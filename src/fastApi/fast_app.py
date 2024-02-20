@@ -1,5 +1,8 @@
 from fastapi import FastAPI
-from models import Todo 
+from models import Todo
+from sqlalchemy.connect import Person
+
+
 # uvicorn fast_app:app --reload ; terminal command
 app = FastAPI()
 

@@ -4,7 +4,6 @@ import CombatLogo from "../assets/combat.svg";
 import DiceLogo from "../assets/dice.svg";
 import CreateCharLogo from "../assets/createChar.svg";
 import LoadCharLogo from "../assets/loadChar.svg";
-import CreateAccountLogo from "../assets/createAccountLogo.svg";
 import LogInLogo from "../assets/logInLogo.svg";
 
 function Header() {
@@ -31,11 +30,7 @@ function Header() {
         </Link>
       </div>
       <div className="flex gap-10 items-center p-2">
-        <Link to="/createAccount" className="flex flex-col items-center">
-          <img src={CreateAccountLogo} className="h-16" />
-          <p>Create Account</p>
-        </Link>
-
+        
         <Link to="/logIn" className="flex flex-col items-center mt-4">
           <img src={LogInLogo} className="h-12" />
           <p>Log in</p>

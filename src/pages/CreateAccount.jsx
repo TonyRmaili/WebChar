@@ -1,10 +1,39 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 function CreateAccount() {
+  const [formData, setFormData] = useState({
+    name: '',
+    password: ''
+  });
 
-  function handleSubmit(e){
-    e.preventDefault()
-    console.log("created account!")
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    try {
+      const response = await fetch('http://localhost:8000/create_account', { 
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      if (response.ok) {
+        console.log('Account created successfully');
+        // Handle success, maybe redirect the user or show a success message
+      } else {
+        console.error('Error creating account');
+        // Handle error
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   }
 
 
@@ -14,12 +43,12 @@ function CreateAccount() {
       <form action="" className='text-red-400 font-mono text-lg border-2 border-black rounded-md'>
         <div className='flex justify-between gap-2 p-2'>
           <label htmlFor="name">Mortal Name</label>
-          <input type="text" id='name' name='name'
+          <input type="text" id='name' name='name' onChange={handleChange}
           className='w-20'/>
         </div><hr />
         <div className='flex justify-between gap-2 p-2'>
           <label htmlFor="password">Secret Phrase</label>
-          <input type="password" name="password" id="password"
+          <input type="password" name="password" id="password" onChange={handleChange}
           className='w-20'/>
         </div><hr />
         <button type='submit' onClick={handleSubmit} 
