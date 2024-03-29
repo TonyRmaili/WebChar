@@ -1,5 +1,4 @@
 from fastapi import FastAPI, HTTPException, Depends, status,Request
-from app.db_setup import init_db, get_db
 from contextlib import asynccontextmanager
 from sqlalchemy.orm import Session, joinedload, selectinload
 from sqlalchemy import select, update, delete, insert
@@ -7,6 +6,23 @@ from sqlalchemy.exc import IntegrityError
 from fastapi.middleware.cors import CORSMiddleware
 from typing import Annotated
 from fastapi import Query
+from app.database.models import User
+from app.database.schemas import UserSchema,CharacterSchema
+from app.security import hash_password, verify_password, create_access_token, get_current_user
+from app.db_setup import init_db, get_db
+from fastapi.security import OAuth2PasswordRequestForm
+from datetime import timedelta, datetime
+from dotenv import load_dotenv
+import os
+
+# uvicorn app.main:app --reload
+
+load_dotenv(override=True)
+
+ALGORITHM = os.getenv("ALGORITHM")  
+SECRET_KEY = os.getenv("SECRET_KEY")  
+ACCESS_TOKEN_EXPIRE_MINUTES = os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES")  
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -14,8 +30,6 @@ async def lifespan(app: FastAPI):
     yield
 
 app = FastAPI(lifespan=lifespan)
-
-
 
 app.add_middleware(
     CORSMiddleware,
@@ -26,8 +40,54 @@ app.add_middleware(
 )
 
 
+@app.post("/create_account", status_code=status.HTTP_201_CREATED,tags=["account"])
+def create_account(user: UserSchema, db: Session = Depends(get_db)):
+    hashed_password: str = hash_password(user.password)
+    user.password = hashed_password
+    try:
+        new_user = User(**user.model_dump())
+        db.add(new_user)
+        db.commit()
+    except IntegrityError:
+        raise HTTPException(detail="User already exists", status_code=status.HTTP_400_BAD_REQUEST) # ?Might not be secure?
+    
+    return new_user
+
+@app.post("/login")
+def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()], db: Session = Depends(get_db)):
+    user = db.scalars(select(User).where(User.name == form_data.username)).first()
+    print(form_data.username)
+    
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="User does not exist",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    
+    if not verify_password(form_data.password, user.password):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Passwords do not match",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    
+    access_token_expires = timedelta(minutes=float(ACCESS_TOKEN_EXPIRE_MINUTES))
+    access_token = create_access_token(data={"sub": str(user.id)}, expires_delta=access_token_expires)
+    
+    return {"access_token": access_token, "token_type": "bearer"}
 
 
+@app.get("/me")
+def read_users_me(current_user: Annotated[User, Depends(get_current_user)]):
+    return current_user
+
+
+@app.post("/create_char",tags=["character"])
+def create_char(current_user: Annotated[User, Depends(get_current_user)],
+            form_data:CharacterSchema):
+    print(form_data)
+    return form_data
 
 
 

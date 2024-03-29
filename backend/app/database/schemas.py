@@ -4,8 +4,20 @@ from datetime import datetime, timezone
 
 
 
+class TokenPayload(BaseModel):
+    sub: str = None
+    exp: int = None
 
+class UserSchema(BaseModel):
+    name: str 
+    email: str
+    password: str 
 
+class CharacterSchema(BaseModel):
+    file_path: str 
+    user_id: int
+
+  
 
 
 # class GenderEnum(str, Enum):
@@ -37,9 +49,7 @@ from datetime import datetime, timezone
 #     token_type: str
 #     model_config = ConfigDict(from_attributes=True)
 
-# class TokenPayload(BaseModel):
-#     sub: str = None
-#     exp: int = None
+
     
 # class TokenData(BaseModel):
 #     username: str | None = None

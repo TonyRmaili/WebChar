@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 
 function CreateAccount() {
-
   const [formData, setFormData] = useState({
     name: '',
     password: ''
@@ -46,6 +45,11 @@ function CreateAccount() {
         <div className='flex justify-between gap-2 p-2'>
           <label htmlFor="name">Mortal Name</label>
           <input type="text" id='name' name='name' onChange={handleChange}
+          className='w-20'/>
+        </div><hr />
+        <div className='flex justify-between gap-2 p-2'>
+          <label htmlFor="email">Email</label>
+          <input type="email" id='email' name='email' onChange={handleChange}
           className='w-20'/>
         </div><hr />
         <div className='flex justify-between gap-2 p-2'>

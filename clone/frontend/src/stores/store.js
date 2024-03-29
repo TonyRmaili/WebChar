@@ -1,4 +1,4 @@
-import { create } from "zustand"; 
+import { create } from "zustand";
 
 const loadInitialState = () => {
   const token = localStorage.getItem("token") || null;

@@ -5,8 +5,13 @@ import DiceLogo from "../assets/dice.svg";
 import CreateCharLogo from "../assets/createChar.svg";
 import LoadCharLogo from "../assets/loadChar.svg";
 import LogInLogo from "../assets/logInLogo.svg";
-
+import LogOutLogo from '../assets/logout.svg'
+import useAuthStore from "../store/AuthStore";
 function Header() {
+
+  const { logout } = useAuthStore()
+ 
+
   return (
     <div className="h-32 bg-slate-800 flex gap-32 items-center justify-center text-orange-400 font-bold text-lg font-serif ">
       <div className="flex gap-6 p-2 ">
@@ -29,11 +34,16 @@ function Header() {
           <p> DiceTower</p>
         </Link>
       </div>
-      <div className="flex gap-10 items-center p-2">
-        
+      <div className="flex gap-10 items-center p-2"> 
         <Link to="/logIn" className="flex flex-col items-center mt-4">
           <img src={LogInLogo} className="h-12" />
           <p>Log in</p>
+        </Link>
+        <Link to="/logIn" className="flex flex-col items-center mt-4">
+          <button onClick={logout}>
+            <img src={LogOutLogo} className="h-12" />
+            <p>Logout</p>
+          </button>
         </Link>
       </div>
     </div>
