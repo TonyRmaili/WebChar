@@ -58,7 +58,6 @@ def create_account(user: UserSchema, db: Session = Depends(get_db)):
 @app.post("/login")
 def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()], db: Session = Depends(get_db)):
     user = db.scalars(select(User).where(User.name == form_data.username)).first()
-    print(form_data.username)
     
     if not user:
         raise HTTPException(
@@ -107,11 +106,16 @@ def create_char(current_user: Annotated[User, Depends(get_current_user)],
         return JSONResponse(content={"message": f"Error: {str(e)}"}, status_code=500)
     
 
-
-
-
-
-
+@app.get("/characters", tags=['character'])
+def get_char(current_user: Annotated[User, Depends(get_current_user)],
+             db:Session = Depends(get_db)):
+    char = db.scalars(select(User)
+            .where(User.id == current_user.id)
+            .options(joinedload(User.characters))).first()
+    
+    return char
+    
+   
 
 # @app.get("/user", status_code=200,tags=["user"])
 # def list_users(db: Session = Depends(get_db)):

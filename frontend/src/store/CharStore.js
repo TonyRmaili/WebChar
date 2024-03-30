@@ -3,7 +3,7 @@ import { create } from "zustand";
 const loadInitialState = () => {
   const charData = JSON.parse(localStorage.getItem("charData")) || null;
 
-  if (localStorage.userData) {
+  if (localStorage.userData.id) {
     charData.user_id = JSON.parse(localStorage.userData).id; // Store userData.id as user_id within charData
   }
   return { charData };
@@ -44,6 +44,29 @@ const useCharStore = create((set, get) => ({
       console.log("CharData posted successfully:", responseData);
     } catch (error) {
       console.error("Error posting charData:", error.message);
+    }
+  },
+  fetchCharacters: async () => {
+    const { token, setCharData, charData } = get(); // Accessing current state and actions
+    try {
+      const response = await fetch("http://localhost:8000/characters", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      if (response.status === 200) {
+        const userData = await response.json();
+        setCharData(charData);
+      } else if (response.status === 401) {
+        logout();
+      } else {
+        console.error("Failed to fetch user data");
+      }
+    } catch (error) {
+      console.error("There was an error fetching user data:", error);
+      // Handle error as needed
     }
   },
 }));

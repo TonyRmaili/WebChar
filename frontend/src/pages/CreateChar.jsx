@@ -30,7 +30,7 @@ function CreateChar() {
 
   return (
     <div className="justify-center items-center mx-auto w-1/2 min-h-screen mb-2">
-      <h className='text-4xl'>Character Creation</h>
+      <p className='text-4xl'>Character Creation</p>
       <div className="mt-2 h-14 ml">
         <ShortcutTab
           tabs={tabs}

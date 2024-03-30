@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
-
+import useAuthStore from '../store/AuthStore';
+import { useNavigate } from 'react-router-dom';
 function CreateAccount() {
+  const navigate = useNavigate()
+  const { fetchUser, setToken } = useAuthStore()
   const [formData, setFormData] = useState({
     name: '',
     password: ''
@@ -12,6 +15,33 @@ function CreateAccount() {
       ...formData,
       [name]: value,
     });
+  }
+
+  async function autoLogIn(name,password){
+    const newFormData = new FormData();
+    newFormData.append("username", name) 
+    newFormData.append("password", password)
+
+    try {
+      const response = await fetch("http://localhost:8000/login", {
+        method: "POST",
+        body: newFormData
+      });
+      
+      if (response.status === 200) {
+        console.log("login success!")
+        const data = await response.json();
+        setToken(data.access_token)
+        await fetchUser()
+        navigate("/createChar")
+
+      } else if (response.status === 400 || response.status === 401) {
+        const data = await response.json();
+        console.log(data)
+      } else {
+        console.log("Login Failed");
+      }
+    } catch (error) {}   
   }
 
   async function handleSubmit(e) {
@@ -27,7 +57,7 @@ function CreateAccount() {
       });
       if (response.ok) {
         console.log('Account created successfully');
-        // Handle success, maybe redirect the user or show a success message
+        autoLogIn(formData.name,formData.password)
       } else {
         console.error('Error creating account');
         // Handle error
