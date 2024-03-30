@@ -25,7 +25,7 @@ function LogIn() {
         console.log("login success!")
         const data = await response.json();
         setToken(data.access_token)
-        fetchUser()
+        await fetchUser()
         navigate("/")
 
       } else if (response.status === 400 || response.status === 401) {

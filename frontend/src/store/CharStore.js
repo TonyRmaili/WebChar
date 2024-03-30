@@ -20,7 +20,7 @@ const useCharStore = create((set, get) => ({
     try {
       const token = localStorage.getItem("token");
       const charData = localStorage.getItem("charData")
-      console.log("char from store",charData, typeof(charData))
+      
 
       if (!token) {
         throw new Error("Token not found in localStorage");

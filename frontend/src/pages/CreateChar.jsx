@@ -27,33 +27,6 @@ function CreateChar() {
     }
   }, [token, userData]);
 
-  function handle(){
-    console.log("dfsf")
-  }
-
-  async function handleSubmit(e) {
-    e.preventDefault();
-
-    try {
-      const response = await fetch("http://localhost:8000/create_char", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(formData),
-      });
-      if (response.ok) {
-        console.log("char created successfully");
-        // Handle success, maybe redirect the user or show a success message
-      } else {
-        console.error("Error creating char");
-        // Handle error
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  }
 
   return (
     <div className="justify-center items-center mx-auto w-1/2 min-h-screen mb-2">

@@ -21,8 +21,16 @@ function LoadChar() {
 
 
   return (
-    <div>LoadChar</div>
-  )
+    <div className="flex flex-wrap justify-center">
+      {userData.characters.map((character, index) => (
+        <div key={index} className="flex items-center justify-center m-2">
+          <div className="w-20 h-20 border-2 border-black rounded-full flex items-center justify-center">
+            <p>{character.id}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
 }
 
 export default LoadChar 
