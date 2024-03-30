@@ -16,7 +16,8 @@ const useAuthStore = create((set, get) => ({
   logout: () => {
     localStorage.removeItem("token"); // Ensure to clear all localStorage on logout
     localStorage.removeItem("userData"); // Ensure to clear all localStorage on logout
-    set(() => ({ token: null, userData: null}));
+    localStorage.removeItem("charData"); // Ensure to clear all localStorage on logout
+    set(() => ({ token: null, userData: null, charData:null}));
   },
   setUserData: (userData) => {
     localStorage.setItem("userData", JSON.stringify(userData)); // Save the user data to localStorage

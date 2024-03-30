@@ -1,24 +1,22 @@
 import React, { useEffect, useState } from "react";
 import useAuthStore from '../store/AuthStore';
+import useCharStore from "../store/CharStore";
 
 function GeneralStats() {
     const { token, userData } = useAuthStore();
+    const { charData, setCharData } = useCharStore();
 
     function handleChange(e) {
         const { name, value } = e.target;
-        setFormData({
-          ...formData,
+        setCharData({
+          ...charData,
           [name]: value,
         });
       }
 
-      const [formData, setFormData] = useState({
-        user_id: userData?.id,
-      });
-    
       useEffect(() => {
-        console.log(formData);
-      }, [formData]);
+        console.log(charData);
+      }, [charData]);
 
 
   return (
@@ -55,11 +53,8 @@ function GeneralStats() {
             onChange={handleChange}
           />
         </div> */}
-        <div className="flex border-2 border-black rounded-3xl text-white bg-red-500 mt-12 ">
-          <button  className="font-bold p-4">
-            Save
-          </button>
-        </div>
+        
+        
       </div>
 
     </div>

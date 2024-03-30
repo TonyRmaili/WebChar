@@ -87,7 +87,8 @@ def read_users_me(current_user: Annotated[User, Depends(get_current_user)]):
 
 @app.post("/create_char", tags=["character"])
 def create_char(current_user: Annotated[User, Depends(get_current_user)],
-          form_data: dict,db:Session = Depends(get_db)):
+          form_data:dict,db:Session = Depends(get_db)):
+    print(form_data)
     try:
         directory = "./app/database/save_files/"+current_user.name
         file_name = form_data['name'] + ".json"

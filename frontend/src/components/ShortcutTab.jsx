@@ -4,7 +4,7 @@ import React from "react";
 function ShortcutTab({ tabs, onSelect }) {
   return (
     <div>
-      <ul className="flex flex-wrap  font-medium text-center">
+      <ul className="flex flex-wrap gap-2 font-medium text-center">
         {tabs.map(tab =>
           <li className="" key={tab.id}>
             <button
