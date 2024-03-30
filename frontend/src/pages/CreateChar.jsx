@@ -1,10 +1,19 @@
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useState } from "react";
 import useAuthStore from "../store/AuthStore";
 import { useNavigate } from "react-router-dom";
+import GeneralStats from "../components/GeneralStats";
+import ShortcutTab from "../components/ShortcutTab";
+
+const tabs = [{ name: "General", id: 0 }];
 
 function CreateChar() {
   const { token, userData } = useAuthStore();
   const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState(tabs[0]);
+
+  const handleTabSelect = (tab) => {
+    setActiveTab(tab);
+  };
 
   useEffect(() => {
     if (!token || !userData) {
@@ -12,87 +21,49 @@ function CreateChar() {
     }
   }, [token, userData]);
 
-  const [formData, setFormData] = useState({
-    user_id: userData?.id,
-  });
+  
+  
 
-  function handleChange(e) {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  }
-
-  useEffect(() => {
-    console.log(formData);
-  }, [formData]);
-
-  async function handleSubmit(e){
-    e.preventDefault()
+  async function handleSubmit(e) {
+    e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:8000/create_char', {
-        method: 'POST',
+      const response = await fetch("http://localhost:8000/create_char", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(formData),
       });
       if (response.ok) {
-        console.log('char created successfully');
+        console.log("char created successfully");
         // Handle success, maybe redirect the user or show a success message
       } else {
-        console.error('Error creating char');
+        console.error("Error creating char");
         // Handle error
       }
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   }
 
   return (
-    <div className="flex justify-center">
+    <div className="justify-center items-center mx-auto w-1/2 min-h-screen mb-2">
       <h className='text-4xl'>Character Creation</h>
-      <div className="flex flex-col justify-center items-center gap">
-        <div className="text-orange-400 mt-10 flex gap-2">
-          <label htmlFor="name">Name</label>
-          <input type="text" id="name" name="name" onChange={handleChange} />
-        </div>
-        <div className="text-orange-400 mt-10 flex gap-2">
-          <label htmlFor="class">Class</label>
-          <input type="text" id="class" name="class" onChange={handleChange} />
-        </div>
-        <div className="text-orange-400 mt-10 flex gap-2">
-          <label htmlFor="level">Level</label>
-          <input type="text" id="level" name="level" onChange={handleChange} />
-        </div>
-        <div className="text-orange-400 mt-10 flex gap-2">
-          <label htmlFor="speed">Speed</label>
-          <input type="text" id="speed" name="speed" onChange={handleChange} />
-        </div>
-        <div className="text-orange-400 mt-10 flex gap-2">
-          <label htmlFor="race">Race</label>
-          <input type="text" id="race" name="race" onChange={handleChange} />
-        </div>
-        <div className="text-orange-400 mt-10 flex gap-2">
-          <label htmlFor="background">Background</label>
-          <input
-            type="text"
-            id="background"
-            name="background"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="flex border-2 border-black rounded-3xl text-white bg-red-500 mt-12 ">
-          <button onClick={handleSubmit} className="font-bold p-4">
-            Save
-          </button>
-        </div>
+      <div className="mt-2 h-14">
+        <ShortcutTab
+          tabs={tabs}
+          selectedTab={activeTab}
+          onSelect={handleTabSelect}
+        />
       </div>
-      
+
+      <div className=" min-h-screen p-2 bg-gray-600">
+        {activeTab.name === "General" && <GeneralStats />}
+      </div>
     </div>
+    
   );
 }
 
