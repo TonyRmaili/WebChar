@@ -6,7 +6,7 @@ from sqlalchemy.exc import IntegrityError
 from fastapi.middleware.cors import CORSMiddleware
 from typing import Annotated
 from fastapi import Query
-from app.database.models import User
+from app.database.models import User,Character
 from app.database.schemas import UserSchema,CharacterSchema
 from app.security import hash_password, verify_password, create_access_token, get_current_user
 from app.db_setup import init_db, get_db
@@ -14,7 +14,9 @@ from fastapi.security import OAuth2PasswordRequestForm
 from datetime import timedelta, datetime
 from dotenv import load_dotenv
 import os
-
+import json
+from app.database.character import save_char_tojson
+from fastapi.responses import JSONResponse
 # uvicorn app.main:app --reload
 
 load_dotenv(override=True)
@@ -83,25 +85,31 @@ def read_users_me(current_user: Annotated[User, Depends(get_current_user)]):
     return current_user
 
 
-@app.post("/create_char",tags=["character"])
+@app.post("/create_char", tags=["character"])
 def create_char(current_user: Annotated[User, Depends(get_current_user)],
-            form_data:CharacterSchema):
-    print(form_data)
-    return form_data
+          form_data: dict,db:Session = Depends(get_db)):
+    try:
+        directory = "./app/database/save_files/"+current_user.name
+        file_name = form_data['name'] + ".json"
+        file_path = os.path.join(directory, file_name)
+        os.makedirs(directory, exist_ok=True)
+        with open(file_path, "w") as json_file:
+            json.dump(form_data, json_file, indent=4)
+
+        character_data = CharacterSchema(user_id=current_user.id,file_path=file_path)
+        db_char = Character(**character_data.model_dump())
+        db.add(db_char)
+        db.commit()
+
+        return JSONResponse(content={"message": "JSON data saved successfully"}, status_code=200)
+    except Exception as e:
+        return JSONResponse(content={"message": f"Error: {str(e)}"}, status_code=500)
+    
 
 
 
 
-# user endpoints
-# @app.post("/user_login", tags=["user"])
-# def validate_user(data:UserSchemaSlim,db:Session = Depends(get_db)):
-#     users = db.scalars(select(User)).all()
 
-#     for user in users:
-#         if data.user_name == user.user_name and data.password == user.password:
-#             print(user)
-#             return {user}
-#     return {"error, user not found"}
 
 
 # @app.get("/user", status_code=200,tags=["user"])
