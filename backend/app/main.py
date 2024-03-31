@@ -17,6 +17,7 @@ import os
 import json
 from app.database.character import save_char_tojson
 from fastapi.responses import JSONResponse
+
 # uvicorn app.main:app --reload
 
 load_dotenv(override=True)
@@ -106,14 +107,21 @@ def create_char(current_user: Annotated[User, Depends(get_current_user)],
         return JSONResponse(content={"message": f"Error: {str(e)}"}, status_code=500)
     
 
-@app.get("/characters", tags=['character'])
+@app.post("/get_char", tags=['character'])
 def get_char(current_user: Annotated[User, Depends(get_current_user)],
-             db:Session = Depends(get_db)):
-    char = db.scalars(select(User)
-            .where(User.id == current_user.id)
-            .options(joinedload(User.characters))).first()
-    
-    return char
+            character:dict, db:Session = Depends(get_db)):
+    print(character)
+    try:
+        
+        with open(character["file_path"],'r') as f:
+            file = json.load(f)
+        print(file)
+      
+    except FileNotFoundError:
+        pass
+
+    return file
+   
     
    
 

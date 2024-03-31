@@ -5,7 +5,7 @@ import useAuthStore from '../store/AuthStore';
 
 function LogIn() {
   const navigate = useNavigate()
-  const { token, setToken, fetchUser} = useAuthStore()
+  const { token, setToken, fetchUser,fetchChars} = useAuthStore()
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
  
@@ -26,6 +26,7 @@ function LogIn() {
         const data = await response.json();
         setToken(data.access_token)
         await fetchUser()
+        
         navigate("/")
 
       } else if (response.status === 400 || response.status === 401) {

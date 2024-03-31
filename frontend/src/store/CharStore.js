@@ -46,21 +46,24 @@ const useCharStore = create((set, get) => ({
       console.error("Error posting charData:", error.message);
     }
   },
-  fetchCharacters: async () => {
-    const { token, setCharData, charData } = get(); // Accessing current state and actions
+  fetchChar: async (character) => {
+    const { setCharData } = get();
+    const token = localStorage.getItem("token");
+    
     try {
-      const response = await fetch("http://localhost:8000/characters", {
-        method: "GET",
+      const response = await fetch("http://localhost:8000/get_char", {
+        method: "POST",
         headers: {
-          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
         },
+        body: JSON.stringify(character)
       });
       if (response.status === 200) {
-        const userData = await response.json();
+        const charData = await response.json();
         setCharData(charData);
       } else if (response.status === 401) {
-        logout();
+       
       } else {
         console.error("Failed to fetch user data");
       }
