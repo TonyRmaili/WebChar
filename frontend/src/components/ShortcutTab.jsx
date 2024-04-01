@@ -2,6 +2,8 @@ import React from "react";
 
 
 function ShortcutTab({ tabs, onSelect }) {
+  
+
   return (
     <div>
       <ul className="flex flex-wrap gap-2 font-medium text-center">

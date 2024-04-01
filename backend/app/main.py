@@ -97,7 +97,10 @@ def create_char(current_user: Annotated[User, Depends(get_current_user)],
         with open(file_path, "w") as json_file:
             json.dump(form_data, json_file, indent=4)
 
-        character_data = CharacterSchema(user_id=current_user.id,file_path=file_path)
+
+
+        character_data = CharacterSchema(user_id=current_user.id,
+            name=form_data['name'] ,file_path=file_path)
         db_char = Character(**character_data.model_dump())
         db.add(db_char)
         db.commit()
@@ -122,8 +125,31 @@ def get_char(current_user: Annotated[User, Depends(get_current_user)],
 
     return file
    
-    
-   
+# for swagger
+@app.get("/characters", status_code=200,tags=["characters"])
+def list_chars(db: Session = Depends(get_db)):
+    chars = db.scalars(select(Character)
+    .options(selectinload(Character.pictures))).all()
+
+    if not chars:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No users found")
+    return chars
+
+
+
+@app.delete("/character/{char_id}",status_code=status.HTTP_204_NO_CONTENT,tags=["characters"])
+def delete_char_id(char_id:int, db:Session = Depends(get_db)):
+    db_char = db.scalars(select(Character).where(
+        Character.id == char_id)).first()
+    if db_char is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    db.delete(db_char)
+    db.commit()
+    return {}
+
+
+
+
 
 # @app.get("/user", status_code=200,tags=["user"])
 # def list_users(db: Session = Depends(get_db)):

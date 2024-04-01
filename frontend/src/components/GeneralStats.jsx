@@ -1,22 +1,23 @@
 import React, { useEffect, useState } from "react";
-import useAuthStore from '../store/AuthStore';
 import useCharStore from "../store/CharStore";
 
 function GeneralStats() {
-    const { token, userData } = useAuthStore();
-    const { charData, setCharData } = useCharStore();
+  const { charData, setCharData } = useCharStore();
+  
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setCharData({
+      ...charData,
+      [name]: value,
+    });
+  }
 
-    function handleChange(e) {
-        const { name, value } = e.target;
-        setCharData({
-          ...charData,
-          [name]: value,
-        });
-      }
+  
+  useEffect(() => {
+    console.log(charData);
+  }, [charData]);
 
-      useEffect(() => {
-        console.log(charData);
-      }, [charData]);
+
 
 
   return (

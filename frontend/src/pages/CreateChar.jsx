@@ -12,8 +12,8 @@ const tabs = [
 ];
 
 function CreateChar() {
-  const { token, userData } = useAuthStore();
-  const { postCharData } = useCharStore();
+  const { token, userData, fetchUser } = useAuthStore();
+  const { postCharData, setCharData } = useCharStore();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState(tabs[0]);
 
@@ -27,6 +27,21 @@ function CreateChar() {
     }
   }, [token, userData]);
 
+  useEffect(() => {
+    setCharData(null)
+    // localStorage.removeItem("charData")
+  }, []);
+
+
+  
+
+  function handleSubmit(){
+    postCharData()
+    fetchUser()
+    
+  }
+
+  
 
   return (
     <div className="justify-center items-center mx-auto w-1/2 min-h-screen mb-2">
@@ -44,10 +59,11 @@ function CreateChar() {
         {activeTab.name === "Ability Score" && <AbilityScore />}
       </div>
       <div className="flex border-2 border-black rounded-3xl text-white bg-red-500 mt-12 ">
-          <button  className="font-bold p-4" onClick={postCharData}>
+          <button  className="font-bold p-4" onClick={handleSubmit}>
             Save
           </button>
       </div>
+      
     </div>
     
   );

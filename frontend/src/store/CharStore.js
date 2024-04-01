@@ -2,9 +2,10 @@ import { create } from "zustand";
 
 const loadInitialState = () => {
   const charData = JSON.parse(localStorage.getItem("charData")) || null;
-
-  if (localStorage.userData.id) {
-    charData.user_id = JSON.parse(localStorage.userData).id; // Store userData.id as user_id within charData
+  const userData = JSON.parse(localStorage.getItem("userData")) || null;
+  
+  if (userData && userData.id && charData) {
+    charData.user_id = userData.id; // Store userData.id as user_id within charData
   }
   return { charData };
 };

@@ -17,13 +17,16 @@ class Picture(Base):
     character : Mapped["Character"] = relationship("Character", back_populates="pictures")
 
 
+
 class Character(Base):
-	__tablename__ = "characters"
-	file_path:Mapped[str]
-	user_id:Mapped[int] = mapped_column(ForeignKey("users.id"),nullable=True)
-     
-	user: Mapped["User"] = relationship("User", back_populates="characters")
-	pictures: Mapped[list[Picture]] = relationship("Picture", back_populates="character")
+    __tablename__ = "characters"
+    file_path:Mapped[str]
+    name:Mapped[str]
+    user_id :Mapped[int] = mapped_column(ForeignKey("users.id"))
+
+    user: Mapped["User"] = relationship("User",back_populates="characters")
+    pictures: Mapped[list[Picture]] = relationship("Picture", back_populates="character")
+
 
 
 class User(Base):

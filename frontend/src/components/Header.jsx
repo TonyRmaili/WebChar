@@ -7,10 +7,10 @@ import LoadCharLogo from "../assets/loadChar.svg";
 import LogInLogo from "../assets/logInLogo.svg";
 import LogOutLogo from '../assets/logout.svg'
 import useAuthStore from "../store/AuthStore";
-function Header() {
 
+function Header() {
   const { logout } = useAuthStore()
- 
+  
 
   return (
     <div className="h-32 bg-slate-800 flex gap-32 items-center justify-center text-orange-400 font-bold text-lg font-serif ">

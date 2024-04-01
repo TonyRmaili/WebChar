@@ -1,10 +1,12 @@
 import { create } from "zustand";
 
 const loadInitialState = () => {
+  
   const token = localStorage.getItem("token") || null;
   const userData = JSON.parse(localStorage.getItem("userData")) || null;
+  const charData = JSON.parse(localStorage.getItem("charData")) || null;
   // Attempt to parse the user data from localStorage or set to null if not found
-  return { token, userData };
+  return { token, userData, charData };
 };
 
 const useAuthStore = create((set, get) => ({
@@ -17,12 +19,14 @@ const useAuthStore = create((set, get) => ({
     localStorage.removeItem("token"); // Ensure to clear all localStorage on logout
     localStorage.removeItem("userData"); // Ensure to clear all localStorage on logout
     localStorage.removeItem("charData"); // Ensure to clear all localStorage on logout
-    set(() => ({ token: null, userData: null, charData:null}));
+    
+    set(() => ({ token: null, userData: null, charData: null}));
   },
   setUserData: (userData) => {
     localStorage.setItem("userData", JSON.stringify(userData)); // Save the user data to localStorage
     set(() => ({ userData }));
   },
+ 
   
   fetchUser: async () => {
     const { token, logout, setUserData } = get(); // Accessing current state and actions

@@ -16,7 +16,7 @@ class UserSchema(BaseModel):
 class CharacterSchema(BaseModel):
     file_path: str 
     user_id: int
-
+    name : str
   
 
 
