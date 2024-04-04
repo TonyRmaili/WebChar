@@ -5,14 +5,18 @@ import { useNavigate } from "react-router-dom";
 import GeneralStats from "../components/GeneralStats";
 import ShortcutTab from "../components/ShortcutTab";
 import AbilityScore from "../components/AbilityScore";
-import ExtraStats from "../components/ExtraStats";
+import ClassSelection from "../components/ClassSelection";
 import FeatsTraits from "../components/FeatsTraits";
+
+
 
 const tabs = [
   { name: "General", id: 0 },
   { name: "Ability Score", id: 1 },
-  { name: "Extra Stats", id: 2 },
-  { name: "Feats & Traits", id: 3 },
+  { name: "Classes", id: 2 },
+  { name: "Feats & Traits", id: 3 }
+  
+ 
 ];
 
 function CreateChar() {
@@ -55,8 +59,10 @@ function CreateChar() {
       <div className=" min-h-screen p-2 bg-gray-600">
         {activeTab.name === "General" && <GeneralStats />}
         {activeTab.name === "Ability Score" && <AbilityScore />}
-        {activeTab.name === "Extra Stats" && <ExtraStats />}
+        {activeTab.name === "Classes" && <ClassSelection />}
         {activeTab.name === "Feats & Traits" && <FeatsTraits />}
+        
+       
       </div>
       <div className="flex border-2 border-black rounded-3xl text-white bg-red-500 mt-12 ">
           <button  className="font-bold p-4" onClick={handleSubmit}>
