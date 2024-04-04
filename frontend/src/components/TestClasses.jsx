@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import useCharStore from "../store/CharStore";
-function ClassSelection() {
-  const { charData, setCharData } = useCharStore()  
+
+function TestClasses() {
   const [classValues, setClassValues] = useState({});
 
   function handleChange(e) {
@@ -32,23 +31,12 @@ function ClassSelection() {
     setClassValues({});
   }
 
-  function handleSubmit(){
-    setCharData({
-        ...charData,
-        "classes": classValues
-    })
-  }
-
   useEffect(() => {
     console.log(classValues);
   }, [classValues]);
 
-  useEffect(() => {
-    console.log("charData",charData);
-  }, [charData]);
-
   return (
-    <div className="flex flex-col">
+    <div className="">
       <p className="text-orange-500 text-xl mb-6">Select a Class(es)</p>
       <select name="classes" id="classes" multiple onChange={handleChange} className="h-80 w-32">
         <option value="Artificer">Artificer</option>
@@ -66,12 +54,9 @@ function ClassSelection() {
         <option value="Wizard">Wizard</option>
         <option value="Custom">Custom</option>
       </select>
-      <div className="flex gap-2 mt-2">
-        <button className="font-bold p-4 border bg-blue-400 text-white rounded-xl w-20" onClick={handleSubmit}>Submit</button>
-        <button className="font-bold p-4 border bg-blue-400 text-white rounded-xl w-16" onClick={handleReset}>Reset</button>
-      </div>
+      <button className="font-bold p-4 border bg-blue-400 text-white rounded-xl" onClick={handleReset}>Reset</button>
     </div>
   );
 }
 
-export default ClassSelection;
+export default TestClasses;

@@ -7,6 +7,8 @@ import ShortcutTab from "../components/ShortcutTab";
 import AbilityScore from "../components/AbilityScore";
 import ClassSelection from "../components/ClassSelection";
 import FeatsTraits from "../components/FeatsTraits";
+import ReactSelect from "../components/ReactSelect";
+
 
 
 
@@ -14,7 +16,9 @@ const tabs = [
   { name: "General", id: 0 },
   { name: "Ability Score", id: 1 },
   { name: "Classes", id: 2 },
-  { name: "Feats & Traits", id: 3 }
+  { name: "Feats & Traits", id: 3 },
+  { name: "ReactSelect", id: 4 }
+
   
  
 ];
@@ -61,10 +65,12 @@ function CreateChar() {
         {activeTab.name === "Ability Score" && <AbilityScore />}
         {activeTab.name === "Classes" && <ClassSelection />}
         {activeTab.name === "Feats & Traits" && <FeatsTraits />}
+        {activeTab.name === "ReactSelect" && <ReactSelect />}
+        
         
        
       </div>
-      <div className="flex border-2 border-black rounded-3xl text-white bg-red-500 mt-12 ">
+      <div className=" border-2 border-black rounded-3xl text-white bg-red-500 mt-12 ">
           <button  className="font-bold p-4" onClick={handleSubmit}>
             Save
           </button>
