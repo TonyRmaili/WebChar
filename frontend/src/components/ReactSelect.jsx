@@ -1,78 +1,103 @@
-import React, {useRef} from 'react'
-import CreatableSelect from 'react-select/creatable'
+import React, { useEffect, useState } from "react";
+import CreatableSelect from "react-select/creatable";
 function ReactSelect() {
-    
-    const options = [
-        {value: 'jack',label:'Jack', color: "red"},
-        {value: 's',label:'Ert',color: "blue"},
-        {value: 'r',label:'Mo',color: "black"},
-    ]
+  const classes = [
+    { value: "Artificer", label: "Artificer" },
+    { value: "Barbarian", label: "Barbarian" },
+    { value: "Bard", label: "Bard" },
+    { value: "Cleric", label: "Cleric" },
+    { value: "Druid", label: "Druid" },
+    { value: "Fighter", label: "Fighter" },
+    { value: "Monk", label: "Monk" },
+    { value: "Paladin", label: "Paladin" },
+    { value: "Ranger", label: "Ranger" },
+    { value: "Rogue", label: "Rogue" },
+    { value: "Sorcerer", label: "Sorcerer" },
+    { value: "Warlock", label: "Warlock" },
+    { value: "Wizard", label: "Wizard" },
+  ];
 
-    const colorStyles = {
-        
-        control: (styles) => ({ ...styles,backgroundColor:"white"}),
-        option: (styles, {data,isDisabled,isFocused, isSelected}) => {
-            // console.log("option",data,isFocused,isDisabled,isSelected)
-            return {...styles, color:data.color}
-        },
-        multiValue: (styles, {data}) =>{
-            return {
-                ...styles,
-                backgroundColor:data.color,
-                color:"#fff",
-            }},
-        multiValueLabel: (styles, {data}) =>{
-            return{
-                ...styles,
-                color:"#fff"
-                
-            }
-        },
-        multiValueRemove: (styles, {data}) =>{
-            return{
-                ...styles,
-                color:"#fff",
-                cursor: 'pointer',
-                ':hover':{
-                    color:'#fff'
-                }
+  const [selectedClasses, setSelectedClasses] = useState();
+  const [selectedClassesLvls, setSelectedClassesLvls] = useState({});
 
-            }
-        },
-       
-    }
-
-    function handleChange(selectedOption,actionMeta){
-        console.log('onChange',selectedOption,actionMeta)
-        
-    }
-
-    const handleInputChange = (inputVale,actionMeta) =>{
-        console.log("InputChange",inputVale,actionMeta)
-
-    }
-    function colorNewOption(inputVale){
-        // const newOption = {
-        //     value: inputVale,
-        //     label: inputVale, // Use inputValue as both value and label for simplicity
-        //     color: "green", // Or whichever color you want to assign
-        // };
-    }
-
-
-
-    const focusCreatable = () => {
-        console.log(creatableRef);
-        creatableRef.current?.focus();
+  const colorStyles = {
+    control: (styles) => ({ ...styles, backgroundColor: "white" }),
+    option: (styles, { data, isDisabled, isFocused, isSelected }) => {
+      // console.log("option",data,isFocused,isDisabled,isSelected)
+      return { ...styles, color: data.color };
+    },
+    multiValue: (styles, { data }) => {
+      return {
+        ...styles,
+        backgroundColor: data.color,
+        color: "#fff",
       };
+    },
+    multiValueLabel: (styles, { data }) => {
+      return {
+        ...styles,
+        color: "#fff",
+      };
+    },
+    multiValueRemove: (styles, { data }) => {
+      return {
+        ...styles,
+        color: "#fff",
+        cursor: "pointer",
+        ":hover": {
+          color: "#fff",
+        },
+      };
+    },
+  };
+
+  function handleChange(selectedOption, actionMeta) {
+    setSelectedClasses(selectedOption);
+
+    // Update selectedClassesLvls
+    const updatedSelectedClassesLvls = {};
+    selectedOption.forEach(option => {
+      updatedSelectedClassesLvls[option.label] = selectedClassesLvls[option.label] || 1;
+    });
+    setSelectedClassesLvls(updatedSelectedClassesLvls);
+  }
+  
+
+  const handleInputChange = (inputVale, actionMeta) => {
+    console.log("InputChange", inputVale, actionMeta);
+  };
+
+  function handleClassLvl(e, name) {
+    setSelectedClassesLvls(prevState => {
+        return { ...prevState, [name]: Number(e.target.value) };
+    });
+}
+  useEffect(() => {
+    console.log(selectedClassesLvls);
+  }, [selectedClassesLvls]);
 
   return (
-    <>
-        <CreatableSelect options={options} onInputChange={handleInputChange} 
-        onChange={handleChange} isMulti  />
-        
-    </>
-  )
+    <div>
+      <CreatableSelect
+        options={classes}
+        onInputChange={handleInputChange}
+        onChange={handleChange}
+        isMulti
+      />
+
+      {selectedClasses &&
+        selectedClasses.length > 0 &&
+        selectedClasses.map((classItem, index) => (
+          <div key={index} className="flex  justify-between w-60 ">
+            <label>{classItem.label}</label>
+            <input type="number" defaultValue={1} min={1} className="w-16 mt-2" onChange={(e)=> handleClassLvl(e,classItem.label)}/>
+            
+          </div>
+        ))}
+      
+
+    </div>
+  );
 }
 
-export default ReactSelect
+export default ReactSelect;
