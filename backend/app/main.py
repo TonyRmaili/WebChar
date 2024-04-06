@@ -148,6 +148,16 @@ def delete_char_id(char_id:int, db:Session = Depends(get_db)):
     return {}
 
 
+@app.get("/races",tags=["5etools"])
+def get_races():
+    try:
+        with open("./app/database/5etools_json/races.json") as f:
+            races = json.load(f)
+        
+        return [races["race"],races["subrace"]]
+    
+    except FileNotFoundError:
+        return {"file not found"}
 
 
 

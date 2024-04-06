@@ -1,75 +1,113 @@
 import React, { useEffect, useState } from "react";
+import CreatableSelect from "react-select/creatable";
 import useCharStore from "../store/CharStore";
+
 function ClassSelection() {
-  const { charData, setCharData } = useCharStore()  
-  const [classValues, setClassValues] = useState({});
+  const { charData, setCharData} = useCharStore()
+  const classes = [
+    { value: "Artificer", label: "Artificer" },
+    { value: "Barbarian", label: "Barbarian" },
+    { value: "Bard", label: "Bard" },
+    { value: "Cleric", label: "Cleric" },
+    { value: "Druid", label: "Druid" },
+    { value: "Fighter", label: "Fighter" },
+    { value: "Monk", label: "Monk" },
+    { value: "Paladin", label: "Paladin" },
+    { value: "Ranger", label: "Ranger" },
+    { value: "Rogue", label: "Rogue" },
+    { value: "Sorcerer", label: "Sorcerer" },
+    { value: "Warlock", label: "Warlock" },
+    { value: "Wizard", label: "Wizard" },
+  ];
 
-  function handleChange(e) {
-    const selectedClassName = e.target.value;
+  const [selectedClasses, setSelectedClasses] = useState();
+  const [selectedClassesLvls, setSelectedClassesLvls] = useState({});
 
-    if (selectedClassName !== "Custom"){
-        const selectedNumber = parseInt(prompt(`Enter class level for ${selectedClassName}:`));
-        if (!isNaN(selectedNumber)) {
-          setClassValues((prevClassValues) => ({
-            ...prevClassValues,
-            [selectedClassName]: selectedNumber,
-          }));
-        }
-    } else{
-        const newClassName =prompt(`Enter custom Class Name`);
-        const selectedNumber = parseInt(prompt(`Enter class level for ${selectedClassName}:`));
-        if (!isNaN(selectedNumber)) {
-            setClassValues((prevClassValues) => ({
-              ...prevClassValues,
-              [newClassName]: selectedNumber,
-            }));
-          }
-    }
+  const colorStyles = {
+    control: (styles) => ({ ...styles, backgroundColor: "white" }),
+    option: (styles, { data, isDisabled, isFocused, isSelected }) => {
+      // console.log("option",data,isFocused,isDisabled,isSelected)
+      return { ...styles, color: data.color };
+    },
+    multiValue: (styles, { data }) => {
+      return {
+        ...styles,
+        backgroundColor: data.color,
+        color: "#fff",
+      };
+    },
+    multiValueLabel: (styles, { data }) => {
+      return {
+        ...styles,
+        color: "#fff",
+      };
+    },
+    multiValueRemove: (styles, { data }) => {
+      return {
+        ...styles,
+        color: "#fff",
+        cursor: "pointer",
+        ":hover": {
+          color: "#fff",
+        },
+      };
+    },
+  };
 
+  function handleChange(selectedOption, actionMeta) {
+    setSelectedClasses(selectedOption);
+
+    // Update selectedClassesLvls
+    const updatedSelectedClassesLvls = {};
+    selectedOption.forEach(option => {
+      updatedSelectedClassesLvls[option.label] = selectedClassesLvls[option.label] || 1;
+    });
+    setSelectedClassesLvls(updatedSelectedClassesLvls);
   }
+  
 
-  function handleReset() {
-    setClassValues({});
-  }
+  const handleInputChange = (inputVale, actionMeta) => {
+    console.log("InputChange", inputVale, actionMeta);
+  };
 
-  function handleSubmit(){
-    setCharData({
-        ...charData,
-        "classes": classValues
-    })
-  }
+  function handleClassLvl(e, name) {
+    setSelectedClassesLvls(prevState => {
+        return { ...prevState, [name]: Number(e.target.value) };
+    });
+}
 
+ function handleSaveClass(){
+  setCharData({
+    ...charData,
+    "classes": selectedClassesLvls,
+  });
+ }
   useEffect(() => {
-    console.log(classValues);
-  }, [classValues]);
-
-  useEffect(() => {
-    console.log("charData",charData);
-  }, [charData]);
+    console.log(selectedClassesLvls);
+  }, [selectedClassesLvls]);
 
   return (
-    <div className="flex flex-col">
-      <p className="text-orange-500 text-xl mb-6">Select a Class(es)</p>
-      <select name="classes" id="classes" multiple onChange={handleChange} className="h-80 w-32">
-        <option value="Artificer">Artificer</option>
-        <option value="Barbarian">Barbarian</option>
-        <option value="Bard">Bard</option>
-        <option value="Cleric">Cleric</option>
-        <option value="Druid">Druid</option>
-        <option value="Fighter">Fighter</option>
-        <option value="Monk">Monk</option>
-        <option value="Paladin">Paladin</option>
-        <option value="Ranger">Ranger</option>
-        <option value="Rogue">Rogue</option>
-        <option value="Sorcerer">Sorcerer</option>
-        <option value="Warlock">Warlock</option>
-        <option value="Wizard">Wizard</option>
-        <option value="Custom">Custom</option>
-      </select>
-      <div className="flex gap-2 mt-2">
-        <button className="font-bold p-4 border bg-blue-400 text-white rounded-xl w-20" onClick={handleSubmit}>Submit</button>
-        <button className="font-bold p-4 border bg-blue-400 text-white rounded-xl w-16" onClick={handleReset}>Reset</button>
-      </div>
+    <div>
+      <CreatableSelect
+        options={classes}
+        onInputChange={handleInputChange}
+        onChange={handleChange}
+        isMulti
+      />
+
+      {selectedClasses &&
+        selectedClasses.length > 0 &&
+        selectedClasses.map((classItem, index) => (
+          <div key={index} className="flex  justify-between w-60 ">
+            <label>{classItem.label}</label>
+            <input type="number" defaultValue={1} min={1} className="w-16 mt-2" onChange={(e)=> handleClassLvl(e,classItem.label)}/>
+            
+          </div>
+        ))}
+      <button onClick={handleSaveClass}>
+        Submit
+      </button>
+
     </div>
   );
 }

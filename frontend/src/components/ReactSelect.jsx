@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import CreatableSelect from "react-select/creatable";
+import useCharStore from "../store/CharStore";
+
 function ReactSelect() {
+  const { charData, setCharData} = useCharStore()
   const classes = [
     { value: "Artificer", label: "Artificer" },
     { value: "Barbarian", label: "Barbarian" },
@@ -72,6 +75,13 @@ function ReactSelect() {
         return { ...prevState, [name]: Number(e.target.value) };
     });
 }
+
+ function handleSaveClass(){
+  setCharData({
+    ...charData,
+    "classes": selectedClassesLvls,
+  });
+ }
   useEffect(() => {
     console.log(selectedClassesLvls);
   }, [selectedClassesLvls]);
@@ -94,7 +104,9 @@ function ReactSelect() {
             
           </div>
         ))}
-      
+      <button onClick={handleSaveClass}>
+        Submit
+      </button>
 
     </div>
   );

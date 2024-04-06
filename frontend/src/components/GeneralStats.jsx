@@ -48,6 +48,8 @@ function GeneralStats() {
           name="ac"
           onChange={handleChange}
           className="w-64"
+          min={0}
+          
         />
       </div>
       <div className="text-orange-400 mt-10 flex gap-2">
@@ -65,44 +67,10 @@ function GeneralStats() {
           name="speed"
           onChange={handleChange}
           className="w-64"
+          min={0}
         />
       </div>
-      <div className="text-orange-400 mt-10 flex gap-2">
-        <label htmlFor="race" className="w-24 text-right">
-          Race
-        </label>
-        <input
-          type="text"
-          id="race"
-          name="race"
-          onChange={handleChange}
-          className="w-64"
-        />
-      </div>
-      <div className="text-orange-400 mt-10 flex gap-2">
-        <label htmlFor="languages" className="w-24 text-right">
-          Languages
-        </label>
-        <input
-          type="text"
-          id="languages"
-          name="languages"
-          onChange={handleChange}
-          className="w-64"
-        />
-      </div>
-      <div className="text-orange-400 mt-10 flex gap-2">
-        <label htmlFor="background" className="w-24 text-right">
-          Background
-        </label>
-        <input
-          type="text"
-          id="background"
-          name="background"
-          onChange={handleChange}
-          className="w-64"
-        />
-      </div>
+      
     </div>
   );
 }
