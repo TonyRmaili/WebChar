@@ -1,18 +1,93 @@
-import React, {useEffect, useState} from 'react'
-import useCharStore from '../store/CharStore';
+import React, { useEffect, useState } from "react";
+import useCharStore from "../store/CharStore";
+import AbilityScoreField from "./AbilityScoreField";
+import SkillField from "./miniComp/SkillField";
 
 function AbilityScore() {
-  const { charData, setCharData } = useCharStore()
+  const { charData, setCharData } = useCharStore();
+  const [abilityScores, setAbilityScores] = useState({
+    stre: { value: null, isChecked: false, label: "Strength" },
+    dex: { value: null, isChecked: false, label: "Dexterity" },
+    con: { value: null, isChecked: false, label: "Constitution" },
+    int: { value: null, isChecked: false, label: "Intelligence" },
+    wis: { value: null, isChecked: false, label: "Wisdom" },
+    char: { value: null, isChecked: false, label: "Charisma" }
+  });
 
-  function handleChange(e) {
-    const { name, value } = e.target;
-    setCharData({
-      ...charData,
-      [name]: value,
-    });
-  }
+  const [skills, setSkills] = useState({
+    acrobatics: { value: null, isChecked: false, label: "Acrobatics" },
+    animalHandling: { value: null, isChecked: false, label: "Animal Handling" },
+    arcana: { value: null, isChecked: false, label: "Arcana" },
+    athletics: { value: null, isChecked: false, label: "Athletics" },
+    deception: { value: null, isChecked: false, label: "Deception" },
+    history: { value: null, isChecked: false, label: "History" },
+    insight: { value: null, isChecked: false, label: "Insight" },
+    intimidation: { value: null, isChecked: false, label: "Intimidation" },
+    investigation: { value: null, isChecked: false, label: "Investigation" },
+    medicine: { value: null, isChecked: false, label: "Medicine" },
+    nature: { value: null, isChecked: false, label: "Nature" },
+    perception: { value: null, isChecked: false, label: "Perception" },
+    performance: { value: null, isChecked: false, label: "Performance" },
+    persuasion: { value: null, isChecked: false, label: "Persuasion" },
+    religion: { value: null, isChecked: false, label: "Religion" },
+    sleightOfHand: { value: null, isChecked: false, label: "Sleight of Hand" },
+    stealth: { value: null, isChecked: false, label: "Stealth" },
+    survival: { value: null, isChecked: false, label: "Survival" }
+  });
+
 
   
+
+  const handleToggleAbility = (ability) => {
+    setAbilityScores((prevAbilityScores) => ({
+      ...prevAbilityScores,
+      [ability]: {
+        ...prevAbilityScores[ability],
+        isChecked: !prevAbilityScores[ability].isChecked,
+      },
+    }));
+  };
+
+  const handleToggleSkill = (skill) => {
+    setSkills((prevSkills) => ({
+      ...prevSkills,
+      [skill]: {
+        ...prevSkills[skill],
+        isChecked: !prevSkills[skill].isChecked,
+      },
+    }));
+  };
+
+  function handleAbilityChange(e, ability) {
+    const { value } = e.target;
+    setAbilityScores((prevAbilityScores) => ({
+      ...prevAbilityScores,
+      [ability]: {
+        ...prevAbilityScores[ability],
+        value: Number(value),
+      },
+    }));
+  }
+
+
+  function handleSkillChange(e, skill){
+    const { value } = e.target;
+    setSkills((prevSkills) => ({
+      ...prevSkills,
+      [skill]: {
+        ...prevSkills[skill],
+        value: Number(value),
+      },
+    }));
+  }
+
+  useEffect(() => {
+    setCharData({
+      ...charData,
+      ability_scores: abilityScores,
+      skills: skills
+    });
+  }, [abilityScores]);
 
 
   useEffect(() => {
@@ -20,47 +95,41 @@ function AbilityScore() {
   }, [charData]);
 
   return (
-    <div className="flex flex-col justify-center">
-      
-      <div className="flex flex-col justify-center items-center gap">
-        <div className="text-orange-400 mt-10 flex gap-2">
-          <label htmlFor="strenght">Strenght</label>
-          <input type="number" id="strenght" name="strenght"  onChange={handleChange}/>
-          </div>
-      </div>
-      <div className="flex flex-col justify-center items-center gap">
-        <div className="text-orange-400 mt-10 flex gap-2">
-          <label htmlFor="dexterity">Dexterity</label>
-          <input type="number" id="dexterity" name="dexterity"  onChange={handleChange}/>
-          </div>
-      </div>
-      <div className="flex flex-col justify-center items-center gap">
-        <div className="text-orange-400 mt-10 flex gap-2">
-          <label htmlFor="constitution">Constitution</label>
-          <input type="number" id="constitution" name="constitution"  onChange={handleChange}/>
-          </div>
-      </div>
-      <div className="flex flex-col justify-center items-center gap">
-        <div className="text-orange-400 mt-10 flex gap-2">
-          <label htmlFor="intelligence">Intelligence</label>
-          <input type="number" id="intelligence" name="intelligence"  onChange={handleChange}/>
-          </div>
-      </div>
-      <div className="flex flex-col justify-center items-center gap">
-        <div className="text-orange-400 mt-10 flex gap-2">
-          <label htmlFor="wisdom">Wisdom</label>
-          <input type="number" id="wisdom" name="wisdom"  onChange={handleChange}/>
-          </div>
-      </div>
-      <div className="flex flex-col justify-center items-center gap">
-        <div className="text-orange-400 mt-10 flex gap-2">
-          <label htmlFor="charisma">Charisma</label>
-          <input type="number" id="charisma" name="charisma"  onChange={handleChange}/>
-          </div>
-      </div>
+    <>
+    <p className="flex ml-48 text-orange-500 font-semibold text-lg">
+      Saving Throw Profficiency
+    </p>
 
+    <div className="flex gap-20 px-4">
+      <div className="w-72">
+        <div className="flex flex-col border">
+          {Object.keys(abilityScores).map((ability) => (
+            <AbilityScoreField
+              key={ability}
+              ability={ability}
+              handleChange={handleAbilityChange}
+              handleToggleChange={handleToggleAbility}
+              abilityScores={abilityScores}
+            />
+          ))}
+        </div>
+      </div>
+        <div className="w-72">
+          <div className="flex flex-col border">
+            {Object.keys(skills).map((skill) => (
+              <SkillField
+                key={skill}
+                skill={skill}
+                handleSkillChange={handleSkillChange}
+                handleToggleSkill={handleToggleSkill}
+                skills={skills}
+              />
+            ))}
+          </div>
+        </div>
     </div>
-  )
+  </>
+  );
 }
 
-export default AbilityScore
+export default AbilityScore;

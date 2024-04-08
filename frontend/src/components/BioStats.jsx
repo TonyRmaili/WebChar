@@ -34,9 +34,12 @@ function BioStats() {
     console.log("selectedRace",selectedRace);
   }, [selectedRace]);
 
+  
   useEffect(() => {
-    console.log("subraces",subRaces);
-  }, [subRaces]);
+    console.log("subrace",selectedSubRace);
+  }, [selectedSubRace]);
+
+  
 
  
   useEffect(() => {
@@ -96,31 +99,27 @@ function BioStats() {
     // Use map directly without wrapping it in another array
     const races = jsonData.map((race, index) => {
       // Perform any operation on each item here
-      return { value: race.name, label: race.name}; // Return the desired object
+      return { value: race.raceName, label: race.name}; // Return the desired object
     });
   
     // Return the mapped array
     return races;
   }
 
+  
+  
   useEffect(() => {
-    function selectSubRace() {
-      if (subRaces && subRaces.value) {
-        const subraces = subRaces.map((subrace, index) => {
-          if (subrace.raceName === selectedRace.name) {
-            return { value: subrace.name, label: subrace.name };
-          }
-          return null; // Return null for unmatched subraces
-        }).filter(subrace => subrace !== null); // Filter out null entries
-        return subraces;
+    function selectSubRaces() {
+      if (selectedRace && subRaces) {
+        const filteredSubRaces = subRaces.filter(subrace => subrace.value === selectedRace);
+        return filteredSubRaces;
       }
-      return []; // Return an empty array if subRaces is null
+      return [];
     }
-    
-    setSelectedSubRace(selectSubRace());
+  
+    setSelectedSubRace(selectSubRaces());
   }, [selectedRace, subRaces]);
   
-
 
 
   function handleRaceChange(inputVale, actionMeta){
@@ -129,9 +128,10 @@ function BioStats() {
 
 
   function handleSubRaceChange(inputVale, actionMeta){
+    
     setSelectedSubRace(inputVale.value)
+    console.log("sub from handle",selectedSubRace)
   }
-
 
 
   return (
@@ -146,14 +146,15 @@ function BioStats() {
             // onInputChange={handleInputChange}
             onChange={handleRaceChange}
             className="w-60"
+            
            
         />
          }
-         {races && selectedRace &&
+         {races && selectedRace && subRaces && selectedSubRace &&
          <div className="flex gap-4">
              <p>SubRace</p>
              <CreatableSelect
-             options={subRaces}
+             options={selectedSubRace}
              // onInputChange={handleInputChange}
              onChange={handleSubRaceChange}
              className="w-60" />

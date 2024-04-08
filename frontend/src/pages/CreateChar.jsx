@@ -8,7 +8,7 @@ import AbilityScore from "../components/AbilityScore";
 import ClassSelection from "../components/ClassSelection";
 import FeatsTraits from "../components/FeatsTraits";
 import BioStats from "../components/BioStats";
-
+import MovableWindow from "../components/MovableWindow";
 
 
 const tabs = [
@@ -17,6 +17,7 @@ const tabs = [
   { name: "Classes", id: 2 },
   { name: "Feats & Traits", id: 3 },
   { name: "Biography", id: 4 },
+ 
 
 ];
 
@@ -63,8 +64,9 @@ function CreateChar() {
         {activeTab.name === "Classes" && <ClassSelection />}
         {activeTab.name === "Feats & Traits" && <FeatsTraits />}
         {activeTab.name === "Biography" && <BioStats />}
-       
         
+       
+         
        
       </div>
       <div className=" border-2 border-black rounded-3xl text-white bg-red-500 mt-12 ">
@@ -79,3 +81,7 @@ function CreateChar() {
 }
 
 export default CreateChar;
+
+
+
+// feat_name{title: "", body:"", ac:
