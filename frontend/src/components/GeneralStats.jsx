@@ -25,9 +25,9 @@ function GeneralStats() {
   }, [charData]);
 
   return (
-    <div className="flex flex-col justify-center items-center gap">
-      <div className="text-orange-400 mt-10 flex gap-2">
-        <label htmlFor="name" className="w-24 text-right">
+    <div className="flex flex-col w-80 gap-4 border p-4">
+      <div className="flex items-center gap-4">
+        <label htmlFor="name" className="w-20 text-right">
           Name
         </label>
         <input
@@ -35,10 +35,10 @@ function GeneralStats() {
           id="name"
           name="name"
           onChange={handleChange}
-          className="w-64"
+          className="flex-1 px-2 py-1 border rounded"
         />
       </div>
-      <div className="text-orange-400 mt-10 flex gap-2">
+      <div className="flex items-center gap-4">
         <label htmlFor="ac" className="w-24 text-right">
           Armor Class
         </label>
@@ -47,17 +47,23 @@ function GeneralStats() {
           id="ac"
           name="ac"
           onChange={handleChange}
-          className="w-64"
+          className="flex-1 px-2 py-1 border rounded"
           min={0}
-          
         />
       </div>
-      <div className="text-orange-400 mt-10 flex gap-2">
-        <label htmlFor="max_hp">Max Health</label>
-        <input type="number" id="max_hp" name="max_hp" onChange={handleChange} />
+      <div className="flex items-center gap-4">
+        <label htmlFor="max_hp" className="w-24 text-right">
+          Max Health
+        </label>
+        <input
+          type="number"
+          id="max_hp"
+          name="max_hp"
+          onChange={handleChange}
+          className="flex-1 px-2 py-1 border rounded"
+        />
       </div>
-
-      <div className="text-orange-400 mt-10 flex gap-2">
+      <div className="flex items-center gap-4">
         <label htmlFor="speed" className="w-24 text-right">
           Speed
         </label>
@@ -66,13 +72,29 @@ function GeneralStats() {
           id="speed"
           name="speed"
           onChange={handleChange}
-          className="w-64"
+          className="flex-1 px-2 py-1 border rounded"
           min={0}
         />
       </div>
-      
+      <div className="flex items-center gap-4">
+        <label htmlFor="pb" className="w-24 text-right">
+          Proficiency Bonus
+        </label>
+        <input
+          type="number"
+          id="pb"
+          name="pb"
+          onChange={handleChange}
+          className="flex-1 px-2 py-1 border rounded"
+          min={2}
+        />
+      </div>
+      <div>
+        
+      </div>
     </div>
   );
+  
 }
 
 export default GeneralStats;
