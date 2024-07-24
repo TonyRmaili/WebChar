@@ -24,6 +24,8 @@ function GeneralStats() {
     console.log(charData);
   }, [charData]);
 
+
+
   return (
     <div className="flex flex-col w-80 gap-4 border p-4">
       <div className="flex items-center gap-4">
@@ -90,7 +92,7 @@ function GeneralStats() {
         />
       </div>
       <div>
-        
+      
       </div>
     </div>
   );

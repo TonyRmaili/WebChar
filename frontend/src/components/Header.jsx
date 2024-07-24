@@ -45,6 +45,10 @@ function Header() {
             <p>Logout</p>
           </button>
         </Link>
+        <Link to="/Embedder" className="flex flex-col items-center mt-4">
+          <img src={LogOutLogo} className="h-12" />
+          <p>Embedder</p>
+        </Link>
       </div>
     </div>
   );

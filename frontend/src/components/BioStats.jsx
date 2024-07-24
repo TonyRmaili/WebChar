@@ -28,8 +28,6 @@ function BioStats() {
   }
 
 
-
-
   useEffect(() => {
     console.log("selectedRace",selectedRace);
   }, [selectedRace]);
@@ -40,8 +38,6 @@ function BioStats() {
   }, [selectedSubRace]);
 
   
-
- 
   useEffect(() => {
     const fetchData = async () => {
       try {

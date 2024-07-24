@@ -9,6 +9,7 @@ import CreateChar from "./pages/CreateChar"
 import LoadChar from "./pages/LoadChar"
 import CreateAccount from "./pages/CreateAccount"
 import LogIn from "./pages/LogIn"
+import Embedder from "./components/Embedder"
  
 
 
@@ -23,6 +24,7 @@ function App() {
           <Route path="/loadChar" element={<LoadChar />}></Route>
           <Route path="/createAccount" element={<CreateAccount />}></Route>
           <Route path="/logIn" element={<LogIn />}></Route>
+          <Route path="/Embedder" element={<Embedder />}></Route>
         </Route>
       </Routes>
     </BrowserRouter>
