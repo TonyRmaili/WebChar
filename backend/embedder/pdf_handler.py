@@ -1,5 +1,5 @@
 import fitz 
-
+import json
 
 def extract_pages(pdf_path):
     document = fitz.open(pdf_path)
@@ -50,6 +50,14 @@ def chunk_pages(all_pages, chunk_size=600, over_lap=100):
         chunked_pages.append({"chunk": ' '.join(carry_over), "page_nums": (start_page, end_page)})
 
     return chunked_pages
+
+
+def save_chunks(all_chunks,file_name):
+
+    with open(file_name, 'w') as file:
+        json.dump(all_chunks, file)
+
+
 
 
 if __name__ == "__main__":
