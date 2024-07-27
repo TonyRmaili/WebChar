@@ -14,7 +14,7 @@ class Embedder:
     def __init__(self,pdf_name,model):
         # init env variables and api key
         load_dotenv()
-        self.pdf_name = pdf_name # with .json
+        self.pdf_name = pdf_name # without .json
         self.chunks = PdfHandler(self.pdf_name+".pdf").load_chunks()
         
 
@@ -28,40 +28,38 @@ class Embedder:
 
         #embedder dimensions models
         self.nomic = {"model":"nomic-embed-text",
-                      "dim":768, "index":"nomic"
+                      "dim":768, "index":"nomic/"
                       }
         
         self.llama3 = {"model":"llama3",
-                      "dim":4096, "index": "llama3"
+                      "dim":4096, "index": "llama3/"
                       }
         
         self.text_small = {"model":"text-embedding-3-small",
-                      "dim":1536, "index":"text_small"
+                      "dim":1536, "index":"text_small/"
                       }
         
         self.text_large = {"model":"text-embedding-3-large",
-                      "dim":3072,  "index":"text_large"
+                      "dim":3072,  "index":"text_large/"
                       }
 
         self.models = [self.nomic,self.llama3,self.text_small,self.text_large]
 
-        for x in self.models:
-            if model == x["model"]:
-                self.model = x
+
+        for name in self.models:
+            if model == name["model"]:
+                self.model = name
 
 
+    def load_index(self):
+        path = self.database_path+self.model["index"]+self.pdf_name
+        print(path)
+        # if os.path.exists(path):
+        #     self.index = faiss.read_index(path)
+        # else:
+        #    self.index = faiss.IndexFlatIP(self.model["dim"])
+        #    faiss.write_index(self.index,path)
 
-
-
-    def load_index(self,model):
-        if os.path.exists(self.database_path+model+self.pdf_name):
-            self.index = faiss.read_index(self.database_path+model+self.pdf_name)
-        else:
-           self.index = faiss.IndexFlatIP(self.d_nomic)
-           self.save_index(model) 
-
-    def save_index(self,model):
-        faiss.write_index(self.index,self.database_path+model+self.pdf_name)
     
     def openai_chat(self):
         completion = self.client.chat.completions.create(
@@ -111,8 +109,10 @@ class Embedder:
     
         
 if __name__ == "__main__":
-    emb = Embedder(pdf_name="players_handbook_5e.json",
-                   model="nomic")
+
+    emb = Embedder(pdf_name="players_handbook_5e",
+                   model="text-embedding-3-small")
     
-    chunks = emb.chunks
-    print(chunks[67])
+    # chunks = emb.chunks
+    emb.load_index()
+

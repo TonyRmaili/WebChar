@@ -43,6 +43,17 @@ app.add_middleware(
 )
 
 
+@app.post("query", tags=["embeddings"])
+def post_query(query:str):
+
+    pass
+
+
+@app.get("/pdf_chunks",tags=["embeddings"])
+def get_chunks(chunks:list):
+    pass
+
+
 @app.post("/create_account", status_code=status.HTTP_201_CREATED,tags=["account"])
 def create_account(user: UserSchema, db: Session = Depends(get_db)):
     hashed_password: str = hash_password(user.password)
