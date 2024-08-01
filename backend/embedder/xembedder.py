@@ -82,12 +82,9 @@ class Embedder:
         
         faiss.write_index(self.index,self.path)
        
-        
-    
-
     
     def query(self,prompt, k=4):
-        
+        self.prompt = prompt
         if self.model == self.text_small or self.model == self.text_large:
             response = self.client.embeddings.create(input= prompt,model=self.model["model"]).data[0].embedding
             embedding = np.array(response).astype("float32").reshape(1,-1)
@@ -97,34 +94,31 @@ class Embedder:
             embedding = np.array(response["embedding"]).astype("float32").reshape(1,-1)
 
         D, I = self.index.search(embedding,k)
-
+        self.I = I
         return D, I
         
-    
-        
+    def get_summary(self):
+        model = "gpt-4o-mini"
+        chunks = []
+        for i in self.I[0]:
+            chunk = {"type":"text","text":self.chunks[i]["chunk"]}
+            chunks.append(chunk)
 
-
-    def open_ai_emb_quary_large(self,text):
-        text = text.replace("\n", " ")
-        response = self.client.embeddings.create(input = text, model=self.model_openai_large).data[0].embedding
-        embedding = np.array(response).astype("float32")
-        if embedding.shape[0] != self.d_text_embedder_large:
-            raise ValueError(f'Embedding dimension mismatch: expected {self.d_text_embedder_large}, got {embedding.shape[0]}')
-        embedding = embedding.reshape(1,-1)
-        return embedding
-    
-    def openai_chat(self):
-        completion = self.client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[
-            {"role": "system", "content": "You are a poetic assistant, skilled in explaining complex programming concepts with creative flair."},
-            {"role": "user", "content": "Compose a poem that explains the concept of recursion in programming."}
+        messages = [
+            {"role": "system", "content": "You are a game rule interpreter that summaries chunks of game rules based on the quary"},
+            {"role":"user","content":[
+                {"type":"text", "text":self.prompt},
+                *chunks
+            ]}
         ]
-        )
-
-        print(completion.choices[0].message)
-
         
+        response = self.client.chat.completions.create(
+            model=model,
+            messages=messages
+        )
+        response = response.choices[0].message.content
+        return response
+
     
         
 if __name__ == "__main__":
@@ -132,19 +126,17 @@ if __name__ == "__main__":
     text_large = "text-embedding-3-large"
     nomic = "nomic-embed-text"
     emb = Embedder(pdf_name="players_handbook_5e",
-                   model=nomic)
-    D,I =emb.query(prompt="To do so, you can take the Ready action on your turn so that you can act later in the round using your reaction. First, you decide what perceivable circum stance will trigger your reaction. Then, you choose the action you will take in response to that trigger, or you choose to move up to your speed in response to it. Examples include “If the cultist steps on the trapdoor, I’ll pull the lever that opens it,” and “If the goblin steps next to me, I move away.” W hen the trigger occurs, you can either take your reaction right after the trigger finishes or ignore the trigger. Rem em ber that you can take only one reaction per ",
-              )
+                   model=text_large)
+    D,I =emb.query(prompt="how to create a new character?")
     print(D,I)
 
-    for i in I[0]:
-        print(emb.chunks[i]["chunk"])
-        print()
-        print()
-        print()
+
+    
+    summary = emb.get_summary()
+    print(summary)
+    
 
     # chunks = emb.chunks
     # emb.embed_chunks()
     # print(emb.index.ntotal)
-    
     
