@@ -18,7 +18,8 @@ class CharacterSchema(BaseModel):
     user_id: int
     name : str
   
-
+class QueryRequest(BaseModel):
+    question: str
 
 # class GenderEnum(str, Enum):
 #     Male = 'Male'

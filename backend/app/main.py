@@ -7,18 +7,22 @@ from fastapi.middleware.cors import CORSMiddleware
 from typing import Annotated
 from fastapi import Query
 from app.database.models import User,Character
-from app.database.schemas import UserSchema,CharacterSchema
+from app.database.schemas import UserSchema,CharacterSchema, QueryRequest
 from app.security import hash_password, verify_password, create_access_token, get_current_user
 from app.db_setup import init_db, get_db
 from fastapi.security import OAuth2PasswordRequestForm
 from datetime import timedelta, datetime
 from dotenv import load_dotenv
 import os
+import sys
 import json
 from app.database.character import save_char_tojson
 from fastapi.responses import JSONResponse
-
+from embedder.xembedder import Embedder
 # uvicorn app.main:app --reload
+
+
+
 
 load_dotenv(override=True)
 
@@ -43,15 +47,16 @@ app.add_middleware(
 )
 
 
-@app.post("query", tags=["embeddings"])
-def post_query(query:str):
-
-    pass
 
 
-@app.get("/pdf_chunks",tags=["embeddings"])
-def get_chunks(chunks:list):
-    pass
+@app.post("/query", tags=["embeddings"])
+def post_query(query: QueryRequest, pdf_name="players_handbook_5e"):
+    emb = Embedder(pdf_name=pdf_name,model="text-embedding-3-small")
+    emb.query(prompt=query.question)
+    summary = emb.get_summary()
+    
+    return {"answer": summary}
+
 
 
 @app.post("/create_account", status_code=status.HTTP_201_CREATED,tags=["account"])

@@ -8,7 +8,7 @@ import pymupdf as pdf
 import time
 from dotenv import load_dotenv
 from openai import OpenAI
-from pdf_handler import PdfHandler
+from .pdf_handler import PdfHandler
 
 class Embedder:
     def __init__(self,pdf_name,model):
@@ -126,7 +126,7 @@ if __name__ == "__main__":
     text_large = "text-embedding-3-large"
     nomic = "nomic-embed-text"
     emb = Embedder(pdf_name="players_handbook_5e",
-                   model=text_large)
+                   model=text_small)
     D,I =emb.query(prompt="how to create a new character?")
     print(D,I)
 

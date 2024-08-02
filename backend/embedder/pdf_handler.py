@@ -3,16 +3,17 @@ import json
 import os
 
 
-
-
-
 class PdfHandler:
     def __init__(self,pdf_name):
         self.pdf_name = self.remove_extension(pdf_name)
-        self.game_rules_path = "./game_rules/"
-        self.chunks_path = "./pdf_chunks/"
-        
-        self.pdf_path = self.game_rules_path+self.pdf_name
+
+        self.game_rules_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "game_rules/")
+        self.chunks_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "pdf_chunks/")
+        self.pdf_path = os.path.join(self.game_rules_path, self.pdf_name)
+
+        # self.game_rules_path = "./game_rules/"
+        # self.chunks_path = "./pdf_chunks/"
+        # self.pdf_path = self.game_rules_path+self.pdf_name
         
         self.chunk_size = 600
         self.overlap = 100
@@ -89,11 +90,11 @@ class PdfHandler:
 
 if __name__ == "__main__":
     pdf_hanlder = PdfHandler("players_handbook_5e.pdf")
-
+    
 
     # pdf_hanlder.run()
-    # chunks = pdf_hanlder.load_chunks()
-    # print(chunks[45])
+    chunks = pdf_hanlder.load_chunks()
+    print(chunks[45])
 
     
     
