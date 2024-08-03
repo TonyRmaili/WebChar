@@ -14,6 +14,7 @@ function Embedder() {
     setSubmittedQuestion(question);
     await submitQuestion(question);
     setQuestion('');
+    console.log("Submitted question: ", question);
   };
 
   async function submitQuestion(question) {
@@ -60,7 +61,7 @@ function Embedder() {
           <textarea className='w-6/12 border p-2'
             readOnly
             value={answer}
-            rows="10"
+            rows="25"
           />
         </div>
       )}
