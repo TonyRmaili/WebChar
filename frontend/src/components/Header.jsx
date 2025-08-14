@@ -24,16 +24,25 @@ function Header() {
           <p>Load Char</p>
         </Link>
       </div>
-      <div className="flex items-center justify-between  w-[400px] p-4">
+      <div className="flex items-center justify-between gap-8 w-[400px] p-4">
         <Link to="/" className="flex flex-col gap-2">
           <img src={CombatLogo} alt="combat-logo" className="h-16" />
           <p>Combat</p>
         </Link>
         <Link to="/diceTower" className="flex flex-col gap-2">
-          <img src={DiceLogo} alt="" className="h-14" />
+          <img src={DiceLogo} alt="" className="h-16" />
           <p> DiceTower</p>
         </Link>
+        <Link to="/DM-Tools" className="flex flex-col gap-2">
+          <img src={LogOutLogo} className="h-16" />
+          <p>DM-Tools</p>
+        </Link>
+        <Link to="/Embedder" className="flex flex-col gap-2">
+          <img src={LogOutLogo} className="h-16" />
+          <p>Embedder</p>
+        </Link>
       </div>
+
       <div className="flex gap-10 items-center p-2"> 
         <Link to="/logIn" className="flex flex-col items-center mt-4">
           <img src={LogInLogo} className="h-12" />
@@ -44,10 +53,6 @@ function Header() {
             <img src={LogOutLogo} className="h-12" />
             <p>Logout</p>
           </button>
-        </Link>
-        <Link to="/Embedder" className="flex flex-col items-center mt-4">
-          <img src={LogOutLogo} className="h-12" />
-          <p>Embedder</p>
         </Link>
       </div>
     </div>

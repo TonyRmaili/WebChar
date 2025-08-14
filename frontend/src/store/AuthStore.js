@@ -5,8 +5,10 @@ const loadInitialState = () => {
   const token = localStorage.getItem("token") || null;
   const userData = JSON.parse(localStorage.getItem("userData")) || null;
   const charData = JSON.parse(localStorage.getItem("charData")) || null;
+  const partyData = JSON.parse(localStorage.getItem("partyData")) || null;
+
   // Attempt to parse the user data from localStorage or set to null if not found
-  return { token, userData, charData };
+  return { token, userData, charData, partyData };
 };
 
 const useAuthStore = create((set, get) => ({
@@ -16,11 +18,13 @@ const useAuthStore = create((set, get) => ({
     set(() => ({ token }));
   },
   logout: () => {
-    localStorage.removeItem("token"); // Ensure to clear all localStorage on logout
-    localStorage.removeItem("userData"); // Ensure to clear all localStorage on logout
-    localStorage.removeItem("charData"); // Ensure to clear all localStorage on logout
+    // Ensure to clear all localStorage on logout
+    localStorage.removeItem("token"); 
+    localStorage.removeItem("userData"); 
+    localStorage.removeItem("charData"); 
+    localStorage.removeItem("partyData"); 
     
-    set(() => ({ token: null, userData: null, charData: null}));
+    set(() => ({ token: null, userData: null, charData: null, partyData: null}));
   },
   setUserData: (userData) => {
     localStorage.setItem("userData", JSON.stringify(userData)); // Save the user data to localStorage

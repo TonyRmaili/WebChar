@@ -64,10 +64,7 @@ function CreateChar() {
         {activeTab.name === "Classes" && <ClassSelection />}
         {activeTab.name === "Feats & Traits" && <FeatsTraits />}
         {activeTab.name === "Biography" && <BioStats />}
-        
-       
-         
-       
+          
       </div>
       <div className=" border-2 border-black rounded-3xl text-white bg-red-500 mt-12 ">
           <button  className="font-bold p-4" onClick={handleSubmit}>

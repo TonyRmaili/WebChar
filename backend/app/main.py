@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, Depends, status,Request
+from fastapi import FastAPI, HTTPException, Depends, status, Request
 from contextlib import asynccontextmanager
 from sqlalchemy.orm import Session, joinedload, selectinload
 from sqlalchemy import select, update, delete, insert
@@ -14,14 +14,11 @@ from fastapi.security import OAuth2PasswordRequestForm
 from datetime import timedelta, datetime
 from dotenv import load_dotenv
 import os
-import sys
 import json
 from app.database.character import save_char_tojson
 from fastapi.responses import JSONResponse
 from embedder.xembedder import Embedder
 # uvicorn app.main:app --reload
-
-
 
 
 load_dotenv(override=True)
@@ -45,8 +42,6 @@ app.add_middleware(
     allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allow_headers=["*"]
 )
-
-
 
 
 @app.post("/query", tags=["embeddings"])
@@ -113,8 +108,6 @@ def create_char(current_user: Annotated[User, Depends(get_current_user)],
         with open(file_path, "w") as json_file:
             json.dump(form_data, json_file, indent=4)
 
-
-
         character_data = CharacterSchema(user_id=current_user.id,
             name=form_data['name'] ,file_path=file_path)
         db_char = Character(**character_data.model_dump())
@@ -125,6 +118,23 @@ def create_char(current_user: Annotated[User, Depends(get_current_user)],
     except Exception as e:
         return JSONResponse(content={"message": f"Error: {str(e)}"}, status_code=500)
     
+
+@app.post("/create_party", tags=["party"])
+def create_party(current_user: Annotated[User, Depends(get_current_user)],
+          form_data:dict,db:Session = Depends(get_db)):
+    print(form_data)
+    try:
+        directory = "./app/database/save_files/"+current_user.name
+        file_name =  "party.json"
+        file_path = os.path.join(directory, file_name)
+        os.makedirs(directory, exist_ok=True)
+        with open(file_path, "w") as json_file:
+            json.dump(form_data, json_file, indent=4)
+
+        return JSONResponse(content={"message": "JSON data saved successfully"}, status_code=200)
+    except Exception as e:
+        return JSONResponse(content={"message": f"Error: {str(e)}"}, status_code=500)
+
 
 @app.post("/get_char", tags=['character'])
 def get_char(current_user: Annotated[User, Depends(get_current_user)],

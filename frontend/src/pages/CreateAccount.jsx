@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import useAuthStore from '../store/AuthStore';
 import { useNavigate } from 'react-router-dom';
+
 function CreateAccount() {
   const navigate = useNavigate()
   const { fetchUser, setToken } = useAuthStore()

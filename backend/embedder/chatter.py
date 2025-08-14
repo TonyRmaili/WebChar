@@ -107,5 +107,5 @@ Ultimately, the "better" race will vary depending on individual playstyle, chara
 
 if __name__ == "__main__":
     con = Conversation()
-    print(con.adv_chat("hgel"))
+    print(con.adv_chat("question"))
 

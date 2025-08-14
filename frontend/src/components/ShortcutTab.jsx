@@ -23,4 +23,4 @@ function ShortcutTab({ tabs, onSelect }) {
     </div>
   )
 }
-export default ShortcutTab; 
+export default ShortcutTab;  
