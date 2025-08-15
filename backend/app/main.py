@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, Depends, status, Request
+from fastapi import FastAPI, HTTPException, Depends, status, Request, Response, Body
 from contextlib import asynccontextmanager
 from sqlalchemy.orm import Session, joinedload, selectinload
 from sqlalchemy import select, update, delete, insert
@@ -18,6 +18,9 @@ import json
 from app.database.character import save_char_tojson
 from fastapi.responses import JSONResponse
 from embedder.xembedder import Embedder
+from pathlib import Path
+from app.dice_handler import roll_dice
+
 # uvicorn app.main:app --reload
 
 
@@ -27,6 +30,8 @@ ALGORITHM = os.getenv("ALGORITHM")
 SECRET_KEY = os.getenv("SECRET_KEY")  
 ACCESS_TOKEN_EXPIRE_MINUTES = os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES")  
 
+
+savefiles_path = "./app/database/save_files/"
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -53,7 +58,6 @@ def post_query(query: QueryRequest, pdf_name="players_handbook_5e"):
     return {"answer": summary}
 
 
-
 @app.post("/create_account", status_code=status.HTTP_201_CREATED,tags=["account"])
 def create_account(user: UserSchema, db: Session = Depends(get_db)):
     hashed_password: str = hash_password(user.password)
@@ -62,6 +66,10 @@ def create_account(user: UserSchema, db: Session = Depends(get_db)):
         new_user = User(**user.model_dump())
         db.add(new_user)
         db.commit()
+        username = new_user.name
+        profile_path = savefiles_path + username
+        os.makedirs(profile_path,exist_ok=True)
+
     except IntegrityError:
         raise HTTPException(detail="User already exists", status_code=status.HTTP_400_BAD_REQUEST) # ?Might not be secure?
     
@@ -99,9 +107,8 @@ def read_users_me(current_user: Annotated[User, Depends(get_current_user)]):
 @app.post("/create_char", tags=["character"])
 def create_char(current_user: Annotated[User, Depends(get_current_user)],
           form_data:dict,db:Session = Depends(get_db)):
-    print(form_data)
     try:
-        directory = "./app/database/save_files/"+current_user.name
+        directory = os.path.join(savefiles_path , current_user.name ,"characters")
         file_name = form_data['name'] + ".json"
         file_path = os.path.join(directory, file_name)
         os.makedirs(directory, exist_ok=True)
@@ -122,10 +129,10 @@ def create_char(current_user: Annotated[User, Depends(get_current_user)],
 @app.post("/create_party", tags=["party"])
 def create_party(current_user: Annotated[User, Depends(get_current_user)],
           form_data:dict,db:Session = Depends(get_db)):
-    print(form_data)
     try:
-        directory = "./app/database/save_files/"+current_user.name
-        file_name =  "party.json"
+       
+        directory = os.path.join(savefiles_path + current_user.name, "parties")
+        file_name =  form_data["name"] +".json"
         file_path = os.path.join(directory, file_name)
         os.makedirs(directory, exist_ok=True)
         with open(file_path, "w") as json_file:
@@ -134,6 +141,45 @@ def create_party(current_user: Annotated[User, Depends(get_current_user)],
         return JSONResponse(content={"message": "JSON data saved successfully"}, status_code=200)
     except Exception as e:
         return JSONResponse(content={"message": f"Error: {str(e)}"}, status_code=500)
+
+
+
+@app.delete("/parties/{party_name}", tags=["party"], status_code=204)
+def delete_party(
+    party_name: str,
+    current_user: Annotated[User, Depends(get_current_user)],
+):
+    base_dir = Path(savefiles_path) / current_user.name / "parties"
+    file_path = (base_dir / f"{party_name}.json").resolve()
+
+    # prevent traversal
+    if base_dir.resolve() not in file_path.parents:
+        raise HTTPException(status_code=400, detail="Invalid party name")
+
+    if not file_path.exists():
+        raise HTTPException(status_code=404, detail="Party not found")
+
+    file_path.unlink()
+    return Response(status_code=204)
+
+
+
+@app.post("/dice_roll/{diceSize}", tags=["dice"])
+def roll_initiative(
+    diceSize: int,
+    current_user: Annotated[User, Depends(get_current_user)],
+    form_data: list  = Body(...), 
+):
+    try:
+        for monster in form_data:
+            modifier = monster["initiativeBonus"]
+            roll = roll_dice(size=diceSize,modifier=modifier)
+            monster["initiative"] = roll 
+
+        return form_data 
+    except Exception as e:
+        return {"error": str(e)}
+    
 
 
 @app.post("/get_char", tags=['character'])
@@ -150,7 +196,9 @@ def get_char(current_user: Annotated[User, Depends(get_current_user)],
         pass
 
     return file
-   
+
+
+
 # for swagger
 @app.get("/characters", status_code=200,tags=["characters"])
 def list_chars(db: Session = Depends(get_db)):

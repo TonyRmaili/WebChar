@@ -4,11 +4,12 @@ import useAuthStore from "../store/AuthStore";
 import ShortcutTab from "../components/ShortcutTab";
 import CreateParty from "../components/CreateParty";
 import InitiativeTracker from "../components/InitiativeTracker";
-
+import CreateMonsters from "../components/CreateMonsters";
 
 const tabs = [
   { name: "Create Party", id: 0 },
-  { name: "Initiative Tracker", id: 1 },
+  { name: "Create Monsters", id: 1 },
+  { name: "Initiative Tracker", id: 2 },
   
 ];
 
@@ -31,7 +32,7 @@ function DMToolsPage() {
 
   return (
     <div className="justify-center items-center mx-auto w-1/2 min-h-screen mb-2">
-      <p className='text-4xl'>Character Creation</p>
+      <p className='text-4xl'>DM Tools</p>
       <div className="mt-2 h-14 ml">
         <ShortcutTab
           tabs={tabs}
@@ -42,6 +43,7 @@ function DMToolsPage() {
 
       <div className=" min-h-screen p-2 bg-gray-600">
         {activeTab.name === "Create Party" && <CreateParty />}
+        {activeTab.name === "Create Monsters" && <CreateMonsters />}
         {activeTab.name === "Initiative Tracker" && <InitiativeTracker />}
          
       </div>

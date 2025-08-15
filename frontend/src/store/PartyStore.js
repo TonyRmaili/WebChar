@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist, subscribeWithSelector } from "zustand/middleware";
 
-const SERVER_URL = "http://localhost:8000/create_party";
+const SERVER_BASE = "http://localhost:8000/create_party";
 
 const uid = () =>
   (crypto.randomUUID?.() || String(Date.now() + Math.random())).toString();
@@ -19,56 +19,196 @@ export const PartyStore = create(
   subscribeWithSelector(
     persist(
       (set, get) => ({
-        players: [],
+        parties: {
+          // [id]: { id, name, players: [], updatedAt }
+        },
+        currentPartyId: null,
         status: "idle",
         lastSyncedAt: null,
 
-        addPlayer: () => set((s) => ({ players: [...s.players, emptyPlayer()] })),
-        removePlayer: (id) => set((s) => ({ players: s.players.filter((p) => p.id !== id) })),
-        updatePlayer: (id, field, value) =>
+        // ---- Party actions ----
+        createParty: async (name) => {
+          const id = uid();
           set((s) => ({
-            players: s.players.map((p) =>
-              p.id === id
-                ? { ...p, [field]: field === "name" ? value : Number(value) }
-                : p
-            ),
-          })),
-        clearPlayers: () => set({ players: [] }),
+            parties: {
+              ...s.parties,
+              [id]: { id, name: name?.trim() || `Party ${Object.keys(s.parties).length + 1}`, players: [], updatedAt: Date.now() },
+            },
+            currentPartyId: id,
+          }));
 
-        syncToServer: async () => {
-          const { players } = get();
+          // Optional API create:
           try {
-            set({ status: "syncing" });
             const token = localStorage.getItem("token");
-            const res = await fetch(SERVER_URL, {
+            await fetch(`${SERVER_BASE}`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
                 ...(token ? { Authorization: `Bearer ${token}` } : {}),
               },
-              body: JSON.stringify({ players, updatedAt: new Date().toISOString() }),
+              body: JSON.stringify({ id, name }),
+              credentials: "include",
+            });
+          } catch (_) {}
+        },
+
+        selectParty: (id) => set({ currentPartyId: id }),
+
+        removeParty: (id) => {
+          set((s) => {
+            const { [id]: _, ...rest } = s.parties;
+            return {
+              parties: rest,
+              currentPartyId: s.currentPartyId === id ? null : s.currentPartyId,
+            };
+          });
+        },
+
+        renameParty: (id, name) =>
+          set((s) => ({
+            parties: {
+              ...s.parties,
+              [id]: { ...s.parties[id], name, updatedAt: Date.now() },
+            },
+          })),
+
+        // ---- Player actions (scoped to current party) ----
+        addPlayer: () =>
+          set((s) => {
+            const id = s.currentPartyId;
+            if (!id) return {};
+            const party = s.parties[id];
+            return {
+              parties: {
+                ...s.parties,
+                [id]: {
+                  ...party,
+                  players: [...party.players, emptyPlayer()],
+                  updatedAt: Date.now(),
+                },
+              },
+            };
+          }),
+
+        clearPlayers: () =>
+          set((s) => {
+            const id = s.currentPartyId;
+            if (!id) return {};
+            const party = s.parties[id];
+            return {
+              parties: {
+                ...s.parties,
+                [id]: { ...party, players: [], updatedAt: Date.now() },
+              },
+            };
+          }),
+
+        removePlayer: (playerId) =>
+          set((s) => {
+            const id = s.currentPartyId;
+            if (!id) return {};
+            const party = s.parties[id];
+            return {
+              parties: {
+                ...s.parties,
+                [id]: {
+                  ...party,
+                  players: party.players.filter((p) => p.id !== playerId),
+                  updatedAt: Date.now(),
+                },
+              },
+            };
+          }),
+
+        updatePlayer: (playerId, field, value) =>
+          set((s) => {
+            const id = s.currentPartyId;
+            if (!id) return {};
+            const party = s.parties[id];
+            return {
+              parties: {
+                ...s.parties,
+                [id]: {
+                  ...party,
+                  players: party.players.map((p) =>
+                    p.id === playerId
+                      ? { ...p, [field]: field === "name" ? value : Number(value) }
+                      : p
+                  ),
+                  updatedAt: Date.now(),
+                },
+              },
+            };
+          }),
+
+        async deletePartyOnServer(partyName) {
+          const token = localStorage.getItem("token");
+          const res = await fetch(
+            `http://localhost:8000/parties/${encodeURIComponent(partyName)}`,
+            {
+              method: "DELETE",
+              headers: {
+                ...(token ? { Authorization: `Bearer ${token}` } : {}),
+              },
+              credentials: "include", // only if you use cookies/sessions
+            }
+          );
+          if (!res.ok && res.status !== 204) {
+            const txt = await res.text();
+            throw new Error(`Delete failed ${res.status}: ${txt}`);
+          }
+        },
+
+        // ---- Sync current party to server ----
+        syncParty: async (partyId) => {
+          const { parties } = get();
+          const party = parties[partyId];
+          if (!party) return;
+
+          try {
+            set({ status: "syncing" });
+            const token = localStorage.getItem("token");
+            const res = await fetch(`${SERVER_BASE}`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                ...(token ? { Authorization: `Bearer ${token}` } : {}),
+              },
+              body: JSON.stringify({
+                id: party.id,
+                name: party.name,
+                players: party.players,
+                updatedAt: new Date().toISOString(),
+              }),
               credentials: "include",
             });
             if (!res.ok) throw new Error(`Sync failed: ${res.status}`);
             set({ status: "synced", lastSyncedAt: Date.now() });
           } catch (e) {
-            console.error(e);
+            console.error("syncParty error:", e);
             set({ status: "error" });
           }
         },
       }),
-      { name: "partyData", partialize: (s) => ({ players: s.players, lastSyncedAt: s.lastSyncedAt }) }
+      {
+        name: "partyData",
+        partialize: (s) => ({
+          parties: s.parties,
+          currentPartyId: s.currentPartyId,
+          lastSyncedAt: s.lastSyncedAt,
+        }),
+      }
     )
   )
 );
 
-// ---- Debounced autosync subscription (call once, e.g., in App or your page) ----
+// ---- Debounced autosync based on partyId + players reference ----
 let initialized = false;
 export const initPartyAutosync = () => {
   if (initialized) return;
   initialized = true;
 
-  const debounce = (fn, wait = 500) => {
+  const debounce = (fn, wait = 700) => {
     let t;
     return (...args) => {
       clearTimeout(t);
@@ -76,15 +216,24 @@ export const initPartyAutosync = () => {
     };
   };
 
-  const debouncedSync = debounce(() => PartyStore.getState().syncToServer(), 500);
-
+  const debouncedSync = debounce((id) => PartyStore.getState().syncParty(id), 700);
   let first = true;
+
   PartyStore.subscribe(
-    (s) => s.players,
-    () => {
-      if (first) { first = false; return; } // skip hydration
-      debouncedSync();
+    (s) => [
+      s.currentPartyId,
+      s.currentPartyId ? s.parties[s.currentPartyId]?.players : null, // reference only
+    ],
+    ([id], [prevId]) => {
+      if (!id) return;
+      // Optional: avoid syncing immediately on party switch:
+      if (first || id !== prevId) { first = false; return; }
+      debouncedSync(id);
     },
-    { fireImmediately: true } // fires once with current state; we skip it via `first`
+    {
+      fireImmediately: true,
+      // Only run listener when id OR players reference actually changes
+      equalityFn: (a, b) => a[0] === b[0] && a[1] === b[1],
+    }
   );
 };
