@@ -15,6 +15,9 @@ const InitiativeTracker = () => {
   const [currentTurnIndex, setCurrentTurnIndex] = useState(0);
   const [round, setRound] = useState(1);
 
+  // per-monster "amount" field for damage/heal, stored as text to enforce digits-only
+  const [adjustBy, setAdjustBy] = useState({}); // { [id]: "12" }
+
   // load monsters from localStorage
   useEffect(() => {
     try {
@@ -51,14 +54,12 @@ const InitiativeTracker = () => {
 
       const rolledMonsters = await res.json(); // backend returns an array
 
-      // Players (no HP editing for players)
+      // Players (do not show/edit HP for players)
       const playerList = (party?.players || []).map((p) => ({
-        id: `pl-${p.id ?? p.name}`,        // stable id if you have p.id
+        id: `pl-${p.id ?? p.name}`, // stable id if you have p.id
         name: p.name,
         type: "player",
         ac: Number(p.ac ?? 0),
-        maxHp: Number(p.hp ?? 0),
-        currentHp: Number(p.hp ?? 0),
         initiative: Number(p.initiative ?? 0),
       }));
 
@@ -72,11 +73,11 @@ const InitiativeTracker = () => {
             type: "monster",
             ac: Number(m.ac ?? 0),
             maxHp,
-            currentHp: maxHp,                           // start full health
+            currentHp: maxHp, // start full health
             initiative: Number(m.initiative ?? 0),
           };
         })
-        .filter((m) => m.maxHp > 0); // (1) don't let 0 HP monsters in
+        .filter((m) => m.maxHp > 0); // don't let 0 HP monsters in
 
       // Merge and sort
       const mergedOrder = [...playerList, ...monsterList].sort(
@@ -86,27 +87,25 @@ const InitiativeTracker = () => {
       setInitiativeOrder(mergedOrder);
       setCurrentTurnIndex(0);
       setRound(1);
+      setAdjustBy({}); // reset per-monster amount fields
     } catch (err) {
       console.error(err);
     }
   };
 
   // ---------- HP helpers (monsters only) ----------
-  const setMonsterHp = (id, next) => {
+  const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
+
+  const setMonsterHp = (id, nextNumber) => {
     setInitiativeOrder((prev) => {
       const updated = prev
         .map((e) =>
           e.type === "monster" && e.id === id
-            ? {
-                ...e,
-                currentHp: Math.max(0, Math.min(Number.isFinite(next) ? next : 0, e.maxHp)),
-              }
+            ? { ...e, currentHp: clamp(Number(nextNumber) || 0, 0, e.maxHp) }
             : e
         )
-        // (1) remove monsters that hit 0 HP
-        .filter((e) => !(e.type === "monster" && (e.currentHp ?? e.maxHp) <= 0));
+        .filter((e) => !(e.type === "monster" && (e.currentHp ?? e.maxHp) <= 0)); // remove dead
 
-      // keep currentTurnIndex in bounds
       setCurrentTurnIndex((i) =>
         updated.length === 0 ? 0 : Math.min(i, updated.length - 1)
       );
@@ -120,14 +119,13 @@ const InitiativeTracker = () => {
       const updated = prev
         .map((e, idx) => {
           if (e.type !== "monster" || e.id !== id) return e;
-          const next = Math.max(0, Math.min((e.currentHp ?? e.maxHp) + delta, e.maxHp));
+          const next = clamp((e.currentHp ?? e.maxHp) + delta, 0, e.maxHp);
           const newE = { ...e, currentHp: next };
           if (next <= 0) removedIndex = idx; // will be filtered below
           return newE;
         })
         .filter((e) => !(e.type === "monster" && (e.currentHp ?? e.maxHp) <= 0));
 
-      // adjust current turn if the removed monster was before/at current index
       setCurrentTurnIndex((i) => {
         if (updated.length === 0) return 0;
         if (removedIndex !== -1 && removedIndex <= i) {
@@ -139,6 +137,17 @@ const InitiativeTracker = () => {
 
       return updated;
     });
+  };
+
+  // digits-only setter for the per-row "Amount" field
+  const setAdjustText = (id, text) => {
+    if (/^\d*$/.test(text)) {
+      setAdjustBy((m) => ({ ...m, [id]: text }));
+    }
+  };
+  const getAdjustNumber = (id) => {
+    const n = parseInt(adjustBy[id] ?? "", 10);
+    return Number.isFinite(n) ? n : 0;
   };
 
   const handleNextTurn = () => {
@@ -153,6 +162,7 @@ const InitiativeTracker = () => {
       setInitiativeOrder([]);
       setCurrentTurnIndex(0);
       setRound(1);
+      setAdjustBy({});
     }
   };
 
@@ -232,10 +242,6 @@ const InitiativeTracker = () => {
           <ol className="space-y-2">
             {initiativeOrder.map((entity, idx) => {
               const isTurn = idx === currentTurnIndex;
-              const hpReadout =
-                entity.type === "monster"
-                  ? `${entity.currentHp}/${entity.maxHp}`
-                  : `${entity.currentHp}/${entity.maxHp}`;
 
               return (
                 <li
@@ -251,32 +257,54 @@ const InitiativeTracker = () => {
                     <span className="text-sm text-slate-1600">AC {entity.ac}</span>
                   </div>
 
-                  {/* HP controls: monsters only */}
+                  {/* MONSTER HP + Adjust controls */}
                   {entity.type === "monster" ? (
-                    <div className="flex items-center gap-2">
-                      
+                    <div className="flex items-center gap-3">
+                      {/* Current HP editor (digits only, clamps 0..max) */}
+                      <IntField
+                        value={entity.currentHp}
+                        min={0}
+                        max={entity.maxHp}
+                        onCommit={(n) => setMonsterHp(entity.id, n)}
+                        className="w-20 text-center rounded-lg border border-slate-300 px-2 py-1 outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                      <span className="text-sm text-slate-1600">/ {entity.maxHp}</span>
 
-                      <div className="flex items-center gap-1">
-                        <input
-                          type="number"
-                          min={0}
-                          max={entity.maxHp}
-                          value={entity.currentHp}
-                          onChange={(e) =>
-                            setMonsterHp(entity.id, Number(e.target.value))
-                          }
-                          className="w-20 text-center rounded-lg border border-slate-300 px-2 py-1 outline-none focus:ring-2 focus:ring-blue-500"
-                        />
-                        <span className="text-sm text-slate-1600">
-                          / {entity.maxHp}
-                        </span>
-                      </div>
-
-                      
+                      {/* Amount + Damage/Heal */}
+                      <input
+                        type="text"
+                        inputMode="numeric"
+                        placeholder="Amt"
+                        value={adjustBy[entity.id] ?? ""}
+                        onChange={(e) => setAdjustText(entity.id, e.target.value)}
+                        className="w-16 text-center rounded-lg border border-slate-300 px-2 py-1 outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const n = getAdjustNumber(entity.id);
+                          if (n > 0) changeMonsterHp(entity.id, -n);
+                        }}
+                        className="rounded-lg px-3 py-2 bg-rose-100 text-rose-700 hover:bg-rose-200"
+                        title="Apply damage"
+                      >
+                        Damage
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const n = getAdjustNumber(entity.id);
+                          if (n > 0) changeMonsterHp(entity.id, +n);
+                        }}
+                        className="rounded-lg px-3 py-2 bg-emerald-100 text-emerald-700 hover:bg-emerald-200"
+                        title="Apply healing"
+                      >
+                        Heal
+                      </button>
                     </div>
                   ) : (
-                    // Players: read-only HP
-                    <div className="text-slate-700">{hpReadout}</div>
+                    // PLAYERS: no HP shown
+                    <div />
                   )}
                 </li>
               );
@@ -285,6 +313,45 @@ const InitiativeTracker = () => {
         )}
       </div>
     </div>
+  );
+};
+
+/**
+ * Integer input that only allows digits while typing.
+ * Commits on blur or Enter, clamped between min..max.
+ */
+const IntField = ({ value, min = Number.MIN_SAFE_INTEGER, max = Number.MAX_SAFE_INTEGER, onCommit, className = "" }) => {
+  const [text, setText] = useState(String(value ?? 0));
+
+  useEffect(() => {
+    setText(String(value ?? 0));
+  }, [value]);
+
+  const onChange = (e) => {
+    const v = e.target.value;
+    if (/^\d*$/.test(v)) setText(v); // digits only
+  };
+
+  const commit = () => {
+    const n = Math.max(min, Math.min(max, parseInt(text || "0", 10)));
+    onCommit?.(n);
+    setText(String(n)); // normalize
+  };
+
+  const onKeyDown = (e) => {
+    if (e.key === "Enter") commit();
+  };
+
+  return (
+    <input
+      type="text"
+      inputMode="numeric"
+      value={text}
+      onChange={onChange}
+      onBlur={commit}
+      onKeyDown={onKeyDown}
+      className={className}
+    />
   );
 };
 

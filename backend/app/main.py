@@ -49,6 +49,21 @@ app.add_middleware(
 )
 
 
+@app.middleware("http")
+async def csp_middleware(request, call_next):
+    resp = await call_next(request)
+    if os.getenv("ENV", "development") == "development":
+        resp.headers["Content-Security-Policy"] = (
+            "default-src 'self'; "
+            "script-src 'self' 'unsafe-eval'; "       # ← allow eval in DEV
+            "style-src 'self' 'unsafe-inline'; "
+            "img-src 'self' data: blob:; "
+            "connect-src 'self' http://localhost:5173 http://localhost:8000 ws://localhost:5173;"
+        )
+    return resp
+
+
+
 @app.post("/query", tags=["embeddings"])
 def post_query(query: QueryRequest, pdf_name="players_handbook_5e"):
     emb = Embedder(pdf_name=pdf_name,model="text-embedding-3-small")
