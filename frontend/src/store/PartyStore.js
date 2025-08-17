@@ -25,7 +25,9 @@ export const PartyStore = create(
         currentPartyId: null,
         status: "idle",
         lastSyncedAt: null,
-
+        
+       
+         
         // ---- Party actions ----
         createParty: async (name) => {
           const id = uid();
@@ -158,6 +160,71 @@ export const PartyStore = create(
             throw new Error(`Delete failed ${res.status}: ${txt}`);
           }
         },
+
+       fetchParty: async () => {
+        const token = localStorage.getItem("token");
+        if (!token) return;
+
+        try {
+          const res = await fetch("http://localhost:8000/party", {
+            method: "GET",
+            headers: { Authorization: `Bearer ${token}` },
+            credentials: "include",
+          });
+          if (res.status !== 200) {
+            console.error("Failed to fetch party:", res.status);
+            return;
+          }
+
+          /** Backend returns: Party[] */
+          const payload = await res.json();
+          const list = Array.isArray(payload) ? payload : [];
+
+          // normalize -> { [id]: {id, name, players, updatedAt} }
+          const normalizeNum = (n, fallback = 0) =>
+            Number.isFinite(Number(n)) ? Number(n) : fallback;
+
+          const normalized = {};
+          for (const p of list) {
+            if (!p) continue;
+            const id = p.id || uid();
+
+            const players = Array.isArray(p.players)
+              ? p.players.map((pl) => ({
+                  id: pl.id || uid(),
+                  name: String(pl.name ?? ""),
+                  initiative: normalizeNum(pl.initiative, 0),
+                  hp: normalizeNum(pl.hp, 0),
+                  perception: normalizeNum(pl.perception, 10),
+                  ac: normalizeNum(pl.ac, 10),
+                }))
+              : [];
+
+            normalized[id] = {
+              id,
+              name: String(p.name ?? `Party ${Object.keys(normalized).length + 1}`),
+              players,
+              // keep server timestamp if present
+              updatedAt: p.updatedAt ?? new Date().toISOString(),
+            };
+          }
+
+          // pick currentPartyId: keep existing if still present, else first in new list
+          const prevId = PartyStore.getState().currentPartyId;
+          const newIds = Object.keys(normalized);
+          const nextId = prevId && normalized[prevId] ? prevId : newIds[0] ?? null;
+
+          set({
+            parties: normalized,
+            currentPartyId: nextId,
+            status: "synced",
+            lastSyncedAt: Date.now(),
+          });
+        } catch (e) {
+          console.error("Error fetching party:", e);
+        }
+      },
+
 
         // ---- Sync current party to server ----
         syncParty: async (partyId) => {

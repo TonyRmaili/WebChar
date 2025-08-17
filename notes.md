@@ -1,7 +1,6 @@
 
 
-1. delete profile
 
 
-2. initiative tracker: 
-3. proper login setup with correct data and clean local storage
+1. Handle contested init rolls
+2. alow multi-same monsters in the tracker 

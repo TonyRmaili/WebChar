@@ -15,6 +15,7 @@ from datetime import timedelta, datetime
 from dotenv import load_dotenv
 import os
 import json
+import shutil
 from app.database.character import save_char_tojson
 from fastapi.responses import JSONResponse
 from embedder.xembedder import Embedder
@@ -42,10 +43,14 @@ app = FastAPI(lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+    ],
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allow_headers=["*"]
+    allow_headers=["Authorization", "Content-Type", "Accept"],
+    # allow_headers=["*"]
 )
 
 
@@ -89,6 +94,33 @@ def create_account(user: UserSchema, db: Session = Depends(get_db)):
         raise HTTPException(detail="User already exists", status_code=status.HTTP_400_BAD_REQUEST) # ?Might not be secure?
     
     return new_user
+
+@app.delete("/account",tags=["account"])
+def delete_account(current_user: Annotated[User, Depends(get_current_user)],
+        db:Session = Depends(get_db)):
+    
+     # 1) Load the user (extra safety)
+    db_user = db.query(User).filter(User.id == current_user.id).first()
+    if not db_user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    for ch in list(db_user.characters):   # ensure it's a list copy
+        db.delete(ch)
+    
+    db.delete(db_user)
+    db.commit()
+
+    # 4) Delete any user-owned files on disk (ignore errors if not present)
+    try:
+        user_dir = Path(savefiles_path) / current_user.name
+        if user_dir.exists():
+            shutil.rmtree(user_dir)
+    except Exception:
+        # Don't fail the request if file cleanup has issues
+        pass
+
+    return Response(status_code=204)
+
 
 @app.post("/login")
 def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()], db: Session = Depends(get_db)):
@@ -156,6 +188,32 @@ def create_party(current_user: Annotated[User, Depends(get_current_user)],
         return JSONResponse(content={"message": "JSON data saved successfully"}, status_code=200)
     except Exception as e:
         return JSONResponse(content={"message": f"Error: {str(e)}"}, status_code=500)
+    
+@app.get("/party", tags=["party"])
+def get_party(
+    current_user: Annotated[User, Depends(get_current_user)],
+):
+    try:
+        parties = []
+        parties_path = os.path.join(savefiles_path, current_user.name, "parties")
+        if not os.path.isdir(parties_path):
+            return []
+
+        for filename in os.listdir(parties_path):
+            if not filename.endswith(".json"):
+                continue
+            party_path = os.path.join(parties_path, filename)
+            try:
+                with open(party_path, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+                if isinstance(data, dict):
+                    parties.append(data)
+            except Exception:
+                continue
+
+        return parties
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 

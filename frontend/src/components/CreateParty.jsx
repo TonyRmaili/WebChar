@@ -47,14 +47,6 @@ const CreateParty = () => {
 
 
 
-  // const onDeleteParty = () => {
-  //   if (!currentPartyId) return;
-  //   if (window.confirm("Are you sure you want to delete this party? This cannot be undone.")) {
-  //     removeParty(currentPartyId);
-  //   }
-  // };
-
-
   const clearAll = () => {
     if (!currentPartyId) return;
     if (window.confirm("Are you sure you want to remove all players in this party?")) {

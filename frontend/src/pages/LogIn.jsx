@@ -2,12 +2,15 @@ import React,  { useState } from 'react'
 import CreateAccountLogo from "../assets/createAccountLogo.svg"
 import { Link, useNavigate } from "react-router-dom"
 import useAuthStore from '../store/AuthStore';
+import { PartyStore } from '../store/PartyStore';
 
 function LogIn() {
   const navigate = useNavigate()
-  const { token, setToken, fetchUser,fetchChars} = useAuthStore()
+  const { token, setToken, fetchUser, fetchChars} = useAuthStore()
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+
+  const { fetchParty } = PartyStore()
  
   async function submitLogin(e) {
     e.preventDefault();
@@ -26,7 +29,8 @@ function LogIn() {
         const data = await response.json();
         setToken(data.access_token)
         await fetchUser()
-        
+        await fetchParty()
+
         navigate("/")
 
       } else if (response.status === 400 || response.status === 401) {
