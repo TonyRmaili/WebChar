@@ -166,6 +166,38 @@ const InitiativeTracker = () => {
     }
   };
 
+  const updateInitiative = (id, nextValue) => {
+  setInitiativeOrder((prev) => {
+    // 1) update the value on the target entity
+    const updated = prev.map((e) =>
+      e.id === id
+        ? { ...e, initiative: Number.isFinite(nextValue) ? nextValue : 0 }
+        : e
+    );
+
+    // 2) remember who is currently acting
+    const currentId = prev[currentTurnIndex]?.id;
+
+    // 3) sort highest first; stable tie-breaker by name then id
+    const sorted = [...updated].sort((a, b) => {
+      const d = (b.initiative ?? 0) - (a.initiative ?? 0);
+      if (d !== 0) return d;
+      const byName =
+        String(a.name ?? "").localeCompare(String(b.name ?? ""));
+      if (byName !== 0) return byName;
+      return String(a.id).localeCompare(String(b.id));
+    });
+
+    // 4) keep the same current entity selected after reorder
+    const newIdx = sorted.findIndex((e) => e.id === currentId);
+    setCurrentTurnIndex(newIdx >= 0 ? newIdx : 0);
+
+    return sorted;
+  });
+};
+
+
+
   return (
     <div className="max-w-5xl mx-auto p-6">
       {/* Header */}
@@ -250,12 +282,23 @@ const InitiativeTracker = () => {
                     isTurn ? "bg-yellow-100 font-semibold" : "bg-slate-50"
                   }`}
                 >
-                  <div className="flex flex-col">
-                    <span>
-                      {entity.name} — Init {entity.initiative}
-                    </span>
-                    <span className="text-sm text-slate-1600">AC {entity.ac}</span>
+                  <div className="flex items-center gap-3">
+                    <div className="flex flex-col">
+                      <span className="font-medium">{entity.name}</span>
+                      <span className="text-sm text-slate-1600">AC {entity.ac}</span>
+                    </div>
+
+                    {/* Editable initiative for players & monsters */}
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm text-slate-1600">Init</span>
+                      <IntFieldSigned
+                        value={entity.initiative}
+                        onCommit={(n) => updateInitiative(entity.id, n)}
+                        className="w-16 text-center rounded-lg border border-slate-300 px-2 py-1 outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                    </div>
                   </div>
+
 
                   {/* MONSTER HP + Adjust controls */}
                   {entity.type === "monster" ? (
@@ -354,5 +397,43 @@ const IntField = ({ value, min = Number.MIN_SAFE_INTEGER, max = Number.MAX_SAFE_
     />
   );
 };
+
+
+const IntFieldSigned = ({ value, onCommit, className = "" }) => {
+  const [text, setText] = useState(String(value ?? 0));
+
+  useEffect(() => {
+    setText(String(value ?? 0));
+  }, [value]);
+
+  const onChange = (e) => {
+    const v = e.target.value;
+    if (/^-?\d*$/.test(v)) setText(v); // allow optional '-' and digits
+  };
+
+  const commit = () => {
+    const n = parseInt(text, 10);
+    const out = Number.isFinite(n) ? n : 0;
+    onCommit?.(out);
+    setText(String(out));
+  };
+
+  const onKeyDown = (e) => {
+    if (e.key === "Enter") commit();
+  };
+
+  return (
+    <input
+      type="text"
+      inputMode="numeric"
+      value={text}
+      onChange={onChange}
+      onBlur={commit}
+      onKeyDown={onKeyDown}
+      className={className}
+    />
+  );
+};
+
 
 export default InitiativeTracker;

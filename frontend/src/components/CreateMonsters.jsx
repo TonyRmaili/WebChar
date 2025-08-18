@@ -7,8 +7,9 @@ const emptyForm = {
   hp: 0,
   ac: 10,
   speed: 30,
-  initiativeBonus: 0, // <-- FIXED name
+  initiativeBonus: 0,
   amount: 1,
+  roll_type: null, // <-- NEW: null (normal) | true (adv) | false (dis)
 };
 
 const uid = () =>
@@ -50,6 +51,7 @@ const CreateMonsters = () => {
       speed: Number(form.speed) || 0,
       initiativeBonus: Number(form.initiativeBonus) || 0,
       amount: Math.max(1, Number(form.amount) || 1),
+      roll_type: form.roll_type ?? null, // <-- include in saved data
     };
     setMonsters((m) => [...m, entry]);
     setForm(emptyForm);
@@ -59,9 +61,7 @@ const CreateMonsters = () => {
   const updateMonster = (id, field, value) =>
     setMonsters((list) =>
       list.map((m) =>
-        m.id === id
-          ? { ...m, [field]: field === "name" ? value : value } // Number handled in NumberField
-          : m
+        m.id === id ? { ...m, [field]: field === "name" ? value : value } : m
       )
     );
 
@@ -115,7 +115,7 @@ const CreateMonsters = () => {
         className="rounded-2xl border border-slate-200 p-4 shadow-sm mb-6"
       >
         <h2 className="font-medium mb-3">Add a monster</h2>
-        <div className="grid md:grid-cols-6 sm:grid-cols-3 grid-cols-2 gap-3">
+        <div className="grid md:grid-cols-7 sm:grid-cols-3 grid-cols-2 gap-3">
           <div className="flex flex-col">
             <label className="text-sm text-slate-1600 mb-1">Name</label>
             <input
@@ -153,6 +153,13 @@ const CreateMonsters = () => {
             value={form.amount}
             min={1}
             onChange={(v) => updateForm("amount", v)}
+          />
+
+          {/* NEW: Roll Type Select */}
+          <RollTypeSelect
+            label="Roll Type"
+            value={form.roll_type}
+            onChange={(rt) => updateForm("roll_type", rt)}
           />
         </div>
 
@@ -217,6 +224,14 @@ const CreateMonsters = () => {
                   onChange={(v) => updateMonster(m.id, "initiativeBonus", v)}
                   allowNegative
                 />
+
+                {/* NEW: Roll Type Select in list */}
+                <RollTypeSelect
+                  label="Roll Type"
+                  value={m.roll_type}
+                  onChange={(rt) => updateMonster(m.id, "roll_type", rt)}
+                />
+
                 <div className="flex flex-col">
                   <label className="text-sm text-slate-1600 mb-1">Amount</label>
                   <div className="flex items-center gap-2">
@@ -256,31 +271,50 @@ const CreateMonsters = () => {
   );
 };
 
+// Helpers -----------------------------------------------------
+
+// Select for roll type → returns null (normal), true (adv), false (dis)
+const RollTypeSelect = ({ label = "Roll Type", value, onChange }) => {
+  // map JS value -> UI option
+  const toOpt = (v) => (v === true ? "adv" : v === false ? "dis" : "normal");
+  // map UI option -> JS value
+  const fromOpt = (opt) =>
+    opt === "adv" ? true : opt === "dis" ? false : null;
+
+  return (
+    <div className="flex flex-col">
+      <label className="text-sm text-slate-1600 mb-1">{label}</label>
+      <select
+        value={toOpt(value)}
+        onChange={(e) => onChange(fromOpt(e.target.value))}
+        className="rounded-xl border border-slate-300 px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+      >
+        <option value="normal">Normal</option>
+        <option value="adv">Advantage</option>
+        <option value="dis">Disadvantage</option>
+      </select>
+    </div>
+  );
+};
+
 // NumberField that allows negative while typing (handles '-', '')
 const NumberField = ({ label, value, onChange, min, allowNegative }) => {
   const [text, setText] = useState(
     value === 0 || typeof value === "number" ? String(value) : ""
   );
 
-  // keep local text in sync if parent value changes elsewhere
   useEffect(() => {
     setText(value === 0 || typeof value === "number" ? String(value) : "");
   }, [value]);
 
   const onTextChange = (e) => {
     const v = e.target.value;
-
-    // Allow empty or lone '-' while typing
     if (v === "" || v === "-" || v === "+") {
       setText(v);
       return;
     }
-
-    // Only digits (with optional leading - if allowed)
     const re = allowNegative ? /^-?\d*$/ : /^\d*$/;
-    if (re.test(v)) {
-      setText(v);
-    }
+    if (re.test(v)) setText(v);
   };
 
   const onBlur = () => {
@@ -288,14 +322,14 @@ const NumberField = ({ label, value, onChange, min, allowNegative }) => {
     if (isNaN(n)) n = 0;
     if (min !== undefined) n = Math.max(min, n);
     onChange(n);
-    setText(String(n)); // normalize display
+    setText(String(n));
   };
 
   return (
     <div className="flex flex-col">
       <label className="text-sm text-slate-1600 mb-1">{label}</label>
       <input
-        type="text"                     // <-- text, not number
+        type="text"
         value={text}
         onChange={onTextChange}
         onBlur={onBlur}

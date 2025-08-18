@@ -246,7 +246,8 @@ def roll_initiative(
     try:
         for monster in form_data:
             modifier = monster["initiativeBonus"]
-            roll = roll_dice(size=diceSize,modifier=modifier)
+            roll_type = monster["roll_type"]
+            roll = roll_dice(size=diceSize,modifier=modifier,roll_type=roll_type)
             monster["initiative"] = roll 
 
         return form_data 
