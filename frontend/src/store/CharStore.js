@@ -7,6 +7,7 @@ const loadInitialState = () => {
   if (userData && userData.id && charData) {
     charData.user_id = userData.id; // Store userData.id as user_id within charData
   }
+  
   return { charData };
 };
 

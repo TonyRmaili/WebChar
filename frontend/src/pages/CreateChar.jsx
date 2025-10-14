@@ -78,7 +78,3 @@ function CreateChar() {
 }
 
 export default CreateChar;
-
-
-
-// feat_name{title: "", body:"", ac:
