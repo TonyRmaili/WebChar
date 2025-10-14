@@ -45,6 +45,7 @@ const useAuthStore = create((set, get) => ({
       if (response.status === 200) {
         const userData = await response.json();
         setUserData(userData);
+       
       } else if (response.status === 401) {
         logout();
       } else {

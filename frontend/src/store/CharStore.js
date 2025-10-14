@@ -5,9 +5,9 @@ const loadInitialState = () => {
   const userData = JSON.parse(localStorage.getItem("userData")) || null;
   
   if (userData && userData.id && charData) {
-    charData.user_id = userData.id; // Store userData.id as user_id within charData
+    charData.user_id = userData.id; 
   }
-  
+
   return { charData };
 };
 
@@ -18,6 +18,8 @@ const useCharStore = create((set, get) => ({
     localStorage.setItem("charData", JSON.stringify(charData)); // Save the user data to localStorage
     set(() => ({ charData }));
   },
+
+
   postCharData: async () => {
     try {
       const token = localStorage.getItem("token");
@@ -28,7 +30,7 @@ const useCharStore = create((set, get) => ({
         throw new Error("Token not found in localStorage");
       }
       
-      const response = await fetch("http://localhost:8000/create_char", {
+      const response = await fetch("http://localhost:8000/character", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -48,22 +50,53 @@ const useCharStore = create((set, get) => ({
       console.error("Error posting charData:", error.message);
     }
   },
-  fetchChar: async (character) => {
+
+  deleteChar: async (char_name) => {
+    try {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        throw new Error("Token not found in localStorage");
+      }
+
+      const response = await fetch(`http://localhost:8000/character/${char_name}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/string",
+          "Authorization": `Bearer ${token}`
+        },
+        body: char_name
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to delete character");
+      }
+
+
+      console.log(`Deleting ${char_name}`)
+    }
+    catch (error) {
+      console.error("Error deleting character:", error.message);
+    }
+  },
+
+  fetchChar: async () => {
     const { setCharData } = get();
     const token = localStorage.getItem("token");
     
     try {
-      const response = await fetch("http://localhost:8000/get_char", {
-        method: "POST",
+      const response = await fetch("http://localhost:8000/character/user_characters", {
+        method: "GET",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/text",
           "Authorization": `Bearer ${token}`
         },
-        body: JSON.stringify(character)
+        
       });
       if (response.status === 200) {
-        const charData = await response.json();
+        const charData = await response.text();
         setCharData(charData);
+        
       } else if (response.status === 401) {
        
       } else {
@@ -74,6 +107,37 @@ const useCharStore = create((set, get) => ({
       // Handle error as needed
     }
   },
+
+
+
+  fetchAllChars: async () => {
+    const { setCharData } = get();
+    const token = localStorage.getItem("token");
+    
+    try {
+      const response = await fetch("http://localhost:8000/character", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        
+      });
+      if (response.status === 200) {
+        const charData = await response.json();
+        
+      } else if (response.status === 401) {
+       
+      } else {
+        console.error("Failed to fetch all characters data");
+      }
+    } catch (error) {
+      console.error("There was an error fetching user data:", error);
+      // Handle error as needed
+    }
+  },
+
+
 }));
 
 export default useCharStore;

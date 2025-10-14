@@ -70,29 +70,66 @@ function CreateAccount() {
 
 
   return (
-    <div className='mx-auto mt-32'>
-      <h2 className='text-4xl mb-10 font-bold text-red-950'>Create Account</h2>
-      <form action="" className='text-red-400 font-mono text-lg border-2 border-black rounded-md'>
-        <div className='flex justify-between gap-2 p-2'>
-          <label htmlFor="name">Mortal Name</label>
-          <input type="text" id='name' name='name' onChange={handleChange}
-          className='w-20'/>
-        </div><hr />
-        <div className='flex justify-between gap-2 p-2'>
-          <label htmlFor="email">Email</label>
-          <input type="email" id='email' name='email' onChange={handleChange}
-          className='w-20'/>
-        </div><hr />
-        <div className='flex justify-between gap-2 p-2'>
-          <label htmlFor="password">Secret Phrase</label>
-          <input type="password" name="password" id="password" onChange={handleChange}
-          className='w-20'/>
-        </div><hr />
-        <button type='submit' onClick={handleSubmit} 
-        className='bg-slate-500 ml-16 mt-2  p-2 hover:bg-red-200 rounded-xl'>Scribe's Seal</button>
+  <div className="flex justify-center items-center min-h-screen bg-gradient-to-b from-stone-900 via-stone-800 to-stone-950">
+    <div className="w-full max-w-md bg-gradient-to-b from-stone-700 via-stone-800 to-stone-900 border-4 border-amber-900 rounded-lg shadow-[0_0_20px_rgba(139,92,246,0.3)] p-8">
+      <h2 className="text-4xl mb-8 text-center font-bold text-amber-200 drop-shadow-[0_0_5px_#451a03]">
+        Create Account
+      </h2>
+
+      <form
+        onSubmit={handleSubmit}
+        className="text-amber-100 font-serif text-lg border-2 border-amber-800 bg-gradient-to-b from-amber-100/5 to-amber-950/10 rounded-md p-4 shadow-inner"
+      >
+        <div className="flex flex-col gap-3 mb-4">
+          <label htmlFor="name" className="font-semibold text-amber-300">
+            Mortal Name
+          </label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            onChange={handleChange}
+            className="w-full border border-amber-700 rounded-md px-3 py-2 bg-stone-800 text-amber-100 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+          />
+        </div>
+
+        <div className="flex flex-col gap-3 mb-4">
+          <label htmlFor="email" className="font-semibold text-amber-300">
+            Scroll Address
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            onChange={handleChange}
+            className="w-full border border-amber-700 rounded-md px-3 py-2 bg-stone-800 text-amber-100 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+          />
+        </div>
+
+        <div className="flex flex-col gap-3 mb-6">
+          <label htmlFor="password" className="font-semibold text-amber-300">
+            Secret Phrase
+          </label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            onChange={handleChange}
+            className="w-full border border-amber-700 rounded-md px-3 py-2 bg-stone-800 text-amber-100 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+          />
+        </div>
+
+        <button
+          type="submit"
+          className="w-full bg-gradient-to-r from-red-900 to-red-700 text-amber-100 font-semibold py-2 rounded-md hover:from-red-800 hover:to-red-600 transition-all shadow-[0_0_10px_rgba(255,0,0,0.4)]"
+        >
+          Scribe’s Seal
+        </button>
       </form>
     </div>
-  )
+  </div>
+);
+
 }
 
 export default CreateAccount
