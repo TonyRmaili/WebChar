@@ -7,7 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from typing import Annotated
 from fastapi import Query
 from app.database.models import User,Character
-from app.database.schemas import UserSchema,CharacterSchema, QueryRequest
+from app.database.schemas import UserSchema,CharacterSchema, QueryRequest, CharacterIn
 from app.security import hash_password, verify_password, create_access_token, get_current_user
 from app.db_setup import init_db, get_db
 from fastapi.security import OAuth2PasswordRequestForm
@@ -148,17 +148,21 @@ def read_users_me(current_user: Annotated[User, Depends(get_current_user)]):
 
 @app.post("/character", tags=["characters"])
 def create_char(current_user: Annotated[User, Depends(get_current_user)],
-          form_data:dict,db:Session = Depends(get_db)):
+        form_data: CharacterIn,db:Session = Depends(get_db)):
     try:
         directory = os.path.join(savefiles_path , current_user.name ,"characters")
-        file_name = form_data['name'] + ".json"
+        file_name = f"{form_data.name}.json"
         file_path = os.path.join(directory, file_name)
         os.makedirs(directory, exist_ok=True)
-        with open(file_path, "w") as json_file:
-            json.dump(form_data, json_file, indent=4)
 
-        character_data = CharacterSchema(user_id=current_user.id,
-            name=form_data['name'] ,file_path=file_path)
+        with open(file_path, "w", encoding="utf-8") as json_file:
+            json.dump({"name": form_data.name}, json_file, indent=4, ensure_ascii=False)
+
+        character_data = CharacterSchema(
+            user_id=current_user.id,
+            name=form_data.name,
+            file_path=file_path)
+        
         db_char = Character(**character_data.model_dump())
         db.add(db_char)
         db.commit()
@@ -166,6 +170,28 @@ def create_char(current_user: Annotated[User, Depends(get_current_user)],
         return JSONResponse(content={"message": "JSON data saved successfully"}, status_code=200)
     except Exception as e:
         return JSONResponse(content={"message": f"Error: {str(e)}"}, status_code=500)
+    
+
+# @app.post("/character", tags=["characters"])
+# def create_char(current_user: Annotated[User, Depends(get_current_user)],
+#           form_data:dict,db:Session = Depends(get_db)):
+#     try:
+#         directory = os.path.join(savefiles_path , current_user.name ,"characters")
+#         file_name = form_data['name'] + ".json"
+#         file_path = os.path.join(directory, file_name)
+#         os.makedirs(directory, exist_ok=True)
+#         with open(file_path, "w") as json_file:
+#             json.dump(form_data, json_file, indent=4)
+
+#         character_data = CharacterSchema(user_id=current_user.id,
+#             name=form_data['name'] ,file_path=file_path)
+#         db_char = Character(**character_data.model_dump())
+#         db.add(db_char)
+#         db.commit()
+
+#         return JSONResponse(content={"message": "JSON data saved successfully"}, status_code=200)
+#     except Exception as e:
+#         return JSONResponse(content={"message": f"Error: {str(e)}"}, status_code=500)
 
 
 @app.get("/character/user_characters", tags=['characters'])

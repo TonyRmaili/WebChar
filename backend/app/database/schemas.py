@@ -17,6 +17,9 @@ class CharacterSchema(BaseModel):
     file_path: str 
     user_id: int
     name : str
+
+class CharacterIn(BaseModel):
+    name : str
   
 class QueryRequest(BaseModel):
     question: str

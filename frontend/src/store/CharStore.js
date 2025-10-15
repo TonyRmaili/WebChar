@@ -20,6 +20,38 @@ const useCharStore = create((set, get) => ({
   },
 
 
+  createChar: async (name) => {
+    try {
+      const token = localStorage.getItem("token");
+      
+
+      if (!token) {
+        throw new Error("Token not found in localStorage");
+      }
+      
+      const response = await fetch("http://localhost:8000/character", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({ name }),  
+
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to post charData to the endpoint");
+      }
+
+      // Optionally, handle the response if needed
+      const responseData = await response.json();
+      console.log("CharData posted successfully:", responseData);
+    } catch (error) {
+      console.error("Error posting charData:", error.message);
+    }
+  },
+
+
   postCharData: async () => {
     try {
       const token = localStorage.getItem("token");
@@ -50,6 +82,7 @@ const useCharStore = create((set, get) => ({
       console.error("Error posting charData:", error.message);
     }
   },
+
 
   deleteChar: async (char_name) => {
     try {
@@ -107,7 +140,6 @@ const useCharStore = create((set, get) => ({
       // Handle error as needed
     }
   },
-
 
 
   fetchAllChars: async () => {

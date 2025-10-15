@@ -8,7 +8,7 @@ import AbilityScore from "../components/AbilityScore";
 import ClassSelection from "../components/ClassSelection";
 import FeatsTraits from "../components/FeatsTraits";
 import BioStats from "../components/BioStats";
-import MovableWindow from "../components/MovableWindow";
+
 
 
 const tabs = [
@@ -44,9 +44,10 @@ function CreateChar() {
 
   function handleSubmit(){
     postCharData()
-    fetchUser()
-    
+    fetchUser()   
   }
+
+  
   return (
     <div className="justify-center items-center mx-auto w-1/2 min-h-screen mb-2">
       <p className='text-4xl'>Character Creation</p>

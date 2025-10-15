@@ -9,7 +9,6 @@ class Base(DeclarativeBase):
     id:Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
 
 
-
 class Picture(Base):
     __tablename__ = 'pictures'
     file_path:Mapped[str]
@@ -23,7 +22,7 @@ class Character(Base):
     file_path:Mapped[str]
     name:Mapped[str]
     user_id :Mapped[int] = mapped_column(ForeignKey("users.id"))
-
+    active: Mapped[bool] = mapped_column(Boolean, nullable=False, server_default="false", index=True)
     user: Mapped["User"] = relationship("User",back_populates="characters")
     pictures: Mapped[list[Picture]] = relationship("Picture", back_populates="character")
 
@@ -78,16 +77,6 @@ class User(Base):
 # 	def __repr__(self):
 # 		return f"<User ={self.first_name} {self.last_name} aka {self.user_name}>" 
 	
-
-
-
-
-
-
-
-
-
-
 
 
 
