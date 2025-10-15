@@ -194,14 +194,6 @@ def create_char(current_user: Annotated[User, Depends(get_current_user)],
 #         return JSONResponse(content={"message": f"Error: {str(e)}"}, status_code=500)
 
 
-@app.get("/character/user_characters", tags=['characters'])
-def get_user_chars(current_user: Annotated[User, Depends(get_current_user)],
-            db:Session = Depends(get_db)):
-    # directory = os.path.join(savefiles_path , current_user.name ,"characters")
-
-    
-    return "file"
-
 
 @app.delete("/character/{char_name}",status_code=status.HTTP_204_NO_CONTENT,tags=["characters"])
 def delete_char_name(current_user: Annotated[User, Depends(get_current_user)],
@@ -235,8 +227,11 @@ def list_all_chars(db: Session = Depends(get_db)):
 
 
 @app.post("/character/{char_id}" , tags=["characters"])
-def toggle_active_char(current_user: Annotated[User, Depends(get_current_user)],
-    char_id:int, db:Session = Depends(get_db)):
+def toggle_active_char(
+    current_user: Annotated[User,Depends(get_current_user)],
+    char_id:int,
+    db:Session = Depends(get_db)
+    ):
     char = db.scalar(select(Character).where(Character.id == char_id, Character.user_id == current_user.id))
     if not char:
         raise HTTPException(status_code=404, detail="Character not found")
@@ -246,6 +241,28 @@ def toggle_active_char(current_user: Annotated[User, Depends(get_current_user)],
     db.refresh(char)
     return {"id": char.id, "active": char.active}
 
+@app.post("/character/update/{char_id}" , tags=["characters"])
+def update_char(
+    form_data:dict,
+    current_user: Annotated[User,Depends(get_current_user)],
+    db:Session = Depends(get_db),
+):
+    print(form_data)
+    
+    
+    return {"test char data post"}
+
+@app.get("/character/file/{char_id}" , tags=["characters"])
+def get_char_file(
+    char_id:int,
+    current_user: Annotated[User,Depends(get_current_user)],
+    db:Session = Depends(get_db),
+):
+    char = db.scalar(select(Character).where(Character.id == char_id, Character.user_id == current_user.id))
+    with open(char.file_path) as f:
+        char_file = json.load(f)
+    
+    return char_file
 
 
 # ------------------------Party-----------------------------

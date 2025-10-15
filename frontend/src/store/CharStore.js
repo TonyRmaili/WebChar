@@ -2,8 +2,8 @@ import { create } from "zustand";
 
 const loadInitialState = () => {
   const charData = JSON.parse(localStorage.getItem("charData")) || null;
+
   const userData = JSON.parse(localStorage.getItem("userData")) || null;
-  
   if (userData && userData.id && charData) {
     charData.user_id = userData.id; 
   }
@@ -18,6 +18,38 @@ const useCharStore = create((set, get) => ({
     localStorage.setItem("charData", JSON.stringify(charData)); // Save the user data to localStorage
     set(() => ({ charData }));
   },
+
+  postCharData: async (char_id) => {
+    try {
+      const token = localStorage.getItem("token");
+      const charData = localStorage.getItem("charData")
+      
+
+      if (!token) {
+        throw new Error("Token not found in localStorage");
+      }
+      
+      const response = await fetch(`http://localhost:8000/character/update/${char_id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: charData
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update charData to the endpoint");
+      }
+
+      // Optionally, handle the response if needed
+      const responseData = await response.json();
+      console.log("CharData posted successfully:", responseData);
+    } catch (error) {
+      console.error("Error updating charData:", error.message);
+    }
+  },
+
 
   toggleActiveChar: async (char_id) => {
     try {
@@ -68,39 +100,6 @@ const useCharStore = create((set, get) => ({
     }
   },
 
-
-  postCharData: async () => {
-    try {
-      const token = localStorage.getItem("token");
-      const charData = localStorage.getItem("charData")
-      
-
-      if (!token) {
-        throw new Error("Token not found in localStorage");
-      }
-      
-      const response = await fetch("http://localhost:8000/character", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-        },
-        body: charData
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to post charData to the endpoint");
-      }
-
-      // Optionally, handle the response if needed
-      const responseData = await response.json();
-      console.log("CharData posted successfully:", responseData);
-    } catch (error) {
-      console.error("Error posting charData:", error.message);
-    }
-  },
-
-
   deleteChar: async (char_name) => {
     try {
       const token = localStorage.getItem("token");
@@ -130,21 +129,21 @@ const useCharStore = create((set, get) => ({
     }
   },
 
-  fetchChar: async () => {
+  fetchChar: async (char_id) => {
     const { setCharData } = get();
     const token = localStorage.getItem("token");
     
     try {
-      const response = await fetch("http://localhost:8000/character/user_characters", {
+      const response = await fetch(`http://localhost:8000/character/file/${char_id}`, {
         method: "GET",
         headers: {
-          "Content-Type": "application/text",
+          "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`
         },
         
       });
       if (response.status === 200) {
-        const charData = await response.text();
+        const charData = await response.json();
         setCharData(charData);
         
       } else if (response.status === 401) {
@@ -157,7 +156,6 @@ const useCharStore = create((set, get) => ({
       // Handle error as needed
     }
   },
-
 
   fetchAllChars: async () => {
     const { setCharData } = get();
