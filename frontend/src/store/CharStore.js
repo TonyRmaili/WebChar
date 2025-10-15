@@ -19,6 +19,23 @@ const useCharStore = create((set, get) => ({
     set(() => ({ charData }));
   },
 
+  toggleActiveChar: async (char_id) => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await fetch(`http://localhost:8000/character/${char_id}`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      })
+      if (!res.ok) throw new Error(`Toggle failed: ${res.status}`)
+      // Pull fresh user data
+      
+    } catch (e) {
+      console.error(e)
+      alert('Could not toggle active state.')
+    }
+  },
 
   createChar: async (name) => {
     try {

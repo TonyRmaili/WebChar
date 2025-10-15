@@ -18,7 +18,7 @@ function CombatPage() {
   
   useEffect(() => {
     if (!userData || !userData.characters || userData.characters.length === 0) {
-      navigate('/createChar');
+      navigate('/loadChar');
     }
   }, [userData]);
 

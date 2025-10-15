@@ -234,6 +234,20 @@ def list_all_chars(db: Session = Depends(get_db)):
     return chars
 
 
+@app.post("/character/{char_id}" , tags=["characters"])
+def toggle_active_char(current_user: Annotated[User, Depends(get_current_user)],
+    char_id:int, db:Session = Depends(get_db)):
+    char = db.scalar(select(Character).where(Character.id == char_id, Character.user_id == current_user.id))
+    if not char:
+        raise HTTPException(status_code=404, detail="Character not found")
+
+    char.active = not char.active
+    db.commit()
+    db.refresh(char)
+    return {"id": char.id, "active": char.active}
+
+
+
 # ------------------------Party-----------------------------
 
 @app.post("/create_party", tags=["party"])

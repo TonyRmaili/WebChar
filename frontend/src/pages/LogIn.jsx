@@ -31,7 +31,7 @@ function LogIn() {
         await fetchUser()
         await fetchParty()
 
-        navigate("/")
+        navigate("/loadChar")
 
       } else if (response.status === 400 || response.status === 401) {
         const data = await response.json();
