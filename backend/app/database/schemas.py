@@ -24,6 +24,9 @@ class CharacterIn(BaseModel):
 class QueryRequest(BaseModel):
     question: str
 
+class DictData(BaseModel):
+    form_data : dict
+
 # class GenderEnum(str, Enum):
 #     Male = 'Male'
 #     Female = 'Female'

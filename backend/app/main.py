@@ -7,7 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from typing import Annotated
 from fastapi import Query
 from app.database.models import User,Character
-from app.database.schemas import UserSchema,CharacterSchema, QueryRequest, CharacterIn
+from app.database.schemas import UserSchema,CharacterSchema, QueryRequest, CharacterIn, DictData
 from app.security import hash_password, verify_password, create_access_token, get_current_user
 from app.db_setup import init_db, get_db
 from fastapi.security import OAuth2PasswordRequestForm
@@ -241,16 +241,22 @@ def toggle_active_char(
     db.refresh(char)
     return {"id": char.id, "active": char.active}
 
-@app.post("/character/update/{char_id}" , tags=["characters"])
+
+@app.post("/update_character", tags=["characters"])
 def update_char(
-    form_data:dict,
-    current_user: Annotated[User,Depends(get_current_user)],
-    db:Session = Depends(get_db),
+    form_data: dict,
+    current_user: Annotated[User, Depends(get_current_user)],
+    db: Session = Depends(get_db),
+    
 ):
-    print(form_data)
-    
-    
-    return {"test char data post"}
+    charpath = os.path.join(savefiles_path,current_user.name,"characters",form_data["name"]+".json")
+
+    with open(charpath,'w') as f:
+        json.dump(form_data,f,indent=4)
+
+
+    return {"ok": True}
+
 
 @app.get("/character/file/{char_id}" , tags=["characters"])
 def get_char_file(
@@ -263,6 +269,7 @@ def get_char_file(
         char_file = json.load(f)
     
     return char_file
+
 
 
 # ------------------------Party-----------------------------

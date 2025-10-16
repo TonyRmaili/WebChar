@@ -4,15 +4,41 @@ import useAuthStore from "../store/AuthStore";
 import GeneralStats from "../components/GeneralStats";
 import useCharStore from "../store/CharStore";
 
-
+// Reusable accordion/collapsible
+function Collapsible({ title, children, defaultOpen = false }) {
+  const [open, setOpen] = useState(defaultOpen);
+  return (
+    <div className="rounded-xl border border-slate-700 overflow-hidden bg-slate-800/50">
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        className="w-full flex items-center justify-between px-4 py-3 text-left hover:bg-slate-800/70"
+        aria-expanded={open}
+      >
+        <span className="font-medium">{title}</span>
+        <svg
+          className={`h-5 w-5 transition-transform ${open ? "rotate-180" : ""}`}
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            fillRule="evenodd"
+            d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z"
+            clipRule="evenodd"
+          />
+        </svg>
+      </button>
+      {open && <div className="px-4 pb-4 pt-1">{children}</div>}
+    </div>
+  );
+}
 
 function CombatPage() {
   const { token, userData } = useAuthStore();
-  const { charData, postCharData, fetchChar } = useCharStore()
+  const { fetchChar } = useCharStore();
   const navigate = useNavigate();
   const [activeTabId, setActiveTabId] = useState(null);
 
-  
   // Route guards
   useEffect(() => {
     if (!token) navigate("/login");
@@ -41,17 +67,16 @@ function CombatPage() {
   }, [activeChars, activeTabId]);
 
   const selectedChar = useMemo(
-    () => activeChars.find(c => (c.id || c._id || c.name) === activeTabId),
+    () => activeChars.find((c) => (c.id || c._id || c.name) === activeTabId),
     [activeChars, activeTabId]
   );
 
-   useEffect(() => {
-    if (token) {
-      fetchChar(activeTabId); 
+  // Load selected char details
+  useEffect(() => {
+    if (token && activeTabId) {
+      fetchChar(activeTabId);
     }
-  }, [activeTabId]);
-
-
+  }, [token, activeTabId, fetchChar]);
 
   return (
     <div className="min-h-screen w-full bg-slate-900 text-slate-100 flex flex-col items-center py-10">
@@ -76,9 +101,40 @@ function CombatPage() {
         })}
       </div>
 
-      {/* Only the selected character's details */}
-      <div className="w-full max-w-5xl mt-6">
-        {selectedChar ? <GeneralStats /> : null}
+      {/* Main content */}
+      <div className="w-full max-w-6xl mt-6 space-y-6">
+        {/* PLAY AREA */}
+        <div className="rounded-2xl border border-slate-700 bg-slate-800/40 shadow-inner">
+          {/* Large rectangular area; adjust height/aspect as you like */}
+          <div className="w-full h-[520px] md:h-[620px] lg:h-[680px] flex items-center justify-center">
+            <span className="text-slate-300/80 text-lg tracking-wide">
+              Play Area (place components here later)
+            </span>
+          </div>
+        </div>
+
+        {/* Collapsible panels (accordion-style) */}
+        <div className="space-y-3">
+          <Collapsible title="General Stats" >
+            {/* Your existing component */}
+            {selectedChar ? <GeneralStats /> : <div className="text-slate-400">Select a character to view stats.</div>}
+          </Collapsible>
+
+          {/* Add more sections as you build them */}
+          <Collapsible title="Abilities & Skills">
+            <div className="text-slate-300/90">
+              {/* TODO: Replace with your component */}
+              Coming soon…
+            </div>
+          </Collapsible>
+
+          <Collapsible title="Inventory & Equipment">
+            <div className="text-slate-300/90">
+              {/* TODO: Replace with your component */}
+              Coming soon…
+            </div>
+          </Collapsible>
+        </div>
       </div>
     </div>
   );

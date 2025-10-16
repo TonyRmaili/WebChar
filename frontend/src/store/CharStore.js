@@ -1,5 +1,14 @@
 import { create } from "zustand";
 
+const initialChar = {
+  ac: 0,
+  max_hp: 0,
+  speed: 0,
+  pb: 2,
+};
+
+const savedCharData = JSON.parse(localStorage.getItem("charData") || "null");
+
 const loadInitialState = () => {
   const charData = JSON.parse(localStorage.getItem("charData")) || null;
 
@@ -13,42 +22,59 @@ const loadInitialState = () => {
 
 const useCharStore = create((set, get) => ({
   ...loadInitialState(),
+  charData: savedCharData || initialChar,
+  setCharData: (data) => {
+    const newData = data ?? initialChar;
+    localStorage.setItem("charData", JSON.stringify(newData));
+    set({ charData: newData });
+  },
+
+  updateCharField: (key, value) =>
+    set((state) => {
+      const updated = {
+        ...(state.charData ?? initialChar),
+        [key]: value,
+      };
+      localStorage.setItem("charData", JSON.stringify(updated));
+      return { charData: updated };
+    }),
   
-  setCharData: (charData) => {
-    localStorage.setItem("charData", JSON.stringify(charData)); // Save the user data to localStorage
-    set(() => ({ charData }));
-  },
 
-  postCharData: async (char_id) => {
-    try {
-      const token = localStorage.getItem("token");
-      const charData = localStorage.getItem("charData")
-      
+  postCharData: async () => {
+  try {
+    const token = localStorage.getItem("token");
+    if (!token) throw new Error("Token not found in localStorage");
 
-      if (!token) {
-        throw new Error("Token not found in localStorage");
-      }
-      
-      const response = await fetch(`http://localhost:8000/character/update/${char_id}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-        },
-        body: charData
-      });
+    const raw = localStorage.getItem("charData");
+    if (!raw) throw new Error("No charData in localStorage");
 
-      if (!response.ok) {
-        throw new Error("Failed to update charData to the endpoint");
-      }
+    const charData = JSON.parse(raw); // make it an object
 
-      // Optionally, handle the response if needed
-      const responseData = await response.json();
-      console.log("CharData posted successfully:", responseData);
-    } catch (error) {
-      console.error("Error updating charData:", error.message);
+    const response = await fetch("http://localhost:8000/update_character", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      // match the DictData(form_data: dict) shape:
+      body: JSON.stringify(charData),
+    });
+
+    // Read the body ONCE:
+    const payload = await response.json().catch(() => null);
+
+    if (!response.ok) {
+      // surface FastAPI error details if present
+      throw new Error(
+        `Failed: ${response.status} ${payload ? JSON.stringify(payload) : ""}`
+      );
     }
-  },
+
+    console.log("CharData posted successfully:", payload);
+  } catch (error) {
+    console.error("Error updating charData:", error.message);
+  }
+},
 
 
   toggleActiveChar: async (char_id) => {

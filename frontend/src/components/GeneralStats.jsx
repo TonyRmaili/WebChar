@@ -4,8 +4,25 @@ import useCharStore from "../store/CharStore";
 
 
 function GeneralStats() {
-  const { charData } = useCharStore()
-  
+  const { charData, updateCharField, postCharData } = useCharStore()
+
+  // Guard: show nothing until data arrives (optional)
+  if (!charData) return null;
+
+  const handleNumberChange = (e) => {
+    const { name, value } = e.target;
+
+    if (value === "") {
+      updateCharField(name, "");
+      return;
+    }
+
+    const num = Number(value);
+    if (!Number.isNaN(num)) updateCharField(name, num);
+    
+    postCharData()
+
+  };
   
 
   return (
@@ -19,7 +36,7 @@ function GeneralStats() {
           id="ac"
           name="ac"
           value= {charData?.ac ?? ""} 
-        
+          onChange={handleNumberChange}
           className="flex-1 px-2 py-1 border rounded text-slate-900"
           min={0}
         />
@@ -33,7 +50,7 @@ function GeneralStats() {
           id="max_hp"
           name="max_hp"
           value={charData?.max_hp ?? ""}
-
+          onChange={handleNumberChange}
           className="flex-1 px-2 py-1 border rounded text-slate-900"
         />
       </div>
@@ -46,7 +63,7 @@ function GeneralStats() {
           id="speed"
           name="speed"
           value={charData?.speed ?? ""}
-
+          onChange={handleNumberChange}
           className="flex-1 px-2 py-1 border rounded text-slate-900"
           min={0}
         />
@@ -60,6 +77,7 @@ function GeneralStats() {
           id="pb"
           name="pb"
           value={charData?.pb ?? ""}
+          onChange={handleNumberChange}
           className="flex-1 px-2 py-1 border rounded text-slate-900"
           min={2}
         />
