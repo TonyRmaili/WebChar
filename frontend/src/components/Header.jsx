@@ -15,13 +15,9 @@ function Header() {
   return (
     <div className="h-32 bg-slate-800 flex gap-32 items-center justify-center text-orange-400 font-bold text-lg font-serif ">
       <div className="flex gap-6 p-2 ">
-        <Link to="/createChar" className="flex flex-col p-2">
-          <img src={CreateCharLogo} className="h-12" />
-          <p>Create Char</p>
-        </Link>
         <Link to="/loadChar" className="flex flex-col p-2">
-          <img src={LoadCharLogo} className="h-12" />
-          <p>Load Char</p>
+          <img src={CreateCharLogo} className="h-12" />
+          <p>Characters</p>
         </Link>
       </div>
       <div className="flex items-center justify-between gap-8 w-[400px] p-4">

@@ -6,7 +6,7 @@ import GeneralStats from "../components/GeneralStats";
 import ShortcutTab from "../components/ShortcutTab";
 import AbilityScore from "../components/AbilityScore";
 import ClassSelection from "../components/ClassSelection";
-import FeatsTraits from "../components/FeatsTraits";
+
 import BioStats from "../components/BioStats";
 
 
@@ -15,7 +15,7 @@ const tabs = [
   { name: "General", id: 0 },
   { name: "Ability Score", id: 1 },
   { name: "Classes", id: 2 },
-  { name: "Feats & Traits", id: 3 },
+  
   { name: "Biography", id: 4 },
  
 
@@ -63,7 +63,7 @@ function CreateChar() {
         {activeTab.name === "General" && <GeneralStats />}
         {activeTab.name === "Ability Score" && <AbilityScore />}
         {activeTab.name === "Classes" && <ClassSelection />}
-        {activeTab.name === "Feats & Traits" && <FeatsTraits />}
+       
         {activeTab.name === "Biography" && <BioStats />}
           
       </div>

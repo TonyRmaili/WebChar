@@ -1,10 +1,16 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "../store/AuthStore";
-import GeneralStats from "../components/GeneralStats";
 import useCharStore from "../store/CharStore";
 
-// Reusable accordion/collapsible
+import GeneralStats from "../components/GeneralStats";
+import AbilityScore from "../components/AbilityScore";
+import BioStats from "../components/BioStats";
+import Traits from "../components/Traits";
+import Spellbook from "../components/Spellbook";
+
+
+// Reusable collapsible component
 function Collapsible({ title, children, defaultOpen = false }) {
   const [open, setOpen] = useState(defaultOpen);
   return (
@@ -15,7 +21,7 @@ function Collapsible({ title, children, defaultOpen = false }) {
         className="w-full flex items-center justify-between px-4 py-3 text-left hover:bg-slate-800/70"
         aria-expanded={open}
       >
-        <span className="font-medium">{title}</span>
+        <span className="font-medium text-slate-100">{title}</span>
         <svg
           className={`h-5 w-5 transition-transform ${open ? "rotate-180" : ""}`}
           viewBox="0 0 20 20"
@@ -101,40 +107,51 @@ function CombatPage() {
         })}
       </div>
 
-      {/* Main content */}
-      <div className="w-full max-w-6xl mt-6 space-y-6">
-        {/* PLAY AREA */}
-        <div className="rounded-2xl border border-slate-700 bg-slate-800/40 shadow-inner">
-          {/* Large rectangular area; adjust height/aspect as you like */}
-          <div className="w-full h-[520px] md:h-[620px] lg:h-[680px] flex items-center justify-center">
-            <span className="text-slate-300/80 text-lg tracking-wide">
-              Play Area (place components here later)
-            </span>
+      {/* Content */}
+      <div className="w-full max-w-6xl mt-6 space-y-4">
+        {/* Collapsible PLAY AREA */}
+        <Collapsible title="Play Area" >
+          <div className="rounded-2xl border border-slate-700 bg-slate-800/40 shadow-inner">
+            <div className="w-full h-[520px] md:h-[620px] lg:h-[680px] flex items-center justify-center">
+              <span className="text-slate-300/80 text-lg tracking-wide">
+                Play Area (place components here later)
+              </span>
+            </div>
           </div>
-        </div>
+        </Collapsible>
 
-        {/* Collapsible panels (accordion-style) */}
-        <div className="space-y-3">
-          <Collapsible title="General Stats" >
-            {/* Your existing component */}
-            {selectedChar ? <GeneralStats /> : <div className="text-slate-400">Select a character to view stats.</div>}
-          </Collapsible>
+        {/* Collapsible panels */}
+        <Collapsible title="General Stats" >
+          {selectedChar ? (<GeneralStats />) : (<div className="text-slate-400">Select a character to view stats.</div>)}
+        </Collapsible>
 
-          {/* Add more sections as you build them */}
-          <Collapsible title="Abilities & Skills">
-            <div className="text-slate-300/90">
-              {/* TODO: Replace with your component */}
-              Coming soon…
-            </div>
-          </Collapsible>
+        <Collapsible title="Abilities & Skills">
+          {selectedChar ? (<AbilityScore />) : (<div className="text-slate-400">Select a character to view stats.</div>)}
+        </Collapsible>
 
-          <Collapsible title="Inventory & Equipment">
-            <div className="text-slate-300/90">
-              {/* TODO: Replace with your component */}
-              Coming soon…
-            </div>
-          </Collapsible>
-        </div>
+        <Collapsible title="Biography">
+          {selectedChar ? (<BioStats />) : (<div className="text-slate-400">Select a character to view stats.</div>)}
+        </Collapsible>
+
+        <Collapsible title="Traits">
+          {selectedChar ? (<Traits />) : (<div className="text-slate-400">Select a character to view stats.</div>)}
+        </Collapsible>
+
+        <Collapsible title="Spellbook">
+          {selectedChar ? (<Spellbook />) : (<div className="text-slate-400">Select a character to view stats.</div>)}
+        </Collapsible>
+
+        <Collapsible title="Inventory & Equipment">
+          <div className="text-slate-300/90">Coming soon…</div>
+        </Collapsible>
+
+        <Collapsible title="Actions">
+          <div className="text-slate-300/90">Coming soon…</div>
+        </Collapsible>
+
+        <Collapsible title="Lore">
+          <div className="text-slate-300/90">Coming soon…</div>
+        </Collapsible>
       </div>
     </div>
   );

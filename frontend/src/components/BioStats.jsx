@@ -1,189 +1,265 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import useCharStore from "../store/CharStore";
 import CreatableSelect from "react-select/creatable";
 
 function BioStats() {
-  const { charData, setCharData } = useCharStore();
-  const [races, setRaces] = useState(null);
-  const [subRaces, setSubRaces] = useState(null);
-  const [selectedRace, setSelectedRace] = useState(null);
-  const [selectedSubRace, setSelectedSubRace] = useState(null);
+  const { charData, updateCharField, postCharData } = useCharStore();
+
+  // Guard
+  if (!charData) return null;
+
+  // ----- Remote race data (options) -----
   const [error, setError] = useState(null);
-
-
-  function handleChange(e) {
-    const { name, value, options } = e.target;
-
-    const selectedValues = options ? getSelectedValues(options) : value;
-    setCharData({
-      ...charData,
-      [name]: selectedValues,
-    });
-  }
-
-  function getSelectedValues(options) {
-    return Array.from(options)
-      .filter((option) => option.selected)
-      .map((option) => option.value);
-  }
-
+  const [raceOptions, setRaceOptions] = useState(null); // [{value,label}]
+  const [subraceRaw, setSubraceRaw] = useState(null);   // [{ value: raceName, label: subraceName }]
 
   useEffect(() => {
-    console.log("selectedRace",selectedRace);
-  }, [selectedRace]);
-
-  
-  useEffect(() => {
-    console.log("subrace",selectedSubRace);
-  }, [selectedSubRace]);
-
-  
-  useEffect(() => {
-    const fetchData = async () => {
+    let cancelled = false;
+    (async () => {
       try {
-        const response = await fetch("http://localhost:8000/races");
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
+        const res = await fetch("http://localhost:8000/races");
+        if (!res.ok) throw new Error("Failed to load races");
+        const data = await res.json();
+
+        // data[0] = races[] with .name; data[1] = subraces[] with .raceName + .name
+        const races0 = Array.isArray(data) && data[0] ? data[0] : [];
+        const subs1  = Array.isArray(data) && data[1] ? data[1] : [];
+
+        // Clean races: remove parentheses and dedupe by name
+        const unique = new Set();
+        const cleanedRaces = races0
+          .map(r => (r?.name ?? "").replace(/\s*\([^)]*\)/g, ""))
+          .filter(n => {
+            if (!n) return false;
+            if (unique.has(n)) return false;
+            unique.add(n);
+            return true;
+          })
+          .map(n => ({ value: n, label: n }));
+
+        // Clean subraces: keep { value: raceName, label: subraceName }
+        const cleanedSubs = subs1.map(s => ({
+          value: s?.raceName ?? "",
+          label: s?.name ?? "",
+        }));
+
+        if (!cancelled) {
+          setRaceOptions(cleanedRaces);
+          setSubraceRaw(cleanedSubs);
         }
-        const jsonData = await response.json();
-        if (Array.isArray(jsonData) && jsonData.length > 0) {
-            // Access each dictionary within the array
-            const raceData = jsonData[0]; // First dictionary containing races
-            const subraceData = jsonData[1]; // Second dictionary containing subraces
-            setRaces(cleanJsonRaces(raceData));
-            setSubRaces(cleanSubRaces(subraceData))
-        
-          } else {
-            throw new Error("something went wrong with race data");
-          }
-        
-      } catch (error) {
-        setError(error.message);
+      } catch (e) {
+        if (!cancelled) setError(e.message || "Error loading races");
       }
-    };
+    })();
+    return () => { cancelled = true; };
+  }, []);
 
-    fetchData();
-    // Cleanup function to cancel the fetch request if the component unmounts or before the effect runs again
-    return () => {
-      // Cleanup code here if necessary
-    };
-  }, []); 
+  // ----- Selected values come from charData -----
+  const selectedRace   = charData?.race ?? "";
+  const selectedSubrace = charData?.subrace ?? "";
+  const languages = Array.isArray(charData?.languages) ? charData.languages : [];
+  const background = charData?.background ?? "";
+  const backstory  = charData?.backstory ?? "";
 
-  function cleanJsonRaces(jsonData) {
-    const uniqueNames = new Set();
-  
-    const races = jsonData.map((race, index) => {
-      let name = race.name;
-  
-      // Remove parentheses and their contents using a regular expression
-      name = name.replace(/\s*\([^)]*\)/g, '');
-  
-      // Check if the modified name is not already present in the Set
-      if (!uniqueNames.has(name)) {
-        uniqueNames.add(name);
-        return { value: name, label: name };
-      }
-  
-      return null;
-    }).filter(race => race !== null);
-  
-    return races;
-  }
-  
+  // Subrace options filtered by chosen race
+  const subraceOptions = useMemo(() => {
+    if (!selectedRace || !Array.isArray(subraceRaw)) return [];
+    return subraceRaw.filter(opt => opt.value === selectedRace);
+  }, [selectedRace, subraceRaw]);
 
-  function cleanSubRaces(jsonData) {
-    // Use map directly without wrapping it in another array
-    const races = jsonData.map((race, index) => {
-      // Perform any operation on each item here
-      return { value: race.raceName, label: race.name}; // Return the desired object
-    });
-  
-    // Return the mapped array
-    return races;
-  }
-
-  
-  
-  useEffect(() => {
-    function selectSubRaces() {
-      if (selectedRace && subRaces) {
-        const filteredSubRaces = subRaces.filter(subrace => subrace.value === selectedRace);
-        return filteredSubRaces;
-      }
-      return [];
+  // ----- Handlers: Race / Subrace -----
+  const handleRaceChange = (opt) => {
+    const newRace = opt?.value ?? "";
+    // If race changes and the current subrace doesn't belong, clear it
+    let nextSubrace = selectedSubrace;
+    if (newRace !== selectedRace) {
+      const stillValid = subraceOptions.some(o => o.label === selectedSubrace && o.value === newRace);
+      if (!stillValid) nextSubrace = "";
     }
-  
-    setSelectedSubRace(selectSubRaces());
-  }, [selectedRace, subRaces]);
-  
 
+    updateCharField("race", newRace);
+    updateCharField("subrace", nextSubrace);
+    postCharData();
+  };
 
-  function handleRaceChange(inputVale, actionMeta){
-    setSelectedRace(inputVale.value)
-  }
+  const handleSubraceChange = (opt) => {
+    const newSub = opt?.label ?? "";
+    updateCharField("subrace", newSub);
+    postCharData();
+  };
 
+  // ----- Handlers: Background -----
+  const handleBackgroundChange = (e) => {
+    updateCharField("background", e.target.value);
+    postCharData();
+  };
 
-  function handleSubRaceChange(inputVale, actionMeta){
-    
-    setSelectedSubRace(inputVale.value)
-    console.log("sub from handle",selectedSubRace)
-  }
+  // ----- Languages: add/remove -----
+  const [langInput, setLangInput] = useState("");
 
+  const addLanguage = () => {
+    const v = langInput.trim();
+    if (!v) return;
+    if (languages.includes(v)) {
+      setLangInput("");
+      return;
+    }
+    const next = [...languages, v];
+    updateCharField("languages", next);
+    postCharData();
+    setLangInput("");
+  };
+
+  const removeLanguage = (idx) => {
+    const next = languages.filter((_, i) => i !== idx);
+    updateCharField("languages", next);
+    postCharData();
+  };
+
+  const onLangInputKey = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      addLanguage();
+    }
+  };
+
+  // ----- Backstory -----
+  const handleBackstoryChange = (e) => {
+    updateCharField("backstory", e.target.value);
+    postCharData();
+  };
 
   return (
-    <div>
-        {error && <div>Error: {error}</div>}
+    <div className="w-full max-w-6xl mx-auto space-y-6">
+      {error && (
+        <div className="rounded-lg border border-red-700 bg-red-900/30 p-3 text-red-100">
+          {error}
+        </div>
+      )}
 
-        <div className="flex gap-4">
-            <p>Race</p>
-        { races &&
+      {/* Race / Subrace */}
+      <section className="rounded-2xl border border-slate-700 bg-slate-800/40 p-4">
+        <header className="mb-3">
+          <h3 className="text-lg font-semibold text-orange-300">Ancestry</h3>
+        </header>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Race */}
+          <div className="flex flex-col gap-1">
+            <label className="text-sm text-slate-300">Race</label>
             <CreatableSelect
-            options={races}
-            // onInputChange={handleInputChange}
-            onChange={handleRaceChange}
-            className="w-60"
-            
-           
-        />
-         }
-         {races && selectedRace && subRaces && selectedSubRace &&
-         <div className="flex gap-4">
-             <p>SubRace</p>
-             <CreatableSelect
-             options={selectedSubRace}
-             // onInputChange={handleInputChange}
-             onChange={handleSubRaceChange}
-             className="w-60" />
-             </div>
-            }
-        </div>
-        
+              className="text-slate-900"
+              value={
+                selectedRace
+                  ? { value: selectedRace, label: selectedRace }
+                  : null
+              }
+              options={raceOptions || []}
+              onChange={handleRaceChange}
+              placeholder="Choose or type a race…"
+            />
+          </div>
 
-        <div className="text-orange-400 mt-10 flex gap-2">
-          <label htmlFor="languages" className="w-24 text-right">
-            Languages
-          </label>
-          <input
-            type="text"
-            id="languages"
-            name="languages"
-            onChange={handleChange}
-            className="w-64"
-          />
+          {/* Subrace */}
+          <div className="flex flex-col gap-1">
+            <label className="text-sm text-slate-300">Subrace</label>
+            <CreatableSelect
+              className="text-slate-900"
+              isDisabled={!selectedRace}
+              value={
+                selectedSubrace
+                  ? { value: selectedRace, label: selectedSubrace }
+                  : null
+              }
+              options={subraceOptions}
+              onChange={handleSubraceChange}
+              placeholder={selectedRace ? "Choose or type a subrace…" : "Select a race first"}
+            />
+          </div>
         </div>
-        <div className="text-orange-400 mt-10 flex gap-2">
-          <label htmlFor="background" className="w-24 text-right">
+      </section>
+
+      {/* Background */}
+      <section className="rounded-2xl border border-slate-700 bg-slate-800/40 p-4">
+        <header className="mb-3">
+          <h3 className="text-lg font-semibold text-orange-300">Background</h3>
+        </header>
+
+        <div className="flex items-center gap-3">
+          <label htmlFor="background" className="w-28 text-right">
             Background
           </label>
           <input
             type="text"
             id="background"
             name="background"
-            onChange={handleChange}
-            className="w-64"
+            value={background}
+            onChange={handleBackgroundChange}
+            className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
+            placeholder='e.g., "Acolyte", "Soldier"'
           />
         </div>
-      </div>
+      </section>
+
+      {/* Languages */}
+      <section className="rounded-2xl border border-slate-700 bg-slate-800/40 p-4">
+        <header className="mb-3 flex items-center justify-between">
+          <h3 className="text-lg font-semibold text-orange-300">Languages</h3>
+          <div className="flex gap-2">
+            <input
+              type="text"
+              value={langInput}
+              onChange={(e) => setLangInput(e.target.value)}
+              onKeyDown={onLangInputKey}
+              placeholder="Add a language"
+              className="px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
+            />
+            <button
+              type="button"
+              onClick={addLanguage}
+              className="px-3 py-1.5 rounded-lg border border-slate-600 bg-slate-900 hover:bg-slate-800 transition"
+            >
+              Add
+            </button>
+          </div>
+        </header>
+
+        <div className="flex flex-wrap gap-2">
+          {languages.length === 0 && (
+            <span className="text-slate-400 text-sm">No languages yet.</span>
+          )}
+          {languages.map((lng, idx) => (
+            <span
+              key={`${lng}-${idx}`}
+              className="inline-flex items-center gap-2 px-2 py-1 rounded-full border border-slate-700 bg-slate-900 text-slate-100"
+            >
+              {lng}
+              <button
+                type="button"
+                className="text-slate-300 hover:text-white"
+                onClick={() => removeLanguage(idx)}
+                title="Remove"
+              >
+                ×
+              </button>
+            </span>
+          ))}
+        </div>
+      </section>
+
+      {/* Backstory */}
+      <section className="rounded-2xl border border-slate-700 bg-slate-800/40 p-4">
+        <header className="mb-3">
+          <h3 className="text-lg font-semibold text-orange-300">Backstory</h3>
+        </header>
+        <textarea
+          value={backstory}
+          onChange={handleBackstoryChange}
+          className="w-full min-h-[220px] rounded-lg border border-slate-700 bg-white text-slate-900 p-3"
+          placeholder="Write your character's backstory here…"
+        />
+      </section>
+    </div>
   );
 }
 

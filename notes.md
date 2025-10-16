@@ -14,9 +14,7 @@ monster improvment
 
 # character creation
 
-1. allow multi char tabs
-
-
+1. 
 
 Entries for characters.
 
