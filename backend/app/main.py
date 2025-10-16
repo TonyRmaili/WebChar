@@ -354,6 +354,7 @@ def roll_initiative(
         return {"error": str(e)}
     
 
+
 # ------------------------Embeddings-----------------------------
 
 @app.post("/query", tags=["embeddings"])

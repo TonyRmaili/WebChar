@@ -8,6 +8,11 @@ import AbilityScore from "../components/AbilityScore";
 import BioStats from "../components/BioStats";
 import Traits from "../components/Traits";
 import Spellbook from "../components/Spellbook";
+import Inventory from "../components/Inventory";
+import Lore from "../components/Lore";
+import Actions from "../components/Actions";
+
+import Health from "../components/Health";
 
 
 // Reusable collapsible component
@@ -114,7 +119,7 @@ function CombatPage() {
           <div className="rounded-2xl border border-slate-700 bg-slate-800/40 shadow-inner">
             <div className="w-full h-[520px] md:h-[620px] lg:h-[680px] flex items-center justify-center">
               <span className="text-slate-300/80 text-lg tracking-wide">
-                Play Area (place components here later)
+                {selectedChar ? (<Health />) : (<div className="text-slate-400">Select a character to view stats.</div>)}
               </span>
             </div>
           </div>
@@ -141,16 +146,17 @@ function CombatPage() {
           {selectedChar ? (<Spellbook />) : (<div className="text-slate-400">Select a character to view stats.</div>)}
         </Collapsible>
 
+
         <Collapsible title="Inventory & Equipment">
-          <div className="text-slate-300/90">Coming soon…</div>
+          {selectedChar ? (<Inventory />) : (<div className="text-slate-400">Select a character to view stats.</div>)}
         </Collapsible>
 
         <Collapsible title="Actions">
-          <div className="text-slate-300/90">Coming soon…</div>
+           {selectedChar ? (<Actions />) : (<div className="text-slate-400">Select a character to view stats.</div>)}
         </Collapsible>
 
         <Collapsible title="Lore">
-          <div className="text-slate-300/90">Coming soon…</div>
+          {selectedChar ? (<Lore />) : (<div className="text-slate-400">Select a character to view stats.</div>)}
         </Collapsible>
       </div>
     </div>
