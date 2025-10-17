@@ -15,6 +15,9 @@ const InitiativeTracker = () => {
   const [currentTurnIndex, setCurrentTurnIndex] = useState(0);
   const [round, setRound] = useState(1);
 
+  // NEW: roll mode (group vs individual)
+  const [rollMode, setRollMode] = useState("group"); // "group" | "individual"
+
   // per-monster "amount" field for damage/heal, stored as text to enforce digits-only
   const [adjustBy, setAdjustBy] = useState({}); // { [id]: "12" }
 
@@ -33,11 +36,56 @@ const InitiativeTracker = () => {
     0
   );
 
+  // ---------- helpers for roll expansion ----------
+  const ensureId = (m, idx) =>
+    m.id ?? `mon-type-${idx}-${m.name ?? "unknown"}`;
+
+  // Expand a single type into N instances (with stable ids & names)
+  const expandTypeToInstances = (typedMonster, typeIndex) => {
+    const n = Math.max(1, Number(typedMonster.amount) || 1);
+    const typeId = ensureId(typedMonster, typeIndex);
+    const name = String(typedMonster.name ?? "Unknown");
+    const ac = Number(typedMonster.ac ?? 0);
+    const hp = Number(typedMonster.hp ?? 0);
+
+    return Array.from({ length: n }, (_, i) => ({
+      id: `${typeId}#${i + 1}`,
+      name: `${name} ${i + 1}`,
+      type: "monster",
+      ac,
+      maxHp: hp,
+      currentHp: hp,
+      initiative: 0,
+      _typeId: typeId,
+    }));
+  };
+
   const handleRollInitiatives = async () => {
     const diceSize = 20;
     const token = localStorage.getItem("token");
 
     try {
+      const payload =
+        rollMode === "group"
+          ? monsters.map((m, idx) => {
+              const typeId = ensureId(m, idx);
+              return {
+                ...m,
+                id: typeId,
+                amount: Number(m.amount) || 1,
+              };
+            })
+          : monsters.flatMap((m, idx) => {
+              const typeId = ensureId(m, idx);
+              const n = Math.max(1, Number(m.amount) || 1);
+              return Array.from({ length: n }, (_, i) => ({
+                ...m,
+                id: `${typeId}#${i + 1}`,
+                name: `${m.name ?? "Unknown"} ${i + 1}`,
+                amount: 1,
+              }));
+            });
+
       const res = await fetch(`http://localhost:8000/dice_roll/${diceSize}`, {
         method: "POST",
         headers: {
@@ -45,49 +93,93 @@ const InitiativeTracker = () => {
           ...(token ? { Authorization: `Bearer ${token}` } : {}),
         },
         credentials: "include",
-        body: JSON.stringify(monsters), // array of monsters
+        body: JSON.stringify(payload),
       });
 
       if (!res.ok) {
         throw new Error(`Failed to roll initiatives: ${res.status}`);
       }
 
-      const rolledMonsters = await res.json(); // backend returns an array
+      const rolled = await res.json();
 
       // Players (do not show/edit HP for players)
       const playerList = (party?.players || []).map((p) => ({
-        id: `pl-${p.id ?? p.name}`, // stable id if you have p.id
+        id: `pl-${p.id ?? p.name}`,
         name: p.name,
         type: "player",
         ac: Number(p.ac ?? 0),
         initiative: Number(p.initiative ?? 0),
       }));
 
-      // Monsters — give them currentHp + maxHp, filter out any with hp <= 0
-      const monsterList = (rolledMonsters || [])
-        .map((m, i) => {
-          const maxHp = Number(m.hp ?? 0);
-          return {
-            id: m.id ?? `mon-${i}-${Date.now()}`,
-            name: m.name,
-            type: "monster",
-            ac: Number(m.ac ?? 0),
-            maxHp,
-            currentHp: maxHp, // start full health
-            initiative: Number(m.initiative ?? 0),
-          };
-        })
-        .filter((m) => m.maxHp > 0); // don't let 0 HP monsters in
+      // Build monster instances for initiative order
+      let monsterInstances = [];
+
+      if (rollMode === "group") {
+        // rolled = one result per TYPE, now expand each type into N instances with same initiative
+        monsterInstances = (rolled || [])
+          .flatMap((typed, tIdx) => {
+            const typeId = typed.id ?? ensureId(typed, tIdx);
+            // Determine amount (prefer typed.amount; fallback to original monsters list)
+            const amount =
+              Math.max(1, Number(typed.amount)) ||
+              Math.max(
+                1,
+                Number(
+                  (monsters.find(
+                    (m, i) => ensureId(m, i) === typeId
+                  ) || {}).amount
+                ) || 1
+              );
+
+            const name = String(typed.name ?? "Unknown");
+            const ac = Number(typed.ac ?? 0);
+            const hp = Number(typed.hp ?? 0);
+            const init = Number(typed.initiative ?? 0);
+
+            return Array.from({ length: amount }, (_, i) => ({
+              id: `${typeId}#${i + 1}`,
+              name: `${name} ${i + 1}`,
+              type: "monster",
+              ac,
+              maxHp: hp,
+              currentHp: hp,
+              initiative: init,
+              _typeId: typeId,
+            }));
+          })
+          .filter((m) => m.maxHp > 0);
+      } else {
+        // INDIVIDUAL: rolled already contains each instance
+        monsterInstances = (rolled || [])
+          .map((m, i) => {
+            const maxHp = Number(m.hp ?? 0);
+            return {
+              id: m.id ?? `mon-${i}-${Date.now()}`,
+              name: m.name,
+              type: "monster",
+              ac: Number(m.ac ?? 0),
+              maxHp,
+              currentHp: maxHp,
+              initiative: Number(m.initiative ?? 0),
+              _typeId: (m.id || "").split("#")[0] || `mon-type-${i}`,
+            };
+          })
+          .filter((m) => m.maxHp > 0);
+      }
 
       // Merge and sort
-      const mergedOrder = [...playerList, ...monsterList].sort(
-        (a, b) => b.initiative - a.initiative
-      );
+      const mergedOrder = [...playerList, ...monsterInstances].sort((a, b) => {
+        const d = (b.initiative ?? 0) - (a.initiative ?? 0);
+        if (d !== 0) return d;
+        const byName = String(a.name ?? "").localeCompare(String(b.name ?? ""));
+        if (byName !== 0) return byName;
+        return String(a.id).localeCompare(String(b.id));
+      });
 
       setInitiativeOrder(mergedOrder);
       setCurrentTurnIndex(0);
       setRound(1);
-      setAdjustBy({}); // reset per-monster amount fields
+      setAdjustBy({});
     } catch (err) {
       console.error(err);
     }
@@ -167,36 +259,30 @@ const InitiativeTracker = () => {
   };
 
   const updateInitiative = (id, nextValue) => {
-  setInitiativeOrder((prev) => {
-    // 1) update the value on the target entity
-    const updated = prev.map((e) =>
-      e.id === id
-        ? { ...e, initiative: Number.isFinite(nextValue) ? nextValue : 0 }
-        : e
-    );
+    setInitiativeOrder((prev) => {
+      const updated = prev.map((e) =>
+        e.id === id
+          ? { ...e, initiative: Number.isFinite(nextValue) ? nextValue : 0 }
+          : e
+      );
 
-    // 2) remember who is currently acting
-    const currentId = prev[currentTurnIndex]?.id;
+      const currentId = prev[currentTurnIndex]?.id;
 
-    // 3) sort highest first; stable tie-breaker by name then id
-    const sorted = [...updated].sort((a, b) => {
-      const d = (b.initiative ?? 0) - (a.initiative ?? 0);
-      if (d !== 0) return d;
-      const byName =
-        String(a.name ?? "").localeCompare(String(b.name ?? ""));
-      if (byName !== 0) return byName;
-      return String(a.id).localeCompare(String(b.id));
+      const sorted = [...updated].sort((a, b) => {
+        const d = (b.initiative ?? 0) - (a.initiative ?? 0);
+        if (d !== 0) return d;
+        const byName =
+          String(a.name ?? "").localeCompare(String(b.name ?? ""));
+        if (byName !== 0) return byName;
+        return String(a.id).localeCompare(String(b.id));
+      });
+
+      const newIdx = sorted.findIndex((e) => e.id === currentId);
+      setCurrentTurnIndex(newIdx >= 0 ? newIdx : 0);
+
+      return sorted;
     });
-
-    // 4) keep the same current entity selected after reorder
-    const newIdx = sorted.findIndex((e) => e.id === currentId);
-    setCurrentTurnIndex(newIdx >= 0 ? newIdx : 0);
-
-    return sorted;
-  });
-};
-
-
+  };
 
   return (
     <div className="max-w-5xl mx-auto p-6">
@@ -205,6 +291,30 @@ const InitiativeTracker = () => {
         <h1 className="text-2xl font-semibold">Initiative Tracker</h1>
 
         <div className="flex items-center gap-2">
+          {/* Roll mode switch */}
+          <div className="flex items-center gap-2 rounded-xl border border-slate-200 px-3 py-2 bg-white">
+            <label className="flex items-center gap-1 text-sm">
+              <input
+                type="radio"
+                name="rollmode"
+                value="group"
+                checked={rollMode === "group"}
+                onChange={() => setRollMode("group")}
+              />
+              Group
+            </label>
+            <label className="flex items-center gap-1 text-sm">
+              <input
+                type="radio"
+                name="rollmode"
+                value="individual"
+                checked={rollMode === "individual"}
+                onChange={() => setRollMode("individual")}
+              />
+              Individual
+            </label>
+          </div>
+
           <button
             type="button"
             onClick={handleRollInitiatives}
@@ -299,7 +409,6 @@ const InitiativeTracker = () => {
                     </div>
                   </div>
 
-
                   {/* MONSTER HP + Adjust controls */}
                   {entity.type === "monster" ? (
                     <div className="flex items-center gap-3">
@@ -363,7 +472,13 @@ const InitiativeTracker = () => {
  * Integer input that only allows digits while typing.
  * Commits on blur or Enter, clamped between min..max.
  */
-const IntField = ({ value, min = Number.MIN_SAFE_INTEGER, max = Number.MAX_SAFE_INTEGER, onCommit, className = "" }) => {
+const IntField = ({
+  value,
+  min = Number.MIN_SAFE_INTEGER,
+  max = Number.MAX_SAFE_INTEGER,
+  onCommit,
+  className = "",
+}) => {
   const [text, setText] = useState(String(value ?? 0));
 
   useEffect(() => {
@@ -397,7 +512,6 @@ const IntField = ({ value, min = Number.MIN_SAFE_INTEGER, max = Number.MAX_SAFE_
     />
   );
 };
-
 
 const IntFieldSigned = ({ value, onCommit, className = "" }) => {
   const [text, setText] = useState(String(value ?? 0));
@@ -434,6 +548,5 @@ const IntFieldSigned = ({ value, onCommit, className = "" }) => {
     />
   );
 };
-
 
 export default InitiativeTracker;

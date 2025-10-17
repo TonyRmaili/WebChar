@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import useCharStore from "../store/CharStore";
 
 const DEFAULT_CURRENT = { hp: 0, temp_hp: 0 };
@@ -7,15 +7,6 @@ export default function PlayHealth() {
   const { charData, updateCharField, postCharData } = useCharStore();
 
   if (!charData) return null;
-
-  // // Ensure the "current" object exists once
-  // useEffect(() => {
-  //   if (!charData.current) {
-  //     updateCharField("current", DEFAULT_CURRENT);
-  //     postCharData();
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [!!charData.current]);
 
   const maxHP = Number(charData?.max_hp ?? 0);
 
@@ -42,8 +33,7 @@ export default function PlayHealth() {
       });
 
       const payload = await res.json().catch(() => null);
-      console.log(charData.current.hp)
-      
+
       if (!res.ok) {
         throw new Error(
           `Failed: ${res.status} ${
@@ -52,7 +42,7 @@ export default function PlayHealth() {
         );
       }
 
-      // ✅ Apply backend’s updated HP to store
+      // ✅ Merge backend response
       if (payload && payload.current && typeof payload.current === "object") {
         updateCharField("current", {
           ...(charData.current || DEFAULT_CURRENT),
@@ -68,8 +58,6 @@ export default function PlayHealth() {
           ...(payload.temp_hp !== undefined ? { temp_hp: payload.temp_hp } : {}),
         });
       }
-
-      console.log("✅ Updated from backend:", payload);
     } catch (e) {
       console.error("❌ Health update error:", e.message);
     }
@@ -93,7 +81,7 @@ export default function PlayHealth() {
       </header>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3 items-center">
-        {/* Current / Max (read-only; backend updates these) */}
+        {/* Current / Max HP */}
         <div className="flex items-center gap-3">
           <label className="w-24 text-slate-300 text-sm">Current / Max</label>
           <div className="flex items-center gap-2">
@@ -102,7 +90,6 @@ export default function PlayHealth() {
               value={current.hp ?? 0}
               readOnly
               className="w-24 px-2 py-1 rounded border border-slate-700 bg-slate-900 text-slate-200"
-              title="Current HP is controlled by the backend"
             />
             <span className="text-slate-300">/</span>
             <input
@@ -110,12 +97,11 @@ export default function PlayHealth() {
               value={maxHP}
               readOnly
               className="w-24 px-2 py-1 rounded border border-slate-700 bg-slate-900 text-slate-200"
-              title="Max HP comes from General Stats"
             />
           </div>
         </div>
 
-        {/* Temp HP (editable) */}
+        {/* Temp HP */}
         <div className="flex items-center gap-3">
           <label className="w-24 text-slate-300 text-sm">Temp HP</label>
           <input
@@ -126,7 +112,7 @@ export default function PlayHealth() {
           />
         </div>
 
-        {/* Amount + buttons */}
+        {/* Heal / Damage input */}
         <div className="flex items-center gap-2">
           <input
             type="number"
@@ -141,9 +127,9 @@ export default function PlayHealth() {
             onClick={() => {
               const n = Number(amount);
               if (!Number.isFinite(n) || n <= 0) return;
-              onHealthChange(-n, charData.name); // damage
+              onHealthChange(-n, charData.name);
             }}
-            className="px-3 py-1.5 rounded-lg border border-red-700 bg-red-900/40 hover:bg-red-900/60 text-red-100 transition"
+            className="px-3 py-1.5 rounded-lg border border-red-700 bg-red-900/40 hover:bg-red-900/60 text-red-100"
           >
             Damage
           </button>
@@ -152,16 +138,16 @@ export default function PlayHealth() {
             onClick={() => {
               const n = Number(amount);
               if (!Number.isFinite(n) || n <= 0) return;
-              onHealthChange(+n, charData.name); // heal
+              onHealthChange(n, charData.name);
             }}
-            className="px-3 py-1.5 rounded-lg border border-emerald-700 bg-emerald-900/40 hover:bg-emerald-900/60 text-emerald-100 transition"
+            className="px-3 py-1.5 rounded-lg border border-emerald-700 bg-emerald-900/40 hover:bg-emerald-900/60 text-emerald-100"
           >
             Heal
           </button>
         </div>
       </div>
 
-      {/* Quick heal/damage buttons */}
+      {/* Quick buttons */}
       <div className="flex flex-wrap gap-2">
         {[-1, -5, -10].map((v) => (
           <button
