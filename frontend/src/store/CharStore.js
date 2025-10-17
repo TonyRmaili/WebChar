@@ -40,6 +40,7 @@ const useCharStore = create((set, get) => ({
     }),
   
 
+    
   postCharData: async () => {
   try {
     const token = localStorage.getItem("token");

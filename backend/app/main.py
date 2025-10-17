@@ -7,7 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from typing import Annotated
 from fastapi import Query
 from app.database.models import User,Character
-from app.database.schemas import UserSchema,CharacterSchema, QueryRequest, CharacterIn, DictData
+from app.database.schemas import UserSchema,CharacterSchema, QueryRequest, CharacterIn, HealthData
 from app.security import hash_password, verify_password, create_access_token, get_current_user
 from app.db_setup import init_db, get_db
 from fastapi.security import OAuth2PasswordRequestForm
@@ -20,6 +20,7 @@ from fastapi.responses import JSONResponse
 from embedder.xembedder import Embedder
 from pathlib import Path
 from app.dice_handler import roll_dice
+from app.combat_functions import heal_health, damage_health,load_character
 
 
 
@@ -333,6 +334,43 @@ def delete_party(
 
     file_path.unlink()
     return Response(status_code=204)
+
+
+
+ 
+# ------------------------Combat-----------------------------
+
+@app.post("/combat/health", tags=["combat"])
+def change_health(
+    form_data: HealthData,
+    current_user: Annotated[User, Depends(get_current_user)],
+    db: Session = Depends(get_db)
+       
+):
+    
+    print(form_data.value)
+    print(type(form_data.value))
+
+    if form_data.value < 0:
+        damage_health(
+            user=current_user.name,
+            character=form_data.name,
+            value = form_data.value     
+        )
+
+    elif form_data.value > 0:
+        heal_health(
+            user=current_user.name,
+            character=form_data.name,
+            value = form_data.value     
+        )
+
+    else:
+        pass
+
+    updated_char = load_character(current_user.name, form_data.name)
+    return {"current": updated_char["current"]}
+
 
 
 # ------------------------Dice-----------------------------

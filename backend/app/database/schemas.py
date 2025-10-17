@@ -27,6 +27,10 @@ class QueryRequest(BaseModel):
 class DictData(BaseModel):
     form_data : dict
 
+class HealthData(BaseModel):
+    value : int
+    name : str
+
 # class GenderEnum(str, Enum):
 #     Male = 'Male'
 #     Female = 'Female'
