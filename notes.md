@@ -12,9 +12,11 @@ monster improvment
 
 
 
-# character creation
+# character pages
 
-1. 
+1. fix temp hp
+2. design the layout for all the other "current" components
+3. 
 
 Entries for characters.
 
