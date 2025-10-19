@@ -14,9 +14,8 @@ monster improvment
 
 # character pages
 
-1. fix temp hp
-2. design the layout for all the other "current" components
-3. 
+1. Show actions in player
+2. 
 
 Entries for characters.
 

@@ -16,26 +16,51 @@ def save_character(user,character,char_data):
 
 
 
-def damage_health(user,character,value):
-    char_data = load_character(user,character)
+def damage_health(user, character, value):
+    """
+    Apply incoming damage (value is already negative) in order:
+    barrier → temp_hp → hp.
+    None of these can go below zero.
+    """
+    char_data = load_character(user, character)
 
-    max_hp = char_data["max_hp"]
-    current_hp = char_data["current"]["hp"]
-    temp_hp = char_data["current"]["temp_hp"]
+    current = char_data.get("current", {})
+    hp = current.get("hp", 0)
+    temp_hp = current.get("temp_hp", 0)
+    barrier = current.get("barrier", 0)
 
-    
-    new_hp = current_hp + value
-    char_data["current"]["hp"] = new_hp
+    # Convert to positive damage amount
+    damage = abs(value)
 
-    if char_data["current"]["hp"] < 0:
-        char_data["current"]["hp"] = 0
+    # --- 1️⃣ Apply to Barrier first ---
+    if barrier >= damage:
+        barrier -= damage
+        damage = 0
+    else:
+        damage -= barrier
+        barrier = 0
 
-    
-    save_character(
-        user=user,
-        character=character,
-        char_data=char_data
-    )
+    # --- 2️⃣ Apply to Temp HP ---
+    if damage > 0:
+        if temp_hp >= damage:
+            temp_hp -= damage
+            damage = 0
+        else:
+            damage -= temp_hp
+            temp_hp = 0
+
+    # --- 3️⃣ Apply to HP ---
+    if damage > 0:
+        hp = max(hp - damage, 0)
+
+    # --- Save updated values ---
+    char_data["current"]["hp"] = hp
+    char_data["current"]["temp_hp"] = temp_hp
+    char_data["current"]["barrier"] = barrier
+
+    save_character(user=user, character=character, char_data=char_data)
+    return char_data
+
 
 
 

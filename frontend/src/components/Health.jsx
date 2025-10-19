@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 import useCharStore from "../store/CharStore";
 
-const DEFAULT_CURRENT = { hp: 0, temp_hp: 0 };
+const DEFAULT_CURRENT = { hp: 0, temp_hp: 0, barrier: 0 };
 
 export default function PlayHealth() {
   const { charData, updateCharField, postCharData } = useCharStore();
@@ -50,12 +50,15 @@ export default function PlayHealth() {
         });
       } else if (
         payload &&
-        (payload.hp !== undefined || payload.temp_hp !== undefined)
+        (payload.hp !== undefined ||
+          payload.temp_hp !== undefined ||
+          payload.barrier !== undefined)
       ) {
         updateCharField("current", {
           ...(charData.current || DEFAULT_CURRENT),
           ...(payload.hp !== undefined ? { hp: payload.hp } : {}),
           ...(payload.temp_hp !== undefined ? { temp_hp: payload.temp_hp } : {}),
+          ...(payload.barrier !== undefined ? { barrier: payload.barrier } : {}),
         });
       }
     } catch (e) {
@@ -63,12 +66,32 @@ export default function PlayHealth() {
     }
   }
 
-  // --- Update temp HP locally and persist ---
+  // --- Local update helpers ---
   async function onTempHpChange(raw) {
-    const value = raw === "" ? "" : Number(raw);
+    const value = raw === "" ? "" : Math.max(0, Number(raw) || 0);
     const next = {
       ...(charData.current || DEFAULT_CURRENT),
-      temp_hp: Number.isNaN(value) ? 0 : value,
+      temp_hp: value,
+    };
+    updateCharField("current", next);
+    await postCharData();
+  }
+
+  async function onBarrierChange(raw) {
+    const value = raw === "" ? "" : Math.max(0, Number(raw) || 0);
+    const next = {
+      ...(charData.current || DEFAULT_CURRENT),
+      barrier: value,
+    };
+    updateCharField("current", next);
+    await postCharData();
+  }
+
+  async function onHpManualChange(raw) {
+    const value = raw === "" ? "" : Math.max(0, Number(raw) || 0);
+    const next = {
+      ...(charData.current || DEFAULT_CURRENT),
+      hp: value,
     };
     updateCharField("current", next);
     await postCharData();
@@ -80,16 +103,17 @@ export default function PlayHealth() {
         <h3 className="text-lg font-semibold text-orange-300">Health</h3>
       </header>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 items-center">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-3 items-center">
         {/* Current / Max HP */}
         <div className="flex items-center gap-3">
           <label className="w-24 text-slate-300 text-sm">Current / Max</label>
           <div className="flex items-center gap-2">
             <input
               type="number"
+              min={0}
               value={current.hp ?? 0}
-              readOnly
-              className="w-24 px-2 py-1 rounded border border-slate-700 bg-slate-900 text-slate-200"
+              onChange={(e) => onHpManualChange(e.target.value)}
+              className="w-24 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
             />
             <span className="text-slate-300">/</span>
             <input
@@ -106,8 +130,21 @@ export default function PlayHealth() {
           <label className="w-24 text-slate-300 text-sm">Temp HP</label>
           <input
             type="number"
+            min={0}
             value={current.temp_hp ?? 0}
             onChange={(e) => onTempHpChange(e.target.value)}
+            className="w-24 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
+          />
+        </div>
+
+        {/* Barrier */}
+        <div className="flex items-center gap-3">
+          <label className="w-24 text-slate-300 text-sm">Barrier</label>
+          <input
+            type="number"
+            min={0}
+            value={current.barrier ?? 0}
+            onChange={(e) => onBarrierChange(e.target.value)}
             className="w-24 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
           />
         </div>
