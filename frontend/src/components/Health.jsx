@@ -5,11 +5,9 @@ const DEFAULT_CURRENT = { hp: 0, temp_hp: 0, barrier: 0 };
 
 export default function PlayHealth() {
   const { charData, updateCharField, postCharData } = useCharStore();
-
   if (!charData) return null;
 
   const maxHP = Number(charData?.max_hp ?? 0);
-
   const current = useMemo(
     () => ({ ...DEFAULT_CURRENT, ...(charData.current || {}) }),
     [charData?.current]
@@ -17,7 +15,6 @@ export default function PlayHealth() {
 
   const [amount, setAmount] = useState("");
 
-  // --- API call to apply damage or healing ---
   async function onHealthChange(value, name) {
     try {
       const token = localStorage.getItem("token");
@@ -33,27 +30,11 @@ export default function PlayHealth() {
       });
 
       const payload = await res.json().catch(() => null);
+      if (!res.ok) throw new Error(`Failed: ${res.status} ${payload ? JSON.stringify(payload) : "Unknown error"}`);
 
-      if (!res.ok) {
-        throw new Error(
-          `Failed: ${res.status} ${
-            payload ? JSON.stringify(payload) : "Unknown error"
-          }`
-        );
-      }
-
-      // ✅ Merge backend response
       if (payload && payload.current && typeof payload.current === "object") {
-        updateCharField("current", {
-          ...(charData.current || DEFAULT_CURRENT),
-          ...payload.current,
-        });
-      } else if (
-        payload &&
-        (payload.hp !== undefined ||
-          payload.temp_hp !== undefined ||
-          payload.barrier !== undefined)
-      ) {
+        updateCharField("current", { ...(charData.current || DEFAULT_CURRENT), ...payload.current });
+      } else if (payload && (payload.hp !== undefined || payload.temp_hp !== undefined || payload.barrier !== undefined)) {
         updateCharField("current", {
           ...(charData.current || DEFAULT_CURRENT),
           ...(payload.hp !== undefined ? { hp: payload.hp } : {}),
@@ -66,98 +47,85 @@ export default function PlayHealth() {
     }
   }
 
-  // --- Local update helpers ---
   async function onTempHpChange(raw) {
     const value = raw === "" ? "" : Math.max(0, Number(raw) || 0);
-    const next = {
-      ...(charData.current || DEFAULT_CURRENT),
-      temp_hp: value,
-    };
-    updateCharField("current", next);
+    updateCharField("current", { ...(charData.current || DEFAULT_CURRENT), temp_hp: value });
     await postCharData();
   }
-
   async function onBarrierChange(raw) {
     const value = raw === "" ? "" : Math.max(0, Number(raw) || 0);
-    const next = {
-      ...(charData.current || DEFAULT_CURRENT),
-      barrier: value,
-    };
-    updateCharField("current", next);
+    updateCharField("current", { ...(charData.current || DEFAULT_CURRENT), barrier: value });
     await postCharData();
   }
-
   async function onHpManualChange(raw) {
     const value = raw === "" ? "" : Math.max(0, Number(raw) || 0);
-    const next = {
-      ...(charData.current || DEFAULT_CURRENT),
-      hp: value,
-    };
-    updateCharField("current", next);
+    updateCharField("current", { ...(charData.current || DEFAULT_CURRENT), hp: value });
     await postCharData();
   }
 
+  // styles
+  const labelCls = "text-amber-200 text-sm w-16 md:w-20 shrink-0";
+  const inputBase = "px-2 py-1 rounded border border-slate-700";
+  const inputLight = `${inputBase} bg-white text-slate-900 w-20 md:w-24`;
+  const inputDark  = `${inputBase} bg-slate-900 text-slate-200 w-20 md:w-24`;
+
   return (
-    <section className="rounded-2xl border border-slate-700 bg-slate-800/40 p-4 space-y-4">
+    <section className="rounded-2xl border border-slate-700 bg-slate-800/40 p-4 space-y-4 overflow-hidden">
       <header>
         <h3 className="text-lg font-semibold text-orange-300">Health</h3>
       </header>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-3 items-center">
-        {/* Current / Max HP */}
-        <div className="flex items-center gap-3">
-          <label className="w-24 text-slate-300 text-sm">Current / Max</label>
-          <div className="flex items-center gap-2">
+      {/* tighter column gaps; align centers */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-x-6 gap-y-3 items-center min-w-0">
+        {/* Current / Max HP (gives Temp some breathing room via right padding/margin) */}
+        <div className="flex items-center gap-1.5 pr-6 md:pr-10 min-w-0">
+          <label className={labelCls}>Current / Max</label>
+          <div className="flex items-center gap-1.5 min-w-0">
             <input
               type="number"
               min={0}
               value={current.hp ?? 0}
               onChange={(e) => onHpManualChange(e.target.value)}
-              className="w-24 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
+              className={inputLight}
             />
             <span className="text-slate-300">/</span>
-            <input
-              type="number"
-              value={maxHP}
-              readOnly
-              className="w-24 px-2 py-1 rounded border border-slate-700 bg-slate-900 text-slate-200"
-            />
+            <input type="number" value={maxHP} readOnly className={inputDark} />
           </div>
         </div>
 
-        {/* Temp HP */}
-        <div className="flex items-center gap-3">
-          <label className="w-24 text-slate-300 text-sm">Temp HP</label>
+        {/* Temp HP — nudged right so it doesn't crowd Max */}
+        <div className="flex items-center gap-1.5 md:ml-8 lg:ml-12 min-w-0">
+          <label className={labelCls}>Temp HP</label>
           <input
             type="number"
             min={0}
             value={current.temp_hp ?? 0}
             onChange={(e) => onTempHpChange(e.target.value)}
-            className="w-24 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
+            className={inputLight}
           />
         </div>
 
         {/* Barrier */}
-        <div className="flex items-center gap-3">
-          <label className="w-24 text-slate-300 text-sm">Barrier</label>
+        <div className="flex items-center gap-1.5 min-w-0">
+          <label className={labelCls}>Barrier</label>
           <input
             type="number"
             min={0}
             value={current.barrier ?? 0}
             onChange={(e) => onBarrierChange(e.target.value)}
-            className="w-24 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
+            className={inputLight}
           />
         </div>
 
-        {/* Heal / Damage input */}
-        <div className="flex items-center gap-2">
+        {/* Amount + Damage/Heal — keep small + allow wrap */}
+        <div className="flex flex-wrap items-center gap-2 min-w-0">
           <input
             type="number"
             min={0}
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
             placeholder="Amount"
-            className="w-28 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
+            className="w-24 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
           />
           <button
             type="button"
@@ -166,7 +134,7 @@ export default function PlayHealth() {
               if (!Number.isFinite(n) || n <= 0) return;
               onHealthChange(-n, charData.name);
             }}
-            className="px-3 py-1.5 rounded-lg border border-red-700 bg-red-900/40 hover:bg-red-900/60 text-red-100"
+            className="px-2 py-1 text-sm rounded-lg border border-red-700 bg-red-900/40 hover:bg-red-900/60 text-red-100"
           >
             Damage
           </button>
@@ -177,7 +145,7 @@ export default function PlayHealth() {
               if (!Number.isFinite(n) || n <= 0) return;
               onHealthChange(n, charData.name);
             }}
-            className="px-3 py-1.5 rounded-lg border border-emerald-700 bg-emerald-900/40 hover:bg-emerald-900/60 text-emerald-100"
+            className="px-2 py-1 text-sm rounded-lg border border-emerald-700 bg-emerald-900/40 hover:bg-emerald-900/60 text-emerald-100"
           >
             Heal
           </button>

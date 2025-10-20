@@ -14,8 +14,10 @@ monster improvment
 
 # character pages
 
-1. Show actions in player
-2. 
+1. fix the grids and layout for the playing field
+2. max hp modifier for aid / drain effects
+3. slight bug with current_charges not matching max_charges on creating action. it cant increase but can decrease on chaning max
+4. improve the resting logic, its messy for the moment. 
 
 Entries for characters.
 

@@ -62,8 +62,6 @@ def damage_health(user, character, value):
     return char_data
 
 
-
-
 def heal_health(user,character,value):
     char_data = load_character(user,character)
 
@@ -80,8 +78,44 @@ def heal_health(user,character,value):
         character=character,
         char_data=char_data
     )
+    return char_data
 
      
+def on_shortrest(user,character):
+    char_data = load_character(user, character)
+
+    action_types = ["actions","bonus_actions","reactions"]
+
+    # actions
+    for action_type in action_types:
+        charge_actions(char_data=char_data,
+                       action_type=action_type,
+                       rest_type="short",
+                       character=character,
+                       user=user)
+
+    
+    return char_data
+
+
+def on_longrest(user,character):
+    print(f'{user} taking long rest')
+
+
+
+def charge_actions(char_data,action_type,rest_type,user,character):
+    for action in char_data["actions"][action_type]:
+        if action["charges"]["has"]:
+            if rest_type == "short":
+                if action["charges"]["resetAmount"] == "full":
+                    action["charges"]["current_charges"] = action["charges"]["max_charges"]
+                else:
+                    action["charges"]["current_charges"] += action["charges"]["resetAmount"]
+                    if action["charges"]["current_charges"] > action["charges"]["max_charges"]:
+                        action["charges"]["current_charges"] = action["charges"]["max_charges"]
+
+    save_character(user=user,character=character,char_data=char_data)
+   
 
 if __name__ == "__main__":
     heal_health("bisi","Mokrot",value=0)

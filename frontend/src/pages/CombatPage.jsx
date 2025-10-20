@@ -13,11 +13,13 @@ import Lore from "../components/Lore";
 import Actions from "../components/Actions";
 
 import Health from "../components/Health";
+import ActionsPlay from "../components/ActionsPlay";
 
 
-// Reusable collapsible component
+
 function Collapsible({ title, children, defaultOpen = false }) {
   const [open, setOpen] = useState(defaultOpen);
+
   return (
     <div className="rounded-xl border border-slate-700 overflow-hidden bg-slate-800/50">
       <button
@@ -49,6 +51,41 @@ function CombatPage() {
   const { fetchChar } = useCharStore();
   const navigate = useNavigate();
   const [activeTabId, setActiveTabId] = useState(null);
+
+
+
+  // --- REST API call ---
+ async function onRest(rest_type) {
+  try {
+    if (!selectedChar?.name) throw new Error("No character selected");
+
+    const authToken = localStorage.getItem("token");
+    if (!authToken) throw new Error("Token not found in localStorage");
+
+    console.log("rest:", rest_type, selectedChar?.name)
+
+    const res = await fetch("http://localhost:8000/combat/rest", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${authToken}`,
+      },
+      // backend expects: { rest_type, name }
+      body: JSON.stringify({ rest_type, name: selectedChar.name }),
+    });
+
+    const payload = await res.json().catch(() => null);
+    if (!res.ok) {
+      throw new Error(`Failed: ${res.status} ${payload ? JSON.stringify(payload) : "Unknown error"}`);
+    }
+
+    // After a successful rest, just refetch the active character to sync UI
+    await fetchChar(activeTabId);
+  } catch (e) {
+    console.error("❌ rest update error:", e.message);
+  }
+}
+
 
   // Route guards
   useEffect(() => {
@@ -114,28 +151,63 @@ function CombatPage() {
 
       {/* Content */}
       <div className="w-full max-w-6xl mt-6 space-y-4">
-        {/* Collapsible PLAY AREA */}
-        <Collapsible title="Play Area" >
-          <div className="rounded-2xl border border-slate-700 bg-slate-800/40 shadow-inner">
-            <div className="w-full h-[520px] md:h-[620px] lg:h-[680px] flex items-center justify-center">
-              <span className="text-slate-300/80 text-lg tracking-wide">
-                {selectedChar ? (<Health />) : (<div className="text-slate-400">Select a character to view stats.</div>)}
-              </span>
+
+{/* Collapsible PLAY AREA */}
+<Collapsible title="Play Area">
+  <div className="relative rounded-2xl border border-slate-700 bg-slate-800/40 shadow-inner">
+    {/* Fixed-height canvas; inside we stack vertically */}
+    <div className="w-full h-[520px] md:h-[620px] lg:h-[680px] p-4">
+      <div className="flex h-full flex-col gap-4">
+        {/* Health: no scrolling, grows to its natural height */}
+        <div className="flex-none">
+          {selectedChar ? (
+            <Health />
+          ) : (
+            <div className="rounded-xl border border-slate-700/60 bg-slate-900/40 p-3 text-slate-400">
+              Select a character to view stats.
             </div>
+          )}
+        </div>
+
+        {/* ActionsPlay: takes remaining space and scrolls if needed */}
+        <div className="flex-1 min-h-0">
+          <div className="h-full overflow-y-auto rounded-xl border border-slate-700/60 bg-slate-900/40 p-3">
+            {selectedChar ? (
+              <ActionsPlay />
+            ) : (
+              <div className="text-slate-400">Select a character to view stats.</div>
+            )}
           </div>
-        </Collapsible>
+        </div>
+      </div>
+    </div>
+
+    {/* Bottom-right controls stay anchored */}
+    <div className="absolute bottom-4 right-4 flex gap-3">
+      <button
+        type="button"
+        className="px-4 py-2 rounded-lg border border-amber-600 bg-amber-800/50 hover:bg-amber-700/70 text-amber-100 transition"
+        onClick={() => onRest("short")}
+        disabled={!selectedChar}
+      >
+        Short Rest
+      </button>
+      <button
+        type="button"
+        className="px-4 py-2 rounded-lg border border-teal-600 bg-teal-800/50 hover:bg-teal-700/70 text-teal-100 transition"
+        onClick={() => onRest("long")}
+        disabled={!selectedChar}
+      >
+        Long Rest
+      </button>
+    </div>
+  </div>
+</Collapsible>
+
 
         {/* Collapsible panels */}
-        <Collapsible title="General Stats" >
-          {selectedChar ? (<GeneralStats />) : (<div className="text-slate-400">Select a character to view stats.</div>)}
-        </Collapsible>
-
-        <Collapsible title="Abilities & Skills">
-          {selectedChar ? (<AbilityScore />) : (<div className="text-slate-400">Select a character to view stats.</div>)}
-        </Collapsible>
-
-        <Collapsible title="Biography">
-          {selectedChar ? (<BioStats />) : (<div className="text-slate-400">Select a character to view stats.</div>)}
+        <Collapsible title="Actions">
+           {selectedChar ? (<Actions />) : (<div className="text-slate-400">Select a character to view stats.</div>)}
         </Collapsible>
 
         <Collapsible title="Traits">
@@ -146,13 +218,20 @@ function CombatPage() {
           {selectedChar ? (<Spellbook />) : (<div className="text-slate-400">Select a character to view stats.</div>)}
         </Collapsible>
 
-
         <Collapsible title="Inventory & Equipment">
           {selectedChar ? (<Inventory />) : (<div className="text-slate-400">Select a character to view stats.</div>)}
         </Collapsible>
 
-        <Collapsible title="Actions">
-           {selectedChar ? (<Actions />) : (<div className="text-slate-400">Select a character to view stats.</div>)}
+        <Collapsible title="General Stats" >
+          {selectedChar ? (<GeneralStats />) : (<div className="text-slate-400">Select a character to view stats.</div>)}
+        </Collapsible>
+
+        <Collapsible title="Abilities & Skills">
+          {selectedChar ? (<AbilityScore />) : (<div className="text-slate-400">Select a character to view stats.</div>)}
+        </Collapsible>
+          
+        <Collapsible title="Biography">
+          {selectedChar ? (<BioStats />) : (<div className="text-slate-400">Select a character to view stats.</div>)}
         </Collapsible>
 
         <Collapsible title="Lore">

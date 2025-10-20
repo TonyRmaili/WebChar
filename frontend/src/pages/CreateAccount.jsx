@@ -34,7 +34,7 @@ function CreateAccount() {
         const data = await response.json();
         setToken(data.access_token)
         await fetchUser()
-        navigate("/createChar")
+        navigate("/loadChar")
 
       } else if (response.status === 400 || response.status === 401) {
         const data = await response.json();

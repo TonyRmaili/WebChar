@@ -31,6 +31,10 @@ class HealthData(BaseModel):
     value : int
     name : str
 
+class TakeRestData(BaseModel):
+    rest_type: str
+    name : str
+
 # class GenderEnum(str, Enum):
 #     Male = 'Male'
 #     Female = 'Female'
