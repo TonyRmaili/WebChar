@@ -12,7 +12,7 @@ import Inventory from "../components/Inventory";
 import Lore from "../components/Lore";
 import Actions from "../components/Actions";
 
-import Health from "../components/Health";
+import Health from "../components/HealthPlay";
 import ActionsPlay from "../components/ActionsPlay";
 import SpellPlay from "../components/SpellPlay";
 

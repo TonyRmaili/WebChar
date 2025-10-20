@@ -2,15 +2,16 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
+
 import Layout from "./pages/Layout";
-import CombatPage from "./pages/CombatPage";
+import CombatPage from "./pages/Combat";
 import DiceTower from "./pages/DiceTower";
-import CreateChar from "./pages/CreateChar"
-import LoadChar from "./pages/LoadChar"
+import LoadChar from "./pages/Characters"
 import CreateAccount from "./pages/CreateAccount"
 import LogIn from "./pages/LogIn"
 import Embedder from "./components/Embedder"
-import DMToolsPage from "./pages/DMToolsPage";
+import DMToolsPage from "./pages/DMTools";
+import UserProfile from "./components/UserProfile";
  
 
 
@@ -21,12 +22,12 @@ function App() {
         <Route element={<Layout />}>
           <Route path="/" element={<CombatPage />}></Route>
           <Route path="/diceTower" element={<DiceTower />}></Route>
-          <Route path="/createChar" element={<CreateChar />}></Route>
           <Route path="/loadChar" element={<LoadChar />}></Route>
           <Route path="/createAccount" element={<CreateAccount />}></Route>
           <Route path="/logIn" element={<LogIn />}></Route>
           <Route path="/Embedder" element={<Embedder />}></Route>
           <Route path="/DM-Tools" element={<DMToolsPage />}></Route>
+          <Route path="/UserProfile" element={<UserProfile />}></Route>
         </Route>
       </Routes>
     </BrowserRouter>

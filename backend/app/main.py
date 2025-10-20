@@ -173,29 +173,6 @@ def create_char(current_user: Annotated[User, Depends(get_current_user)],
         return JSONResponse(content={"message": f"Error: {str(e)}"}, status_code=500)
     
 
-# @app.post("/character", tags=["characters"])
-# def create_char(current_user: Annotated[User, Depends(get_current_user)],
-#           form_data:dict,db:Session = Depends(get_db)):
-#     try:
-#         directory = os.path.join(savefiles_path , current_user.name ,"characters")
-#         file_name = form_data['name'] + ".json"
-#         file_path = os.path.join(directory, file_name)
-#         os.makedirs(directory, exist_ok=True)
-#         with open(file_path, "w") as json_file:
-#             json.dump(form_data, json_file, indent=4)
-
-#         character_data = CharacterSchema(user_id=current_user.id,
-#             name=form_data['name'] ,file_path=file_path)
-#         db_char = Character(**character_data.model_dump())
-#         db.add(db_char)
-#         db.commit()
-
-#         return JSONResponse(content={"message": "JSON data saved successfully"}, status_code=200)
-#     except Exception as e:
-#         return JSONResponse(content={"message": f"Error: {str(e)}"}, status_code=500)
-
-
-
 @app.delete("/character/{char_name}",status_code=status.HTTP_204_NO_CONTENT,tags=["characters"])
 def delete_char_name(current_user: Annotated[User, Depends(get_current_user)],
     char_name:str, db:Session = Depends(get_db)):
@@ -272,7 +249,6 @@ def get_char_file(
     return char_file
 
 
-
 # ------------------------Party-----------------------------
 
 @app.post("/create_party", tags=["party"])
@@ -336,8 +312,6 @@ def delete_party(
     return Response(status_code=204)
 
 
-
- 
 # ------------------------Combat-----------------------------
 
 @app.post("/combat/health", tags=["combat"])
@@ -436,3 +410,26 @@ def get_races():
     except FileNotFoundError:
         return {"file not found"}
 
+
+
+
+# @app.post("/character", tags=["characters"])
+# def create_char(current_user: Annotated[User, Depends(get_current_user)],
+#           form_data:dict,db:Session = Depends(get_db)):
+#     try:
+#         directory = os.path.join(savefiles_path , current_user.name ,"characters")
+#         file_name = form_data['name'] + ".json"
+#         file_path = os.path.join(directory, file_name)
+#         os.makedirs(directory, exist_ok=True)
+#         with open(file_path, "w") as json_file:
+#             json.dump(form_data, json_file, indent=4)
+
+#         character_data = CharacterSchema(user_id=current_user.id,
+#             name=form_data['name'] ,file_path=file_path)
+#         db_char = Character(**character_data.model_dump())
+#         db.add(db_char)
+#         db.commit()
+
+#         return JSONResponse(content={"message": "JSON data saved successfully"}, status_code=200)
+#     except Exception as e:
+#         return JSONResponse(content={"message": f"Error: {str(e)}"}, status_code=500)
