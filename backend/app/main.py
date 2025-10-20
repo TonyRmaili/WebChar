@@ -392,6 +392,7 @@ def take_rest(
     return {"ok": True}
 
 
+
 # ------------------------Dice-----------------------------
 @app.post("/dice_roll/{diceSize}", tags=["dice"])
 def roll_initiative(

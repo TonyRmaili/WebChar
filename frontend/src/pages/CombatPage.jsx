@@ -14,7 +14,7 @@ import Actions from "../components/Actions";
 
 import Health from "../components/Health";
 import ActionsPlay from "../components/ActionsPlay";
-
+import SpellPlay from "../components/SpellPlay";
 
 
 function Collapsible({ title, children, defaultOpen = false }) {
@@ -174,6 +174,15 @@ function CombatPage() {
           <div className="h-full overflow-y-auto rounded-xl border border-slate-700/60 bg-slate-900/40 p-3">
             {selectedChar ? (
               <ActionsPlay />
+            ) : (
+              <div className="text-slate-400">Select a character to view stats.</div>
+            )}
+          </div>
+        </div>
+        <div className="flex-1 min-h-0">
+          <div className="h-full overflow-y-auto rounded-xl border border-slate-700/60 bg-slate-900/40 p-3">
+            {selectedChar ? (
+              <SpellPlay />
             ) : (
               <div className="text-slate-400">Select a character to view stats.</div>
             )}
