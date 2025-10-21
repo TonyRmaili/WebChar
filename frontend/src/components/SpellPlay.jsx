@@ -11,27 +11,23 @@ export default function SpellPlay() {
   const { charData, updateCharField, postCharData } = useCharStore();
   if (!charData) return null;
 
-  // Safe read of spellbook
+  // New model: spellslots, pactslots, spells[], metamagic[], sorcery_points
   const book = useMemo(() => {
     const raw = charData.spellbook || {};
     return {
-      spellcasting: {
-        spells: raw.spellcasting?.spells || [],
-        slots: raw.spellcasting?.slots || [],
-      },
-      pactmagic: {
-        spells: raw.pactmagic?.spells || [],
-        slots: raw.pactmagic?.slots || [],
-      },
-      innate: {
-        spells: raw.innate?.spells || [],
-      },
+      spellslots: { slots: raw.spellslots?.slots || [] },
+      pactslots: { slots: raw.pactslots?.slots || [] },
+      spells: raw.spells || [],
       metamagic: raw.metamagic || [],
-      sorcery_points: raw.sorcery_points || { max_charges: "", current_charges: "", recharge_short_amount: 0 },
+      sorcery_points: raw.sorcery_points || {
+        max_charges: "",
+        current_charges: "",
+        recharge_short_amount: 0,
+      },
     };
   }, [charData?.spellbook]);
 
-  // Seed missing current values from max once
+  // Seed currents from max once
   useEffect(() => {
     let changed = false;
 
@@ -48,8 +44,9 @@ export default function SpellPlay() {
         return row;
       });
 
-    const fixInnate = (arr) =>
+    const fixInnateInUnified = (arr) =>
       (arr || []).map((s) => {
+        if (!s?.innate) return s;
         const max = Number(s?.max_charges);
         const cur = Number(s?.current_charges);
         const hasMax = Number.isFinite(max) && max >= 0;
@@ -63,9 +60,9 @@ export default function SpellPlay() {
 
     const next = {
       ...book,
-      spellcasting: { ...book.spellcasting, slots: fixSlots(book.spellcasting.slots) },
-      pactmagic: { ...book.pactmagic, slots: fixSlots(book.pactmagic.slots) },
-      innate: { ...book.innate, spells: fixInnate(book.innate.spells) },
+      spellslots: { slots: fixSlots(book.spellslots.slots) },
+      pactslots: { slots: fixSlots(book.pactslots.slots) },
+      spells: fixInnateInUnified(book.spells),
       sorcery_points: (() => {
         const max = Number(book.sorcery_points?.max_charges);
         const cur = Number(book.sorcery_points?.current_charges);
@@ -84,9 +81,15 @@ export default function SpellPlay() {
       postCharData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [book.spellcasting.slots, book.pactmagic.slots, book.innate.spells, book.sorcery_points?.max_charges, book.sorcery_points?.current_charges]);
+  }, [
+    book.spellslots.slots,
+    book.pactslots.slots,
+    book.spells,
+    book.sorcery_points?.max_charges,
+    book.sorcery_points?.current_charges,
+  ]);
 
-  // Decrement a slot row
+  // Use a slot
   const onUseSlot = useCallback(
     (catKey, rowId) => {
       const source = (book[catKey]?.slots || []);
@@ -101,11 +104,7 @@ export default function SpellPlay() {
       const updated = { ...row, slots_current: cur - 1 };
       const next = {
         ...book,
-        [catKey]: {
-          ...book[catKey],
-          slots: [...source.slice(0, idx), updated, ...source.slice(idx + 1)],
-          spells: [...(book[catKey].spells || [])],
-        },
+        [catKey]: { slots: [...source.slice(0, idx), updated, ...source.slice(idx + 1)] },
       };
       updateCharField("spellbook", next);
       postCharData();
@@ -113,30 +112,29 @@ export default function SpellPlay() {
     [book, updateCharField, postCharData]
   );
 
-  // Decrement innate spell charges
+  // Spend innate charge
   const onUseInnate = useCallback(
     (spellId) => {
-      const list = book.innate?.spells || [];
+      const list = book.spells || [];
       const idx = list.findIndex((s) => (s.id || "") === spellId);
       if (idx < 0) return;
 
       const s = list[idx];
+      if (!s?.innate) return;
+
       const max = clampNum(s.max_charges, 0, Number(s.max_charges) || 0);
       const cur = clampNum(s.current_charges, 0, max);
       if (cur <= 0) return;
 
       const updated = { ...s, current_charges: cur - 1 };
-      const next = {
-        ...book,
-        innate: { ...book.innate, spells: [...list.slice(0, idx), updated, ...list.slice(idx + 1)] },
-      };
+      const next = { ...book, spells: [...list.slice(0, idx), updated, ...list.slice(idx + 1)] };
       updateCharField("spellbook", next);
       postCharData();
     },
     [book, updateCharField, postCharData]
   );
 
-  // Decrement sorcery points
+  // Spend sorcery point
   const onUseSorcery = useCallback(() => {
     const sp = book.sorcery_points || {};
     const max = clampNum(sp.max_charges, 0, Number(sp.max_charges) || 0);
@@ -148,7 +146,7 @@ export default function SpellPlay() {
     postCharData();
   }, [book, updateCharField, postCharData]);
 
-  // UI helpers
+  // UI
   const SlotSection = ({ title, catKey, rows }) => (
     <section className="space-y-2">
       <h4 className="text-slate-300 text-sm font-semibold">{title}</h4>
@@ -190,29 +188,35 @@ export default function SpellPlay() {
     </section>
   );
 
-  const InnateSection = ({ spells }) => (
-    <section className="space-y-2">
-      <h4 className="text-slate-300 text-sm font-semibold">Innate Spells</h4>
-      {spells.length === 0 ? (
-        <div className="text-slate-400 text-sm">No innate spells defined.</div>
-      ) : (
+  const InnateSection = ({ spells }) => {
+    // Only show innate spells that currently have charges > 0
+    const usable = (spells || []).filter((s) => {
+      if (!s?.innate) return false;
+      const max = Number(s?.max_charges);
+      const cur = Number(s?.current_charges);
+      if (!Number.isFinite(max) || max <= 0) return false;
+      if (!Number.isFinite(cur) || cur <= 0) return false;
+      return true;
+    });
+
+    if (usable.length === 0) return null;
+
+    return (
+      <section className="space-y-2">
+        <h4 className="text-slate-300 text-sm font-semibold">Innate Spells</h4>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-          {spells.map((s) => {
-            const max = Number.isFinite(Number(s.max_charges)) ? Math.max(0, Number(s.max_charges)) : 0;
-            const curRaw = Number(s.current_charges);
-            const cur = Number.isFinite(curRaw) ? clampNum(curRaw, 0, max) : max;
-            const depleted = cur <= 0 || max <= 0;
+          {usable.map((s) => {
+            const max = Math.max(0, Number(s.max_charges) || 0);
+            const cur = clampNum(s.current_charges, 0, max);
             const base = "w-full text-left px-3 py-3 rounded-xl border transition focus:outline-none";
             const ok = "border-slate-600 bg-slate-900 hover:bg-slate-800 text-slate-100";
-            const off = "border-slate-700 bg-slate-800/50 text-slate-500 cursor-not-allowed opacity-70";
 
             return (
               <button
                 key={s.id}
                 type="button"
                 onClick={() => onUseInnate(s.id)}
-                disabled={depleted}
-                className={`${base} ${depleted ? off : ok}`}
+                className={`${base} ${ok}`}
                 title={s.notes || ""}
               >
                 <div className="flex items-start justify-between gap-2">
@@ -224,7 +228,7 @@ export default function SpellPlay() {
                   </div>
                   <div className="text-right shrink-0">
                     <div className="text-xs text-slate-400">Charges</div>
-                    <div className={`text-sm font-semibold ${depleted ? "text-slate-500" : "text-slate-100"}`}>
+                    <div className="text-sm font-semibold text-slate-100">
                       {cur} / {max}
                     </div>
                   </div>
@@ -233,16 +237,17 @@ export default function SpellPlay() {
             );
           })}
         </div>
-      )}
-    </section>
-  );
+      </section>
+    );
+  };
 
-  const SorcerySection = ({ sp }) => {
+  const SorcerySection = ({ sp, metamagic }) => {
     const max = Number.isFinite(Number(sp?.max_charges)) ? Math.max(0, Number(sp.max_charges)) : 0;
-    if (max <= 0) return null; // hide when no sorcery points
+    if (max <= 0) return null;
 
     const cur = clampNum(sp?.current_charges, 0, max);
     const depleted = cur <= 0;
+    const names = (metamagic || []).map((m) => m?.name).filter(Boolean);
     const base = "w-full text-left px-3 py-3 rounded-xl border transition focus:outline-none";
     const ok = "border-slate-600 bg-slate-900 hover:bg-slate-800 text-slate-100";
     const off = "border-slate-700 bg-slate-800/50 text-slate-500 cursor-not-allowed opacity-70";
@@ -255,12 +260,19 @@ export default function SpellPlay() {
           onClick={onUseSorcery}
           disabled={depleted}
           className={`${base} ${depleted ? off : ok}`}
-          title="Click to spend 1 sorcery point"
+          title="Spend 1 sorcery point"
         >
           <div className="flex items-start justify-between gap-2">
             <div className="min-w-0">
               <div className="font-semibold truncate">Spend Sorcery Point</div>
-              <div className="text-xs text-slate-400">Short-rest recharge: +{Number(book.sorcery_points?.recharge_short_amount || 0)}</div>
+              <div className="text-xs text-slate-400">
+                Short-rest recharge: +{Number(book.sorcery_points?.recharge_short_amount || 0)}
+              </div>
+              {names.length > 0 && (
+                <div className="mt-1 text-xs text-slate-300">
+                  Metamagic: {names.join(", ")}
+                </div>
+              )}
             </div>
             <div className="text-right shrink-0">
               <div className="text-xs text-slate-400">Remaining</div>
@@ -276,10 +288,10 @@ export default function SpellPlay() {
 
   return (
     <div className="w-full space-y-6">
-      <SlotSection title="Spellcasting Slots" catKey="spellcasting" rows={book.spellcasting.slots} />
-      <SlotSection title="Pact Magic Slots" catKey="pactmagic" rows={book.pactmagic.slots} />
-      <InnateSection spells={book.innate.spells} />
-      <SorcerySection sp={book.sorcery_points} />
+      <SlotSection title="Spellcasting Slots" catKey="spellslots" rows={book.spellslots.slots} />
+      <SlotSection title="Pact Magic Slots" catKey="pactslots" rows={book.pactslots.slots} />
+      <InnateSection spells={book.spells} />
+      <SorcerySection sp={book.sorcery_points} metamagic={book.metamagic} />
     </div>
   );
 }

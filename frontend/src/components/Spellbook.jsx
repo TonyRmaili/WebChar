@@ -1,12 +1,12 @@
-import React, { useMemo, useRef, useState, useCallback } from "react";
+import React, { useMemo, useRef, useState, useCallback} from "react";
 import useCharStore from "../store/CharStore";
 
 /* ---------------- Defaults ---------------- */
 const DEFAULT_SPELLBOOK = {
-  spellcasting: { spells: [], slots: [] },
-  pactmagic: { spells: [], slots: [] },
-  innate: { spells: [] }, // no slots here
-  metamagic: [],          // [{id, name, description}]
+  spellslots: { slots: [] }, // previously spellcasting.slots
+  pactslots: { slots: [] },  // previously pactmagic.slots
+  spells: [],                // unified list (slot-based + innate)
+  metamagic: [],
   sorcery_points: { max_charges: "", current_charges: "", recharge_short_amount: 0 },
 };
 
@@ -23,8 +23,7 @@ const Chip = ({ children }) => (
 /* ---------------- Small helpers ---------------- */
 const idGen = () => `${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
 
-function normalizeSpellRow(r, { slotBased = true } = {}) {
-  // Shared fields for both slot-based and innate
+function normalizeSpellRow(r) {
   const base = {
     id: r.id || idGen(),
     name: r.name ?? "",
@@ -33,15 +32,15 @@ function normalizeSpellRow(r, { slotBased = true } = {}) {
     notes: r.notes ?? "",
     concentration: !!r.concentration,
     ritual: !!r.ritual,
-    // cast time: choice or numeric+unit
+    // cast time
     cast_time_kind: r.cast_time_kind || "choice", // "choice" | "timed"
-    cast_time_choice: r.cast_time_choice || "action", // "action" | "bonus" | "reaction"
+    cast_time_choice: r.cast_time_choice || "action",
     cast_time_value: r.cast_time_value ?? "",
     cast_time_unit: r.cast_time_unit || "rounds",
-    // duration: numeric + unit
+    // duration
     duration_value: r.duration_value ?? "",
     duration_unit: r.duration_unit || "rounds",
-    // range in ft
+    // range
     range_ft: r.range_ft ?? "",
     // components
     components: {
@@ -51,32 +50,27 @@ function normalizeSpellRow(r, { slotBased = true } = {}) {
       material_desc: r.components?.material_desc ?? "",
       material_cost: r.components?.material_cost ?? "",
     },
+    // unified flags
+    prepared: !!r.prepared,   // ignored by pact users in gameplay, still editable here
+    innate: !!r.innate,       // if true show charges fields
   };
 
-  if (slotBased) {
-    return {
-      ...base,
-      prepared: !!r.prepared, // ignored for pactmagic in UI
-    };
-  }
+  if (!base.innate) return base;
 
-  // Innate adds charges-like fields
+  const max = r.max_charges ?? "";
+  const cur = r.current_charges ?? max;
+  const recharge = Math.max(0, Math.min(Number(r.recharge_short_amount ?? 0), Number(max || 0)));
   return {
     ...base,
-    max_charges: r.max_charges ?? "",
-    current_charges: r.current_charges ?? (r.max_charges ?? ""),
-    recharge_short_amount: Math.max(
-      0,
-      Math.min(Number(r.recharge_short_amount ?? 0), Number(r.max_charges ?? 0) || 0)
-    ),
+    max_charges: max,
+    current_charges: cur,
+    recharge_short_amount: recharge,
   };
 }
 
-/* ---------------- Reusable fields: Cast time, Duration, Components ---------------- */
+/* ---------------- Reusable editors ---------------- */
 function CastTimeEditor({ row, onChange, hideChoice = false }) {
-  // hideChoice=true if you ever need to force numeric; otherwise let the user choose
   const usingChoice = !hideChoice && row.cast_time_kind === "choice";
-
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
       {!hideChoice && (
@@ -85,11 +79,8 @@ function CastTimeEditor({ row, onChange, hideChoice = false }) {
           <select
             value={usingChoice ? row.cast_time_choice : "timed"}
             onChange={(e) => {
-              if (e.target.value === "timed") {
-                onChange({ cast_time_kind: "timed" });
-              } else {
-                onChange({ cast_time_kind: "choice", cast_time_choice: e.target.value });
-              }
+              if (e.target.value === "timed") onChange({ cast_time_kind: "timed" });
+              else onChange({ cast_time_kind: "choice", cast_time_choice: e.target.value });
             }}
             className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
           >
@@ -161,33 +152,17 @@ function ComponentsEditor({ row, onChange }) {
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
       <div className="flex items-center gap-4">
         <label className="w-28 text-slate-300 text-sm">Components</label>
-        <label className="inline-flex items-center gap-2">
-          <input
-            type="checkbox"
-            className="h-4 w-4 accent-orange-500"
-            checked={!!c.v}
-            onChange={(e) => onChange({ components: { ...c, v: e.target.checked } })}
-          />
-          <span className="text-slate-200 text-sm">V</span>
-        </label>
-        <label className="inline-flex items-center gap-2">
-          <input
-            type="checkbox"
-            className="h-4 w-4 accent-orange-500"
-            checked={!!c.s}
-            onChange={(e) => onChange({ components: { ...c, s: e.target.checked } })}
-          />
-          <span className="text-slate-200 text-sm">S</span>
-        </label>
-        <label className="inline-flex items-center gap-2">
-          <input
-            type="checkbox"
-            className="h-4 w-4 accent-orange-500"
-            checked={!!c.m}
-            onChange={(e) => onChange({ components: { ...c, m: e.target.checked } })}
-          />
-          <span className="text-slate-200 text-sm">M</span>
-        </label>
+        {["v","s","m"].map((k) => (
+          <label key={k} className="inline-flex items-center gap-2">
+            <input
+              type="checkbox"
+              className="h-4 w-4 accent-orange-500"
+              checked={!!c[k]}
+              onChange={(e) => onChange({ components: { ...c, [k]: e.target.checked } })}
+            />
+            <span className="text-slate-200 text-sm">{k.toUpperCase()}</span>
+          </label>
+        ))}
       </div>
 
       {c.m && (
@@ -215,193 +190,116 @@ function ComponentsEditor({ row, onChange }) {
   );
 }
 
-/* ---------------- Slot-based Spell Row ---------------- */
-const SpellRowSlotBased = React.memo(function SpellRowSlotBased({
-  categoryKey, // "spellcasting" | "pactmagic"
-  row,
-  open,
-  onToggleOpen,
-  onChangeField,
-  onRemove,
-}) {
-  const isPact = categoryKey === "pactmagic";
-
+/* ---------------- Slot Row ---------------- */
+const SlotRow = React.memo(function SlotRow({ categoryKey, row, onChangeField, onRemove }) {
   return (
-    <div className="rounded-lg border border-slate-700 bg-slate-900/60">
-      <button
-        type="button"
-        onClick={() => onToggleOpen(row.id)}
-        className="w-full flex items-center justify-between px-3 py-2 hover:bg-slate-800/60"
-        aria-expanded={open}
-      >
-        <div className="flex-1 flex items-center gap-2">
-          <span className="text-slate-400 text-sm">Name:</span>
-          <input
-            type="text"
-            value={row.name ?? ""}
-            onChange={(e) => onChangeField(categoryKey, row.id, { name: e.target.value })}
-            placeholder="e.g., Fireball"
-            className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
-            onClick={(e) => e.stopPropagation()}
-          />
-        </div>
+    <div className="flex flex-col sm:flex-row gap-2 items-center rounded-lg border border-slate-700 bg-slate-900/60 p-2">
+      <div className="flex items-center gap-2 w-full sm:w-1/3">
+        <label className="w-20 text-slate-300 text-sm">Level</label>
+        <input
+          type="number"
+          min={0}
+          max={9}
+          value={row.level ?? ""}
+          onChange={(e) => {
+            const v = e.target.value === "" ? "" : Number(e.target.value);
+            if (v !== "" && Number.isNaN(v)) return;
+            onChangeField(categoryKey, row.id, { level: v });
+          }}
+          className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
+        />
+      </div>
 
-        <div className="hidden md:flex items-center gap-2 px-2">
-          <Chip>Lvl {row.level ?? "-"}</Chip>
-          {!isPact && <Chip>{row.prepared ? "Prepared" : "Unprepared"}</Chip>}
-          {row.concentration && <Chip>Concentration</Chip>}
-          {row.ritual && <Chip>Ritual</Chip>}
-        </div>
+      <div className="flex items-center gap-2 w-full sm:w-1/3">
+        <label className="w-20 text-slate-300 text-sm">Max</label>
+        <input
+          type="number"
+          min={0}
+          value={row.slots_max ?? ""}
+          onChange={(e) => {
+            const v = e.target.value === "" ? "" : Number(e.target.value);
+            if (v !== "" && Number.isNaN(v)) return;
+            onChangeField(categoryKey, row.id, { slots_max: v });
+          }}
+          className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
+        />
+      </div>
 
-        <svg
-          className={`ml-3 h-5 w-5 transition-transform ${open ? "rotate-180" : ""}`}
-          viewBox="0 0 20 20"
-          fill="currentColor"
+      <div className="flex items-center gap-2 w-full sm:w-1/3">
+        <label className="w-20 text-slate-300 text-sm">Current</label>
+        <input
+          type="number"
+          min={0}
+          value={row.slots_current ?? ""}
+          onChange={(e) => {
+            const v = e.target.value === "" ? "" : Number(e.target.value);
+            if (v !== "" && Number.isNaN(v)) return;
+            onChangeField(categoryKey, row.id, { slots_current: v });
+          }}
+          className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
+        />
+      </div>
+
+      <div className="w-full sm:w-auto flex justify-end">
+        <button
+          type="button"
+          onClick={() => onRemove(categoryKey, row.id)}
+          className="px-3 py-1.5 rounded-lg border border-red-700 bg-red-900/40 hover:bg-red-900/60 text-red-100 transition"
         >
-          <path
-            fillRule="evenodd"
-            d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z"
-            clipRule="evenodd"
-          />
-        </svg>
-      </button>
-
-      {open && (
-        <div className="p-3 space-y-4 border-t border-slate-700">
-          {/* Top line: Level / Prepared (hidden for pact) / School */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            <div className="flex items-center gap-2">
-              <label className="w-24 text-slate-300 text-sm">Level</label>
-              <input
-                type="number"
-                min={0}
-                max={9}
-                value={row.level ?? ""}
-                onChange={(e) => {
-                  const v = e.target.value === "" ? "" : Number(e.target.value);
-                  if (v !== "" && Number.isNaN(v)) return;
-                  onChangeField(categoryKey, row.id, { level: v });
-                }}
-                className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
-                onClick={(e) => e.stopPropagation()}
-              />
-            </div>
-
-            {!isPact && (
-              <label className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  checked={!!row.prepared}
-                  onChange={(e) => onChangeField(categoryKey, row.id, { prepared: e.target.checked })}
-                  className="h-4 w-4 accent-orange-500"
-                  onClick={(e) => e.stopPropagation()}
-                />
-                <span className="text-slate-200 text-sm">Prepared</span>
-              </label>
-            )}
-
-            <div className="flex items-center gap-2">
-              <label className="w-24 text-slate-300 text-sm">School</label>
-              <input
-                type="text"
-                value={row.school ?? ""}
-                onChange={(e) => onChangeField(categoryKey, row.id, { school: e.target.value })}
-                placeholder="e.g., Evocation"
-                className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
-                onClick={(e) => e.stopPropagation()}
-              />
-            </div>
-          </div>
-
-          {/* Concentration / Ritual / Range */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            <label className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                checked={!!row.concentration}
-                onChange={(e) => onChangeField(categoryKey, row.id, { concentration: e.target.checked })}
-                className="h-4 w-4 accent-orange-500"
-              />
-              <span className="text-slate-200 text-sm">Concentration</span>
-            </label>
-            <label className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                checked={!!row.ritual}
-                onChange={(e) => onChangeField(categoryKey, row.id, { ritual: e.target.checked })}
-                className="h-4 w-4 accent-orange-500"
-              />
-              <span className="text-slate-200 text-sm">Ritual</span>
-            </label>
-
-            <div className="flex items-center gap-2">
-              <label className="w-24 text-slate-300 text-sm">Range (ft)</label>
-              <input
-                type="number"
-                min={0}
-                value={row.range_ft ?? ""}
-                onChange={(e) => {
-                  const v = e.target.value === "" ? "" : Math.max(0, Number(e.target.value) || 0);
-                  onChangeField(categoryKey, row.id, { range_ft: v });
-                }}
-                className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
-              />
-            </div>
-          </div>
-
-          {/* Cast time */}
-          <CastTimeEditor
-            row={row}
-            onChange={(patch) => onChangeField(categoryKey, row.id, patch)}
-          />
-
-          {/* Duration */}
-          <DurationEditor
-            row={row}
-            onChange={(patch) => onChangeField(categoryKey, row.id, patch)}
-          />
-
-          {/* Components */}
-          <ComponentsEditor
-            row={row}
-            onChange={(patch) => onChangeField(categoryKey, row.id, patch)}
-          />
-
-          {/* Notes */}
-          <div className="flex flex-col md:flex-row gap-2">
-            <label className="w-full md:w-24 text-slate-300 text-sm md:text-right">Notes</label>
-            <textarea
-              value={row.notes ?? ""}
-              onChange={(e) => onChangeField(categoryKey, row.id, { notes: e.target.value })}
-              placeholder="Extra rules text, riders, upcasting notes…"
-              className="flex-1 min-h-[110px] rounded border border-slate-700 bg-white text-slate-900 p-2"
-            />
-          </div>
-
-          <div className="flex justify-end">
-            <button
-              type="button"
-              onClick={() => onRemove(categoryKey, row.id, "spells")}
-              className="px-3 py-1.5 rounded-lg border border-red-700 bg-red-900/40 hover:bg-red-900/60 text-red-100 transition"
-            >
-              Remove
-            </button>
-          </div>
-        </div>
-      )}
+          Remove
+        </button>
+      </div>
     </div>
   );
 });
 
-/* ---------------- Innate Spell Row ---------------- */
-const SpellRowInnate = React.memo(function SpellRowInnate({
-  categoryKey,
-  row,
-  open,
-  onToggleOpen,
-  onChangeField,
-  onRemove,
+/* ---------------- Slots Cards (only slots) ---------------- */
+const SlotsOnlyCard = React.memo(function SlotsOnlyCard({
+  title,
+  categoryKey, // "spellslots" | "pactslots"
+  model,
+  onAddSlot,
+  onRemoveRow,
+  onChangeSlot,
 }) {
+  const slots = model.slots || [];
+  return (
+    <section className="rounded-2xl border border-slate-700 bg-slate-800/40 p-4 space-y-4">
+      <header className="flex items-center justify-between">
+        <h3 className="text-lg font-semibold text-orange-300">
+          {title} <span className="text-slate-400 text-sm">({slots.length} slot row{slots.length === 1 ? "" : "s"})</span>
+        </h3>
+        <div className="flex gap-2">
+          <button
+            type="button"
+            onClick={() => onAddSlot(categoryKey)}
+            className="px-3 py-1.5 rounded-lg border border-slate-600 bg-slate-900 hover:bg-slate-800 transition"
+          >
+            Add slots
+          </button>
+        </div>
+      </header>
+
+      <div className="space-y-2">
+        <div className="text-slate-300 text-sm font-medium">Spell Slots</div>
+        {slots.length === 0 && <p className="text-slate-400 text-sm">No slot rows. Click “Add slots”.</p>}
+        {slots.map((row) => (
+          <SlotRow
+            key={row.id}
+            categoryKey={categoryKey}
+            row={row}
+            onChangeField={onChangeSlot}
+            onRemove={onRemoveRow}
+          />
+        ))}
+      </div>
+    </section>
+  );
+});
+
+/* ---------------- Unified Spell Row ---------------- */
+const SpellEditorRow = React.memo(function SpellEditorRow({ row, open, onToggleOpen, onChangeField, onRemove }) {
+  const isInnate = !!row.innate;
   const clampRecharge = (val, max) => {
     const n = Number.isFinite(val) ? val : 0;
     const hi = Number.isFinite(max) ? max : 0;
@@ -417,13 +315,13 @@ const SpellRowInnate = React.memo(function SpellRowInnate({
         className="w-full flex items-center justify-between px-3 py-2 hover:bg-slate-800/60"
         aria-expanded={open}
       >
-        <div className="flex-1 flex items-center gap-2">
+        <div className="flex-1 min-w-0 flex items-center gap-2">
           <span className="text-slate-400 text-sm">Name:</span>
           <input
             type="text"
             value={row.name ?? ""}
-            onChange={(e) => onChangeField(categoryKey, row.id, { name: e.target.value })}
-            placeholder="e.g., Mage Armor"
+            onChange={(e) => onChangeField(row.id, { name: e.target.value })}
+            placeholder="e.g., Fireball"
             className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
             onClick={(e) => e.stopPropagation()}
           />
@@ -431,16 +329,12 @@ const SpellRowInnate = React.memo(function SpellRowInnate({
 
         <div className="hidden md:flex items-center gap-2 px-2">
           <Chip>Lvl {row.level ?? "-"}</Chip>
-          <Chip>Innate</Chip>
+          {isInnate ? <Chip>Innate</Chip> : <Chip>{row.prepared ? "Prepared" : "Unprepared"}</Chip>}
           {row.concentration && <Chip>Concentration</Chip>}
           {row.ritual && <Chip>Ritual</Chip>}
         </div>
 
-        <svg
-          className={`ml-3 h-5 w-5 transition-transform ${open ? "rotate-180" : ""}`}
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
+        <svg className={`ml-3 h-5 w-5 transition-transform ${open ? "rotate-180" : ""}`} viewBox="0 0 20 20" fill="currentColor">
           <path
             fillRule="evenodd"
             d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z"
@@ -451,10 +345,10 @@ const SpellRowInnate = React.memo(function SpellRowInnate({
 
       {open && (
         <div className="p-3 space-y-4 border-t border-slate-700">
-          {/* Level / charges */}
+          {/* Top line: Level / Prepared-or-Innate / School */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div className="flex items-center gap-2">
-              <label className="w-28 text-slate-300 text-sm">Level</label>
+              <label className="w-24 text-slate-300 text-sm">Level</label>
               <input
                 type="number"
                 min={0}
@@ -463,83 +357,41 @@ const SpellRowInnate = React.memo(function SpellRowInnate({
                 onChange={(e) => {
                   const v = e.target.value === "" ? "" : Number(e.target.value);
                   if (v !== "" && Number.isNaN(v)) return;
-                  onChangeField(categoryKey, row.id, { level: v });
+                  onChangeField(row.id, { level: v });
                 }}
                 className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
               />
             </div>
 
-            <div className="flex items-center gap-2">
-              <label className="w-28 text-slate-300 text-sm">Max charges</label>
+            <label className="flex items-center gap-2">
               <input
-                type="number"
-                min={0}
-                value={row.max_charges ?? ""}
-                onChange={(e) => {
-                  const v = e.target.value === "" ? "" : Number(e.target.value);
-                  if (v !== "" && Number.isNaN(v)) return;
-                  const clampedRecharge = clampRecharge(
-                    Number(row.recharge_short_amount ?? 0),
-                    Number(v || 0)
-                  );
-                  const clampedCurrent = Math.max(
-                    0,
-                    Math.min(Number(row.current_charges ?? 0), Number(v || 0))
-                  );
-                  onChangeField(categoryKey, row.id, {
-                    max_charges: v,
-                    recharge_short_amount: clampedRecharge,
-                    current_charges: clampedCurrent,
-                  });
-                }}
-                className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
+                type="checkbox"
+                checked={!!row.innate}
+                onChange={(e) => onChangeField(row.id, { innate: e.target.checked })}
+                className="h-4 w-4 accent-orange-500"
               />
-            </div>
+              <span className="text-slate-200 text-sm">Innate</span>
+            </label>
 
-            <div className="flex items-center gap-2">
-              <label className="w-28 text-slate-300 text-sm">Current</label>
-              <input
-                type="number"
-                min={0}
-                value={row.current_charges ?? ""}
-                onChange={(e) => {
-                  const v = e.target.value === "" ? "" : Number(e.target.value);
-                  if (v !== "" && Number.isNaN(v)) return;
-                  onChangeField(categoryKey, row.id, {
-                    current_charges: v === "" ? "" : Math.max(0, Math.min(v, max)),
-                  });
-                }}
-                className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
-              />
-            </div>
-          </div>
+            {!isInnate && (
+              <label className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  checked={!!row.prepared}
+                  onChange={(e) => onChangeField(row.id, { prepared: e.target.checked })}
+                  className="h-4 w-4 accent-orange-500"
+                />
+                <span className="text-slate-200 text-sm">Prepared</span>
+              </label>
+            )}
 
-          {/* Short rest recharge amount */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            <div className="flex items-center gap-2">
-              <label className="w-28 text-slate-300 text-sm">Short rest +</label>
-              <input
-                type="number"
-                min={0}
-                value={row.recharge_short_amount ?? 0}
-                onChange={(e) => {
-                  const raw = e.target.value === "" ? 0 : Number(e.target.value);
-                  if (Number.isNaN(raw)) return;
-                  onChangeField(categoryKey, row.id, {
-                    recharge_short_amount: clampRecharge(raw, max),
-                  });
-                }}
-                className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
-              />
-            </div>
-
-            <div className="flex items-center gap-2">
-              <label className="w-28 text-slate-300 text-sm">School</label>
+            <div className="flex items-center gap-2 sm:col-span-3">
+              <label className="w-24 text-slate-300 text-sm">School</label>
               <input
                 type="text"
                 value={row.school ?? ""}
-                onChange={(e) => onChangeField(categoryKey, row.id, { school: e.target.value })}
-                placeholder="e.g., Abjuration"
+                onChange={(e) => onChangeField(row.id, { school: e.target.value })}
+                placeholder="e.g., Evocation"
                 className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
               />
             </div>
@@ -551,7 +403,7 @@ const SpellRowInnate = React.memo(function SpellRowInnate({
               <input
                 type="checkbox"
                 checked={!!row.concentration}
-                onChange={(e) => onChangeField(categoryKey, row.id, { concentration: e.target.checked })}
+                onChange={(e) => onChangeField(row.id, { concentration: e.target.checked })}
                 className="h-4 w-4 accent-orange-500"
               />
               <span className="text-slate-200 text-sm">Concentration</span>
@@ -560,20 +412,21 @@ const SpellRowInnate = React.memo(function SpellRowInnate({
               <input
                 type="checkbox"
                 checked={!!row.ritual}
-                onChange={(e) => onChangeField(categoryKey, row.id, { ritual: e.target.checked })}
+                onChange={(e) => onChangeField(row.id, { ritual: e.target.checked })}
                 className="h-4 w-4 accent-orange-500"
               />
               <span className="text-slate-200 text-sm">Ritual</span>
             </label>
+
             <div className="flex items-center gap-2">
-              <label className="w-28 text-slate-300 text-sm">Range (ft)</label>
+              <label className="w-24 text-slate-300 text-sm">Range (ft)</label>
               <input
                 type="number"
                 min={0}
                 value={row.range_ft ?? ""}
                 onChange={(e) => {
                   const v = e.target.value === "" ? "" : Math.max(0, Number(e.target.value) || 0);
-                  onChangeField(categoryKey, row.id, { range_ft: v });
+                  onChangeField(row.id, { range_ft: v });
                 }}
                 className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
               />
@@ -581,30 +434,79 @@ const SpellRowInnate = React.memo(function SpellRowInnate({
           </div>
 
           {/* Cast time */}
-          <CastTimeEditor
-            row={row}
-            onChange={(patch) => onChangeField(categoryKey, row.id, patch)}
-          />
+          <CastTimeEditor row={row} onChange={(patch) => onChangeField(row.id, patch)} />
 
           {/* Duration */}
-          <DurationEditor
-            row={row}
-            onChange={(patch) => onChangeField(categoryKey, row.id, patch)}
-          />
+          <DurationEditor row={row} onChange={(patch) => onChangeField(row.id, patch)} />
 
           {/* Components */}
-          <ComponentsEditor
-            row={row}
-            onChange={(patch) => onChangeField(categoryKey, row.id, patch)}
-          />
+          <ComponentsEditor row={row} onChange={(patch) => onChangeField(row.id, patch)} />
+
+          {/* Innate charges */}
+          {isInnate && (
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="flex items-center gap-2">
+                <label className="w-28 text-slate-300 text-sm">Max charges</label>
+                <input
+                  type="number"
+                  min={0}
+                  value={row.max_charges ?? ""}
+                  onChange={(e) => {
+                    const v = e.target.value === "" ? "" : Number(e.target.value);
+                    if (v !== "" && Number.isNaN(v)) return;
+                    const clampedRecharge = clampRecharge(Number(row.recharge_short_amount ?? 0), Number(v || 0));
+                    const clampedCurrent = Math.max(0, Math.min(Number(row.current_charges ?? 0), Number(v || 0)));
+                    onChangeField(row.id, {
+                      max_charges: v,
+                      recharge_short_amount: clampedRecharge,
+                      current_charges: clampedCurrent,
+                    });
+                  }}
+                  className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
+                />
+              </div>
+              <div className="flex items-center gap-2">
+                <label className="w-28 text-slate-300 text-sm">Current</label>
+                <input
+                  type="number"
+                  min={0}
+                  value={row.current_charges ?? ""}
+                  onChange={(e) => {
+                    const v = e.target.value === "" ? "" : Number(e.target.value);
+                    if (v !== "" && Number.isNaN(v)) return;
+                    onChangeField(row.id, {
+                      current_charges: v === "" ? "" : Math.max(0, Math.min(v, max)),
+                    });
+                  }}
+                  className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
+                />
+              </div>
+              <div className="flex items-center gap-2">
+                <label className="w-28 text-slate-300 text-sm">Short rest +</label>
+                <input
+                  type="number"
+                  min={0}
+                  value={row.recharge_short_amount ?? 0}
+                  onChange={(e) => {
+                    const raw = e.target.value === "" ? 0 : Number(e.target.value);
+                    if (Number.isNaN(raw)) return;
+                    onChangeField(row.id, {
+                      recharge_short_amount: clampRecharge(raw, max),
+                    });
+                  }}
+                  className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
+                />
+              </div>
+            </div>
+          )}
 
           {/* Notes */}
           <div className="flex flex-col md:flex-row gap-2">
             <label className="w-full md:w-24 text-slate-300 text-sm md:text-right">Notes</label>
             <textarea
               value={row.notes ?? ""}
-              onChange={(e) => onChangeField(categoryKey, row.id, { notes: e.target.value })}
-              placeholder="Recharge rules, materials, etc."
+              onChange={(e) => onChangeField(row.id, { notes: e.target.value })}
+              placeholder="Extra rules text, upcasting notes…"
               className="flex-1 min-h-[110px] rounded border border-slate-700 bg-white text-slate-900 p-2"
             />
           </div>
@@ -612,7 +514,7 @@ const SpellRowInnate = React.memo(function SpellRowInnate({
           <div className="flex justify-end">
             <button
               type="button"
-              onClick={() => onRemove(categoryKey, row.id, "spells")}
+              onClick={() => onRemove(row.id)}
               className="px-3 py-1.5 rounded-lg border border-red-700 bg-red-900/40 hover:bg-red-900/60 text-red-100 transition"
             >
               Remove
@@ -624,126 +526,26 @@ const SpellRowInnate = React.memo(function SpellRowInnate({
   );
 });
 
-/* ---------------- Slot Row ---------------- */
-const SlotRow = React.memo(function SlotRow({ categoryKey, row, onChangeField, onRemove }) {
-  return (
-    <div className="flex flex-col sm:flex-row gap-2 items-center rounded-lg border border-slate-700 bg-slate-900/60 p-2">
-      <div className="flex items-center gap-2 w-full sm:w-1/3">
-        <label className="w-20 text-slate-300 text-sm">Level</label>
-        <input
-          type="number"
-          min={0}
-          max={9}
-          value={row.level ?? ""}
-          onChange={(e) => {
-            const v = e.target.value === "" ? "" : Number(e.target.value);
-            if (v !== "" && Number.isNaN(v)) return;
-            onChangeField(categoryKey, row.id, { level: v }, "slots");
-          }}
-          className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
-        />
-      </div>
-
-      <div className="flex items-center gap-2 w-full sm:w-1/3">
-        <label className="w-20 text-slate-300 text-sm">Max</label>
-        <input
-          type="number"
-          min={0}
-          value={row.slots_max ?? ""}
-          onChange={(e) => {
-            const v = e.target.value === "" ? "" : Number(e.target.value);
-            if (v !== "" && Number.isNaN(v)) return;
-            onChangeField(categoryKey, row.id, { slots_max: v }, "slots");
-          }}
-          className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
-        />
-      </div>
-
-      <div className="flex items-center gap-2 w-full sm:w-1/3">
-        <label className="w-20 text-slate-300 text-sm">Current</label>
-        <input
-          type="number"
-          min={0}
-          value={row.slots_current ?? ""}
-          onChange={(e) => {
-            const v = e.target.value === "" ? "" : Number(e.target.value);
-            if (v !== "" && Number.isNaN(v)) return;
-            onChangeField(categoryKey, row.id, { slots_current: v }, "slots");
-          }}
-          className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
-        />
-      </div>
-
-      <div className="w-full sm:w-auto flex justify-end">
-        <button
-          type="button"
-          onClick={() => onRemove(categoryKey, row.id, "slots")}
-          className="px-3 py-1.5 rounded-lg border border-red-700 bg-red-900/40 hover:bg-red-900/60 text-red-100 transition"
-        >
-          Remove
-        </button>
-      </div>
-    </div>
-  );
-});
-
-/* ---------------- Category Cards ---------------- */
-const SlotsCategoryCard = React.memo(function SlotsCategoryCard({
-  title,
-  categoryKey, // "spellcasting" | "pactmagic"
-  model,
-  openById,
-  onToggleOpen,
-  onAddSpell,
-  onAddSlot,
-  onRemoveRow,
-  onChangeSpell,
-  onChangeSlot,
-  onPrepareAll,    // only for spellcasting
-  onUnprepareAll,  // only for spellcasting
-}) {
-  const spells = model.spells || [];
-  const slots = model.slots || [];
-  const isSpellcasting = categoryKey === "spellcasting";
-
+/* ---------------- Spells Card (unified list) ---------------- */
+function SpellsCard({ list, openById, onToggleOpen, onAdd, onChange, onRemove }) {
   return (
     <section className="rounded-2xl border border-slate-700 bg-slate-800/40 p-4 space-y-4">
       <header className="flex items-center justify-between">
         <h3 className="text-lg font-semibold text-orange-300">
-          {title}{" "}
-          <span className="text-slate-400 text-sm">
-            ({spells.length} spells, {slots.length} slot row{slots.length === 1 ? "" : "s"})
-          </span>
+          Spells <span className="text-slate-400 text-sm">({list.length})</span>
         </h3>
         <div className="flex gap-2">
-          {isSpellcasting && (
-            <>
-              <button
-                type="button"
-                onClick={() => onPrepareAll(true)}
-                className="px-3 py-1.5 rounded-lg border border-emerald-700 bg-emerald-900/40 hover:bg-emerald-900/60 text-emerald-100 transition"
-              >
-                Prepare all
-              </button>
-              <button
-                type="button"
-                onClick={() => onPrepareAll(false)}
-                className="px-3 py-1.5 rounded-lg border border-amber-700 bg-amber-900/40 hover:bg-amber-900/60 text-amber-100 transition"
-              >
-                Unprepare all
-              </button>
-            </>
-          )}
           <button
             type="button"
-            onClick={() => onAddSlot(categoryKey)}
-            className="px-3 py-1.5 rounded-lg border border-slate-600 bg-slate-900 hover:bg-slate-800 transition"
+            className="px-3 py-1.5 rounded-lg border border-indigo-600 bg-indigo-900/40 text-indigo-100"
+            // placeholder for future API integration
+            onClick={() => {/* no-op for now */}}
           >
-            Add slots
+            Import Spells
           </button>
           <button
             type="button"
-            onClick={() => onAddSpell(categoryKey)}
+            onClick={onAdd}
             className="px-3 py-1.5 rounded-lg border border-slate-600 bg-slate-900 hover:bg-slate-800 transition"
           >
             Add spell
@@ -751,99 +553,26 @@ const SlotsCategoryCard = React.memo(function SlotsCategoryCard({
         </div>
       </header>
 
-      {/* Slots */}
-      <div className="space-y-2">
-        <div className="text-slate-300 text-sm font-medium">Spell Slots</div>
-        {slots.length === 0 && <p className="text-slate-400 text-sm">No slot rows. Click “Add slots”.</p>}
-        {slots.map((row) => (
-          <SlotRow
-            key={row.id}
-            categoryKey={categoryKey}
-            row={row}
-            onChangeField={onChangeSlot}
-            onRemove={onRemoveRow}
-          />
-        ))}
-      </div>
+      {list.length === 0 && <p className="text-slate-400 text-sm">No spells yet. Click “Add spell”.</p>}
 
-      {/* Spells */}
-      <div className="space-y-2">
-        <div className="text-slate-300 text-sm font-medium">Spells</div>
-        {spells.length === 0 && <p className="text-slate-400 text-sm">No spells yet. Click “Add spell”.</p>}
-        <div className="space-y-3">
-          {spells.map((raw) => {
-            const row = normalizeSpellRow(raw, { slotBased: true });
-            return (
-              <SpellRowSlotBased
-                key={row.id}
-                categoryKey={categoryKey}
-                row={row}
-                open={!!openById[row.id]}
-                onToggleOpen={onToggleOpen}
-                onChangeField={onChangeSpell}
-                onRemove={onRemoveRow}
-              />
-            );
-          })}
-        </div>
+      <div className="space-y-3">
+        {list.map((raw) => {
+          const row = normalizeSpellRow(raw);
+          return (
+            <SpellEditorRow
+              key={row.id}
+              row={row}
+              open={!!openById[row.id]}
+              onToggleOpen={onToggleOpen}
+              onChangeField={(id, patch) => onChange(id, patch)}
+              onRemove={onRemove}
+            />
+          );
+        })}
       </div>
     </section>
   );
-});
-
-const InnateCategoryCard = React.memo(function InnateCategoryCard({
-  title,
-  categoryKey,
-  model,
-  openById,
-  onToggleOpen,
-  onAddSpell,
-  onRemoveRow,
-  onChangeSpell,
-}) {
-  const spells = model.spells || [];
-
-  return (
-    <section className="rounded-2xl border border-slate-700 bg-slate-800/40 p-4 space-y-4">
-      <header className="flex items-center justify-between">
-        <h3 className="text-lg font-semibold text-orange-300">
-          {title}{" "}
-          <span className="text-slate-400 text-sm">({spells.length} innate spell{spells.length === 1 ? "" : "s"})</span>
-        </h3>
-        <div className="flex gap-2">
-          <button
-            type="button"
-            onClick={() => onAddSpell(categoryKey)}
-            className="px-3 py-1.5 rounded-lg border border-slate-600 bg-slate-900 hover:bg-slate-800 transition"
-          >
-            Add innate spell
-          </button>
-        </div>
-      </header>
-
-      <div className="space-y-2">
-        <div className="text-slate-300 text-sm font-medium">Innate Spells</div>
-        {spells.length === 0 && <p className="text-slate-400 text-sm">No innate spells yet. Click “Add innate spell”.</p>}
-        <div className="space-y-3">
-          {spells.map((raw) => {
-            const row = normalizeSpellRow(raw, { slotBased: false });
-            return (
-              <SpellRowInnate
-                key={row.id}
-                categoryKey={categoryKey}
-                row={row}
-                open={!!openById[row.id]}
-                onToggleOpen={onToggleOpen}
-                onChangeField={onChangeSpell}
-                onRemove={onRemoveRow}
-              />
-            );
-          })}
-        </div>
-      </div>
-    </section>
-  );
-});
+}
 
 /* ---------------- Metamagic ---------------- */
 function MetamagicCard({ list, onAdd, onRemove, onChange }) {
@@ -961,11 +690,13 @@ export default function Spellbook() {
   const { charData, updateCharField, postCharData } = useCharStore();
   if (!charData) return null;
 
-  // Normalize existing data to the extended shape
+  
+  // Normalize + migrate legacy -> new shape
   const book = useMemo(() => {
     const raw = charData.spellbook || {};
     const mapped = { ...DEFAULT_SPELLBOOK, ...(raw || {}) };
 
+    // migrate legacy slots
     const normSlots = (arr) =>
       (arr || []).map((r) => ({
         id: r.id || idGen(),
@@ -974,20 +705,36 @@ export default function Spellbook() {
         slots_current: r.slots_current ?? r.slots_max ?? "",
       }));
 
-    // spellcasting/pactmagic
-    mapped.spellcasting = {
-      spells: (mapped.spellcasting?.spells || []).map((r) => normalizeSpellRow(r, { slotBased: true })),
-      slots: normSlots(mapped.spellcasting?.slots || []),
-    };
-    mapped.pactmagic = {
-      spells: (mapped.pactmagic?.spells || []).map((r) => normalizeSpellRow(r, { slotBased: true })),
-      slots: normSlots(mapped.pactmagic?.slots || []),
-    };
+    // if legacy spellcasting/pactmagic exist, pull their slots
+    if (raw.spellcasting?.slots && !mapped.spellslots?.slots?.length) {
+      mapped.spellslots = { slots: normSlots(raw.spellcasting.slots) };
+    } else {
+      mapped.spellslots = { slots: normSlots(mapped.spellslots?.slots || []) };
+    }
+    if (raw.pactmagic?.slots && !mapped.pactslots?.slots?.length) {
+      mapped.pactslots = { slots: normSlots(raw.pactmagic.slots) };
+    } else {
+      mapped.pactslots = { slots: normSlots(mapped.pactslots?.slots || []) };
+    }
 
-    // innate
-    mapped.innate = {
-      spells: (mapped.innate?.spells || []).map((r) => normalizeSpellRow(r, { slotBased: false })),
-    };
+    // unify spells: gather from legacy spellcasting.spells, pactmagic.spells, innate.spells, plus any existing mapped.spells
+    const legacySpellLists = [
+      ...(raw.spellcasting?.spells || []).map((s) => ({ ...s, innate: false })),
+      ...(raw.pactmagic?.spells || []).map((s) => ({ ...s, innate: false })),
+      ...(raw.innate?.spells || []).map((s) => ({ ...s, innate: true })),
+    ];
+    const existingUnified = mapped.spells || [];
+    const unified = [...existingUnified, ...legacySpellLists].map(normalizeSpellRow);
+
+    // dedupe by id (keep first)
+    const seen = new Set();
+    const deduped = unified.filter((s) => {
+      if (seen.has(s.id)) return false;
+      seen.add(s.id);
+      return true;
+    });
+
+    mapped.spells = deduped;
 
     // metamagic
     mapped.metamagic = (mapped.metamagic || []).map((m) => ({
@@ -1033,42 +780,14 @@ export default function Spellbook() {
     [updateCharField, postCharData, debouncedPost]
   );
 
-  /* ----- Add/Remove ----- */
-  const addSpell = useCallback(
-    (categoryKey) => {
-      const base = normalizeSpellRow(
-        { name: "", level: "", school: "", notes: "" },
-        { slotBased: categoryKey !== "innate" }
-      );
-      let row =
-        categoryKey === "innate"
-          ? { ...base, max_charges: "", current_charges: "", recharge_short_amount: 0 }
-          : { ...base, prepared: false };
-
-      const next = {
-        ...book,
-        [categoryKey]: {
-          ...book[categoryKey],
-          spells: [...(book[categoryKey].spells || []), row],
-          ...(categoryKey === "innate" ? {} : { slots: [...(book[categoryKey].slots || [])] }),
-        },
-      };
-      persist(next, { immediate: true });
-      setOpenById((prev) => ({ ...prev, [row.id]: true }));
-    },
-    [book, persist]
-  );
-
+  /* ----- Slots add/remove/update ----- */
   const addSlot = useCallback(
-    (categoryKey) => {
-      if (categoryKey === "innate") return;
+    (categoryKey /* 'spellslots' | 'pactslots' */) => {
       const row = { id: idGen(), level: "", slots_max: "", slots_current: "" };
       const next = {
         ...book,
         [categoryKey]: {
-          ...book[categoryKey],
-          spells: [...(book[categoryKey].spells || [])],
-          slots: [...(book[categoryKey].slots || []), row],
+          slots: [...(book[categoryKey]?.slots || []), row],
         },
       };
       persist(next, { immediate: true });
@@ -1076,18 +795,50 @@ export default function Spellbook() {
     [book, persist]
   );
 
-  const removeRow = useCallback(
-    (categoryKey, id, which) => {
+  const removeSlotRow = useCallback(
+    (categoryKey, id) => {
       const next = {
         ...book,
         [categoryKey]: {
-          ...book[categoryKey],
-          spells: (book[categoryKey].spells || []).filter((r) => !(which === "spells" && r.id === id)),
-          ...(categoryKey === "innate"
-            ? {}
-            : { slots: (book[categoryKey].slots || []).filter((r) => !(which === "slots" && r.id === id)) }),
+          slots: (book[categoryKey]?.slots || []).filter((r) => r.id !== id),
         },
       };
+      persist(next, { immediate: true });
+    },
+    [book, persist]
+  );
+
+  const changeSlotField = useCallback(
+    (categoryKey, id, patch) => {
+      const next = {
+        ...book,
+        [categoryKey]: {
+          slots: (book[categoryKey]?.slots || []).map((r) => (r.id === id ? { ...r, ...patch } : r)),
+        },
+      };
+      persist(next);
+    },
+    [book, persist]
+  );
+
+  /* ----- Spells add/remove/update ----- */
+  const addSpell = useCallback(() => {
+    const row = normalizeSpellRow({
+      name: "",
+      level: "",
+      school: "",
+      notes: "",
+      prepared: false,
+      innate: false,
+    });
+    const next = { ...book, spells: [...(book.spells || []), row] };
+    persist(next, { immediate: true });
+    setOpenById((prev) => ({ ...prev, [row.id]: true }));
+  }, [book, persist]);
+
+  const removeSpell = useCallback(
+    (id) => {
+      const next = { ...book, spells: (book.spells || []).filter((r) => r.id !== id) };
       persist(next, { immediate: true });
       setOpenById((prev) => {
         const copy = { ...prev };
@@ -1098,50 +849,13 @@ export default function Spellbook() {
     [book, persist]
   );
 
-  /* ----- Update fields ----- */
   const changeSpellField = useCallback(
-    (categoryKey, id, patch) => {
+    (id, patch) => {
       const next = {
         ...book,
-        [categoryKey]: {
-          ...book[categoryKey],
-          spells: (book[categoryKey].spells || []).map((r) => (r.id === id ? { ...r, ...patch } : r)),
-          ...(categoryKey === "innate" ? {} : { slots: [...(book[categoryKey].slots || [])] }),
-        },
+        spells: (book.spells || []).map((r) => (r.id === id ? normalizeSpellRow({ ...r, ...patch }) : r)),
       };
       persist(next);
-    },
-    [book, persist]
-  );
-
-  const changeSlotField = useCallback(
-    (categoryKey, id, patch) => {
-      if (categoryKey === "innate") return;
-      const next = {
-        ...book,
-        [categoryKey]: {
-          ...book[categoryKey],
-          spells: [...(book[categoryKey].spells || [])],
-          slots: (book[categoryKey].slots || []).map((r) => (r.id === id ? { ...r, ...patch } : r)),
-        },
-      };
-      persist(next);
-    },
-    [book, persist]
-  );
-
-  /* ----- Prepare all / Unprepare all (spellcasting only) ----- */
-  const prepareAll = useCallback(
-    (flag) => {
-      const next = {
-        ...book,
-        spellcasting: {
-          ...book.spellcasting,
-          spells: (book.spellcasting.spells || []).map((s) => ({ ...s, prepared: !!flag })),
-          slots: [...(book.spellcasting.slots || [])],
-        },
-      };
-      persist(next, { immediate: true });
     },
     [book, persist]
   );
@@ -1172,45 +886,38 @@ export default function Spellbook() {
     persist(next);
   }, [book, persist]);
 
+
+
+
   return (
     <div className="w-full max-w-6xl mx-auto space-y-6">
-      <SlotsCategoryCard
+      {/* Slots-only cards */}
+      <SlotsOnlyCard
         title="Spellcasting"
-        categoryKey="spellcasting"
-        model={book.spellcasting}
-        openById={openById}
-        onToggleOpen={toggleOpen}
-        onAddSpell={addSpell}
+        categoryKey="spellslots"
+        model={book.spellslots}
         onAddSlot={addSlot}
-        onRemoveRow={removeRow}
-        onChangeSpell={changeSpellField}
+        onRemoveRow={removeSlotRow}
         onChangeSlot={changeSlotField}
-        onPrepareAll={(flag) => prepareAll(flag)}
       />
 
-      <SlotsCategoryCard
+      <SlotsOnlyCard
         title="Pact Magic"
-        categoryKey="pactmagic"
-        model={book.pactmagic}
-        openById={openById}
-        onToggleOpen={toggleOpen}
-        onAddSpell={addSpell}
+        categoryKey="pactslots"
+        model={book.pactslots}
         onAddSlot={addSlot}
-        onRemoveRow={removeRow}
-        onChangeSpell={changeSpellField}
+        onRemoveRow={removeSlotRow}
         onChangeSlot={changeSlotField}
-        onPrepareAll={undefined}
       />
 
-      <InnateCategoryCard
-        title="Innate Spells"
-        categoryKey="innate"
-        model={book.innate}
+      {/* Unified spells */}
+      <SpellsCard
+        list={book.spells || []}
         openById={openById}
         onToggleOpen={toggleOpen}
-        onAddSpell={addSpell}
-        onRemoveRow={removeRow}
-        onChangeSpell={changeSpellField}
+        onAdd={addSpell}
+        onChange={changeSpellField}
+        onRemove={removeSpell}
       />
 
       <MetamagicCard

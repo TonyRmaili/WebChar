@@ -34,7 +34,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 ACCESS_TOKEN_EXPIRE_MINUTES = os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES")  
 
 savefiles_path = "./app/database/save_files/"
-
+fiveEtools_path = ".data/5etools_data/"
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -397,9 +397,26 @@ def post_query(query: QueryRequest, pdf_name="players_handbook_5e"):
     
     return {"answer": summary}
 
-# ------------------------Other-----------------------------
+# ------------------------5etools Data-----------------------------
 
-@app.get("/races",tags=["5etools"])
+@app.get("/5etools/spells/filenames",tags=["5etools"])
+def get_spell_filenames():
+    path = os.path.join(fiveEtools_path,"spells")
+    try:
+        filenames = []
+
+        for f in os.listdir(path):
+            if os.path.isfile(os.path.join(path, f)):
+                name, _ = os.path.splitext(f)
+                filenames.append(name)
+
+        print(filenames)
+    
+    except FileNotFoundError:
+        return {"file not found"}
+
+
+@app.get("/5etools/races",tags=["5etools"])
 def get_races():
     try:
         with open("./app/database/5etools_json/races.json") as f:
