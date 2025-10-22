@@ -34,7 +34,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 ACCESS_TOKEN_EXPIRE_MINUTES = os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES")  
 
 savefiles_path = "./app/database/save_files/"
-fiveEtools_path = ".data/5etools_data/"
+fiveEtools_path = os.path.join(os.path.dirname(__file__), "../data/5etools_data/")
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -401,19 +401,55 @@ def post_query(query: QueryRequest, pdf_name="players_handbook_5e"):
 
 @app.get("/5etools/spells/filenames",tags=["5etools"])
 def get_spell_filenames():
-    path = os.path.join(fiveEtools_path,"spells")
+
+    path = os.path.join(fiveEtools_path,"spells/")
+    path = os.path.abspath(path)
+
     try:
-        filenames = []
+        filenames = [
+        os.path.splitext(f)[0]
+        for f in os.listdir(path)
+        if os.path.isfile(os.path.join(path, f))
+    ]
 
-        for f in os.listdir(path):
-            if os.path.isfile(os.path.join(path, f)):
-                name, _ = os.path.splitext(f)
-                filenames.append(name)
-
-        print(filenames)
+        return filenames
     
     except FileNotFoundError:
         return {"file not found"}
+    
+
+@app.get("/5etools/spells/load_spells/{file_name}",tags=["5etools"])
+def get_spells(file_name):
+
+    path = os.path.join(fiveEtools_path,"spells/",file_name+".json")
+    path = os.path.abspath(path)
+
+    with open(path) as f:
+        spells_data = json.load(f)
+    
+    spells_data = spells_data["spell"]
+    spell_names = []
+    for spell in spells_data:
+        spell_names.append(spell["name"])
+
+    return spell_names
+
+# @app.get("/5etools/spells/select_spell/{spell_name}",tags=["5etools"])
+# def select_spell(spell_name):
+
+#     path = os.path.join(fiveEtools_path,"spells/",file_name+".json")
+#     path = os.path.abspath(path)
+
+#     with open(path) as f:
+#         spells_data = json.load(f)
+    
+#     spells_data = spells_data["spell"]
+#     spell_names = []
+#     for spell in spells_data:
+#         spell_names.append(spell["name"])
+
+#     return spell_names
+
 
 
 @app.get("/5etools/races",tags=["5etools"])
