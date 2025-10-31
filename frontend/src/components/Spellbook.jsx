@@ -17,12 +17,13 @@ const DEFAULT_SPELLBOOK = {
 /* ---------------- Main ---------------- */
 export default function Spellbook() {
   const { charData, updateCharField, postCharData } = useCharStore();
+  
   if (!charData) return null;
   // const { files, loadingFiles, selectedFile, loadFiles, onSelectFile } = useDnDStore();
   const {
   files, loadingFiles, selectedFile,
   spellNames, loadingSpellNames, selectedSpell,
-  loadFiles, onSelectFile, onSelectSpell,
+  loadFiles, onSelectFile, onSelectSpell, spellData
 } = useDnDStore();
 
   
@@ -218,6 +219,43 @@ export default function Spellbook() {
     persist(next);
   }, [book, persist]);
 
+
+ 
+  // import spell = map store.spellData → row, then add
+  const onImport = useCallback(() => {
+    const s = spellData;
+    if (!s || Object.keys(s).length === 0) return;
+
+    // map backend spell shape → your row shape
+    const row = normalizeSpellRow({
+      name: s.name ?? "",
+      level: Number.isFinite(+s.level) ? +s.level : s.level ?? "",
+      school: s.school ?? "",
+      notes: Array.isArray(s.desc) ? s.desc.join("\n") : (s.desc ?? ""),
+      concentration: !!s.concentration,
+      ritual: !!s.ritual,
+      range_ft: Number.isFinite(+s.range) ? +s.range : s.range ?? "",
+      // try to read components sensibly
+      components: {
+        v: !!(s.components?.v ?? s.components?.includes?.("V")),
+        s: !!(s.components?.s ?? s.components?.includes?.("S")),
+        m: !!(s.components?.m ?? s.components?.includes?.("M") ?? s.material),
+        material_desc: s.material ?? s.components?.material_desc ?? "",
+        material_cost: s.material_cost ?? s.components?.material_cost ?? "",
+      },
+      // crude casting time parse if present
+      cast_time_kind: "choice",
+      cast_time_choice:
+        /bonus/i.test(s.casting_time || "") ? "bonus" :
+        /reaction/i.test(s.casting_time || "") ? "reaction" : "action",
+    });
+
+    const next = { ...book, spells: [...(book.spells || []), row] };
+    persist(next, { immediate: true });
+    setOpenById((p) => ({ ...p, [row.id]: true }));
+  }, [book, persist, spellData]);
+
+
   return (
     <div className="w-full max-w-6xl mx-auto space-y-6">
       <SlotsOnlyCard
@@ -243,6 +281,7 @@ export default function Spellbook() {
         openById={openById}
         onToggleOpen={toggleOpen}
         onAdd={addSpell}
+        onImport={onImport}
         onChange={changeSpellField}
         onRemove={removeSpell}
         files={files}

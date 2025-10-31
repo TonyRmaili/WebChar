@@ -5,11 +5,15 @@ import ShortcutTab from "../components/ShortcutTab";
 import CreateParty from "../components/CreateParty";
 import InitiativeTracker from "../components/InitiativeTracker";
 import CreateMonsters from "../components/CreateMonsters";
+import MonsterCard from "../utils/MonsterCard";
+
+
 
 const tabs = [
   { name: "Create Party", id: 0 },
   { name: "Create Monsters", id: 1 },
-  { name: "Initiative Tracker", id: 2 },
+  { name: "Monster Card", id: 2 },
+  { name: "Initiative Tracker", id: 3 },
   
 ];
 
@@ -44,6 +48,7 @@ function DMToolsPage() {
       <div className=" min-h-screen p-2 bg-gray-600">
         {activeTab.name === "Create Party" && <CreateParty />}
         {activeTab.name === "Create Monsters" && <CreateMonsters />}
+        {activeTab.name === "Monster Card" && <MonsterCard />}
         {activeTab.name === "Initiative Tracker" && <InitiativeTracker />}
          
       </div>

@@ -10,6 +10,8 @@ export const useDnDStore = create((set, get) => ({
   loadingSpellNames: false,
   selectedSpell: "",
   error: null,
+  loadingSpell: false,
+  spellData: JSON.parse(localStorage.getItem("spellData") || "{}"),
 
   loadFiles: async () => {
     set({ loadingFiles: true, error: null });
@@ -44,5 +46,36 @@ export const useDnDStore = create((set, get) => ({
     }
   },
 
-  onSelectSpell: (name) => set({ selectedSpell: name }),
+  
+  onSelectSpell: async (name) => {
+  const { selectedFile } = get(); 
+  set({ selectedSpell: name });
+
+  if (!name || !selectedFile) return;
+
+  try {
+    set({ loadingSpell: true, error: null });
+
+    const res = await fetch(
+      `${API_BASE}/5etools/spells/select_spell/${encodeURIComponent(selectedFile)}/${encodeURIComponent(name)}`
+    );
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+    const data = await res.json();
+    const spellData = typeof data === "object" && data !== null ? data : {};
+
+    set({ spellData });
+    localStorage.setItem("spellData", JSON.stringify(spellData))
+
+    console.log("Saved spellData:", spellData);
+
+  } catch (e) {
+    console.error(e);
+    set({ spellData: {}, error: e.message });
+  } finally {
+    set({ loadingSpell: false });
+  }
+},
+
+
 }));

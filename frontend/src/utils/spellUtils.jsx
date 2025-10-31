@@ -500,6 +500,7 @@ export function SpellsCard({
   openById,
   onToggleOpen,
   onAdd,
+  onImport,
   onChange,
   onRemove,
   files,
@@ -555,10 +556,18 @@ export function SpellsCard({
 
           <button
             type="button"
+            onClick={onImport}
+            className="px-3 py-1.5 rounded-lg border border-slate-600 bg-slate-900 hover:bg-slate-800 transition"
+          >
+            Import spell
+          </button>
+
+          <button
+            type="button"
             onClick={onAdd}
             className="px-3 py-1.5 rounded-lg border border-slate-600 bg-slate-900 hover:bg-slate-800 transition"
           >
-            Add spell
+            Create spell
           </button>
         </div>
       </header>

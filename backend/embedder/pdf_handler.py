@@ -74,7 +74,7 @@ class PdfHandler:
     
     def save_chunks(self,all_chunks )->None:
         with open(self.chunks_path+self.pdf_name+".json", 'w') as file:
-            json.dump(all_chunks, file)
+            json.dump(all_chunks, file, indent=4)
 
     def run(self ):
         all_pages = self.extract_pages()
@@ -89,12 +89,18 @@ class PdfHandler:
 
 
 if __name__ == "__main__":
-    pdf_hanlder = PdfHandler("players_handbook_5e.pdf")
+    pdf_hanlder = PdfHandler("players_handbook_5e_new.pdf")
     
+    pages = pdf_hanlder.extract_pages()
+    path = pdf_hanlder.game_rules_path
+    savepath = os.path.join(path,"pages.json")
+    with open(savepath,"w") as f:
+        json.dump(pages,f,indent=4)
+
 
     # pdf_hanlder.run()
-    chunks = pdf_hanlder.load_chunks()
-    print(chunks[45])
+    # chunks = pdf_hanlder.load_chunks()
+    # print(len(chunks))
 
     
     

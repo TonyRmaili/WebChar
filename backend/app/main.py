@@ -21,10 +21,10 @@ from embedder.xembedder import Embedder
 from pathlib import Path
 from app.dice_handler import roll_dice
 from app.combat_functions import heal_health, damage_health,load_character,on_longrest,on_shortrest
-
-
+from data.cleaner import Cleaner 
 
 # uvicorn app.main:app --reload
+
 
 #------------------------Setup-----------------------------
 load_dotenv(override=True)
@@ -387,6 +387,7 @@ def roll_initiative(
     
 
 
+
 # ------------------------Embeddings-----------------------------
 
 @app.post("/query", tags=["embeddings"])
@@ -434,22 +435,27 @@ def get_spells(file_name):
 
     return spell_names
 
-# @app.get("/5etools/spells/select_spell/{spell_name}",tags=["5etools"])
-# def select_spell(spell_name):
+@app.get("/5etools/spells/select_spell/{file_name}/{spell_name}",tags=["5etools"])
+def select_spell(file_name,spell_name):
+    print(file_name)
+    print(spell_name)
+   
+    file_path = os.path.join(fiveEtools_path,"spells/",file_name+".json")
+    file_path = os.path.abspath(file_path)
 
-#     path = os.path.join(fiveEtools_path,"spells/",file_name+".json")
-#     path = os.path.abspath(path)
+    with open(file_path) as f:
+        spells_data = json.load(f)
 
-#     with open(path) as f:
-#         spells_data = json.load(f)
+    spells_data = spells_data["spell"]
+
     
-#     spells_data = spells_data["spell"]
-#     spell_names = []
-#     for spell in spells_data:
-#         spell_names.append(spell["name"])
+    
+    for spell in spells_data:
+        if spell["name"] == spell_name:
+            spell = clean_spell(spell)
+            return spell
 
-#     return spell_names
-
+    
 
 
 @app.get("/5etools/races",tags=["5etools"])
@@ -463,7 +469,7 @@ def get_races():
     except FileNotFoundError:
         return {"file not found"}
 
-
+ 
 
 
 # @app.post("/character", tags=["characters"])
