@@ -64,37 +64,45 @@ export default function PlayHealth() {
   }
 
   // styles
-  const labelCls = "text-amber-200 text-sm w-16 md:w-20 shrink-0";
+  const labelCls = "text-amber-200 text-xs leading-tight"; // removed w-16/md:w-20
   const inputBase = "px-2 py-1 rounded border border-slate-700";
-  const inputLight = `${inputBase} bg-white text-slate-900 w-20 md:w-24`;
-  const inputDark  = `${inputBase} bg-slate-900 text-slate-200 w-20 md:w-24`;
+  const inputLight = `${inputBase} bg-white text-slate-900 w-16`;
+  const inputDark  = `${inputBase} bg-slate-900 text-slate-200 w-16`;
+
 
   return (
     <section className="rounded-2xl border border-slate-700 bg-slate-800/40 p-4 space-y-4 overflow-hidden">
-      <header>
-        <h3 className="text-lg font-semibold text-orange-300">Health</h3>
-      </header>
+      <div className="grid grid-cols-1 md:grid-cols-[auto_auto_auto_1fr] gap-y-3 min-w-0">
 
-      {/* tighter column gaps; align centers */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-x-6 gap-y-3 items-center min-w-0">
-        {/* Current / Max HP (gives Temp some breathing room via right padding/margin) */}
-        <div className="flex items-center gap-1.5 pr-6 md:pr-10 min-w-0">
-          <label className={labelCls}>Current / Max</label>
-          <div className="flex items-center gap-1.5 min-w-0">
-            <input
-              type="number"
-              min={0}
-              value={current.hp ?? 0}
-              onChange={(e) => onHpManualChange(e.target.value)}
-              className={inputLight}
-            />
-            <span className="text-slate-300">/</span>
-            <input type="number" value={maxHP} readOnly className={inputDark} />
+        <div className="flex flex-col  min-w-0">
+          <div className="flex gap-3 min-w-0">
+            {/* Current HP */}
+            <div className="flex flex-col gap-0.5 min-w-0">
+              <label className={labelCls}>HP</label>
+              <input
+                type="number"
+                min={0}
+                value={current.hp ?? 0}
+                onChange={(e) => onHpManualChange(e.target.value)}
+                className={inputLight}
+              />
+            </div>
+            {/* Max HP */}
+            <div className="flex flex-col gap-0.5 min-w-0">
+              <label className={labelCls}>Max</label>
+              <input
+                type="number"
+                value={maxHP}
+                readOnly
+                className={inputDark}
+              />
+            </div>
           </div>
         </div>
 
-        {/* Temp HP — nudged right so it doesn't crowd Max */}
-        <div className="flex items-center gap-1.5 md:ml-8 lg:ml-12 min-w-0">
+
+
+        <div className="flex flex-col items-start gap-0.5  ml-2 min-w-0">
           <label className={labelCls}>Temp HP</label>
           <input
             type="number"
@@ -105,8 +113,8 @@ export default function PlayHealth() {
           />
         </div>
 
-        {/* Barrier */}
-        <div className="flex items-center gap-1.5 min-w-0">
+
+        <div className="flex flex-col items-start gap-0.5 ml-2 min-w-0">
           <label className={labelCls}>Barrier</label>
           <input
             type="number"
@@ -117,40 +125,47 @@ export default function PlayHealth() {
           />
         </div>
 
-        {/* Amount + Damage/Heal — keep small + allow wrap */}
-        <div className="flex flex-wrap items-center gap-2 min-w-0">
+       
+
+        <div className="flex flex-col items-start ml-3 min-w-0">
+          {/* Amount input on top */}
           <input
             type="number"
             min={0}
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
             placeholder="Amount"
-            className="w-24 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
+            className="w-24 px-2 py-1 mb-1 ml-2 rounded border border-slate-700 bg-white text-slate-900"
           />
-          <button
-            type="button"
-            onClick={() => {
-              const n = Number(amount);
-              if (!Number.isFinite(n) || n <= 0) return;
-              onHealthChange(-n, charData.name);
-            }}
-            className="px-2 py-1 text-sm rounded-lg border border-red-700 bg-red-900/40 hover:bg-red-900/60 text-red-100"
-          >
-            Damage
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              const n = Number(amount);
-              if (!Number.isFinite(n) || n <= 0) return;
-              onHealthChange(n, charData.name);
-            }}
-            className="px-2 py-1 text-sm rounded-lg border border-emerald-700 bg-emerald-900/40 hover:bg-emerald-900/60 text-emerald-100"
-          >
-            Heal
-          </button>
+
+          {/* Damage and Heal buttons same width, minimal gap */}
+          <div className="flex w-24 justify-between gap-1">
+            <button
+              type="button"
+              onClick={() => {
+                const n = Number(amount);
+                if (!Number.isFinite(n) || n <= 0) return;
+                onHealthChange(-n, charData.name);
+              }}
+              className="flex-1 px-2 py-1 text-sm rounded border border-red-700 bg-red-900/40 hover:bg-red-900/60 text-red-100"
+            >
+              Damage
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                const n = Number(amount);
+                if (!Number.isFinite(n) || n <= 0) return;
+                onHealthChange(n, charData.name);
+              }}
+              className="flex-1 px-2 py-1 text-sm rounded border border-emerald-700 bg-emerald-900/40 hover:bg-emerald-900/60 text-emerald-100"
+            >
+              Heal
+            </button>
+          </div>
         </div>
       </div>
+        
 
       {/* Quick buttons */}
       <div className="flex flex-wrap gap-2">

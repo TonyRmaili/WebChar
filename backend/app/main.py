@@ -21,7 +21,6 @@ from embedder.xembedder import Embedder
 from pathlib import Path
 from app.dice_handler import roll_dice
 from app.combat_functions import heal_health, damage_health,load_character,on_longrest,on_shortrest
-from data.cleaner import Cleaner 
 
 # uvicorn app.main:app --reload
 
