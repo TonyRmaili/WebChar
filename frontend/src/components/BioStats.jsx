@@ -13,46 +13,46 @@ function BioStats() {
   const [raceOptions, setRaceOptions] = useState(null); // [{value,label}]
   const [subraceRaw, setSubraceRaw] = useState(null);   // [{ value: raceName, label: subraceName }]
 
-  useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      try {
-        const res = await fetch("http://localhost:8000/races");
-        if (!res.ok) throw new Error("Failed to load races");
-        const data = await res.json();
+  // useEffect(() => {
+  //   let cancelled = false;
+  //   (async () => {
+  //     try {
+  //       const res = await fetch("http://localhost:8000/races");
+  //       if (!res.ok) throw new Error("Failed to load races");
+  //       const data = await res.json();
 
-        // data[0] = races[] with .name; data[1] = subraces[] with .raceName + .name
-        const races0 = Array.isArray(data) && data[0] ? data[0] : [];
-        const subs1  = Array.isArray(data) && data[1] ? data[1] : [];
+  //       // data[0] = races[] with .name; data[1] = subraces[] with .raceName + .name
+  //       const races0 = Array.isArray(data) && data[0] ? data[0] : [];
+  //       const subs1  = Array.isArray(data) && data[1] ? data[1] : [];
 
-        // Clean races: remove parentheses and dedupe by name
-        const unique = new Set();
-        const cleanedRaces = races0
-          .map(r => (r?.name ?? "").replace(/\s*\([^)]*\)/g, ""))
-          .filter(n => {
-            if (!n) return false;
-            if (unique.has(n)) return false;
-            unique.add(n);
-            return true;
-          })
-          .map(n => ({ value: n, label: n }));
+  //       // Clean races: remove parentheses and dedupe by name
+  //       const unique = new Set();
+  //       const cleanedRaces = races0
+  //         .map(r => (r?.name ?? "").replace(/\s*\([^)]*\)/g, ""))
+  //         .filter(n => {
+  //           if (!n) return false;
+  //           if (unique.has(n)) return false;
+  //           unique.add(n);
+  //           return true;
+  //         })
+  //         .map(n => ({ value: n, label: n }));
 
-        // Clean subraces: keep { value: raceName, label: subraceName }
-        const cleanedSubs = subs1.map(s => ({
-          value: s?.raceName ?? "",
-          label: s?.name ?? "",
-        }));
+  //       // Clean subraces: keep { value: raceName, label: subraceName }
+  //       const cleanedSubs = subs1.map(s => ({
+  //         value: s?.raceName ?? "",
+  //         label: s?.name ?? "",
+  //       }));
 
-        if (!cancelled) {
-          setRaceOptions(cleanedRaces);
-          setSubraceRaw(cleanedSubs);
-        }
-      } catch (e) {
-        if (!cancelled) setError(e.message || "Error loading races");
-      }
-    })();
-    return () => { cancelled = true; };
-  }, []);
+  //       if (!cancelled) {
+  //         setRaceOptions(cleanedRaces);
+  //         setSubraceRaw(cleanedSubs);
+  //       }
+  //     } catch (e) {
+  //       if (!cancelled) setError(e.message || "Error loading races");
+  //     }
+  //   })();
+  //   return () => { cancelled = true; };
+  // }, []);
 
   // ----- Selected values come from charData -----
   const selectedRace   = charData?.race ?? "";

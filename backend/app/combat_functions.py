@@ -24,8 +24,8 @@ def damage_health(user, character, value):
     """
     char_data = load_character(user, character)
 
-    current = char_data.get("current", {})
-    hp = current.get("hp", 0)
+    current = char_data.get("health", {})
+    hp = current.get("current_hp", 0)
     temp_hp = current.get("temp_hp", 0)
     barrier = current.get("barrier", 0)
 
@@ -54,9 +54,9 @@ def damage_health(user, character, value):
         hp = max(hp - damage, 0)
 
     # --- Save updated values ---
-    char_data["current"]["hp"] = hp
-    char_data["current"]["temp_hp"] = temp_hp
-    char_data["current"]["barrier"] = barrier
+    char_data["health"]["current_hp"] = hp
+    char_data["health"]["temp_hp"] = temp_hp
+    char_data["health"]["barrier"] = barrier
 
     save_character(user=user, character=character, char_data=char_data)
     return char_data
@@ -65,13 +65,13 @@ def damage_health(user, character, value):
 def heal_health(user,character,value):
     char_data = load_character(user,character)
 
-    max_hp = char_data["max_hp"]
-    current_hp = char_data["current"]["hp"]
+    max_hp = char_data["health"]["max_hp"]
+    current_hp = char_data["health"]["current_hp"]
 
     new_hp = current_hp + value
-    char_data["current"]["hp"] = new_hp
-    if char_data["current"]["hp"] > max_hp:
-        char_data["current"]["hp"] = max_hp
+    char_data["health"]["current_hp"] = new_hp
+    if char_data["health"]["current_hp"] > max_hp:
+        char_data["health"]["current_hp"] = max_hp
 
     save_character(
         user=user,

@@ -342,7 +342,7 @@ def change_health(
         pass
 
     updated_char = load_character(current_user.name, form_data.name)
-    return {"current": updated_char["current"]}
+    return {"health": updated_char["health"]}
 
 
 @app.post("/combat/rest", tags=["combat"])
