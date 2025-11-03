@@ -114,11 +114,11 @@ export default function ActionsPlay() {
   const Section = ({ title, rows, catKey }) => (
     <section className="space-y-2">
       <h4 className="text-slate-300 text-sm font-semibold">{title}</h4>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(9rem,1fr))] gap-2">
         {rows.map((a) => {
           const { has, current, max } = getCounts(a);
           const depleted = has && current <= 0;
-          const base = "w-full text-left px-3 py-3 rounded-xl border transition focus:outline-none";
+          const base = "text-left px-2 py-1 rounded-xl border transition focus:outline-none w-full";
           const ok = "border-slate-600 bg-slate-900 hover:bg-slate-800 text-slate-100";
           const off = "border-slate-700 bg-slate-800/50 text-slate-500 cursor-not-allowed opacity-70";
 
@@ -135,7 +135,9 @@ export default function ActionsPlay() {
                 <div className="min-w-0">
                   <div className="font-semibold truncate">{a.name || "Unnamed Action"}</div>
                   {a.hit_bonus !== "" && a.hit_bonus != null ? (
-                    <div className="text-xs text-slate-400">+{a.hit_bonus} to hit</div>
+                    <div className="text-xs text-slate-400">
+                      {a.hit_bonus >= 0 ? `+${a.hit_bonus}` : a.hit_bonus} to hit
+                    </div>
                   ) : null}
                 </div>
                 {has && (

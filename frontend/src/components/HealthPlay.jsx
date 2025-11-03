@@ -1,7 +1,8 @@
 import React, { useMemo, useState } from "react";
 import useCharStore from "../store/CharStore";
 
-const DEFAULT_CURRENT = { hp: 0, temp_hp: 0, barrier: 0 };
+const DEFAULT_CURRENT = { hp: 0, temp_hp: 0, barrier: 0, reaction: false};
+
 
 export default function PlayHealth() {
   const { charData, updateCharField, postCharData } = useCharStore();
@@ -63,6 +64,14 @@ export default function PlayHealth() {
     await postCharData();
   }
 
+  function onReactionToggle(checked) {
+  updateCharField("current", {
+    ...(charData.current || DEFAULT_CURRENT),
+    reaction: checked,
+  });
+  postCharData();
+}
+
   // styles
   const labelCls = "text-amber-200 text-xs leading-tight"; // removed w-16/md:w-20
   const inputBase = "px-2 py-1 rounded border border-slate-700";
@@ -72,7 +81,7 @@ export default function PlayHealth() {
 
   return (
     <section className="rounded-2xl border border-slate-700 bg-slate-800/40 p-4 space-y-4 overflow-hidden">
-      <div className="grid grid-cols-1 md:grid-cols-[auto_auto_auto_1fr] gap-y-3 min-w-0">
+      <div className="grid grid-cols-1 md:grid-cols-[auto_auto_auto_auto_1fr] gap-y-3 min-w-0">
 
         <div className="flex flex-col  min-w-0">
           <div className="flex gap-3 min-w-0">
@@ -100,8 +109,7 @@ export default function PlayHealth() {
           </div>
         </div>
 
-
-
+        {/* Temp HP */}
         <div className="flex flex-col items-start gap-0.5  ml-2 min-w-0">
           <label className={labelCls}>Temp HP</label>
           <input
@@ -113,7 +121,7 @@ export default function PlayHealth() {
           />
         </div>
 
-
+        {/* Barrier */}
         <div className="flex flex-col items-start gap-0.5 ml-2 min-w-0">
           <label className={labelCls}>Barrier</label>
           <input
@@ -125,10 +133,8 @@ export default function PlayHealth() {
           />
         </div>
 
-       
-
-        <div className="flex flex-col items-start ml-3 min-w-0">
-          {/* Amount input on top */}
+        {/* Amount input on top */}
+        <div className="flex flex-col items-start ml-3 min-w-0"> 
           <input
             type="number"
             min={0}
@@ -164,8 +170,25 @@ export default function PlayHealth() {
             </button>
           </div>
         </div>
-      </div>
         
+        {/* Reaction */}
+        <div className="flex items-center ml-8 mb-10 gap-2">
+          <label
+            htmlFor="reaction"
+            className="text-amber-200 text-sm select-none cursor-pointer"
+          >
+            Reaction
+          </label>
+          <input
+            id="reaction"
+            type="checkbox"
+            checked={Boolean(current.reaction)}
+            onChange={(e) => onReactionToggle(e.target.checked)}
+            className="w-4 h-4 accent-amber-500 cursor-pointer"
+          />
+        </div>
+        
+      </div>
 
       {/* Quick buttons */}
       <div className="flex flex-wrap gap-2">
