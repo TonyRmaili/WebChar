@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useCallback } from "react";
 import useCharStore from "../store/CharStore";
 
-export default function ActionsPlay() {
+export default function EffectsPlay() {
   const { charData, updateCharField, postCharData } = useCharStore();
   if (!charData) return null;
 

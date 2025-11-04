@@ -10,11 +10,13 @@ import Traits from "../components/Traits";
 import Spellbook from "../components/Spellbook";
 import Inventory from "../components/Inventory";
 import Lore from "../components/Lore";
-import Actions from "../components/Actions";
+import Effects from "../components/Effects";
 
 import Health from "../components/HealthPlay";
-import ActionsPlay from "../components/ActionsPlay";
+import EffectsPlay from "../components/EffectsPlay";
 import SpellPlay from "../components/SpellPlay";
+import ChargesPlay from "../components/ChargesPlay";
+
 
 function TabButton({ id, label, active, onClick }) {
   return (
@@ -127,7 +129,7 @@ export default function CombatPage() {
 
               <div className="flex-1 min-h-0">
                 <div className="h-full overflow-y-auto rounded-xl border border-slate-700/60 bg-slate-900/40 p-4">
-                  {selectedChar ? <ActionsPlay /> : <div className="text-slate-400">Select a character.</div>}
+                  {selectedChar ? <EffectsPlay /> : <div className="text-slate-400">Select a character.</div>}
                 </div>
               </div>
 
@@ -136,6 +138,14 @@ export default function CombatPage() {
                   {selectedChar ? <SpellPlay /> : <div className="text-slate-400">Select a character.</div>}
                 </div>
               </div>
+
+              <div className="flex-1 min-h-0">
+                <div className="h-full overflow-y-auto rounded-xl border border-slate-700/60 bg-slate-900/40 p-4">
+                  {selectedChar ? <ChargesPlay /> : <div className="text-slate-400">Select a character.</div>}
+                </div>
+              </div>
+
+
             </div>
 
 
@@ -164,7 +174,7 @@ export default function CombatPage() {
         {/* RIGHT: Tabs */}
         <div className="flex-[1.1] pl-2">
           <div className="flex flex-wrap gap-3 bg-slate-800/60 border border-slate-700 rounded-xl p-3 mb-4">
-            <TabButton id="actions"     label="Actions"     active={rightTab==="actions"}     onClick={setRightTab}/>
+            <TabButton id="effects"     label="Effects"     active={rightTab==="effects"}     onClick={setRightTab}/>
             <TabButton id="traits"      label="Traits"      active={rightTab==="traits"}      onClick={setRightTab}/>
             <TabButton id="spellbook"   label="Spellbook"   active={rightTab==="spellbook"}   onClick={setRightTab}/>
             <TabButton id="inventory"   label="Inventory"   active={rightTab==="inventory"}   onClick={setRightTab}/>
@@ -179,7 +189,7 @@ export default function CombatPage() {
               <div className="text-slate-400">Select a character to view content.</div>
             ) : (
               <>
-                {rightTab === "actions"   && <Actions />}
+                {rightTab === "effects"   && <Effects />}
                 {rightTab === "traits"    && <Traits />}
                 {rightTab === "spellbook" && <Spellbook />}
                 {rightTab === "inventory" && <Inventory />}

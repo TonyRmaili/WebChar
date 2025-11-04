@@ -20,30 +20,38 @@
     Use AI to clean the json ?
 
 
-# character pages
+# Play Area
 
-
-
-1. max hp modifier for aid / drain effects
+1. max hp modifier for aid / drain effects - Healthplay
 2. slight bug with current_charges not matching max_charges on creating action. it cant increase but can decrease on chaning max
-3. implement on init  and on_turn buttons for resets
-4. move all reset buttons out from specific char to overhead so all selected chars gets the same rest?
-5. Spell area and its components needs to be more compact, way to much deadspace
-6. ability modifiers and connect them with pb and all
+3. implement on init  and on_turn buttons for resets - Overhead and bottom in Healthplay
+4. All forms of reset must work for single char or ALL SELECTED CHARS
+5. Define general +atk (melee, ranged, spell) and DC and have it shown in play area. Togglable ability mod per atk and DC
 
+   
 
 # GeneralStats
-
-1. pb dependant on total level and a modifier box next to it default to zero
-2. speed with categories, fly, burrow, climb and swim, hover
-3. senses ; blind, tremor, true, darkvision
-4. Define general +atk (melee, ranged, spell) and DC and have it shown in play area
+1. senses ; blind, tremor, true, darkvision
+2. display hitdice in healthplay and make em clickable
 
 # AbilityScores
-1. overhaul the layout
-2. display checks, saves neatly and allow modifier, pb, expertise
-3. create own skill and categories skills depending on ability
+1. Improve design for both skill and ability boxes
+2. May be bugs
 
+
+# Spells
+1. Spell area and its components needs to be more compact, way to much deadspace
+2. Add invocation tab
+
+
+# Traits can cover these below
+
+1. Manuevers
+2. Focus/Ki
+3. Wildshapes?
+4. Allow user to name category?
+
+# Effects Tab replaced Actions
 
 
 # Exports 

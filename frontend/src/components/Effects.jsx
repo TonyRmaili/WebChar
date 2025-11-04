@@ -391,7 +391,7 @@ const CategoryCard = React.memo(function CategoryCard({
 });
 
 /* ================== MAIN PAGE ================== */
-export default function Actions() {
+export default function Effects() {
   const { charData, updateCharField, postCharData } = useCharStore();
   if (!charData) return null;
 
