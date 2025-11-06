@@ -239,7 +239,7 @@ export const SlotsOnlyCard = React.memo(function SlotsOnlyCard({
   onRemoveRow,
   onChangeSlot,
 }) {
-  const slots = model.slots || [];
+  const slots = model || [];
   return (
     <section className="rounded-2xl border border-slate-700 bg-slate-800/40 p-4 space-y-4">
       <header className="flex items-center justify-between">
@@ -647,6 +647,65 @@ export function MetamagicCard({ list, onAdd, onRemove, onChange }) {
     </section>
   );
 }
+
+/* ---------------- Invocations ---------------- */
+export function InvocationsCard({ list, onAdd, onRemove, onChange }) {
+  return (
+    <section className="rounded-2xl border border-slate-700 bg-slate-800/40 p-4 space-y-4">
+      <header className="flex items-center justify-between">
+        <h3 className="text-lg font-semibold text-orange-300">
+          Invocations <span className="text-slate-400 text-sm">({list.length})</span>
+        </h3>
+        <button
+          type="button"
+          onClick={onAdd}
+          className="px-3 py-1.5 rounded-lg border border-slate-600 bg-slate-900 hover:bg-slate-800 transition"
+        >
+          Add invocation
+        </button>
+      </header>
+
+      {list.length === 0 && <p className="text-slate-400 text-sm">No invocations yet.</p>}
+
+      <div className="space-y-3">
+        {list.map((row) => (
+          <div key={row.id} className="rounded-lg border border-slate-700 bg-slate-900/60 p-3 space-y-2">
+            <div className="flex items-center gap-2">
+              <label className="w-24 text-slate-300 text-sm">Name</label>
+              <input
+                type="text"
+                value={row.name ?? ""}
+                onChange={(e) => onChange(row.id, { name: e.target.value })}
+                className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
+              />
+            </div>
+            <div className="flex flex-col md:flex-row gap-2">
+              <label className="w-full md:w-24 text-slate-300 text-sm md:text-right">Description</label>
+              <textarea
+                value={row.description ?? ""}
+                onChange={(e) => onChange(row.id, { description: e.target.value })}
+                className="flex-1 min-h-[110px] rounded border border-slate-700 bg-white text-slate-900 p-2"
+              />
+            </div>
+            <div className="flex justify-end">
+              <button
+                type="button"
+                onClick={() => onRemove(row.id)}
+                className="px-3 py-1.5 rounded-lg border border-red-700 bg-red-900/40 hover:bg-red-900/60 text-red-100 transition"
+              >
+                Remove
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+
+
+
 
 /* ---------------- Sorcery Points ---------------- */
 export function SorceryPointsCard({ model, onChange }) {

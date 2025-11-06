@@ -86,25 +86,101 @@ def on_shortrest(user,character):
 
     action_types = ["actions","bonus_actions","reactions"]
 
-    # actions
+    # effects
     for action_type in action_types:
-        charge_actions(char_data=char_data,
+        charge_effects(char_data=char_data,
                        action_type=action_type,
                        rest_type="short",
                        character=character,
                        user=user)
+        
+    # pactslots
+    pactslots = char_data["spellbook"]["pactslots"]
+    for slots in pactslots:
+        slots["slots_current"] = slots["slots_max"]
+        
+    # traits
+
+    # magic items
+    charge_magic_items(char_data=char_data,character=character,
+                       user=user,rest_type="short")
+   
 
     
     return char_data
 
 
+
+
 def on_longrest(user,character):
-    print(f'{user} taking long rest')
+    '''
+    always full resets
+       
+    '''
+
+    char_data = load_character(user, character)
+
+    #  current_hp
+    char_data["health"]["current_hp"] = char_data["health"]["max_hp"]
+    
+    # hit dice
+    hit_dice=  char_data["hit_dice"]
+    for dice in hit_dice.values():
+        dice["current"] = dice["max"]
+
+    # spells
+    # pactslots
+    pactslots = char_data["spellbook"]["pactslots"]
+    for slots in pactslots:
+        slots["slots_current"] = slots["slots_max"]
+
+    # spellslots
+    spellslots = char_data["spellbook"]["spellslots"]
+    for slots in spellslots:
+        slots["slots_current"] = slots["slots_max"]
+
+    # innate spells
+    innate_spells = char_data["spellbook"]["spells"]
+    for spell in innate_spells:
+        if spell["innate"]:
+            spell["current_charges"] = spell["max_charges"]
+
+    # sorcery points
+    char_data["spellbook"]["sorcery_points"]["current_charges"] = char_data["spellbook"]["sorcery_points"]["max_charges"]
 
 
 
-def charge_actions(char_data,action_type,rest_type,user,character):
-    for action in char_data["actions"][action_type]:
+
+
+    save_character(user=user,character=character,char_data=char_data)
+
+
+   
+    
+def on_initiative_roll(user,character):
+    print(f'{user} new init roll')
+
+
+def on_new_turn(user,character):
+    print(f'{user} new turn')
+
+
+
+
+def charge_magic_items(char_data,character,user,rest_type):
+    items = char_data["inventory"]["magic"]
+    
+    for item in items:
+        if item["charges"]["has"]:
+            if rest_type == "short":
+                item["charges"]["current_charges"] += item["charges"]["resetAmount"]
+                if item["charges"]["current_charges"] > item["charges"]["max_charges"]:
+                    item["charges"]["current_charges"] = item["charges"]["max_charges"]
+    
+    save_character(user=user,character=character,char_data=char_data)
+
+def charge_effects(char_data,action_type,rest_type,user,character):
+    for action in char_data["effects"][action_type]:
         if action["charges"]["has"]:
             if rest_type == "short":
                 if action["charges"]["resetAmount"] == "full":

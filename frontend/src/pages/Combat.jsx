@@ -12,10 +12,11 @@ import Inventory from "../components/Inventory";
 import Lore from "../components/Lore";
 import Effects from "../components/Effects";
 
-import Health from "../components/HealthPlay";
+import HealthPlay from "../components/HealthPlay"
 import EffectsPlay from "../components/EffectsPlay";
 import SpellPlay from "../components/SpellPlay";
 import ChargesPlay from "../components/ChargesPlay";
+import OffensePlay from "../components/OffensePlay";
 
 
 function TabButton({ id, label, active, onClick }) {
@@ -37,8 +38,9 @@ export default function CombatPage() {
   const navigate = useNavigate();
 
   const [activeCharId, setActiveCharId] = useState(null);
-  const [rightTab, setRightTab] = useState("actions"); // default right-panel tab
-
+  const [rightTab, setRightTab] = useState("effects"); // default right-panel tab
+  
+  
   // rest API
   async function onRest(rest_type) {
     try {
@@ -90,7 +92,7 @@ export default function CombatPage() {
   }, [token, activeCharId, fetchChar]);
 
   return (
-    <div className="min-h-screen w-full bg-slate-900 text-slate-100 flex flex-col items-center py-6">
+    <div className="relative min-h-screen w-full bg-slate-900 text-slate-100 flex flex-col items-center py-6">
       {/* character tabs */}
       <div className="flex gap-2 bg-slate-800/60 border border-slate-700 rounded-xl p-2 shadow-md">
         {activeChars.map((char) => {
@@ -110,16 +112,43 @@ export default function CombatPage() {
         })}
       </div>
 
-      
+      <div className="absolute left-1 flex gap-3 py-8 px-14 text-base">
+        <button
+          type="button"
+          className="px-2 py-2 rounded-lg border border-amber-600 bg-amber-800/50 hover:bg-amber-700/70 text-amber-100 transition"
+          onClick={() => onRest("roll_initiative")}
+          disabled={!selectedChar}
+        >
+          Roll Initiative
+        </button>
+        <button
+          type="button"
+          className="px-2 py-2 rounded-lg border border-amber-600 bg-amber-800/50 hover:bg-amber-700/70 text-amber-100 transition"
+          onClick={() => onRest("short")}
+          disabled={!selectedChar}
+        >
+          Short Rest
+        </button>
+        <button
+          type="button"
+          className="px-2 py-2 rounded-lg border border-teal-600 bg-teal-800/50 hover:bg-teal-700/70 text-teal-100 transition"
+          onClick={() => onRest("long")}
+          disabled={!selectedChar}
+        >
+          Long Rest
+        </button>
+      </div>  
+
          {/* two-column layout */}
       <div className="w-[95vw] max-w-[1800px] mt-6 flex gap-4">
         {/* LEFT: Play area */}
         <div className="flex-[1.1] pr-2">
-          <div className="relative h-[82vh] rounded-2xl border border-slate-700 bg-slate-800/40 shadow-inner p-6">
+          <div className="rounded-2xl border border-slate-700 bg-slate-800/40 shadow-inner p-6">
             <div className="flex h-full flex-col gap-5">
+
               <div className="flex-none">
                 {selectedChar ? (
-                  <Health />
+                  <HealthPlay id={activeCharId}/>
                 ) : (
                   <div className="rounded-xl border border-slate-700/60 bg-slate-900/40 p-4 text-slate-400">
                     Select a character to view stats.
@@ -127,46 +156,29 @@ export default function CombatPage() {
                 )}
               </div>
 
-              <div className="flex-1 min-h-0">
+              <div className="flex-none">
+                <div className="h-full overflow-y-auto rounded-xl border border-slate-700/60 bg-slate-900/40 p-4">
+                  {selectedChar ? <OffensePlay /> : <div className="text-slate-400">Select a character.</div>}
+                </div>
+              </div>
+
+              <div className="flex-[1.5] min-h-[25vh]">
                 <div className="h-full overflow-y-auto rounded-xl border border-slate-700/60 bg-slate-900/40 p-4">
                   {selectedChar ? <EffectsPlay /> : <div className="text-slate-400">Select a character.</div>}
                 </div>
               </div>
 
-              <div className="flex-1 min-h-0">
+              <div className="flex-[1.5] min-h-[25vh]">
                 <div className="h-full overflow-y-auto rounded-xl border border-slate-700/60 bg-slate-900/40 p-4">
                   {selectedChar ? <SpellPlay /> : <div className="text-slate-400">Select a character.</div>}
                 </div>
               </div>
 
-              <div className="flex-1 min-h-0">
+              <div className="flex-[1.5] min-h-[25vh]">
                 <div className="h-full overflow-y-auto rounded-xl border border-slate-700/60 bg-slate-900/40 p-4">
                   {selectedChar ? <ChargesPlay /> : <div className="text-slate-400">Select a character.</div>}
                 </div>
               </div>
-
-
-            </div>
-
-
-
-            <div className="absolute bottom-5 right-6 flex gap-4">
-              <button
-                type="button"
-                className="px-5 py-2 rounded-lg border border-amber-600 bg-amber-800/50 hover:bg-amber-700/70 text-amber-100 transition"
-                onClick={() => onRest("short")}
-                disabled={!selectedChar}
-              >
-                Short Rest
-              </button>
-              <button
-                type="button"
-                className="px-5 py-2 rounded-lg border border-teal-600 bg-teal-800/50 hover:bg-teal-700/70 text-teal-100 transition"
-                onClick={() => onRest("long")}
-                disabled={!selectedChar}
-              >
-                Long Rest
-              </button>
             </div>
           </div>
         </div>
@@ -184,7 +196,7 @@ export default function CombatPage() {
             <TabButton id="lore"        label="Lore"        active={rightTab==="lore"}        onClick={setRightTab}/>
           </div>
 
-          <div className="h-[82vh] rounded-2xl border border-slate-700 bg-slate-800/40 p-6 overflow-y-auto">
+          <div className="rounded-2xl border border-slate-700 bg-slate-800/40 p-6 overflow-y-auto">
             {!selectedChar ? (
               <div className="text-slate-400">Select a character to view content.</div>
             ) : (
@@ -202,7 +214,6 @@ export default function CombatPage() {
           </div>
         </div>
       </div>
-
     </div>
   );
 }

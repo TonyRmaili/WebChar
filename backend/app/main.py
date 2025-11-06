@@ -20,7 +20,7 @@ from fastapi.responses import JSONResponse
 from embedder.xembedder import Embedder
 from pathlib import Path
 from app.dice_handler import roll_dice
-from app.combat_functions import heal_health, damage_health,load_character,on_longrest,on_shortrest
+from app.combat_functions import heal_health, damage_health,load_character,on_longrest,on_shortrest,on_initiative_roll,on_new_turn
 
 # uvicorn app.main:app --reload
 
@@ -357,6 +357,12 @@ def take_rest(
 
     elif form_data.rest_type == "short":
         on_shortrest(current_user.name,form_data.name)
+
+    elif form_data.rest_type == "initiative":
+        on_initiative_roll(current_user.name,form_data.name)
+
+    elif form_data.rest_type == "turn":
+        on_new_turn(current_user.name,form_data.name)
     
     else:
         print("no valid rest type")

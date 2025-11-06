@@ -8,11 +8,11 @@ export default function EffectsPlay() {
   // Expect the new shape already
   const groups = useMemo(
     () => ({
-      actions: charData.actions?.actions || [],
-      bonus_actions: charData.actions?.bonus_actions || [],
-      reactions: charData.actions?.reactions || [],
+      actions: charData.effects?.actions || [],
+      bonus_actions: charData.effects?.bonus_actions || [],
+      reactions: charData.effects?.reactions || [],
     }),
-    [charData?.actions]
+    [charData?.effects]
   );
 
   // Seed missing current_charges from max_charges once
@@ -52,7 +52,7 @@ export default function EffectsPlay() {
     }
 
     if (changed) {
-      updateCharField("actions", nextActions);
+      updateCharField("effects", nextActions);
       postCharData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -105,7 +105,7 @@ export default function EffectsPlay() {
         ],
       };
 
-      updateCharField("actions", next);
+      updateCharField("effects", next);
       postCharData();
     },
     [groups, getCounts, updateCharField, postCharData]

@@ -1,8 +1,16 @@
 import React, { useMemo, useRef, useState, useCallback } from "react";
 import useCharStore from "../store/CharStore";
 
-const DEFAULT_ACTIONS = { actions: [], bonus_actions: [], reactions: [] };
+const DEFAULT_EFFECTS = { actions: [], bonus_actions: [], reactions: [] };
 const SAVE_ABILITIES = ["Strength","Dexterity","Constitution","Intelligence","Wisdom","Charisma"];
+
+const ATTACK_TYPES = ["melee", "ranged", "spell"];
+const DICE_SIDES = [4, 6, 8, 10, 12, 20, 100];
+const DAMAGE_TYPES = [
+  "acid","bludgeoning","cold","fire","force","lightning","necrotic",
+  "piercing","poison","psychic","radiant","slashing","thunder"
+];
+
 
 /* ---------- Small chip ---------- */
 const Chip = ({ children }) => (
@@ -13,10 +21,12 @@ const Chip = ({ children }) => (
 
 /* ---------- Helpers ---------- */
 const newDamagePart = () => ({
-  id: `${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
-  formula: "",
-  dtype: "",
+  id: `${Date.now()}_${Math.random().toString(36).slice(2,8)}`,
+  dice_count: 1,
+  dice_sides: 6,
+  dtype: "slashing",
 });
+
 
 /* ================== Action Row ================== */
 const ActionRow = React.memo(function ActionRow({
@@ -30,11 +40,11 @@ const ActionRow = React.memo(function ActionRow({
   onRemoveDamage,
 }) {
   const summaryDamage = (row.damages || [])
-    .map((d,i) => `${i>0?"+ ":""}${(d.formula||"-").trim()} ${d.dtype||""}`.trim())
+    .map((d,i) => `${i>0?"+ ":""}${d.dice_count}d${d.dice_sides} ${d.dtype}`)
     .join(", ");
-  const saveText = row.save?.has ? `DC ${row.save.dc || "-"} ${row.save.ability || ""}`.trim() : "";
+  const saveText = row.save?.has ? `${row.save.ability || ""}`.trim() : "";
   const chargesText = row.charges?.has
-    ? `${row.charges.current_charges ?? 0}/${row.charges.max_charges ?? 0} charges`
+    ? `${row.charges.max_charges ?? 0} max`
     : null;
 
   return (
@@ -47,19 +57,18 @@ const ActionRow = React.memo(function ActionRow({
         aria-expanded={open}
       >
         <div className="flex-1 flex items-center gap-2">
-          <span className="text-slate-400 text-sm">Name:</span>
+          <span className="text-slate-400 text-xs">Name</span>
           <input
             type="text"
             value={row.name ?? ""}
             onChange={(e) => onChange({ name: e.target.value })}
             placeholder='e.g., "Shadow Strike"'
-            className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
+            className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900 max-w-[18rem]"
             onClick={(e) => e.stopPropagation()}
           />
         </div>
 
         <div className="hidden md:flex items-center gap-2 px-2">
-          <Chip>{row.hit_bonus !== "" && row.hit_bonus != null ? `+${row.hit_bonus} hit` : "+? hit"}</Chip>
           {summaryDamage ? <Chip>{summaryDamage}</Chip> : null}
           {saveText ? <Chip>{saveText}</Chip> : null}
           {chargesText ? <Chip>{chargesText}</Chip> : null}
@@ -72,23 +81,36 @@ const ActionRow = React.memo(function ActionRow({
 
       {/* Body */}
       {open && (
-        <div className="p-3 space-y-4 border-t border-slate-700">
-          {/* Hit + Save + Charges toggles */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            <div className="flex items-center gap-2">
-              <label className="w-24 text-slate-300 text-sm">+Hit</label>
-              <input
-                type="number"
-                value={row.hit_bonus ?? ""}
-                onChange={(e) => {
-                  const v = e.target.value === "" ? "" : Number(e.target.value);
-                  if (v !== "" && Number.isNaN(v)) return;
-                  onChange({ hit_bonus: v });
-                }}
-                className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
-                onClick={(e) => e.stopPropagation()}
-              />
+        <div className="p-3 space-y-3 border-t border-slate-700">
+          {/* First row: atk type, charges, save, add damage */}
+          <div className="flex flex-wrap items-end gap-3">
+            <div className="flex flex-col">
+              <label className="text-[10px] text-slate-400">Attack Type</label>
+              <select
+                value={row.atk_kind || "melee"}
+                onChange={(e) => onChange({ atk_kind: e.target.value })}
+                className="px-2 py-1 rounded border border-slate-700 bg-white text-slate-900 w-24"
+              >
+                {ATTACK_TYPES.map((k) => <option key={k} value={k}>{k}</option>)}
+              </select>
             </div>
+
+            <label className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                checked={!!row.charges?.has}
+                onChange={(e) => {
+                  const has = e.target.checked;
+                  onChange({
+                    charges: has
+                      ? { has: true, max_charges: row.charges?.max_charges ?? "", resetAmount: row.charges?.resetAmount ?? "full" }
+                      : { has: false }
+                  });
+                }}
+                className="h-4 w-4 accent-orange-500"
+              />
+              <span className="text-xs text-slate-200">Has charges</span>
+            </label>
 
             <label className="flex items-center gap-2">
               <input
@@ -96,66 +118,30 @@ const ActionRow = React.memo(function ActionRow({
                 checked={!!row.save?.has}
                 onChange={(e) => onChange({ save: { ...(row.save||{}), has: e.target.checked } })}
                 className="h-4 w-4 accent-orange-500"
-                onClick={(e) => e.stopPropagation()}
               />
-              <span className="text-slate-200 text-sm">Requires Save</span>
+              <span className="text-xs text-slate-200">Requires save</span>
             </label>
 
-            <label className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                checked={!!row.charges?.has}
-                onChange={(e) => {
-                  const enable = e.target.checked;
-                  if (!enable) {
-                    onChange({ charges: { ...(row.charges || {}), has: false } });
-                  } else {
-                    onChange({
-                      charges: {
-                        ...(row.charges || {}),
-                        has: true,
-                        // no current_charges input; will auto-seed when max is entered
-                        max_charges: row.charges?.max_charges ?? "",
-                        resetAmount: row.charges?.resetAmount ?? "full",
-                        resetOn: row.charges?.resetOn ?? "short",
-                      },
-                    });
-                  }
-                }}
-                className="h-4 w-4 accent-orange-500"
-                onClick={(e) => e.stopPropagation()}
-              />
-              <span className="text-slate-200 text-sm">Has Charges</span>
-            </label>
+            <button
+              type="button"
+              onClick={onAddDamage}
+              className="ml-auto px-3 py-1 rounded-lg border border-slate-600 bg-slate-900 hover:bg-slate-800 text-sm"
+            >
+              Add damage
+            </button>
           </div>
 
           {/* Save details */}
           {row.save?.has && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div className="flex items-center gap-2">
-                <label className="w-24 text-slate-300 text-sm">DC</label>
-                <input
-                  type="number"
-                  value={row.save.dc ?? ""}
-                  onChange={(e) => {
-                    const v = e.target.value === "" ? "" : Number(e.target.value);
-                    if (v !== "" && Number.isNaN(v)) return;
-                    onChange({ save: { ...(row.save||{}), dc: v, has: true } });
-                  }}
-                  className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
-                  onClick={(e) => e.stopPropagation()}
-                />
-              </div>
-
-              <div className="flex items-center gap-2">
-                <label className="w-24 text-slate-300 text-sm">Save Type</label>
+            <div className="flex flex-wrap gap-3">                       
+              <div className="flex flex-col">
+                <label className="text-[10px] text-slate-400">Save Ability</label>
                 <select
                   value={row.save.ability || ""}
                   onChange={(e) => onChange({ save: { ...(row.save||{}), ability: e.target.value, has: true } })}
-                  className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900 max-w-sm"
-                  onClick={(e) => e.stopPropagation()}
+                  className="w-30 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
                 >
-                  <option value="">Select…</option>
+                  <option value="">Select</option>
                   {SAVE_ABILITIES.map((a) => <option key={a} value={a}>{a}</option>)}
                 </select>
               </div>
@@ -164,102 +150,77 @@ const ActionRow = React.memo(function ActionRow({
 
           {/* Damage parts */}
           <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <div className="text-slate-300 text-sm font-medium">Damage</div>
-              <button
-                type="button"
-                onClick={onAddDamage}
-                className="px-3 py-1.5 rounded-lg border border-slate-600 bg-slate-900 hover:bg-slate-800 transition"
-              >
-                Add damage part
-              </button>
-            </div>
-
-            {(row.damages || []).length === 0 && (
-              <p className="text-slate-400 text-sm">No damage yet. Add parts like “2d6 + 4 slashing”.</p>
-            )}
-
-            <div className="space-y-2">
-              {(row.damages || []).map((d) => (
-                <div key={d.id} className="flex flex-col sm:flex-row items-center gap-2 rounded-lg border border-slate-700 bg-slate-900/60 p-2">
-                  <div className="flex items-center gap-2 w-full sm:w-1/2">
-                    <label className="w-24 text-slate-300 text-sm">Formula</label>
+            {(row.damages || []).map((d) => (
+              <div key={d.id} className="flex flex-wrap items-end gap-2 rounded border border-slate-700 bg-slate-900/60 p-2">
+                <div className="flex flex-col">
+                  <label className="text-[10px] text-slate-400">Dice</label>
+                  <div className="flex items-center gap-1">
                     <input
-                      type="text"
-                      value={d.formula ?? ""}
-                      onChange={(e) => onChangeDamage(d.id, { formula: e.target.value })}
-                      placeholder='e.g., "2d6 + 4"'
-                      className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
+                      type="number"
+                      min={1}
+                      step={1}
+                      value={d.dice_count ?? 1}
+                      onChange={(e) => onChangeDamage(d.id, { dice_count: Math.max(1, Number(e.target.value) || 1) })}
+                      className="w-16 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
                     />
-                  </div>
-
-                  <div className="flex items-center gap-2 w-full sm:w-1/2">
-                    <label className="w-16 text-slate-300 text-sm">Type</label>
-                    <input
-                      type="text"
-                      value={d.dtype ?? ""}
-                      onChange={(e) => onChangeDamage(d.id, { dtype: e.target.value })}
-                      placeholder="slashing, necrotic…"
-                      className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
-                    />
-                  </div>
-
-                  <div className="w-full sm:w-auto flex justify-end">
-                    <button
-                      type="button"
-                      onClick={() => onRemoveDamage(d.id)}
-                      className="px-3 py-1.5 rounded-lg border border-red-700 bg-red-900/40 hover:bg-red-900/60 text-red-100 transition"
+                    <span className="text-xs text-slate-300">d</span>
+                    <select
+                      value={d.dice_sides ?? 6}
+                      onChange={(e) => onChangeDamage(d.id, { dice_sides: Number(e.target.value) })}
+                      className="w-20 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
                     >
-                      Remove
-                    </button>
+                      {DICE_SIDES.map((n) => <option key={n} value={n}>{n}</option>)}
+                    </select>
                   </div>
                 </div>
-              ))}
-            </div>
+
+                <div className="flex flex-col">
+                  <label className="text-[10px] text-slate-400">Damage Type</label>
+                  <select
+                    value={d.dtype ?? "slashing"}
+                    onChange={(e) => onChangeDamage(d.id, { dtype: e.target.value })}
+                    className="w-36 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
+                  >
+                    {DAMAGE_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
+                  </select>
+                </div>
+
+                <div className="ml-auto">
+                  <button
+                    type="button"
+                    onClick={() => onRemoveDamage(d.id)}
+                    className="px-2 py-1 rounded border border-red-700 bg-red-900/40 hover:bg-red-900/60 text-red-100 text-sm"
+                  >
+                    Remove
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
 
-          {/* Charges (no Current input) */}
+          {/* Charges */}
           {row.charges?.has && (
-            <>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                {/* Max */}
+            <div className="flex flex-wrap gap-3">
+              <div className="flex flex-col">
+                <label className="text-[10px] text-slate-400">Max Charges</label>
+                <input
+                  type="number"
+                  min={0}
+                  value={row.charges.max_charges ?? ""}
+                  onChange={(e) => {
+                    const raw = e.target.value === "" ? "" : Number(e.target.value);
+                    if (raw !== "" && Number.isNaN(raw)) return;
+                    const nextMax = raw === "" ? "" : Math.max(0, raw);
+                    onChange({ charges: { ...(row.charges||{}), has: true, max_charges: nextMax } });
+                  }}
+                  className="w-24 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
+                />
+              </div>
+
+              <div className="flex flex-col">
+                <label className="text-[10px] text-slate-400">Short Rest Reset</label>
                 <div className="flex items-center gap-2">
-                  <label className="w-24 text-slate-300 text-sm">Max</label>
-                  <input
-                    type="number"
-                    min={0}
-                    value={row.charges.max_charges ?? ""}
-                    onChange={(e) => {
-                      const raw = e.target.value === "" ? "" : Number(e.target.value);
-                      if (raw !== "" && Number.isNaN(raw)) return;
-
-                      const nextMax = raw === "" ? "" : Math.max(0, raw);
-                      let nextCur = row.charges.current_charges;
-
-                      // Auto-seed current when first setting max, else clamp current to max
-                      if (nextMax !== "" && Number.isFinite(Number(nextMax))) {
-                        const nMax = Number(nextMax);
-                        if (nextCur === "" || nextCur == null) nextCur = nMax;
-                        else if (Number.isFinite(Number(nextCur))) nextCur = Math.min(Number(nextCur), nMax);
-                      }
-
-                      onChange({
-                        charges: {
-                          ...(row.charges || {}),
-                          has: true,
-                          max_charges: nextMax,
-                          current_charges: nextCur,
-                        },
-                      });
-                    }}
-                    className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
-                  />
-                </div>
-
-                {/* Reset amount */}
-                <div className="flex items-center gap-2">
-                  <label className="w-24 text-slate-300 text-sm">Reset Amount</label>
-                  <label className="inline-flex items-center gap-2">
+                  <label className="inline-flex items-center gap-1 text-xs">
                     <input
                       type="checkbox"
                       checked={row.charges?.resetAmount === "full"}
@@ -267,59 +228,41 @@ const ActionRow = React.memo(function ActionRow({
                         const isFull = e.target.checked;
                         const prevNum = typeof row.charges?.resetAmount === "number" && row.charges.resetAmount >= 1
                           ? row.charges.resetAmount : 1;
-                        onChange({
-                          charges: { ...(row.charges || {}), resetAmount: isFull ? "full" : prevNum, has: true }
-                        });
+                        onChange({ charges: { ...(row.charges||{}), resetAmount: isFull ? "full" : prevNum, has: true } });
                       }}
                       className="h-4 w-4 accent-orange-500"
                     />
-                    <span className="text-slate-200 text-sm">Full</span>
+                    Full
                   </label>
                   {row.charges?.resetAmount !== "full" && (
                     <input
                       type="number"
                       min={1}
                       step={1}
-                      value={
-                        typeof row.charges?.resetAmount === "number" && row.charges.resetAmount >= 1
-                          ? row.charges.resetAmount : 1
-                      }
+                      value={typeof row.charges?.resetAmount === "number" && row.charges.resetAmount >= 1
+                        ? row.charges.resetAmount : 1}
                       onChange={(e) => {
                         const raw = Number(e.target.value);
                         if (Number.isFinite(raw)) {
-                          const val = Math.max(1, Math.trunc(raw));
-                          onChange({ charges: { ...(row.charges || {}), resetAmount: val, has: true } });
+                          onChange({ charges: { ...(row.charges||{}), resetAmount: Math.max(1, Math.trunc(raw)), has: true } });
                         }
                       }}
-                      className="w-24 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
+                      className="w-20 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
                     />
                   )}
                 </div>
-
-                {/* Reset on */}
-                <div className="flex items-center gap-2">
-                  <label className="w-24 text-slate-300 text-sm">Resets On</label>
-                  <select
-                    value={row.charges.resetOn || "short"}
-                    onChange={(e) => onChange({ charges: { ...(row.charges || {}), resetOn: e.target.value, has: true } })}
-                    className="max-w-xs flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
-                  >
-                    <option value="short">Short Rest</option>
-                    <option value="long">Long Rest</option>
-                  </select>
-                </div>
               </div>
-            </>
+            </div>
           )}
 
           {/* Description */}
-          <div className="flex flex-col md:flex-row gap-2">
-            <label className="w-full md:w-24 text-slate-300 text-sm md:text-right">Description</label>
+          <div className="flex flex-col">
+            <label className="text-[10px] text-slate-400">Description</label>
             <textarea
               value={row.description ?? ""}
               onChange={(e) => onChange({ description: e.target.value })}
-              placeholder="Rider effects, conditions, notes…"
-              className="flex-1 min-h-[120px] rounded border border-slate-700 bg-white text-slate-900 p-2"
+              placeholder="Notes, riders, conditions"
+              className="min-h-[80px] rounded border border-slate-700 bg-white text-slate-900 p-2 max-w-[40rem]"
             />
           </div>
 
@@ -327,7 +270,7 @@ const ActionRow = React.memo(function ActionRow({
             <button
               type="button"
               onClick={onRemove}
-              className="px-3 py-1.5 rounded-lg border border-red-700 bg-red-900/40 hover:bg-red-900/60 text-red-100 transition"
+              className="px-3 py-1 rounded border border-red-700 bg-red-900/40 hover:bg-red-900/60 text-red-100 text-sm"
             >
               Remove
             </button>
@@ -397,8 +340,8 @@ export default function Effects() {
 
   // Expect the new shape already
   const model = useMemo(
-    () => ({ ...DEFAULT_ACTIONS, ...(charData.actions || {}) }),
-    [charData?.actions]
+    () => ({ ...DEFAULT_EFFECTS, ...(charData.effects || {}) }),
+    [charData?.effects]
   );
 
   const [openById, setOpenById] = useState({});
@@ -415,7 +358,7 @@ export default function Effects() {
 
   const persist = useCallback(
     (next, { immediate = false } = {}) => {
-      updateCharField("actions", next);
+      updateCharField("effects", next);
       if (immediate) postCharData();
       else debouncedPost();
     },
@@ -427,17 +370,17 @@ export default function Effects() {
     const row = {
       id: `${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
       name: "",
-      hit_bonus: "",
-      damages: [],
-      save: { has: false, dc: "", ability: "" },
-      // Charges: disabled by default; when user sets Max, we'll auto-seed Current = Max.
-      charges: { has: false, max_charges: "", /* current_charges auto-seeded later */ resetAmount: "full", resetOn: "short" },
+      atk_kind: "melee",                 // new
+      damages: [],                       // [{ dice_count, dice_sides, dtype }]
+      save: { has: false, ability: "" },
+      charges: { has: false, max_charges: "", resetAmount: "full" },
       description: "",
     };
     const next = { ...model, [categoryKey]: [...(model[categoryKey] || []), row] };
     persist(next, { immediate: true });
     setOpenById((prev) => ({ ...prev, [row.id]: true }));
   }, [model, persist]);
+
 
   const removeRow = useCallback((categoryKey, id) => {
     const next = { ...model, [categoryKey]: (model[categoryKey] || []).filter((r) => r.id !== id) };
