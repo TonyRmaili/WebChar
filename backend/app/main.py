@@ -7,7 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from typing import Annotated
 from fastapi import Query
 from app.database.models import User,Character
-from app.database.schemas import UserSchema,CharacterSchema, QueryRequest, CharacterIn, HealthData,TakeRestData
+from app.database.schemas import UserSchema,CharacterSchema, QueryRequest, CharacterIn, HealthData,TakeRestData, TakeRestAllData
 from app.security import hash_password, verify_password, create_access_token, get_current_user
 from app.db_setup import init_db, get_db
 from fastapi.security import OAuth2PasswordRequestForm
@@ -320,36 +320,33 @@ def change_health(
     db: Session = Depends(get_db)
        
 ):
-    
-    print(form_data.value)
-    print(type(form_data.value))
+    try:
+        if form_data.value < 0:
+            damage_health(
+                user=current_user.name,
+                character=form_data.name,
+                value = form_data.value     
+            )
 
-    if form_data.value < 0:
-        damage_health(
-            user=current_user.name,
-            character=form_data.name,
-            value = form_data.value     
-        )
+        elif form_data.value > 0:
+            heal_health(
+                user=current_user.name,
+                character=form_data.name,
+                value = form_data.value     
+            )
 
-    elif form_data.value > 0:
-        heal_health(
-            user=current_user.name,
-            character=form_data.name,
-            value = form_data.value     
-        )
+        else:
+            pass
 
-    else:
-        pass
-
-    updated_char = load_character(current_user.name, form_data.name)
-    return {"health": updated_char["health"]}
-
+        updated_char = load_character(current_user.name, form_data.name)
+        return {"health": updated_char["health"]}
+    except KeyError as e:
+        return e 
 
 @app.post("/combat/rest", tags=["combat"])
 def take_rest(
     form_data: TakeRestData,
-    current_user: Annotated[User, Depends(get_current_user)]
-    
+    current_user: Annotated[User, Depends(get_current_user)]  
 ):
     
     if form_data.rest_type == "long":
@@ -363,6 +360,28 @@ def take_rest(
     
     # updated_char = load_character(current_user.name, form_data.name)
     return {"ok": True}
+
+@app.post("/combat/rest_all", tags=["combat"])
+def take_rest_all(
+    form_data: TakeRestAllData,
+    current_user: Annotated[User, Depends(get_current_user)]  
+):
+    
+
+    if form_data.rest_type == "long":
+        for character in form_data.characters:
+            on_longrest(current_user.name,character["name"])
+
+    elif form_data.rest_type == "short":
+        for character in form_data.characters: 
+            on_shortrest(current_user.name,character["name"])
+
+    else:
+        print("no valid rest type")
+    
+    return {"ok": True}
+
+
 
 
 

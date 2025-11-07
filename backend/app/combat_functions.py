@@ -62,111 +62,157 @@ def damage_health(user, character, value):
     save_character(user=user, character=character, char_data=char_data)
     return char_data
 
-
 def heal_health(user,character,value):
     char_data = load_character(user,character)
 
-    max_hp = char_data["health"]["max_hp"]
-    current_hp = char_data["health"]["current_hp"]
+    try:
+        max_hp = char_data["health"]["max_hp"]
+        current_hp = char_data["health"]["current_hp"]
 
-    new_hp = current_hp + value
-    char_data["health"]["current_hp"] = new_hp
-    if char_data["health"]["current_hp"] > max_hp:
-        char_data["health"]["current_hp"] = max_hp
+        new_hp = current_hp + value
+        char_data["health"]["current_hp"] = new_hp
+        if char_data["health"]["current_hp"] > max_hp:
+            char_data["health"]["current_hp"] = max_hp
 
-    save_character(
-        user=user,
-        character=character,
-        char_data=char_data
-    )
-    return char_data
+        save_character(
+            user=user,
+            character=character,
+            char_data=char_data
+        )
+        return char_data
+    except KeyError as e:
+        return e
 
-     
+
 def on_shortrest(user,character):
     char_data = load_character(user, character)
 
     action_types = ["actions","bonus_actions","reactions"]
 
+    
     # effects
     for action_type in action_types:
-        charge_effects(char_data=char_data,
-                       action_type=action_type,
-                       character=character,
-                       user=user)
+        try:
+            charge_effects(char_data=char_data,
+                        action_type=action_type,
+                        character=character,
+                        user=user)
+        except KeyError as e:
+            print(e) 
+    
         
     # pactslots
-    pactslots = char_data["spellbook"]["pactslots"]
-    for slots in pactslots:
-        slots["slots_current"] = slots["slots_max"]
+    try:
+        pactslots = char_data["spellbook"]["pactslots"]
+        for slots in pactslots:
+            slots["slots_current"] = slots["slots_max"]
+    except KeyError as e:
+        print(e) 
+    
 
     # sorcery points
-    char_data["spellbook"]["sorcery_points"]["current_charges"] += char_data["spellbook"]["sorcery_points"]["reset_amount"]
-    if char_data["spellbook"]["sorcery_points"]["current_charges"] > char_data["spellbook"]["sorcery_points"]["max_charges"]:
-        char_data["spellbook"]["sorcery_points"]["current_charges"] = char_data["spellbook"]["sorcery_points"]["max_charges"]
-        
+    try:
+        char_data["spellbook"]["sorcery_points"]["current_charges"] += char_data["spellbook"]["sorcery_points"]["reset_amount"]
+        if char_data["spellbook"]["sorcery_points"]["current_charges"] > char_data["spellbook"]["sorcery_points"]["max_charges"]:
+            char_data["spellbook"]["sorcery_points"]["current_charges"] = char_data["spellbook"]["sorcery_points"]["max_charges"]
+    except KeyError as e:
+        print(e) 
+    
     # traits
-    charge_traits(character=character,char_data=char_data["traits"],user=user)
-
+    try:
+        charge_traits(character=character,char_data=char_data["traits"],user=user)
+    except KeyError as e:
+        print(e)
 
     # magic items
-    charge_magic_items(char_data=char_data,character=character,user=user)
-   
+    try:
+        charge_magic_items(char_data=char_data,character=character,user=user)
+    except KeyError as e:
+        print(e)     
 
     return char_data
+    
+        
 
 def on_longrest(user,character):
     char_data = load_character(user, character)
-
-    #  current_hp
-    char_data["health"]["current_hp"] = char_data["health"]["max_hp"]
+    
+    # current_hp
+    try:
+        char_data["health"]["current_hp"] = char_data["health"]["max_hp"]
+    except KeyError as e:
+        print(e) 
     
     # hit dice
-    hit_dice=  char_data["hit_dice"]
-    for dice in hit_dice.values():
-        dice["current"] = dice["max"]
-
+    try:
+        hit_dice=  char_data["hit_dice"]
+        for dice in hit_dice.values():
+            dice["current"] = dice["max"]
+    except KeyError as e:
+        print(e)
     # spells
     # pactslots
-    pactslots = char_data["spellbook"]["pactslots"]
-    for slots in pactslots:
-        slots["slots_current"] = slots["slots_max"]
-
+    try:
+        pactslots = char_data["spellbook"]["pactslots"]
+        for slots in pactslots:
+            slots["slots_current"] = slots["slots_max"]
+    except KeyError as e:
+        print(e)
+    
     # spellslots
-    spellslots = char_data["spellbook"]["spellslots"]
-    for slots in spellslots:
-        slots["slots_current"] = slots["slots_max"]
-
+    try:
+        spellslots = char_data["spellbook"]["spellslots"]
+        for slots in spellslots:
+            slots["slots_current"] = slots["slots_max"]
+    except KeyError as e:
+        print(e) 
+    
     # innate spells
-    innate_spells = char_data["spellbook"]["spells"]
-    for spell in innate_spells:
-        if spell["innate"]:
-            spell["current_charges"] = spell["max_charges"]
-
+    try:
+        innate_spells = char_data["spellbook"]["spells"]
+        for spell in innate_spells:
+            if spell["innate"]:
+                spell["current_charges"] = spell["max_charges"]
+    except KeyError as e:
+        print(e) 
+    
     # sorcery points
-    char_data["spellbook"]["sorcery_points"]["current_charges"] = char_data["spellbook"]["sorcery_points"]["max_charges"]
+    try:
+        char_data["spellbook"]["sorcery_points"]["current_charges"] = char_data["spellbook"]["sorcery_points"]["max_charges"]
+    except KeyError as e:
+        print(e) 
 
-
-    # effects 
-    effects = char_data["effects"]
-    for action_type in effects.values():
-        for effect in action_type:
-            if effect["charges"]["has"]:
-                effect["charges"]["current_charges"] = effect["charges"]["max_charges"]
-
-    # magic items 
-    items = char_data["inventory"]["magic"]
-    for item in items:
-        if item["charges"]["has"]:
-            item["charges"]["current_charges"] = item["charges"]["max_charges"]
-
+    # effects
+    try: 
+        effects = char_data["effects"]
+        for action_type in effects.values():
+            for effect in action_type:
+                if effect["charges"]["has"]:
+                    effect["charges"]["current_charges"] = effect["charges"]["max_charges"]
+    except KeyError as e:
+        print(e) 
+    
+    # magic items
+    try:
+        items = char_data["inventory"]["magic"]
+        for item in items:
+            if item["charges"]["has"]:
+                item["charges"]["current_charges"] = item["charges"]["max_charges"]
+    except KeyError as e:
+        print(e) 
+    
     # traits
-    traits = char_data["traits"]
-    for trait_type in traits.values():
-        for trait in trait_type:
-            if trait["charges"]["has"]:
-                trait["charges"]["current_charges"] = trait["charges"]["max_charges"]
-
+    try:
+        traits = char_data["traits"]
+        for trait_type in traits.values():
+            for trait in trait_type:
+                if trait["charges"]["has"]:
+                    trait["charges"]["current_charges"] = trait["charges"]["max_charges"]
+    except KeyError as e:
+        print(e) 
+    
     save_character(user=user,character=character,char_data=char_data)
+
 
 def charge_traits(char_data,character,user):
     for trait_type in char_data.values():
@@ -178,7 +224,6 @@ def charge_traits(char_data,character,user):
 
     save_character(user=user,character=character,char_data=char_data)
             
-
 def charge_magic_items(char_data,character,user):
     items = char_data["inventory"]["magic"]
     for item in items:

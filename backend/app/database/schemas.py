@@ -35,6 +35,10 @@ class TakeRestData(BaseModel):
     rest_type: str
     name : str
 
+class TakeRestAllData(BaseModel):
+    rest_type: str
+    characters : list
+
 # class GenderEnum(str, Enum):
 #     Male = 'Male'
 #     Female = 'Female'

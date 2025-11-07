@@ -42,16 +42,16 @@ export default function CombatPage() {
   
   
   // rest API
-  async function onRest(rest_type) {
+  async function onRestAll(rest_type) {
     try {
-      if (!selectedChar?.name) throw new Error("No character selected");
+      if (!activeChars) throw new Error("No characters selected");
       const authToken = localStorage.getItem("token");
       if (!authToken) throw new Error("Token not found in localStorage");
 
-      const res = await fetch("http://localhost:8000/combat/rest", {
+      const res = await fetch("http://localhost:8000/combat/rest_all", {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${authToken}` },
-        body: JSON.stringify({ rest_type, name: selectedChar.name }),
+        body: JSON.stringify({ rest_type, characters: activeChars }),
       });
 
       const payload = await res.json().catch(() => null);
@@ -116,7 +116,7 @@ export default function CombatPage() {
         <button
           type="button"
           className="px-2 py-2 rounded-lg border border-amber-600 bg-amber-800/50 hover:bg-amber-700/70 text-amber-100 transition"
-          onClick={() => onRest("short")}
+          onClick={() => onRestAll("short")}
           disabled={!selectedChar}
         >
           Short Rest
@@ -124,7 +124,7 @@ export default function CombatPage() {
         <button
           type="button"
           className="px-2 py-2 rounded-lg border border-teal-600 bg-teal-800/50 hover:bg-teal-700/70 text-teal-100 transition"
-          onClick={() => onRest("long")}
+          onClick={() => onRestAll("long")}
           disabled={!selectedChar}
         >
           Long Rest
