@@ -21,7 +21,8 @@ const Chip = ({ children }) => (
   </span>
 );
 
-/* ---------------- Magic Item Row ---------------- */
+
+/* ---------------- Magic Item Row (compact) ---------------- */
 const MagicItemRow = React.memo(function MagicItemRow({
   row,
   open,
@@ -32,30 +33,30 @@ const MagicItemRow = React.memo(function MagicItemRow({
   const charges = row.charges ?? {
     has: false,
     max_charges: 0,
-    resetAmount: "full",
-    resetOn: "none",
+    reset_amount: "full",
     current_charges: 0,
   };
   const hasCharges = !!charges.has;
   const disable = !hasCharges;
-  const resetLabel = RESET_OPTIONS.find(o => o.value === charges.resetOn)?.label || "Passive / None";
-  const resetAmountMode = typeof charges.resetAmount === "string" ? "full" : "number";
-  const resetAmountNumber = typeof charges.resetAmount === "number" ? charges.resetAmount : 0;
+  const resetAmountMode = typeof charges.reset_amount === "string" ? "full" : "number";
+  const resetAmountNumber = typeof charges.reset_amount === "number" ? charges.reset_amount : 1;
 
-  const patch = (patchObj) => onChange(row.id, patchObj);
+  const patch      = (patchObj)  => onChange(row.id, patchObj);
   const patchCharges = (patchObj) => onChange(row.id, { charges: { ...charges, ...patchObj } });
 
   const handleToggleHas = (checked) => {
     if (!checked) {
-      patch({ charges: { has: false, max_charges: 0, resetAmount: "full", resetOn: "none", current_charges: 0 } });
+      patch({ charges: { has: false, max_charges: 0, reset_amount: "full", current_charges: 0 } });
     } else {
       const max = Number(charges.max_charges) || 1;
-      patch({ charges: { has: true, max_charges: max, resetAmount: charges.resetAmount ?? "full", resetOn: charges.resetOn ?? "short", current_charges: max } });
+      // enable → set current = max
+      patch({ charges: { has: true, max_charges: max, reset_amount: charges.reset_amount ?? "full", current_charges: max } });
     }
   };
 
   return (
     <div className="rounded-lg border border-slate-700 bg-slate-900/60">
+      {/* Header */}
       <button
         type="button"
         onClick={() => onToggleOpen(row.id)}
@@ -63,44 +64,40 @@ const MagicItemRow = React.memo(function MagicItemRow({
         aria-expanded={open}
       >
         <div className="flex flex-wrap items-center gap-2">
-          <div className="flex items-center gap-2 min-w-[240px] max-w-[520px] grow">
-            <span className="text-slate-400 text-sm shrink-0">Name:</span>
+          <div className="flex items-center gap-2 min-w-[220px] max-w-[520px] grow">
+            <span className="text-slate-400 text-xs shrink-0">Name</span>
             <input
               type="text"
               value={row.name ?? ""}
               onChange={(e) => patch({ name: e.target.value })}
-              placeholder="e.g., Wand of Magic Missiles"
+              placeholder="Wand of Magic Missiles"
               className="w-full min-w-0 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
               onClick={(e) => e.stopPropagation()}
             />
           </div>
 
-          <div className="flex flex-wrap items-center gap-2 shrink min-w-[240px]">
+          <div className="flex flex-wrap items-center gap-2 shrink min-w-[220px]">
             <Chip>Amt {row.amount ?? 1}</Chip>
             <Chip>{row.attuned ? "Attuned" : "Not attuned"}</Chip>
             {hasCharges ? <Chip>{charges.current_charges}/{charges.max_charges}</Chip> : null}
-            <Chip>{hasCharges ? resetLabel : "Passive / None"}</Chip>
           </div>
 
           <svg
             className={`ml-auto h-5 w-5 transition-transform ${open ? "rotate-180" : ""}`}
             viewBox="0 0 20 20" fill="currentColor"
           >
-            <path
-              fillRule="evenodd"
-              d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z"
-              clipRule="evenodd"
-            />
+            <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clipRule="evenodd"/>
           </svg>
         </div>
       </button>
 
+      {/* Body */}
       {open && (
         <div className="p-3 space-y-3 border-t border-slate-700">
-          {/* Top controls */}
-          <div className="grid gap-3 [grid-template-columns:repeat(auto-fit,minmax(220px,1fr))]">
-            <div className="flex items-center gap-2 min-w-0">
-              <label className="w-24 shrink-0 text-slate-300 text-sm">Amount</label>
+          {/* Top controls: tighter with tiny labels */}
+          <div className="flex flex-wrap items-end gap-3">
+            <div className="flex flex-col">
+              <label className="text-[10px] text-slate-400">Amount</label>
               <input
                 type="number" min={0}
                 value={row.amount ?? 1}
@@ -109,7 +106,7 @@ const MagicItemRow = React.memo(function MagicItemRow({
                   if (v !== "" && Number.isNaN(v)) return;
                   patch({ amount: v });
                 }}
-                className="w-full min-w-0 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
+                className="w-24 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
                 onClick={(e) => e.stopPropagation()}
               />
             </div>
@@ -122,7 +119,7 @@ const MagicItemRow = React.memo(function MagicItemRow({
                 className="h-4 w-4 accent-orange-500"
                 onClick={(e) => e.stopPropagation()}
               />
-              <span className="text-slate-200 text-sm">Attunement</span>
+              <span className="text-xs text-slate-200">Attunement</span>
             </label>
 
             <label className="inline-flex items-center gap-2">
@@ -133,7 +130,7 @@ const MagicItemRow = React.memo(function MagicItemRow({
                 className="h-4 w-4 accent-orange-400"
                 onClick={(e) => e.stopPropagation()}
               />
-              <span className="text-slate-200 text-sm">Has charges</span>
+              <span className="text-xs text-slate-200">Has charges</span>
             </label>
 
             {hasCharges ? (
@@ -161,99 +158,71 @@ const MagicItemRow = React.memo(function MagicItemRow({
             ) : null}
           </div>
 
-          {/* Charges config */}
-          <div className="grid gap-3 [grid-template-columns:repeat(auto-fit,minmax(220px,1fr))]">
-            <div className="flex items-center gap-2 min-w-0">
-              <label className="w-24 shrink-0 text-slate-300 text-sm">Max</label>
-              <input
-                type="number" min={0}
-                value={charges.max_charges ?? 0}
-                disabled={disable}
-                onChange={(e) => {
-                  const v = e.target.value === "" ? 0 : Number(e.target.value);
-                  if (Number.isNaN(v)) return;
-                  const nextCur = Math.min(v, charges.current_charges ?? 0);
-                  patchCharges({ max_charges: v, current_charges: nextCur });
-                }}
-                className={`w-full min-w-0 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900 ${disable ? "opacity-60 cursor-not-allowed" : ""}`}
-                onClick={(e) => e.stopPropagation()}
-              />
+          {/* Charges config: compact; no Current input; reset number wider */}
+          {hasCharges && (
+            <div className="flex flex-wrap items-end gap-3">
+              {/* Max */}
+              <div className="flex flex-col">
+                <label className="text-[10px] text-slate-400">Max</label>
+                <input
+                  type="number" min={0}
+                  value={charges.max_charges ?? 0}
+                  onChange={(e) => {
+                    const v = e.target.value === "" ? 0 : Number(e.target.value);
+                    if (Number.isNaN(v)) return;
+                    const max = Math.max(0, v);
+                    // Always sync current to max when max changes
+                    patchCharges({ max_charges: max, current_charges: max });
+                  }}
+                  className="w-24 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
+                  onClick={(e) => e.stopPropagation()}
+                />
+              </div>
+
+              {/* Recharge mode + number */}
+              <div className="flex items-end gap-2">
+                <div className="flex flex-col">
+                  <label className="text-[10px] text-slate-400">Recharge mode</label>
+                  <select
+                    value={resetAmountMode}
+                    disabled={disable}
+                    onChange={(e) => patchCharges({ reset_amount: e.target.value === "full" ? "full" : 1 })}
+                    className="w-24 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <option value="full">Full</option>
+                    <option value="number">Number</option>
+                  </select>
+                </div>
+
+                <div className="flex flex-col">
+                  <label className="text-[10px] text-slate-400">Recharge number</label>
+                  <input
+                    type="number" min={1} step={1}
+                    value={resetAmountNumber}
+                    disabled={resetAmountMode !== "number"}
+                    onChange={(e) => {
+                      const v = Number(e.target.value);
+                      if (Number.isFinite(v)) patchCharges({ reset_amount: Math.max(1, Math.trunc(v)) });
+                    }}
+                    className={`w-32 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900 ${
+                      resetAmountMode !== "number" ? "opacity-60 cursor-not-allowed" : ""
+                    }`}
+                    onClick={(e) => e.stopPropagation()}
+                  />
+                </div>
+              </div>
             </div>
-
-            <div className="flex items-center gap-2 min-w-0">
-              <label className="w-24 shrink-0 text-slate-300 text-sm">Current</label>
-              <input
-                type="number" min={0}
-                value={charges.current_charges ?? 0}
-                disabled={disable}
-                onChange={(e) => {
-                  const v = e.target.value === "" ? 0 : Number(e.target.value);
-                  if (Number.isNaN(v)) return;
-                  patchCharges({ current_charges: Math.max(0, Math.min(v, charges.max_charges || 0)) });
-                }}
-                className={`w-full min-w-0 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900 ${disable ? "opacity-60 cursor-not-allowed" : ""}`}
-                onClick={(e) => e.stopPropagation()}
-              />
-            </div>
-
-            <div className="flex items-center gap-2 min-w-0">
-              <label className="w-24 shrink-0 text-slate-300 text-sm">Resets</label>
-              <select
-                value={charges.resetOn}
-                disabled={disable}
-                onChange={(e) => patchCharges({ resetOn: e.target.value })}
-                className={`w-full min-w-0 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900 ${disable ? "opacity-60 cursor-not-allowed" : ""}`}
-                onClick={(e) => e.stopPropagation()}
-              >
-                {RESET_OPTIONS.map((opt) => (
-                  <option key={opt.value} value={opt.value}>{opt.label}</option>
-                ))}
-              </select>
-            </div>
-
-            <div className="flex items-center gap-2 min-w-0">
-              <label className="w-24 shrink-0 text-slate-300 text-sm">Recharge</label>
-
-              <select
-                value={resetAmountMode}
-                disabled={disable || charges.resetOn === "none"}
-                onChange={(e) => patchCharges({ resetAmount: e.target.value === "full" ? "full" : 1 })}
-                className={`w-28 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900 ${
-                  disable || charges.resetOn === "none" ? "opacity-60 cursor-not-allowed" : ""
-                }`}
-                onClick={(e) => e.stopPropagation()}
-              >
-                <option value="full">Full</option>
-                <option value="number">Number</option>
-              </select>
-
-              <input
-                type="number" min={0}
-                value={resetAmountNumber}
-                disabled={disable || charges.resetOn === "none" || resetAmountMode !== "number"}
-                onChange={(e) => {
-                  const v = e.target.value === "" ? 0 : Number(e.target.value);
-                  if (Number.isNaN(v)) return;
-                  patchCharges({ resetAmount: v });
-                }}
-                className={`w-full min-w-0 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900 ${
-                  disable || charges.resetOn === "none" || resetAmountMode !== "number"
-                    ? "opacity-60 cursor-not-allowed"
-                    : ""
-                }`}
-                onClick={(e) => e.stopPropagation()}
-              />
-            </div>
-          </div>
+          )}
 
           {/* Notes */}
-          <div className="flex flex-col gap-2">
-            <label className="text-slate-300 text-sm">Notes</label>
+          <div className="flex flex-col">
+            <label className="text-[10px] text-slate-400">Notes</label>
             <textarea
               value={row.notes ?? ""}
               onChange={(e) => patch({ notes: e.target.value })}
               placeholder="Special properties, activation, etc."
-              className="w-full min-h-[110px] rounded border border-slate-700 bg-white text-slate-900 p-2"
+              className="min-h-[80px] rounded border border-slate-700 bg-white text-slate-900 p-2 max-w-[40rem]"
               onClick={(e) => e.stopPropagation()}
             />
           </div>
@@ -262,7 +231,7 @@ const MagicItemRow = React.memo(function MagicItemRow({
             <button
               type="button"
               onClick={() => onRemove(row.id)}
-              className="px-3 py-1.5 rounded-lg border border-red-700 bg-red-900/40 hover:bg-red-900/60 text-red-100 transition"
+              className="px-3 py-1 rounded border border-red-700 bg-red-900/40 hover:bg-red-900/60 text-red-100 text-sm"
             >
               Remove
             </button>
@@ -273,8 +242,8 @@ const MagicItemRow = React.memo(function MagicItemRow({
   );
 });
 
-/* ---------------- Mundane Item Row ---------------- */
 
+/* ---------------- Mundane Item Row (compact labels) ---------------- */
 const MundaneItemRow = React.memo(function MundaneItemRow({
   row,
   open,
@@ -291,22 +260,20 @@ const MundaneItemRow = React.memo(function MundaneItemRow({
         aria-expanded={open}
       >
         <div className="flex flex-wrap items-center gap-2">
-          <div className="flex items-center gap-2 min-w-[240px] max-w-[520px] grow">
-            <span className="text-slate-400 text-sm shrink-0">Name:</span>
+          <div className="flex items-center gap-2 min-w-[220px] max-w-[520px] grow">
+            <span className="text-slate-400 text-xs shrink-0">Name</span>
             <input
               type="text"
               value={row.name ?? ""}
               onChange={(e) => onChange(row.id, { name: e.target.value })}
-              placeholder="e.g., Arrows"
+              placeholder="Arrows"
               className="w-full min-w-0 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
               onClick={(e) => e.stopPropagation()}
             />
           </div>
 
           <div className="hidden md:flex items-center gap-2 px-2">
-            <span className="inline-flex items-center px-2 py-0.5 rounded-full border border-slate-700 bg-slate-900 text-slate-200 text-xs">
-              Amt {row.amount ?? 1}
-            </span>
+            <Chip>Amt {row.amount ?? 1}</Chip>
             {row.consumed ? (
               <span className="inline-flex items-center px-2 py-0.5 rounded-full border border-amber-700 bg-amber-900/30 text-amber-200 text-xs">
                 Consumed
@@ -314,25 +281,17 @@ const MundaneItemRow = React.memo(function MundaneItemRow({
             ) : null}
           </div>
 
-          <svg
-            className={`ml-auto h-5 w-5 transition-transform ${open ? "rotate-180" : ""}`}
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path
-              fillRule="evenodd"
-              d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z"
-              clipRule="evenodd"
-            />
+          <svg className={`ml-auto h-5 w-5 transition-transform ${open ? "rotate-180" : ""}`} viewBox="0 0 20 20" fill="currentColor">
+            <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clipRule="evenodd"/>
           </svg>
         </div>
       </button>
 
       {open && (
         <div className="p-3 space-y-3 border-t border-slate-700">
-          <div className="grid gap-3 [grid-template-columns:repeat(auto-fit,minmax(220px,1fr))]">
-            <div className="flex items-center gap-2 min-w-0">
-              <label className="w-24 shrink-0 text-slate-300 text-sm">Amount</label>
+          <div className="flex flex-wrap items-end gap-3">
+            <div className="flex flex-col">
+              <label className="text-[10px] text-slate-400">Amount</label>
               <input
                 type="number" min={0}
                 value={row.amount ?? 1}
@@ -341,24 +300,23 @@ const MundaneItemRow = React.memo(function MundaneItemRow({
                   if (v !== "" && Number.isNaN(v)) return;
                   onChange(row.id, { amount: v });
                 }}
-                className="w-full min-w-0 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
+                className="w-24 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
                 onClick={(e) => e.stopPropagation()}
               />
             </div>
 
-            <div className="flex items-center gap-2 min-w-0">
-              <label className="w-24 shrink-0 text-slate-300 text-sm">Notes</label>
+            <div className="flex flex-col grow max-w-[28rem]">
+              <label className="text-[10px] text-slate-400">Notes</label>
               <input
                 type="text"
                 value={row.notes ?? ""}
                 onChange={(e) => onChange(row.id, { notes: e.target.value })}
                 placeholder="Weight, where stored, etc."
-                className="w-full min-w-0 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
+                className="px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
                 onClick={(e) => e.stopPropagation()}
               />
             </div>
 
-            {/* NEW: Consumed checkbox */}
             <label className="inline-flex items-center gap-2">
               <input
                 type="checkbox"
@@ -367,7 +325,7 @@ const MundaneItemRow = React.memo(function MundaneItemRow({
                 className="h-4 w-4 accent-orange-500"
                 onClick={(e) => e.stopPropagation()}
               />
-              <span className="text-slate-200 text-sm">Consumed</span>
+              <span className="text-xs text-slate-200">Consumed</span>
             </label>
           </div>
 
@@ -375,7 +333,7 @@ const MundaneItemRow = React.memo(function MundaneItemRow({
             <button
               type="button"
               onClick={() => onRemove(row.id)}
-              className="px-3 py-1.5 rounded-lg border border-red-700 bg-red-900/40 hover:bg-red-900/60 text-red-100 transition"
+              className="px-3 py-1 rounded border border-red-700 bg-red-900/40 hover:bg-red-900/60 text-red-100 text-sm"
             >
               Remove
             </button>
@@ -529,7 +487,7 @@ export default function Inventory() {
       amount: 1,
       attuned: false,
       notes: "",
-      charges: { has: false, max_charges: 0, resetAmount: "full", resetOn: "none", current_charges: 0 },
+      charges: { has: false, max_charges: 0, reset_amount: "full", current_charges: 0 },
     };
     const next = { ...inv, magic: [...inv.magic, row] };
     persist(next, { immediate: true });

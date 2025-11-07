@@ -103,7 +103,7 @@ const ActionRow = React.memo(function ActionRow({
                   const has = e.target.checked;
                   onChange({
                     charges: has
-                      ? { has: true, max_charges: row.charges?.max_charges ?? "", resetAmount: row.charges?.resetAmount ?? "full" }
+                      ? { has: true, max_charges: row.charges?.max_charges ?? "", reset_amount: row.charges?.reset_amount ?? "full" }
                       : { has: false }
                   });
                 }}
@@ -223,28 +223,28 @@ const ActionRow = React.memo(function ActionRow({
                   <label className="inline-flex items-center gap-1 text-xs">
                     <input
                       type="checkbox"
-                      checked={row.charges?.resetAmount === "full"}
+                      checked={row.charges?.reset_amount === "full"}
                       onChange={(e) => {
                         const isFull = e.target.checked;
-                        const prevNum = typeof row.charges?.resetAmount === "number" && row.charges.resetAmount >= 1
-                          ? row.charges.resetAmount : 1;
-                        onChange({ charges: { ...(row.charges||{}), resetAmount: isFull ? "full" : prevNum, has: true } });
+                        const prevNum = typeof row.charges?.reset_amount === "number" && row.charges.reset_amount >= 1
+                          ? row.charges.reset_amount : 1;
+                        onChange({ charges: { ...(row.charges||{}), reset_amount: isFull ? "full" : prevNum, has: true } });
                       }}
                       className="h-4 w-4 accent-orange-500"
                     />
                     Full
                   </label>
-                  {row.charges?.resetAmount !== "full" && (
+                  {row.charges?.reset_amount !== "full" && (
                     <input
                       type="number"
                       min={1}
                       step={1}
-                      value={typeof row.charges?.resetAmount === "number" && row.charges.resetAmount >= 1
-                        ? row.charges.resetAmount : 1}
+                      value={typeof row.charges?.reset_amount === "number" && row.charges.reset_amount >= 1
+                        ? row.charges.reset_amount : 1}
                       onChange={(e) => {
                         const raw = Number(e.target.value);
                         if (Number.isFinite(raw)) {
-                          onChange({ charges: { ...(row.charges||{}), resetAmount: Math.max(1, Math.trunc(raw)), has: true } });
+                          onChange({ charges: { ...(row.charges||{}), reset_amount: Math.max(1, Math.trunc(raw)), has: true } });
                         }
                       }}
                       className="w-20 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
@@ -373,7 +373,7 @@ export default function Effects() {
       atk_kind: "melee",                 // new
       damages: [],                       // [{ dice_count, dice_sides, dtype }]
       save: { has: false, ability: "" },
-      charges: { has: false, max_charges: "", resetAmount: "full" },
+      charges: { has: false, max_charges: "", reset_amount: "full" },
       description: "",
     };
     const next = { ...model, [categoryKey]: [...(model[categoryKey] || []), row] };

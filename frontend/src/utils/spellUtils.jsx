@@ -36,12 +36,12 @@ export function normalizeSpellRow(r) {
 
   const max = r.max_charges ?? "";
   const cur = r.current_charges ?? max;
-  const recharge = Math.max(0, Math.min(Number(r.recharge_short_amount ?? 0), Number(max || 0)));
+  const recharge = Math.max(0, Math.min(Number(r.reset_amount ?? 0), Number(max || 0)));
   return {
     ...base,
     max_charges: max,
     current_charges: cur,
-    recharge_short_amount: recharge,
+    reset_amount: recharge,
   };
 }
 
@@ -423,11 +423,11 @@ export const SpellEditorRow = React.memo(function SpellEditorRow({ row, open, on
                   onChange={(e) => {
                     const v = e.target.value === "" ? "" : Number(e.target.value);
                     if (v !== "" && Number.isNaN(v)) return;
-                    const clampedRecharge = clampRecharge(Number(row.recharge_short_amount ?? 0), Number(v || 0));
+                    const clampedRecharge = clampRecharge(Number(row.reset_amount ?? 0), Number(v || 0));
                     const clampedCurrent = Math.max(0, Math.min(Number(row.current_charges ?? 0), Number(v || 0)));
                     onChangeField(row.id, {
                       max_charges: v,
-                      recharge_short_amount: clampedRecharge,
+                      reset_amount: clampedRecharge,
                       current_charges: clampedCurrent,
                     });
                   }}
@@ -455,12 +455,12 @@ export const SpellEditorRow = React.memo(function SpellEditorRow({ row, open, on
                 <input
                   type="number"
                   min={0}
-                  value={row.recharge_short_amount ?? 0}
+                  value={row.reset_amount ?? 0}
                   onChange={(e) => {
                     const raw = e.target.value === "" ? 0 : Number(e.target.value);
                     if (Number.isNaN(raw)) return;
                     onChangeField(row.id, {
-                      recharge_short_amount: clampRecharge(raw, max),
+                      reset_amount: clampRecharge(raw, max),
                     });
                   }}
                   className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
@@ -726,8 +726,8 @@ export function SorceryPointsCard({ model, onChange }) {
             onChange={(e) => {
               const v = e.target.value === "" ? "" : Math.max(0, Number(e.target.value) || 0);
               const cur = Math.min(Number(model.current_charges || 0), Number(v || 0));
-              const recharge = Math.min(Number(model.recharge_short_amount || 0), Number(v || 0));
-              onChange({ max_charges: v, current_charges: cur, recharge_short_amount: recharge });
+              const recharge = Math.min(Number(model.reset_amount || 0), Number(v || 0));
+              onChange({ max_charges: v, current_charges: cur, reset_amount: recharge });
             }}
             className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
           />
@@ -750,10 +750,10 @@ export function SorceryPointsCard({ model, onChange }) {
           <input
             type="number"
             min={0}
-            value={model.recharge_short_amount ?? 0}
+            value={model.reset_amount ?? 0}
             onChange={(e) => {
               const v = e.target.value === "" ? 0 : Math.max(0, Math.min(Number(e.target.value) || 0, max));
-              onChange({ recharge_short_amount: v });
+              onChange({ reset_amount: v });
             }}
             className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
           />

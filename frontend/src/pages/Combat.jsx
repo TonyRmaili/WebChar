@@ -112,15 +112,7 @@ export default function CombatPage() {
         })}
       </div>
 
-      <div className="absolute left-1 flex gap-3 py-8 px-14 text-base">
-        <button
-          type="button"
-          className="px-2 py-2 rounded-lg border border-amber-600 bg-amber-800/50 hover:bg-amber-700/70 text-amber-100 transition"
-          onClick={() => onRest("roll_initiative")}
-          disabled={!selectedChar}
-        >
-          Roll Initiative
-        </button>
+      <div className="absolute left-1 flex gap-3 py-8 px-14 text-base">       
         <button
           type="button"
           className="px-2 py-2 rounded-lg border border-amber-600 bg-amber-800/50 hover:bg-amber-700/70 text-amber-100 transition"

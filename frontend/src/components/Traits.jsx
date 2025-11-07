@@ -3,13 +3,6 @@ import useCharStore from "../store/CharStore";
 
 const DEFAULT_TRAITS = { feats: [], class: [], race: [], background: [], others: [] };
 
-const RESET_OPTIONS = [
-  { value: "none",       label: "Passive / None" },
-  { value: "turn",       label: "On New Turn" },
-  { value: "initiative", label: "On Initiative Roll" },
-  { value: "short",      label: "On Short Rest" },
-  { value: "long",       label: "On Long Rest" },
-];
 
 function SummaryChip({ label, value }) {
   return (
@@ -28,24 +21,12 @@ const TraitRow = React.memo(function TraitRow({
   onChangeField,
   onRemove,
 }) {
-  const charges = row.charges ?? {
-    has: false,
-    max_charges: 0,
-    resetAmount: "full",
-    resetOn: "none",
-    current_charges: 0,
-  };
+  const charges = row.charges ?? { has: false, max_charges: 0, reset_amount: "full", current_charges: 0 };
   const hasCharges = !!charges.has;
-  const disableChargeFields = !hasCharges;
+  const patchCharges = (patch) => onChangeField(categoryKey, row.id, { charges: { ...charges, ...patch } });
 
-  const resetLabel =
-    RESET_OPTIONS.find((o) => o.value === charges.resetOn)?.label || "Passive / None";
-
-  const patchCharges = (patch) =>
-    onChangeField(categoryKey, row.id, { charges: { ...charges, ...patch } });
-
-  const resetAmountMode = typeof charges.resetAmount === "string" ? "full" : "number";
-  const resetAmountNumber = typeof charges.resetAmount === "number" ? charges.resetAmount : 0;
+  const resetAmountMode = typeof charges.reset_amount === "string" ? "full" : "number";
+  const resetAmountNumber = typeof charges.reset_amount === "number" ? charges.reset_amount : 1;
 
   return (
     <div className="rounded-lg border border-slate-700 bg-slate-900/60">
@@ -57,47 +38,27 @@ const TraitRow = React.memo(function TraitRow({
         aria-expanded={open}
       >
         <div className="flex flex-wrap items-center gap-2">
-          {/* Name field — capped width, does not stretch across chips */}
-          <div className="flex items-center gap-2 min-w-[240px] max-w-[520px] grow">
-            <span className="text-slate-400 text-sm shrink-0">Name:</span>
+          <div className="flex items-center gap-2 min-w-[220px] max-w-[520px] grow">
+            <span className="text-slate-400 text-xs">Name</span>
             <input
               type="text"
               value={row.name ?? ""}
               onChange={(e) => onChangeField(categoryKey, row.id, { name: e.target.value })}
-              placeholder="e.g., Great Weapon Master"
+              placeholder="Great Weapon Master"
               className="w-full min-w-0 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
               onClick={(e) => e.stopPropagation()}
             />
           </div>
 
-          {/* Summary chips — wrap nicely */}
-          <div className="flex flex-wrap items-center gap-2 shrink min-w-[240px]">
-            <SummaryChip label="Reset" value={hasCharges ? resetLabel : "Passive / None"} />
-            {hasCharges ? (
-              <>
-                <SummaryChip
-                  label="Charges"
-                  value={`${charges.current_charges}/${charges.max_charges}`}
-                />
-                <SummaryChip
-                  label="On reset"
-                  value={typeof charges.resetAmount === "string" ? "Full" : charges.resetAmount}
-                />
-              </>
-            ) : null}
-          </div>
+          {hasCharges ? (
+            <div className="flex flex-wrap items-center gap-2 shrink min-w-[220px]">
+              <SummaryChip label="Charges" value={`${charges.current_charges}/${charges.max_charges}`} />
+              <SummaryChip label="On reset" value={typeof charges.reset_amount === "string" ? "Full" : charges.reset_amount} />
+            </div>
+          ) : null}
 
-          {/* Chevron aligned right on its own line if needed */}
-          <svg
-            className={`ml-auto h-5 w-5 transition-transform ${open ? "rotate-180" : ""}`}
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path
-              fillRule="evenodd"
-              d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z"
-              clipRule="evenodd"
-            />
+          <svg className={`ml-auto h-5 w-5 transition-transform ${open ? "rotate-180" : ""}`} viewBox="0 0 20 20" fill="currentColor">
+            <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clipRule="evenodd"/>
           </svg>
         </div>
       </button>
@@ -105,34 +66,20 @@ const TraitRow = React.memo(function TraitRow({
       {/* Body */}
       {open && (
         <div className="p-3 space-y-3 border-t border-slate-700">
-          {/* Charges toggle row — wraps on small screens */}
+          {/* Charges toggle + quick actions */}
           <div className="flex flex-wrap items-center gap-3">
-            <label className="inline-flex items-center gap-2 text-slate-200 text-sm">
+            <label className="inline-flex items-center gap-2 text-slate-200 text-xs">
               <input
-                id={`has-charges-${row.id}`}
                 type="checkbox"
                 checked={hasCharges}
-                onChange={(e) =>
-                  e.target.checked
-                    ? onChangeField(categoryKey, row.id, {
-                        charges: {
-                          has: true,
-                          max_charges: charges.max_charges || 1,
-                          resetAmount: charges.resetAmount ?? "full",
-                          resetOn: charges.resetOn ?? "short",
-                          current_charges: charges.max_charges || 1,
-                        },
-                      })
-                    : onChangeField(categoryKey, row.id, {
-                        charges: {
-                          has: false,
-                          max_charges: 0,
-                          resetAmount: "full",
-                          resetOn: "none",
-                          current_charges: 0,
-                        },
-                      })
-                }
+                onChange={(e) => {
+                  if (e.target.checked) {
+                    const max = charges.max_charges || 1;
+                    patchCharges({ has: true, max_charges: max, current_charges: max, reset_amount: charges.reset_amount ?? "full" });
+                  } else {
+                    patchCharges({ has: false, max_charges: 0, current_charges: 0, reset_amount: "full" });
+                  }
+                }}
                 onClick={(e) => e.stopPropagation()}
                 className="h-4 w-4 accent-orange-400"
               />
@@ -143,10 +90,7 @@ const TraitRow = React.memo(function TraitRow({
               <div className="ml-auto flex flex-wrap items-center gap-2">
                 <button
                   type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    patchCharges({ current_charges: charges.max_charges });
-                  }}
+                  onClick={(e) => { e.stopPropagation(); patchCharges({ current_charges: charges.max_charges }); }}
                   className="px-2 py-1 rounded border border-slate-600 bg-slate-900 hover:bg-slate-800 text-xs"
                 >
                   Refill
@@ -155,12 +99,7 @@ const TraitRow = React.memo(function TraitRow({
                   type="button"
                   onClick={(e) => {
                     e.stopPropagation();
-                    patchCharges({
-                      current_charges: Math.max(
-                        0,
-                        Math.min(charges.max_charges, (charges.current_charges ?? 0) - 1)
-                      ),
-                    });
+                    patchCharges({ current_charges: Math.max(0, (charges.current_charges ?? 0) - 1) });
                   }}
                   className="px-2 py-1 rounded border border-slate-600 bg-slate-900 hover:bg-slate-800 text-xs"
                 >
@@ -170,122 +109,74 @@ const TraitRow = React.memo(function TraitRow({
             ) : null}
           </div>
 
-          {/* Charges config — responsive auto-fit columns with min width */}
-          <div className="grid gap-3 [grid-template-columns:repeat(auto-fit,minmax(220px,1fr))]">
-            {/* Max charges */}
-            <div className="flex items-center gap-2 min-w-0">
-              <label className="w-28 shrink-0 text-slate-300 text-sm">Max charges</label>
-              <input
-                type="number"
-                min={0}
-                value={charges.max_charges ?? 0}
-                disabled={disableChargeFields}
-                onChange={(e) => {
-                  const v = e.target.value === "" ? 0 : Number(e.target.value);
-                  if (Number.isNaN(v)) return;
-                  const nextCurrent = Math.min(v, charges.current_charges ?? 0);
-                  patchCharges({ max_charges: v, current_charges: nextCurrent });
-                }}
-                className={`w-full min-w-0 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900 ${
-                  disableChargeFields ? "opacity-60 cursor-not-allowed" : ""
-                }`}
-                onClick={(e) => e.stopPropagation()}
-              />
-            </div>
+          {/* Charges config */}
+          {hasCharges && (
+            <div className="flex flex-wrap items-end gap-3">
+              {/* Max charges */}
+              <div className="flex flex-col">
+                <label className="text-[10px] text-slate-400">Max charges</label>
+                <input
+                  type="number"
+                  min={0}
+                  value={charges.max_charges ?? 0}
+                  onChange={(e) => {
+                    const v = e.target.value === "" ? 0 : Number(e.target.value);
+                    if (Number.isNaN(v)) return;
+                    const max = Math.max(0, v);
+                    // Always sync current to max when max changes
+                    patchCharges({ max_charges: max, current_charges: max });
+                  }}
+                  className="w-24 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
+                  onClick={(e) => e.stopPropagation()}
+                />
+              </div>
 
-            {/* Reset type */}
-            <div className="flex items-center gap-2 min-w-0">
-              <label className="w-28 shrink-0 text-slate-300 text-sm">Resets</label>
-              <select
-                value={charges.resetOn}
-                disabled={disableChargeFields}
-                onChange={(e) => patchCharges({ resetOn: e.target.value })}
-                className={`w-full min-w-0 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900 ${
-                  disableChargeFields ? "opacity-60 cursor-not-allowed" : ""
-                }`}
-                onClick={(e) => e.stopPropagation()}
-              >
-                {RESET_OPTIONS.map((opt) => (
-                  <option key={opt.value} value={opt.value}>
-                    {opt.label}
-                  </option>
-                ))}
-              </select>
-            </div>
+              {/* Reset amount */}
+              <div className="flex items-end gap-2">
+                <div className="flex flex-col">
+                  <label className="text-[10px] text-slate-400">Reset mode</label>
+                  <select
+                    value={resetAmountMode}
+                    onChange={(e) => patchCharges({ reset_amount: e.target.value === "full" ? "full" : 1 })}
+                    className="w-24 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <option value="full">Full</option>
+                    <option value="number">Number</option>
+                  </select>
+                </div>
 
-            {/* Reset amount mode + number */}
-            <div className="flex items-center gap-2 min-w-0">
-              <label className="w-28 shrink-0 text-slate-300 text-sm">Reset amount</label>
-              <select
-                value={resetAmountMode}
-                disabled={disableChargeFields || charges.resetOn === "none"}
-                onChange={(e) => {
-                  const mode = e.target.value;
-                  patchCharges({ resetAmount: mode === "full" ? "full" : 1 });
-                }}
-                className={`w-28 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900 ${
-                  disableChargeFields || charges.resetOn === "none" ? "opacity-60 cursor-not-allowed" : ""
-                }`}
-                onClick={(e) => e.stopPropagation()}
-              >
-                <option value="full">Full</option>
-                <option value="number">Number</option>
-              </select>
-
-              <input
-                type="number"
-                min={0}
-                value={resetAmountNumber}
-                disabled={
-                  disableChargeFields ||
-                  charges.resetOn === "none" ||
-                  resetAmountMode !== "number"
-                }
-                onChange={(e) => {
-                  const v = e.target.value === "" ? 0 : Number(e.target.value);
-                  if (Number.isNaN(v)) return;
-                  patchCharges({ resetAmount: v });
-                }}
-                className={`w-full min-w-0 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900 ${
-                  disableChargeFields ||
-                  charges.resetOn === "none" ||
-                  resetAmountMode !== "number"
-                    ? "opacity-60 cursor-not-allowed"
-                    : ""
-                }`}
-                onClick={(e) => e.stopPropagation()}
-              />
+                <div className="flex flex-col">
+                  <label className="text-[10px] text-slate-400">Reset number</label>
+                  <input
+                    type="number"
+                    min={1}
+                    step={1}
+                    value={resetAmountNumber}
+                    disabled={resetAmountMode !== "number"}
+                    onChange={(e) => {
+                      const n = Number(e.target.value);
+                      if (Number.isFinite(n)) patchCharges({ reset_amount: Math.max(1, Math.trunc(n)) });
+                    }}
+                    // wider so numbers are readable
+                    className={`w-28 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900 ${
+                      resetAmountMode !== "number" ? "opacity-60 cursor-not-allowed" : ""
+                    }`}
+                    onClick={(e) => e.stopPropagation()}
+                  />
+                </div>
+              </div>
             </div>
-
-            {/* Current */}
-            <div className="flex items-center gap-2 min-w-0">
-              <label className="w-28 shrink-0 text-slate-300 text-sm">Current</label>
-              <input
-                type="number"
-                min={0}
-                value={charges.current_charges ?? 0}
-                disabled={disableChargeFields}
-                onChange={(e) => {
-                  const v = e.target.value === "" ? 0 : Number(e.target.value);
-                  if (Number.isNaN(v)) return;
-                  patchCharges({ current_charges: Math.max(0, Math.min(v, charges.max_charges || 0)) });
-                }}
-                className={`w-full min-w-0 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900 ${
-                  disableChargeFields ? "opacity-60 cursor-not-allowed" : ""
-                }`}
-                onClick={(e) => e.stopPropagation()}
-              />
-            </div>
-          </div>
+          )}
 
           {/* Description */}
-          <div className="flex flex-col gap-2">
-            <label className="text-slate-300 text-sm">Description</label>
+          <div className="flex flex-col">
+            <label className="text-[10px] text-slate-400">Description</label>
             <textarea
               value={row.description ?? ""}
               onChange={(e) => onChangeField(categoryKey, row.id, { description: e.target.value })}
-              placeholder="Rules text, benefits, usage notes, etc."
-              className="w-full min-h-[130px] rounded border border-slate-700 bg-white text-slate-900 p-2"
+              placeholder="Rules text, benefits, usage notes"
+              className="min-h-[80px] rounded border border-slate-700 bg-white text-slate-900 p-2 max-w-[40rem]"
               onClick={(e) => e.stopPropagation()}
             />
           </div>
@@ -294,7 +185,7 @@ const TraitRow = React.memo(function TraitRow({
             <button
               type="button"
               onClick={() => onRemove(categoryKey, row.id)}
-              className="px-3 py-1.5 rounded-lg border border-red-700 bg-red-900/40 hover:bg-red-900/60 text-red-100 transition"
+              className="px-3 py-1 rounded border border-red-700 bg-red-900/40 hover:bg-red-900/60 text-red-100 text-sm"
             >
               Remove
             </button>
@@ -388,7 +279,7 @@ function Traits() {
         id: `${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
         name: "",
         description: "",
-        charges: { has: false, max_charges: 0, resetAmount: "full", resetOn: "none", current_charges: 0 },
+        charges: { has: false, max_charges: 0, reset_amount: "full", current_charges: 0 },
       };
       const next = { ...traits, [category]: [...(traits[category] || []), row] };
       persist(next, { immediate: true });

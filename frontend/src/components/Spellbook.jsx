@@ -16,7 +16,7 @@ const DEFAULT_SPELLBOOK = {
   spells: [],
   metamagic: [],
   invocations: [],
-  sorcery_points: { max_charges: "", current_charges: "", recharge_short_amount: 0 },
+  sorcery_points: { max_charges: "", current_charges: "", reset_amount: 0 },
 };
 
 export default function Spellbook() {
@@ -64,7 +64,7 @@ export default function Spellbook() {
       sorcery_points: {
         max_charges: base.sorcery_points?.max_charges ?? "",
         current_charges: base.sorcery_points?.current_charges ?? (base.sorcery_points?.max_charges ?? ""),
-        recharge_short_amount: Number(base.sorcery_points?.recharge_short_amount ?? 0) || 0,
+        reset_amount: Number(base.sorcery_points?.reset_amount ?? 0) || 0,
       },
     };
   }, [charData?.spellbook]);

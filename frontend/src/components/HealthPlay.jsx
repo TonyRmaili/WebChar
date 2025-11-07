@@ -241,8 +241,6 @@ export default function HealthPlay({ id }) {
 
       
       <div className="absolute bottom-5 text-sm right-2 flex gap-2">
-        <button type="button" className="px-1 py-1 rounded-lg border border-amber-600 bg-amber-800/50 hover:bg-amber-700/70 text-amber-100 transition">New Turn</button>
-        <button type="button" className="px-1 py-1 rounded-lg border border-amber-600 bg-amber-800/50 hover:bg-amber-700/70 text-amber-100 transition">Roll Initiative</button>
         <button type="button" onClick={() => onRest("short")} className="px-1 py-1 rounded-lg border border-amber-600 bg-amber-800/50 hover:bg-amber-700/70 text-amber-100 transition">Short Rest</button>
         <button type="button" onClick={() => onRest("long")} className="px-1 py-1 rounded-lg border border-teal-600 bg-teal-800/50 hover:bg-teal-700/70 text-teal-100 transition">Long Rest</button>
       </div>

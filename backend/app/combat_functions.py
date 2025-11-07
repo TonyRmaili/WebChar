@@ -16,6 +16,7 @@ def save_character(user,character,char_data):
 
 
 
+
 def damage_health(user, character, value):
     """
     Apply incoming damage (value is already negative) in order:
@@ -90,7 +91,6 @@ def on_shortrest(user,character):
     for action_type in action_types:
         charge_effects(char_data=char_data,
                        action_type=action_type,
-                       rest_type="short",
                        character=character,
                        user=user)
         
@@ -98,26 +98,23 @@ def on_shortrest(user,character):
     pactslots = char_data["spellbook"]["pactslots"]
     for slots in pactslots:
         slots["slots_current"] = slots["slots_max"]
+
+    # sorcery points
+    char_data["spellbook"]["sorcery_points"]["current_charges"] += char_data["spellbook"]["sorcery_points"]["reset_amount"]
+    if char_data["spellbook"]["sorcery_points"]["current_charges"] > char_data["spellbook"]["sorcery_points"]["max_charges"]:
+        char_data["spellbook"]["sorcery_points"]["current_charges"] = char_data["spellbook"]["sorcery_points"]["max_charges"]
         
     # traits
+    charge_traits(character=character,char_data=char_data["traits"],user=user)
+
 
     # magic items
-    charge_magic_items(char_data=char_data,character=character,
-                       user=user,rest_type="short")
+    charge_magic_items(char_data=char_data,character=character,user=user)
    
 
-    
     return char_data
 
-
-
-
 def on_longrest(user,character):
-    '''
-    always full resets
-       
-    '''
-
     char_data = load_character(user, character)
 
     #  current_hp
@@ -149,46 +146,58 @@ def on_longrest(user,character):
     char_data["spellbook"]["sorcery_points"]["current_charges"] = char_data["spellbook"]["sorcery_points"]["max_charges"]
 
 
+    # effects 
+    effects = char_data["effects"]
+    for action_type in effects.values():
+        for effect in action_type:
+            if effect["charges"]["has"]:
+                effect["charges"]["current_charges"] = effect["charges"]["max_charges"]
 
-
-
-    save_character(user=user,character=character,char_data=char_data)
-
-
-   
-    
-def on_initiative_roll(user,character):
-    print(f'{user} new init roll')
-
-
-def on_new_turn(user,character):
-    print(f'{user} new turn')
-
-
-
-
-def charge_magic_items(char_data,character,user,rest_type):
+    # magic items 
     items = char_data["inventory"]["magic"]
-    
     for item in items:
         if item["charges"]["has"]:
-            if rest_type == "short":
-                item["charges"]["current_charges"] += item["charges"]["resetAmount"]
-                if item["charges"]["current_charges"] > item["charges"]["max_charges"]:
-                    item["charges"]["current_charges"] = item["charges"]["max_charges"]
-    
+            item["charges"]["current_charges"] = item["charges"]["max_charges"]
+
+    # traits
+    traits = char_data["traits"]
+    for trait_type in traits.values():
+        for trait in trait_type:
+            if trait["charges"]["has"]:
+                trait["charges"]["current_charges"] = trait["charges"]["max_charges"]
+
     save_character(user=user,character=character,char_data=char_data)
 
-def charge_effects(char_data,action_type,rest_type,user,character):
+def charge_traits(char_data,character,user):
+    for trait_type in char_data.values():
+        for trait in trait_type:
+            if trait["charges"]["has"]:
+                trait["charges"]["current_charges"] += trait["charges"]["reset_amount"]
+                if trait["charges"]["current_charges"] > trait["charges"]["max_charges"]:
+                    trait["charges"]["current_charges"] = trait["charges"]["max_charges"]
+
+    save_character(user=user,character=character,char_data=char_data)
+            
+
+def charge_magic_items(char_data,character,user):
+    items = char_data["inventory"]["magic"]
+    for item in items:
+        if item["charges"]["has"]:
+            item["charges"]["current_charges"] += item["charges"]["reset_amount"]
+            if item["charges"]["current_charges"] > item["charges"]["max_charges"]:
+                item["charges"]["current_charges"] = item["charges"]["max_charges"]
+
+    save_character(user=user,character=character,char_data=char_data)
+
+def charge_effects(char_data,action_type,user,character):
     for action in char_data["effects"][action_type]:
         if action["charges"]["has"]:
-            if rest_type == "short":
-                if action["charges"]["resetAmount"] == "full":
+            if action["charges"]["reset_amount"] == "full":
+                action["charges"]["current_charges"] = action["charges"]["max_charges"]
+            else:
+                action["charges"]["current_charges"] += action["charges"]["reset_amount"]
+                if action["charges"]["current_charges"] > action["charges"]["max_charges"]:
                     action["charges"]["current_charges"] = action["charges"]["max_charges"]
-                else:
-                    action["charges"]["current_charges"] += action["charges"]["resetAmount"]
-                    if action["charges"]["current_charges"] > action["charges"]["max_charges"]:
-                        action["charges"]["current_charges"] = action["charges"]["max_charges"]
 
     save_character(user=user,character=character,char_data=char_data)
    
