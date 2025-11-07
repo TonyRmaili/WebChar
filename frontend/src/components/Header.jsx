@@ -1,11 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
+
 import CombatLogo from "../assets/combat.svg";
 import DiceLogo from "../assets/dice.svg";
 import CreateCharLogo from "../assets/createChar.svg";
 import LoadCharLogo from "../assets/loadChar.svg";
 import LogInLogo from "../assets/logInLogo.svg";
 import LogOutLogo from '../assets/logout.svg'
+
 import useAuthStore from "../store/AuthStore";
 
 function Header() {
@@ -19,12 +21,14 @@ function Header() {
           <img src={CreateCharLogo} className="h-12" />
           <p>Characters</p>
         </Link>
-      </div>
-      <div className="flex items-center justify-between gap-8 w-[400px] p-4">
         <Link to="/" className="flex flex-col gap-2">
           <img src={CombatLogo} alt="combat-logo" className="h-16" />
           <p>Combat</p>
         </Link>
+      </div>
+
+
+      <div className="flex items-center justify-between gap-8 w-[400px] p-4">
         <Link to="/diceTower" className="flex flex-col gap-2">
           <img src={DiceLogo} alt="" className="h-16" />
           <p> DiceTower</p>
@@ -40,6 +44,10 @@ function Header() {
       </div>
 
       <div className="flex gap-10 items-center p-2"> 
+        <Link to="/UserProfile" className="flex flex-col items-center mt-4">
+          <img src={CreateCharLogo} className="h-12" />
+          <p>User Profile</p>
+        </Link>
         <Link to="/logIn" className="flex flex-col items-center mt-4">
           <img src={LogInLogo} className="h-12" />
           <p>Log in</p>

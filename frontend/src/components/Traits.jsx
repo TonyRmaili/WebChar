@@ -1,21 +1,9 @@
 import React, { useMemo, useRef, useState, useCallback } from "react";
 import useCharStore from "../store/CharStore";
 
-const DEFAULT_TRAITS = {
-  feats: [],
-  class: [],
-  race: [],
-  background: [],
-  others: [],
-};
+const DEFAULT_TRAITS = { feats: [], class: [], race: [], background: [], others: [] };
 
-const RESET_OPTIONS = [
-  { value: "none",  label: "Passive / None" },
-  { value: "short", label: "On Short Rest" },
-  { value: "long",  label: "On Long Rest" },
-];
 
-/* ---------- Small presentational chip ---------- */
 function SummaryChip({ label, value }) {
   return (
     <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-slate-700 bg-slate-900 text-slate-200 text-xs">
@@ -24,7 +12,7 @@ function SummaryChip({ label, value }) {
   );
 }
 
-/* ---------- A single trait row (collapsible) ---------- */
+
 const TraitRow = React.memo(function TraitRow({
   categoryKey,
   row,
@@ -33,8 +21,12 @@ const TraitRow = React.memo(function TraitRow({
   onChangeField,
   onRemove,
 }) {
-  const resetLabel =
-    RESET_OPTIONS.find((o) => o.value === (row.reset || "none"))?.label || "Passive / None";
+  const charges = row.charges ?? { has: false, max_charges: 0, reset_amount: "full", current_charges: 0 };
+  const hasCharges = !!charges.has;
+  const patchCharges = (patch) => onChangeField(categoryKey, row.id, { charges: { ...charges, ...patch } });
+
+  const resetAmountMode = typeof charges.reset_amount === "string" ? "full" : "number";
+  const resetAmountNumber = typeof charges.reset_amount === "number" ? charges.reset_amount : 0;
 
   return (
     <div className="rounded-lg border border-slate-700 bg-slate-900/60">
@@ -42,90 +34,149 @@ const TraitRow = React.memo(function TraitRow({
       <button
         type="button"
         onClick={() => onToggleOpen(row.id)}
-        className="w-full flex items-center justify-between px-3 py-2 hover:bg-slate-800/60"
+        className="w-full px-3 py-2 hover:bg-slate-800/60"
         aria-expanded={open}
       >
-        <div className="flex-1 flex items-center gap-2">
-          <span className="text-slate-400 text-sm">Name:</span>
-          <input
-            type="text"
-            value={row.name ?? ""}
-            onChange={(e) => onChangeField(categoryKey, row.id, { name: e.target.value })}
-            placeholder="e.g., Great Weapon Master"
-            className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
-            onClick={(e) => e.stopPropagation()} // don't toggle when editing
-          />
-        </div>
+        <div className="flex flex-wrap items-center gap-2">
+          <div className="flex items-center gap-2 min-w-[220px] max-w-[520px] grow">
+            <span className="text-slate-400 text-xs">Name</span>
+            <input
+              type="text"
+              value={row.name ?? ""}
+              onChange={(e) => onChangeField(categoryKey, row.id, { name: e.target.value })}
+              placeholder="Great Weapon Master"
+              className="w-full min-w-0 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
+              onClick={(e) => e.stopPropagation()}
+            />
+          </div>
 
-        {/* Compact summary chips */}
-        <div className="hidden md:flex items-center gap-2 px-2">
-          <SummaryChip label="Reset" value={resetLabel} />
-          {row.uses_max ? <SummaryChip label="Uses" value={`${row.uses_max}`} /> : null}
-        </div>
+          {hasCharges ? (
+            <div className="flex flex-wrap items-center gap-2 shrink min-w-[220px]">
+              <SummaryChip label="Charges" value={`${charges.current_charges}/${charges.max_charges}`} />
+              <SummaryChip label="On reset" value={typeof charges.reset_amount === "string" ? "Full" : charges.reset_amount} />
+            </div>
+          ) : null}
 
-        <svg
-          className={`ml-3 h-5 w-5 transition-transform ${open ? "rotate-180" : ""}`}
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
-          <path
-            fillRule="evenodd"
-            d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z"
-            clipRule="evenodd"
-          />
-        </svg>
+          <svg className={`ml-auto h-5 w-5 transition-transform ${open ? "rotate-180" : ""}`} viewBox="0 0 20 20" fill="currentColor">
+            <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clipRule="evenodd"/>
+          </svg>
+        </div>
       </button>
 
       {/* Body */}
       {open && (
         <div className="p-3 space-y-3 border-t border-slate-700">
-          {/* Uses + Reset line */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div className="flex items-center gap-2">
-              <label className="w-28 text-slate-300 text-sm">Uses (max)</label>
+          {/* Charges toggle + quick actions */}
+          <div className="flex flex-wrap items-center gap-3">
+            <label className="inline-flex items-center gap-2 text-slate-200 text-xs">
               <input
-                type="number"
-                min={0}
-                value={row.uses_max ?? ""}
+                type="checkbox"
+                checked={hasCharges}
                 onChange={(e) => {
-                  const v = e.target.value === "" ? "" : Number(e.target.value);
-                  if (v !== "" && Number.isNaN(v)) return;
-                  onChangeField(categoryKey, row.id, { uses_max: v });
+                  if (e.target.checked) {
+                    const max = charges.max_charges || 1;
+                    patchCharges({ has: true, max_charges: max, current_charges: max, reset_amount: charges.reset_amount ?? "full" });
+                  } else {
+                    patchCharges({ has: false, max_charges: 0, current_charges: 0, reset_amount: "full" });
+                  }
                 }}
-                className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
                 onClick={(e) => e.stopPropagation()}
+                className="h-4 w-4 accent-orange-400"
               />
-            </div>
+              Trait has charges
+            </label>
 
-            <div className="flex items-center gap-2">
-              <label className="w-28 text-slate-300 text-sm">Resets</label>
-              <select
-                value={row.reset || "none"}
-                onChange={(e) => onChangeField(categoryKey, row.id, { reset: e.target.value })}
-                className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
-                onClick={(e) => e.stopPropagation()}
-              >
-                {RESET_OPTIONS.map((opt) => (
-                  <option key={opt.value} value={opt.value}>
-                    {opt.label}
-                  </option>
-                ))}
-              </select>
-            </div>
+            {hasCharges ? (
+              <div className="ml-auto flex flex-wrap items-center gap-2">
+                <button
+                  type="button"
+                  onClick={(e) => { e.stopPropagation(); patchCharges({ current_charges: charges.max_charges }); }}
+                  className="px-2 py-1 rounded border border-slate-600 bg-slate-900 hover:bg-slate-800 text-xs"
+                >
+                  Refill
+                </button>
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    patchCharges({ current_charges: Math.max(0, (charges.current_charges ?? 0) - 1) });
+                  }}
+                  className="px-2 py-1 rounded border border-slate-600 bg-slate-900 hover:bg-slate-800 text-xs"
+                >
+                  Spend 1
+                </button>
+              </div>
+            ) : null}
           </div>
 
+          {/* Charges config */}
+          {hasCharges && (
+            <div className="flex flex-wrap items-end gap-3">
+              {/* Max charges */}
+              <div className="flex flex-col">
+                <label className="text-[10px] text-slate-400">Max charges</label>
+                <input
+                  type="number"
+                  min={0}
+                  value={charges.max_charges ?? 0}
+                  onChange={(e) => {
+                    const v = e.target.value === "" ? 0 : Number(e.target.value);
+                    if (Number.isNaN(v)) return;
+                    const max = Math.max(0, v);
+                    // Always sync current to max when max changes
+                    patchCharges({ max_charges: max, current_charges: max });
+                  }}
+                  className="w-24 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
+                  onClick={(e) => e.stopPropagation()}
+                />
+              </div>
+
+              {/* Reset amount */}
+              <div className="flex items-end gap-2">
+                <div className="flex flex-col">
+                  <label className="text-[10px] text-slate-400">Reset mode</label>
+                  <select
+                    value={resetAmountMode}
+                    onChange={(e) => patchCharges({ reset_amount: e.target.value === "full" ? "full" : 0 })}
+                    className="w-24 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <option value="full">Full</option>
+                    <option value="number">Number</option>
+                  </select>
+                </div>
+
+                <div className="flex flex-col">
+                  <label className="text-[10px] text-slate-400">Reset number</label>
+                  <input
+                    type="number"
+                    min={0}
+                    step={1}
+                    value={resetAmountNumber}
+                    disabled={resetAmountMode !== "number"}
+                    onChange={(e) => {
+                      const n = Number(e.target.value);
+                      if (Number.isFinite(n)) patchCharges({ reset_amount: Math.max(0, Math.trunc(n)) });
+                    }}
+                    // wider so numbers are readable
+                    className={`w-28 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900 ${
+                      resetAmountMode !== "number" ? "opacity-60 cursor-not-allowed" : ""
+                    }`}
+                    onClick={(e) => e.stopPropagation()}
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Description */}
-          <div className="flex flex-col md:flex-row gap-2">
-            <label className="w-full md:w-28 text-slate-300 text-sm md:text-right">
-              Description
-            </label>
+          <div className="flex flex-col">
+            <label className="text-[10px] text-slate-400">Description</label>
             <textarea
               value={row.description ?? ""}
-              onChange={(e) =>
-                onChangeField(categoryKey, row.id, { description: e.target.value })
-              }
-              placeholder="Rules text, benefits, usage notes, etc."
-              className="flex-1 min-h-[130px] rounded border border-slate-700 bg-white text-slate-900 p-2"
+              onChange={(e) => onChangeField(categoryKey, row.id, { description: e.target.value })}
+              placeholder="Rules text, benefits, usage notes"
+              className="min-h-[80px] rounded border border-slate-700 bg-white text-slate-900 p-2 max-w-[40rem]"
               onClick={(e) => e.stopPropagation()}
             />
           </div>
@@ -134,7 +185,7 @@ const TraitRow = React.memo(function TraitRow({
             <button
               type="button"
               onClick={() => onRemove(categoryKey, row.id)}
-              className="px-3 py-1.5 rounded-lg border border-red-700 bg-red-900/40 hover:bg-red-900/60 text-red-100 transition"
+              className="px-3 py-1 rounded border border-red-700 bg-red-900/40 hover:bg-red-900/60 text-red-100 text-sm"
             >
               Remove
             </button>
@@ -145,7 +196,7 @@ const TraitRow = React.memo(function TraitRow({
   );
 });
 
-/* ---------- Category card ---------- */
+
 const CategoryCard = React.memo(function CategoryCard({
   title,
   categoryKey,
@@ -192,25 +243,21 @@ const CategoryCard = React.memo(function CategoryCard({
   );
 });
 
-/* =================== MAIN PAGE =================== */
 function Traits() {
   const { charData, updateCharField, postCharData } = useCharStore();
   if (!charData) return null;
 
-  // Ensure a stable shape even if backend hasn't set it yet
   const traits = useMemo(
     () => ({ ...DEFAULT_TRAITS, ...(charData.traits || {}) }),
     [charData?.traits]
   );
 
-  // Keep open/closed state per row ID (survives re-renders)
   const [openById, setOpenById] = useState({});
 
   const toggleOpen = useCallback((id) => {
     setOpenById((prev) => ({ ...prev, [id]: !prev[id] }));
   }, []);
 
-  // Debounced posting so typing doesn't steal focus
   const debounceRef = useRef(null);
   const debouncedPost = useCallback(() => {
     if (debounceRef.current) clearTimeout(debounceRef.current);
@@ -232,15 +279,10 @@ function Traits() {
         id: `${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
         name: "",
         description: "",
-        uses_max: "",
-        reset: "none",
+        charges: { has: false, max_charges: 0, reset_amount: "full", current_charges: 0 },
       };
-      const next = {
-        ...traits,
-        [category]: [...(traits[category] || []), row],
-      };
+      const next = { ...traits, [category]: [...(traits[category] || []), row] };
       persist(next, { immediate: true });
-      // auto-open the new row
       setOpenById((prev) => ({ ...prev, [row.id]: true }));
     },
     [traits, persist]
@@ -248,10 +290,7 @@ function Traits() {
 
   const removeTrait = useCallback(
     (category, id) => {
-      const next = {
-        ...traits,
-        [category]: (traits[category] || []).filter((t) => t.id !== id),
-      };
+      const next = { ...traits, [category]: (traits[category] || []).filter((t) => t.id !== id) };
       persist(next, { immediate: true });
       setOpenById((prev) => {
         const copy = { ...prev };
@@ -268,7 +307,7 @@ function Traits() {
         ...traits,
         [category]: (traits[category] || []).map((t) => (t.id === id ? { ...t, ...patch } : t)),
       };
-      persist(next); // debounced while typing
+      persist(next);
     },
     [traits, persist]
   );

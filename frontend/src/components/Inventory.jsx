@@ -1,26 +1,21 @@
-import React, { useMemo, useRef, useState, useCallback } from "react";
+import React, { useMemo, useRef, useState, useCallback, useEffect } from "react";
 import useCharStore from "../store/CharStore";
 
-const RESET_OPTIONS = [
-  { value: "none",  label: "Passive / None" },
-  { value: "short", label: "On Short Rest" },
-  { value: "long",  label: "On Long Rest" },
-];
 
 const DEFAULT_INVENTORY = {
-  magic:   [],   // Array<MagicItem>
-  mundane: [],   // Array<MundaneItem>
+  magic:   [],
+  mundane: [],
   currency: { gp: 0, sp: 0, cp: 0, ep: 0, pp: 0 },
 };
 
-// ------- Presentational helpers -------
 const Chip = ({ children }) => (
   <span className="inline-flex items-center px-2 py-0.5 rounded-full border border-slate-700 bg-slate-900 text-slate-200 text-xs">
     {children}
   </span>
 );
 
-// ------- Magic Item Row -------
+
+/* ---------------- Magic Item Row (compact) ---------------- */
 const MagicItemRow = React.memo(function MagicItemRow({
   row,
   open,
@@ -28,116 +23,199 @@ const MagicItemRow = React.memo(function MagicItemRow({
   onChange,
   onRemove,
 }) {
-  const resetLabel =
-    RESET_OPTIONS.find(o => o.value === (row.reset || "none"))?.label || "Passive / None";
+  const charges = row.charges ?? {
+    has: false,
+    max_charges: 0,
+    reset_amount: "full",
+    current_charges: 0,
+  };
+  const hasCharges = !!charges.has;
+  const disable = !hasCharges;
+  const resetAmountMode = typeof charges.reset_amount === "string" ? "full" : "number";
+  const resetAmountNumber = typeof charges.reset_amount === "number" ? charges.reset_amount : 0;
+
+  const patch      = (patchObj)  => onChange(row.id, patchObj);
+  const patchCharges = (patchObj) => onChange(row.id, { charges: { ...charges, ...patchObj } });
+
+  const handleToggleHas = (checked) => {
+    if (!checked) {
+      patch({ charges: { has: false, max_charges: 0, reset_amount: "full", current_charges: 0 } });
+    } else {
+      const max = Number(charges.max_charges) || 1;
+      // enable → set current = max
+      patch({ charges: { has: true, max_charges: max, reset_amount: charges.reset_amount ?? "full", current_charges: max } });
+    }
+  };
 
   return (
     <div className="rounded-lg border border-slate-700 bg-slate-900/60">
+      {/* Header */}
       <button
         type="button"
         onClick={() => onToggleOpen(row.id)}
-        className="w-full flex items-center justify-between px-3 py-2 hover:bg-slate-800/60"
+        className="w-full px-3 py-2 hover:bg-slate-800/60"
         aria-expanded={open}
       >
-        <div className="flex-1 flex items-center gap-2">
-          <span className="text-slate-400 text-sm">Name:</span>
-          <input
-            type="text"
-            value={row.name ?? ""}
-            onChange={(e) => onChange(row.id, { name: e.target.value })}
-            placeholder="e.g., Wand of Magic Missiles"
-            className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
-            onClick={(e) => e.stopPropagation()}
-          />
-        </div>
+        <div className="flex flex-wrap items-center gap-2">
+          <div className="flex items-center gap-2 min-w-[220px] max-w-[520px] grow">
+            <span className="text-slate-400 text-xs shrink-0">Name</span>
+            <input
+              type="text"
+              value={row.name ?? ""}
+              onChange={(e) => patch({ name: e.target.value })}
+              placeholder="Wand of Magic Missiles"
+              className="w-full min-w-0 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
+              onClick={(e) => e.stopPropagation()}
+            />
+          </div>
 
-        <div className="hidden md:flex items-center gap-2 px-2">
-          <Chip>Amt {row.amount ?? 1}</Chip>
-          <Chip>{row.attuned ? "Attuned" : "Not attuned"}</Chip>
-          {row.uses_max ? <Chip>Uses {row.uses_max}</Chip> : null}
-          <Chip>{resetLabel}</Chip>
-        </div>
+          <div className="flex flex-wrap items-center gap-2 shrink min-w-[220px]">
+            <Chip>Amt {row.amount ?? 1}</Chip>
+            <Chip>{row.attuned ? "Attuned" : "Not attuned"}</Chip>
+            {hasCharges ? <Chip>{charges.current_charges}/{charges.max_charges}</Chip> : null}
+          </div>
 
-        <svg
-          className={`ml-3 h-5 w-5 transition-transform ${open ? "rotate-180" : ""}`}
-          viewBox="0 0 20 20" fill="currentColor"
-        >
-          <path
-            fillRule="evenodd"
-            d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z"
-            clipRule="evenodd"
-          />
-        </svg>
+          <svg
+            className={`ml-auto h-5 w-5 transition-transform ${open ? "rotate-180" : ""}`}
+            viewBox="0 0 20 20" fill="currentColor"
+          >
+            <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clipRule="evenodd"/>
+          </svg>
+        </div>
       </button>
 
+      {/* Body */}
       {open && (
         <div className="p-3 space-y-3 border-t border-slate-700">
-          <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
-            <div className="flex items-center gap-2">
-              <label className="w-24 text-slate-300 text-sm">Amount</label>
+          {/* Top controls: tighter with tiny labels */}
+          <div className="flex flex-wrap items-end gap-3">
+            <div className="flex flex-col">
+              <label className="text-[10px] text-slate-400">Amount</label>
               <input
                 type="number" min={0}
                 value={row.amount ?? 1}
                 onChange={(e) => {
                   const v = e.target.value === "" ? "" : Number(e.target.value);
                   if (v !== "" && Number.isNaN(v)) return;
-                  onChange(row.id, { amount: v });
+                  patch({ amount: v });
                 }}
-                className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
+                className="w-24 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
                 onClick={(e) => e.stopPropagation()}
               />
             </div>
 
-            <label className="flex items-center gap-2">
+            <label className="inline-flex items-center gap-2">
               <input
                 type="checkbox"
                 checked={!!row.attuned}
-                onChange={(e) => onChange(row.id, { attuned: e.target.checked })}
+                onChange={(e) => patch({ attuned: e.target.checked })}
                 className="h-4 w-4 accent-orange-500"
                 onClick={(e) => e.stopPropagation()}
               />
-              <span className="text-slate-200 text-sm">Attunement</span>
+              <span className="text-xs text-slate-200">Attunement</span>
             </label>
 
-            <div className="flex items-center gap-2">
-              <label className="w-24 text-slate-300 text-sm">Uses (max)</label>
+            <label className="inline-flex items-center gap-2">
               <input
-                type="number" min={0}
-                value={row.uses_max ?? ""}
-                onChange={(e) => {
-                  const v = e.target.value === "" ? "" : Number(e.target.value);
-                  if (v !== "" && Number.isNaN(v)) return;
-                  onChange(row.id, { uses_max: v });
-                }}
-                className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
+                type="checkbox"
+                checked={hasCharges}
+                onChange={(e) => handleToggleHas(e.target.checked)}
+                className="h-4 w-4 accent-orange-400"
                 onClick={(e) => e.stopPropagation()}
               />
-            </div>
+              <span className="text-xs text-slate-200">Has charges</span>
+            </label>
 
-            <div className="flex items-center gap-2">
-              <label className="w-24 text-slate-300 text-sm">Resets</label>
-              <select
-                value={row.reset || "none"}
-                onChange={(e) => onChange(row.id, { reset: e.target.value })}
-                className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
-                onClick={(e) => e.stopPropagation()}
-              >
-                {RESET_OPTIONS.map((opt) => (
-                  <option key={opt.value} value={opt.value}>{opt.label}</option>
-                ))}
-              </select>
-            </div>
+            {hasCharges ? (
+              <div className="ml-auto flex flex-wrap items-center gap-2">
+                <button
+                  type="button"
+                  onClick={(e) => { e.stopPropagation(); patchCharges({ current_charges: charges.max_charges }); }}
+                  className="px-2 py-1 rounded border border-slate-600 bg-slate-900 hover:bg-slate-800 text-xs"
+                >
+                  Refill
+                </button>
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    patchCharges({
+                      current_charges: Math.max(0, Math.min(charges.max_charges, (charges.current_charges ?? 0) - 1)),
+                    });
+                  }}
+                  className="px-2 py-1 rounded border border-slate-600 bg-slate-900 hover:bg-slate-800 text-xs"
+                >
+                  Spend 1
+                </button>
+              </div>
+            ) : null}
           </div>
 
-          <div className="flex flex-col md:flex-row gap-2">
-            <label className="w-full md:w-24 text-slate-300 text-sm md:text-right">
-              Notes
-            </label>
+          {/* Charges config: compact; no Current input; reset number wider */}
+          {hasCharges && (
+            <div className="flex flex-wrap items-end gap-3">
+              {/* Max */}
+              <div className="flex flex-col">
+                <label className="text-[10px] text-slate-400">Max</label>
+                <input
+                  type="number" min={0}
+                  value={charges.max_charges ?? 0}
+                  onChange={(e) => {
+                    const v = e.target.value === "" ? 0 : Number(e.target.value);
+                    if (Number.isNaN(v)) return;
+                    const max = Math.max(0, v);
+                    // Always sync current to max when max changes
+                    patchCharges({ max_charges: max, current_charges: max });
+                  }}
+                  className="w-24 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
+                  onClick={(e) => e.stopPropagation()}
+                />
+              </div>
+
+              {/* Recharge mode + number */}
+              <div className="flex items-end gap-2">
+                <div className="flex flex-col">
+                  <label className="text-[10px] text-slate-400">Recharge mode</label>
+                  <select
+                    value={resetAmountMode}
+                    disabled={disable}
+                    onChange={(e) => patchCharges({ reset_amount: e.target.value === "full" ? "full" : 0 })}
+                    className="w-24 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <option value="full">Full</option>
+                    <option value="number">Number</option>
+                  </select>
+                </div>
+
+                <div className="flex flex-col">
+                  <label className="text-[10px] text-slate-400">Recharge number</label>
+                  <input
+                    type="number" min={0} step={1}
+                    value={resetAmountNumber}
+                    disabled={resetAmountMode !== "number"}
+                    onChange={(e) => {
+                      const v = Number(e.target.value);
+                      if (Number.isFinite(v)) patchCharges({ reset_amount: Math.max(0, Math.trunc(v)) });
+                    }}
+                    className={`w-32 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900 ${
+                      resetAmountMode !== "number" ? "opacity-60 cursor-not-allowed" : ""
+                    }`}
+                    onClick={(e) => e.stopPropagation()}
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Notes */}
+          <div className="flex flex-col">
+            <label className="text-[10px] text-slate-400">Notes</label>
             <textarea
               value={row.notes ?? ""}
-              onChange={(e) => onChange(row.id, { notes: e.target.value })}
+              onChange={(e) => patch({ notes: e.target.value })}
               placeholder="Special properties, activation, etc."
-              className="flex-1 min-h-[110px] rounded border border-slate-700 bg-white text-slate-900 p-2"
+              className="min-h-[80px] rounded border border-slate-700 bg-white text-slate-900 p-2 max-w-[40rem]"
               onClick={(e) => e.stopPropagation()}
             />
           </div>
@@ -146,7 +224,7 @@ const MagicItemRow = React.memo(function MagicItemRow({
             <button
               type="button"
               onClick={() => onRemove(row.id)}
-              className="px-3 py-1.5 rounded-lg border border-red-700 bg-red-900/40 hover:bg-red-900/60 text-red-100 transition"
+              className="px-3 py-1 rounded border border-red-700 bg-red-900/40 hover:bg-red-900/60 text-red-100 text-sm"
             >
               Remove
             </button>
@@ -157,7 +235,8 @@ const MagicItemRow = React.memo(function MagicItemRow({
   );
 });
 
-// ------- Mundane Item Row -------
+
+/* ---------------- Mundane Item Row (compact labels) ---------------- */
 const MundaneItemRow = React.memo(function MundaneItemRow({
   row,
   open,
@@ -170,42 +249,42 @@ const MundaneItemRow = React.memo(function MundaneItemRow({
       <button
         type="button"
         onClick={() => onToggleOpen(row.id)}
-        className="w-full flex items-center justify-between px-3 py-2 hover:bg-slate-800/60"
+        className="w-full px-3 py-2 hover:bg-slate-800/60"
         aria-expanded={open}
       >
-        <div className="flex-1 flex items-center gap-2">
-          <span className="text-slate-400 text-sm">Name:</span>
-          <input
-            type="text"
-            value={row.name ?? ""}
-            onChange={(e) => onChange(row.id, { name: e.target.value })}
-            placeholder="e.g., Arrows"
-            className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
-            onClick={(e) => e.stopPropagation()}
-          />
-        </div>
+        <div className="flex flex-wrap items-center gap-2">
+          <div className="flex items-center gap-2 min-w-[220px] max-w-[520px] grow">
+            <span className="text-slate-400 text-xs shrink-0">Name</span>
+            <input
+              type="text"
+              value={row.name ?? ""}
+              onChange={(e) => onChange(row.id, { name: e.target.value })}
+              placeholder="Arrows"
+              className="w-full min-w-0 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
+              onClick={(e) => e.stopPropagation()}
+            />
+          </div>
 
-        <div className="hidden md:flex items-center gap-2 px-2">
-          <Chip>Amt {row.amount ?? 1}</Chip>
-        </div>
+          <div className="hidden md:flex items-center gap-2 px-2">
+            <Chip>Amt {row.amount ?? 1}</Chip>
+            {row.consumed ? (
+              <span className="inline-flex items-center px-2 py-0.5 rounded-full border border-amber-700 bg-amber-900/30 text-amber-200 text-xs">
+                Consumed
+              </span>
+            ) : null}
+          </div>
 
-        <svg
-          className={`ml-3 h-5 w-5 transition-transform ${open ? "rotate-180" : ""}`}
-          viewBox="0 0 20 20" fill="currentColor"
-        >
-          <path
-            fillRule="evenodd"
-            d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z"
-            clipRule="evenodd"
-          />
-        </svg>
+          <svg className={`ml-auto h-5 w-5 transition-transform ${open ? "rotate-180" : ""}`} viewBox="0 0 20 20" fill="currentColor">
+            <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clipRule="evenodd"/>
+          </svg>
+        </div>
       </button>
 
       {open && (
         <div className="p-3 space-y-3 border-t border-slate-700">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div className="flex items-center gap-2">
-              <label className="w-24 text-slate-300 text-sm">Amount</label>
+          <div className="flex flex-wrap items-end gap-3">
+            <div className="flex flex-col">
+              <label className="text-[10px] text-slate-400">Amount</label>
               <input
                 type="number" min={0}
                 value={row.amount ?? 1}
@@ -214,29 +293,40 @@ const MundaneItemRow = React.memo(function MundaneItemRow({
                   if (v !== "" && Number.isNaN(v)) return;
                   onChange(row.id, { amount: v });
                 }}
-                className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
+                className="w-24 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
                 onClick={(e) => e.stopPropagation()}
               />
             </div>
 
-            <div className="flex items-center gap-2">
-              <label className="w-24 text-slate-300 text-sm">Notes</label>
+            <div className="flex flex-col grow max-w-[28rem]">
+              <label className="text-[10px] text-slate-400">Notes</label>
               <input
                 type="text"
                 value={row.notes ?? ""}
                 onChange={(e) => onChange(row.id, { notes: e.target.value })}
                 placeholder="Weight, where stored, etc."
-                className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
+                className="px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
                 onClick={(e) => e.stopPropagation()}
               />
             </div>
+
+            <label className="inline-flex items-center gap-2">
+              <input
+                type="checkbox"
+                checked={!!row.consumed}
+                onChange={(e) => onChange(row.id, { consumed: e.target.checked })}
+                className="h-4 w-4 accent-orange-500"
+                onClick={(e) => e.stopPropagation()}
+              />
+              <span className="text-xs text-slate-200">Consumed</span>
+            </label>
           </div>
 
           <div className="flex justify-end">
             <button
               type="button"
               onClick={() => onRemove(row.id)}
-              className="px-3 py-1.5 rounded-lg border border-red-700 bg-red-900/40 hover:bg-red-900/60 text-red-100 transition"
+              className="px-3 py-1 rounded border border-red-700 bg-red-900/40 hover:bg-red-900/60 text-red-100 text-sm"
             >
               Remove
             </button>
@@ -247,7 +337,7 @@ const MundaneItemRow = React.memo(function MundaneItemRow({
   );
 });
 
-// ------- Category Cards -------
+/* ---------------- Category Cards ---------------- */
 const MagicCategoryCard = React.memo(function MagicCategoryCard({
   title,
   items,
@@ -332,24 +422,19 @@ const MundaneCategoryCard = React.memo(function MundaneCategoryCard({
   );
 });
 
-// ================= MAIN PAGE =================
+/* ---------------- MAIN ---------------- */
 export default function Inventory() {
   const { charData, updateCharField, postCharData } = useCharStore();
   if (!charData) return null;
 
-  // Stable default shape
   const inv = useMemo(
     () => ({ ...DEFAULT_INVENTORY, ...(charData.inventory || {}) }),
     [charData?.inventory]
   );
 
-  // Keep rows open while editing
-  const [openById, setOpenById] = useState({}); // { [rowId]: boolean }
-  const toggleOpen = useCallback((id) => {
-    setOpenById((prev) => ({ ...prev, [id]: !prev[id] }));
-  }, []);
+  const [openById, setOpenById] = useState({});
+  const toggleOpen = useCallback((id) => setOpenById((p) => ({ ...p, [id]: !p[id] })), []);
 
-  // Debounce post to avoid focus loss
   const debounceRef = useRef(null);
   const debouncedPost = useCallback(() => {
     if (debounceRef.current) clearTimeout(debounceRef.current);
@@ -365,83 +450,90 @@ export default function Inventory() {
     [updateCharField, postCharData, debouncedPost]
   );
 
-  // ----- MAGIC -----
+  // Seed missing current_charges for magic items
+  useEffect(() => {
+    let changed = false;
+    const nextMagic = (inv.magic || []).map((m) => {
+      const c = m?.charges;
+      if (!c?.has) return m;
+      const max = Number(c.max_charges);
+      const cur = Number(c.current_charges);
+      const hasMax = Number.isFinite(max) && max >= 0;
+      const hasCur = Number.isFinite(cur);
+      if (hasMax && !hasCur) {
+        changed = true;
+        return { ...m, charges: { ...c, current_charges: max } };
+      }
+      return m;
+    });
+    if (changed) {
+      persist({ ...inv, magic: nextMagic }, { immediate: true });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inv.magic]);
+
+  /* ---- Magic ---- */
   const addMagic = useCallback(() => {
     const row = {
       id: `${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
       name: "",
       amount: 1,
       attuned: false,
-      uses_max: "",
-      reset: "none",
       notes: "",
+      charges: { has: false, max_charges: 0, reset_amount: "full", current_charges: 0 },
     };
     const next = { ...inv, magic: [...inv.magic, row] };
     persist(next, { immediate: true });
-    setOpenById((prev) => ({ ...prev, [row.id]: true }));
+    setOpenById((p) => ({ ...p, [row.id]: true }));
   }, [inv, persist]);
 
   const removeMagic = useCallback((id) => {
     const next = { ...inv, magic: inv.magic.filter((i) => i.id !== id) };
     persist(next, { immediate: true });
-    setOpenById((prev) => {
-      const c = { ...prev };
-      delete c[id];
-      return c;
-    });
+    setOpenById((p) => { const c = { ...p }; delete c[id]; return c; });
   }, [inv, persist]);
 
   const changeMagic = useCallback((id, patch) => {
-    const next = {
-      ...inv,
-      magic: inv.magic.map((i) => (i.id === id ? { ...i, ...patch } : i)),
-    };
-    persist(next); // debounced
+    const next = { ...inv, magic: inv.magic.map((i) => (i.id === id ? { ...i, ...patch } : i)) };
+    persist(next);
   }, [inv, persist]);
 
-  // ----- MUNDANE -----
+  /* ---- Mundane ---- */
   const addMundane = useCallback(() => {
     const row = {
       id: `${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
       name: "",
       amount: 1,
       notes: "",
+      consumed: false, 
     };
     const next = { ...inv, mundane: [...inv.mundane, row] };
     persist(next, { immediate: true });
-    setOpenById((prev) => ({ ...prev, [row.id]: true }));
+    setOpenById((p) => ({ ...p, [row.id]: true }));
   }, [inv, persist]);
 
   const removeMundane = useCallback((id) => {
     const next = { ...inv, mundane: inv.mundane.filter((i) => i.id !== id) };
     persist(next, { immediate: true });
-    setOpenById((prev) => {
-      const c = { ...prev };
-      delete c[id];
-      return c;
-    });
+    setOpenById((p) => { const c = { ...p }; delete c[id]; return c; });
   }, [inv, persist]);
 
   const changeMundane = useCallback((id, patch) => {
-    const next = {
-      ...inv,
-      mundane: inv.mundane.map((i) => (i.id === id ? { ...i, ...patch } : i)),
-    };
-    persist(next); // debounced
+    const next = { ...inv, mundane: inv.mundane.map((i) => (i.id === id ? { ...i, ...patch } : i)) };
+    persist(next);
   }, [inv, persist]);
 
-  // ----- CURRENCY -----
+  /* ---- Currency ---- */
   const currency = inv.currency || DEFAULT_INVENTORY.currency;
   const changeCurrency = (key, raw) => {
     const value = raw === "" ? "" : Number(raw);
     if (value !== "" && Number.isNaN(value)) return;
     const next = { ...inv, currency: { ...currency, [key]: value } };
-    persist(next); // debounced while typing
+    persist(next);
   };
 
   return (
     <div className="w-full max-w-6xl mx-auto space-y-6">
-      {/* Magic Items */}
       <MagicCategoryCard
         title="Magic Items"
         items={inv.magic}
@@ -452,7 +544,6 @@ export default function Inventory() {
         toggleOpen={toggleOpen}
       />
 
-      {/* Mundane Items */}
       <MundaneCategoryCard
         title="Mundane Items"
         items={inv.mundane}
@@ -463,7 +554,6 @@ export default function Inventory() {
         toggleOpen={toggleOpen}
       />
 
-      {/* Currency */}
       <section className="rounded-2xl border border-slate-700 bg-slate-800/40 p-4 space-y-3">
         <header>
           <h3 className="text-lg font-semibold text-orange-300">Currency</h3>
@@ -484,7 +574,7 @@ export default function Inventory() {
                 min={0}
                 value={currency[key] ?? 0}
                 onChange={(e) => changeCurrency(key, e.target.value)}
-                className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900 w-14"
+                className="w-full min-w-0 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
               />
             </div>
           ))}

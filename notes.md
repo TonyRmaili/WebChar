@@ -1,8 +1,39 @@
+# Play Area
+
+1. max hp modifier for aid / drain effects - Healthplay
+2. slight bug with current_charges not matching max_charges on creating action. it cant increase but can decrease on chaning max. Fixed?
+4. Really compact all visible effects, traits, spells etc
+5. offensive data needs to be more compact, remove label save_dc_X and add init with mod input
+6. Collapse right area to the right? 
+
+
+# GeneralStats
+1. senses ; blind, tremor, true, darkvision
+
+
+# AbilityScores
+1. Improve design for both skill and ability boxes
+2. May be bugs
+
+
+# Spells
+1. Spell area and its components needs to be more compact, way to much deadspace
+    Categories spells by level
+2. Sorc points stores strings as default, leads to TypeError
+
+
+# Effects
+1. Perhaps let Traits, Items and Spell handle and define effects
 
 # init tracker
 1. store init tracker values in storage so that i navigating in the site dont reset the tracker
-2. alow multi-same monsters in the tracker 
-3. major backend and database changes to always have the tracker saved when paging around
+2. Redesing init tracker. This will be an encounter manager with listings of all monster from 5edata that is cleaned
+    proper monster card that also shows in the init tracker for when a monster has its turn
+    template adding system that adds template to all selected monsters in a selected encounter
+        ex. grants all monsters darkvision, +hp .. etc
+3. track conditions
+
+
 
 # DM tools
 1. Creating tables for loot, events etc
@@ -13,26 +44,15 @@
 
 
 # monster improvment
-
 1. Mod an already defined statblock
 2. merge multiple templates?
 3. Expand monsterblocks to allow direct play from tracker ; perhaps api to 5etools finally? 
     Use AI to clean the json ?
 
 
-# character pages
-
-1. max hp modifier for aid / drain effects
-2. slight bug with current_charges not matching max_charges on creating action. it cant increase but can decrease on chaning max
-3. improve the resting logic, its messy for the moment. 
-4. add in spells to the playfield and connect to the resting
-5. fix innate spell options 
-6. layout for Userprofile needs to move, probably to header and make room for better combat page
-7. Combatpage needs much larger area. Have the "active" area always show; take half screen width to the left
-    have the  right side be tabs were we toggle to show stats instead of collapsable bars
-
-
-
 # Exports 
 1. Pictures
 
+
+# .env
+set duration to 1800min to match

@@ -1,0 +1,61 @@
+import React, { useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom';
+import useAuthStore from "../store/AuthStore";
+import ShortcutTab from "../components/ShortcutTab";
+import CreateParty from "../components/CreateParty";
+import InitiativeTracker from "../components/InitiativeTracker";
+import CreateMonsters from "../components/CreateMonsters";
+import MonsterCard from "../utils/MonsterCard";
+
+
+
+const tabs = [
+  { name: "Create Party", id: 0 },
+  { name: "Create Monsters", id: 1 },
+  { name: "Monster Card", id: 2 },
+  { name: "Initiative Tracker", id: 3 },
+  
+];
+
+
+function DMToolsPage() {
+    const navigate = useNavigate()
+    const { token, userData } = useAuthStore();
+    const [activeTab, setActiveTab] = useState(tabs[0]);
+
+    const handleTabSelect = (tab) => {
+    setActiveTab(tab);
+  };
+
+    useEffect(() => {
+        if (!token || !userData) {
+          navigate("/login");
+        }
+      }, [token, userData]);
+    
+
+  return (
+    <div className="justify-center items-center mx-auto w-1/2 min-h-screen mb-2">
+      <p className='text-4xl'>DM Tools</p>
+      <div className="mt-2 h-14 ml">
+        <ShortcutTab
+          tabs={tabs}
+          selectedTab={activeTab}
+          onSelect={handleTabSelect}
+        />
+      </div>
+
+      <div className=" min-h-screen p-2 bg-gray-600">
+        {activeTab.name === "Create Party" && <CreateParty />}
+        {activeTab.name === "Create Monsters" && <CreateMonsters />}
+        {activeTab.name === "Monster Card" && <MonsterCard />}
+        {activeTab.name === "Initiative Tracker" && <InitiativeTracker />}
+         
+      </div>
+      
+    </div>
+    
+  );
+}
+
+export default DMToolsPage

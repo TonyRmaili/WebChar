@@ -7,7 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from typing import Annotated
 from fastapi import Query
 from app.database.models import User,Character
-from app.database.schemas import UserSchema,CharacterSchema, QueryRequest, CharacterIn, HealthData,TakeRestData
+from app.database.schemas import UserSchema,CharacterSchema, QueryRequest, CharacterIn, HealthData,TakeRestData, TakeRestAllData
 from app.security import hash_password, verify_password, create_access_token, get_current_user
 from app.db_setup import init_db, get_db
 from fastapi.security import OAuth2PasswordRequestForm
@@ -22,9 +22,8 @@ from pathlib import Path
 from app.dice_handler import roll_dice
 from app.combat_functions import heal_health, damage_health,load_character,on_longrest,on_shortrest
 
-
-
 # uvicorn app.main:app --reload
+
 
 #------------------------Setup-----------------------------
 load_dotenv(override=True)
@@ -34,7 +33,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 ACCESS_TOKEN_EXPIRE_MINUTES = os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES")  
 
 savefiles_path = "./app/database/save_files/"
-
+fiveEtools_path = os.path.join(os.path.dirname(__file__), "../data/5etools_data/")
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -173,28 +172,6 @@ def create_char(current_user: Annotated[User, Depends(get_current_user)],
         return JSONResponse(content={"message": f"Error: {str(e)}"}, status_code=500)
     
 
-# @app.post("/character", tags=["characters"])
-# def create_char(current_user: Annotated[User, Depends(get_current_user)],
-#           form_data:dict,db:Session = Depends(get_db)):
-#     try:
-#         directory = os.path.join(savefiles_path , current_user.name ,"characters")
-#         file_name = form_data['name'] + ".json"
-#         file_path = os.path.join(directory, file_name)
-#         os.makedirs(directory, exist_ok=True)
-#         with open(file_path, "w") as json_file:
-#             json.dump(form_data, json_file, indent=4)
-
-#         character_data = CharacterSchema(user_id=current_user.id,
-#             name=form_data['name'] ,file_path=file_path)
-#         db_char = Character(**character_data.model_dump())
-#         db.add(db_char)
-#         db.commit()
-
-#         return JSONResponse(content={"message": "JSON data saved successfully"}, status_code=200)
-#     except Exception as e:
-#         return JSONResponse(content={"message": f"Error: {str(e)}"}, status_code=500)
-
-
 
 @app.delete("/character/{char_name}",status_code=status.HTTP_204_NO_CONTENT,tags=["characters"])
 def delete_char_name(current_user: Annotated[User, Depends(get_current_user)],
@@ -272,7 +249,6 @@ def get_char_file(
     return char_file
 
 
-
 # ------------------------Party-----------------------------
 
 @app.post("/create_party", tags=["party"])
@@ -336,8 +312,6 @@ def delete_party(
     return Response(status_code=204)
 
 
-
- 
 # ------------------------Combat-----------------------------
 
 @app.post("/combat/health", tags=["combat"])
@@ -347,36 +321,33 @@ def change_health(
     db: Session = Depends(get_db)
        
 ):
-    
-    print(form_data.value)
-    print(type(form_data.value))
+    try:
+        if form_data.value < 0:
+            damage_health(
+                user=current_user.name,
+                character=form_data.name,
+                value = form_data.value     
+            )
 
-    if form_data.value < 0:
-        damage_health(
-            user=current_user.name,
-            character=form_data.name,
-            value = form_data.value     
-        )
+        elif form_data.value > 0:
+            heal_health(
+                user=current_user.name,
+                character=form_data.name,
+                value = form_data.value     
+            )
 
-    elif form_data.value > 0:
-        heal_health(
-            user=current_user.name,
-            character=form_data.name,
-            value = form_data.value     
-        )
+        else:
+            pass
 
-    else:
-        pass
-
-    updated_char = load_character(current_user.name, form_data.name)
-    return {"current": updated_char["current"]}
-
+        updated_char = load_character(current_user.name, form_data.name)
+        return {"health": updated_char["health"]}
+    except KeyError as e:
+        return e 
 
 @app.post("/combat/rest", tags=["combat"])
 def take_rest(
     form_data: TakeRestData,
-    current_user: Annotated[User, Depends(get_current_user)]
-    
+    current_user: Annotated[User, Depends(get_current_user)]  
 ):
     
     if form_data.rest_type == "long":
@@ -384,12 +355,34 @@ def take_rest(
 
     elif form_data.rest_type == "short":
         on_shortrest(current_user.name,form_data.name)
-    
+
     else:
         print("no valid rest type")
     
     # updated_char = load_character(current_user.name, form_data.name)
     return {"ok": True}
+
+@app.post("/combat/rest_all", tags=["combat"])
+def take_rest_all(
+    form_data: TakeRestAllData,
+    current_user: Annotated[User, Depends(get_current_user)]  
+):
+    
+
+    if form_data.rest_type == "long":
+        for character in form_data.characters:
+            on_longrest(current_user.name,character["name"])
+
+    elif form_data.rest_type == "short":
+        for character in form_data.characters: 
+            on_shortrest(current_user.name,character["name"])
+
+    else:
+        print("no valid rest type")
+    
+    return {"ok": True}
+
+
 
 
 
@@ -413,6 +406,7 @@ def roll_initiative(
     
 
 
+
 # ------------------------Embeddings-----------------------------
 
 @app.post("/query", tags=["embeddings"])
@@ -423,9 +417,67 @@ def post_query(query: QueryRequest, pdf_name="players_handbook_5e"):
     
     return {"answer": summary}
 
-# ------------------------Other-----------------------------
+# ------------------------5etools Data-----------------------------
 
-@app.get("/races",tags=["5etools"])
+@app.get("/5etools/spells/filenames",tags=["5etools"])
+def get_spell_filenames():
+
+    path = os.path.join(fiveEtools_path,"spells/")
+    path = os.path.abspath(path)
+
+    try:
+        filenames = [
+        os.path.splitext(f)[0]
+        for f in os.listdir(path)
+        if os.path.isfile(os.path.join(path, f))
+    ]
+
+        return filenames
+    
+    except FileNotFoundError:
+        return {"file not found"}
+    
+
+@app.get("/5etools/spells/load_spells/{file_name}",tags=["5etools"])
+def get_spells(file_name):
+
+    path = os.path.join(fiveEtools_path,"spells/",file_name+".json")
+    path = os.path.abspath(path)
+
+    with open(path) as f:
+        spells_data = json.load(f)
+    
+    spells_data = spells_data["spell"]
+    spell_names = []
+    for spell in spells_data:
+        spell_names.append(spell["name"])
+
+    return spell_names
+
+@app.get("/5etools/spells/select_spell/{file_name}/{spell_name}",tags=["5etools"])
+def select_spell(file_name,spell_name):
+    print(file_name)
+    print(spell_name)
+   
+    file_path = os.path.join(fiveEtools_path,"spells/",file_name+".json")
+    file_path = os.path.abspath(file_path)
+
+    with open(file_path) as f:
+        spells_data = json.load(f)
+
+    spells_data = spells_data["spell"]
+
+    
+    
+    for spell in spells_data:
+        if spell["name"] == spell_name:
+            spell = clean_spell(spell)
+            return spell
+
+    
+
+
+@app.get("/5etools/races",tags=["5etools"])
 def get_races():
     try:
         with open("./app/database/5etools_json/races.json") as f:
@@ -436,3 +488,26 @@ def get_races():
     except FileNotFoundError:
         return {"file not found"}
 
+ 
+
+
+# @app.post("/character", tags=["characters"])
+# def create_char(current_user: Annotated[User, Depends(get_current_user)],
+#           form_data:dict,db:Session = Depends(get_db)):
+#     try:
+#         directory = os.path.join(savefiles_path , current_user.name ,"characters")
+#         file_name = form_data['name'] + ".json"
+#         file_path = os.path.join(directory, file_name)
+#         os.makedirs(directory, exist_ok=True)
+#         with open(file_path, "w") as json_file:
+#             json.dump(form_data, json_file, indent=4)
+
+#         character_data = CharacterSchema(user_id=current_user.id,
+#             name=form_data['name'] ,file_path=file_path)
+#         db_char = Character(**character_data.model_dump())
+#         db.add(db_char)
+#         db.commit()
+
+#         return JSONResponse(content={"message": "JSON data saved successfully"}, status_code=200)
+#     except Exception as e:
+#         return JSONResponse(content={"message": f"Error: {str(e)}"}, status_code=500)

@@ -1,275 +1,81 @@
-import React, { useMemo, useRef, useState, useCallback } from "react";
+import React, { useMemo, useRef, useState, useCallback, useEffect } from "react";
 import useCharStore from "../store/CharStore";
+import { useDnDStore } from "../store/DndStore";
+import { SlotsOnlyCard, SpellsCard, MetamagicCard, InvocationsCard, SorceryPointsCard, normalizeSpellRow } from "../utils/spellUtils";
 
+/* ---------- Helpers ---------- */
+const idGen = () =>
+  (globalThis.crypto?.randomUUID
+    ? crypto.randomUUID()
+    : `${Date.now()}_${Math.random().toString(36).slice(2, 8)}`);
+
+/* ---------- Defaults (fresh schema) ---------- */
 const DEFAULT_SPELLBOOK = {
-  spells:     { spells: [], slots: [] },
-  pactmagic:  { spells: [], slots: [] },
-  innate:     { spells: [], slots: [] },
+  spellslots: [],          
+  pactslots: [],           
+  spells: [],
+  metamagic: [],
+  invocations: [],
+  sorcery_points: { max_charges: "", current_charges: "", reset_amount: 0 },
 };
-
-// Small chip UI
-const Chip = ({ children }) => (
-  <span className="inline-flex items-center px-2 py-0.5 rounded-full border border-slate-700 bg-slate-900 text-slate-200 text-xs">
-    {children}
-  </span>
-);
-
-// Spell row (collapsible)
-const SpellRow = React.memo(function SpellRow({
-  categoryKey,
-  row,
-  open,
-  onToggleOpen,
-  onChangeField,
-  onRemove,
-}) {
-  return (
-    <div className="rounded-lg border border-slate-700 bg-slate-900/60">
-      <button
-        type="button"
-        onClick={() => onToggleOpen(row.id)}
-        className="w-full flex items-center justify-between px-3 py-2 hover:bg-slate-800/60"
-        aria-expanded={open}
-      >
-        <div className="flex-1 flex items-center gap-2">
-          <span className="text-slate-400 text-sm">Name:</span>
-          <input
-            type="text"
-            value={row.name ?? ""}
-            onChange={(e) => onChangeField(categoryKey, row.id, { name: e.target.value })}
-            placeholder="e.g., Fireball"
-            className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
-            onClick={(e) => e.stopPropagation()}
-          />
-        </div>
-
-        <div className="hidden md:flex items-center gap-2 px-2">
-          <Chip>Lvl {row.level ?? "-"}</Chip>
-          <Chip>{row.prepared ? "Prepared" : "Unprepared"}</Chip>
-        </div>
-
-        <svg
-          className={`ml-3 h-5 w-5 transition-transform ${open ? "rotate-180" : ""}`}
-          viewBox="0 0 20 20" fill="currentColor"
-        >
-          <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clipRule="evenodd"/>
-        </svg>
-      </button>
-
-      {open && (
-        <div className="p-3 space-y-3 border-t border-slate-700">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            <div className="flex items-center gap-2">
-              <label className="w-24 text-slate-300 text-sm">Level</label>
-              <input
-                type="number" min={0} max={9}
-                value={row.level ?? ""}
-                onChange={(e) => {
-                  const v = e.target.value === "" ? "" : Number(e.target.value);
-                  if (v !== "" && Number.isNaN(v)) return;
-                  onChangeField(categoryKey, row.id, { level: v });
-                }}
-                className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
-                onClick={(e) => e.stopPropagation()}
-              />
-            </div>
-
-            <label className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                checked={!!row.prepared}
-                onChange={(e) => onChangeField(categoryKey, row.id, { prepared: e.target.checked })}
-                className="h-4 w-4 accent-orange-500"
-                onClick={(e) => e.stopPropagation()}
-              />
-              <span className="text-slate-200 text-sm">Prepared</span>
-            </label>
-
-            <div className="flex items-center gap-2">
-              <label className="w-24 text-slate-300 text-sm">School</label>
-              <input
-                type="text"
-                value={row.school ?? ""}
-                onChange={(e) => onChangeField(categoryKey, row.id, { school: e.target.value })}
-                placeholder="e.g., Evocation"
-                className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
-                onClick={(e) => e.stopPropagation()}
-              />
-            </div>
-          </div>
-
-          <div className="flex flex-col md:flex-row gap-2">
-            <label className="w-full md:w-24 text-slate-300 text-sm md:text-right">Notes</label>
-            <textarea
-              value={row.notes ?? ""}
-              onChange={(e) => onChangeField(categoryKey, row.id, { notes: e.target.value })}
-              placeholder="Casting time, components, special notes…"
-              className="flex-1 min-h-[110px] rounded border border-slate-700 bg-white text-slate-900 p-2"
-              onClick={(e) => e.stopPropagation()}
-            />
-          </div>
-
-          <div className="flex justify-end">
-            <button
-              type="button"
-              onClick={() => onRemove(categoryKey, row.id, "spells")}
-              className="px-3 py-1.5 rounded-lg border border-red-700 bg-red-900/40 hover:bg-red-900/60 text-red-100 transition"
-            >
-              Remove
-            </button>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-});
-
-// Slot row (simple inline, non-collapsible)
-const SlotRow = React.memo(function SlotRow({ categoryKey, row, onChangeField, onRemove }) {
-  return (
-    <div className="flex flex-col sm:flex-row gap-2 items-center rounded-lg border border-slate-700 bg-slate-900/60 p-2">
-      <div className="flex items-center gap-2 w-full sm:w-1/2">
-        <label className="w-24 text-slate-300 text-sm">Level</label>
-        <input
-          type="number" min={0} max={9}
-          value={row.level ?? ""}
-          onChange={(e) => {
-            const v = e.target.value === "" ? "" : Number(e.target.value);
-            if (v !== "" && Number.isNaN(v)) return;
-            onChangeField(categoryKey, row.id, { level: v }, "slots");
-          }}
-          className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
-        />
-      </div>
-
-      <div className="flex items-center gap-2 w-full sm:w-1/2">
-        <label className="w-24 text-slate-300 text-sm">Slots (max)</label>
-        <input
-          type="number" min={0}
-          value={row.slots_max ?? ""}
-          onChange={(e) => {
-            const v = e.target.value === "" ? "" : Number(e.target.value);
-            if (v !== "" && Number.isNaN(v)) return;
-            onChangeField(categoryKey, row.id, { slots_max: v }, "slots");
-          }}
-          className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
-        />
-      </div>
-
-      <div className="w-full sm:w-auto flex justify-end">
-        <button
-          type="button"
-          onClick={() => onRemove(categoryKey, row.id, "slots")}
-          className="px-3 py-1.5 rounded-lg border border-red-700 bg-red-900/40 hover:bg-red-900/60 text-red-100 transition"
-        >
-          Remove
-        </button>
-      </div>
-    </div>
-  );
-});
-
-// Category card
-const CategoryCard = React.memo(function CategoryCard({
-  title,
-  categoryKey,
-  model,
-  openById,
-  onToggleOpen,
-  onAddSpell,
-  onAddSlot,
-  onRemoveRow,
-  onChangeSpell,
-  onChangeSlot,
-}) {
-  const spells = model.spells || [];
-  const slots  = model.slots  || [];
-
-  return (
-    <section className="rounded-2xl border border-slate-700 bg-slate-800/40 p-4 space-y-4">
-      <header className="flex items-center justify-between">
-        <h3 className="text-lg font-semibold text-orange-300">
-          {title}{" "}
-          <span className="text-slate-400 text-sm">
-            ({spells.length} spells, {slots.length} slot row{slots.length === 1 ? "" : "s"})
-          </span>
-        </h3>
-        <div className="flex gap-2">
-          <button
-            type="button"
-            onClick={() => onAddSlot(categoryKey)}
-            className="px-3 py-1.5 rounded-lg border border-slate-600 bg-slate-900 hover:bg-slate-800 transition"
-          >
-            Add slots
-          </button>
-          <button
-            type="button"
-            onClick={() => onAddSpell(categoryKey)}
-            className="px-3 py-1.5 rounded-lg border border-slate-600 bg-slate-900 hover:bg-slate-800 transition"
-          >
-            Add spell
-          </button>
-        </div>
-      </header>
-
-      {/* Slots */}
-      <div className="space-y-2">
-        <div className="text-slate-300 text-sm font-medium">Spell Slots</div>
-        {slots.length === 0 && (
-          <p className="text-slate-400 text-sm">No slot rows. Click “Add slots”.</p>
-        )}
-        {slots.map((row) => (
-          <SlotRow
-            key={row.id}
-            categoryKey={categoryKey}
-            row={row}
-            onChangeField={onChangeSlot}
-            onRemove={onRemoveRow}
-          />
-        ))}
-      </div>
-
-      {/* Spells */}
-      <div className="space-y-2">
-        <div className="text-slate-300 text-sm font-medium">Spells</div>
-        {spells.length === 0 && (
-          <p className="text-slate-400 text-sm">No spells yet. Click “Add spell”.</p>
-        )}
-        <div className="space-y-3">
-          {spells.map((row) => (
-            <SpellRow
-              key={row.id}
-              categoryKey={categoryKey}
-              row={row}
-              open={!!openById[row.id]}
-              onToggleOpen={onToggleOpen}
-              onChangeField={onChangeSpell}
-              onRemove={onRemoveRow}
-            />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-});
 
 export default function Spellbook() {
   const { charData, updateCharField, postCharData } = useCharStore();
   if (!charData) return null;
 
-  // Stable default shape
-  const book = useMemo(
-    () => ({ ...DEFAULT_SPELLBOOK, ...(charData.spellbook || {}) }),
-    [charData?.spellbook]
-  );
+  const {
+    files, loadingFiles, selectedFile,
+    spellNames, loadingSpellNames, selectedSpell,
+    loadFiles, onSelectFile, onSelectSpell, spellData
+  } = useDnDStore();
 
-  // Keep rows open while editing
-  const [openById, setOpenById] = useState({}); // { [rowId]: boolean }
+  useEffect(() => { loadFiles(); }, [loadFiles]);
+
+  /* ---------- Fresh book (no migrations) ---------- */
+  const book = useMemo(() => {
+    const raw = charData.spellbook ?? {};
+    const base = { ...DEFAULT_SPELLBOOK, ...raw };
+
+    const normalizeSlots = (arr) =>
+      (Array.isArray(arr) ? arr : []).map((r) => ({
+        id: r.id ?? idGen(),
+        level: r.level ?? "",
+        slots_max: r.slots_max ?? "",
+        slots_current: r.slots_current ?? r.slots_max ?? "",
+      }));
+
+    return {
+      ...base,
+      spellslots: normalizeSlots(base.spellslots),
+      pactslots: normalizeSlots(base.pactslots),
+      spells: (base.spells ?? []).map(normalizeSpellRow),
+      metamagic: (base.metamagic ?? []).map((m) => ({
+        id: m.id ?? idGen(),
+        name: m.name ?? "",
+        description: m.description ?? "",
+      })),
+
+      invocations: (base.invocations ?? []).map((m) => ({
+        id: m.id ?? idGen(),
+        name: m.name ?? "",
+        description: m.description ?? "",
+      })),
+
+      sorcery_points: {
+        max_charges: base.sorcery_points?.max_charges ?? "",
+        current_charges: base.sorcery_points?.current_charges ?? (base.sorcery_points?.max_charges ?? ""),
+        reset_amount: Number(base.sorcery_points?.reset_amount ?? 0) || 0,
+      },
+    };
+  }, [charData?.spellbook]);
+
+  /* ---------- UI state ---------- */
+  const [openById, setOpenById] = useState({});
   const toggleOpen = useCallback((id) => {
     setOpenById((prev) => ({ ...prev, [id]: !prev[id] }));
   }, []);
 
-  // Debounce post to avoid focus loss
+  /* ---------- Debounced persist ---------- */
   const debounceRef = useRef(null);
   const debouncedPost = useCallback(() => {
     if (debounceRef.current) clearTimeout(debounceRef.current);
@@ -285,83 +91,20 @@ export default function Spellbook() {
     [updateCharField, postCharData, debouncedPost]
   );
 
-  // ---- Add / Remove ----
-  const addSpell = useCallback(
-    (categoryKey) => {
-      const row = {
-        id: `${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
-        name: "",
-        level: "",
-        prepared: false,
-        school: "",
-        notes: "",
-      };
-      const next = {
-        ...book,
-        [categoryKey]: {
-          ...book[categoryKey],
-          spells: [...(book[categoryKey].spells || []), row],
-          slots:  [...(book[categoryKey].slots || [])],
-        },
-      };
-      persist(next, { immediate: true });
-      setOpenById((prev) => ({ ...prev, [row.id]: true }));
-    },
-    [book, persist]
-  );
-
+  /* ---------- Slots (flat arrays) ---------- */
   const addSlot = useCallback(
-    (categoryKey) => {
-      const row = {
-        id: `${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
-        level: "",
-        slots_max: "",
-      };
-      const next = {
-        ...book,
-        [categoryKey]: {
-          ...book[categoryKey],
-          spells: [...(book[categoryKey].spells || [])],
-          slots:  [...(book[categoryKey].slots || []), row],
-        },
-      };
+    (categoryKey /* 'spellslots' | 'pactslots' */) => {
+      const row = { id: idGen(), level: "", slots_max: "", slots_current: "" };
+      const next = { ...book, [categoryKey]: [...(book[categoryKey] ?? []), row] };
       persist(next, { immediate: true });
     },
     [book, persist]
   );
 
-  const removeRow = useCallback(
-    (categoryKey, id, which) => {
-      const next = {
-        ...book,
-        [categoryKey]: {
-          ...book[categoryKey],
-          spells: (book[categoryKey].spells || []).filter((r) => !(which === "spells" && r.id === id)),
-          slots:  (book[categoryKey].slots  || []).filter((r) => !(which === "slots"  && r.id === id)),
-        },
-      };
+  const removeSlotRow = useCallback(
+    (categoryKey, id) => {
+      const next = { ...book, [categoryKey]: (book[categoryKey] ?? []).filter((r) => r.id !== id) };
       persist(next, { immediate: true });
-      setOpenById((prev) => {
-        const copy = { ...prev };
-        delete copy[id];
-        return copy;
-      });
-    },
-    [book, persist]
-  );
-
-  // ---- Update fields ----
-  const changeSpellField = useCallback(
-    (categoryKey, id, patch) => {
-      const next = {
-        ...book,
-        [categoryKey]: {
-          ...book[categoryKey],
-          spells: (book[categoryKey].spells || []).map((r) => (r.id === id ? { ...r, ...patch } : r)),
-          slots:  [...(book[categoryKey].slots || [])],
-        },
-      };
-      persist(next); // debounced
     },
     [book, persist]
   );
@@ -370,56 +113,177 @@ export default function Spellbook() {
     (categoryKey, id, patch) => {
       const next = {
         ...book,
-        [categoryKey]: {
-          ...book[categoryKey],
-          spells: [...(book[categoryKey].spells || [])],
-          slots:  (book[categoryKey].slots || []).map((r) => (r.id === id ? { ...r, ...patch } : r)),
-        },
+        [categoryKey]: (book[categoryKey] ?? []).map((r) => (r.id === id ? { ...r, ...patch } : r)),
       };
-      persist(next); // debounced
+      persist(next);
     },
     [book, persist]
   );
 
+  /* ---------- Spells ---------- */
+  const addSpell = useCallback(() => {
+    const row = normalizeSpellRow({
+      name: "",
+      level: "",
+      school: "",
+      notes: "",
+      prepared: false,
+      innate: false,
+    });
+    const next = { ...book, spells: [...(book.spells ?? []), row] };
+    persist(next, { immediate: true });
+    setOpenById((prev) => ({ ...prev, [row.id]: true }));
+  }, [book, persist]);
+
+  const removeSpell = useCallback((id) => {
+    const next = { ...book, spells: (book.spells ?? []).filter((r) => r.id !== id) };
+    persist(next, { immediate: true });
+    setOpenById((prev) => {
+      const copy = { ...prev }; delete copy[id]; return copy;
+    });
+  }, [book, persist]);
+
+  const changeSpellField = useCallback((id, patch) => {
+    const next = {
+      ...book,
+      spells: (book.spells ?? []).map((r) => (r.id === id ? normalizeSpellRow({ ...r, ...patch }) : r)),
+    };
+    persist(next);
+  }, [book, persist]);
+
+  /* ---------- Metamagic ---------- */
+  const addMetamagic = useCallback(() => {
+    const row = { id: idGen(), name: "", description: "" };
+    const next = { ...book, metamagic: [...(book.metamagic ?? []), row] };
+    persist(next, { immediate: true });
+  }, [book, persist]);
+
+  const removeMetamagic = useCallback((id) => {
+    const next = { ...book, metamagic: (book.metamagic ?? []).filter((m) => m.id !== id) };
+    persist(next, { immediate: true });
+  }, [book, persist]);
+
+  const changeMetamagic = useCallback((id, patch) => {
+    const next = {
+      ...book,
+      metamagic: (book.metamagic ?? []).map((m) => (m.id === id ? { ...m, ...patch } : m)),
+    };
+    persist(next);
+  }, [book, persist]);
+
+  /* ---------- Invocations ---------- */
+  const addInvocations = useCallback(() => {
+    const row = { id: idGen(), name: "", description: "" };
+    const next = { ...book, invocations: [...(book.invocations ?? []), row] };
+    persist(next, { immediate: true });
+  }, [book, persist]);
+
+  const removeInvocations = useCallback((id) => {
+    const next = { ...book, invocations: (book.invocations ?? []).filter((m) => m.id !== id) };
+    persist(next, { immediate: true });
+  }, [book, persist]);
+
+  const changeInvocations = useCallback((id, patch) => {
+    const next = {
+      ...book,
+      invocations: (book.invocations ?? []).map((m) => (m.id === id ? { ...m, ...patch } : m)),
+    };
+    persist(next);
+  }, [book, persist]);
+
+  /* ---------- Sorcery Points ---------- */
+  const changeSorcery = useCallback((patch) => {
+    const next = { ...book, sorcery_points: { ...book.sorcery_points, ...patch } };
+    persist(next);
+  }, [book, persist]);
+
+  /* ---------- Import spell ---------- */
+  const onImport = useCallback(() => {
+    const s = spellData;
+    if (!s || Object.keys(s).length === 0) return;
+
+    const row = normalizeSpellRow({
+      name: s.name ?? "",
+      level: Number.isFinite(+s.level) ? +s.level : s.level ?? "",
+      school: s.school ?? "",
+      notes: Array.isArray(s.desc) ? s.desc.join("\n") : (s.desc ?? ""),
+      concentration: !!s.concentration,
+      ritual: !!s.ritual,
+      range_ft: Number.isFinite(+s.range) ? +s.range : s.range ?? "",
+      components: {
+        v: !!(s.components?.v ?? s.components?.includes?.("V")),
+        s: !!(s.components?.s ?? s.components?.includes?.("S")),
+        m: !!(s.components?.m ?? s.components?.includes?.("M") ?? s.material),
+        material_desc: s.material ?? s.components?.material_desc ?? "",
+        material_cost: s.material_cost ?? s.components?.material_cost ?? "",
+      },
+      cast_time_kind: "choice",
+      cast_time_choice:
+        /bonus/i.test(s.casting_time || "") ? "bonus" :
+        /reaction/i.test(s.casting_time || "") ? "reaction" : "action",
+    });
+
+    const next = { ...book, spells: [...(book.spells ?? []), row] };
+    persist(next, { immediate: true });
+    setOpenById((p) => ({ ...p, [row.id]: true }));
+  }, [book, persist, spellData]);
+
   return (
     <div className="w-full max-w-6xl mx-auto space-y-6">
-      <CategoryCard
-        title="Spells"
-        categoryKey="spells"
-        model={book.spells}
-        openById={openById}
-        onToggleOpen={toggleOpen}
-        onAddSpell={addSpell}
+      {/* pass arrays directly now */}
+      <SlotsOnlyCard
+        title="Spellcasting"
+        categoryKey="spellslots"
+        model={book.spellslots}
         onAddSlot={addSlot}
-        onRemoveRow={removeRow}
-        onChangeSpell={changeSpellField}
+        onRemoveRow={removeSlotRow}
         onChangeSlot={changeSlotField}
       />
 
-      <CategoryCard
+      <SlotsOnlyCard
         title="Pact Magic"
-        categoryKey="pactmagic"
-        model={book.pactmagic}
-        openById={openById}
-        onToggleOpen={toggleOpen}
-        onAddSpell={addSpell}
+        categoryKey="pactslots"
+        model={book.pactslots}
         onAddSlot={addSlot}
-        onRemoveRow={removeRow}
-        onChangeSpell={changeSpellField}
+        onRemoveRow={removeSlotRow}
         onChangeSlot={changeSlotField}
       />
 
-      <CategoryCard
-        title="Innate Spells"
-        categoryKey="innate"
-        model={book.innate}
+      <SpellsCard
+        list={book.spells ?? []}
         openById={openById}
         onToggleOpen={toggleOpen}
-        onAddSpell={addSpell}
-        onAddSlot={addSlot}
-        onRemoveRow={removeRow}
-        onChangeSpell={changeSpellField}
-        onChangeSlot={changeSlotField}
+        onAdd={addSpell}
+        onImport={onImport}
+        onChange={changeSpellField}
+        onRemove={removeSpell}
+        files={files}
+        loadingFiles={loadingFiles}
+        selectedFile={selectedFile}
+        onSelectFile={onSelectFile}
+        spellNames={spellNames}
+        loadingSpellNames={loadingSpellNames}
+        selectedSpell={selectedSpell}
+        onSelectSpell={onSelectSpell}
+      />
+
+      <MetamagicCard
+        list={book.metamagic ?? []}
+        onAdd={addMetamagic}
+        onRemove={removeMetamagic}
+        onChange={changeMetamagic}
+      />
+
+      <InvocationsCard
+        list={book.invocations ?? []}
+        onAdd={addInvocations}
+        onRemove={removeInvocations}
+        onChange={changeInvocations}
+      />
+
+      <SorceryPointsCard
+        model={book.sorcery_points}
+        onChange={changeSorcery}
       />
     </div>
   );
