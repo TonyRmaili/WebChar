@@ -2,9 +2,8 @@
 
 1. max hp modifier for aid / drain effects - Healthplay
 2. slight bug with current_charges not matching max_charges on creating action. it cant increase but can decrease on chaning max. Fixed?
-3. Error handle all char_data for resting 
 4. Really compact all visible effects, traits, spells etc
-5. offensive data needs to be more compact, remove label save_dc_X 
+5. offensive data needs to be more compact, remove label save_dc_X and add init with mod input
 6. Collapse right area to the right? 
 
 
@@ -19,17 +18,12 @@
 
 # Spells
 1. Spell area and its components needs to be more compact, way to much deadspace
+    Categories spells by level
+2. Sorc points stores strings as default, leads to TypeError
 
 
-# Traits can cover these below?
-
-1. Manuevers
-2. Focus/Ki
-3. Wildshapes?
-4. Allow user to name category?
-
-
-
+# Effects
+1. Perhaps let Traits, Items and Spell handle and define effects
 
 # init tracker
 1. store init tracker values in storage so that i navigating in the site dont reset the tracker
@@ -37,6 +31,7 @@
     proper monster card that also shows in the init tracker for when a monster has its turn
     template adding system that adds template to all selected monsters in a selected encounter
         ex. grants all monsters darkvision, +hp .. etc
+3. track conditions
 
 
 
@@ -57,3 +52,7 @@
 
 # Exports 
 1. Pictures
+
+
+# .env
+set duration to 1800min to match

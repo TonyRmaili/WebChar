@@ -1,13 +1,6 @@
 import React, { useMemo, useRef, useState, useCallback, useEffect } from "react";
 import useCharStore from "../store/CharStore";
 
-const RESET_OPTIONS = [
-  { value: "none",       label: "Passive / None" },
-  { value: "turn",       label: "On New Turn" },
-  { value: "initiative", label: "On Initiative Roll" },
-  { value: "short",      label: "On Short Rest" },
-  { value: "long",       label: "On Long Rest" },
-];
 
 const DEFAULT_INVENTORY = {
   magic:   [],
@@ -39,7 +32,7 @@ const MagicItemRow = React.memo(function MagicItemRow({
   const hasCharges = !!charges.has;
   const disable = !hasCharges;
   const resetAmountMode = typeof charges.reset_amount === "string" ? "full" : "number";
-  const resetAmountNumber = typeof charges.reset_amount === "number" ? charges.reset_amount : 1;
+  const resetAmountNumber = typeof charges.reset_amount === "number" ? charges.reset_amount : 0;
 
   const patch      = (patchObj)  => onChange(row.id, patchObj);
   const patchCharges = (patchObj) => onChange(row.id, { charges: { ...charges, ...patchObj } });
@@ -186,7 +179,7 @@ const MagicItemRow = React.memo(function MagicItemRow({
                   <select
                     value={resetAmountMode}
                     disabled={disable}
-                    onChange={(e) => patchCharges({ reset_amount: e.target.value === "full" ? "full" : 1 })}
+                    onChange={(e) => patchCharges({ reset_amount: e.target.value === "full" ? "full" : 0 })}
                     className="w-24 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
                     onClick={(e) => e.stopPropagation()}
                   >
@@ -198,12 +191,12 @@ const MagicItemRow = React.memo(function MagicItemRow({
                 <div className="flex flex-col">
                   <label className="text-[10px] text-slate-400">Recharge number</label>
                   <input
-                    type="number" min={1} step={1}
+                    type="number" min={0} step={1}
                     value={resetAmountNumber}
                     disabled={resetAmountMode !== "number"}
                     onChange={(e) => {
                       const v = Number(e.target.value);
-                      if (Number.isFinite(v)) patchCharges({ reset_amount: Math.max(1, Math.trunc(v)) });
+                      if (Number.isFinite(v)) patchCharges({ reset_amount: Math.max(0, Math.trunc(v)) });
                     }}
                     className={`w-32 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900 ${
                       resetAmountMode !== "number" ? "opacity-60 cursor-not-allowed" : ""

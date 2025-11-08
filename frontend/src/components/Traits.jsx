@@ -26,7 +26,7 @@ const TraitRow = React.memo(function TraitRow({
   const patchCharges = (patch) => onChangeField(categoryKey, row.id, { charges: { ...charges, ...patch } });
 
   const resetAmountMode = typeof charges.reset_amount === "string" ? "full" : "number";
-  const resetAmountNumber = typeof charges.reset_amount === "number" ? charges.reset_amount : 1;
+  const resetAmountNumber = typeof charges.reset_amount === "number" ? charges.reset_amount : 0;
 
   return (
     <div className="rounded-lg border border-slate-700 bg-slate-900/60">
@@ -137,7 +137,7 @@ const TraitRow = React.memo(function TraitRow({
                   <label className="text-[10px] text-slate-400">Reset mode</label>
                   <select
                     value={resetAmountMode}
-                    onChange={(e) => patchCharges({ reset_amount: e.target.value === "full" ? "full" : 1 })}
+                    onChange={(e) => patchCharges({ reset_amount: e.target.value === "full" ? "full" : 0 })}
                     className="w-24 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
                     onClick={(e) => e.stopPropagation()}
                   >
@@ -150,13 +150,13 @@ const TraitRow = React.memo(function TraitRow({
                   <label className="text-[10px] text-slate-400">Reset number</label>
                   <input
                     type="number"
-                    min={1}
+                    min={0}
                     step={1}
                     value={resetAmountNumber}
                     disabled={resetAmountMode !== "number"}
                     onChange={(e) => {
                       const n = Number(e.target.value);
-                      if (Number.isFinite(n)) patchCharges({ reset_amount: Math.max(1, Math.trunc(n)) });
+                      if (Number.isFinite(n)) patchCharges({ reset_amount: Math.max(0, Math.trunc(n)) });
                     }}
                     // wider so numbers are readable
                     className={`w-28 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900 ${

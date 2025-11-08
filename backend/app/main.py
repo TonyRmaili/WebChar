@@ -172,6 +172,7 @@ def create_char(current_user: Annotated[User, Depends(get_current_user)],
         return JSONResponse(content={"message": f"Error: {str(e)}"}, status_code=500)
     
 
+
 @app.delete("/character/{char_name}",status_code=status.HTTP_204_NO_CONTENT,tags=["characters"])
 def delete_char_name(current_user: Annotated[User, Depends(get_current_user)],
     char_name:str, db:Session = Depends(get_db)):

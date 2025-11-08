@@ -117,6 +117,8 @@ def on_shortrest(user,character):
             char_data["spellbook"]["sorcery_points"]["current_charges"] = char_data["spellbook"]["sorcery_points"]["max_charges"]
     except KeyError as e:
         print(e) 
+    except TypeError as e:
+        print(e)
     
     # traits
     try:
