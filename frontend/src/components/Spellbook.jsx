@@ -23,6 +23,17 @@ export default function Spellbook() {
   const { charData, updateCharField, postCharData } = useCharStore();
   if (!charData) return null;
 
+  const maxPrepared = Number(charData.max_prepared_spells ?? 0);
+
+  const setMaxPrepared = useCallback(
+    (val) => {
+      const n = val === "" ? "" : Math.max(0, Number(val) || 0);
+      updateCharField("max_prepared_spells", n);
+      postCharData();
+    },
+    [updateCharField, postCharData]
+  );
+
   const {
     files, loadingFiles, selectedFile,
     spellNames, loadingSpellNames, selectedSpell,
@@ -143,13 +154,48 @@ export default function Spellbook() {
     });
   }, [book, persist]);
 
-  const changeSpellField = useCallback((id, patch) => {
-    const next = {
-      ...book,
-      spells: (book.spells ?? []).map((r) => (r.id === id ? normalizeSpellRow({ ...r, ...patch }) : r)),
-    };
-    persist(next);
-  }, [book, persist]);
+  // const changeSpellField = useCallback((id, patch) => {
+  //   const next = {
+  //     ...book,
+  //     spells: (book.spells ?? []).map((r) => (r.id === id ? normalizeSpellRow({ ...r, ...patch }) : r)),
+  //   };
+  //   persist(next);
+  // }, [book, persist]);
+
+    const changeSpellField = useCallback(
+    (id, patch) => {
+      const prevList = book.spells ?? [];
+
+      // Build next list with the patch applied and normalized
+      const nextList = prevList.map((r) =>
+        r.id === id ? normalizeSpellRow({ ...r, ...patch }) : r
+      );
+
+      // If the change touches prepared / level / innate, enforce max_prepared_spells
+      if ("prepared" in patch || "level" in patch || "innate" in patch) {
+        const cap = Number(charData.max_prepared_spells ?? 0) || 0;
+
+        if (cap > 0) {
+          const preparedCount = nextList.reduce((acc, s) => {
+            const lvl = Number(s.level || 0);
+            const counts =
+              !s.innate && lvl >= 1 && !!s.prepared; // only non-innate, level >=1
+            return acc + (counts ? 1 : 0);
+          }, 0);
+
+          // If this edit would exceed the cap, reject it
+          if (preparedCount > cap) {
+            return;
+          }
+        }
+      }
+
+      const next = { ...book, spells: nextList };
+      persist(next);
+    },
+    [book, persist, charData.max_prepared_spells]
+  );
+
 
   /* ---------- Metamagic ---------- */
   const addMetamagic = useCallback(() => {
@@ -249,6 +295,23 @@ export default function Spellbook() {
         onChangeSlot={changeSlotField}
       />
 
+      {/* <SpellsCard
+        list={book.spells ?? []}
+        openById={openById}
+        onToggleOpen={toggleOpen}
+        onAdd={addSpell}
+        onImport={onImport}
+        onChange={changeSpellField}
+        onRemove={removeSpell}
+        files={files}
+        loadingFiles={loadingFiles}
+        selectedFile={selectedFile}
+        onSelectFile={onSelectFile}
+        spellNames={spellNames}
+        loadingSpellNames={loadingSpellNames}
+        selectedSpell={selectedSpell}
+        onSelectSpell={onSelectSpell}
+      /> */}
       <SpellsCard
         list={book.spells ?? []}
         openById={openById}
@@ -265,7 +328,10 @@ export default function Spellbook() {
         loadingSpellNames={loadingSpellNames}
         selectedSpell={selectedSpell}
         onSelectSpell={onSelectSpell}
+        maxPrepared={charData.max_prepared_spells ?? ""}
+        onChangeMaxPrepared={setMaxPrepared}
       />
+
 
       <MetamagicCard
         list={book.metamagic ?? []}

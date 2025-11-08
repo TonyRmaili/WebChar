@@ -3,9 +3,8 @@
 1. max hp modifier for aid / drain effects - Healthplay
 2. slight bug with current_charges not matching max_charges on creating action. it cant increase but can decrease on chaning max. Fixed?
 4. Really compact all visible effects, traits, spells etc
-5. offensive data needs to be more compact, remove label save_dc_X and add init with mod input
-6. Collapse right area to the right? 
-
+5. Collapse right area to the right? 
+6. Add a Unit Manager were player can create summons with hp, ac etc and also a number
 
 # GeneralStats
 1. senses ; blind, tremor, true, darkvision
@@ -18,8 +17,7 @@
 
 # Spells
 1. Spell area and its components needs to be more compact, way to much deadspace
-    Categories spells by level
-2. Sorc points stores strings as default, leads to TypeError
+2. Collapsable spell categories
 
 
 # Effects

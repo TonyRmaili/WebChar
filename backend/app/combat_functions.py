@@ -220,9 +220,12 @@ def charge_traits(char_data,character,user):
     for trait_type in char_data.values():
         for trait in trait_type:
             if trait["charges"]["has"]:
-                trait["charges"]["current_charges"] += trait["charges"]["reset_amount"]
-                if trait["charges"]["current_charges"] > trait["charges"]["max_charges"]:
+                if trait["charges"]["reset_amount"] == "full":
                     trait["charges"]["current_charges"] = trait["charges"]["max_charges"]
+                else:
+                    trait["charges"]["current_charges"] += trait["charges"]["reset_amount"]
+                    if trait["charges"]["current_charges"] > trait["charges"]["max_charges"]:
+                        trait["charges"]["current_charges"] = trait["charges"]["max_charges"]
 
     save_character(user=user,character=character,char_data=char_data)
             
@@ -230,9 +233,12 @@ def charge_magic_items(char_data,character,user):
     items = char_data["inventory"]["magic"]
     for item in items:
         if item["charges"]["has"]:
-            item["charges"]["current_charges"] += item["charges"]["reset_amount"]
-            if item["charges"]["current_charges"] > item["charges"]["max_charges"]:
+            if item["charges"]["reset_amount"] == "full":
                 item["charges"]["current_charges"] = item["charges"]["max_charges"]
+            else:
+                item["charges"]["current_charges"] += item["charges"]["reset_amount"]
+                if item["charges"]["current_charges"] > item["charges"]["max_charges"]:
+                    item["charges"]["current_charges"] = item["charges"]["max_charges"]
 
     save_character(user=user,character=character,char_data=char_data)
 

@@ -5,6 +5,46 @@ const CAST_TIME_UNITS = ["rounds", "minutes", "hours"];
 const DURATION_UNITS = ["rounds", "minutes", "hours", "days"];
 
 
+// export function normalizeSpellRow(r) {
+//   const base = {
+//     id: r.id || idGen(),
+//     name: r.name ?? "",
+//     level: r.level ?? "",
+//     school: r.school ?? "",
+//     notes: r.notes ?? "",
+//     concentration: !!r.concentration,
+//     ritual: !!r.ritual,
+//     cast_time_kind: r.cast_time_kind || "choice",
+//     cast_time_choice: r.cast_time_choice || "action",
+//     cast_time_value: r.cast_time_value ?? "",
+//     cast_time_unit: r.cast_time_unit || "rounds",
+//     duration_value: r.duration_value ?? "",
+//     duration_unit: r.duration_unit || "rounds",
+//     range_ft: r.range_ft ?? "",
+//     components: {
+//       v: !!(r.components?.v),
+//       s: !!(r.components?.s),
+//       m: !!(r.components?.m),
+//       material_desc: r.components?.material_desc ?? "",
+//       material_cost: r.components?.material_cost ?? "",
+//     },
+//     prepared: !!r.prepared,
+//     innate: !!r.innate,
+//   };
+
+//   if (!base.innate) return base;
+
+//   const max = r.max_charges ?? "";
+//   const cur = r.current_charges ?? max;
+//   const recharge = Math.max(0, Math.min(Number(r.reset_amount ?? 0), Number(max || 0)));
+//   return {
+//     ...base,
+//     max_charges: max,
+//     current_charges: cur,
+//     reset_amount: recharge,
+//   };
+// }
+
 export function normalizeSpellRow(r) {
   const base = {
     id: r.id || idGen(),
@@ -28,22 +68,29 @@ export function normalizeSpellRow(r) {
       material_desc: r.components?.material_desc ?? "",
       material_cost: r.components?.material_cost ?? "",
     },
-    prepared: !!r.prepared,
     innate: !!r.innate,
   };
 
-  if (!base.innate) return base;
+  // prepared only matters for non-innate spells
+  const prepared = !base.innate && !!r.prepared;
+
+  if (!base.innate) {
+    return { ...base, prepared };
+  }
 
   const max = r.max_charges ?? "";
   const cur = r.current_charges ?? max;
   const recharge = Math.max(0, Math.min(Number(r.reset_amount ?? 0), Number(max || 0)));
+
   return {
     ...base,
+    prepared, // will be false for innate
     max_charges: max,
     current_charges: cur,
     reset_amount: recharge,
   };
 }
+
 
 /* ---------------- Reusable editors ---------------- */
 export function CastTimeEditor({ row, onChange, hideChoice = false }) {
@@ -511,16 +558,128 @@ export function SpellsCard({
   loadingSpellNames,
   selectedSpell,
   onSelectSpell,
+  maxPrepared,
+  onChangeMaxPrepared,
 }) {
-  const pascalLabel = (s) =>
-    s.replace(/\.\w+$/,"").replace(/_/g," ").toLowerCase().replace(/\b\w/g,c=>c.toUpperCase()).replace(/\s+/g,"");
 
-  return (
+  const pascalLabel = (s) =>
+    s
+      .replace(/\.\w+$/, "")
+      .replace(/_/g, " ")
+      .toLowerCase()
+      .replace(/\b\w/g, (c) => c.toUpperCase())
+      .replace(/\s+/g, "");
+
+  const spells = (list ?? []).map(normalizeSpellRow);
+
+  const preparedCount = spells.reduce((acc, s) => {
+    const lvl = Number(s.level || 0);
+    const counts = !s.innate && lvl >= 1 && !!s.prepared;
+    return acc + (counts ? 1 : 0);
+  }, 0);
+
+  // const pascalLabel = (s) =>
+  //   s.replace(/\.\w+$/,"").replace(/_/g," ").toLowerCase().replace(/\b\w/g,c=>c.toUpperCase()).replace(/\s+/g,"");
+
+  // return (
+  //   <section className="rounded-2xl border border-slate-700 bg-slate-800/40 p-4 space-y-4">
+  //     <header className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+  //       <h3 className="text-lg font-semibold text-orange-300">
+  //         Spells <span className="text-slate-400 text-sm">({list.length})</span>
+  //       </h3>
+
+  //       <div className="flex items-center gap-2 flex-wrap">
+  //         <label htmlFor="spell-file" className="text-slate-300 text-sm">Import from</label>
+  //         <select
+  //           id="spell-file"
+  //           className="px-3 py-1.5 rounded-lg border border-indigo-600 bg-slate-900 text-indigo-100"
+  //           disabled={loadingFiles || files.length === 0}
+  //           value={selectedFile}
+  //           onChange={(e) => onSelectFile(e.target.value)}
+  //         >
+  //           <option value="">{loadingFiles ? "Loading..." : "Select file..."}</option>
+  //           {files.map((f) => (
+  //             <option key={f} value={f}>{pascalLabel(f)}</option>
+  //           ))}
+  //         </select>
+
+  //         {selectedFile && (
+  //           <select
+  //             className="px-3 py-1.5 rounded-lg border border-indigo-600 bg-slate-900 text-indigo-100"
+  //             disabled={loadingSpellNames || (spellNames?.length ?? 0) === 0}
+  //             value={selectedSpell}
+  //             onChange={(e) => onSelectSpell(e.target.value)}
+  //             aria-label="Spell name"
+  //           >
+  //             <option value="">
+  //               {loadingSpellNames ? "Loading spells..." : "Select spell..."}
+  //             </option>
+  //             {spellNames.map((name) => (
+  //               <option key={name} value={name}>{name}</option>
+  //             ))}
+  //           </select>
+  //         )}
+
+  //         <button
+  //           type="button"
+  //           onClick={onImport}
+  //           className="px-3 py-1.5 rounded-lg border border-slate-600 bg-slate-900 hover:bg-slate-800 transition"
+  //         >
+  //           Import spell
+  //         </button>
+
+  //         <button
+  //           type="button"
+  //           onClick={onAdd}
+  //           className="px-3 py-1.5 rounded-lg border border-slate-600 bg-slate-900 hover:bg-slate-800 transition"
+  //         >
+  //           Create spell
+  //         </button>
+  //       </div>
+  //     </header>
+
+  //     {list.length === 0 && <p className="text-slate-400 text-sm">No spells yet. Add or import.</p>}
+
+  //     <div className="space-y-3">
+  //       {list.map((raw) => {
+  //         const row = normalizeSpellRow(raw);
+  //         return (
+  //           <SpellEditorRow
+  //             key={row.id}
+  //             row={row}
+  //             open={!!openById[row.id]}
+  //             onToggleOpen={onToggleOpen}
+  //             onChangeField={(id, patch) => onChange(id, patch)}
+  //             onRemove={onRemove}
+  //           />
+  //         );
+  //       })}
+  //     </div>
+  //   </section>
+  // );
+
+    return (
     <section className="rounded-2xl border border-slate-700 bg-slate-800/40 p-4 space-y-4">
       <header className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-        <h3 className="text-lg font-semibold text-orange-300">
-          Spells <span className="text-slate-400 text-sm">({list.length})</span>
-        </h3>
+        <div className="flex items-center gap-3">
+          <h3 className="text-lg font-semibold text-orange-300">
+            Spells <span className="text-slate-400 text-sm">({spells.length})</span>
+          </h3>
+          <div className="flex items-center gap-2 text-xs text-slate-300">
+            <span>Prepared (≥1):</span>
+            <span className="text-amber-300 font-semibold">
+              {preparedCount}
+              {maxPrepared ? ` / ${maxPrepared}` : ""}
+            </span>
+            <input
+              type="number"
+              min={0}
+              value={maxPrepared ?? ""}
+              onChange={(e) => onChangeMaxPrepared(e.target.value)}
+              className="w-16 px-2 py-1 rounded border border-slate-600 bg-slate-900 text-slate-100 text-xs"
+            />
+          </div>
+        </div>
 
         <div className="flex items-center gap-2 flex-wrap">
           <label htmlFor="spell-file" className="text-slate-300 text-sm">Import from</label>
@@ -571,27 +730,124 @@ export function SpellsCard({
           </button>
         </div>
       </header>
+            {spells.length === 0 && (
+        <p className="text-slate-400 text-sm">No spells yet. Add or import.</p>
+      )}
 
-      {list.length === 0 && <p className="text-slate-400 text-sm">No spells yet. Add or import.</p>}
+      {spells.length > 0 && (
+        <div className="space-y-4">
+          {Object.entries(
+            spells.reduce((acc, spell) => {
+              const lvl = Number(spell.level || 0);
+              const key = String(lvl);
+              if (!acc[key]) acc[key] = [];
+              acc[key].push(spell);
+              return acc;
+            }, {})
+          )
+            .sort((a, b) => Number(a[0]) - Number(b[0]))
+            .map(([lvlKey, levelSpells]) => {
+              const lvl = Number(lvlKey);
 
-      <div className="space-y-3">
-        {list.map((raw) => {
-          const row = normalizeSpellRow(raw);
-          return (
-            <SpellEditorRow
-              key={row.id}
-              row={row}
-              open={!!openById[row.id]}
-              onToggleOpen={onToggleOpen}
-              onChangeField={(id, patch) => onChange(id, patch)}
-              onRemove={onRemove}
-            />
-          );
-        })}
-      </div>
+              const innate = levelSpells.filter((s) => s.innate);
+              const nonInnate = levelSpells.filter((s) => !s.innate);
+
+              const prepared = nonInnate.filter((s) => s.prepared);
+              const ritualsOnly = nonInnate.filter(
+                (s) => s.ritual && !s.prepared
+              );
+              const other = nonInnate.filter(
+                (s) => !s.prepared && !s.ritual
+              );
+
+              return (
+                <div key={lvlKey} className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <h4 className="text-sm font-semibold text-orange-200">
+                      Level {lvl}{" "}
+                      {lvl === 0 && (
+                        <span className="text-xs text-slate-400">(Cantrips)</span>
+                      )}
+                    </h4>
+                  </div>
+
+                  {/* Prepared */}
+                  {prepared.length > 0 && (
+                    <div className="space-y-1">
+                      <p className="text-xs text-slate-300">Prepared</p>
+                      {prepared.map((row) => (
+                        <SpellEditorRow
+                          key={row.id}
+                          row={row}
+                          open={!!openById[row.id]}
+                          onToggleOpen={onToggleOpen}
+                          onChangeField={(id, patch) => onChange(id, patch)}
+                          onRemove={onRemove}
+                        />
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Rituals (non-prepared) */}
+                  {ritualsOnly.length > 0 && (
+                    <div className="space-y-1">
+                      <p className="text-xs text-slate-300">Rituals</p>
+                      {ritualsOnly.map((row) => (
+                        <SpellEditorRow
+                          key={row.id}
+                          row={row}
+                          open={!!openById[row.id]}
+                          onToggleOpen={onToggleOpen}
+                          onChangeField={(id, patch) => onChange(id, patch)}
+                          onRemove={onRemove}
+                        />
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Innate (includes innate+ritual) */}
+                  {innate.length > 0 && (
+                    <div className="space-y-1">
+                      <p className="text-xs text-slate-300">Innate</p>
+                      {innate.map((row) => (
+                        <SpellEditorRow
+                          key={row.id}
+                          row={row}
+                          open={!!openById[row.id]}
+                          onToggleOpen={onToggleOpen}
+                          onChangeField={(id, patch) => onChange(id, patch)}
+                          onRemove={onRemove}
+                        />
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Other (unprepared, non-ritual, non-innate) */}
+                  {other.length > 0 && (
+                    <div className="space-y-1">
+                      <p className="text-xs text-slate-300">Other</p>
+                      {other.map((row) => (
+                        <SpellEditorRow
+                          key={row.id}
+                          row={row}
+                          open={!!openById[row.id]}
+                          onToggleOpen={onToggleOpen}
+                          onChangeField={(id, patch) => onChange(id, patch)}
+                          onRemove={onRemove}
+                        />
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+        </div>
+      )}
     </section>
   );
 }
+
+
 
 /* ---------------- Metamagic ---------------- */
 export function MetamagicCard({ list, onAdd, onRemove, onChange }) {
