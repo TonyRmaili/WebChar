@@ -16,8 +16,6 @@ import HealthPlay from "../components/HealthPlay"
 import EffectsPlay from "../components/EffectsPlay";
 import SpellPlay from "../components/SpellPlay";
 import ChargesPlay from "../components/ChargesPlay";
-import OffensePlay from "../components/OffensePlay";
-
 
 function TabButton({ id, label, active, onClick }) {
   return (
@@ -148,17 +146,17 @@ export default function CombatPage() {
                 )}
               </div>
 
-              <div className="flex-none">
-                <div className="h-full overflow-y-auto rounded-xl border border-slate-700/60 bg-slate-900/40 p-4">
-                  {selectedChar ? <OffensePlay /> : <div className="text-slate-400">Select a character.</div>}
-                </div>
-              </div>
-
               <div className="flex-[1.5] min-h-[25vh]">
                 <div className="h-full overflow-y-auto rounded-xl border border-slate-700/60 bg-slate-900/40 p-4">
                   {selectedChar ? <EffectsPlay /> : <div className="text-slate-400">Select a character.</div>}
                 </div>
               </div>
+
+              {/* <div className="flex-[1.5] min-h-[25vh]">
+                <div className="h-full overflow-y-auto rounded-xl border border-slate-700/60 bg-slate-900/40 p-4">
+                  {selectedChar ? <ActionsExperiment /> : <div className="text-slate-400">Select a character.</div>}
+                </div>
+              </div> */}
 
               <div className="flex-[1.5] min-h-[25vh]">
                 <div className="h-full overflow-y-auto rounded-xl border border-slate-700/60 bg-slate-900/40 p-4">
@@ -171,6 +169,9 @@ export default function CombatPage() {
                   {selectedChar ? <ChargesPlay /> : <div className="text-slate-400">Select a character.</div>}
                 </div>
               </div>
+
+              
+
             </div>
           </div>
         </div>

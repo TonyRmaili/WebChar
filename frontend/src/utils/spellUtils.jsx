@@ -1,49 +1,8 @@
 import React from "react";
 
-
 const CAST_TIME_UNITS = ["rounds", "minutes", "hours"];
 const DURATION_UNITS = ["rounds", "minutes", "hours", "days"];
 
-
-// export function normalizeSpellRow(r) {
-//   const base = {
-//     id: r.id || idGen(),
-//     name: r.name ?? "",
-//     level: r.level ?? "",
-//     school: r.school ?? "",
-//     notes: r.notes ?? "",
-//     concentration: !!r.concentration,
-//     ritual: !!r.ritual,
-//     cast_time_kind: r.cast_time_kind || "choice",
-//     cast_time_choice: r.cast_time_choice || "action",
-//     cast_time_value: r.cast_time_value ?? "",
-//     cast_time_unit: r.cast_time_unit || "rounds",
-//     duration_value: r.duration_value ?? "",
-//     duration_unit: r.duration_unit || "rounds",
-//     range_ft: r.range_ft ?? "",
-//     components: {
-//       v: !!(r.components?.v),
-//       s: !!(r.components?.s),
-//       m: !!(r.components?.m),
-//       material_desc: r.components?.material_desc ?? "",
-//       material_cost: r.components?.material_cost ?? "",
-//     },
-//     prepared: !!r.prepared,
-//     innate: !!r.innate,
-//   };
-
-//   if (!base.innate) return base;
-
-//   const max = r.max_charges ?? "";
-//   const cur = r.current_charges ?? max;
-//   const recharge = Math.max(0, Math.min(Number(r.reset_amount ?? 0), Number(max || 0)));
-//   return {
-//     ...base,
-//     max_charges: max,
-//     current_charges: cur,
-//     reset_amount: recharge,
-//   };
-// }
 
 export function normalizeSpellRow(r) {
   const base = {
@@ -90,7 +49,6 @@ export function normalizeSpellRow(r) {
     reset_amount: recharge,
   };
 }
-
 
 /* ---------------- Reusable editors ---------------- */
 export function CastTimeEditor({ row, onChange, hideChoice = false }) {
@@ -340,7 +298,7 @@ export const SpellEditorRow = React.memo(function SpellEditorRow({ row, open, on
         aria-expanded={open}
       >
         <div className="flex-1 min-w-0 flex items-center gap-2">
-          <span className="text-slate-400 text-sm">Name:</span>
+          
           <input
             type="text"
             value={row.name ?? ""}
@@ -445,6 +403,7 @@ export const SpellEditorRow = React.memo(function SpellEditorRow({ row, open, on
               <input
                 type="number"
                 min={0}
+                step={5}
                 value={row.range_ft ?? ""}
                 onChange={(e) => {
                   const v = e.target.value === "" ? "" : Math.max(0, Number(e.target.value) || 0);
@@ -561,7 +520,6 @@ export function SpellsCard({
   maxPrepared,
   onChangeMaxPrepared,
 }) {
-
   const pascalLabel = (s) =>
     s
       .replace(/\.\w+$/, "")
@@ -578,87 +536,33 @@ export function SpellsCard({
     return acc + (counts ? 1 : 0);
   }, 0);
 
-  // const pascalLabel = (s) =>
-  //   s.replace(/\.\w+$/,"").replace(/_/g," ").toLowerCase().replace(/\b\w/g,c=>c.toUpperCase()).replace(/\s+/g,"");
+  // collapse state
+  const [collapsedLevels, setCollapsedLevels] = React.useState({});
+  const [collapsedGroups, setCollapsedGroups] = React.useState({});
 
-  // return (
-  //   <section className="rounded-2xl border border-slate-700 bg-slate-800/40 p-4 space-y-4">
-  //     <header className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-  //       <h3 className="text-lg font-semibold text-orange-300">
-  //         Spells <span className="text-slate-400 text-sm">({list.length})</span>
-  //       </h3>
+  const toggleLevel = (lvlKey) => {
+    setCollapsedLevels((prev) => ({ ...prev, [lvlKey]: !prev[lvlKey] }));
+  };
 
-  //       <div className="flex items-center gap-2 flex-wrap">
-  //         <label htmlFor="spell-file" className="text-slate-300 text-sm">Import from</label>
-  //         <select
-  //           id="spell-file"
-  //           className="px-3 py-1.5 rounded-lg border border-indigo-600 bg-slate-900 text-indigo-100"
-  //           disabled={loadingFiles || files.length === 0}
-  //           value={selectedFile}
-  //           onChange={(e) => onSelectFile(e.target.value)}
-  //         >
-  //           <option value="">{loadingFiles ? "Loading..." : "Select file..."}</option>
-  //           {files.map((f) => (
-  //             <option key={f} value={f}>{pascalLabel(f)}</option>
-  //           ))}
-  //         </select>
+  const toggleGroup = (key) => {
+    setCollapsedGroups((prev) => ({ ...prev, [key]: !prev[key] }));
+  };
 
-  //         {selectedFile && (
-  //           <select
-  //             className="px-3 py-1.5 rounded-lg border border-indigo-600 bg-slate-900 text-indigo-100"
-  //             disabled={loadingSpellNames || (spellNames?.length ?? 0) === 0}
-  //             value={selectedSpell}
-  //             onChange={(e) => onSelectSpell(e.target.value)}
-  //             aria-label="Spell name"
-  //           >
-  //             <option value="">
-  //               {loadingSpellNames ? "Loading spells..." : "Select spell..."}
-  //             </option>
-  //             {spellNames.map((name) => (
-  //               <option key={name} value={name}>{name}</option>
-  //             ))}
-  //           </select>
-  //         )}
+  const Chevron = ({ collapsed, className = "" }) => (
+    <svg
+      className={`h-4 w-4 transition-transform ${collapsed ? "-rotate-90" : "rotate-0"} ${className}`}
+      viewBox="0 0 20 20"
+      fill="currentColor"
+    >
+      <path
+        fillRule="evenodd"
+        d="M7.21 14.77a.75.75 0 01-.02-1.06L10.94 10 7.2 6.29a.75.75 0 111.06-1.06l4.24 4.24a.75.75 0 010 1.06l-4.24 4.24a.75.75 0 01-1.06 0z"
+        clipRule="evenodd"
+      />
+    </svg>
+  );
 
-  //         <button
-  //           type="button"
-  //           onClick={onImport}
-  //           className="px-3 py-1.5 rounded-lg border border-slate-600 bg-slate-900 hover:bg-slate-800 transition"
-  //         >
-  //           Import spell
-  //         </button>
-
-  //         <button
-  //           type="button"
-  //           onClick={onAdd}
-  //           className="px-3 py-1.5 rounded-lg border border-slate-600 bg-slate-900 hover:bg-slate-800 transition"
-  //         >
-  //           Create spell
-  //         </button>
-  //       </div>
-  //     </header>
-
-  //     {list.length === 0 && <p className="text-slate-400 text-sm">No spells yet. Add or import.</p>}
-
-  //     <div className="space-y-3">
-  //       {list.map((raw) => {
-  //         const row = normalizeSpellRow(raw);
-  //         return (
-  //           <SpellEditorRow
-  //             key={row.id}
-  //             row={row}
-  //             open={!!openById[row.id]}
-  //             onToggleOpen={onToggleOpen}
-  //             onChangeField={(id, patch) => onChange(id, patch)}
-  //             onRemove={onRemove}
-  //           />
-  //         );
-  //       })}
-  //     </div>
-  //   </section>
-  // );
-
-    return (
+  return (
     <section className="rounded-2xl border border-slate-700 bg-slate-800/40 p-4 space-y-4">
       <header className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
         <div className="flex items-center gap-3">
@@ -682,7 +586,9 @@ export function SpellsCard({
         </div>
 
         <div className="flex items-center gap-2 flex-wrap">
-          <label htmlFor="spell-file" className="text-slate-300 text-sm">Import from</label>
+          <label htmlFor="spell-file" className="text-slate-300 text-sm">
+            Import from
+          </label>
           <select
             id="spell-file"
             className="px-3 py-1.5 rounded-lg border border-indigo-600 bg-slate-900 text-indigo-100"
@@ -692,7 +598,9 @@ export function SpellsCard({
           >
             <option value="">{loadingFiles ? "Loading..." : "Select file..."}</option>
             {files.map((f) => (
-              <option key={f} value={f}>{pascalLabel(f)}</option>
+              <option key={f} value={f}>
+                {pascalLabel(f)}
+              </option>
             ))}
           </select>
 
@@ -708,7 +616,9 @@ export function SpellsCard({
                 {loadingSpellNames ? "Loading spells..." : "Select spell..."}
               </option>
               {spellNames.map((name) => (
-                <option key={name} value={name}>{name}</option>
+                <option key={name} value={name}>
+                  {name}
+                </option>
               ))}
             </select>
           )}
@@ -730,7 +640,8 @@ export function SpellsCard({
           </button>
         </div>
       </header>
-            {spells.length === 0 && (
+
+      {spells.length === 0 && (
         <p className="text-slate-400 text-sm">No spells yet. Add or import.</p>
       )}
 
@@ -760,82 +671,161 @@ export function SpellsCard({
                 (s) => !s.prepared && !s.ritual
               );
 
+              const levelCollapsed = !!collapsedLevels[lvlKey];
+
               return (
                 <div key={lvlKey} className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <h4 className="text-sm font-semibold text-orange-200">
-                      Level {lvl}{" "}
-                      {lvl === 0 && (
-                        <span className="text-xs text-slate-400">(Cantrips)</span>
+                  {/* Level header (collapsible) */}
+                  <button
+                    type="button"
+                    onClick={() => toggleLevel(lvlKey)}
+                    className="w-full flex items-center justify-between text-left hover:bg-slate-800/40 px-2 py-1 rounded"
+                  >
+                    <div className="flex items-center gap-2">
+                      <h4 className="text-sm font-semibold text-orange-200">
+                        Level {lvl}{" "}
+                        {lvl === 0 && (
+                          <span className="text-xs text-slate-400">(Cantrips)</span>
+                        )}
+                      </h4>
+                      <span className="text-[10px] text-slate-400">
+                        ({levelSpells.length} spell
+                        {levelSpells.length === 1 ? "" : "s"})
+                      </span>
+                    </div>
+                    <Chevron collapsed={levelCollapsed} />
+                  </button>
+
+                  {/* Level contents */}
+                  {levelCollapsed ? null : (
+                    <div className="space-y-2">
+                      {/* Prepared */}
+                      {prepared.length > 0 && (
+                        <div className="space-y-1">
+                          <button
+                            type="button"
+                            onClick={() => toggleGroup(`${lvlKey}-prepared`)}
+                            className="flex items-center gap-2 text-xs text-slate-300 hover:text-slate-100"
+                          >
+                            <span>Prepared</span>
+                            <span className="text-[10px] text-slate-400">
+                              ({prepared.length})
+                            </span>
+                            <Chevron
+                              collapsed={!!collapsedGroups[`${lvlKey}-prepared`]}
+                              className="h-3 w-3"
+                            />
+                          </button>
+
+                          {!collapsedGroups[`${lvlKey}-prepared`] &&
+                            prepared.map((row) => (
+                              <SpellEditorRow
+                                key={row.id}
+                                row={row}
+                                open={!!openById[row.id]}
+                                onToggleOpen={onToggleOpen}
+                                onChangeField={(id, patch) => onChange(id, patch)}
+                                onRemove={onRemove}
+                              />
+                            ))}
+                        </div>
                       )}
-                    </h4>
-                  </div>
 
-                  {/* Prepared */}
-                  {prepared.length > 0 && (
-                    <div className="space-y-1">
-                      <p className="text-xs text-slate-300">Prepared</p>
-                      {prepared.map((row) => (
-                        <SpellEditorRow
-                          key={row.id}
-                          row={row}
-                          open={!!openById[row.id]}
-                          onToggleOpen={onToggleOpen}
-                          onChangeField={(id, patch) => onChange(id, patch)}
-                          onRemove={onRemove}
-                        />
-                      ))}
-                    </div>
-                  )}
+                      {/* Rituals (non-prepared) */}
+                      {ritualsOnly.length > 0 && (
+                        <div className="space-y-1">
+                          <button
+                            type="button"
+                            onClick={() => toggleGroup(`${lvlKey}-rituals`)}
+                            className="flex items-center gap-2 text-xs text-slate-300 hover:text-slate-100"
+                          >
+                            <span>Rituals</span>
+                            <span className="text-[10px] text-slate-400">
+                              ({ritualsOnly.length})
+                            </span>
+                            <Chevron
+                              collapsed={!!collapsedGroups[`${lvlKey}-rituals`]}
+                              className="h-3 w-3"
+                            />
+                          </button>
 
-                  {/* Rituals (non-prepared) */}
-                  {ritualsOnly.length > 0 && (
-                    <div className="space-y-1">
-                      <p className="text-xs text-slate-300">Rituals</p>
-                      {ritualsOnly.map((row) => (
-                        <SpellEditorRow
-                          key={row.id}
-                          row={row}
-                          open={!!openById[row.id]}
-                          onToggleOpen={onToggleOpen}
-                          onChangeField={(id, patch) => onChange(id, patch)}
-                          onRemove={onRemove}
-                        />
-                      ))}
-                    </div>
-                  )}
+                          {!collapsedGroups[`${lvlKey}-rituals`] &&
+                            ritualsOnly.map((row) => (
+                              <SpellEditorRow
+                                key={row.id}
+                                row={row}
+                                open={!!openById[row.id]}
+                                onToggleOpen={onToggleOpen}
+                                onChangeField={(id, patch) => onChange(id, patch)}
+                                onRemove={onRemove}
+                              />
+                            ))}
+                        </div>
+                      )}
 
-                  {/* Innate (includes innate+ritual) */}
-                  {innate.length > 0 && (
-                    <div className="space-y-1">
-                      <p className="text-xs text-slate-300">Innate</p>
-                      {innate.map((row) => (
-                        <SpellEditorRow
-                          key={row.id}
-                          row={row}
-                          open={!!openById[row.id]}
-                          onToggleOpen={onToggleOpen}
-                          onChangeField={(id, patch) => onChange(id, patch)}
-                          onRemove={onRemove}
-                        />
-                      ))}
-                    </div>
-                  )}
+                      {/* Innate (includes innate+ritual) */}
+                      {innate.length > 0 && (
+                        <div className="space-y-1">
+                          <button
+                            type="button"
+                            onClick={() => toggleGroup(`${lvlKey}-innate`)}
+                            className="flex items-center gap-2 text-xs text-slate-300 hover:text-slate-100"
+                          >
+                            <span>Innate</span>
+                            <span className="text-[10px] text-slate-400">
+                              ({innate.length})
+                            </span>
+                            <Chevron
+                              collapsed={!!collapsedGroups[`${lvlKey}-innate`]}
+                              className="h-3 w-3"
+                            />
+                          </button>
 
-                  {/* Other (unprepared, non-ritual, non-innate) */}
-                  {other.length > 0 && (
-                    <div className="space-y-1">
-                      <p className="text-xs text-slate-300">Other</p>
-                      {other.map((row) => (
-                        <SpellEditorRow
-                          key={row.id}
-                          row={row}
-                          open={!!openById[row.id]}
-                          onToggleOpen={onToggleOpen}
-                          onChangeField={(id, patch) => onChange(id, patch)}
-                          onRemove={onRemove}
-                        />
-                      ))}
+                          {!collapsedGroups[`${lvlKey}-innate`] &&
+                            innate.map((row) => (
+                              <SpellEditorRow
+                                key={row.id}
+                                row={row}
+                                open={!!openById[row.id]}
+                                onToggleOpen={onToggleOpen}
+                                onChangeField={(id, patch) => onChange(id, patch)}
+                                onRemove={onRemove}
+                              />
+                            ))}
+                        </div>
+                      )}
+
+                      {/* Other (unprepared, non-ritual, non-innate) */}
+                      {other.length > 0 && (
+                        <div className="space-y-1">
+                          <button
+                            type="button"
+                            onClick={() => toggleGroup(`${lvlKey}-other`)}
+                            className="flex items-center gap-2 text-xs text-slate-300 hover:text-slate-100"
+                          >
+                            <span>Other</span>
+                            <span className="text-[10px] text-slate-400">
+                              ({other.length})
+                            </span>
+                            <Chevron
+                              collapsed={!!collapsedGroups[`${lvlKey}-other`]}
+                              className="h-3 w-3"
+                            />
+                          </button>
+
+                          {!collapsedGroups[`${lvlKey}-other`] &&
+                            other.map((row) => (
+                              <SpellEditorRow
+                                key={row.id}
+                                row={row}
+                                open={!!openById[row.id]}
+                                onToggleOpen={onToggleOpen}
+                                onChangeField={(id, patch) => onChange(id, patch)}
+                                onRemove={onRemove}
+                              />
+                            ))}
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
@@ -846,7 +836,6 @@ export function SpellsCard({
     </section>
   );
 }
-
 
 
 /* ---------------- Metamagic ---------------- */

@@ -1,34 +1,130 @@
-import React, { useMemo, useRef, useState, useCallback } from "react";
+import React, { useMemo, useRef, useState, useCallback, useEffect } from "react";
 import useCharStore from "../store/CharStore";
 
-const DEFAULT_EFFECTS = { actions: [], bonus_actions: [], reactions: [] };
-const SAVE_ABILITIES = ["Strength","Dexterity","Constitution","Intelligence","Wisdom","Charisma"];
-
-const ATTACK_TYPES = ["melee", "ranged", "spell"];
-const DICE_SIDES = [4, 6, 8, 10, 12, 20, 100];
-const DAMAGE_TYPES = [
-  "acid","bludgeoning","cold","fire","force","lightning","necrotic",
-  "piercing","poison","psychic","radiant","slashing","thunder"
+const ACTION_TYPES = [
+  { value: "action",       label: "Actions" },
+  { value: "bonus_action", label: "Bonus Actions" },
+  { value: "reaction",     label: "Reactions" },
 ];
 
+const ACTION_KINDS = [
+  { value: "attack",          label: "Attack" },
+  { value: "save",            label: "Save" },
+  { value: "attack_and_save", label: "Attack + Save" },
+];
 
-/* ---------- Small chip ---------- */
+const ATTACK_TYPES = [
+  { value: "melee", label: "Melee attack" },
+  { value: "ranged", label: "Ranged attack" },
+  { value: "spell", label: "Spell attack" },
+];
+
+const SAVE_ABILITIES = ["STR", "DEX", "CON", "INT", "WIS", "CHA"];
+
+const DAMAGE_TYPES = [
+  "slashing",
+  "piercing",
+  "bludgeoning",
+  "fire",
+  "cold",
+  "acid",
+  "lightning",
+  "thunder",
+  "poison",
+  "necrotic",
+  "radiant",
+  "psychic",
+  "force",
+];
+
+const DAMAGE_DICE_SIZES = ["d4", "d6", "d8", "d10", "d12", "d20", "d100"];
+
+const idGen = () =>
+  `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
+
+/* ---------- Helpers ---------- */
+
+const toIntOrNull = (v) => {
+  if (v === "" || v == null) return null;
+  const n = parseInt(v, 10);
+  return Number.isFinite(n) ? n : null;
+};
+
+
+function createDefaultAction(actionType = "action") {
+  return {
+    id: idGen(),
+    name: "",
+    action_type: actionType,
+    kind: "attack",
+    attack: {
+      attack_type: "",
+      hit_bonus: null,
+      range_ft: "",
+    },
+    save: {
+      ability: "",
+      dc_bonus: null,
+    },
+    damages: [],
+    notes: "",
+    charges: {
+      has: false,
+      max_charges: "",
+      reset_amount: 0,
+      current_charges: "",
+    },
+    linked_effect_ids: [],
+  };
+}
+
+function createDefaultDamage() {
+  return {
+    id: idGen(),
+    dice_count: null,
+    dice_size: "",
+    mod: null,
+    damage_type: "",
+  };
+}
+
 const Chip = ({ children }) => (
-  <span className="inline-flex items-center px-2 py-0.5 rounded-full border border-slate-700 bg-slate-900 text-slate-200 text-xs">
+  <span className="inline-flex items-center px-2 py-0.5 rounded-full border border-slate-700 bg-slate-900 text-slate-200 text-[11px]">
     {children}
   </span>
 );
 
-/* ---------- Helpers ---------- */
-const newDamagePart = () => ({
-  id: `${Date.now()}_${Math.random().toString(36).slice(2,8)}`,
-  dice_count: 1,
-  dice_sides: 6,
-  dtype: "slashing",
-});
+/* ---------- Summary helpers ---------- */
+
+const summarizeDamage = (row) => {
+  const list = (row.damages || [])
+    .map((d) => {
+      const dicePart =
+        d.dice_count && d.dice_size
+          ? `${d.dice_count}${d.dice_size}`
+          : d.dice_size || "";
+
+      const modNum = Number(d.mod);
+      const hasMod = Number.isFinite(modNum) && modNum !== 0;
+      const modPart = hasMod
+        ? `${modNum > 0 ? "+" : ""}${modNum}`
+        : "";
+
+      const base = [dicePart, modPart].filter(Boolean).join("");
+
+      if (!base && !d.damage_type) return "";
+      if (!d.damage_type) return base;
+      if (!base) return d.damage_type;
+      return `${base} ${d.damage_type}`;
+    })
+    .filter(Boolean);
+
+  return list.join(", ");
+};
 
 
 /* ================== Action Row ================== */
+
 const ActionRow = React.memo(function ActionRow({
   row,
   open,
@@ -39,149 +135,574 @@ const ActionRow = React.memo(function ActionRow({
   onChangeDamage,
   onRemoveDamage,
 }) {
-  const summaryDamage = (row.damages || [])
-    .map((d,i) => `${i>0?"+ ":""}${d.dice_count}d${d.dice_sides} ${d.dtype}`)
-    .join(", ");
-  const saveText = row.save?.has ? `${row.save.ability || ""}`.trim() : "";
-  const chargesText = row.charges?.has
-    ? `${row.charges.max_charges ?? 0} max`
-    : null;
+  const dmgSummary = summarizeDamage(row);
+ 
+  const kind = row.kind || "attack";
+
+  // charges object on the row
+  const charges = row.charges || {
+    has: false,
+    max_charges: "",
+    reset_amount: 0,
+    current_charges: "",
+  };
+
+  // local UI-only flag, not stored in charData
+  const [fullReset, setFullReset] = useState(false);
+
+  // when charges.turn off, also turn off fullReset
+  useEffect(() => {
+    if (!charges.has) setFullReset(false);
+  }, [charges.has]);
+
+const handleKindChange = (e) => {
+  const nextKind = e.target.value;
+
+  if (nextKind === "attack") {
+    // pure attack: keep/normalize attack, wipe save
+    onChange({
+      kind: "attack",
+      attack: {
+        attack_type: row.attack?.attack_type ?? "",
+        hit_bonus: toIntOrNull(row.attack?.hit_bonus),
+        range_ft: row.attack?.range_ft ?? "",
+      },
+      save: {
+        ability: "",
+        dc_bonus: null,
+      },
+    });
+    return;
+  }
+
+  if (nextKind === "save") {
+    // pure save: keep/normalize save, wipe attack
+    onChange({
+      kind: "save",
+      attack: {
+        attack_type: "",
+        hit_bonus: null,
+        range_ft: "",
+      },
+      save: {
+        ability: row.save?.ability ?? "",
+        dc_bonus: toIntOrNull(row.save?.dc_bonus),
+      },
+    });
+    return;
+  }
+
+  if (nextKind === "attack_and_save") {
+    // both: normalize both blocks
+    onChange({
+      kind: "attack_and_save",
+      attack: {
+        attack_type: row.attack?.attack_type ?? "",
+        hit_bonus: toIntOrNull(row.attack?.hit_bonus),
+        range_ft: row.attack?.range_ft ?? "",
+      },
+      save: {
+        ability: row.save?.ability ?? "",
+        dc_bonus: toIntOrNull(row.save?.dc_bonus),
+      },
+    });
+  }
+};
+
+
+  const handleHasChargesChange = (e) => {
+    const checked = e.target.checked;
+    if (!checked) {
+      setFullReset(false);
+      onChange({
+        charges: {
+          has: false,
+          max_charges: "",
+          reset_amount: 0,
+          current_charges: "",
+        },
+      });
+      return;
+    }
+
+    onChange({
+      charges: {
+        has: true,
+        max_charges: charges.max_charges ?? "",
+        current_charges: charges.current_charges ?? "",
+        reset_amount: charges.reset_amount ?? 0,
+      },
+    });
+  };
+
+  const handleMaxChange = (e) => {
+    const rawMax = e.target.value;
+    const maxNum = Number(rawMax);
+    const curRaw = charges.current_charges ?? "";
+    let newCurrent = curRaw;
+
+    // clamp current_charges to new max
+    if (rawMax === "") {
+      newCurrent = "";
+    } else if (Number.isFinite(maxNum)) {
+      const curNum = Number(curRaw);
+      if (Number.isFinite(curNum)) {
+        newCurrent = Math.min(curNum, maxNum).toString();
+      }
+    }
+
+    // if fullReset is enabled, reset_amount should follow max
+    let newReset = charges.reset_amount ?? 0;
+    if (fullReset) {
+      if (rawMax === "" || !Number.isFinite(maxNum)) {
+        newReset = 0;
+      } else {
+        newReset = maxNum;
+      }
+    }
+
+    onChange({
+      charges: {
+        has: true,
+        max_charges: rawMax,
+        current_charges: newCurrent,
+        reset_amount: newReset,
+      },
+    });
+  };
+
+  const handleCurrentChange = (e) => {
+    const raw = e.target.value;
+    const maxStr = charges.max_charges ?? "";
+    const maxNum = Number(maxStr);
+    let value = raw;
+
+    if (raw === "") {
+      value = "";
+    } else if (Number.isFinite(maxNum)) {
+      const n = Number(raw);
+      if (Number.isFinite(n)) {
+        value = Math.min(n, maxNum);
+      }
+    }
+
+    onChange({
+      charges: {
+        ...charges,
+        has: true,
+        current_charges: value,
+      },
+    });
+  };
+
+  const handleFullResetChange = (e) => {
+    const checked = e.target.checked;
+    setFullReset(checked);
+
+    if (checked) {
+      const maxStr = charges.max_charges ?? "";
+      const maxNum = Number(maxStr);
+      const resetVal =
+        maxStr === "" || !Number.isFinite(maxNum) ? 0 : maxNum;
+      onChange({
+        charges: {
+          ...charges,
+          has: true,
+          reset_amount: resetVal,
+        },
+      });
+    }
+  };
+
+  const handleResetAmountChange = (e) => {
+    if (fullReset) return; // do nothing when full reset is on
+
+    const raw = e.target.value;
+    if (raw === "") {
+      onChange({
+        charges: {
+          ...charges,
+          has: true,
+          reset_amount: 0,
+        },
+      });
+      return;
+    }
+    const n = Number(raw);
+    const value = !Number.isFinite(n) || n < 0 ? 0 : n;
+    onChange({
+      charges: {
+        ...charges,
+        has: true,
+        reset_amount: value,
+      },
+    });
+  };
 
   return (
-    <div className="rounded-lg border border-slate-700 bg-slate-900/60">
+    <div className="rounded-xl border border-slate-700 bg-slate-900/60">
       {/* Header */}
       <button
         type="button"
-        onClick={() => onToggleOpen(row.id)}
-        className="w-full flex items-center justify-between px-3 py-2 hover:bg-slate-800/60"
+        onClick={onToggleOpen}
+        className="w-full px-3 py-2 hover:bg-slate-800/60"
         aria-expanded={open}
+        title={row.notes || ""}
       >
-        <div className="flex-1 flex items-center gap-2">
-          <span className="text-slate-400 text-xs">Name</span>
-          <input
-            type="text"
-            value={row.name ?? ""}
-            onChange={(e) => onChange({ name: e.target.value })}
-            placeholder='e.g., "Shadow Strike"'
-            className="flex-1 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900 max-w-[18rem]"
-            onClick={(e) => e.stopPropagation()}
-          />
-        </div>
+        <div className="flex flex-wrap items-center gap-2">
+          {/* Arrow */}
+          <svg
+            className={`h-4 w-4 text-slate-300 transition-transform ${
+              open ? "rotate-180" : ""
+            }`}
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fillRule="evenodd"
+              d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z"
+              clipRule="evenodd"
+            />
+          </svg>
 
-        <div className="hidden md:flex items-center gap-2 px-2">
-          {summaryDamage ? <Chip>{summaryDamage}</Chip> : null}
-          {saveText ? <Chip>{saveText}</Chip> : null}
-          {chargesText ? <Chip>{chargesText}</Chip> : null}
-        </div>
+          {/* Name (no label) */}
+          <div className="flex items-center gap-2 min-w-[220px] max-w-[520px] grow">
+            <input
+              type="text"
+              value={row.name ?? ""}
+              onChange={(e) => onChange({ name: e.target.value })}
+              placeholder='e.g. "Shadow Strike"'
+              className="w-full min-w-0 px-2 py-1 rounded-md bg-slate-950 border border-slate-700 text-sm text-slate-100"
+              onClick={(e) => e.stopPropagation()}
+            />
+          </div>
 
-        <svg className={`ml-3 h-5 w-5 transition-transform ${open ? "rotate-180" : ""}`} viewBox="0 0 20 20" fill="currentColor">
-          <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clipRule="evenodd"/>
-        </svg>
+          {/* Kind chip */}
+          <Chip>
+            {ACTION_KINDS.find((k) => k.value === kind)?.label || "Attack"}
+          </Chip>
+
+          {/* Compact summaries */}
+          <div className="hidden md:flex flex-wrap items-center gap-2 px-2">
+            {dmgSummary ? <Chip>{dmgSummary}</Chip> : null}
+          </div>
+        </div>
       </button>
 
       {/* Body */}
       {open && (
         <div className="p-3 space-y-3 border-t border-slate-700">
-          {/* First row: atk type, charges, save, add damage */}
-          <div className="flex flex-wrap items-end gap-3">
+          {/* Top row: category + kind + add dmg */}
+          <div className="flex flex-wrap items-end gap-3 text-xs">
             <div className="flex flex-col">
-              <label className="text-[10px] text-slate-400">Attack Type</label>
+              <label className="text-[10px] text-slate-400">Action Type</label>
               <select
-                value={row.atk_kind || "melee"}
-                onChange={(e) => onChange({ atk_kind: e.target.value })}
-                className="px-2 py-1 rounded border border-slate-700 bg-white text-slate-900 w-24"
+                value={row.action_type || "action"}
+                onChange={(e) => onChange({ action_type: e.target.value })}
+                className="w-32 px-2 py-1 rounded-md bg-slate-950 border border-slate-700 text-xs text-slate-100"
               >
-                {ATTACK_TYPES.map((k) => <option key={k} value={k}>{k}</option>)}
+                {ACTION_TYPES.map((t) => (
+                  <option key={t.value} value={t.value}>
+                    {t.label}
+                  </option>
+                ))}
               </select>
             </div>
 
-            <label className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                checked={!!row.charges?.has}
-                onChange={(e) => {
-                  const has = e.target.checked;
-                  onChange({
-                    charges: has
-                      ? { has: true, max_charges: row.charges?.max_charges ?? "", reset_amount: row.charges?.reset_amount ?? "full" }
-                      : { has: false }
-                  });
-                }}
-                className="h-4 w-4 accent-orange-500"
-              />
-              <span className="text-xs text-slate-200">Has charges</span>
-            </label>
-
-            <label className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                checked={!!row.save?.has}
-                onChange={(e) => onChange({ save: { ...(row.save||{}), has: e.target.checked } })}
-                className="h-4 w-4 accent-orange-500"
-              />
-              <span className="text-xs text-slate-200">Requires save</span>
-            </label>
+            <div className="flex flex-col">
+              <label className="text-[10px] text-slate-400">Effect Type</label>
+              <select
+                value={kind}
+                onChange={handleKindChange}
+                className="w-40 px-2 py-1 rounded-md bg-slate-950 border border-slate-700 text-xs text-slate-100"
+              >
+                {ACTION_KINDS.map((k) => (
+                  <option key={k.value} value={k.value}>
+                    {k.label}
+                  </option>
+                ))}
+              </select>
+            </div>
 
             <button
               type="button"
               onClick={onAddDamage}
-              className="ml-auto px-3 py-1 rounded-lg border border-slate-600 bg-slate-900 hover:bg-slate-800 text-sm"
+              className="ml-auto px-3 py-1 rounded-lg border border-slate-600 bg-slate-900 hover:bg-slate-800 text-xs text-slate-100"
             >
               Add damage
             </button>
           </div>
 
-          {/* Save details */}
-          {row.save?.has && (
-            <div className="flex flex-wrap gap-3">                       
+          {/* Attack block */}
+          {(kind === "attack" || kind === "attack_and_save") && (
+            <div className="flex flex-wrap gap-3 text-xs">
               <div className="flex flex-col">
-                <label className="text-[10px] text-slate-400">Save Ability</label>
+                <label className="text-[10px] text-slate-400">
+                  Attack type
+                </label>
                 <select
-                  value={row.save.ability || ""}
-                  onChange={(e) => onChange({ save: { ...(row.save||{}), ability: e.target.value, has: true } })}
-                  className="w-30 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
+                  value={row.attack?.attack_type ?? ""}
+                  onChange={(e) =>
+                    onChange({
+                      attack: {
+                        ...(row.attack || {}),
+                        attack_type: e.target.value,
+                      },
+                    })
+                  }
+                  className="w-32 px-2 py-1 rounded-md bg-slate-950 border border-slate-700 text-xs text-slate-100"
                 >
-                  <option value="">Select</option>
-                  {SAVE_ABILITIES.map((a) => <option key={a} value={a}>{a}</option>)}
+                  <option value="">None</option> {/* <--- new default option */}
+                  {ATTACK_TYPES.map((opt) => (
+                    <option key={opt.value} value={opt.value}>
+                      {opt.label}
+                    </option>
+                  ))}
                 </select>
+
+              </div>
+
+              <div className="flex flex-col">
+                <label className="text-[10px] text-slate-400">Hit bonus</label>
+                <input
+                  type="number"
+                  step={1}
+                  value={row.attack?.hit_bonus ?? ""}
+                  onChange={(e) =>
+                    onChange({
+                      attack: {
+                        ...(row.attack || {}),
+                        hit_bonus: e.target.value,
+                      },
+                    })
+                  }
+                  placeholder="+7"
+                  className="w-24 px-2 py-1 rounded-md bg-slate-950 border border-slate-700 text-xs text-slate-100"
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="text-[10px] text-slate-400">
+                  Range / Reach (ft)
+                </label>
+                <input
+                  type="number"
+                  value={row.attack?.range_ft ?? ""}
+                  min={0}
+                  step={5}
+                  onChange={(e) =>
+                    onChange({
+                      attack: {
+                        ...(row.attack || {}),
+                        range_ft: e.target.value,
+                      },
+                    })
+                  }
+                  placeholder="5 or 30/120"
+                  className="w-32 px-2 py-1 rounded-md bg-slate-950 border border-slate-700 text-xs text-slate-100"
+                />
               </div>
             </div>
           )}
 
-          {/* Damage parts */}
-          <div className="space-y-2">
-            {(row.damages || []).map((d) => (
-              <div key={d.id} className="flex flex-wrap items-end gap-2 rounded border border-slate-700 bg-slate-900/60 p-2">
+          {/* Save block */}
+          {(kind === "save" || kind === "attack_and_save") && (
+            <div className="flex flex-wrap gap-3 text-xs">
+              <div className="flex flex-col">
+                <label className="text-[10px] text-slate-400">
+                  Save ability
+                </label>
+               <select
+                  value={row.save?.ability ?? ""}
+                  onChange={(e) =>
+                    onChange({
+                      save: {
+                        ...(row.save || {}),
+                        ability: e.target.value,
+                      },
+                    })
+                  }
+                  className="w-24 px-2 py-1 rounded-md bg-slate-950 border border-slate-700 text-xs text-slate-100"
+                >
+                  <option value="">None</option> {/* <--- new default option */}
+                  {SAVE_ABILITIES.map((ab) => (
+                    <option key={ab} value={ab}>
+                      {ab}
+                    </option>
+                  ))}
+              </select>
+
+              </div>
+              <div className="flex flex-col">
+                <label className="text-[10px] text-slate-400">
+                  Save DC Bonus
+                </label>
+                <input
+                  type="number"
+                  step={1}
+                  value={row.save?.dc_bonus ?? ""}
+                  onChange={(e) =>
+                    onChange({
+                      save: {
+                        ...(row.save || {}),
+                        dc_bonus: toIntOrNull(e.target.value),
+                      },
+                    })
+                  }                 
+                  className="w-20 px-2 py-1 rounded-md bg-slate-950 border border-slate-700 text-xs text-slate-100"
+                />
+              </div>
+            </div>
+          )}
+
+          {/* Charges block */}
+          <div className="flex flex-col gap-2 text-xs border border-slate-800 rounded-md p-2 bg-slate-900/40">
+            <label className="inline-flex items-center gap-2">
+              <input
+                type="checkbox"
+                checked={!!charges.has}
+                onChange={handleHasChargesChange}
+                className="h-3 w-3"
+              />
+              <span className="text-slate-200">Has charges</span>
+            </label>
+
+            {charges.has && (
+              <div className="flex flex-wrap gap-3">
                 <div className="flex flex-col">
-                  <label className="text-[10px] text-slate-400">Dice</label>
-                  <div className="flex items-center gap-1">
-                    <input
-                      type="number"
-                      min={1}
-                      step={1}
-                      value={d.dice_count ?? 1}
-                      onChange={(e) => onChangeDamage(d.id, { dice_count: Math.max(1, Number(e.target.value) || 1) })}
-                      className="w-16 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
-                    />
-                    <span className="text-xs text-slate-300">d</span>
-                    <select
-                      value={d.dice_sides ?? 6}
-                      onChange={(e) => onChangeDamage(d.id, { dice_sides: Number(e.target.value) })}
-                      className="w-20 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
-                    >
-                      {DICE_SIDES.map((n) => <option key={n} value={n}>{n}</option>)}
-                    </select>
-                  </div>
+                  <label className="text-[10px] text-slate-400">
+                    Max charges
+                  </label>
+                  <input
+                    type="number"
+                    min={0}
+                    step={1}
+                    value={charges.max_charges ?? ""}
+                    onChange={handleMaxChange}
+                    className="w-24 px-2 py-1 rounded-md bg-slate-950 border border-slate-700 text-xs text-slate-100"
+                  />
                 </div>
 
                 <div className="flex flex-col">
-                  <label className="text-[10px] text-slate-400">Damage Type</label>
+                  <label className="text-[10px] text-slate-400">
+                    Current charges
+                  </label>
+                  <input
+                    type="number"
+                    min={0}
+                    step={1}
+                    value={charges.current_charges ?? ""}
+                    onChange={handleCurrentChange}
+                    className="w-24 px-2 py-1 rounded-md bg-slate-950 border border-slate-700 text-xs text-slate-100"
+                  />
+                </div>
+
+                <div className="flex flex-col">
+                  <label className="text-[10px] text-slate-400">
+                    Reset amount
+                  </label>
+                  <div className="flex items-center gap-2">
+                    <label className="inline-flex items-center gap-1">
+                      <input
+                        type="checkbox"
+                        checked={fullReset}
+                        onChange={handleFullResetChange}
+                        className="h-3 w-3"
+                      />
+                      <span className="text-slate-200 text-[11px]">
+                        Full reset (= max)
+                      </span>
+                    </label>
+                    <input
+                      type="number"
+                      min={0}
+                      step={1}
+                      value={charges.reset_amount ?? 0}
+                      onChange={handleResetAmountChange}
+                      disabled={fullReset}
+                      className={`w-20 px-2 py-1 rounded-md border text-xs ${
+                        fullReset
+                          ? "bg-slate-900 border-slate-800 text-slate-500"
+                          : "bg-slate-950 border-slate-700 text-slate-100"
+                      }`}
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Damage parts */}
+          <div className="space-y-2 text-xs">
+            {(row.damages || []).map((d) => (
+              <div
+                key={d.id}
+                className="flex flex-wrap items-end gap-2 rounded-md border border-slate-700 bg-slate-900/60 p-2"
+              >
+                {/* Dice count */}
+                <div className="flex flex-col">
+                  <label className="text-[10px] text-slate-400">Dice count</label>
+                  <input
+                    type="number"
+                    step={1}
+                    value={d.dice_count ?? ""}
+                    onChange={(e) =>
+                      onChangeDamage(d.id, { dice_count: toIntOrNull(e.target.value) })
+                    }
+                    placeholder="2"
+                    className="w-16 px-2 py-1 rounded-md bg-slate-950 border border-slate-700 text-xs text-slate-100"
+                  />
+                </div>
+
+                {/* Dice size */}
+                <div className="flex flex-col">
+                  <label className="text-[10px] text-slate-400">Die</label>
                   <select
-                    value={d.dtype ?? "slashing"}
-                    onChange={(e) => onChangeDamage(d.id, { dtype: e.target.value })}
-                    className="w-36 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
+                    value={d.dice_size ?? ""}
+                    onChange={(e) =>
+                      onChangeDamage(d.id, { dice_size: e.target.value })
+                    }
+                    className="w-20 px-2 py-1 rounded-md bg-slate-950 border border-slate-700 text-xs text-slate-100"
                   >
-                    {DAMAGE_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
+                    <option value="">Die</option>
+                    {DAMAGE_DICE_SIZES.map((sz) => (
+                      <option key={sz} value={sz}>
+                        {sz}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Extra mod */}
+                <div className="flex flex-col">
+                  <label className="text-[10px] text-slate-400">Extra mod</label>
+                  <input
+                    type="number"
+                    step={1}
+                    value={d.mod ?? ""}
+                    onChange={(e) =>
+                      onChangeDamage(d.id, { mod: toIntOrNull(e.target.value) })
+                    }
+                    placeholder="+3"
+                    className="w-16 px-2 py-1 rounded-md bg-slate-950 border border-slate-700 text-xs text-slate-100"
+                  />
+                </div>
+
+                {/* Damage type */}
+                <div className="flex flex-col">
+                  <label className="text-[10px] text-slate-400">Damage type</label>
+                  <select
+                    value={d.damage_type ?? ""}
+                    onChange={(e) =>
+                      onChangeDamage(d.id, { damage_type: e.target.value })
+                    }
+                    className="w-32 px-2 py-1 rounded-md bg-slate-950 border border-slate-700 text-xs text-slate-100"
+                  >
+                    <option value="">Select</option>
+                    {DAMAGE_TYPES.map((t) => (
+                      <option key={t} value={t}>
+                        {t}
+                      </option>
+                    ))}
                   </select>
                 </div>
 
@@ -189,7 +710,7 @@ const ActionRow = React.memo(function ActionRow({
                   <button
                     type="button"
                     onClick={() => onRemoveDamage(d.id)}
-                    className="px-2 py-1 rounded border border-red-700 bg-red-900/40 hover:bg-red-900/60 text-red-100 text-sm"
+                    className="px-2 py-1 rounded-md border border-red-700 bg-red-900/40 hover:bg-red-900/60 text-red-100 text-[11px]"
                   >
                     Remove
                   </button>
@@ -198,71 +719,17 @@ const ActionRow = React.memo(function ActionRow({
             ))}
           </div>
 
-          {/* Charges */}
-          {row.charges?.has && (
-            <div className="flex flex-wrap gap-3">
-              <div className="flex flex-col">
-                <label className="text-[10px] text-slate-400">Max Charges</label>
-                <input
-                  type="number"
-                  min={0}
-                  value={row.charges.max_charges ?? ""}
-                  onChange={(e) => {
-                    const raw = e.target.value === "" ? "" : Number(e.target.value);
-                    if (raw !== "" && Number.isNaN(raw)) return;
-                    const nextMax = raw === "" ? "" : Math.max(0, raw);
-                    onChange({ charges: { ...(row.charges||{}), has: true, max_charges: nextMax } });
-                  }}
-                  className="w-24 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
-                />
-              </div>
 
-              <div className="flex flex-col">
-                <label className="text-[10px] text-slate-400">Short Rest Reset</label>
-                <div className="flex items-center gap-2">
-                  <label className="inline-flex items-center gap-1 text-xs">
-                    <input
-                      type="checkbox"
-                      checked={row.charges?.reset_amount === "full"}
-                      onChange={(e) => {
-                        const isFull = e.target.checked;
-                        const prevNum = typeof row.charges?.reset_amount === "number" && row.charges.reset_amount >= 1
-                          ? row.charges.reset_amount : 1;
-                        onChange({ charges: { ...(row.charges||{}), reset_amount: isFull ? "full" : prevNum, has: true } });
-                      }}
-                      className="h-4 w-4 accent-orange-500"
-                    />
-                    Full
-                  </label>
-                  {row.charges?.reset_amount !== "full" && (
-                    <input
-                      type="number"
-                      min={1}
-                      step={1}
-                      value={typeof row.charges?.reset_amount === "number" && row.charges.reset_amount >= 1
-                        ? row.charges.reset_amount : 1}
-                      onChange={(e) => {
-                        const raw = Number(e.target.value);
-                        if (Number.isFinite(raw)) {
-                          onChange({ charges: { ...(row.charges||{}), reset_amount: Math.max(1, Math.trunc(raw)), has: true } });
-                        }
-                      }}
-                      className="w-20 px-2 py-1 rounded border border-slate-700 bg-white text-slate-900"
-                    />
-                  )}
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Description */}
-          <div className="flex flex-col">
-            <label className="text-[10px] text-slate-400">Description</label>
+          {/* Notes */}
+          <div className="flex flex-col text-xs">
+            <label className="text-[10px] text-slate-400">
+              Notes / Description
+            </label>
             <textarea
-              value={row.description ?? ""}
-              onChange={(e) => onChange({ description: e.target.value })}
-              placeholder="Notes, riders, conditions"
-              className="min-h-[80px] rounded border border-slate-700 bg-white text-slate-900 p-2 max-w-[40rem]"
+              value={row.notes ?? ""}
+              onChange={(e) => onChange({ notes: e.target.value })}
+              placeholder="Extra riders, conditions, effects"
+              className="min-h-[60px] rounded-md border border-slate-700 bg-slate-950 text-slate-100 p-2 max-w-[40rem]"
             />
           </div>
 
@@ -270,7 +737,7 @@ const ActionRow = React.memo(function ActionRow({
             <button
               type="button"
               onClick={onRemove}
-              className="px-3 py-1 rounded border border-red-700 bg-red-900/40 hover:bg-red-900/60 text-red-100 text-sm"
+              className="px-3 py-1 rounded-md border border-red-700 bg-red-900/40 hover:bg-red-900/60 text-red-100 text-xs"
             >
               Remove
             </button>
@@ -282,37 +749,23 @@ const ActionRow = React.memo(function ActionRow({
 });
 
 /* ================== Category Card ================== */
+
 const CategoryCard = React.memo(function CategoryCard({
   title,
-  categoryKey,
   rows,
   openById,
   onToggleOpen,
-  onAdd,
-  onRemove,
   onChangeRow,
+  onRemoveRow,
   onAddDamage,
   onChangeDamage,
   onRemoveDamage,
 }) {
-  return (
-    <section className="rounded-2xl border border-slate-700 bg-slate-800/40 p-4 space-y-3">
-      <header className="flex items-center justify-between">
-        <h3 className="text-lg font-semibold text-orange-300">
-          {title} {rows.length > 0 ? <span className="text-slate-400 text-sm">({rows.length})</span> : null}
-        </h3>
-        <button
-          type="button"
-          onClick={() => onAdd(categoryKey)}
-          className="px-3 py-1.5 rounded-lg border border-slate-600 bg-slate-900 hover:bg-slate-800 transition"
-        >
-          Add
-        </button>
-      </header>
+  if (!rows.length) return null; // hide empty section
 
-      {rows.length === 0 && (
-        <p className="text-slate-400 text-sm">No {title.toLowerCase()} yet. Click “Add”.</p>
-      )}
+  return (
+    <section className="space-y-2">
+      <h4 className="text-slate-300 text-sm font-semibold">{title}</h4>
 
       <div className="space-y-3">
         {rows.map((row) => (
@@ -321,11 +774,13 @@ const CategoryCard = React.memo(function CategoryCard({
             row={row}
             open={!!openById[row.id]}
             onToggleOpen={() => onToggleOpen(row.id)}
-            onChange={(patch) => onChangeRow(categoryKey, row.id, patch)}
-            onRemove={() => onRemove(categoryKey, row.id)}
-            onAddDamage={() => onAddDamage(categoryKey, row.id)}
-            onChangeDamage={(dmgId, patch) => onChangeDamage(categoryKey, row.id, dmgId, patch)}
-            onRemoveDamage={(dmgId) => onRemoveDamage(categoryKey, row.id, dmgId)}
+            onChange={(patch) => onChangeRow(row.id, patch)}
+            onRemove={() => onRemoveRow(row.id)}
+            onAddDamage={() => onAddDamage(row.id)}
+            onChangeDamage={(dmgId, patch) =>
+              onChangeDamage(row.id, dmgId, patch)
+            }
+            onRemoveDamage={(dmgId) => onRemoveDamage(row.id, dmgId)}
           />
         ))}
       </div>
@@ -333,16 +788,16 @@ const CategoryCard = React.memo(function CategoryCard({
   );
 });
 
-/* ================== MAIN PAGE ================== */
+/* ================== MAIN ================== */
+
 export default function Effects() {
   const { charData, updateCharField, postCharData } = useCharStore();
   if (!charData) return null;
 
-  // Expect the new shape already
-  const model = useMemo(
-    () => ({ ...DEFAULT_EFFECTS, ...(charData.effects || {}) }),
-    [charData?.effects]
-  );
+  const actions = useMemo(() => {
+    const src = charData.effects;
+    return Array.isArray(src) ? src : [];
+  }, [charData?.effects]);
 
   const [openById, setOpenById] = useState({});
   const toggleOpen = useCallback((id) => {
@@ -365,114 +820,151 @@ export default function Effects() {
     [updateCharField, postCharData, debouncedPost]
   );
 
-  // Add / Remove
-  const addRow = useCallback((categoryKey) => {
-    const row = {
-      id: `${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
-      name: "",
-      atk_kind: "melee",                 // new
-      damages: [],                       // [{ dice_count, dice_sides, dtype }]
-      save: { has: false, ability: "" },
-      charges: { has: false, max_charges: "", reset_amount: "full" },
-      description: "",
-    };
-    const next = { ...model, [categoryKey]: [...(model[categoryKey] || []), row] };
+  /* ---- flat actions mutations ---- */
+
+  const addEffect = useCallback(() => {
+    const row = createDefaultAction("action");
+    const next = [...actions, row];
     persist(next, { immediate: true });
     setOpenById((prev) => ({ ...prev, [row.id]: true }));
-  }, [model, persist]);
+  }, [actions, persist]);
 
+  const removeRow = useCallback(
+    (id) => {
+      const next = actions.filter((a) => a.id !== id);
+      persist(next, { immediate: true });
+      setOpenById((prev) => {
+        const copy = { ...prev };
+        delete copy[id];
+        return copy;
+      });
+    },
+    [actions, persist]
+  );
 
-  const removeRow = useCallback((categoryKey, id) => {
-    const next = { ...model, [categoryKey]: (model[categoryKey] || []).filter((r) => r.id !== id) };
-    persist(next, { immediate: true });
-    setOpenById((prev) => {
-      const copy = { ...prev };
-      delete copy[id];
-      return copy;
-    });
-  }, [model, persist]);
+  const changeRow = useCallback(
+    (id, patch) => {
+      const next = actions.map((a) =>
+        a.id === id ? { ...a, ...patch } : a
+      );
+      persist(next); // debounced
+    },
+    [actions, persist]
+  );
 
-  const changeRow = useCallback((categoryKey, id, patch) => {
-    const next = {
-      ...model,
-      [categoryKey]: (model[categoryKey] || []).map((r) => (r.id === id ? { ...r, ...patch } : r)),
-    };
-    persist(next); // debounced
-  }, [model, persist]);
-
-  // Damage parts mutations
-  const addDamagePartTo = useCallback((categoryKey, actionId) => {
-    const next = {
-      ...model,
-      [categoryKey]: (model[categoryKey] || []).map((a) =>
-        a.id === actionId ? { ...a, damages: [...(a.damages || []), newDamagePart()] } : a
-      ),
-    };
-    persist(next, { immediate: true });
-  }, [model, persist]);
-
-  const changeDamagePart = useCallback((categoryKey, actionId, dmgId, patch) => {
-    const next = {
-      ...model,
-      [categoryKey]: (model[categoryKey] || []).map((a) =>
-        a.id === actionId
-          ? { ...a, damages: (a.damages || []).map((d) => (d.id === dmgId ? { ...d, ...patch } : d)) }
+  const addDamageToRow = useCallback(
+    (id) => {
+      const next = actions.map((a) =>
+        a.id === id
+          ? { ...a, damages: [...(a.damages || []), createDefaultDamage()] }
           : a
-      ),
-    };
-    persist(next); // debounced
-  }, [model, persist]);
+      );
+      persist(next, { immediate: true });
+    },
+    [actions, persist]
+  );
 
-  const removeDamagePart = useCallback((categoryKey, actionId, dmgId) => {
-    const next = {
-      ...model,
-      [categoryKey]: (model[categoryKey] || []).map((a) =>
-        a.id === actionId ? { ...a, damages: (a.damages || []).filter((d) => d.id !== dmgId) } : a
-      ),
-    };
-    persist(next, { immediate: true });
-  }, [model, persist]);
+  const changeDamage = useCallback(
+    (id, dmgId, patch) => {
+      const next = actions.map((a) =>
+        a.id === id
+          ? {
+              ...a,
+              damages: (a.damages || []).map((d) =>
+                d.id === dmgId ? { ...d, ...patch } : d
+              ),
+            }
+          : a
+      );
+      persist(next); // debounced
+    },
+    [actions, persist]
+  );
+
+  const removeDamageFromRow = useCallback(
+    (id, dmgId) => {
+      const next = actions.map((a) =>
+        a.id === id
+          ? {
+              ...a,
+              damages: (a.damages || []).filter((d) => d.id !== dmgId),
+            }
+          : a
+      );
+      persist(next, { immediate: true });
+    },
+    [actions, persist]
+  );
+
+  const collapseAll = useCallback(() => {
+    setOpenById((_) => {
+      const next = {};
+      for (const a of actions) next[a.id] = false;
+      return next;
+    });
+  }, [actions]);
+
+  const grouped = useMemo(
+    () => ({
+      actions: actions.filter((a) => (a.action_type || "action") === "action"),
+      bonus_actions: actions.filter((a) => a.action_type === "bonus_action"),
+      reactions: actions.filter((a) => a.action_type === "reaction"),
+    }),
+    [actions]
+  );
 
   return (
-    <div className="w-full max-w-6xl mx-auto space-y-6">
+    <div className="w-full space-y-4">
+      {/* Global controls */}
+      <div className="flex items-center justify-between">
+        <button
+          type="button"
+          onClick={addEffect}
+          className="px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-900 hover:bg-slate-800 text-xs text-slate-100"
+        >
+          Add effect
+        </button>
+        <button
+          type="button"
+          onClick={collapseAll}
+          className="px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-900 hover:bg-slate-800 text-xs text-slate-100"
+        >
+          Collapse all
+        </button>
+      </div>
+
       <CategoryCard
         title="Actions"
-        categoryKey="actions"
-        rows={model.actions}
+        rows={grouped.actions}
         openById={openById}
         onToggleOpen={toggleOpen}
-        onAdd={addRow}
-        onRemove={removeRow}
         onChangeRow={changeRow}
-        onAddDamage={addDamagePartTo}
-        onChangeDamage={changeDamagePart}
-        onRemoveDamage={removeDamagePart}
+        onRemoveRow={removeRow}
+        onAddDamage={addDamageToRow}
+        onChangeDamage={changeDamage}
+        onRemoveDamage={removeDamageFromRow}
       />
       <CategoryCard
         title="Bonus Actions"
-        categoryKey="bonus_actions"
-        rows={model.bonus_actions}
+        rows={grouped.bonus_actions}
         openById={openById}
         onToggleOpen={toggleOpen}
-        onAdd={addRow}
-        onRemove={removeRow}
         onChangeRow={changeRow}
-        onAddDamage={addDamagePartTo}
-        onChangeDamage={changeDamagePart}
-        onRemoveDamage={removeDamagePart}
+        onRemoveRow={removeRow}
+        onAddDamage={addDamageToRow}
+        onChangeDamage={changeDamage}
+        onRemoveDamage={removeDamageFromRow}
       />
       <CategoryCard
         title="Reactions"
-        categoryKey="reactions"
-        rows={model.reactions}
+        rows={grouped.reactions}
         openById={openById}
         onToggleOpen={toggleOpen}
-        onAdd={addRow}
-        onRemove={removeRow}
         onChangeRow={changeRow}
-        onAddDamage={addDamagePartTo}
-        onChangeDamage={changeDamagePart}
-        onRemoveDamage={removeDamagePart}
+        onRemoveRow={removeRow}
+        onAddDamage={addDamageToRow}
+        onChangeDamage={changeDamage}
+        onRemoveDamage={removeDamageFromRow}
       />
     </div>
   );

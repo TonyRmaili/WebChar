@@ -1,27 +1,45 @@
-# Play Area
+# Overall
+1. Collapse right area? 
 
-1. max hp modifier for aid / drain effects - Healthplay
-2. slight bug with current_charges not matching max_charges on creating action. it cant increase but can decrease on chaning max. Fixed?
-4. Really compact all visible effects, traits, spells etc
-5. Collapse right area to the right? 
-6. Add a Unit Manager were player can create summons with hp, ac etc and also a number
 
+# Define / rightside
 # GeneralStats
 1. senses ; blind, tremor, true, darkvision
 
-
 # AbilityScores
 1. Improve design for both skill and ability boxes
-2. May be bugs
 
 
-# Spells
-1. Spell area and its components needs to be more compact, way to much deadspace
-2. Collapsable spell categories
+
+# Play (Interact) / leftside
+# HealthPlay
+1. max hp modifier for aid / drain effects - Healthplay
+2. Minor tweaks to GUI 
 
 
-# Effects
-1. Perhaps let Traits, Items and Spell handle and define effects
+# UnitsPlay
+1. Create units such as summons and followers etc
+2. make windows or large collapsables?
+3. pipe in dice tower
+4. connect to rest logic
+
+
+# EffectsPlay
+1. include the mods from base for atks and saves and use total from defined effect
+2. remove notes, only allow hover over for notes
+3. improve damage display - categories by damage type and combine all same terms (const, dX )
+
+
+
+# Spellsplay
+1. Better Cards
+
+# ChargesPlay
+1. combine with spells play and effectsplay?
+
+
+
+
 
 # init tracker
 1. store init tracker values in storage so that i navigating in the site dont reset the tracker
@@ -38,7 +56,8 @@
 
 
 # Dice Tower
-1. Not even started 
+1. An importable box that can open anywere in the page
+2. 
 
 
 # monster improvment

@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo } from "react";
 import useCharStore from "../store/CharStore";
+import OffenseCard from "./miniComp/OffenseCard";
 
 /* ---------- Hit dice defaults ---------- */
 const DIE_OPTIONS = ["d4", "d6", "d8", "d10", "d12","d20"];
@@ -315,7 +316,7 @@ export default function GeneralStats() {
                     <button
                       type="button"
                       onClick={() => removeSpeed(s.type)}
-                      className="rounded-lg border border-red-700 bg-red-900/40 hover:bg-red-900/60 text-red-100 "
+                      className="rounded-lg border border-red-700 bg-red-900/40 hover:bg-red-900/60 text-red-100"
                       title={`Remove ${s.type}`}
                     >
                       Remove
@@ -327,6 +328,12 @@ export default function GeneralStats() {
           </div>
         </div>
       </div>
+
+      {/* Offense block */}
+      <section className="rounded-2xl border border-slate-700 bg-slate-800/40 p-3 space-y-2">
+        <h3 className="text-sm font-semibold text-slate-200 mb-1">Offense</h3>
+        <OffenseCard charData={charData} postCharData={postCharData} updateCharField={updateCharField} />
+      </section>
 
       {/* Classes header */}
       <div className="space-y-3">
@@ -503,6 +510,7 @@ export default function GeneralStats() {
           </div>
         </div>
       </div>
+
     </div>
   );
 }
