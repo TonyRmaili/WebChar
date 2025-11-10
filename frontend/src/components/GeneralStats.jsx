@@ -3,7 +3,7 @@ import useCharStore from "../store/CharStore";
 import OffenseCard from "./miniComp/OffenseCard";
 
 /* ---------- Hit dice defaults ---------- */
-const DIE_OPTIONS = ["d4", "d6", "d8", "d10", "d12","d20"];
+const DIE_OPTIONS = ["d4", "d6", "d8", "d10", "d12", "d20"];
 
 // Category-first for quick listing, plus a lookup map for O(1) resolution.
 const HD_BY_CLASS = Object.freeze({
@@ -34,7 +34,8 @@ const calcPbStandard = (lvl) => {
 
 // Helpers
 const canon = (s) => (typeof s === "string" ? s.trim().toLowerCase() : "");
-const isValidDie = (d) => typeof d === "string" && /^d(4|6|8|10|12|20)$/i.test(d);
+const isValidDie = (d) =>
+  typeof d === "string" && /^d(4|6|8|10|12|20)$/i.test(d);
 
 /** Auto-fill hit_dice from class unless the row is overridden or user set a custom class */
 const autofillDieForClass = (row) => {
@@ -43,7 +44,6 @@ const autofillDieForClass = (row) => {
   if (!out.hit_dice_overridden) {
     const def = CLASS_TO_DIE[key];
     if (def) out.hit_dice = def; // default class
-    // else: custom class → require user to set hit_dice manually; leave as-is
   }
   return out;
 };
@@ -52,18 +52,21 @@ const autofillDieForClass = (row) => {
 const summarizeHitDice = (rows) => {
   const totals = {};
   for (const r of rows) {
-  const lvl = Number(r.level) || 0;
-  const die = r.hit_dice ? r.hit_dice.toLowerCase() : "";
+    const lvl = Number(r.level) || 0;
+    const die = r.hit_dice ? r.hit_dice.toLowerCase() : "";
     if (!lvl || !isValidDie(die)) continue;
     const max = (totals[die]?.max || 0) + lvl;
     totals[die] = { max, current: max }; // initialize current = max
   }
   return totals; // e.g. { d8: {max:5,current:5}, d10:{max:4,current:4} }
- };
-
+};
 
 export default function GeneralStats() {
-  const { charData, updateCharField, postCharData } = useCharStore();
+  // --- ZUSTAND SELECTORS ---
+  const charData = useCharStore((s) => s.charData);
+  const updateCharField = useCharStore((s) => s.updateCharField);
+  const postCharData = useCharStore((s) => s.postCharData);
+
   if (!charData) return null;
 
   /* classes */
@@ -73,7 +76,8 @@ export default function GeneralStats() {
   const totalLevel = useMemo(
     () =>
       classes.reduce(
-        (sum, r) => sum + (Number.isFinite(Number(r.level)) ? Number(r.level) : 0),
+        (sum, r) =>
+          sum + (Number.isFinite(Number(r.level)) ? Number(r.level) : 0),
         0
       ),
     [classes]
@@ -113,7 +117,13 @@ export default function GeneralStats() {
 
   /* health */
   const health = useMemo(
-    () => ({ current_hp: 0, max_hp: 0, temp_hp: 0, barrier: 0, ...(charData.health || {}) }),
+    () => ({
+      current_hp: 0,
+      max_hp: 0,
+      temp_hp: 0,
+      barrier: 0,
+      ...(charData.health || {}),
+    }),
     [charData?.health]
   );
 
@@ -127,21 +137,29 @@ export default function GeneralStats() {
 
   /* speed */
   const speeds = useMemo(
-    () => (Array.isArray(charData?.speed) ? charData.speed : [{ type: "walk", value: 0, unit: "ft" }]),
+    () =>
+      Array.isArray(charData?.speed)
+        ? charData.speed
+        : [{ type: "walk", value: 0, unit: "ft" }],
     [charData?.speed]
   );
 
   const normalizeSpeed = (arr) => {
     const unitized = arr.map((s) => ({ unit: "ft", ...s }));
     const hasWalk = unitized.some((s) => s.type === "walk");
-    return hasWalk ? unitized : [{ type: "walk", value: 0, unit: "ft" }, ...unitized];
+    return hasWalk
+      ? unitized
+      : [{ type: "walk", value: 0, unit: "ft" }, ...unitized];
   };
 
   const upsertSpeed = (type) => {
     const exists = speeds.some((s) => s.type === type);
     const next = exists
       ? speeds
-      : [...speeds, { type, value: 0, unit: "ft", ...(type === "fly" ? { hover: false } : {}) }];
+      : [
+          ...speeds,
+          { type, value: 0, unit: "ft", ...(type === "fly" ? { hover: false } : {}) },
+        ];
     updateCharField("speed", normalizeSpeed(next));
     postCharData();
   };
@@ -162,7 +180,9 @@ export default function GeneralStats() {
   };
 
   const toggleHover = (idx) => {
-    const next = speeds.map((s, i) => (i === idx ? { ...s, hover: !s.hover } : s));
+    const next = speeds.map((s, i) =>
+      i === idx ? { ...s, hover: !s.hover } : s
+    );
     updateCharField("speed", normalizeSpeed(next));
     postCharData();
   };
@@ -174,8 +194,8 @@ export default function GeneralStats() {
       class_name: "",
       subclass: "",
       level: "",
-      hit_dice: "",              // will fill when class chosen, or user sets manually
-      hit_dice_overridden: false // mark if user customizes die
+      hit_dice: "",
+      hit_dice_overridden: false,
     };
     updateCharField("classes", [...classes, newRow]);
     postCharData();
@@ -197,12 +217,11 @@ export default function GeneralStats() {
         return autofillDieForClass(updated);
       }
       if (key === "hit_dice") {
-        // Any manual edit becomes an override flag. Validate die shape lightly.
         const v = value.trim();
         return {
           ...r,
           hit_dice: v,
-          hit_dice_overridden: true
+          hit_dice_overridden: true,
         };
       }
       if (key === "hit_dice_overridden") {
@@ -235,7 +254,9 @@ export default function GeneralStats() {
       {/* Core stats */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="flex flex-col">
-          <label htmlFor="ac" className="mb-1 text-slate-300 text-xs font-semibold">Armor Class</label>
+          <label htmlFor="ac" className="mb-1 text-slate-300 text-xs font-semibold">
+            Armor Class
+          </label>
           <input
             type="number"
             id="ac"
@@ -243,7 +264,10 @@ export default function GeneralStats() {
             value={charData?.ac ?? ""}
             onChange={(e) => {
               const num = e.target.value === "" ? 0 : Number(e.target.value);
-              if (Number.isFinite(num)) { updateCharField("ac", num); postCharData(); }
+              if (Number.isFinite(num)) {
+                updateCharField("ac", num);
+                postCharData();
+              }
             }}
             className="px-2 py-1 border rounded text-slate-900"
             min={0}
@@ -251,7 +275,9 @@ export default function GeneralStats() {
         </div>
 
         <div className="flex flex-col">
-          <label htmlFor="max_hp" className="mb-1 text-slate-300 text-xs font-semibold">Max HP</label>
+          <label htmlFor="max_hp" className="mb-1 text-slate-300 text-xs font-semibold">
+            Max HP
+          </label>
           <input
             type="number"
             id="max_hp"
@@ -282,7 +308,10 @@ export default function GeneralStats() {
 
           <div className="space-y-2">
             {speeds.map((s, idx) => (
-              <div key={`${s.type}_${idx}`} className="flex flex-wrap items-center gap-3 rounded-lg border border-slate-700 bg-slate-900/60 p-3">
+              <div
+                key={`${s.type}_${idx}`}
+                className="flex flex-wrap items-center gap-3 rounded-lg border border-slate-700 bg-slate-900/60 p-3"
+              >
                 <span className="min-w-20 capitalize">{s.type}</span>
 
                 <input
@@ -306,7 +335,11 @@ export default function GeneralStats() {
 
                 {s.type === "fly" && (
                   <label className="flex items-center gap-2 text-sm">
-                    <input type="checkbox" checked={!!s.hover} onChange={() => toggleHover(idx)} />
+                    <input
+                      type="checkbox"
+                      checked={!!s.hover}
+                      onChange={() => toggleHover(idx)}
+                    />
                     hover
                   </label>
                 )}
@@ -332,10 +365,14 @@ export default function GeneralStats() {
       {/* Offense block */}
       <section className="rounded-2xl border border-slate-700 bg-slate-800/40 p-3 space-y-2">
         <h3 className="text-sm font-semibold text-slate-200 mb-1">Offense</h3>
-        <OffenseCard charData={charData} postCharData={postCharData} updateCharField={updateCharField} />
+        <OffenseCard
+          charData={charData}
+          postCharData={postCharData}
+          updateCharField={updateCharField}
+        />
       </section>
 
-      {/* Classes header */}
+     {/* Classes header */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
           <div className="flex-1 grid grid-cols-1 sm:grid-cols-5 gap-2">

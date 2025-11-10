@@ -16,6 +16,21 @@ export default function OffenseCard({ charData, updateCharField, postCharData })
   const offense = useMemo(() => {
     const base = typeof charData.offense === "object" ? charData.offense : {};
 
+    const rawSaveDcs =
+      base.save_dcs && typeof base.save_dcs === "object" ? base.save_dcs : {};
+
+    const normalizedSaveDcs = {};
+    for (const ab of ABILITIES) {
+      const key = `save_${ab}`;
+      const row = rawSaveDcs[key] || {};
+      normalizedSaveDcs[key] = {
+        base: row.base || ab,
+        mod: toInt(row.mod ?? 0),
+        total: toInt(row.total ?? 0),
+        active: !!row.active,
+      };
+    }
+
     const normalized = {
       melee: {
         base: "str",
@@ -35,31 +50,16 @@ export default function OffenseCard({ charData, updateCharField, postCharData })
         total: 0,
         ...(base.spell || {}),
       },
-      save_dcs: {},
+      save_dcs: normalizedSaveDcs,
     };
-
-    const rawSaveDcs =
-      base.save_dcs && typeof base.save_dcs === "object" ? base.save_dcs : {};
-
-    const entries = Object.entries(rawSaveDcs);
-    if (entries.length === 0) {
-      normalized.save_dcs.save_1 = { base: "cha", mod: 0, total: 0 };
-    } else {
-      for (const [k, v] of entries) {
-        normalized.save_dcs[k] = {
-          base: v?.base ?? "cha",
-          mod: toInt(v?.mod ?? 0),
-          total: toInt(v?.total ?? 0),
-        };
-      }
-    }
 
     return normalized;
   }, [charData.offense]);
 
   // ---------- normalize initiative ----------
   const initiative = useMemo(() => {
-    const base = typeof charData.initiative === "object" ? charData.initiative : {};
+    const base =
+      typeof charData.initiative === "object" ? charData.initiative : {};
     const mod = toInt(base.mod ?? 0);
     const total = dexMod + mod;
     return { mod, total };
@@ -89,17 +89,15 @@ export default function OffenseCard({ charData, updateCharField, postCharData })
     calcAttack("ranged");
     calcAttack("spell");
 
-    const rawSaveDcs =
-      result.save_dcs && typeof result.save_dcs === "object"
-        ? result.save_dcs
-        : {};
-
     const newSaveDcs = {};
-    for (const [key, row] of Object.entries(rawSaveDcs)) {
-      const base = row?.base ?? "cha";
-      const mod = toInt(row?.mod ?? 0);
+    for (const ab of ABILITIES) {
+      const key = `save_${ab}`;
+      const row = (result.save_dcs && result.save_dcs[key]) || {};
+      const base = row.base || ab;
+      const mod = toInt(row.mod ?? 0);
+      const active = !!row.active;
       const total = 8 + pb + mod + abilMod(base);
-      newSaveDcs[key] = { ...row, base, mod, total };
+      newSaveDcs[key] = { ...row, base, mod, active, total };
     }
     result.save_dcs = newSaveDcs;
 
@@ -123,46 +121,23 @@ export default function OffenseCard({ charData, updateCharField, postCharData })
     writeOffense(next);
   };
 
-  const setSaveRow = (saveKey, key, val) => {
+  const setSaveRow = (saveKey, field, val) => {
     const currentSaves = offense.save_dcs || {};
+    const existing = currentSaves[saveKey] || {};
+
+    let nextValue = val;
+    if (field === "mod") nextValue = toInt(val);
+    if (field === "active") nextValue = !!val;
+
     const next = {
       ...offense,
       save_dcs: {
         ...currentSaves,
         [saveKey]: {
-          ...currentSaves[saveKey],
-          [key]: key === "mod" ? toInt(val) : val,
+          ...existing,
+          [field]: nextValue,
         },
       },
-    };
-    writeOffense(next);
-  };
-
-  const addSaveDc = () => {
-    const currentSaves = offense.save_dcs || {};
-    const nums = Object.keys(currentSaves)
-      .filter((k) => /^save_\d+$/.test(k))
-      .map((k) => Number(k.split("_").pop()));
-    const nextIdx = nums.length ? Math.max(...nums) + 1 : 1;
-    const saveKey = `save_${nextIdx}`;
-    const next = {
-      ...offense,
-      save_dcs: {
-        ...currentSaves,
-        [saveKey]: { base: "cha", mod: 0, total: 0 },
-      },
-    };
-    writeOffense(next);
-  };
-
-  const removeSaveDc = (saveKey) => {
-    const currentSaves = offense.save_dcs || {};
-    const keys = Object.keys(currentSaves);
-    if (keys.length <= 1) return;
-    const { [saveKey]: _, ...rest } = currentSaves;
-    const next = {
-      ...offense,
-      save_dcs: rest,
     };
     writeOffense(next);
   };
@@ -173,14 +148,6 @@ export default function OffenseCard({ charData, updateCharField, postCharData })
     updateCharField("initiative", { mod, total });
     postCharData();
   };
-
-  const saveKeys = useMemo(
-    () =>
-      Object.keys(offense.save_dcs || {})
-        .filter((k) => /^save_\d+$/.test(k))
-        .sort((a, b) => Number(a.split("_").pop()) - Number(b.split("_").pop())),
-    [offense.save_dcs]
-  );
 
   return (
     <div className="flex flex-col gap-2 text-slate-100 text-xs">
@@ -282,56 +249,60 @@ export default function OffenseCard({ charData, updateCharField, postCharData })
         {/* vertical divider between Attacks and Save */}
         <div className="self-stretch w-px bg-amber-700/70 mx-1" />
 
-        {/* Save DCs */}
-        <div className="flex flex-col gap-1">
-          <div className="flex items-center gap-2">
-            <button
-              onClick={addSaveDc}
-              className="rounded border border-slate-600 bg-slate-800 px-2 py-0.5 text-[10px]"
-            >
-              + Save DC
-            </button>
-          </div>
+        {/* Save DCs: 2 columns x 3 rows */}
+        <div className="flex flex-col gap-1">          
+          <div className="grid grid-cols-2 gap-1">
+            {ABILITIES.map((ab) => {
+              const key = `save_${ab}`;
+              const row =
+                offense.save_dcs[key] || {
+                  base: ab,
+                  mod: 0,
+                  total: 0,
+                  active: false,
+                };
+              const labelBase =
+                ab.charAt(0).toUpperCase() + ab.slice(1); // str -> Str
 
-          {saveKeys.map((key) => {
-            const row = offense.save_dcs[key];
-            return (
-              <div key={key} className="flex items-center gap-1">
-                <select
-                  value={row.base}
-                  onChange={(e) => setSaveRow(key, "base", e.target.value)}
-                  className="text-slate-700 rounded border border-slate-600 w-16 px-1 py-0.5 text-xs"
+              return (
+                <div
+                  key={key}
+                  className="flex items-center gap-1 rounded border border-slate-600 bg-slate-900/60 px-1 py-0.5"
                 >
-                  {ABILITIES.map((opt) => (
-                    <option key={opt} value={opt}>
-                      {opt}
-                    </option>
-                  ))}
-                </select>
-                <input
-                  type="number"
-                  step="1"
-                  value={row.mod}
-                  onChange={(e) => setSaveRow(key, "mod", e.target.value)}
-                  className="text-slate-700 rounded border border-slate-600 w-10 px-1 py-0.5 text-xs"
-                />
-                <p>=</p>
-                <input
-                  type="number"
-                  value={saveTotal(row)}
-                  disabled
-                  className="rounded border border-amber-500 w-10 px-1 py-0.5 bg-amber-300 text-slate-900 text-xs font-semibold"
-                />
-                <button
-                  onClick={() => removeSaveDc(key)}
-                  className="rounded border border-slate-600 px-1.5 py-0.5 text-[10px]"
-                  title="Remove"
-                >
-                  ✕
-                </button>
-              </div>
-            );
-          })}
+                  <input
+                    type="checkbox"
+                    className="h-3 w-3"
+                    checked={!!row.active}
+                    onChange={(e) => setSaveRow(key, "active", e.target.checked)}
+                  />
+                  <div className="flex-1 flex flex-col gap-0.5">
+                    <div className="text-[10px]">
+                      <span className="text-amber-500 font-semibold">
+                        {labelBase}
+                      </span>
+                      <span className="ml-0.5 text-slate-200">SaveDC</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <input
+                        type="number"
+                        readOnly
+                        value={saveTotal(row)}
+                        className="w-10 px-1 py-0.5 rounded border border-amber-500 bg-amber-300 text-slate-900 text-[10px] font-semibold text-center"
+                      />
+                      <input
+                        type="number"
+                        value={row.mod}
+                        onChange={(e) =>
+                          setSaveRow(key, "mod", e.target.value)
+                        }
+                        className="w-10 px-1 py-0.5 rounded border border-slate-600 bg-white text-slate-900 text-[10px] text-center"
+                      />
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
 
         {/* vertical divider between Save and Init */}

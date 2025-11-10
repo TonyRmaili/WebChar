@@ -1,21 +1,8 @@
 import React, { useEffect, useMemo, useCallback } from "react";
 import useCharStore from "../store/CharStore";
 
-const ACTION_TYPE_LABELS = {
-  action: "Action",
-  bonus_action: "Bonus Action",
-  reaction: "Reaction",
-};
-
-const toIntOrNull = (v) => {
-  if (v === "" || v == null) return null;
-  const n = parseInt(v, 10);
-  return Number.isFinite(n) ? n : null;
-};
-
-/* --- summarizers, aligned with your edit UI --- */
-
-const summarizeDamage = (row) => {
+/* --- helper, not used directly for display anymore --- */
+const summarizeDamageRaw = (row) => {
   const list = (row.damages || [])
     .map((d) => {
       const dicePart =
@@ -25,9 +12,7 @@ const summarizeDamage = (row) => {
 
       const modNum = Number(d.mod);
       const hasMod = Number.isFinite(modNum) && modNum !== 0;
-      const modPart = hasMod
-        ? `${modNum > 0 ? "+" : ""}${modNum}`
-        : "";
+      const modPart = hasMod ? `${modNum > 0 ? "+" : ""}${modNum}` : "";
 
       const base = [dicePart, modPart].filter(Boolean).join("");
 
@@ -48,7 +33,6 @@ const summarizeAttack = (row) => {
 
   const parts = [];
   if (type) {
-    // Capitalize first
     parts.push(type.charAt(0).toUpperCase() + type.slice(1));
   }
   if (range) parts.push(`${range} ft`);
@@ -56,33 +40,118 @@ const summarizeAttack = (row) => {
   return parts.join(" • ");
 };
 
-const summarizeSave = (row) => {
-  const ability = row.save?.ability;
-  const dcBonus = row.save?.dc_bonus;
-
-  const n = Number(dcBonus);
-  const hasBonus = Number.isFinite(n) && n !== 0;
-
-  if (!ability && !hasBonus) return "";
-
-  if (ability && hasBonus) {
-    const bonusStr = n > 0 ? `+${n}` : `${n}`;
-    return `${ability} save DC ${bonusStr}`;
-  }
-  if (ability) return `${ability} save`;
-  // no ability, only bonus
-  const bonusStr = n > 0 ? `+${n}` : `${n}`;
-  return `Save DC ${bonusStr}`;
-};
-
 export default function EffectsPlay() {
-  const { charData, updateCharField, postCharData } = useCharStore();
+  // --- Zustand selectors ---
+  const charData = useCharStore((s) => s.charData);
+  const updateCharField = useCharStore((s) => s.updateCharField);
+  const postCharData = useCharStore((s) => s.postCharData);
+
   if (!charData) return null;
 
   const effects = useMemo(() => {
     const src = charData.effects;
     return Array.isArray(src) ? src : [];
   }, [charData?.effects]);
+
+  const offense = charData.offense || {};
+  const saveDcs = offense.save_dcs || {};
+  const abilityScores = charData.ability_scores || {};
+  const pb = Number(charData.pb?.total ?? 0);
+
+  const getAbilityMod = useCallback(
+    (ability) => {
+      if (!ability) return 0;
+      const key = String(ability).toLowerCase();
+      const raw = abilityScores[key]?.mod;
+      const n = Number(raw);
+      return Number.isFinite(n) ? n : 0;
+    },
+    [abilityScores]
+  );
+
+  const getAttackAbilityModByType = useCallback(
+    (attackType) => {
+      const type = String(attackType || "").toLowerCase();
+      const row = offense[type] || {};
+      let base = row.base;
+      if (!base) {
+        if (type === "ranged") base = "dex";
+        else if (type === "spell") base = "cha";
+        else base = "str";
+      }
+      return getAbilityMod(base);
+    },
+    [offense, getAbilityMod]
+  );
+
+  // Total to-hit = PB + abilityMod(from offense.base) + global atk mod + effect's own hit bonus
+  const getToHit = useCallback(
+    (row) => {
+      const atk = row.attack || {};
+      const type = String(atk.attack_type || "").toLowerCase();
+
+      const typeRow = offense[type] || {};
+      let baseAbility = typeRow.base;
+      if (!baseAbility) {
+        if (type === "ranged") baseAbility = "dex";
+        else if (type === "spell") baseAbility = "cha";
+        else baseAbility = "str";
+      }
+
+      const abilityMod = getAbilityMod(baseAbility);
+      const globalModNum = Number(typeRow.mod);
+      const globalMod = Number.isFinite(globalModNum) ? globalModNum : 0;
+
+      const hitBonusNum = Number(atk.hit_bonus);
+      const effectBonus = Number.isFinite(hitBonusNum) ? hitBonusNum : 0;
+
+      const total = pb + abilityMod + globalMod + effectBonus;
+      if (!Number.isFinite(total)) return null;
+      return total;
+    },
+    [offense, pb, getAbilityMod]
+  );
+
+  // Damage summary with ability mod added to first damage entry
+  const summarizeDamageWithAttack = useCallback(
+    (row) => {
+      const damages = row.damages || [];
+      if (!damages.length) return "";
+
+      const atkType = row.attack?.attack_type || "";
+      const abilityBonus = atkType
+        ? getAttackAbilityModByType(atkType)
+        : 0;
+
+      const parts = damages
+        .map((d, idx) => {
+          const dicePart =
+            d.dice_count && d.dice_size
+              ? `${d.dice_count}${d.dice_size}`
+              : d.dice_size || "";
+
+          let baseMod = Number(d.mod);
+          if (!Number.isFinite(baseMod)) baseMod = 0;
+          const effectiveMod = idx === 0 ? baseMod + abilityBonus : baseMod;
+
+          const hasMod = effectiveMod !== 0;
+          const modPart = hasMod
+            ? `${effectiveMod > 0 ? "+" : ""}${effectiveMod}`
+            : "";
+
+          const base = [dicePart, modPart].filter(Boolean).join("");
+
+          if (!base && !d.damage_type) return "";
+          if (!d.damage_type) return base;
+          if (!base) return d.damage_type;
+          return `${base} ${d.damage_type}`;
+        })
+        .filter(Boolean);
+
+      return parts.join(", ");
+    },
+    [getAttackAbilityModByType]
+  );
 
   /* ---- seed missing current_charges from max_charges once ---- */
 
@@ -186,18 +255,70 @@ export default function EffectsPlay() {
 
     return (
       <section className="space-y-2">
-        <h4 className="text-slate-300 text-sm font-semibold">{title}</h4>
+        <h4 className="text-slate-200 text-sm font-semibold">{title}</h4>
         <div className="grid grid-cols-[repeat(auto-fill,minmax(11rem,1fr))] gap-2">
           {rows.map((e) => {
             const { has, current, max } = getCounts(e);
             const depleted = has && current <= 0;
 
-            const dmg = summarizeDamage(e);
-            const atk = summarizeAttack(e);
-            const save = summarizeSave(e);
+            const dmg = summarizeDamageWithAttack(e);
+            const atkLabel = summarizeAttack(e);
+            const toHit = getToHit(e); // total attack bonus
 
-            const actionTypeLabel =
-              ACTION_TYPE_LABELS[e.action_type || "action"] || "Action";
+          
+           // --- Save label with live DC from ability_scores + pb + global mod + effect bonus ---
+            const saveChip = (() => {
+              const save = e.save || {};
+
+              // What the target rolls (label)
+              const displayRaw = save.target || save.ability;
+              // What DC is based on (caster ability)
+              const calcRaw = save.ability || save.target;
+
+              if (!displayRaw && !calcRaw) return "";
+
+              const displayLower = displayRaw
+                ? String(displayRaw).toLowerCase()
+                : "";
+              const displayLabel = displayLower.toUpperCase(); // STR / DEX / WIS ...
+
+              const calcLower = calcRaw
+                ? String(calcRaw).toLowerCase()
+                : "";
+
+              // Rebuild DC from primitives instead of stored .total
+              let baseDc = 0;
+              if (calcLower) {
+                const key = `save_${calcLower}`;
+                const saveRow = saveDcs[key] || {};
+
+                const abilityModForCalc = getAbilityMod(calcLower); // from ability_scores
+                const rowModNum = Number(saveRow.mod);
+                const rowMod = Number.isFinite(rowModNum) ? rowModNum : 0;
+
+                const rawDc = 8 + pb + abilityModForCalc + rowMod;
+                baseDc = Number.isFinite(rawDc) ? rawDc : 0;
+              }
+
+              const bonusNum = Number(save.dc_bonus);
+              const bonus = Number.isFinite(bonusNum) ? bonusNum : 0;
+
+              const totalDc = baseDc + bonus;
+
+              if (baseDc === 0 && bonus === 0) {
+                // no configured DC, just show "Wis save"
+                return `${displayLabel} save`;
+              }
+
+              const labelParts = [];
+              labelParts.push(`${displayLabel} save DC ${totalDc}`);
+              if (bonus !== 0) {
+                const sign = bonus > 0 ? "+" : "";
+                labelParts.push(`(${sign}${bonus} effect bonus)`);
+              }
+              return labelParts.join(" ");
+            })();
+
 
             const base =
               "text-left px-3 py-2 rounded-xl border transition focus:outline-none w-full";
@@ -216,21 +337,24 @@ export default function EffectsPlay() {
                 {/* Top row: name + charges */}
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0">
-                    <div className="font-semibold text-sm truncate">
+                    <div className="font-semibold text-sm truncate text-slate-50">
                       {e.name || "Unnamed effect"}
                     </div>
-                    <div className="flex flex-wrap items-center gap-1 mt-0.5 text-[10px] text-slate-400">
-                      <span className="px-1.5 py-0.5 rounded-full border border-slate-600 bg-slate-950/60">
-                        {actionTypeLabel}
-                      </span>
-                      {atk && (
-                        <span className="px-1.5 py-0.5 rounded-full border border-slate-700 bg-slate-900/60">
-                          {atk}
+                    <div className="flex flex-wrap items-center gap-1 mt-0.5 text-[10px] text-slate-200">
+                      {atkLabel && (
+                        <span className="px-1.5 py-0.5 rounded-full border border-slate-600 bg-slate-900/70">
+                          {atkLabel}
                         </span>
                       )}
-                      {save && (
-                        <span className="px-1.5 py-0.5 rounded-full border border-slate-700 bg-slate-900/60">
-                          {save}
+                      {typeof toHit === "number" && (
+                        <span className="px-1.5 py-0.5 rounded-full border border-slate-600 bg-slate-900/70">
+                          {toHit >= 0 ? "+" : ""}
+                          {toHit} to hit
+                        </span>
+                      )}
+                      {saveChip && (
+                        <span className="px-1.5 py-0.5 rounded-full border border-slate-600 bg-slate-900/70">
+                          {saveChip}
                         </span>
                       )}
                     </div>
@@ -238,12 +362,12 @@ export default function EffectsPlay() {
 
                   {has && (
                     <div className="text-right shrink-0">
-                      <div className="text-[10px] text-slate-400">
+                      <div className="text-[10px] text-slate-200">
                         Charges
                       </div>
                       <div
                         className={`text-sm font-semibold ${
-                          depleted ? "text-slate-500" : "text-slate-100"
+                          depleted ? "text-slate-500" : "text-slate-50"
                         }`}
                       >
                         {current} / {max}
@@ -254,15 +378,8 @@ export default function EffectsPlay() {
 
                 {/* Damage line */}
                 {dmg && (
-                  <div className="text-[11px] text-slate-200">
+                  <div className="text-[11px] text-slate-100">
                     {dmg}
-                  </div>
-                )}
-
-                {/* Notes hint */}
-                {e.notes && (
-                  <div className="text-[10px] text-slate-500 line-clamp-2">
-                    {e.notes}
                   </div>
                 )}
               </div>

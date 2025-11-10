@@ -3,19 +3,16 @@ import useCharStore from "../store/CharStore";
 
 const DEFAULT_HEALTH = { current_hp: 0, max_hp: 0, temp_hp: 0, barrier: 0 };
 const DIE_ORDER = ["d4", "d6", "d8", "d10", "d12", "d20"];
+const ABILITY_ORDER = ["str", "dex", "con", "int", "wis", "cha"];
 
 export default function HealthPlay({ id }) {
-  const { charData, updateCharField, postCharData, fetchChar } = useCharStore();
+  // --- ZUSTAND SELECTORS ---
+  const charData = useCharStore((s) => s.charData);
+  const updateCharField = useCharStore((s) => s.updateCharField);
+  const postCharData = useCharStore((s) => s.postCharData);
+  const fetchChar = useCharStore((s) => s.fetchChar);
+
   if (!charData) return null;
-
-  // const meleeBase = charData.offense.melee.base;
-  // const meleeScore = charData.ability_scores?.[meleeBase]?.mod ?? 0;
-  // const meleeAtkTotal =
-  //   (charData.pb?.total ?? 0) +
-  //   (charData.offense?.melee?.mod ?? 0) +
-  //   meleeScore;
-
-
 
   const health = useMemo(
     () => ({ ...DEFAULT_HEALTH, ...(charData.health || {}) }),
@@ -55,9 +52,7 @@ export default function HealthPlay({ id }) {
       const payload = await res.json().catch(() => null);
       if (!res.ok)
         throw new Error(
-          `Failed: ${res.status} ${
-            payload ? JSON.stringify(payload) : ""
-          }`
+          `Failed: ${res.status} ${payload ? JSON.stringify(payload) : ""}`
         );
       await fetchChar(id);
     } catch (e) {
@@ -71,7 +66,10 @@ export default function HealthPlay({ id }) {
       if (!token) throw new Error("Token not found in localStorage");
       const res = await fetch("http://localhost:8000/combat/health", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify({ value: delta, name: who }),
       });
       const payload = await res.json().catch(() => null);
@@ -93,7 +91,9 @@ export default function HealthPlay({ id }) {
   const onBarrierChange = (raw) =>
     patchHealth({ barrier: raw === "" ? 0 : Math.max(0, Number(raw) || 0) });
   const onHpManualChange = (raw) =>
-    patchHealth({ current_hp: raw === "" ? 0 : Math.max(0, Number(raw) || 0) });
+    patchHealth({
+      current_hp: raw === "" ? 0 : Math.max(0, Number(raw) || 0),
+    });
 
   function onReactionToggle(checked) {
     updateCharField("reaction", !!checked);
@@ -253,7 +253,7 @@ export default function HealthPlay({ id }) {
           </div>
         </div>
 
-        {/* Toggles, tighter stack */}
+        {/* Toggles */}
         <div className="flex flex-col gap-1 ml-6 mt-1">
           <div className="flex items-center gap-2">
             <label
@@ -321,7 +321,7 @@ export default function HealthPlay({ id }) {
         </div>
       </div>
 
-      {/* Quick buttons – closer to the grid */}
+      {/* Quick buttons */}
       <div className="flex flex-wrap gap-2">
         {[-1, -5, -10].map((v) => (
           <button
@@ -344,7 +344,7 @@ export default function HealthPlay({ id }) {
         ))}
       </div>
 
-      {/* Offense */}
+      {/* Offense summary */}
       <div className="flex flex-col gap-1">
         <div className="flex gap-2">
           <p>
@@ -373,24 +373,34 @@ export default function HealthPlay({ id }) {
           </p>
         </div>
 
-        {/* Save DCs under attacks, max 4 per row */}
+        {/* Save DCs – only active ones */}
         {(() => {
-          const entries = Object.entries(charData.offense?.save_dcs || {})
-            .sort(([aKey], [bKey]) => {
-              const aNum = Number(aKey.split("_").pop());
-              const bNum = Number(bKey.split("_").pop());
-              return aNum - bNum;
+          const saveDcs = charData.offense?.save_dcs || {};
+
+          const activeEntries = Object.entries(saveDcs)
+            .filter(([, row]) => row && row.active)
+            .sort(([keyA, rowA], [keyB, rowB]) => {
+              const baseA = (rowA?.base || keyA.split("_")[1] || "").toLowerCase();
+              const baseB = (rowB?.base || keyB.split("_")[1] || "").toLowerCase();
+              const idxA = ABILITY_ORDER.indexOf(baseA);
+              const idxB = ABILITY_ORDER.indexOf(baseB);
+              if (idxA === -1 && idxB === -1) return 0;
+              if (idxA === -1) return 1;
+              if (idxB === -1) return -1;
+              return idxA - idxB;
             });
 
-          const rows = [];
-          const CHUNK_SIZE = 4;
+          if (activeEntries.length === 0) return null;
 
-          for (let i = 0; i < entries.length; i += CHUNK_SIZE) {
-            rows.push(entries.slice(i, i + CHUNK_SIZE));
+          const rows = [];
+          const CHUNK_SIZE = 4; // keep your original layout
+
+          for (let i = 0; i < activeEntries.length; i += CHUNK_SIZE) {
+            rows.push(activeEntries.slice(i, i + CHUNK_SIZE));
           }
 
           const capitalize = (s) =>
-            s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
+            s ? s.charAt(0).toUpperCase() + s.slice(1).toLowerCase() : "";
 
           return rows.map((rowEntries, rowIdx) => (
             <div key={`save-row-${rowIdx}`} className="flex gap-2">
@@ -399,6 +409,7 @@ export default function HealthPlay({ id }) {
                 return (
                   <p key={key}>
                     <span className="text-amber-500">{base}</span>
+                    {" "}
                     SaveDC:{" "}
                     <span className="text-amber-500">{row?.total ?? 0}</span>
                   </p>

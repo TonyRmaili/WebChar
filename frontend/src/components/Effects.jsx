@@ -1,15 +1,21 @@
-import React, { useMemo, useRef, useState, useCallback, useEffect } from "react";
+import React, {
+  useMemo,
+  useRef,
+  useState,
+  useCallback,
+  useEffect,
+} from "react";
 import useCharStore from "../store/CharStore";
 
 const ACTION_TYPES = [
-  { value: "action",       label: "Actions" },
+  { value: "action", label: "Actions" },
   { value: "bonus_action", label: "Bonus Actions" },
-  { value: "reaction",     label: "Reactions" },
+  { value: "reaction", label: "Reactions" },
 ];
 
 const ACTION_KINDS = [
-  { value: "attack",          label: "Attack" },
-  { value: "save",            label: "Save" },
+  { value: "attack", label: "Attack" },
+  { value: "save", label: "Save" },
   { value: "attack_and_save", label: "Attack + Save" },
 ];
 
@@ -19,7 +25,7 @@ const ATTACK_TYPES = [
   { value: "spell", label: "Spell attack" },
 ];
 
-const SAVE_ABILITIES = ["STR", "DEX", "CON", "INT", "WIS", "CHA"];
+const SAVES = ["str", "dex", "con", "int", "wis", "cha"];
 
 const DAMAGE_TYPES = [
   "slashing",
@@ -50,7 +56,6 @@ const toIntOrNull = (v) => {
   return Number.isFinite(n) ? n : null;
 };
 
-
 function createDefaultAction(actionType = "action") {
   return {
     id: idGen(),
@@ -63,6 +68,7 @@ function createDefaultAction(actionType = "action") {
       range_ft: "",
     },
     save: {
+      target: "str", // new default target (lowercase)
       ability: "",
       dc_bonus: null,
     },
@@ -106,9 +112,7 @@ const summarizeDamage = (row) => {
 
       const modNum = Number(d.mod);
       const hasMod = Number.isFinite(modNum) && modNum !== 0;
-      const modPart = hasMod
-        ? `${modNum > 0 ? "+" : ""}${modNum}`
-        : "";
+      const modPart = hasMod ? `${modNum > 0 ? "+" : ""}${modNum}` : "";
 
       const base = [dicePart, modPart].filter(Boolean).join("");
 
@@ -121,7 +125,6 @@ const summarizeDamage = (row) => {
 
   return list.join(", ");
 };
-
 
 /* ================== Action Row ================== */
 
@@ -136,10 +139,8 @@ const ActionRow = React.memo(function ActionRow({
   onRemoveDamage,
 }) {
   const dmgSummary = summarizeDamage(row);
- 
   const kind = row.kind || "attack";
 
-  // charges object on the row
   const charges = row.charges || {
     has: false,
     max_charges: "",
@@ -147,68 +148,75 @@ const ActionRow = React.memo(function ActionRow({
     current_charges: "",
   };
 
-  // local UI-only flag, not stored in charData
   const [fullReset, setFullReset] = useState(false);
 
-  // when charges.turn off, also turn off fullReset
   useEffect(() => {
     if (!charges.has) setFullReset(false);
   }, [charges.has]);
 
-const handleKindChange = (e) => {
-  const nextKind = e.target.value;
+  const getSaveTarget = (save) => {
+    const rawTarget = save?.target;
+    if (rawTarget) return String(rawTarget).toLowerCase();
+    const fromAbility = save?.ability
+      ? String(save.ability).toLowerCase()
+      : "";
+    if (SAVES.includes(fromAbility)) return fromAbility;
+    return "str";
+  };
 
-  if (nextKind === "attack") {
-    // pure attack: keep/normalize attack, wipe save
-    onChange({
-      kind: "attack",
-      attack: {
-        attack_type: row.attack?.attack_type ?? "",
-        hit_bonus: toIntOrNull(row.attack?.hit_bonus),
-        range_ft: row.attack?.range_ft ?? "",
-      },
-      save: {
-        ability: "",
-        dc_bonus: null,
-      },
-    });
-    return;
-  }
+  const handleKindChange = (e) => {
+    const nextKind = e.target.value;
 
-  if (nextKind === "save") {
-    // pure save: keep/normalize save, wipe attack
-    onChange({
-      kind: "save",
-      attack: {
-        attack_type: "",
-        hit_bonus: null,
-        range_ft: "",
-      },
-      save: {
-        ability: row.save?.ability ?? "",
-        dc_bonus: toIntOrNull(row.save?.dc_bonus),
-      },
-    });
-    return;
-  }
+    if (nextKind === "attack") {
+      onChange({
+        kind: "attack",
+        attack: {
+          attack_type: row.attack?.attack_type ?? "",
+          hit_bonus: toIntOrNull(row.attack?.hit_bonus),
+          range_ft: row.attack?.range_ft ?? "",
+        },
+        save: {
+          target: getSaveTarget(row.save),
+          ability: "",
+          dc_bonus: null,
+        },
+      });
+      return;
+    }
 
-  if (nextKind === "attack_and_save") {
-    // both: normalize both blocks
-    onChange({
-      kind: "attack_and_save",
-      attack: {
-        attack_type: row.attack?.attack_type ?? "",
-        hit_bonus: toIntOrNull(row.attack?.hit_bonus),
-        range_ft: row.attack?.range_ft ?? "",
-      },
-      save: {
-        ability: row.save?.ability ?? "",
-        dc_bonus: toIntOrNull(row.save?.dc_bonus),
-      },
-    });
-  }
-};
+    if (nextKind === "save") {
+      onChange({
+        kind: "save",
+        attack: {
+          attack_type: "",
+          hit_bonus: null,
+          range_ft: "",
+        },
+        save: {
+          target: getSaveTarget(row.save),
+          ability: row.save?.ability ?? "",
+          dc_bonus: toIntOrNull(row.save?.dc_bonus),
+        },
+      });
+      return;
+    }
 
+    if (nextKind === "attack_and_save") {
+      onChange({
+        kind: "attack_and_save",
+        attack: {
+          attack_type: row.attack?.attack_type ?? "",
+          hit_bonus: toIntOrNull(row.attack?.hit_bonus),
+          range_ft: row.attack?.range_ft ?? "",
+        },
+        save: {
+          target: getSaveTarget(row.save),
+          ability: row.save?.ability ?? "",
+          dc_bonus: toIntOrNull(row.save?.dc_bonus),
+        },
+      });
+    }
+  };
 
   const handleHasChargesChange = (e) => {
     const checked = e.target.checked;
@@ -241,7 +249,6 @@ const handleKindChange = (e) => {
     const curRaw = charges.current_charges ?? "";
     let newCurrent = curRaw;
 
-    // clamp current_charges to new max
     if (rawMax === "") {
       newCurrent = "";
     } else if (Number.isFinite(maxNum)) {
@@ -251,7 +258,6 @@ const handleKindChange = (e) => {
       }
     }
 
-    // if fullReset is enabled, reset_amount should follow max
     let newReset = charges.reset_amount ?? 0;
     if (fullReset) {
       if (rawMax === "" || !Number.isFinite(maxNum)) {
@@ -315,7 +321,7 @@ const handleKindChange = (e) => {
   };
 
   const handleResetAmountChange = (e) => {
-    if (fullReset) return; // do nothing when full reset is on
+    if (fullReset) return;
 
     const raw = e.target.value;
     if (raw === "") {
@@ -338,6 +344,9 @@ const handleKindChange = (e) => {
       },
     });
   };
+
+  const currentSave = row.save || {};
+  const currentTarget = getSaveTarget(currentSave);
 
   return (
     <div className="rounded-xl border border-slate-700 bg-slate-900/60">
@@ -365,7 +374,7 @@ const handleKindChange = (e) => {
             />
           </svg>
 
-          {/* Name (no label) */}
+          {/* Name */}
           <div className="flex items-center gap-2 min-w-[220px] max-w-[520px] grow">
             <input
               type="text"
@@ -452,14 +461,13 @@ const handleKindChange = (e) => {
                   }
                   className="w-32 px-2 py-1 rounded-md bg-slate-950 border border-slate-700 text-xs text-slate-100"
                 >
-                  <option value="">None</option> {/* <--- new default option */}
+                  <option value="">None</option>
                   {ATTACK_TYPES.map((opt) => (
                     <option key={opt.value} value={opt.value}>
                       {opt.label}
                     </option>
                   ))}
                 </select>
-
               </div>
 
               <div className="flex flex-col">
@@ -509,9 +517,34 @@ const handleKindChange = (e) => {
             <div className="flex flex-wrap gap-3 text-xs">
               <div className="flex flex-col">
                 <label className="text-[10px] text-slate-400">
+                  Target save
+                </label>
+                <select
+                  value={currentTarget}
+                  onChange={(e) =>
+                    onChange({
+                      save: {
+                        ...(row.save || {}),
+                        target: e.target.value.toLowerCase(),
+                      },
+                    })
+                  }
+                  className="w-24 px-2 py-1 rounded-md bg-slate-950 border border-slate-700 text-xs text-slate-100"
+                >
+                  <option value="">None</option>
+                  {SAVES.map((t) => (
+                    <option key={t} value={t}>
+                      {t}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="flex flex-col">
+                <label className="text-[10px] text-slate-400">
                   Save ability
                 </label>
-               <select
+                <select
                   value={row.save?.ability ?? ""}
                   onChange={(e) =>
                     onChange({
@@ -523,15 +556,15 @@ const handleKindChange = (e) => {
                   }
                   className="w-24 px-2 py-1 rounded-md bg-slate-950 border border-slate-700 text-xs text-slate-100"
                 >
-                  <option value="">None</option> {/* <--- new default option */}
-                  {SAVE_ABILITIES.map((ab) => (
+                  <option value="">None</option>
+                  {SAVES.map((ab) => (
                     <option key={ab} value={ab}>
                       {ab}
                     </option>
                   ))}
-              </select>
-
+                </select>
               </div>
+
               <div className="flex flex-col">
                 <label className="text-[10px] text-slate-400">
                   Save DC Bonus
@@ -547,7 +580,7 @@ const handleKindChange = (e) => {
                         dc_bonus: toIntOrNull(e.target.value),
                       },
                     })
-                  }                 
+                  }
                   className="w-20 px-2 py-1 rounded-md bg-slate-950 border border-slate-700 text-xs text-slate-100"
                 />
               </div>
@@ -638,22 +671,24 @@ const handleKindChange = (e) => {
                 key={d.id}
                 className="flex flex-wrap items-end gap-2 rounded-md border border-slate-700 bg-slate-900/60 p-2"
               >
-                {/* Dice count */}
                 <div className="flex flex-col">
-                  <label className="text-[10px] text-slate-400">Dice count</label>
+                  <label className="text-[10px] text-slate-400">
+                    Dice count
+                  </label>
                   <input
                     type="number"
                     step={1}
                     value={d.dice_count ?? ""}
                     onChange={(e) =>
-                      onChangeDamage(d.id, { dice_count: toIntOrNull(e.target.value) })
+                      onChangeDamage(d.id, {
+                        dice_count: toIntOrNull(e.target.value),
+                      })
                     }
                     placeholder="2"
                     className="w-16 px-2 py-1 rounded-md bg-slate-950 border border-slate-700 text-xs text-slate-100"
                   />
                 </div>
 
-                {/* Dice size */}
                 <div className="flex flex-col">
                   <label className="text-[10px] text-slate-400">Die</label>
                   <select
@@ -672,24 +707,28 @@ const handleKindChange = (e) => {
                   </select>
                 </div>
 
-                {/* Extra mod */}
                 <div className="flex flex-col">
-                  <label className="text-[10px] text-slate-400">Extra mod</label>
+                  <label className="text-[10px] text-slate-400">
+                    Extra mod
+                  </label>
                   <input
                     type="number"
                     step={1}
                     value={d.mod ?? ""}
                     onChange={(e) =>
-                      onChangeDamage(d.id, { mod: toIntOrNull(e.target.value) })
+                      onChangeDamage(d.id, {
+                        mod: toIntOrNull(e.target.value),
+                      })
                     }
                     placeholder="+3"
                     className="w-16 px-2 py-1 rounded-md bg-slate-950 border border-slate-700 text-xs text-slate-100"
                   />
                 </div>
 
-                {/* Damage type */}
                 <div className="flex flex-col">
-                  <label className="text-[10px] text-slate-400">Damage type</label>
+                  <label className="text-[10px] text-slate-400">
+                    Damage type
+                  </label>
                   <select
                     value={d.damage_type ?? ""}
                     onChange={(e) =>
@@ -718,7 +757,6 @@ const handleKindChange = (e) => {
               </div>
             ))}
           </div>
-
 
           {/* Notes */}
           <div className="flex flex-col text-xs">
@@ -761,7 +799,7 @@ const CategoryCard = React.memo(function CategoryCard({
   onChangeDamage,
   onRemoveDamage,
 }) {
-  if (!rows.length) return null; // hide empty section
+  if (!rows.length) return null;
 
   return (
     <section className="space-y-2">
@@ -791,7 +829,11 @@ const CategoryCard = React.memo(function CategoryCard({
 /* ================== MAIN ================== */
 
 export default function Effects() {
-  const { charData, updateCharField, postCharData } = useCharStore();
+  // Zustand selectors
+  const charData = useCharStore((s) => s.charData);
+  const updateCharField = useCharStore((s) => s.updateCharField);
+  const postCharData = useCharStore((s) => s.postCharData);
+
   if (!charData) return null;
 
   const actions = useMemo(() => {
@@ -804,7 +846,6 @@ export default function Effects() {
     setOpenById((prev) => ({ ...prev, [id]: !prev[id] }));
   }, []);
 
-  // Debounced post
   const debounceRef = useRef(null);
   const debouncedPost = useCallback(() => {
     if (debounceRef.current) clearTimeout(debounceRef.current);
@@ -819,8 +860,6 @@ export default function Effects() {
     },
     [updateCharField, postCharData, debouncedPost]
   );
-
-  /* ---- flat actions mutations ---- */
 
   const addEffect = useCallback(() => {
     const row = createDefaultAction("action");
@@ -847,7 +886,7 @@ export default function Effects() {
       const next = actions.map((a) =>
         a.id === id ? { ...a, ...patch } : a
       );
-      persist(next); // debounced
+      persist(next);
     },
     [actions, persist]
   );
@@ -876,7 +915,7 @@ export default function Effects() {
             }
           : a
       );
-      persist(next); // debounced
+      persist(next);
     },
     [actions, persist]
   );

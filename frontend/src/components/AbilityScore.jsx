@@ -33,8 +33,8 @@ const ABILITIES_ORDER = [
   { key: "int", label: "Intelligence" },
   { key: "wis", label: "Wisdom" },
   { key: "cha", label: "Charisma" },
-  
 ];
+
 const SKILLS_ORDER = [
   { key: "wis", label: "Wisdom" },
   { key: "dex", label: "Dexterity" },
@@ -55,19 +55,27 @@ const DEFAULT_ABILITY_SCORES = {
 
 /* ---------- Helpers ---------- */
 const scoreToMod = (score) =>
-  typeof score === "number" && Number.isFinite(score) ? Math.floor((score - 10) / 2) : null;
+  typeof score === "number" && Number.isFinite(score)
+    ? Math.floor((score - 10) / 2)
+    : null;
 
 const toKey = (name) => {
   const cleaned = name.replace(/[^a-zA-Z0-9 ]+/g, " ").trim();
   const camel = cleaned
     .split(/\s+/)
-    .map((w, i) => (i === 0 ? w.toLowerCase() : w[0].toUpperCase() + w.slice(1).toLowerCase()))
+    .map((w, i) =>
+      i === 0 ? w.toLowerCase() : w[0].toUpperCase() + w.slice(1).toLowerCase()
+    )
     .join("");
   return camel || "customSkill";
 };
 
 export default function AbilityScore() {
-  const { charData, updateCharField, postCharData } = useCharStore();
+  // --- Zustand selectors ---
+  const charData = useCharStore((s) => s.charData);
+  const updateCharField = useCharStore((s) => s.updateCharField);
+  const postCharData = useCharStore((s) => s.postCharData);
+
   if (!charData) return null;
 
   const pb = Number(charData?.pb?.total ?? 0);
@@ -104,8 +112,6 @@ export default function AbilityScore() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [charData?.ability_scores]); // runs when ability scores change
-
-
 
   // Build groups from current skills and hide empty ones
   const groupedSkills = useMemo(() => {
@@ -181,7 +187,6 @@ export default function AbilityScore() {
     postCharData();
   };
 
-
   /* ------- Add custom skill ------- */
   const [addOpen, setAddOpen] = useState(false);
   const [newName, setNewName] = useState("");
@@ -224,8 +229,8 @@ export default function AbilityScore() {
             ability={key}
             row={abilityScores[key]}
             onValueChange={(v) => handleAbilityValueChange(key, v)}
-            onCheckModChange={(v) => handleCheckModChange(key, v)}  
-            onSaveModChange={(v) => handleSaveModChange(key, v)}    
+            onCheckModChange={(v) => handleCheckModChange(key, v)}
+            onSaveModChange={(v) => handleSaveModChange(key, v)}
             onToggle={(flag) => toggleAbilityFlag(key, flag)}
             pb={pb}
           />
@@ -292,7 +297,7 @@ export default function AbilityScore() {
         <div className="grid md:grid-cols-2 gap-4">
           {SKILLS_ORDER.map(({ key, label }) => {
             const list = groupedSkills[label] || [];
-            if (list.length === 0) return null; // hide empty groups
+            if (list.length === 0) return null;
 
             return (
               <div
@@ -303,7 +308,6 @@ export default function AbilityScore() {
                   <div className="text-sm font-semibold text-slate-200">
                     {label}
                   </div>
-                  
                 </div>
 
                 <div className="divide-y divide-slate-700/60">
@@ -312,11 +316,16 @@ export default function AbilityScore() {
                       key={skillKey}
                       skill={skillKey}
                       row={skills[skillKey]}
-                      governingMod={abilityScores[key]?.mod ?? 0} 
-                      pb={pb}  
-                      onOffsetChange={(v) => handleSkillValueChange(skillKey, v)}
-                      onToggleProficient={() => toggleSkillFlag(skillKey, "proficient")}
-                      onToggleExpertise={() => toggleSkillFlag(skillKey, "expertise")
+                      governingMod={abilityScores[key]?.mod ?? 0}
+                      pb={pb}
+                      onOffsetChange={(v) =>
+                        handleSkillValueChange(skillKey, v)
+                      }
+                      onToggleProficient={() =>
+                        toggleSkillFlag(skillKey, "proficient")
+                      }
+                      onToggleExpertise={() =>
+                        toggleSkillFlag(skillKey, "expertise")
                       }
                     />
                   ))}
