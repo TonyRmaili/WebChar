@@ -119,9 +119,7 @@ export default function EffectsPlay() {
       if (!damages.length) return "";
 
       const atkType = row.attack?.attack_type || "";
-      const abilityBonus = atkType
-        ? getAttackAbilityModByType(atkType)
-        : 0;
+      const abilityBonus = atkType ? getAttackAbilityModByType(atkType) : 0;
 
       const parts = damages
         .map((d, idx) => {
@@ -238,23 +236,24 @@ export default function EffectsPlay() {
   );
 
   /* ---- grouping by action_type ---- */
+  const grouped = useMemo(() => {
+    const activeOnly = effects.filter((e) => e.active === true);
 
-  const grouped = useMemo(
-    () => ({
-      actions: effects.filter(
+    return {
+      actions: activeOnly.filter(
         (e) => (e.action_type || "action") === "action"
       ),
-      bonus_actions: effects.filter((e) => e.action_type === "bonus_action"),
-      reactions: effects.filter((e) => e.action_type === "reaction"),
-    }),
-    [effects]
-  );
+      bonus_actions: activeOnly.filter((e) => e.action_type === "bonus_action"),
+      reactions: activeOnly.filter((e) => e.action_type === "reaction"),
+      passives: activeOnly.filter((e) => e.action_type === "passive"),
+    };
+  }, [effects]);
 
   const Section = ({ title, rows }) => {
     if (!rows.length) return null;
 
     return (
-      <section className="space-y-2">
+      <section className="break-inside-avoid mb-2 space-y-2">
         <h4 className="text-slate-200 text-sm font-semibold">{title}</h4>
         <div className="grid grid-cols-[repeat(auto-fill,minmax(11rem,1fr))] gap-2">
           {rows.map((e) => {
@@ -265,8 +264,7 @@ export default function EffectsPlay() {
             const atkLabel = summarizeAttack(e);
             const toHit = getToHit(e); // total attack bonus
 
-          
-           // --- Save label with live DC from ability_scores + pb + global mod + effect bonus ---
+            // --- Save label with live DC from ability_scores + pb + global mod + effect bonus ---
             const saveChip = (() => {
               const save = e.save || {};
 
@@ -311,14 +309,10 @@ export default function EffectsPlay() {
               }
 
               const labelParts = [];
-              labelParts.push(`${displayLabel} save DC ${totalDc}`);
-              if (bonus !== 0) {
-                const sign = bonus > 0 ? "+" : "";
-                labelParts.push(`(${sign}${bonus} effect bonus)`);
-              }
+              labelParts.push(`${displayLabel} DC ${totalDc}`);
+
               return labelParts.join(" ");
             })();
-
 
             const base =
               "text-left px-3 py-2 rounded-xl border transition focus:outline-none w-full";
@@ -346,12 +340,13 @@ export default function EffectsPlay() {
                           {atkLabel}
                         </span>
                       )}
-                      {typeof toHit === "number" && (
-                        <span className="px-1.5 py-0.5 rounded-full border border-slate-600 bg-slate-900/70">
-                          {toHit >= 0 ? "+" : ""}
-                          {toHit} to hit
-                        </span>
-                      )}
+                      {(e.kind === "attack" || e.kind === "attack_and_save") &&
+                        typeof toHit === "number" && (
+                          <span className="px-1.5 py-0.5 rounded-full border border-slate-600 bg-slate-900/70">
+                            {toHit >= 0 ? "+" : ""}
+                            {toHit} to hit
+                          </span>
+                        )}
                       {saveChip && (
                         <span className="px-1.5 py-0.5 rounded-full border border-slate-600 bg-slate-900/70">
                           {saveChip}
@@ -418,11 +413,13 @@ export default function EffectsPlay() {
     );
   };
 
+  // Masonry-like stacking for the four Sections, same logic as SpellPlay
   return (
-    <div className="w-full space-y-4">
+    <div className="w-full columns-1 md:columns-2 2xl:columns-3 gap-x-2">
       <Section title="Actions" rows={grouped.actions} />
       <Section title="Bonus Actions" rows={grouped.bonus_actions} />
       <Section title="Reactions" rows={grouped.reactions} />
+      <Section title="Passives" rows={grouped.passives} />
     </div>
   );
 }

@@ -12,6 +12,8 @@
     Effects
     EffectsPlay
     AbilityScore
+    SpellPlay
+    
 
 
 place experiance input for all chars and individual 
@@ -25,7 +27,7 @@ place experiance input for all chars and individual
 # AbilityScores
 1. Improve design for both skill and ability boxes
 
-# Effects
+# Effects (absorbed Traits)
 1. for damage allow multi-damage type selector
 
 # Play (Interact) / leftside
@@ -45,10 +47,9 @@ resting logic broken due to large changes to charData
 
 
 # EffectsPlay
-1. include the mods from base for atks and saves and use total from defined effect
-2. remove notes, only allow hover over for notes
-3. improve damage display - categories by damage type and combine all same terms (const, dX )
-4. saves needs a "self" ability and "target" ability. Link the self ability with the calculated value in charData. 
+1. categories by damage type and combine all same terms (const, dX )
+2. 
+ 
 
 
 

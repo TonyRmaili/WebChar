@@ -6,16 +6,14 @@ import useCharStore from "../store/CharStore";
 import GeneralStats from "../components/GeneralStats";
 import AbilityScore from "../components/AbilityScore";
 import BioStats from "../components/BioStats";
-import Traits from "../components/Traits";
+import Units from "../components/Units";
 import Spellbook from "../components/Spellbook";
 import Inventory from "../components/Inventory";
 import Lore from "../components/Lore";
 import Effects from "../components/Effects";
 
 import HealthPlay from "../components/HealthPlay"
-import EffectsPlay from "../components/EffectsPlay";
-import SpellPlay from "../components/SpellPlay";
-import ChargesPlay from "../components/ChargesPlay";
+import UltimaCharges from "../components/UltimaCharges";
 
 function TabButton({ id, label, active, onClick }) {
   return (
@@ -145,33 +143,13 @@ export default function CombatPage() {
                   </div>
                 )}
               </div>
-
+           
               <div className="flex-[1.5] min-h-[25vh]">
                 <div className="h-full overflow-y-auto rounded-xl border border-slate-700/60 bg-slate-900/40 p-4">
-                  {selectedChar ? <EffectsPlay /> : <div className="text-slate-400">Select a character.</div>}
+                  {selectedChar ? <UltimaCharges /> : <div className="text-slate-400">Select a character.</div>}
                 </div>
               </div>
-
-              {/* <div className="flex-[1.5] min-h-[25vh]">
-                <div className="h-full overflow-y-auto rounded-xl border border-slate-700/60 bg-slate-900/40 p-4">
-                  {selectedChar ? <ActionsExperiment /> : <div className="text-slate-400">Select a character.</div>}
-                </div>
-              </div> */}
-
-              <div className="flex-[1.5] min-h-[25vh]">
-                <div className="h-full overflow-y-auto rounded-xl border border-slate-700/60 bg-slate-900/40 p-4">
-                  {selectedChar ? <SpellPlay /> : <div className="text-slate-400">Select a character.</div>}
-                </div>
-              </div>
-
-              <div className="flex-[1.5] min-h-[25vh]">
-                <div className="h-full overflow-y-auto rounded-xl border border-slate-700/60 bg-slate-900/40 p-4">
-                  {selectedChar ? <ChargesPlay /> : <div className="text-slate-400">Select a character.</div>}
-                </div>
-              </div>
-
-              
-
+          
             </div>
           </div>
         </div>
@@ -180,7 +158,7 @@ export default function CombatPage() {
         <div className="flex-[1.1] pl-2">
           <div className="flex flex-wrap gap-3 bg-slate-800/60 border border-slate-700 rounded-xl p-3 mb-4">
             <TabButton id="effects"     label="Effects"     active={rightTab==="effects"}     onClick={setRightTab}/>
-            <TabButton id="traits"      label="Traits"      active={rightTab==="traits"}      onClick={setRightTab}/>
+            <TabButton id="units"      label="Units"      active={rightTab==="units"}      onClick={setRightTab}/>
             <TabButton id="spellbook"   label="Spellbook"   active={rightTab==="spellbook"}   onClick={setRightTab}/>
             <TabButton id="inventory"   label="Inventory"   active={rightTab==="inventory"}   onClick={setRightTab}/>
             <TabButton id="general"     label="General"     active={rightTab==="general"}     onClick={setRightTab}/>
@@ -195,7 +173,7 @@ export default function CombatPage() {
             ) : (
               <>
                 {rightTab === "effects"   && <Effects />}
-                {rightTab === "traits"    && <Traits />}
+                {rightTab === "units"    && <Units />}
                 {rightTab === "spellbook" && <Spellbook />}
                 {rightTab === "inventory" && <Inventory />}
                 {rightTab === "general"   && <GeneralStats />}

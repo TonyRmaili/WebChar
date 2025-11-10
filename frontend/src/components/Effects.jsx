@@ -8,21 +8,34 @@ import React, {
 import useCharStore from "../store/CharStore";
 
 const ACTION_TYPES = [
-  { value: "action", label: "Actions" },
-  { value: "bonus_action", label: "Bonus Actions" },
-  { value: "reaction", label: "Reactions" },
+  { value: "action", label: "Action" },
+  { value: "bonus_action", label: "Bonus Action" },
+  { value: "reaction", label: "Reaction" },
+  { value: "passive", label: "Passive" },
 ];
 
-const ACTION_KINDS = [
-  { value: "attack", label: "Attack" },
-  { value: "save", label: "Save" },
+const EFFECT_TYPES = [
+  { value: "attack",          label: "Attack" },
+  { value: "save",            label: "Save" },
   { value: "attack_and_save", label: "Attack + Save" },
+  { value: "none",            label: "None" },
 ];
 
 const ATTACK_TYPES = [
   { value: "melee", label: "Melee attack" },
   { value: "ranged", label: "Ranged attack" },
   { value: "spell", label: "Spell attack" },
+];
+
+const TRAIT_TYPES = [
+  { value: "standard",   label: "Standard" },
+  { value: "class",      label: "Class" },
+  { value: "race",       label: "Race" },
+  { value: "feat",       label: "Feat" },
+  { value: "martial",    label: "Martial" },
+  { value: "background", label: "Background" },
+  { value: "spell",      label: "Spell" },
+  { value: "other",      label: "Other" },
 ];
 
 const SAVES = ["str", "dex", "con", "int", "wis", "cha"];
@@ -61,14 +74,16 @@ function createDefaultAction(actionType = "action") {
     id: idGen(),
     name: "",
     action_type: actionType,
-    kind: "attack",
+    kind: "none",          // start as "none"
+    trait: "standard",
+    active: true,
     attack: {
       attack_type: "",
       hit_bonus: null,
-      range_ft: "",
+      range_ft: null,      // always shown, starts null
     },
     save: {
-      target: "str", // new default target (lowercase)
+      target: "",
       ability: "",
       dc_bonus: null,
     },
@@ -139,7 +154,7 @@ const ActionRow = React.memo(function ActionRow({
   onRemoveDamage,
 }) {
   const dmgSummary = summarizeDamage(row);
-  const kind = row.kind || "attack";
+  const kind = row.kind || "none";
 
   const charges = row.charges || {
     has: false,
@@ -161,11 +176,31 @@ const ActionRow = React.memo(function ActionRow({
       ? String(save.ability).toLowerCase()
       : "";
     if (SAVES.includes(fromAbility)) return fromAbility;
-    return "str";
+    return ""; // no default STR anymore
   };
 
   const handleKindChange = (e) => {
     const nextKind = e.target.value;
+
+    // always preserve range_ft when switching kind
+    const currentRange = row.attack?.range_ft ?? "";
+
+    if (nextKind === "none") {
+      onChange({
+        kind: "none",
+        attack: {
+          attack_type: "",
+          hit_bonus: null,
+          range_ft: currentRange,
+        },
+        save: {
+          target: "",
+          ability: "",
+          dc_bonus: null,
+        },
+      });
+      return;
+    }
 
     if (nextKind === "attack") {
       onChange({
@@ -173,10 +208,11 @@ const ActionRow = React.memo(function ActionRow({
         attack: {
           attack_type: row.attack?.attack_type ?? "",
           hit_bonus: toIntOrNull(row.attack?.hit_bonus),
-          range_ft: row.attack?.range_ft ?? "",
+          range_ft: currentRange,
         },
         save: {
-          target: getSaveTarget(row.save),
+          // clear all save data so it does not render in EffectsPlay
+          target: "",
           ability: "",
           dc_bonus: null,
         },
@@ -188,9 +224,10 @@ const ActionRow = React.memo(function ActionRow({
       onChange({
         kind: "save",
         attack: {
+          // clear attack-only data
           attack_type: "",
           hit_bonus: null,
-          range_ft: "",
+          range_ft: currentRange,
         },
         save: {
           target: getSaveTarget(row.save),
@@ -207,7 +244,7 @@ const ActionRow = React.memo(function ActionRow({
         attack: {
           attack_type: row.attack?.attack_type ?? "",
           hit_bonus: toIntOrNull(row.attack?.hit_bonus),
-          range_ft: row.attack?.range_ft ?? "",
+          range_ft: currentRange,
         },
         save: {
           target: getSaveTarget(row.save),
@@ -386,9 +423,17 @@ const ActionRow = React.memo(function ActionRow({
             />
           </div>
 
-          {/* Kind chip */}
+          {/* Effect type chip */}
           <Chip>
-            {ACTION_KINDS.find((k) => k.value === kind)?.label || "Attack"}
+            {EFFECT_TYPES.find((k) => k.value === kind)?.label || "None"}
+          </Chip>
+
+          {/* Trait chip */}
+          <Chip>
+            {(
+              TRAIT_TYPES.find((t) => t.value === (row.trait || "standard")) ||
+              TRAIT_TYPES[0]
+            ).label}
           </Chip>
 
           {/* Compact summaries */}
@@ -401,7 +446,7 @@ const ActionRow = React.memo(function ActionRow({
       {/* Body */}
       {open && (
         <div className="p-3 space-y-3 border-t border-slate-700">
-          {/* Top row: category + kind + add dmg */}
+          {/* Top row: action type + effect type + trait + active + add dmg */}
           <div className="flex flex-wrap items-end gap-3 text-xs">
             <div className="flex flex-col">
               <label className="text-[10px] text-slate-400">Action Type</label>
@@ -425,12 +470,44 @@ const ActionRow = React.memo(function ActionRow({
                 onChange={handleKindChange}
                 className="w-40 px-2 py-1 rounded-md bg-slate-950 border border-slate-700 text-xs text-slate-100"
               >
-                {ACTION_KINDS.map((k) => (
+                {EFFECT_TYPES.map((k) => (
                   <option key={k.value} value={k.value}>
                     {k.label}
                   </option>
                 ))}
               </select>
+            </div>
+
+            <div className="flex flex-col">
+              <label className="text-[10px] text-slate-400">Trait Type</label>
+              <select
+                value={row.trait || "standard"}
+                onChange={(e) =>
+                  onChange({
+                    trait: e.target.value,
+                  })
+                }
+                className="w-40 px-2 py-1 rounded-md bg-slate-950 border border-slate-700 text-xs text-slate-100"
+              >
+                {TRAIT_TYPES.map((t) => (
+                  <option key={t.value} value={t.value}>
+                    {t.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Active Checkbox */}
+            <div className="flex flex-col">
+              <label className="flex items-center gap-2 text-[11px] text-slate-200">
+                Active
+              </label>
+              <input
+                type="checkbox"
+                checked={!!row.active}
+                onChange={(e) => onChange({ active: e.target.checked })}
+                className="h-3 w-3"
+              />
             </div>
 
             <button
@@ -442,7 +519,7 @@ const ActionRow = React.memo(function ActionRow({
             </button>
           </div>
 
-          {/* Attack block */}
+          {/* Attack-only block: type + hit bonus */}
           {(kind === "attack" || kind === "attack_and_save") && (
             <div className="flex flex-wrap gap-3 text-xs">
               <div className="flex flex-col">
@@ -488,29 +565,33 @@ const ActionRow = React.memo(function ActionRow({
                   className="w-24 px-2 py-1 rounded-md bg-slate-950 border border-slate-700 text-xs text-slate-100"
                 />
               </div>
-              <div className="flex flex-col">
-                <label className="text-[10px] text-slate-400">
-                  Range / Reach (ft)
-                </label>
-                <input
-                  type="number"
-                  value={row.attack?.range_ft ?? ""}
-                  min={0}
-                  step={5}
-                  onChange={(e) =>
-                    onChange({
-                      attack: {
-                        ...(row.attack || {}),
-                        range_ft: e.target.value,
-                      },
-                    })
-                  }
-                  placeholder="5 or 30/120"
-                  className="w-32 px-2 py-1 rounded-md bg-slate-950 border border-slate-700 text-xs text-slate-100"
-                />
-              </div>
             </div>
           )}
+
+          {/* Range: always visible, regardless of effect type */}
+          <div className="flex flex-wrap gap-3 text-xs">
+            <div className="flex flex-col">
+              <label className="text-[10px] text-slate-400">
+                Range / Reach (ft)
+              </label>
+              <input
+                type="number"
+                value={row.attack?.range_ft ?? ""}
+                min={0}
+                step={5}
+                onChange={(e) =>
+                  onChange({
+                    attack: {
+                      ...(row.attack || {}),
+                      range_ft: e.target.value,
+                    },
+                  })
+                }
+                placeholder="5 or 30/120"
+                className="w-32 px-2 py-1 rounded-md bg-slate-950 border border-slate-700 text-xs text-slate-100"
+              />
+            </div>
+          </div>
 
           {/* Save block */}
           {(kind === "save" || kind === "attack_and_save") && (
@@ -829,7 +910,6 @@ const CategoryCard = React.memo(function CategoryCard({
 /* ================== MAIN ================== */
 
 export default function Effects() {
-  // Zustand selectors
   const charData = useCharStore((s) => s.charData);
   const updateCharField = useCharStore((s) => s.updateCharField);
   const postCharData = useCharStore((s) => s.postCharData);
@@ -948,6 +1028,7 @@ export default function Effects() {
       actions: actions.filter((a) => (a.action_type || "action") === "action"),
       bonus_actions: actions.filter((a) => a.action_type === "bonus_action"),
       reactions: actions.filter((a) => a.action_type === "reaction"),
+      passives: actions.filter((a) => a.action_type === "passive"),
     }),
     [actions]
   );
@@ -997,6 +1078,17 @@ export default function Effects() {
       <CategoryCard
         title="Reactions"
         rows={grouped.reactions}
+        openById={openById}
+        onToggleOpen={toggleOpen}
+        onChangeRow={changeRow}
+        onRemoveRow={removeRow}
+        onAddDamage={addDamageToRow}
+        onChangeDamage={changeDamage}
+        onRemoveDamage={removeDamageFromRow}
+      />
+      <CategoryCard
+        title="Passives"
+        rows={grouped.passives}
         openById={openById}
         onToggleOpen={toggleOpen}
         onChangeRow={changeRow}
