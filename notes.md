@@ -1,3 +1,12 @@
+
+
+# Minoions/+Play
+1. Create units such as summons and followers etc
+2. make windows or large collapsables?
+3. pipe in dice tower
+4. connect to rest logic
+
+
 # Overall
 1. Collapse right area? 
 2. Giga lag (large Interaction to Next Paint (INP) > 16k ms) due to const { charData, updateCharField } = useCharStore();
@@ -13,54 +22,39 @@
     EffectsPlay
     AbilityScore
     SpellPlay
+    Comabt
     
 
-
-place experiance input for all chars and individual 
-
-# Define / rightside
-
 # GeneralStats
-1. senses ; blind, tremor, true, darkvision
+1. Optimize space and style for OffenseCard because of remove of init
 
 
 # AbilityScores
-1. Improve design for both skill and ability boxes
+1. Minor tweaks for abilityScoreCard
 
 # Effects (absorbed Traits)
 1. for damage allow multi-damage type selector
 
-# Play (Interact) / leftside
+# backend
+1. break out resting logic, messy atm but works
 
-resting logic broken due to large changes to charData
+
+# SpellBook / Play
+1. Save innate spells and charges like the rest
+2. Make switching from innate to not innate reset the data for charges
+3. SpellPlay needs better stacking of components
 
 # HealthPlay
-1. max hp modifier for aid / drain effects - Healthplay
-2. Minor tweaks to GUI 
+1. Minor tweaks to GUI
+2. current hp can exceed max_hp when max_hp_mod is reduced 
 
 
-# UnitsPlay
-1. Create units such as summons and followers etc
-2. make windows or large collapsables?
-3. pipe in dice tower
-4. connect to rest logic
 
 
 # EffectsPlay
 1. categories by damage type and combine all same terms (const, dX )
-2. 
+
  
-
-
-
-# Spellsplay
-1. Better Cards
-
-# ChargesPlay
-1. combine with spells play and effectsplay?
-2. better cards
-
-
 
 
 

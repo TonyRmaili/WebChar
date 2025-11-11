@@ -3,6 +3,7 @@ import CreateAccountLogo from "../assets/createAccountLogo.svg"
 import { Link, useNavigate } from "react-router-dom"
 import useAuthStore from '../store/AuthStore';
 import { PartyStore } from '../store/PartyStore';
+import useMonsterStore from '../store/MonsterStore';
 
 function LogIn() {
   const navigate = useNavigate()
@@ -11,6 +12,7 @@ function LogIn() {
   const [password, setPassword] = useState("");
 
   const { fetchParty } = PartyStore()
+  
  
   async function submitLogin(e) {
     e.preventDefault();
@@ -30,6 +32,7 @@ function LogIn() {
         setToken(data.access_token)
         await fetchUser()
         await fetchParty()
+        
 
         navigate("/loadChar")
 

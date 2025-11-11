@@ -39,6 +39,9 @@ class TakeRestAllData(BaseModel):
     rest_type: str
     characters : list
 
+class GrantExperienceAll(BaseModel):
+    delta : int
+
 # class GenderEnum(str, Enum):
 #     Male = 'Male'
 #     Female = 'Female'

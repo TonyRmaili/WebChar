@@ -23,6 +23,7 @@ const useAuthStore = create((set, get) => ({
     localStorage.removeItem("userData"); 
     localStorage.removeItem("charData"); 
     localStorage.removeItem("partyData"); 
+    localStorage.removeItem("minionsData"); 
     
     set(() => ({ token: null, userData: null, charData: null, partyData: null}));
   },

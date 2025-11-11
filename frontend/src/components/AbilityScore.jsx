@@ -45,13 +45,14 @@ const SKILLS_ORDER = [
 ];
 
 const DEFAULT_ABILITY_SCORES = {
-  str: { value: null, mod: null, check_mod: 0, save_mod: 0, proficient: false, expertise: false, check: null, save: null, label: "Strength" },
-  dex: { value: null, mod: null, check_mod: 0, save_mod: 0, proficient: false, expertise: false, check: null, save: null, label: "Dexterity" },
-  con: { value: null, mod: null, check_mod: 0, save_mod: 0, proficient: false, expertise: false, check: null, save: null, label: "Constitution" },
-  int: { value: null, mod: null, check_mod: 0, save_mod: 0, proficient: false, expertise: false, check: null, save: null, label: "Intelligence" },
-  wis: { value: null, mod: null, check_mod: 0, save_mod: 0, proficient: false, expertise: false, check: null, save: null, label: "Wisdom" },
-  cha: { value: null, mod: null, check_mod: 0, save_mod: 0, proficient: false, expertise: false, check: null, save: null, label: "Charisma" },
+  str: { value: null, mod: null, check_mod: 0, save_mod: 0, proficient: false, expertise: false, label: "Strength" },
+  dex: { value: null, mod: null, check_mod: 0, save_mod: 0, proficient: false, expertise: false, label: "Dexterity" },
+  con: { value: null, mod: null, check_mod: 0, save_mod: 0, proficient: false, expertise: false, label: "Constitution" },
+  int: { value: null, mod: null, check_mod: 0, save_mod: 0, proficient: false, expertise: false, label: "Intelligence" },
+  wis: { value: null, mod: null, check_mod: 0, save_mod: 0, proficient: false, expertise: false, label: "Wisdom" },
+  cha: { value: null, mod: null, check_mod: 0, save_mod: 0, proficient: false, expertise: false, label: "Charisma" },
 };
+
 
 /* ---------- Helpers ---------- */
 const scoreToMod = (score) =>

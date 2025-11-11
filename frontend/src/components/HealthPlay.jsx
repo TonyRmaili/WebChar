@@ -1,7 +1,13 @@
 import React, { useMemo, useState } from "react";
 import useCharStore from "../store/CharStore";
 
-const DEFAULT_HEALTH = { current_hp: 0, max_hp: 0, temp_hp: 0, barrier: 0 };
+const DEFAULT_HEALTH = {
+  current_hp: 0,
+  max_hp: 0,
+  temp_hp: 0,
+  barrier: 0,
+  max_hp_mod: 0,        // ← new default
+};
 const DIE_ORDER = ["d4", "d6", "d8", "d10", "d12", "d20"];
 const ABILITY_ORDER = ["str", "dex", "con", "int", "wis", "cha"];
 
@@ -95,6 +101,15 @@ export default function HealthPlay({ id }) {
       current_hp: raw === "" ? 0 : Math.max(0, Number(raw) || 0),
     });
 
+  // NEW: max hp mod change
+  const onMaxHpModChange = (raw) =>
+    patchHealth({
+      max_hp_mod: raw === "" ? 0 : Number(raw) || 0,
+    });
+
+  const effectiveMaxHp =
+    (Number(health.max_hp) || 0) + (Number(health.max_hp_mod) || 0);
+
   function onReactionToggle(checked) {
     updateCharField("reaction", !!checked);
     postCharData();
@@ -144,7 +159,7 @@ export default function HealthPlay({ id }) {
 
   return (
     <section className="relative rounded-2xl border border-slate-700 bg-slate-800/40 p-4 space-y-2 overflow-hidden">
-      <div className="grid grid-cols-1 md:grid-cols-[auto_auto_auto_auto_1fr] gap-y-2 min-w-0">
+      <div className="grid grid-cols-1 md:grid-cols-[auto_auto_auto_auto_auto_1fr] gap-y-2 min-w-0">
         <div className="flex flex-col min-w-0">
           <div className="flex gap-3 min-w-0">
             {/* Current HP */}
@@ -158,12 +173,12 @@ export default function HealthPlay({ id }) {
                 className={inputLight}
               />
             </div>
-            {/* Max HP */}
+            {/* Max HP (base + mod) */}
             <div className="flex flex-col gap-0.5 min-w-0">
               <label className={labelCls}>Max</label>
               <input
                 type="number"
-                value={health.max_hp}
+                value={effectiveMaxHp}
                 readOnly
                 className={inputDark}
               />
@@ -191,6 +206,17 @@ export default function HealthPlay({ id }) {
             min={0}
             value={health.barrier}
             onChange={(e) => onBarrierChange(e.target.value)}
+            className={inputLight}
+          />
+        </div>
+
+        {/* MaxHp Mod */}
+        <div className="flex flex-col items-start gap-0.5 ml-2 min-w-0">
+          <label className={labelCls}>Max HP Mod</label>
+          <input
+            type="number"
+            value={health.max_hp_mod}
+            onChange={(e) => onMaxHpModChange(e.target.value)}
             className={inputLight}
           />
         </div>
@@ -233,7 +259,7 @@ export default function HealthPlay({ id }) {
           </div>
 
           {/* Hit Dice buttons */}
-          <div className="flex flex-col gap-1 ml-2">
+          <div className="flex flex-col gap-1 ml-4">
             {hdList.length === 0 ? (
               <span className="text-xs text-slate-400 ml-1">No hit dice</span>
             ) : (
@@ -393,7 +419,7 @@ export default function HealthPlay({ id }) {
           if (activeEntries.length === 0) return null;
 
           const rows = [];
-          const CHUNK_SIZE = 4; // keep your original layout
+          const CHUNK_SIZE = 4;
 
           for (let i = 0; i < activeEntries.length; i += CHUNK_SIZE) {
             rows.push(activeEntries.slice(i, i + CHUNK_SIZE));
@@ -408,9 +434,7 @@ export default function HealthPlay({ id }) {
                 const base = capitalize(row?.base ?? "");
                 return (
                   <p key={key}>
-                    <span className="text-amber-500">{base}</span>
-                    {" "}
-                    SaveDC:{" "}
+                    <span className="text-amber-500">{base}</span> SaveDC:{" "}
                     <span className="text-amber-500">{row?.total ?? 0}</span>
                   </p>
                 );

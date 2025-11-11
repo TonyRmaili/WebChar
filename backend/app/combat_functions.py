@@ -14,15 +14,12 @@ def save_character(user,character,char_data):
     with open(character_path, "w") as f:
         json.dump(char_data,f,indent=4)
 
-
-
+def grant_experience(user, character, exp):
+    char_data = load_character(user=user, character=character.name)
+    char_data["exp"] = char_data.get("exp", 0) + exp
+    save_character(user=user, character=character.name, char_data=char_data)
 
 def damage_health(user, character, value):
-    """
-    Apply incoming damage (value is already negative) in order:
-    barrier → temp_hp → hp.
-    None of these can go below zero.
-    """
     char_data = load_character(user, character)
 
     current = char_data.get("health", {})
@@ -68,11 +65,12 @@ def heal_health(user,character,value):
     try:
         max_hp = char_data["health"]["max_hp"]
         current_hp = char_data["health"]["current_hp"]
+        max_hp_total = max_hp + char_data["health"]["max_hp_mod"]
 
         new_hp = current_hp + value
         char_data["health"]["current_hp"] = new_hp
-        if char_data["health"]["current_hp"] > max_hp:
-            char_data["health"]["current_hp"] = max_hp
+        if char_data["health"]["current_hp"] > max_hp_total:
+            char_data["health"]["current_hp"] = max_hp_total
 
         save_character(
             user=user,
@@ -83,32 +81,53 @@ def heal_health(user,character,value):
     except KeyError as e:
         return e
 
-
 def on_shortrest(user,character):
     char_data = load_character(user, character)
-
-    action_types = ["actions","bonus_actions","reactions"]
-
     
     # effects
-    for action_type in action_types:
-        try:
-            charge_effects(char_data=char_data,
-                        action_type=action_type,
-                        character=character,
-                        user=user)
-        except KeyError as e:
-            print(e) 
+    try:
+        effects = char_data["effects"]
+        for effect in effects:
+            
+            if effect["charges"]["has"]:
+                effect["charges"]["current_charges"] += effect["charges"]["reset_amount"]
+                if effect["charges"]["current_charges"] > effect["charges"]["max_charges"]:
+                    effect["charges"]["current_charges"] = effect["charges"]["max_charges"]
+            
+    except KeyError as e:
+        print(e)
+    except TypeError as e:
+        print(e) 
     
-        
+    # spells
     # pactslots
     try:
         pactslots = char_data["spellbook"]["pactslots"]
         for slots in pactslots:
             slots["slots_current"] = slots["slots_max"]
+        
     except KeyError as e:
-        print(e) 
+        print(e)
+    except TypeError as e:
+            print(e)  
     
+    # innate spells
+    try:
+        spells = char_data["spellbook"]["spells"]
+        for spell in spells:
+            if spell["innate"]:
+                try:
+                    spell["current_charges"] += spell["reset_amount"]
+                    if spell["current_charges"] > spell["max_charges"]:
+                        spell["current_charges"] = spell["max_charges"]
+                except TypeError as e:
+                    pass
+                except KeyError as e:
+                    pass
+    except KeyError as e:
+        print(e)
+    except TypeError as e:
+        print(e)  
 
     # sorcery points
     try:
@@ -120,22 +139,19 @@ def on_shortrest(user,character):
     except TypeError as e:
         print(e)
     
-    # traits
-    try:
-        charge_traits(character=character,char_data=char_data["traits"],user=user)
-    except KeyError as e:
-        print(e)
-
+    
     # magic items
     try:
         charge_magic_items(char_data=char_data,character=character,user=user)
     except KeyError as e:
-        print(e)     
+        print(e)
+    except TypeError as e:
+        print(e)
 
+
+    save_character(user=user,character=character,char_data=char_data)
     return char_data
     
-        
-
 def on_longrest(user,character):
     char_data = load_character(user, character)
     
@@ -143,7 +159,9 @@ def on_longrest(user,character):
     try:
         char_data["health"]["current_hp"] = char_data["health"]["max_hp"]
     except KeyError as e:
-        print(e) 
+        print(e)
+    except TypeError as e:
+        print(e)
     
     # hit dice
     try:
@@ -152,6 +170,9 @@ def on_longrest(user,character):
             dice["current"] = dice["max"]
     except KeyError as e:
         print(e)
+    except TypeError as e:
+        print(e)
+
     # spells
     # pactslots
     try:
@@ -160,6 +181,8 @@ def on_longrest(user,character):
             slots["slots_current"] = slots["slots_max"]
     except KeyError as e:
         print(e)
+    except TypeError as e:
+        print(e)
     
     # spellslots
     try:
@@ -167,6 +190,8 @@ def on_longrest(user,character):
         for slots in spellslots:
             slots["slots_current"] = slots["slots_max"]
     except KeyError as e:
+        print(e)
+    except TypeError as e:
         print(e) 
     
     # innate spells
@@ -174,25 +199,35 @@ def on_longrest(user,character):
         innate_spells = char_data["spellbook"]["spells"]
         for spell in innate_spells:
             if spell["innate"]:
-                spell["current_charges"] = spell["max_charges"]
+                try:
+                    spell["current_charges"] = spell["max_charges"]
+                except KeyError as e:
+                    print(e)
+                except TypeError as e:
+                    print(e) 
     except KeyError as e:
+        print(e)
+    except TypeError as e:
         print(e) 
     
     # sorcery points
     try:
         char_data["spellbook"]["sorcery_points"]["current_charges"] = char_data["spellbook"]["sorcery_points"]["max_charges"]
     except KeyError as e:
-        print(e) 
+        print(e)
+    except TypeError as e:
+        print(e)  
 
     # effects
     try: 
         effects = char_data["effects"]
-        for action_type in effects.values():
-            for effect in action_type:
-                if effect["charges"]["has"]:
-                    effect["charges"]["current_charges"] = effect["charges"]["max_charges"]
+        for effect in effects:
+            if effect["charges"]["has"]:
+                effect["charges"]["current_charges"] = effect["charges"]["max_charges"]
     except KeyError as e:
-        print(e) 
+        print(e)
+    except TypeError as e:
+        print(e)  
     
     # magic items
     try:
@@ -201,34 +236,12 @@ def on_longrest(user,character):
             if item["charges"]["has"]:
                 item["charges"]["current_charges"] = item["charges"]["max_charges"]
     except KeyError as e:
-        print(e) 
-    
-    # traits
-    try:
-        traits = char_data["traits"]
-        for trait_type in traits.values():
-            for trait in trait_type:
-                if trait["charges"]["has"]:
-                    trait["charges"]["current_charges"] = trait["charges"]["max_charges"]
-    except KeyError as e:
-        print(e) 
+        print(e)
+    except TypeError as e:
+        print(e)  
     
     save_character(user=user,character=character,char_data=char_data)
-
-
-def charge_traits(char_data,character,user):
-    for trait_type in char_data.values():
-        for trait in trait_type:
-            if trait["charges"]["has"]:
-                if trait["charges"]["reset_amount"] == "full":
-                    trait["charges"]["current_charges"] = trait["charges"]["max_charges"]
-                else:
-                    trait["charges"]["current_charges"] += trait["charges"]["reset_amount"]
-                    if trait["charges"]["current_charges"] > trait["charges"]["max_charges"]:
-                        trait["charges"]["current_charges"] = trait["charges"]["max_charges"]
-
-    save_character(user=user,character=character,char_data=char_data)
-            
+      
 def charge_magic_items(char_data,character,user):
     items = char_data["inventory"]["magic"]
     for item in items:
@@ -242,17 +255,7 @@ def charge_magic_items(char_data,character,user):
 
     save_character(user=user,character=character,char_data=char_data)
 
-def charge_effects(char_data,action_type,user,character):
-    for action in char_data["effects"][action_type]:
-        if action["charges"]["has"]:
-            if action["charges"]["reset_amount"] == "full":
-                action["charges"]["current_charges"] = action["charges"]["max_charges"]
-            else:
-                action["charges"]["current_charges"] += action["charges"]["reset_amount"]
-                if action["charges"]["current_charges"] > action["charges"]["max_charges"]:
-                    action["charges"]["current_charges"] = action["charges"]["max_charges"]
 
-    save_character(user=user,character=character,char_data=char_data)
    
 
 if __name__ == "__main__":

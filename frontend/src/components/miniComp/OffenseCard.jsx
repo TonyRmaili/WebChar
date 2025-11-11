@@ -10,7 +10,7 @@ const toInt = (v) => {
 export default function OffenseCard({ charData, updateCharField, postCharData }) {
   const pb = charData.pb?.total ?? 0;
   const scores = charData.ability_scores || {};
-  const dexMod = toInt(charData.ability_scores?.dex?.mod ?? 0);
+ 
 
   // ---------- normalize offense ----------
   const offense = useMemo(() => {
@@ -56,15 +56,8 @@ export default function OffenseCard({ charData, updateCharField, postCharData })
     return normalized;
   }, [charData.offense]);
 
-  // ---------- normalize initiative ----------
-  const initiative = useMemo(() => {
-    const base =
-      typeof charData.initiative === "object" ? charData.initiative : {};
-    const mod = toInt(base.mod ?? 0);
-    const total = dexMod + mod;
-    return { mod, total };
-  }, [charData.initiative, dexMod]);
-
+  
+  
   // ---------- helpers ----------
   const abilMod = (a) => toInt(scores?.[a]?.mod ?? 0);
 
@@ -142,12 +135,7 @@ export default function OffenseCard({ charData, updateCharField, postCharData })
     writeOffense(next);
   };
 
-  const setInitiativeMod = (val) => {
-    const mod = toInt(val);
-    const total = dexMod + mod;
-    updateCharField("initiative", { mod, total });
-    postCharData();
-  };
+  
 
   return (
     <div className="flex flex-col gap-2 text-slate-100 text-xs">
@@ -308,24 +296,8 @@ export default function OffenseCard({ charData, updateCharField, postCharData })
         {/* vertical divider between Save and Init */}
         <div className="self-stretch w-px bg-amber-700/70 mx-1" />
 
-        {/* Initiative */}
-        <div className="flex items-center gap-1 text-xs">
-          <span className="w-10 text-xs text-slate-300 text-right">Init</span>
-          <input
-            type="number"
-            step="1"
-            value={initiative.mod}
-            onChange={(e) => setInitiativeMod(e.target.value)}
-            className="text-slate-700 rounded border border-slate-600 w-10 px-1 py-0.5"
-          />
-          <span className="px-1 text-[10px] text-slate-400">=</span>
-          <input
-            type="number"
-            disabled
-            value={initiative.total}
-            className="rounded border border-amber-500 w-10 px-1 py-0.5 bg-amber-300 text-slate-900 text-xs font-semibold"
-          />
-        </div>
+       
+
       </div>
     </div>
   );

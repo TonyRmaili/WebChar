@@ -7,7 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from typing import Annotated
 from fastapi import Query
 from app.database.models import User,Character
-from app.database.schemas import UserSchema,CharacterSchema, QueryRequest, CharacterIn, HealthData,TakeRestData, TakeRestAllData
+from app.database.schemas import UserSchema,CharacterSchema, QueryRequest, CharacterIn, HealthData,TakeRestData, TakeRestAllData, GrantExperienceAll
 from app.security import hash_password, verify_password, create_access_token, get_current_user
 from app.db_setup import init_db, get_db
 from fastapi.security import OAuth2PasswordRequestForm
@@ -20,7 +20,7 @@ from fastapi.responses import JSONResponse
 from embedder.xembedder import Embedder
 from pathlib import Path
 from app.dice_handler import roll_dice
-from app.combat_functions import heal_health, damage_health,load_character,on_longrest,on_shortrest
+from app.combat_functions import heal_health, damage_health,load_character,on_longrest,on_shortrest,grant_experience
 
 # uvicorn app.main:app --reload
 
@@ -171,8 +171,6 @@ def create_char(current_user: Annotated[User, Depends(get_current_user)],
     except Exception as e:
         return JSONResponse(content={"message": f"Error: {str(e)}"}, status_code=500)
     
-
-
 @app.delete("/character/{char_name}",status_code=status.HTTP_204_NO_CONTENT,tags=["characters"])
 def delete_char_name(current_user: Annotated[User, Depends(get_current_user)],
     char_name:str, db:Session = Depends(get_db)):
@@ -250,7 +248,6 @@ def get_char_file(
 
 
 # ------------------------Party-----------------------------
-
 @app.post("/create_party", tags=["party"])
 def create_party(current_user: Annotated[User, Depends(get_current_user)],
           form_data:dict,db:Session = Depends(get_db)):
@@ -368,7 +365,6 @@ def take_rest_all(
     current_user: Annotated[User, Depends(get_current_user)]  
 ):
     
-
     if form_data.rest_type == "long":
         for character in form_data.characters:
             on_longrest(current_user.name,character["name"])
@@ -381,6 +377,58 @@ def take_rest_all(
         print("no valid rest type")
     
     return {"ok": True}
+
+@app.post("/combat/experience", tags=["combat"])
+def grant_all_exp(
+    form_data: GrantExperienceAll,
+    current_user: Annotated[User, Depends(get_current_user)]  
+):
+    user = current_user.name
+    
+    for character in current_user.characters:
+        grant_experience(user=user,character=character,exp=form_data.delta)
+    
+    return {"ok": True}
+
+
+# ------------------------Monsters-----------------------------
+
+@app.post("/minions", tags=["monsters"])
+def create_minion(
+        current_user: Annotated[User, Depends(get_current_user)],
+        form_data:dict,
+        char_name: str = Query(...),
+        db:Session = Depends(get_db)):
+
+    dirr = os.path.join(savefiles_path,current_user.name,"minions",char_name)
+    os.makedirs(dirr,exist_ok=True)
+
+    file_name = f'{form_data["name"]}.json'
+    savepath = os.path.join(dirr,file_name)
+
+    with open(savepath,"w") as f:
+        json.dump(form_data,f,indent=4) 
+   
+    return savepath
+
+@app.get("/minions", tags=["monsters"])
+def get_minions(
+    current_user: Annotated[User, Depends(get_current_user)],
+    char_name: str = Query(...)
+    ):
+    
+    minions_path = os.path.join(savefiles_path,current_user.name,"minions",char_name)
+    minions = []
+    try:
+        for filename in os.listdir(minions_path):
+            filepath = os.path.join(minions_path, filename)
+            if os.path.isfile(filepath):
+                minions.append(filepath)
+    except FileNotFoundError as e:
+        return []
+    return minions
+
+
 
 
 
@@ -403,8 +451,6 @@ def roll_initiative(
     except Exception as e:
         return {"error": str(e)}
     
-
-
 
 # ------------------------Embeddings-----------------------------
 
@@ -473,9 +519,7 @@ def select_spell(file_name,spell_name):
             spell = clean_spell(spell)
             return spell
 
-    
-
-
+ 
 @app.get("/5etools/races",tags=["5etools"])
 def get_races():
     try:
@@ -489,24 +533,3 @@ def get_races():
 
  
 
-
-# @app.post("/character", tags=["characters"])
-# def create_char(current_user: Annotated[User, Depends(get_current_user)],
-#           form_data:dict,db:Session = Depends(get_db)):
-#     try:
-#         directory = os.path.join(savefiles_path , current_user.name ,"characters")
-#         file_name = form_data['name'] + ".json"
-#         file_path = os.path.join(directory, file_name)
-#         os.makedirs(directory, exist_ok=True)
-#         with open(file_path, "w") as json_file:
-#             json.dump(form_data, json_file, indent=4)
-
-#         character_data = CharacterSchema(user_id=current_user.id,
-#             name=form_data['name'] ,file_path=file_path)
-#         db_char = Character(**character_data.model_dump())
-#         db.add(db_char)
-#         db.commit()
-
-#         return JSONResponse(content={"message": "JSON data saved successfully"}, status_code=200)
-#     except Exception as e:
-#         return JSONResponse(content={"message": f"Error: {str(e)}"}, status_code=500)
