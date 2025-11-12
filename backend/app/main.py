@@ -423,14 +423,52 @@ def get_minions(
         for filename in os.listdir(minions_path):
             filepath = os.path.join(minions_path, filename)
             if os.path.isfile(filepath):
-                minions.append(filepath)
+
+                with open(filepath) as f:
+                    data = json.load(f)
+                minions.append(data)
     except FileNotFoundError as e:
         return []
     return minions
 
 
+@app.put("/minions",tags=["monsters"])
+def update_minion(
+    current_user: Annotated[User, Depends(get_current_user)],
+    form_data:dict,
+    char_name: str = Query(...)
+    
+):
+    minion_path = os.path.join(savefiles_path,current_user.name,"minions",char_name,f"{form_data["name"]}.json")
+    with open(minion_path, "w") as f:
+        json.dump(form_data,f,indent=4)
 
+    return form_data
 
+@app.delete("/minions", tags=["monsters"])
+def delete_minion(
+    current_user: Annotated[User, Depends(get_current_user)],
+    char_name: str = Query(...),
+    form_data: dict = Body(...)
+):
+    
+    minion_path = os.path.join(
+        savefiles_path,
+        current_user.name,
+        "minions",
+        char_name,
+        f"{form_data.get('name')}.json"
+    )
+
+    if not os.path.exists(minion_path):
+        raise HTTPException(status_code=404, detail=f"Minion not found: {form_data.get('name')}")
+
+    try:
+        os.remove(minion_path)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to delete minion: {e}")
+
+    return {"status": "success", "deleted": form_data.get("name")}
 
 
 # ------------------------Dice-----------------------------

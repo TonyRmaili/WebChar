@@ -90,11 +90,6 @@ export default function CombatPage() {
   );
 
 
-
-  // useEffect(() => {
-  //   if (token && activeCharId) fetchChar(activeCharId);
-  // }, [token, activeCharId, fetchChar]);
-
   useEffect(() => {
   if (!token || !activeCharId) return;
 

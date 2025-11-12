@@ -28,9 +28,7 @@ const useMonsterStore = create((set, get) => ({
   fetchMinions: async (charName) => {
     set({ loading: true, error: null });
     try {
-      const url = `${API_BASE_MINIONS}?char_name=${encodeURIComponent(
-        charName
-      )}`;
+      const url = `${API_BASE_MINIONS}?char_name=${encodeURIComponent(charName)}`;
       const token = localStorage.getItem("token");
 
       const res = await fetch(url, {
@@ -52,9 +50,7 @@ const useMonsterStore = create((set, get) => ({
   createMinion: async (monsterPayload, charName) => {
     set({ loading: true, error: null });
     try {
-      const url = `${API_BASE_MINIONS}?char_name=${encodeURIComponent(
-        charName
-      )}`;
+      const url = `${API_BASE_MINIONS}?char_name=${encodeURIComponent(charName)}`;
 
       const token = localStorage.getItem("token");
       if (!token) throw new Error("Token not found in localStorage");
@@ -85,6 +81,71 @@ const useMonsterStore = create((set, get) => ({
       return null;
     }
   },
+
+  updateMinion: async (minionData, charName) => {
+  set({ loading: true, error: null });
+  try {
+    const token = localStorage.getItem("token");
+    if (!token) throw new Error("Token not found in localStorage");
+
+    const url = `${API_BASE_MINIONS}?char_name=${encodeURIComponent(charName)}`;
+    const res = await fetch(url, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(minionData),
+    });
+
+    if (!res.ok) {
+      let details = "";
+      try { details = JSON.stringify(await res.json()); } catch {}
+      throw new Error(`Failed to update minion: ${res.status} ${details}`);
+    }
+
+    const data = await res.json(); // or null if your API returns nothing
+    set({ loading: false });
+    return data ?? true; // truthy on success
+  } catch (err) {
+    set({ error: err.message || "Unknown error", loading: false });
+    return null;
+  }
+},
+
+
+  deleteMinion: async (minionData, charName) => {
+    set({ loading: true, error: null });
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) throw new Error("Token not found in localStorage");
+
+      const url = `${API_BASE_MINIONS}?char_name=${encodeURIComponent(charName)}`;
+      const res = await fetch(url, {
+        method: "DELETE", // if your backend disallows body on DELETE, switch to POST /minions/delete
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(minionData),
+      });
+
+      if (!res.ok) {
+        let details = "";
+        try { details = JSON.stringify(await res.json()); } catch {}
+        throw new Error(`Failed to delete minion: ${res.status} ${details}`);
+      }
+
+      set({ loading: false });
+      // optionally return server payload if any
+      return true;
+    } catch (err) {
+      set({ error: err.message || "Unknown error", loading: false });
+      return null;
+    }
+  },
+
+
 }));
 
 export default useMonsterStore;

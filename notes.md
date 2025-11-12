@@ -49,7 +49,10 @@
 2. current hp can exceed max_hp when max_hp_mod is reduced 
 
 
-
+# Biography 
+1. Add alignments
+2. fix the page
+3. change filename
 
 # EffectsPlay
 1. categories by damage type and combine all same terms (const, dX )
