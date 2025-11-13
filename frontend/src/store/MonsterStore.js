@@ -23,6 +23,13 @@ const useMonsterStore = create((set, get) => ({
   setError: (error) => set({ error }),
   clearError: () => set({ error: null }),
 
+  // central place to update minionsData + localStorage
+  setMinionsData: (data) => {
+    const next = Array.isArray(data) ? data : [];
+    localStorage.setItem("minionsData", JSON.stringify(next));
+    set({ minionsData: next });
+  },
+
   /* ---------- API actions ---------- */
 
   fetchMinions: async (charName) => {

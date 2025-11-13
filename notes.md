@@ -1,19 +1,29 @@
 
 
-# Minoions/+Play
-1. Create units such as summons and followers etc
-2. make windows or large collapsables?
-3. pipe in dice tower
-4. connect to rest logic
+# Minions
+1. neat dividers for all the subcomponents
+2. define hit-dice?
+3. connect CR to PB
+4. save DC needs to be simpler and connected to ability (or set DC directly, simplest)
+5. define init and connect to dex mod
+6. pipe-in equipments from real items database
+7. fix the stupid "one-character at a time bug" in senses and speed fts input  
+8. Allow name change that triggers a new minion (separete save json which essentially makes a copy for modding a monster template)
+9. handle spells in effects?
+    how will this be once AI cleans data?
+    and for old spellcasting features from 2014?
 
+
+# MinionsPlay
+1. make windows or large collapsables?
+2. pipe in dice tower
+3. connect to rest logic
 
 # Overall
 1. Collapse right area? 
 2. Giga lag (large Interaction to Next Paint (INP) > 16k ms) due to const { charData, updateCharField } = useCharStore();
     fix by using selectors such as const melee = useCharStore((s) => s.charData.offense.melee);
                                    const updateCharField = useCharStore((s) => s.updateCharField);
-
-
     Fixed:
     HealthPlay
     OffensCard
@@ -22,7 +32,11 @@
     EffectsPlay
     AbilityScore
     SpellPlay
-    Comabt
+    Combat
+3. Major function breakout. Far too many repeatable functions everywere
+    math.js, functions, elements such as buttons and styling
+4. Organize folders and files - rename some files
+5. All api calls define in corresponding store
     
 
 # GeneralStats

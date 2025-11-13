@@ -26,21 +26,20 @@ const DEFAULT_MINION_DATA = {
   amount: 0,
   ac: 0,
   max_hp: 0,
-  cr: 0, // link to pb?
-  pb:0, 
+  cr: 0,
+  pb: 0,
   size: "",
   alignment: "",
-  type: [],
+  monster_types: [],   // <— renamed from type
   speed: [],
   habitats: [],
   immunities: [],
   resistances: [],
   senses: [],
   languages: [],
-  equipment:[],
+  equipment: [],
   ability_scores: {},
   skills: [],
-
 
   traits: [],
   actions: [],
@@ -50,9 +49,9 @@ const DEFAULT_MINION_DATA = {
   mythic_actions: [],
   regional_effects: [],
 
-  initiative: 0, // link to dex_mod 
-  
+  initiative: 0,
 };
+
 
 const SIZE_OPTIONS = [
   "Miniscule",
@@ -224,7 +223,7 @@ function MinionRow({index,minion,isOpen,onToggle,onFieldChange,onDelete,}){
     onFieldChange(index, field, v);
   };
   
-  const [pending, setPending] = useState({ habitats: "", type: "" });
+  const [pending, setPending] = useState({ habitats: "", monster_types: "" });
 
   const addArrayItem = (field) => {
     const v = (pending[field] || "").trim();
@@ -881,7 +880,7 @@ function MinionRow({index,minion,isOpen,onToggle,onFieldChange,onDelete,}){
             <select
               className={`${inputTextStyle} cursor-pointer`}
               value={safe.alignment}
-              onChange={ch("size")}
+              onChange={ch("alignment")}
             >
               <option value="">Select Alignment</option>
               {ALIGNMENT_OPTIONS.map((opt) => (
@@ -893,7 +892,7 @@ function MinionRow({index,minion,isOpen,onToggle,onFieldChange,onDelete,}){
           </div>
 
           <ArrayPicker label="Habitats" field="habitats" options={HABITAT_OPTIONS} />
-          <ArrayPicker label="Types" field="type" options={TYPE_OPTIONS} />
+          <ArrayPicker label="Types" field="monster_types" options={TYPE_OPTIONS} />
           <ArrayPicker label="Resistances" field="resistances" options={DAMAGE_TYPES} />
           <ArrayPicker label="Immunities" field="immunities" options={[...DAMAGE_TYPES, ...CONDITION_OPTIONS]} />
 
@@ -982,7 +981,7 @@ export default function Minions() {
       timersRef.current[key] = setTimeout(async () => {
         if (!charData?.name) return;
         await updateMinion(fullMinion, charData.name);
-        // await fetchMinions(charData.name); // sync back from server
+        await fetchMinions(charData.name); // sync back from server
         delete timersRef.current[key];
       }, 400);
     },

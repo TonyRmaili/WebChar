@@ -61,15 +61,18 @@ function createDefaultDamage() {
   return { id: idGen(), dice_count: null, dice_size: "", mod: null, damage_type: "" };
 }
 
-function createDefaultEffect(kind = "none") {
+
+function createDefaultEffect(effect_type = "none") {
   return {
     id: idGen(),
     name: "",
-    kind,
-    attack: { attack_type: "", hit_bonus: null, range_ft: null }, // range always present
-    save:   { target: "", ability: "", dc_bonus: null },
+    effect_type,
+    attack: { attack_type: "", hit_bonus: null },
+    save:   { target: "", dc_bonus: null },
+    range_ft: "",
     damages: [],
     notes: "",
+    active: true,
     charges: { has: false, max_charges: "", current_charges: "", reset_amount: 0 },
     open: true, // UI-only
   };
@@ -120,45 +123,59 @@ function EffectCard({ effect, onPatch, onRemove }) {
   const [fullReset, setFullReset] = useState(false);
   const charges = effect.charges || { has: false, max_charges: "", current_charges: "", reset_amount: 0 };
 
-  const getSaveTarget = (save) => {
-    const rawTarget = save?.target;
-    if (rawTarget) return String(rawTarget).toLowerCase();
-    const fromAbility = save?.ability ? String(save.ability).toLowerCase() : "";
-    if (SAVES.includes(fromAbility)) return fromAbility;
-    return "";
-  };
+  const isActive = effect.active ?? true;
 
-  const handleKindChange = (nextKind) => {
-    const currentRange = effect.attack?.range_ft ?? "";
-    if (nextKind === "none") {
+  const handleEffectTypeChange = (nextType) => {
+    const currentRange = effect.range_ft ?? "";
+
+    if (nextType === "none") {
       onPatch({
-        kind: "none",
-        attack: { attack_type: "", hit_bonus: null, range_ft: currentRange },
-        save:   { target: "", ability: "", dc_bonus: null },
+        effect_type: "none",
+        attack: { attack_type: "", hit_bonus: null },
+        save:   { target: "", dc_bonus: null },
+        range_ft: currentRange,
       });
       return;
     }
-    if (nextKind === "attack") {
+
+    if (nextType === "attack") {
       onPatch({
-        kind: "attack",
-        attack: { attack_type: effect.attack?.attack_type ?? "", hit_bonus: toIntOrNull(effect.attack?.hit_bonus), range_ft: currentRange },
-        save:   { target: "", ability: "", dc_bonus: null },
+        effect_type: "attack",
+        attack: {
+          attack_type: ATTACK_TYPES[0].value, 
+          hit_bonus: toIntOrNull(effect.attack?.hit_bonus),
+        },
+        save:   { target: "", dc_bonus: null }, 
+        range_ft: currentRange,
       });
       return;
     }
-    if (nextKind === "save") {
+
+    if (nextType === "save") {
       onPatch({
-        kind: "save",
-        attack: { attack_type: "", hit_bonus: null, range_ft: currentRange },
-        save:   { target: getSaveTarget(effect.save), ability: effect.save?.ability ?? "", dc_bonus: toIntOrNull(effect.save?.dc_bonus) },
+        effect_type: "save",
+        attack: { attack_type: "", hit_bonus: null }, 
+        save: {
+          target: SAVES[0], 
+          dc_bonus: toIntOrNull(effect.save?.dc_bonus),
+        },
+        range_ft: currentRange,
       });
       return;
     }
-    if (nextKind === "attack_and_save") {
+
+    if (nextType === "attack_and_save") {
       onPatch({
-        kind: "attack_and_save",
-        attack: { attack_type: effect.attack?.attack_type ?? "", hit_bonus: toIntOrNull(effect.attack?.hit_bonus), range_ft: currentRange },
-        save:   { target: getSaveTarget(effect.save), ability: effect.save?.ability ?? "", dc_bonus: toIntOrNull(effect.save?.dc_bonus) },
+        effect_type: "attack_and_save",
+        attack: {
+          attack_type: ATTACK_TYPES[0].value,
+          hit_bonus: toIntOrNull(effect.attack?.hit_bonus),
+        },
+        save: {
+          target: SAVES[0],
+          dc_bonus: toIntOrNull(effect.save?.dc_bonus),
+        },
+        range_ft: currentRange,
       });
     }
   };
@@ -218,6 +235,10 @@ function EffectCard({ effect, onPatch, onRemove }) {
     setCharges({ has: true, reset_amount: !Number.isFinite(n) || n < 0 ? 0 : n });
   };
 
+  const onActiveChange = (checked) => {
+    onPatch({ active: !!checked });
+  };
+
   // damages
   const addDamage = () => onPatch({ damages: [...(effect.damages || []), createDefaultDamage()] });
   const patchDamage = (dmgId, patch) =>
@@ -247,7 +268,12 @@ function EffectCard({ effect, onPatch, onRemove }) {
               onClick={(e) => e.stopPropagation()}
             />
           </div>
-          <Chip>{EFFECT_TYPES.find((k) => k.value === (effect.kind || "none"))?.label || "None"}</Chip>
+          <Chip>
+            {EFFECT_TYPES.find(
+              (k) => k.value === (effect.effect_type ?? "none")
+            )?.label || "None"}
+          </Chip>
+
           {summarizeDamage(effect) ? <Chip>{summarizeDamage(effect)}</Chip> : null}
         </div>
       </button>
@@ -255,13 +281,13 @@ function EffectCard({ effect, onPatch, onRemove }) {
       {/* Body */}
       {effect.open && (
         <div className="p-3 space-y-3 border-t border-slate-700">
-          {/* Top row: kind + add dmg */}
+          {/* Top row: type + add dmg */}
           <div className="flex flex-wrap items-end gap-3 text-xs">
             <div className="flex flex-col">
               <label className="text-[10px] text-slate-400">Effect Type</label>
               <select
-                value={effect.kind || "none"}
-                onChange={(e) => handleKindChange(e.target.value)}
+                value={effect.effect_type ?? "none"}
+                onChange={(e) => handleEffectTypeChange(e.target.value)}
                 className="w-40 px-2 py-1 rounded-md bg-slate-950 border border-slate-700 text-xs text-slate-100"
               >
                 {EFFECT_TYPES.map((k) => (
@@ -280,16 +306,19 @@ function EffectCard({ effect, onPatch, onRemove }) {
           </div>
 
           {/* Attack-only */}
-          {(effect.kind === "attack" || effect.kind === "attack_and_save") && (
+          {(effect.effect_type === "attack" || effect.effect_type === "attack_and_save") && (
             <div className="flex flex-wrap gap-3 text-xs">
               <div className="flex flex-col">
                 <label className="text-[10px] text-slate-400">Attack type</label>
                 <select
-                  value={effect.attack?.attack_type ?? ""}
-                  onChange={(e) => onPatch({ attack: { ...(effect.attack || {}), attack_type: e.target.value } })}
+                  value={effect.attack?.attack_type || ATTACK_TYPES[0].value}
+                  onChange={(e) =>
+                    onPatch({
+                      attack: { ...(effect.attack || {}), attack_type: e.target.value },
+                    })
+                  }
                   className="w-32 px-2 py-1 rounded-md bg-slate-950 border border-slate-700 text-xs text-slate-100"
                 >
-                  <option value="">None</option>
                   {ATTACK_TYPES.map((opt) => (
                     <option key={opt.value} value={opt.value}>{opt.label}</option>
                   ))}
@@ -297,29 +326,32 @@ function EffectCard({ effect, onPatch, onRemove }) {
               </div>
 
               <div className="flex flex-col">
-                <label className="text-[10px] text-slate-400">Hit bonus</label>
+                <label className="text-[10px] text-slate-400">+ Hit</label>
                 <input
                   type="number"
                   step={1}
                   value={effect.attack?.hit_bonus ?? ""}
-                  onChange={(e) => onPatch({ attack: { ...(effect.attack || {}), hit_bonus: e.target.value } })}
-                  placeholder="+7"
+                  onChange={(e) =>
+                    onPatch({
+                      attack: { ...(effect.attack || {}), hit_bonus: e.target.value },
+                    })
+                  }
                   className="w-24 px-2 py-1 rounded-md bg-slate-950 border border-slate-700 text-xs text-slate-100"
                 />
               </div>
             </div>
           )}
 
-          {/* Range - always visible */}
+          {/* Range - always visible, now top-level */}
           <div className="flex flex-wrap gap-3 text-xs">
             <div className="flex flex-col">
               <label className="text-[10px] text-slate-400">Range / Reach (ft)</label>
               <input
                 type="number"
-                value={effect.attack?.range_ft ?? ""}
+                value={effect.range_ft ?? ""}
                 min={0}
                 step={5}
-                onChange={(e) => onPatch({ attack: { ...(effect.attack || {}), range_ft: e.target.value } })}
+                onChange={(e) => onPatch({ range_ft: e.target.value })}
                 placeholder="5 or 30/120"
                 className="w-32 px-2 py-1 rounded-md bg-slate-950 border border-slate-700 text-xs text-slate-100"
               />
@@ -327,63 +359,84 @@ function EffectCard({ effect, onPatch, onRemove }) {
           </div>
 
           {/* Save block */}
-          {(effect.kind === "save" || effect.kind === "attack_and_save") && (
+          {(effect.effect_type === "save" || effect.effect_type === "attack_and_save") && (
             <div className="flex flex-wrap gap-3 text-xs">
               <div className="flex flex-col">
                 <label className="text-[10px] text-slate-400">Target save</label>
                 <select
-                  value={effect.save?.target ? String(effect.save.target).toLowerCase() : ""}
-                  onChange={(e) => onPatch({ save: { ...(effect.save || {}), target: e.target.value.toLowerCase() } })}
+                  value={
+                    effect.save?.target
+                      ? String(effect.save.target).toLowerCase()
+                      : SAVES[0]
+                  }
+                  onChange={(e) =>
+                    onPatch({
+                      save: {
+                        ...(effect.save || {}),
+                        target: e.target.value.toLowerCase(),
+                      },
+                    })
+                  }
                   className="w-24 px-2 py-1 rounded-md bg-slate-950 border border-slate-700 text-xs text-slate-100"
                 >
-                  <option value="">None</option>
-                  {SAVES.map((t) => <option key={t} value={t}>{t}</option>)}
+                  {SAVES.map((t) => (
+                    <option key={t} value={t}>{t}</option>
+                  ))}
                 </select>
               </div>
 
               <div className="flex flex-col">
-                <label className="text-[10px] text-slate-400">Save ability</label>
-                <select
-                  value={effect.save?.ability ?? ""}
-                  onChange={(e) => onPatch({ save: { ...(effect.save || {}), ability: e.target.value } })}
-                  className="w-24 px-2 py-1 rounded-md bg-slate-950 border border-slate-700 text-xs text-slate-100"
-                >
-                  <option value="">None</option>
-                  {SAVES.map((ab) => <option key={ab} value={ab}>{ab}</option>)}
-                </select>
-              </div>
-
-              <div className="flex flex-col">
-                <label className="text-[10px] text-slate-400">Save DC Bonus</label>
+                <label className="text-[10px] text-slate-400">Save DC</label>
                 <input
                   type="number"
                   step={1}
                   value={effect.save?.dc_bonus ?? ""}
-                  onChange={(e) => onPatch({ save: { ...(effect.save || {}), dc_bonus: toIntOrNull(e.target.value) } })}
+                  onChange={(e) =>
+                    onPatch({
+                      save: {
+                        ...(effect.save || {}),
+                        dc_bonus: toIntOrNull(e.target.value),
+                      },
+                    })
+                  }
                   className="w-20 px-2 py-1 rounded-md bg-slate-950 border border-slate-700 text-xs text-slate-100"
                 />
               </div>
             </div>
           )}
 
-          {/* Charges */}
+          {/* Charges + Show Effect */}
           <div className="flex flex-col gap-2 text-xs border border-slate-800 rounded-md p-2 bg-slate-900/40">
-            <label className="inline-flex items-center gap-2">
-              <input
-                type="checkbox"
-                checked={!!charges.has}
-                onChange={(e) => onHasCharges(e.target.checked)}
-                className="h-3 w-3"
-              />
-              <span className="text-slate-200">Has charges</span>
-            </label>
+            <div className="flex flex-wrap items-center gap-4">
+              <label className="inline-flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  checked={!!charges.has}
+                  onChange={(e) => onHasCharges(e.target.checked)}
+                  className="h-3 w-3"
+                />
+                <span className="text-slate-200">Has charges</span>
+              </label>
+
+              <label className="inline-flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  checked={!!isActive}
+                  onChange={(e) => onActiveChange(e.target.checked)}
+                  className="h-3 w-3"
+                />
+                <span className="text-slate-200">Show Effect</span>
+              </label>
+            </div>
 
             {charges.has && (
               <div className="flex flex-wrap gap-3">
                 <div className="flex flex-col">
                   <label className="text-[10px] text-slate-400">Max charges</label>
                   <input
-                    type="number" min={0} step={1}
+                    type="number"
+                    min={0}
+                    step={1}
                     value={charges.max_charges ?? ""}
                     onChange={(e) => onMax(e.target.value)}
                     className="w-24 px-2 py-1 rounded-md bg-slate-950 border border-slate-700 text-xs text-slate-100"
@@ -393,7 +446,9 @@ function EffectCard({ effect, onPatch, onRemove }) {
                 <div className="flex flex-col">
                   <label className="text-[10px] text-slate-400">Current charges</label>
                   <input
-                    type="number" min={0} step={1}
+                    type="number"
+                    min={0}
+                    step={1}
                     value={charges.current_charges ?? ""}
                     onChange={(e) => onCurrent(e.target.value)}
                     className="w-24 px-2 py-1 rounded-md bg-slate-950 border border-slate-700 text-xs text-slate-100"
@@ -410,15 +465,21 @@ function EffectCard({ effect, onPatch, onRemove }) {
                         onChange={(e) => onFullReset(e.target.checked)}
                         className="h-3 w-3"
                       />
-                      <span className="text-slate-200 text-[11px]">Full reset (= max)</span>
+                      <span className="text-slate-200 text-[11px]">
+                        Full reset (= max)
+                      </span>
                     </label>
                     <input
-                      type="number" min={0} step={1}
+                      type="number"
+                      min={0}
+                      step={1}
                       value={charges.reset_amount ?? 0}
                       onChange={(e) => onResetAmount(e.target.value)}
                       disabled={fullReset}
                       className={`w-20 px-2 py-1 rounded-md border text-xs ${
-                        fullReset ? "bg-slate-900 border-slate-800 text-slate-500" : "bg-slate-950 border-slate-700 text-slate-100"
+                        fullReset
+                          ? "bg-slate-900 border-slate-800 text-slate-500"
+                          : "bg-slate-950 border-slate-700 text-slate-100"
                       }`}
                     />
                   </div>
@@ -430,12 +491,19 @@ function EffectCard({ effect, onPatch, onRemove }) {
           {/* Damages */}
           <div className="space-y-2 text-xs">
             {(effect.damages || []).map((d) => (
-              <div key={d.id} className="flex flex-wrap items-end gap-2 rounded-md border border-slate-700 bg-slate-900/60 p-2">
+              <div
+                key={d.id}
+                className="flex flex-wrap items-end gap-2 rounded-md border border-slate-700 bg-slate-900/60 p-2"
+              >
                 <div className="flex flex-col">
                   <label className="text-[10px] text-slate-400">Dice count</label>
                   <input
-                    type="number" step={1} value={d.dice_count ?? ""}
-                    onChange={(e) => patchDamage(d.id, { dice_count: toIntOrNull(e.target.value) })}
+                    type="number"
+                    step={1}
+                    value={d.dice_count ?? ""}
+                    onChange={(e) =>
+                      patchDamage(d.id, { dice_count: toIntOrNull(e.target.value) })
+                    }
                     placeholder="2"
                     className="w-16 px-2 py-1 rounded-md bg-slate-950 border border-slate-700 text-xs text-slate-100"
                   />
@@ -445,19 +513,29 @@ function EffectCard({ effect, onPatch, onRemove }) {
                   <label className="text-[10px] text-slate-400">Die</label>
                   <select
                     value={d.dice_size ?? ""}
-                    onChange={(e) => patchDamage(d.id, { dice_size: e.target.value })}
+                    onChange={(e) =>
+                      patchDamage(d.id, { dice_size: e.target.value })
+                    }
                     className="w-20 px-2 py-1 rounded-md bg-slate-950 border border-slate-700 text-xs text-slate-100"
                   >
                     <option value="">Die</option>
-                    {DAMAGE_DICE_SIZES.map((sz) => <option key={sz} value={sz}>{sz}</option>)}
+                    {DAMAGE_DICE_SIZES.map((sz) => (
+                      <option key={sz} value={sz}>
+                        {sz}
+                      </option>
+                    ))}
                   </select>
                 </div>
 
                 <div className="flex flex-col">
-                  <label className="text-[10px] text-slate-400">Extra mod</label>
+                  <label className="text-[10px] text-slate-400">Mod</label>
                   <input
-                    type="number" step={1} value={d.mod ?? ""}
-                    onChange={(e) => patchDamage(d.id, { mod: toIntOrNull(e.target.value) })}
+                    type="number"
+                    step={1}
+                    value={d.mod ?? ""}
+                    onChange={(e) =>
+                      patchDamage(d.id, { mod: toIntOrNull(e.target.value) })
+                    }
                     placeholder="+3"
                     className="w-16 px-2 py-1 rounded-md bg-slate-950 border border-slate-700 text-xs text-slate-100"
                   />
@@ -467,18 +545,30 @@ function EffectCard({ effect, onPatch, onRemove }) {
                   <label className="text-[10px] text-slate-400">Damage type</label>
                   <select
                     value={d.damage_type ?? ""}
-                    onChange={(e) => patchDamage(d.id, { damage_type: e.target.value })}
+                    onChange={(e) =>
+                      patchDamage(d.id, { damage_type: e.target.value })
+                    }
                     className="w-32 px-2 py-1 rounded-md bg-slate-950 border border-slate-700 text-xs text-slate-100"
                   >
                     <option value="">Select</option>
-                    {DAMAGE_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
+                    {DAMAGE_TYPES.map((t) => (
+                      <option key={t} value={t}>
+                        {t}
+                      </option>
+                    ))}
                   </select>
                 </div>
 
                 <div className="ml-auto">
                   <button
                     type="button"
-                    onClick={() => onPatch({ damages: (effect.damages || []).filter((x) => x.id !== d.id) })}
+                    onClick={() =>
+                      onPatch({
+                        damages: (effect.damages || []).filter(
+                          (x) => x.id !== d.id
+                        ),
+                      })
+                    }
                     className="px-2 py-1 rounded-md border border-red-700 bg-red-900/40 hover:bg-red-900/60 text-red-100 text-[11px]"
                   >
                     Remove
@@ -546,10 +636,6 @@ function CategorySection({ title, sectionKey, items, collapsed, onToggleSection,
 }
 
 /* ================== MAIN ================== */
-/**
- * Controlled child: gets the current minion object and uses the parent's onFieldChange
- * so the parent's debounced save to backend stays in charge.
- */
 export function MinionEffects({ buttonStyle, minion, index, onFieldChange }) {
   const safeMinion = ensureArrays(minion);
 
@@ -565,7 +651,10 @@ export function MinionEffects({ buttonStyle, minion, index, onFieldChange }) {
 
   // only show non-empty categories
   const visibleCategories = useMemo(
-    () => CATEGORY_KEYS.filter((k) => Array.isArray(safeMinion[k]) && safeMinion[k].length > 0),
+    () =>
+      CATEGORY_KEYS.filter(
+        (k) => Array.isArray(safeMinion[k]) && safeMinion[k].length > 0
+      ),
     [safeMinion]
   );
 
@@ -594,13 +683,42 @@ export function MinionEffects({ buttonStyle, minion, index, onFieldChange }) {
     <div className="space-y-4">
       {/* Top buttons are the ONLY way to add new effects */}
       <div className="px-4 py-4 flex flex-wrap gap-2">
-        <button className={buttonStyle} onClick={() => addToCategory("traits")}>Trait</button>
-        <button className={buttonStyle} onClick={() => addToCategory("actions")}>Action</button>
-        <button className={buttonStyle} onClick={() => addToCategory("bonus_actions")}>Bonus Action</button>
-        <button className={buttonStyle} onClick={() => addToCategory("reactions")}>Reaction</button>
-        <button className={buttonStyle} onClick={() => addToCategory("legendary_actions")}>Legendary Action</button>
-        <button className={buttonStyle} onClick={() => addToCategory("mythic_actions")}>Mythic Action</button>
-        <button className={buttonStyle} onClick={() => addToCategory("regional_effects")}>Regional Effects</button>
+        <button className={buttonStyle} onClick={() => addToCategory("traits")}>
+          Trait
+        </button>
+        <button className={buttonStyle} onClick={() => addToCategory("actions")}>
+          Action
+        </button>
+        <button
+          className={buttonStyle}
+          onClick={() => addToCategory("bonus_actions")}
+        >
+          Bonus Action
+        </button>
+        <button
+          className={buttonStyle}
+          onClick={() => addToCategory("reactions")}
+        >
+          Reaction
+        </button>
+        <button
+          className={buttonStyle}
+          onClick={() => addToCategory("legendary_actions")}
+        >
+          Legendary Action
+        </button>
+        <button
+          className={buttonStyle}
+          onClick={() => addToCategory("mythic_actions")}
+        >
+          Mythic Action
+        </button>
+        <button
+          className={buttonStyle}
+          onClick={() => addToCategory("regional_effects")}
+        >
+          Regional Effects
+        </button>
       </div>
 
       {/* Only non-empty categories render */}

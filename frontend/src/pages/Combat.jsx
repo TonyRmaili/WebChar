@@ -15,6 +15,7 @@ import Effects from "../components/Effects";
 
 import HealthPlay from "../components/HealthPlay";
 import UltimaCharges from "../components/UltimaCharges";
+import { MinionsPlay } from "../components/MinionsPlay";
 
 function TabButton({ id, label, active, onClick }) {
   return (
@@ -257,7 +258,17 @@ export default function CombatPage() {
                   </div>
                 )}
               </div>
-
+              <div className="flex-[1.5] min-h-[25vh]">
+                <div className="h-full overflow-y-auto rounded-xl border border-slate-700/60 bg-slate-900/40 p-4">
+                  {selectedChar ? (
+                    <MinionsPlay />
+                  ) : (
+                    <div className="text-slate-400">
+                      Select a character.
+                    </div>
+                  )}
+                </div>
+              </div>
               <div className="flex-[1.5] min-h-[25vh]">
                 <div className="h-full overflow-y-auto rounded-xl border border-slate-700/60 bg-slate-900/40 p-4">
                   {selectedChar ? (
@@ -269,6 +280,7 @@ export default function CombatPage() {
                   )}
                 </div>
               </div>
+
             </div>
           </div>
         </div>

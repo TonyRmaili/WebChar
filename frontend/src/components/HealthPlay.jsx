@@ -107,9 +107,9 @@ export default function HealthPlay({ id }) {
       max_hp_mod: raw === "" ? 0 : Number(raw) || 0,
     });
 
-  const effectiveMaxHp =
-    (Number(health.max_hp) || 0) + (Number(health.max_hp_mod) || 0);
+  const effectiveMaxHp = (Number(health.max_hp) || 0) + (Number(health.max_hp_mod) || 0)
 
+  
   function onReactionToggle(checked) {
     updateCharField("reaction", !!checked);
     postCharData();
