@@ -256,7 +256,6 @@ def charge_magic_items(char_data,character,user):
     save_character(user=user,character=character,char_data=char_data)
 
 
-   
 
 if __name__ == "__main__":
     heal_health("bisi","Mokrot",value=0)

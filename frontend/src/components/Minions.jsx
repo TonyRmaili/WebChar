@@ -21,16 +21,19 @@ const modFrom = (score) => Math.floor((toInt(score) - 10) / 2);
 const saveFrom = (score, prof, exp, pb) => modFrom(score) + (exp ? 2 * pb : prof ? pb : 0);
 const toInt = (v) => {const n = Number(v); return Number.isFinite(n) ? Math.trunc(n) : 0;};
 
+
+
 const DEFAULT_MINION_DATA = {
   name: "",
   amount: 0,
   ac: 0,
   max_hp: 0,
-  cr: 0,
-  pb: 0,
+  cr: 0,  // <<< dependant on pb
+  exp: 0, // <<< dependant on pb
+  pb: 2,
   size: "",
   alignment: "",
-  monster_types: [],   // <— renamed from type
+  monster_types: [],   
   speed: [],
   habitats: [],
   immunities: [],
@@ -49,7 +52,8 @@ const DEFAULT_MINION_DATA = {
   mythic_actions: [],
   regional_effects: [],
 
-  initiative: 0,
+  initiative: 0,  // dependant on dex mod
+  units: [],
 };
 
 
@@ -223,6 +227,7 @@ function MinionRow({index,minion,isOpen,onToggle,onFieldChange,onDelete,}){
     onFieldChange(index, field, v);
   };
   
+ 
   const [pending, setPending] = useState({ habitats: "", monster_types: "" });
 
   const addArrayItem = (field) => {
@@ -855,6 +860,11 @@ function MinionRow({index,minion,isOpen,onToggle,onFieldChange,onDelete,}){
           </div>
 
           <div className="flex flex-col gap-1">
+            <label className="text-[11px] text-slate-400">Initiative</label>
+            <input type="number" className={inputNumberStyle} value={safe.initiative} onChange={ch("initiative")} />
+          </div>
+
+          <div className="flex flex-col gap-1">
             <label className="text-[11px] text-slate-400">CR</label>
             <input type="text" className={inputNumberStyle} value={safe.cr} onChange={ch("cr")} />
           </div>
@@ -990,18 +1000,77 @@ export default function Minions() {
 
 
 
-  // field change: update draft immediately, then debounce API call
-  const handleFieldChange = (index, field, value) => {
-    setDrafts((prev) => {
-      const next = [...prev];
-      const base = { ...DEFAULT_MINION_DATA, ...(next[index] || {}) };
-      const updated = { ...base, [field]: value };
-      next[index] = updated;
-      // debounce save with full object
-      debouncedSave(index, updated);
-      return next;
+ const handleFieldChange = (index, field, value) => {
+  setDrafts((prev) => {
+    const next = [...prev];
+
+    // start from the existing minion + defaults
+    const base = { ...DEFAULT_MINION_DATA, ...(next[index] || {}) };
+
+    // apply the raw field change first
+    const rawNext = { ...base, [field]: value };
+
+    // normalize amount / max_hp as non-negative integers
+    const prevMaxHp = Math.max(0, toInt(base.max_hp));
+    const maxHp = Math.max(0, toInt(rawNext.max_hp));
+    const amount = Math.max(0, toInt(rawNext.amount));
+
+    // work with units instead of current_hps
+    let units = Array.isArray(rawNext.units) ? [...rawNext.units] : [];
+
+    // --- handle max_hp change ---
+    if (maxHp !== prevMaxHp) {
+      const allAtPrev =
+        units.length > 0 &&
+        units.every((u) => u.current_hp === prevMaxHp);
+
+      if (allAtPrev) {
+        // fresh / undamaged: resync all to new max_hp
+        units = units.map((u) => ({
+          ...u,
+          current_hp: maxHp,
+        }));
+      } else {
+        // damaged: only clamp values that exceed new max_hp
+        units = units.map((u) => ({
+          ...u,
+          current_hp: u.current_hp > maxHp ? maxHp : u.current_hp,
+        }));
+      }
+    }
+
+    // helper to create a new unit with default selected=false
+    const makeUnit = (slotIndex) => ({
+      id: `u-${index}-${slotIndex}`,
+      current_hp: maxHp,
+      selected: false,
     });
-  };
+
+    // --- handle amount change: length of units === amount ---
+    if (units.length < amount) {
+      const toAdd = amount - units.length;
+      for (let i = 0; i < toAdd; i++) {
+        const slotIndex = units.length + i;
+        units.push(makeUnit(slotIndex)); // new instances start at full HP
+      }
+    } else if (units.length > amount) {
+      units = units.slice(0, amount); // removing minions chops from the end
+    }
+
+    const updated = {
+      ...rawNext,
+      amount,
+      max_hp: maxHp,
+      units,
+    };
+
+    next[index] = updated;
+
+    // debounce save with full object
+    debouncedSave(index, updated);
+    return next;
+  });
+};
 
   const onCreateMinion = async () => {
     const name = newName.trim();
@@ -1042,7 +1111,7 @@ export default function Minions() {
       </div>
 
       <div className="mt-4">
-        {loading && <p className="text-slate-300 text-xs">Loading minions…</p>}
+        {/* {loading && <p className="text-slate-300 text-xs">Loading minions…</p>} */}
         {error && <p className="text-red-400 text-xs">Error: {error}</p>}
         {!loading && !error && (!drafts || drafts.length === 0) && (
           <p className="text-slate-500 text-xs">No minions yet.</p>

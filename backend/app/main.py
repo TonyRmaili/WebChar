@@ -472,6 +472,18 @@ def delete_minion(
 
 
 # ------------------------Dice-----------------------------
+@app.post("/dice", tags=["dice"])
+def handle_dice_payload(
+    current_user: Annotated[User, Depends(get_current_user)],
+    dice: list[dict]
+):
+    
+    print(dice)
+
+    return {"dice handled":dice}
+
+
+
 @app.post("/dice_roll/{diceSize}", tags=["dice"])
 def roll_initiative(
     diceSize: int,

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "../store/AuthStore";
 import useCharStore from "../store/CharStore";
@@ -16,6 +16,8 @@ import Effects from "../components/Effects";
 import HealthPlay from "../components/HealthPlay";
 import UltimaCharges from "../components/UltimaCharges";
 import { MinionsPlay } from "../components/MinionsPlay";
+
+import DiceTower from "../pages/DiceTower"
 
 function TabButton({ id, label, active, onClick }) {
   return (
@@ -58,6 +60,8 @@ export default function CombatPage() {
       ),
     [userData]
   );
+
+  
 
   // guards
   useEffect(() => {
@@ -167,8 +171,74 @@ export default function CombatPage() {
     }
   }
 
+  function DiceTowerPopup({ component, onClose }) {
+  const [position, setPosition] = useState({ x: 200, y: 120 });
+  const dragging = useRef(false);
+  const offset = useRef({ x: 0, y: 0 });
+
+  const handleMouseMove = useCallback((e) => {
+    if (!dragging.current) return;
+    setPosition({
+      x: e.clientX - offset.current.x,
+      y: e.clientY - offset.current.y,
+    });
+  }, []);
+
+  const handleMouseUp = useCallback(() => {
+    dragging.current = false;
+    document.removeEventListener("mousemove", handleMouseMove);
+    document.removeEventListener("mouseup", handleMouseUp);
+  }, [handleMouseMove]);
+
+  const handleMouseDown = useCallback(
+    (e) => {
+      dragging.current = true;
+      offset.current = {
+        x: e.clientX - position.x,
+        y: e.clientY - position.y,
+      };
+
+      document.addEventListener("mousemove", handleMouseMove);
+      document.addEventListener("mouseup", handleMouseUp);
+    },
+    [position.x, position.y, handleMouseMove, handleMouseUp]
+  );
+
   return (
-    <div className="min-h-screen w-full bg-slate-900 text-slate-100 flex flex-col items-center py-6">
+    <div
+      style={{
+        position: "fixed",
+        left: position.x,
+        top: position.y,
+        zIndex: 200,
+      }}
+      className="w-[520px] max-w-[95vw] max-h-[90vh] overflow-auto rounded-lg border border-slate-700 bg-slate-950 shadow-xl"
+    >
+      {/* Draggable Header */}
+      <div
+        className="flex items-center justify-between px-3 py-1 border-b border-slate-700 bg-slate-900 cursor-move"
+        onMouseDown={handleMouseDown}
+      >
+        <span className="text-xs text-slate-300">DiceTower</span>
+
+        <button
+          className="text-xs px-2 py-0.5 rounded border border-slate-600 hover:bg-slate-800 text-slate-200"
+          onClick={onClose}
+        >
+          ✕
+        </button>
+      </div>
+
+      <div>{component}</div>
+    </div>
+  );
+}
+
+const [diceOpen, setDiceOpen] = useState(false);
+
+
+  return (
+    <div className=" bg-slate-900 text-slate-100 flex flex-col items-center py-6">
       {/* character tabs */}
       <div className="flex gap-2 bg-slate-800/60 border border-slate-700 rounded-xl p-2 shadow-md">
         {activeChars.map((char) => {
@@ -191,8 +261,8 @@ export default function CombatPage() {
         })}
       </div>
 
-      {/* Rest + Experience bar, on same row */}
-      <div className="w-[95vw] max-w-[1800px] mt-4 flex items-center gap-64 px-4 text-sm">
+      {/* Rest + Experience + Dice Tower*/}
+      <div className="w-full flex justify-start px-20 gap-12">
         {/* Left: rests */}
         <div className="flex gap-3">
           <button
@@ -215,9 +285,7 @@ export default function CombatPage() {
 
         {/* Right: experience controls */}
         <div className="flex items-center gap-2">
-          <span className="text-xs text-slate-300 tracking-wide">
-            Experience
-          </span>
+          
           <button
             type="button"
             className="px-2 py-1 rounded-lg border border-slate-600 bg-slate-900 hover:bg-slate-800 text-xs text-slate-100 transition"
@@ -226,12 +294,18 @@ export default function CombatPage() {
           >
             −
           </button>
-          <input
-            type="number"
-            value={expAmount}
-            onChange={(e) => setExpAmount(e.target.value)}
-            className="w-24 px-2 py-1 rounded border border-slate-700 bg-slate-950 text-amber-200 text-center text-xs"
-          />
+          <div className="flex flex-col gap-1">
+            <span className="text-xs text-slate-300 tracking-wide flex justify-center">
+              Experience
+            </span>
+            <input
+              type="number"
+              value={expAmount}
+              onChange={(e) => setExpAmount(e.target.value)}
+              className="w-24 px-2 py-1 rounded border border-slate-700 bg-slate-950 text-amber-200 text-center text-xs"
+            />
+          </div>
+
           <button
             type="button"
             className="px-2 py-1 rounded-lg border border-slate-600 bg-slate-900 hover:bg-slate-800 text-xs text-slate-100 transition"
@@ -241,6 +315,15 @@ export default function CombatPage() {
             +
           </button>
         </div>
+
+        <button
+          className="px-2 py-1 rounded-lg border border-slate-600 bg-slate-900 hover:bg-slate-800 text-xs text-slate-100 transition"
+          onClick={() => setDiceOpen(true)}
+        >
+          DiceTower
+        </button>
+
+
       </div>
 
       {/* two-column layout */}
@@ -358,6 +441,14 @@ export default function CombatPage() {
           </div>
         </div>
       </div>
+
+      {diceOpen && (
+        <DiceTowerPopup
+          component={<DiceTower />}
+          onClose={() => setDiceOpen(false)}
+        />
+      )}
+
     </div>
   );
 }
