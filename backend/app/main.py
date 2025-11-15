@@ -405,6 +405,7 @@ def create_minion(
 
     file_name = f'{form_data["name"]}.json'
     savepath = os.path.join(dirr,file_name)
+    form_data["file_path"] = savepath
 
     with open(savepath,"w") as f:
         json.dump(form_data,f,indent=4) 

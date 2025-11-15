@@ -4,20 +4,19 @@
 1. neat dividers for all the subcomponents
 2. define hit-dice?
 3. connect CR to PB
-4. save DC needs to be simpler and connected to ability (or set DC directly, simplest)
-5. define init and connect to dex mod
-6. pipe-in equipments from real items database
-7. fix the stupid "one-character at a time bug" in senses and speed fts input  
-8. Allow name change that triggers a new minion (separete save json which essentially makes a copy for modding a monster template)
-9. handle spells in effects?
+4. pipe-in equipments from real items database
+5. fix the stupid "one-character at a time bug" in senses and speed fts input  
+6. Allow name change that triggers a new minion (separete save json which essentially makes a copy for modding a monster template)
+7. add lair actions and legendary resistance option
+8. handle spells in effects?
     how will this be once AI cleans data?
     and for old spellcasting features from 2014?
 
 
+
+
 # MinionsPlay
-1. make windows or large collapsables?
-2. pipe in dice tower
-3. connect to rest logic
+1. connect to rest logic
 
 # Overall
 1. Collapse right area? 
@@ -45,6 +44,7 @@
 
 # AbilityScores
 1. Minor tweaks for abilityScoreCard
+2. score not updating save/attack values in Play section
 
 # Effects (absorbed Traits)
 1. for damage allow multi-damage type selector

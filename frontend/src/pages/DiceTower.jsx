@@ -14,13 +14,13 @@ const makeRow = () => ({
   damage_type: DAMAGE_TYPES[0].toLowerCase(),
 });
 
-function DiceTower() {
+function DiceTower({ units }) {
   const userData = useAuthStore((s) => s.userData);
   const charData = useCharStore((s) => s.charData);
   const minionsData = useMonsterStore((s) => s.minionsData);
   const postDice = useDiceStore((s) => s.postDice);
 
-  const [rows, setRows] = useState([makeRow()]);
+  const [rows, setRows] = useState([]);
 
   function updateRow(index, field, value) {
     setRows((prev) =>
@@ -35,7 +35,7 @@ function DiceTower() {
   }
 
   function removeRow(index) {
-    setRows((prev) => (prev.length === 1 ? prev : prev.filter((_, i) => i !== index)));
+    setRows((prev) => prev.filter((_, i) => i !== index));
   }
 
   async function onSendDice() {
@@ -54,6 +54,22 @@ function DiceTower() {
 
   return (
     <div className="p-2 bg-stone-600 text-black flex flex-col gap-2">
+      <div className="flex gap-2 mt-1">
+        <button
+          type="button"
+          onClick={addRow}
+          className="text-amber-300 text-xs bg-slate-900 rounded-lg px-3 py-1 border border-slate-700 hover:bg-slate-800"
+        >
+          + Add dice
+        </button>
+
+        <button
+          className="text-amber-500 bg-red-950 rounded-lg px-3 py-1 border border-red-700 hover:bg-red-900 text-xs"
+          onClick={onSendDice}
+        >
+          SEND
+        </button>
+      </div>
       {rows.map((row, index) => (
         <div
           key={index}
@@ -134,22 +150,27 @@ function DiceTower() {
         </div>
       ))}
 
-      <div className="flex gap-2 mt-1">
-        <button
-          type="button"
-          onClick={addRow}
-          className="text-amber-300 text-xs bg-slate-900 rounded-lg px-3 py-1 border border-slate-700 hover:bg-slate-800"
-        >
-          + Add dice
-        </button>
+      <div className="text-black font-semibold flex border justify-between px-12">
 
-        <button
-          className="text-amber-500 bg-red-950 rounded-lg px-3 py-1 border border-red-700 hover:bg-red-900 text-xs"
-          onClick={onSendDice}
-        >
-          SEND
-        </button>
+        <div>
+          <p>Characters</p>
+        </div>
+
+        <div>
+          <p>Minions</p>  
+        </div>
       </div>
+
+
+      <label className="text-amber-300 flex justify-center">
+        Output
+      </label>
+      <textarea
+        value=""
+        readOnly
+        className="w-full h-32 bg-slate-800 text-slate-100 p-2 rounded"
+      ></textarea>
+
     </div>
   );
 }

@@ -316,12 +316,12 @@ const [diceOpen, setDiceOpen] = useState(false);
           </button>
         </div>
 
-        <button
+        {/* <button
           className="px-2 py-1 rounded-lg border border-slate-600 bg-slate-900 hover:bg-slate-800 text-xs text-slate-100 transition"
           onClick={() => setDiceOpen(true)}
         >
           DiceTower
-        </button>
+        </button> */}
 
 
       </div>
@@ -444,7 +444,7 @@ const [diceOpen, setDiceOpen] = useState(false);
 
       {diceOpen && (
         <DiceTowerPopup
-          component={<DiceTower />}
+          component={<DiceTower units={activeChars} />}
           onClose={() => setDiceOpen(false)}
         />
       )}
