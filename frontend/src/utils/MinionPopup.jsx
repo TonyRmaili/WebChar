@@ -116,7 +116,7 @@ export default function MinionPopup({ item, onClose, onDragStart }) {
               <span className="font-semibold">AC</span> {item.ac ?? "Unknown"}
             </p>
             <p>
-              <span className="font-semibold">Initiative</span> {item.initiative ?? 0} ({item.initiative+10 ?? 10})
+              <span className="font-semibold">Initiative</span> {item.initiative ?? 0} ({(item.initiative ?? 0) + 10})
             </p>
           </div>
           <p>

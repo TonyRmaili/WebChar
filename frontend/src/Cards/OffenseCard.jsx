@@ -1,11 +1,9 @@
 import React, { useMemo } from "react";
+import { toInt } from "../utils/HelperFunctions";
 
 const ABILITIES = ["str", "dex", "con", "int", "wis", "cha"];
 
-const toInt = (v) => {
-  const n = parseInt(v, 10);
-  return Number.isNaN(n) ? 0 : n;
-};
+
 
 export default function OffenseCard({ charData, updateCharField, postCharData }) {
   const pb = charData.pb?.total ?? 0;

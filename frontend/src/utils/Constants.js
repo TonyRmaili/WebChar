@@ -26,3 +26,7 @@ export const DAMAGE_TYPES = [
   "psychic",
   "force",
 ];
+
+
+export const SPEED_TYPES = ["walk", "fly", "swim", "climb", "burrow"];
+export const SENSE_TYPES = ["blindsight", "tremorsense", "truesight", "darkvision"];

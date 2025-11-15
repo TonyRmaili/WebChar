@@ -29,10 +29,6 @@ function Header() {
 
 
       <div className="flex items-center justify-between gap-8 w-[400px] p-4">
-        <Link to="/diceTower" className="flex flex-col gap-2">
-          <img src={DiceLogo} alt="" className="h-16" />
-          <p> DiceTower</p>
-        </Link>
         <Link to="/DM-Tools" className="flex flex-col gap-2">
           <img src={LogOutLogo} className="h-16" />
           <p>DM-Tools</p>

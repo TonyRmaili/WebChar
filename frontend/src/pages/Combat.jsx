@@ -6,7 +6,7 @@ import useMonsterStore from "../store/MonsterStore";
 
 import GeneralStats from "../components/GeneralStats";
 import AbilityScore from "../components/AbilityScore";
-import BioStats from "../components/BioStats";
+import Biography from "../components/Biography";
 import Minions from "../components/Minions";
 import Spellbook from "../components/Spellbook";
 import Inventory from "../components/Inventory";
@@ -17,7 +17,7 @@ import HealthPlay from "../components/HealthPlay";
 import UltimaCharges from "../components/UltimaCharges";
 import { MinionsPlay } from "../components/MinionsPlay";
 
-import DiceTower from "../pages/DiceTower"
+import DiceTower from "../components/DiceTower"
 
 function TabButton({ id, label, active, onClick }) {
   return (
@@ -434,7 +434,7 @@ const [diceOpen, setDiceOpen] = useState(false);
                 {rightTab === "inventory" && <Inventory />}
                 {rightTab === "general" && <GeneralStats />}
                 {rightTab === "abilities" && <AbilityScore />}
-                {rightTab === "bio" && <BioStats />}
+                {rightTab === "bio" && <Biography />}
                 {rightTab === "lore" && <Lore />}
               </>
             )}

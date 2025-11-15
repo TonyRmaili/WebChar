@@ -1,18 +1,18 @@
 import React, { useMemo, useState } from "react";
 import useCharStore from "../store/CharStore";
+import { toInt } from "../utils/HelperFunctions";
 
 const DEFAULT_HEALTH = {
   current_hp: 0,
   max_hp: 0,
   temp_hp: 0,
   barrier: 0,
-  max_hp_mod: 0,        // ← new default
+  max_hp_mod: 0,        
 };
 const DIE_ORDER = ["d4", "d6", "d8", "d10", "d12", "d20"];
 const ABILITY_ORDER = ["str", "dex", "con", "int", "wis", "cha"];
 
 export default function HealthPlay({ id }) {
-  // --- ZUSTAND SELECTORS ---
   const charData = useCharStore((s) => s.charData);
   const updateCharField = useCharStore((s) => s.updateCharField);
   const postCharData = useCharStore((s) => s.postCharData);
@@ -40,6 +40,64 @@ export default function HealthPlay({ id }) {
     await postCharData();
   };
 
+  const abilityScores = charData.ability_scores || {};
+
+  const dexMod = toInt(abilityScores.dex?.mod ?? 0);
+  const initMod = toInt(charData.initiative?.mod ?? 0);
+  const initiativeTotal = dexMod + initMod;
+
+  const pb = toInt(charData.pb?.total ?? 0);
+
+  const getAbilityMod = (abilityKey) => {
+    if (!abilityKey) return 0;
+    const key = abilityKey.toLowerCase();
+    return toInt(abilityScores[key]?.mod ?? 0);
+  };
+
+  // ---- Offense attack totals (derived) ----
+  const offenseBase = charData.offense || {};
+
+  const meleeCfg = {
+    base: "str",
+    mod: 0,
+    misc: 0,
+    use_pb: true,
+    ...(offenseBase.melee || {}),
+  };
+
+  const rangedCfg = {
+    base: "dex",
+    mod: 0,
+    misc: 0,
+    use_pb: true,
+    ...(offenseBase.ranged || {}),
+  };
+
+  const spellCfg = {
+    base: "cha",
+    mod: 0,
+    misc: 0,
+    use_pb: true,
+    ...(offenseBase.spell || {}),
+  };
+
+  const calcAttackTotal = (row) => {
+    const aMod = getAbilityMod(row.base);
+    const flat = toInt(row.mod ?? 0);
+    const misc = toInt(row.misc ?? 0);
+    const usePb = row.use_pb ?? true; // adapt if you use a different flag
+    return aMod + flat + misc + (usePb ? pb : 0);
+  };
+
+  const offenseTotals = {
+    melee: calcAttackTotal(meleeCfg),
+    ranged: calcAttackTotal(rangedCfg),
+    spell: calcAttackTotal(spellCfg),
+  };
+
+
+
+// make combatStore for these
   async function onRest(rest_type) {
     try {
       if (!charData?.name) throw new Error("No character selected");
@@ -376,32 +434,32 @@ export default function HealthPlay({ id }) {
           <p>
             MeleeAtk:{" "}
             <span className="text-amber-500">
-              {charData.offense?.melee?.total ?? 0}
+              {offenseTotals.melee}
             </span>
           </p>
           <p>
             RangedAtk:{" "}
             <span className="text-amber-500">
-              {charData.offense?.ranged?.total ?? 0}
+              {offenseTotals.ranged}
             </span>
           </p>
           <p>
             SpellAtk:{" "}
             <span className="text-amber-500">
-              {charData.offense?.spell?.total ?? 0}
+              {offenseTotals.spell}
             </span>
           </p>
           <p>
             Initiative:{" "}
             <span className="text-amber-500">
-              {charData.initiative?.total ?? 0}
+              {initiativeTotal}
             </span>
           </p>
         </div>
 
-        {/* Save DCs – only active ones */}
+        {/* Save DCs – only active ones, derived */}
         {(() => {
-          const saveDcs = charData.offense?.save_dcs || {};
+          const saveDcs = offenseBase.save_dcs || {};
 
           const activeEntries = Object.entries(saveDcs)
             .filter(([, row]) => row && row.active)
@@ -431,18 +489,28 @@ export default function HealthPlay({ id }) {
           return rows.map((rowEntries, rowIdx) => (
             <div key={`save-row-${rowIdx}`} className="flex gap-2">
               {rowEntries.map(([key, row]) => {
-                const base = capitalize(row?.base ?? "");
+                const baseKey =
+                  (row?.base || key.split("_")[1] || "").toLowerCase();
+                const baseLabel = capitalize(baseKey);
+
+                // Same as OffenseCard: 8 + PB + mod + ability mod
+                const abilityMod = getAbilityMod(baseKey);
+                const modBonus = toInt(row?.mod ?? 0);
+                const dc = 8 + pb + modBonus + abilityMod;
+
                 return (
                   <p key={key}>
-                    <span className="text-amber-500">{base}</span> SaveDC:{" "}
-                    <span className="text-amber-500">{row?.total ?? 0}</span>
+                    <span className="text-amber-500">{baseLabel}</span> SaveDC:{" "}
+                    <span className="text-amber-500">{dc}</span>
                   </p>
                 );
               })}
             </div>
           ));
         })()}
+
       </div>
+
 
       {/* Rest buttons pinned bottom-right */}
       <div className="absolute bottom-5 right-2 flex gap-2 text-sm">

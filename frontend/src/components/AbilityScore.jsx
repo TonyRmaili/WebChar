@@ -1,8 +1,11 @@
 import React, { useMemo, useState, useEffect } from "react";
 import useCharStore from "../store/CharStore";
 
-import AbilityScoreCard from "./miniComp/AbilityScoreCard";
-import SkillCard from "./miniComp/SkillCard";
+
+
+
+import AbilityScoreCard from "../Cards/AbilityScoreCard"
+import SkillCard from "../Cards/SkillCard";
 
 /* ---------- Constants ---------- */
 const DEFAULT_SKILLS = {

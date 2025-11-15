@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import useCharStore from "../store/CharStore";
 import CreatableSelect from "react-select/creatable";
 
-function BioStats() {
+function Biography() {
   const { charData, updateCharField, postCharData } = useCharStore();
 
   // Guard
@@ -263,4 +263,4 @@ function BioStats() {
   );
 }
 
-export default BioStats;
+export default Biography;

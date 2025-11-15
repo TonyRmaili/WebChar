@@ -5,13 +5,12 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 
 import Layout from "./pages/Layout";
 import CombatPage from "./pages/Combat";
-import DiceTower from "./pages/DiceTower";
 import LoadChar from "./pages/Characters"
 import CreateAccount from "./pages/CreateAccount"
 import LogIn from "./pages/LogIn"
-import Embedder from "./components/Embedder"
+import Embedder from "./pages/Embedder"
 import DMToolsPage from "./pages/DMTools";
-import UserProfile from "./components/UserProfile";
+import UserProfile from "./pages/UserProfile";
  
 
 
@@ -21,7 +20,6 @@ function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<CombatPage />}></Route>
-          <Route path="/diceTower" element={<DiceTower />}></Route>
           <Route path="/loadChar" element={<LoadChar />}></Route>
           <Route path="/createAccount" element={<CreateAccount />}></Route>
           <Route path="/logIn" element={<LogIn />}></Route>

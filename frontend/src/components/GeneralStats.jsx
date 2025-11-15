@@ -1,6 +1,9 @@
 import React, { useEffect, useMemo, useState } from "react";
 import useCharStore from "../store/CharStore";
-import OffenseCard from "./miniComp/OffenseCard";
+import OffenseCard from "../Cards/OffenseCard"
+
+import { SPEED_TYPES, SENSE_TYPES } from "../utils/Constants";
+import { toInt } from "../utils/HelperFunctions";
 
 /* ---------- Hit dice defaults ---------- */
 const DIE_OPTIONS = ["d4", "d6", "d8", "d10", "d12", "d20"];
@@ -21,8 +24,6 @@ const CLASS_TO_DIE = Object.freeze(
   }, {})
 );
 
-const SPEED_TYPES = ["walk", "fly", "swim", "climb", "burrow"];
-const SENSE_TYPES = ["blindsight", "tremorsense", "truesight", "darkvision"];
 
 const calcPbStandard = (lvl) => {
   if (!Number.isFinite(lvl) || lvl <= 0) return 2;
@@ -33,12 +34,9 @@ const calcPbStandard = (lvl) => {
   return 6;
 };
 
-const toInt = (v) => {
-  const n = parseInt(v, 10);
-  return Number.isNaN(n) ? 0 : n;
-};
 
 const canon = (s) => (typeof s === "string" ? s.trim().toLowerCase() : "");
+
 const isValidDie = (d) =>
   typeof d === "string" && /^d(4|6|8|10|12|20)$/i.test(d);
 
@@ -67,7 +65,6 @@ const summarizeHitDice = (rows) => {
 };
 
 export default function GeneralStats() {
-  // --- ZUSTAND SELECTORS ---
   const charData = useCharStore((s) => s.charData);
   const updateCharField = useCharStore((s) => s.updateCharField);
   const postCharData = useCharStore((s) => s.postCharData);
@@ -90,7 +87,7 @@ export default function GeneralStats() {
     [classes]
   );
 
-  // ----------initiative ----------
+  
   const dexMod = toInt(charData.ability_scores?.dex?.mod ?? 0);
 
   const initiative = useMemo(() => {
@@ -107,6 +104,8 @@ export default function GeneralStats() {
     updateCharField("initiative", { mod, total });
     postCharData();
   };
+
+  
 
   useEffect(() => {
     if (charData.total_level !== totalLevel) {

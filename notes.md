@@ -8,7 +8,8 @@
 5. fix the stupid "one-character at a time bug" in senses and speed fts input  
 6. Allow name change that triggers a new minion (separete save json which essentially makes a copy for modding a monster template)
 7. add lair actions and legendary resistance option
-8. handle spells in effects?
+8. delete backend minion for deletion
+9. handle spells in effects?
     how will this be once AI cleans data?
     and for old spellcasting features from 2014?
 
@@ -44,7 +45,7 @@
 
 # AbilityScores
 1. Minor tweaks for abilityScoreCard
-2. score not updating save/attack values in Play section
+
 
 # Effects (absorbed Traits)
 1. for damage allow multi-damage type selector

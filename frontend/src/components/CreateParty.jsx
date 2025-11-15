@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { PartyStore, initPartyAutosync } from "../store/PartyStore";
-import PlayerCard from "./miniComp/PlayerCard";
+
+import PlayerCard from "../Cards/PlayerCard"
 
 const CreateParty = () => {
   const parties       = PartyStore((s) => s.parties);
