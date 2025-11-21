@@ -7,7 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from typing import Annotated
 from fastapi import Query
 from app.database.models import User,Character
-from app.database.schemas import UserSchema,CharacterSchema, QueryRequest, CharacterIn, HealthData,TakeRestData, TakeRestAllData, GrantExperienceAll
+from app.database.schemas import UserSchema,CharacterSchema, QueryRequest, CharacterIn, HealthData,TakeRestData, TakeRestAllData, GrantExperienceAll, MinionEffects
 from app.security import hash_password, verify_password, create_access_token, get_current_user
 from app.db_setup import init_db, get_db
 from fastapi.security import OAuth2PasswordRequestForm
@@ -21,6 +21,7 @@ from embedder.xembedder import Embedder
 from pathlib import Path
 from app.dice_handler import roll_dice
 from app.combat_functions import heal_health, damage_health,load_character,on_longrest,on_shortrest,grant_experience
+from app.minion_functions import handle_minionEffects
 
 # uvicorn app.main:app --reload
 
@@ -482,6 +483,16 @@ def handle_dice_payload(
     print(dice)
 
     return {"dice handled":dice}
+
+@app.post("/dice/minion_effects", tags=["dice"])
+def catch_minion_effects(
+    current_user: Annotated[User, Depends(get_current_user)],
+    payload: MinionEffects
+):
+    
+    messages = handle_minionEffects(payload)
+
+    return messages
 
 
 

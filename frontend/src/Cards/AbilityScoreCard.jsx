@@ -7,14 +7,14 @@ function AbilityScoreCard({
   onToggle,
   pb,
 }) {
-  const value = row?.value ?? "";
+  const score = row?.score ?? "";
   const label = row?.label ?? ability;
 
   const proficient = !!row?.proficient;
   const expertise = !!row?.expertise;
 
   const computedMod =
-    Number.isFinite(Number(value)) ? Math.floor((Number(value) - 10) / 2) : null;
+    Number.isFinite(Number(score)) ? Math.floor((Number(score) - 10) / 2) : null;
   const mod = Number.isFinite(row?.mod) ? row.mod : computedMod;
 
   const checkMod = Number.isFinite(row?.check_mod) ? row.check_mod : 0;
@@ -54,7 +54,7 @@ function AbilityScoreCard({
 
         <input
           type="number"
-          value={value}
+          value={score}
           onChange={(e) =>
             onValueChange(e.target.value === "" ? "" : Number(e.target.value))
           }

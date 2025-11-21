@@ -3,17 +3,20 @@
 # Minions
 1. neat dividers for all the subcomponents
 2. define hit-dice?
-3. connect CR to PB
+3. connect CR to PB and exp yield
 4. pipe-in equipments from real items database
 5. fix the stupid "one-character at a time bug" in senses and speed fts input  
 6. Allow name change that triggers a new minion (separete save json which essentially makes a copy for modding a monster template)
-7. add lair actions and legendary resistance option
-8. delete backend minion for deletion
-9. handle spells in effects?
+7. delete backend minion for deletion
+8. handle spells in effects?
     how will this be once AI cleans data?
     and for old spellcasting features from 2014?
 
-
+# DiceTower (minions)
+1. handle charged effects
+2. better logic for selecting units (UI and update for sending minon effects)
+3. complete the minionCard (display purpose only)
+4. Optimize the popup size with draggable sides and bottom, also make it resizable window
 
 
 # MinionsPlay

@@ -1,81 +1,15 @@
 import React, { useMemo, useState, useEffect } from "react";
 import useCharStore from "../store/CharStore";
 
-
-
-
-import AbilityScoreCard from "../Cards/AbilityScoreCard"
+import AbilityScoreCard from "../Cards/AbilityScoreCard";
 import SkillCard from "../Cards/SkillCard";
 
-/* ---------- Constants ---------- */
-const DEFAULT_SKILLS = {
-  acrobatics:     { value: null, proficient: false, expertise: false, label: "Acrobatics",      ability: "Dexterity"    },
-  animalHandling: { value: null, proficient: false, expertise: false, label: "Animal Handling", ability: "Wisdom"       },
-  arcana:         { value: null, proficient: false, expertise: false, label: "Arcana",          ability: "Intelligence" },
-  athletics:      { value: null, proficient: false, expertise: false, label: "Athletics",       ability: "Strength"     },
-  deception:      { value: null, proficient: false, expertise: false, label: "Deception",       ability: "Charisma"     },
-  history:        { value: null, proficient: false, expertise: false, label: "History",         ability: "Intelligence" },
-  insight:        { value: null, proficient: false, expertise: false, label: "Insight",         ability: "Wisdom"       },
-  intimidation:   { value: null, proficient: false, expertise: false, label: "Intimidation",    ability: "Charisma"     },
-  investigation:  { value: null, proficient: false, expertise: false, label: "Investigation",   ability: "Intelligence" },
-  medicine:       { value: null, proficient: false, expertise: false, label: "Medicine",        ability: "Wisdom"       },
-  nature:         { value: null, proficient: false, expertise: false, label: "Nature",          ability: "Intelligence" },
-  perception:     { value: null, proficient: false, expertise: false, label: "Perception",      ability: "Wisdom"       },
-  performance:    { value: null, proficient: false, expertise: false, label: "Performance",     ability: "Charisma"     },
-  persuasion:     { value: null, proficient: false, expertise: false, label: "Persuasion",      ability: "Charisma"     },
-  religion:       { value: null, proficient: false, expertise: false, label: "Religion",        ability: "Intelligence" },
-  sleightOfHand:  { value: null, proficient: false, expertise: false, label: "Sleight of Hand", ability: "Dexterity"    },
-  stealth:        { value: null, proficient: false, expertise: false, label: "Stealth",         ability: "Dexterity"    },
-  survival:       { value: null, proficient: false, expertise: false, label: "Survival",        ability: "Wisdom"       },
-};
-
-const ABILITIES_ORDER = [
-  { key: "str", label: "Strength" },
-  { key: "dex", label: "Dexterity" },
-  { key: "con", label: "Constitution" },
-  { key: "int", label: "Intelligence" },
-  { key: "wis", label: "Wisdom" },
-  { key: "cha", label: "Charisma" },
-];
-
-const SKILLS_ORDER = [
-  { key: "wis", label: "Wisdom" },
-  { key: "dex", label: "Dexterity" },
-  { key: "int", label: "Intelligence" },
-  { key: "cha", label: "Charisma" },
-  { key: "str", label: "Strength" },
-  { key: "con", label: "Constitution" },
-];
-
-const DEFAULT_ABILITY_SCORES = {
-  str: { value: null, mod: null, check_mod: 0, save_mod: 0, proficient: false, expertise: false, label: "Strength" },
-  dex: { value: null, mod: null, check_mod: 0, save_mod: 0, proficient: false, expertise: false, label: "Dexterity" },
-  con: { value: null, mod: null, check_mod: 0, save_mod: 0, proficient: false, expertise: false, label: "Constitution" },
-  int: { value: null, mod: null, check_mod: 0, save_mod: 0, proficient: false, expertise: false, label: "Intelligence" },
-  wis: { value: null, mod: null, check_mod: 0, save_mod: 0, proficient: false, expertise: false, label: "Wisdom" },
-  cha: { value: null, mod: null, check_mod: 0, save_mod: 0, proficient: false, expertise: false, label: "Charisma" },
-};
+import { DEFAULT_ABILITY_SCORES , DEFAULT_SKILLS, ABILITIES_ORDER, SKILLS_ORDER } from "../utils/Constants";
+import { toKey, scoreToMod } from "../utils/HelperFunctions.js"
 
 
-/* ---------- Helpers ---------- */
-const scoreToMod = (score) =>
-  typeof score === "number" && Number.isFinite(score)
-    ? Math.floor((score - 10) / 2)
-    : null;
-
-const toKey = (name) => {
-  const cleaned = name.replace(/[^a-zA-Z0-9 ]+/g, " ").trim();
-  const camel = cleaned
-    .split(/\s+/)
-    .map((w, i) =>
-      i === 0 ? w.toLowerCase() : w[0].toUpperCase() + w.slice(1).toLowerCase()
-    )
-    .join("");
-  return camel || "customSkill";
-};
 
 export default function AbilityScore() {
-  // --- Zustand selectors ---
   const charData = useCharStore((s) => s.charData);
   const updateCharField = useCharStore((s) => s.updateCharField);
   const postCharData = useCharStore((s) => s.postCharData);
@@ -94,14 +28,16 @@ export default function AbilityScore() {
     [charData?.skills]
   );
 
-  // Backfill/repair missing or stale mods once per mismatch
+  // Backfill/repair missing mods once per mismatch (using score, not value)
   useEffect(() => {
     const next = { ...abilityScores };
     let changed = false;
 
     Object.entries(abilityScores).forEach(([k, row]) => {
-      const v = row?.value;
-      const expected = scoreToMod(typeof v === "string" ? Number(v) : v);
+      const s = row?.score;
+      const numericScore =
+        typeof s === "string" ? Number(s) : s;
+      const expected = scoreToMod(numericScore);
       const current = Number.isFinite(row?.mod) ? row.mod : row?.mod ?? null;
 
       if (expected !== current) {
@@ -138,11 +74,17 @@ export default function AbilityScore() {
   /* ------- Ability handlers ------- */
 
   const handleAbilityValueChange = (ability, raw) => {
-    const value = raw === "" ? "" : Number(raw);
-    if (value !== "" && Number.isNaN(value)) return;
+    const score = raw === "" ? "" : Number(raw);
+    if (score !== "" && Number.isNaN(score)) return;
 
-    const mod = value === "" ? null : Math.floor((Number(value) - 10) / 2);
-    const nextRow = { ...abilityScores[ability], value, mod };
+    const mod =
+      score === "" ? null : Math.floor((Number(score) - 10) / 2);
+
+    const nextRow = {
+      ...abilityScores[ability],
+      score,
+      mod,
+    };
     const next = { ...abilityScores, [ability]: nextRow };
     updateCharField("ability_scores", next);
     postCharData();

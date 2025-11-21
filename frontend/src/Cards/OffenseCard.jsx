@@ -1,7 +1,6 @@
 import React, { useMemo } from "react";
 import { toInt } from "../utils/HelperFunctions";
-
-const ABILITIES = ["str", "dex", "con", "int", "wis", "cha"];
+import { ABILITY_ORDER } from "../utils/Constants"
 
 
 
@@ -18,7 +17,7 @@ export default function OffenseCard({ charData, updateCharField, postCharData })
       base.save_dcs && typeof base.save_dcs === "object" ? base.save_dcs : {};
 
     const normalizedSaveDcs = {};
-    for (const ab of ABILITIES) {
+    for (const ab of ABILITY_ORDER) {
       const key = `save_${ab}`;
       const row = rawSaveDcs[key] || {};
       normalizedSaveDcs[key] = {
@@ -81,7 +80,7 @@ export default function OffenseCard({ charData, updateCharField, postCharData })
     calcAttack("spell");
 
     const newSaveDcs = {};
-    for (const ab of ABILITIES) {
+    for (const ab of ABILITY_ORDER) {
       const key = `save_${ab}`;
       const row = (result.save_dcs && result.save_dcs[key]) || {};
       const base = row.base || ab;
@@ -149,7 +148,7 @@ export default function OffenseCard({ charData, updateCharField, postCharData })
               onChange={(e) => setAttack("melee", "base", e.target.value)}
               className="text-slate-700 rounded border border-slate-600 w-16 px-1 py-0.5 text-xs"
             >
-              {ABILITIES.map((opt) => (
+              {ABILITY_ORDER.map((opt) => (
                 <option key={opt} value={opt}>
                   {opt}
                 </option>
@@ -179,7 +178,7 @@ export default function OffenseCard({ charData, updateCharField, postCharData })
               onChange={(e) => setAttack("ranged", "base", e.target.value)}
               className="text-slate-700 rounded border border-slate-600 w-16 px-1 py-0.5 text-xs"
             >
-              {ABILITIES.map((opt) => (
+              {ABILITY_ORDER.map((opt) => (
                 <option key={opt} value={opt}>
                   {opt}
                 </option>
@@ -209,7 +208,7 @@ export default function OffenseCard({ charData, updateCharField, postCharData })
               onChange={(e) => setAttack("spell", "base", e.target.value)}
               className="text-slate-700 rounded border border-slate-600 w-16 px-1 py-0.5 text-xs"
             >
-              {ABILITIES.map((opt) => (
+              {ABILITY_ORDER.map((opt) => (
                 <option key={opt} value={opt}>
                   {opt}
                 </option>
@@ -238,7 +237,7 @@ export default function OffenseCard({ charData, updateCharField, postCharData })
         {/* Save DCs: 2 columns x 3 rows */}
         <div className="flex flex-col gap-1">          
           <div className="grid grid-cols-2 gap-1">
-            {ABILITIES.map((ab) => {
+            {ABILITY_ORDER.map((ab) => {
               const key = `save_${ab}`;
               const row =
                 offense.save_dcs[key] || {

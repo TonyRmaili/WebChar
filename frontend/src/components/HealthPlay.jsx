@@ -1,16 +1,9 @@
 import React, { useMemo, useState } from "react";
 import useCharStore from "../store/CharStore";
 import { toInt } from "../utils/HelperFunctions";
+import { ABILITY_ORDER, DIE_ORDER, DEFAULT_HEALTH } from "../utils/Constants";
 
-const DEFAULT_HEALTH = {
-  current_hp: 0,
-  max_hp: 0,
-  temp_hp: 0,
-  barrier: 0,
-  max_hp_mod: 0,        
-};
-const DIE_ORDER = ["d4", "d6", "d8", "d10", "d12", "d20"];
-const ABILITY_ORDER = ["str", "dex", "con", "int", "wis", "cha"];
+
 
 export default function HealthPlay({ id }) {
   const charData = useCharStore((s) => s.charData);

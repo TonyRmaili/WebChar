@@ -7,7 +7,7 @@ import useMonsterStore from "../store/MonsterStore";
 import GeneralStats from "../components/GeneralStats";
 import AbilityScore from "../components/AbilityScore";
 import Biography from "../components/Biography";
-import Minions from "../components/Minions";
+import MinionsDefine from "../components/Minions/MinionsDefine";
 import Spellbook from "../components/Spellbook";
 import Inventory from "../components/Inventory";
 import Lore from "../components/Lore";
@@ -15,9 +15,8 @@ import Effects from "../components/Effects";
 
 import HealthPlay from "../components/HealthPlay";
 import UltimaCharges from "../components/UltimaCharges";
-import { MinionsPlay } from "../components/MinionsPlay";
+import { MinionsPlay } from "../components/Minions/MinionsPlay";
 
-import DiceTower from "../components/DiceTower"
 
 function TabButton({ id, label, active, onClick }) {
   return (
@@ -36,7 +35,6 @@ function TabButton({ id, label, active, onClick }) {
 }
 
 export default function CombatPage() {
-  // --- Zustand selectors ---
   const token = useAuthStore((s) => s.token);
   const userData = useAuthStore((s) => s.userData);
   const fetchChar = useCharStore((s) => s.fetchChar);
@@ -171,71 +169,6 @@ export default function CombatPage() {
     }
   }
 
-  function DiceTowerPopup({ component, onClose }) {
-  const [position, setPosition] = useState({ x: 200, y: 120 });
-  const dragging = useRef(false);
-  const offset = useRef({ x: 0, y: 0 });
-
-  const handleMouseMove = useCallback((e) => {
-    if (!dragging.current) return;
-    setPosition({
-      x: e.clientX - offset.current.x,
-      y: e.clientY - offset.current.y,
-    });
-  }, []);
-
-  const handleMouseUp = useCallback(() => {
-    dragging.current = false;
-    document.removeEventListener("mousemove", handleMouseMove);
-    document.removeEventListener("mouseup", handleMouseUp);
-  }, [handleMouseMove]);
-
-  const handleMouseDown = useCallback(
-    (e) => {
-      dragging.current = true;
-      offset.current = {
-        x: e.clientX - position.x,
-        y: e.clientY - position.y,
-      };
-
-      document.addEventListener("mousemove", handleMouseMove);
-      document.addEventListener("mouseup", handleMouseUp);
-    },
-    [position.x, position.y, handleMouseMove, handleMouseUp]
-  );
-
-  return (
-    <div
-      style={{
-        position: "fixed",
-        left: position.x,
-        top: position.y,
-        zIndex: 200,
-      }}
-      className="w-[520px] max-w-[95vw] max-h-[90vh] overflow-auto rounded-lg border border-slate-700 bg-slate-950 shadow-xl"
-    >
-      {/* Draggable Header */}
-      <div
-        className="flex items-center justify-between px-3 py-1 border-b border-slate-700 bg-slate-900 cursor-move"
-        onMouseDown={handleMouseDown}
-      >
-        <span className="text-xs text-slate-300">DiceTower</span>
-
-        <button
-          className="text-xs px-2 py-0.5 rounded border border-slate-600 hover:bg-slate-800 text-slate-200"
-          onClick={onClose}
-        >
-          ✕
-        </button>
-      </div>
-
-      <div>{component}</div>
-    </div>
-  );
-}
-
-const [diceOpen, setDiceOpen] = useState(false);
-
 
   return (
     <div className=" bg-slate-900 text-slate-100 flex flex-col items-center py-6">
@@ -315,15 +248,7 @@ const [diceOpen, setDiceOpen] = useState(false);
             +
           </button>
         </div>
-
-        {/* <button
-          className="px-2 py-1 rounded-lg border border-slate-600 bg-slate-900 hover:bg-slate-800 text-xs text-slate-100 transition"
-          onClick={() => setDiceOpen(true)}
-        >
-          DiceTower
-        </button> */}
-
-
+      
       </div>
 
       {/* two-column layout */}
@@ -429,7 +354,7 @@ const [diceOpen, setDiceOpen] = useState(false);
             ) : (
               <>
                 {rightTab === "effects" && <Effects />}
-                {rightTab === "minions" && <Minions />}
+                {rightTab === "minions" && <MinionsDefine />}
                 {rightTab === "spellbook" && <Spellbook />}
                 {rightTab === "inventory" && <Inventory />}
                 {rightTab === "general" && <GeneralStats />}
@@ -441,13 +366,6 @@ const [diceOpen, setDiceOpen] = useState(false);
           </div>
         </div>
       </div>
-
-      {diceOpen && (
-        <DiceTowerPopup
-          component={<DiceTower units={activeChars} />}
-          onClose={() => setDiceOpen(false)}
-        />
-      )}
 
     </div>
   );

@@ -1,5 +1,5 @@
-import useMonsterStore from "../store/MonsterStore";
-import useCharStore from "../store/CharStore";
+import useMonsterStore from "../../store/MonsterStore";
+import useCharStore from "../../store/CharStore";
 
 export default function MinionPopup({ item, onClose, onDragStart }) {
   if (!item) return null;
