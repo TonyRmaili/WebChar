@@ -269,7 +269,7 @@ export default function CombatPage() {
               <div className="flex-[1.5] min-h-[25vh]">
                 <div className="h-full overflow-y-auto rounded-xl border border-slate-700/60 bg-slate-900/40 p-4">
                   {selectedChar ? (
-                    <MinionsPlay />
+                    <UltimaCharges />
                   ) : (
                     <div className="text-slate-400">
                       Select a character.
@@ -280,7 +280,7 @@ export default function CombatPage() {
               <div className="flex-[1.5] min-h-[25vh]">
                 <div className="h-full overflow-y-auto rounded-xl border border-slate-700/60 bg-slate-900/40 p-4">
                   {selectedChar ? (
-                    <UltimaCharges />
+                    <MinionsPlay />
                   ) : (
                     <div className="text-slate-400">
                       Select a character.
@@ -288,6 +288,7 @@ export default function CombatPage() {
                   )}
                 </div>
               </div>
+              
 
             </div>
           </div>
