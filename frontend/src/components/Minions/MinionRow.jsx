@@ -875,9 +875,9 @@ export function MinionRow({
             />
 
             <TextListPicker
-              label="Equipment"
-              value={safe.equipment || []}
-              onChange={(next) => onFieldChange(index, "equipment", next)}
+              label="Gear"
+              value={safe.gear || []}
+              onChange={(next) => onFieldChange(index, "gear", next)}
               inputTextStyle={inputTextStyle}
               buttonStyle={buttonStyle}
             />

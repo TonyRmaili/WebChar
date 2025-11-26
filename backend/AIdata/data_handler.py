@@ -1,19 +1,19 @@
 import os 
-import time
 import fitz 
 import json
+import time, random, string
 
 from dotenv import load_dotenv
 from openai import OpenAI
-from pydantic import BaseModel
 from schemas.classes import GeneralStats, FeatureList
+from schemas.monsters import MonsterBase
 
 import re
 from collections import OrderedDict
 from pathlib import Path
 
 class DataHandler:
-    def __init__(self,pdf_name):
+    def __init__(self):
         # setup
         load_dotenv(override=True)
         self.api_key = os.getenv("OPENAI_API_KEY")
@@ -32,9 +32,11 @@ class DataHandler:
         self.models = ["gpt-5-mini"]
 
         # base paths
+        self.raw_data_path = "5etools_data/raw/"
+        self.cleaned_data_path = "5etools_data/cleaned/"
         self.instructions_path = "instructions/"
         self.output_path = "outputs/"
-        self.pdf_path = os.path.join(self.output_path,"pdf_extracts/",pdf_name)
+        # self.pdf_path = os.path.join(self.output_path,"pdf_extracts/",pdf_name)
 
         # test
         self.SECTION_RE = re.compile(r'^\{([A-Z_ ]+)\}\s*$', re.MULTILINE)
@@ -106,12 +108,11 @@ class DataHandler:
 
         return response.output_text
 
-    def openai_parse(self,model,instructions,input,reasoning,text_format):
+    def openai_parse(self,model,input,reasoning,text_format):
         self.reasoning["effort"] = reasoning
 
         response = self.client.responses.parse(
             model=model,
-            instructions=instructions,
             input=input,
             reasoning=self.reasoning,
             text_format=text_format
@@ -165,6 +166,20 @@ class DataHandler:
         with open(path,"w",encoding="utf-8") as f:
             f.write(data)
 
+    def base36(self,n: int) -> str:
+        chars = "0123456789abcdefghijklmnopqrstuvwxyz"
+        if n == 0:
+            return "0"
+        s = ""
+        while n > 0:
+            n, r = divmod(n, 36)
+            s = chars[r] + s
+        return s
+
+    def id_gen(self):
+        ts = self.base36(int(time.time() * 1000))
+        rand = ''.join(random.choices(string.ascii_lowercase + string.digits, k=6))
+        return f"{ts}-{rand}"
 
     # ---------- SPECIFIC METHODS
 
@@ -210,8 +225,56 @@ class DataHandler:
             filename = f"{prefix}{name.replace(' ', '_')}.txt"
             Path(out, filename).write_text(content + "\n", encoding="utf-8")
 
+    def append_regional_effects(self):
+        monsters_path = os.path.join(self.raw_data_path,"monsters","mm2025.json")
+        save_path = os.path.join(self.raw_data_path,"monsters")
+        regional_path = os.path.join(self.raw_data_path,"monsters","legendaryGroups.json")
+        monsters_data = self.load_json_data(path=monsters_path)
+        extra_data = self.load_json_data(path=regional_path)
+        extra_data = extra_data["legendaryGroup"]
+        
+        for monster in monsters_data["monster"]:
+            try:
+                if monster["legendaryGroup"]:
+                    legendary_name = monster["legendaryGroup"]["name"]
+                    source = monster["legendaryGroup"]["source"]
+                    
+                    for effect in extra_data:
+                        if effect["source"] == source and effect["name"] == legendary_name:
+                            monster["regional_effects"] = effect["regionalEffects"]
+            except KeyError:
+                continue
+        
+        self.save_as_json(data=monsters_data,path=save_path,filename="mm2025_regional_effects")
 
+    def add_id_to_monster_effects(self,monster_data,path,filename):
+        try:
+            for effects in monster_data["effects"].values():
+                if not effects:
+                    continue
+                else:
+                    for effect in effects:
+                        if not effect:
+                            continue
 
+                        effect["id"] = self.id_gen()
+
+                        if effect["damages"]:
+                            for damage in effect["damages"]:
+                                damage["id"] = self.id_gen()
+                        
+                        if effect["attack"]["damages"]:
+                            for damage in effect["attack"]["damages"]:
+                                damage["id"] = self.id_gen()
+
+                        if effect["save"]["damages"]:
+                            for damage in effect["attack"]["save"]:                             
+                                damage["id"] = self.id_gen()
+                        
+            self.save_as_json(data=monster_data,path=path,filename=filename)
+
+        except KeyError as e:
+            print("something whent wrong")
     # ----- LARGE METHODS
 
     def clean_pages_phase1(self,
@@ -246,41 +309,60 @@ class DataHandler:
             self.save_as_text(data=resp,path=save_path)
             
 
-
+   
 
 if __name__=="__main__":
-    handler = DataHandler(pdf_name="players_handbook_new.json")
-    # data = handler.load_data("outputs/druid_md/combined_druid.md",encoding=True)
-    # instructions = handler.load_data("instructions/classes_set_delimiters.md",encoding=True)
+    handler = DataHandler()
+    # print(handler.id_gen())
 
-    page_range=(99,106)
 
-    start = time.perf_counter()
-    handler.clean_pages_phase1(
-        page_range=page_range,
-        instructions_filename="clean_classes_phase01.md",
-        reasoning="high",
-        class_name="monk/",
-    )
-        
 
-    # sections = handler.split_file_by_sections("outputs/druid_md/delimiter_druid.md")
-    # handler.save_sections(sections, "outputs/druid_md/","druid_")
+    monster_data=handler.load_json_data("outputs/monster_Imp_v1.json")
 
-    # response = handler.openai_response(
-    #     model=handler.models[0],
-    #     instructions=instructions,
-    #     input=data,
-    #     reasoning="high"
+    handler.add_id_to_monster_effects(monster_data=monster_data,path="outputs/",
+                                      filename="monster_Imp_v1")
+
+    # raw_path = handler.raw_data_path
+    # monsters_path = os.path.join(raw_path,"monsters","mm2025_regional_effects.json")
+    # monsters_data = handler.load_json_data(path=monsters_path)
+    
+    # monsters_data = monsters_data["monster"]
+
+    # instructions_path = os.path.join(handler.instructions_path,"clean_monsters.md")
+    # instructions = handler.load_data(instructions_path)
+
+    # start = time.perf_counter()
+   
+    # for monster in monsters_data:
+    #     if monster["name"] == "Imp":
+    #         selected_monster = monster
+
+    
+    # input=[
+    #     {"role": "system", "content": instructions},
+    #     {"role": "user", "content": json.dumps(selected_monster)}
+    # ]
+
+
+    # response = handler.openai_parse(
+    #     model="gpt-5-mini",
+    #     input=input,
+    #     reasoning="high",
+    #     text_format= MonsterBase
+    # )
+    
+    # output_path = handler.output_path
+
+    # handler.save_as_json(
+    #     path=output_path,
+    #     filename="monster_Imp_v1",
+    #     data=response
     # )
 
-    # handler.save_as_text(data=response,path="outputs/druid_md/delimiter_druid.md")
-    
 
 
-
-    end = time.perf_counter()
-    elapsed_minutes = (end - start) / 60
-    print(f"Elapsed time: {elapsed_minutes:.2f} minutes")
+    # end = time.perf_counter()
+    # elapsed_minutes = (end - start) / 60
+    # print(f"Elapsed time: {elapsed_minutes:.2f} minutes")
 
 

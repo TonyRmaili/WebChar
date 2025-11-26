@@ -2,13 +2,14 @@
 
 # Minions
 1. neat dividers for all the subcomponents
-2. define hit-dice?
-3. connect CR to PB and exp yield
-4. pipe-in equipments from real items database
-5. fix the stupid "one-character at a time bug" in senses and speed fts input  
-6. Allow name change that triggers a new minion (separete save json which essentially makes a copy for modding a monster template)
-7. delete backend minion for deletion
-8. handle spells in effects?
+2. empty backward compatible traits, actions etc needs to get removed
+3. define hit-dice?
+4. connect CR to PB and exp yield
+5. pipe-in equipments from real items database
+6. fix the stupid "one-character at a time bug" in senses and speed fts input  
+7. Allow name change that triggers a new minion (separete save json which essentially makes a copy for modding a monster template)
+8. delete backend minion for deletion
+9. handle spells in effects?
     how will this be once AI cleans data?
     and for old spellcasting features from 2014?
 
@@ -20,7 +21,7 @@
 
 
 # MinionsPlay
-1. connect to rest logic
+1. connect to resting logic
 
 # Overall
 1. Collapse right area? 
@@ -93,20 +94,12 @@
 1. Creating tables for loot, events etc
 
 
-# Dice Tower
-1. An importable box that can open anywere in the page
-2. 
-
 
 # monster improvment
 1. Mod an already defined statblock
 2. merge multiple templates?
 3. Expand monsterblocks to allow direct play from tracker ; perhaps api to 5etools finally? 
     Use AI to clean the json ?
-
-
-# Exports 
-1. Pictures
 
 
 

@@ -1,0 +1,191 @@
+{
+    "name": "Giant Constrictor Snake",
+    "size": "Huge",
+    "ac": 12,
+    "hp": 60,
+    "cr": "2",
+    "pb": 2,
+    "exp": 450,
+    "alignment": "Unaligned",
+    "monster_types": [
+        "beast"
+    ],
+    "languages": [],
+    "treasure": [],
+    "habitats": [
+        "desert",
+        "forest",
+        "swamp",
+        "underwater"
+    ],
+    "gear": [],
+    "immunities": [],
+    "resistances": [],
+    "skills": [
+        "Perception"
+    ],
+    "speed": [
+        {
+            "type": "walk",
+            "value": 30
+        },
+        {
+            "type": "swim",
+            "value": 30
+        }
+    ],
+    "senses": [
+        {
+            "type": "blindsight",
+            "value": 10
+        },
+        {
+            "type": "passive perception",
+            "value": 12
+        }
+    ],
+    "ability_scores": {
+        "str": {
+            "score": 19,
+            "proficient": false,
+            "expertise": false,
+            "mod": 4,
+            "save": 4
+        },
+        "dex": {
+            "score": 14,
+            "proficient": false,
+            "expertise": false,
+            "mod": 2,
+            "save": 2
+        },
+        "con": {
+            "score": 12,
+            "proficient": false,
+            "expertise": false,
+            "mod": 1,
+            "save": 1
+        },
+        "int": {
+            "score": 1,
+            "proficient": false,
+            "expertise": false,
+            "mod": -5,
+            "save": -5
+        },
+        "wis": {
+            "score": 10,
+            "proficient": false,
+            "expertise": false,
+            "mod": 0,
+            "save": 0
+        },
+        "cha": {
+            "score": 3,
+            "proficient": false,
+            "expertise": false,
+            "mod": -4,
+            "save": -4
+        }
+    },
+    "effects": {
+        "actions": [
+            {
+                "name": "Multiattack",
+                "effect_type": "none",
+                "range_ft": null,
+                "attack": {
+                    "attack_type": "",
+                    "hit_bonus": null,
+                    "damages": []
+                },
+                "save": {
+                    "target": "",
+                    "dc_bonus": null,
+                    "damages": [],
+                    "half_damage": false
+                },
+                "notes": "The snake makes one Bite attack and uses Constrict.",
+                "charges": {
+                    "has": false,
+                    "max_charges": 0,
+                    "current_charges": 0,
+                    "reset_amount": 0
+                },
+                "open": false,
+                "active": true
+            },
+            {
+                "name": "Bite",
+                "effect_type": "attack",
+                "range_ft": 10,
+                "attack": {
+                    "attack_type": "Melee Weapon Attack",
+                    "hit_bonus": 6,
+                    "damages": [
+                        {
+                            "dice_count": 2,
+                            "dice_size": "d6",
+                            "mod": 4,
+                            "damage_type": "Piercing"
+                        }
+                    ]
+                },
+                "save": {
+                    "target": "",
+                    "dc_bonus": null,
+                    "damages": [],
+                    "half_damage": false
+                },
+                "notes": "Melee Weapon Attack: +6 to hit, reach 10 ft. Hit: 11 (2d6 + 4) Piercing damage.",
+                "charges": {
+                    "has": false,
+                    "max_charges": 0,
+                    "current_charges": 0,
+                    "reset_amount": 0
+                },
+                "open": false,
+                "active": true
+            },
+            {
+                "name": "Constrict",
+                "effect_type": "save",
+                "range_ft": 10,
+                "attack": {
+                    "attack_type": "",
+                    "hit_bonus": null,
+                    "damages": []
+                },
+                "save": {
+                    "target": "Strength",
+                    "dc_bonus": 14,
+                    "damages": [
+                        {
+                            "dice_count": 2,
+                            "dice_size": "d8",
+                            "mod": 4,
+                            "damage_type": "Bludgeoning"
+                        }
+                    ],
+                    "half_damage": false
+                },
+                "notes": "Strength saving throw, DC 14, one Large or smaller creature the snake can see within 10 feet. On a failed save, the target takes 13 (2d8 + 4) Bludgeoning damage and is Grappled (escape DC 14).",
+                "charges": {
+                    "has": false,
+                    "max_charges": 0,
+                    "current_charges": 0,
+                    "reset_amount": 0
+                },
+                "open": false,
+                "active": true
+            }
+        ],
+        "bonus_actions": [],
+        "reactions": [],
+        "legendary_actions": [],
+        "mythic_actions": [],
+        "lair_actions": [],
+        "regional_effects": [],
+        "traits": []
+    }
+}

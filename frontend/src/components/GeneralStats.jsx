@@ -51,18 +51,28 @@ const autofillDieForClass = (row) => {
   return out;
 };
 
-/** Summarize totals like { d8: 5, d10: 4 } */
-const summarizeHitDice = (rows) => {
+/** Summarize totals like { d8: { max, current } }, preserving current where possible */
+const summarizeHitDice = (rows, prevHd = {}) => {
   const totals = {};
   for (const r of rows) {
     const lvl = Number(r.level) || 0;
     const die = r.hit_dice ? r.hit_dice.toLowerCase() : "";
     if (!lvl || !isValidDie(die)) continue;
+
     const max = (totals[die]?.max || 0) + lvl;
-    totals[die] = { max, current: max }; // initialize current = max
+
+    const prevDie = prevHd[die] || {};
+    const prevCurrent = Number.isFinite(prevDie.current)
+      ? prevDie.current
+      : max; // if no previous current, start full
+
+    const current = Math.min(prevCurrent, max); // don't exceed new max
+
+    totals[die] = { max, current };
   }
-  return totals; // e.g. { d8: {max:5,current:5}, d10:{max:4,current:4} }
+  return totals;
 };
+
 
 export default function GeneralStats() {
   const charData = useCharStore((s) => s.charData);
@@ -325,17 +335,16 @@ export default function GeneralStats() {
     postCharData();
   };
 
-  // Compute and persist hit_dice totals whenever classes change
-  useEffect(() => {
-    const totals = summarizeHitDice(classes);
-    const prev = charData?.hit_dice || {};
-    const changed = JSON.stringify(prev) !== JSON.stringify(totals);
-    if (changed) {
-      updateCharField("hit_dice", totals); // e.g. { d8: 5, d10: 4 }
-      postCharData();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [classes]);
+ useEffect(() => {
+  const prev = charData?.hit_dice || {};
+  const totals = summarizeHitDice(classes, prev);
+  const changed = JSON.stringify(prev) !== JSON.stringify(totals);
+  if (changed) {
+    updateCharField("hit_dice", totals);
+    postCharData();
+  }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [classes]);
 
   // Experience
   const exp = Number.isFinite(Number(charData.exp))
