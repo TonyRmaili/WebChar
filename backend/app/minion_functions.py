@@ -3,6 +3,7 @@ import os
 import json
 from collections import defaultdict
 from .dice_handler import roll_attack, roll_save
+from AIdata.data_handler import DataHandler
 
 # Simple label tags you can color in the frontend
 HIT_LABEL = {
@@ -17,6 +18,10 @@ SAVE_LABEL = {
     "success_half": "[SAVE (HALF)]",
     "fail": "[FAIL]",
 }
+
+fiveEtools_path = "./AIdata/5etools_data/"
+raw_path = os.path.join(fiveEtools_path,"raw","monsters")
+cleaned_path = os.path.join(fiveEtools_path,"cleaned","monsters")
 
 
 def handle_minionEffects(payload):
@@ -245,13 +250,73 @@ def format_minion_results(summary: dict) -> str:
 
     return "\n".join(lines)
 
+def filter_monster_data() -> list[dict[str:bool]]:
+    raw_monsters_path = os.path.join(fiveEtools_path,"raw","monsters","mm2025_plusRE.json")
+    cleaned_monsters_path = os.path.join(fiveEtools_path,"cleaned","monsters","mm2025_plusRE")
+
+    raw_monster_names = []
+    cleaned_monster_names = []
+    with open(raw_monsters_path) as f:
+        raw_monsters_data = json.load(f)
+
+    raw_monsters_data = raw_monsters_data["monster"]
+
+    for raw_monster in raw_monsters_data:
+        raw_monster_names.append(raw_monster["name"])
+
+
+    for cleaned_monster in os.listdir(cleaned_monsters_path):
+        if os.path.isfile(os.path.join(cleaned_monsters_path, cleaned_monster)):
+            cleaned_monster, _ = os.path.splitext(cleaned_monster)
+            cleaned_monster_names.append(cleaned_monster)
+    
+    
+    total_list = []
+    for monster in raw_monster_names:
+        if monster in cleaned_monster_names:
+            total_list.append({monster:True})
+        else:
+            total_list.append({monster:False})
+
+    return total_list
+
+def get_minion_data(selected_minion,user_name,char_name):
+
+    flag = next(iter(selected_minion.values()))
+    name = next(iter(selected_minion.keys()))
+
+    json_name = name+".json"
+    subfolder_name = "mm2025_plusRE"
+
+    save_path = f"app/database/save_files/{user_name}/minions/{char_name}/{json_name}"
+    
+    if flag == True:
+        file_path = os.path.join(cleaned_path,subfolder_name,name+".json")
+
+        with open(file_path) as f:
+            minion_data = json.load(f)
+        
+        with open(save_path, "w") as f:
+            json.dump(minion_data,f,indent=4)
+
+        return minion_data
+    
+    else:
+        data_handler = DataHandler()
+        
+        cleaned_monster =data_handler.clean_monster(
+            raw_monsters_filename=subfolder_name+".json",
+            instructions_filename="clean_monsters.md",
+            monster_name=name,
+            reasoning="high"
+        )
+
+        with open(save_path, "w") as f:
+            json.dump(cleaned_monster,f,indent=4)
+        
+        return cleaned_monster
 
 if __name__=="__main__":
 
-    with open("minion_effects.json") as f:
-        test_data = json.load(f)
-
-
-    handle_minionEffects(payload=test_data)
-
+    filter_monster_data()
     

@@ -105,4 +105,21 @@
 
 
 
+# Monster Cleaning
+(example from "Erinyes")
+
+1. missed languages ; telepathy 120 ft added in senses instead -> clarify that telepathy is a language
+2. Let AI ignore Passive perception otherwise its added in Senses
+3. halucinated gear? added Magic Rope from traits to gear
+4. effect_types = > remove none and keep passive only (aswell in frontend)
+
+5. concerning? 
+ "notes": "The erinyes has a magic rope. While bearing it, the erinyes can use the Entangling Rope action. The rope has AC 20, HP 90, and immunity to poison and psychic damage. The rope turns to dust if reduced to 0 Hit Points, if it is 5+ feet away from the erinyes for 1 hour or more, or if the erinyes dies. If the rope is damaged or destroyed, the erinyes can fully restore it when finishing a short or long rest.",
+
+= > "charges": {
+     "has": false,
+     "max_charges": 0,
+     "current_charges": 0,
+     "reset_amount": 0
+ }
 

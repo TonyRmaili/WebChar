@@ -49,3 +49,6 @@ class MinionEffects(BaseModel):
     target_roll_type: str
     minions_roll_type: str
 
+class ImportMinion(BaseModel):
+    data: dict
+

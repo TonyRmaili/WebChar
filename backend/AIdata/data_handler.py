@@ -5,8 +5,8 @@ import time, random, string
 
 from dotenv import load_dotenv
 from openai import OpenAI
-from schemas.classes import GeneralStats, FeatureList
-from schemas.monsters import MonsterBase
+from .schemas.classes import GeneralStats, FeatureList
+from .schemas.monsters import MonsterBase
 
 import re
 from collections import OrderedDict
@@ -32,16 +32,64 @@ class DataHandler:
         self.models = ["gpt-5-mini"]
 
         # base paths
-        self.raw_data_path = "5etools_data/raw/"
-        self.cleaned_data_path = "5etools_data/cleaned/"
-        self.instructions_path = "instructions/"
+        self.raw_data_path = "AIdata/5etools_data/raw/"
+        self.cleaned_data_path = "AIdata/5etools_data/cleaned/"
+        self.instructions_path = "AIdata/instructions/"
         self.output_path = "outputs/"
         # self.pdf_path = os.path.join(self.output_path,"pdf_extracts/",pdf_name)
 
-        # test
+       
         self.SECTION_RE = re.compile(r'^\{([A-Z_ ]+)\}\s*$', re.MULTILINE)
         self.DOC_START_RE = re.compile(r'^===== DOC_START =====\s*$', re.MULTILINE)
         self.DOC_END_RE   = re.compile(r'^===== DOC_END =====\s*$', re.MULTILINE)
+
+        # constants
+
+        self.CR_STATS = {
+        "0":  {"xp": 10,     "pb": 2},
+        "1/8": {"xp": 25,     "pb": 2},
+        "1/4": {"xp": 50,     "pb": 2},
+        "1/2": {"xp": 100,    "pb": 2},
+
+        "1":  {"xp": 200,    "pb": 2},
+        "2":  {"xp": 450,    "pb": 2},
+        "3":  {"xp": 700,    "pb": 2},
+        "4":  {"xp": 1100,   "pb": 2},
+
+        "5":  {"xp": 1800,   "pb": 3},
+        "6":  {"xp": 2300,   "pb": 3},
+        "7":  {"xp": 2900,   "pb": 3},
+        "8":  {"xp": 3900,   "pb": 3},
+
+        "9":  {"xp": 5000,   "pb": 4},
+        "10": {"xp": 5900,   "pb": 4},
+        "11": {"xp": 7200,   "pb": 4},
+        "12": {"xp": 8400,   "pb": 4},
+
+        "13": {"xp": 10000,  "pb": 5},
+        "14": {"xp": 11500,  "pb": 5},
+        "15": {"xp": 13000,  "pb": 5},
+        "16": {"xp": 15000,  "pb": 5},
+
+        "17": {"xp": 18000,  "pb": 6},
+        "18": {"xp": 20000,  "pb": 6},
+        "19": {"xp": 22000,  "pb": 6},
+        "20": {"xp": 25000,  "pb": 6},
+
+        "21": {"xp": 33000,  "pb": 7},
+        "22": {"xp": 41000,  "pb": 7},
+        "23": {"xp": 50000,  "pb": 7},
+        "24": {"xp": 62000,  "pb": 7},
+
+        "25": {"xp": 75000,  "pb": 8},
+        "26": {"xp": 90000,  "pb": 8},
+        "27": {"xp": 105000, "pb": 8},
+        "28": {"xp": 120000, "pb": 8},
+
+        "29": {"xp": 135000, "pb": 9},
+        "30": {"xp": 155000, "pb": 9},
+    }
+
 
     # ---------- PDF Methods
     def extract_pdf_pages(self,path):
@@ -247,7 +295,7 @@ class DataHandler:
         
         self.save_as_json(data=monsters_data,path=save_path,filename="mm2025_regional_effects")
 
-    def add_id_to_monster_effects(self,monster_data,path,filename):
+    def add_id_to_monster_effects(self,monster_data):
         try:
             for effects in monster_data["effects"].values():
                 if not effects:
@@ -268,13 +316,37 @@ class DataHandler:
                                 damage["id"] = self.id_gen()
 
                         if effect["save"]["damages"]:
-                            for damage in effect["attack"]["save"]:                             
+                            for damage in effect["save"]["damages"]:                             
                                 damage["id"] = self.id_gen()
                         
-            self.save_as_json(data=monster_data,path=path,filename=filename)
+            return monster_data
 
         except KeyError as e:
-            print("something whent wrong")
+            print("something whent wrong: ",e)
+
+    def score_to_mod(self,score):
+        return (score - 10) // 2
+
+    def add_init_pb_xp_to_monster(self,raw_monster_data,cleaned_monster_data):
+
+        init_coeff = raw_monster_data.get("initiative", {}).get("proficiency", 0)
+        cr = raw_monster_data["cr"]
+        dex = raw_monster_data["dex"]
+                
+        dex_mod = self.score_to_mod(dex)
+        pb = self.CR_STATS[cr]["pb"]
+        xp = self.CR_STATS[cr]["xp"]
+
+        initiative = dex_mod + init_coeff*pb
+
+        cleaned_monster_data["pb"] = pb
+        cleaned_monster_data["xp"] = xp
+        cleaned_monster_data["initiative"] = initiative
+        cleaned_monster_data["amount"] = 1
+
+       
+        return cleaned_monster_data
+
     # ----- LARGE METHODS
 
     def clean_pages_phase1(self,
@@ -308,61 +380,65 @@ class DataHandler:
             save_path = os.path.join(dir_path, f"page_{i+1:03}.md")
             self.save_as_text(data=resp,path=save_path)
             
+    def clean_monster(self,raw_monsters_filename,instructions_filename,
+                      monster_name,reasoning,
+                      ):
+        raw_monsters_path = os.path.join(self.raw_data_path,"monsters",raw_monsters_filename)
+        raw_monsters_data = self.load_json_data(raw_monsters_path)
+        raw_monsters_data = raw_monsters_data["monster"]
+        
+        instructions_path = os.path.join(self.instructions_path,instructions_filename)
+        instructions_data = self.load_data(path=instructions_path,encoding=True)
 
-   
+        for raw_monster in raw_monsters_data:
+            if raw_monster["name"] == monster_name:
+                selected_monster = raw_monster
+        
+        input=[
+        {"role": "system", "content": instructions_data},
+        {"role": "user", "content": json.dumps(selected_monster)}
+        ]
+
+
+        cleaned_monster = self.openai_parse(
+            model=self.models[0],
+            input=input,
+            reasoning=reasoning,
+            text_format=MonsterBase
+        )
+
+        subfolder_name, _ = os.path.splitext(raw_monsters_filename)
+        clean_monsters_path = os.path.join(self.cleaned_data_path,"monsters",subfolder_name)
+        os.makedirs(clean_monsters_path,exist_ok=True)
+
+    
+        cleaned_monster = self.add_id_to_monster_effects(monster_data=cleaned_monster)
+        cleaned_monster = self.add_init_pb_xp_to_monster(raw_monster_data=selected_monster,cleaned_monster_data=cleaned_monster)
+
+        self.save_as_json(data=cleaned_monster,path=clean_monsters_path,filename=monster_name)
+
+        return cleaned_monster
 
 if __name__=="__main__":
     handler = DataHandler()
-    # print(handler.id_gen())
-
-
-
-    monster_data=handler.load_json_data("outputs/monster_Imp_v1.json")
-
-    handler.add_id_to_monster_effects(monster_data=monster_data,path="outputs/",
-                                      filename="monster_Imp_v1")
-
-    # raw_path = handler.raw_data_path
-    # monsters_path = os.path.join(raw_path,"monsters","mm2025_regional_effects.json")
-    # monsters_data = handler.load_json_data(path=monsters_path)
     
-    # monsters_data = monsters_data["monster"]
+    start = time.perf_counter()
 
-    # instructions_path = os.path.join(handler.instructions_path,"clean_monsters.md")
-    # instructions = handler.load_data(instructions_path)
+    handler.clean_monster(
+        raw_monsters_filename="mm2025_plusRE.json",
+        instructions_filename="clean_monsters.md",
+        monster_name="Lacedon Ghoul",
+        reasoning="high"
+    )
 
-    # start = time.perf_counter()
-   
-    # for monster in monsters_data:
-    #     if monster["name"] == "Imp":
-    #         selected_monster = monster
+    end = time.perf_counter()
+    elapsed_minutes = (end - start) / 60
+    print(f"Elapsed time: {elapsed_minutes:.2f} minutes")
+
 
     
-    # input=[
-    #     {"role": "system", "content": instructions},
-    #     {"role": "user", "content": json.dumps(selected_monster)}
-    # ]
 
 
-    # response = handler.openai_parse(
-    #     model="gpt-5-mini",
-    #     input=input,
-    #     reasoning="high",
-    #     text_format= MonsterBase
-    # )
+
     
-    # output_path = handler.output_path
-
-    # handler.save_as_json(
-    #     path=output_path,
-    #     filename="monster_Imp_v1",
-    #     data=response
-    # )
-
-
-
-    # end = time.perf_counter()
-    # elapsed_minutes = (end - start) / 60
-    # print(f"Elapsed time: {elapsed_minutes:.2f} minutes")
-
 

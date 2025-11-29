@@ -799,16 +799,7 @@ export function MinionRow({
               />
             </div>
 
-            <div className="flex flex-col gap-1">
-              <label className="text-[11px] text-slate-400">Legendary Resistance</label>
-              <input
-                type="number"
-                min={0}
-                className={inputNumberStyle}
-                value={safe.legendary_resistance}
-                onChange={ch("legendary_resistance")}
-              />
-            </div>
+          
 
             <div className="flex flex-col gap-1">
               <label className="text-[11px] text-slate-400">Size</label>
@@ -855,6 +846,11 @@ export function MinionRow({
             <ArrayPicker
               label="Resistances"
               field="resistances"
+              options={DAMAGE_TYPES}
+            />
+            <ArrayPicker
+              label="Vulnerabilities"
+              field="vulnerabilities"
               options={DAMAGE_TYPES}
             />
             <ArrayPicker

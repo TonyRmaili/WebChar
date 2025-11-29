@@ -7,7 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from typing import Annotated
 from fastapi import Query
 from app.database.models import User,Character
-from app.database.schemas import UserSchema,CharacterSchema, QueryRequest, CharacterIn, HealthData,TakeRestData, TakeRestAllData, GrantExperienceAll, MinionEffects
+from app.database.schemas import UserSchema,CharacterSchema, QueryRequest, CharacterIn, HealthData,TakeRestData, TakeRestAllData, GrantExperienceAll, MinionEffects,ImportMinion
 from app.security import hash_password, verify_password, create_access_token, get_current_user
 from app.db_setup import init_db, get_db
 from fastapi.security import OAuth2PasswordRequestForm
@@ -21,7 +21,7 @@ from embedder.xembedder import Embedder
 from pathlib import Path
 from app.dice_handler import roll_dice
 from app.combat_functions import heal_health, damage_health,load_character,on_longrest,on_shortrest,grant_experience
-from app.minion_functions import handle_minionEffects
+from app.minion_functions import handle_minionEffects,filter_monster_data,get_minion_data
 
 # uvicorn app.main:app --reload
 
@@ -34,7 +34,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 ACCESS_TOKEN_EXPIRE_MINUTES = os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES")  
 
 savefiles_path = "./app/database/save_files/"
-fiveEtools_path = os.path.join(os.path.dirname(__file__), "../data/5etools_data/")
+fiveEtools_path = os.path.join(os.path.dirname(__file__), "../AIdata/5etools_data/")
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -472,6 +472,26 @@ def delete_minion(
 
     return {"status": "success", "deleted": form_data.get("name")}
 
+@app.get("/monsters/get_all_names", tags=["monsters"])
+def get_all_monster_names(
+    current_user: Annotated[User, Depends(get_current_user)],
+):
+    monster_names = filter_monster_data()
+
+    return monster_names
+
+@app.post("/minions/import", tags=["monsters"])
+def import_minion(
+    current_user: Annotated[User, Depends(get_current_user)],
+    selected_minion: ImportMinion,
+    char_name: str = Query(...)
+):
+    minion_data = get_minion_data(selected_minion.data,current_user.name,char_name)
+    return minion_data
+
+    
+
+ 
 
 # ------------------------Dice-----------------------------
 @app.post("/dice", tags=["dice"])

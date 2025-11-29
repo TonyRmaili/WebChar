@@ -4,11 +4,8 @@ import useMonsterStore from "../../store/MonsterStore";
 import { toInt2 } from "../../utils/HelperFunctions";
 import { DEFAULT_MINION_DATA, CATEGORY_KEYS } from "../../utils/Constants";
 import { MinionRow } from "./MinionRow";
-import { buttonStyle, inputTextStyle } from "./MinionStyle"
-
-
-
-
+import { buttonStyle, inputTextStyle, selectStyle } from "./MinionStyle";
+import Select from "react-select";
 
 function collectChargedEffectsFromMinion(minion) {
   const out = [];
@@ -21,8 +18,7 @@ function collectChargedEffectsFromMinion(minion) {
         if (max <= 0) return;
 
         const baseCur = toInt2(e.charges.current_charges);
-        const cur =
-          Number.isFinite(baseCur) && baseCur >= 0 ? baseCur : max;
+        const cur = Number.isFinite(baseCur) && baseCur >= 0 ? baseCur : max;
 
         out.push({
           effect_id: e.id,
@@ -38,7 +34,6 @@ function collectChargedEffectsFromMinion(minion) {
   return out;
 }
 
- 
 function syncUnitChargesForMinion(minion) {
   const chargedEffects = collectChargedEffectsFromMinion(minion);
 
@@ -68,9 +63,10 @@ function syncUnitChargesForMinion(minion) {
         if (!meta) return null; // effect was deleted or lost charges
 
         const prevCur = toInt2(ce.current_charges);
-        const current_charges = Number.isFinite(prevCur) && prevCur >= 0
-          ? Math.min(prevCur, meta.max)
-          : meta.current;
+        const current_charges =
+          Number.isFinite(prevCur) && prevCur >= 0
+            ? Math.min(prevCur, meta.max)
+            : meta.current;
 
         return {
           effect_id: meta.effect_id,
@@ -103,11 +99,12 @@ function syncUnitChargesForMinion(minion) {
   });
 }
 
-
 export default function MinionsDefine() {
   const charData = useCharStore((s) => s.charData);
 
   const fetchMinions = useMonsterStore((s) => s.fetchMinions);
+  const fetchAllMonsterNames = useMonsterStore((s) => s.fetchAllMonsterNames);
+  const importMinion = useMonsterStore((s) => s.importMinion);
   const createMinion = useMonsterStore((s) => s.createMinion);
   const updateMinion = useMonsterStore((s) => s.updateMinion);
   const deleteMinion = useMonsterStore((s) => s.deleteMinion);
@@ -115,6 +112,18 @@ export default function MinionsDefine() {
   const minionsData = useMonsterStore((s) => s.minionsData);
   const loading = useMonsterStore((s) => s.loading);
   const error = useMonsterStore((s) => s.error);
+
+  const [selectedMinion, setSelectedMinion] = useState({})
+
+  const [monsterNames, setMonsterNames] = useState([]);
+  const options = monsterNames.map((obj) => {
+    const [name] = Object.keys(obj);      
+    return {
+      label: name,                       
+      value: obj,                         
+    };
+  });
+
 
   // local drafts for smooth typing (optimistic UI)
   const [drafts, setDrafts] = useState([]);
@@ -151,84 +160,101 @@ export default function MinionsDefine() {
     [updateMinion, fetchMinions, charData?.name]
   );
 
-const handleFieldChange = (index, field, value) => {
-  setDrafts((prev) => {
-    const next = [...prev];
+  const handleFieldChange = (index, field, value) => {
+    setDrafts((prev) => {
+      const next = [...prev];
 
-    // start from the existing minion + defaults
-    const base = { ...DEFAULT_MINION_DATA, ...(next[index] || {}) };
+      // start from the existing minion + defaults
+      const base = { ...DEFAULT_MINION_DATA, ...(next[index] || {}) };
 
-    // apply the raw field change first
-    const rawNext = { ...base, [field]: value };
+      // apply the raw field change first
+      const rawNext = { ...base, [field]: value };
 
-    // normalize amount / max_hp as non-negative integers
-    const prevMaxHp = Math.max(0, toInt2(base.max_hp));
-    const maxHp = Math.max(0, toInt2(rawNext.max_hp));
-    const amount = Math.max(0, toInt2(rawNext.amount));
+      // normalize amount / max_hp as non-negative integers
+      const prevMaxHp = Math.max(0, toInt2(base.max_hp));
+      const maxHp = Math.max(0, toInt2(rawNext.max_hp));
+      const amount = Math.max(0, toInt2(rawNext.amount));
 
-    // work with units instead of current_hps
-    let units = Array.isArray(rawNext.units) ? [...rawNext.units] : [];
+      // work with units instead of current_hps
+      let units = Array.isArray(rawNext.units) ? [...rawNext.units] : [];
 
-    // --- handle max_hp change ---
-    if (maxHp !== prevMaxHp) {
-      const allAtPrev =
-        units.length > 0 && units.every((u) => u.current_hp === prevMaxHp);
+      // --- handle max_hp change ---
+      if (maxHp !== prevMaxHp) {
+        const allAtPrev =
+          units.length > 0 && units.every((u) => u.current_hp === prevMaxHp);
 
-      if (allAtPrev) {
-        // fresh / undamaged: resync all to new max_hp
-        units = units.map((u) => ({
-          ...u,
-          current_hp: maxHp,
-        }));
-      } else {
-        // damaged: only clamp values that exceed new max_hp
-        units = units.map((u) => ({
-          ...u,
-          current_hp: u.current_hp > maxHp ? maxHp : u.current_hp,
-        }));
+        if (allAtPrev) {
+          // fresh / undamaged: resync all to new max_hp
+          units = units.map((u) => ({
+            ...u,
+            current_hp: maxHp,
+          }));
+        } else {
+          // damaged: only clamp values that exceed new max_hp
+          units = units.map((u) => ({
+            ...u,
+            current_hp: u.current_hp > maxHp ? maxHp : u.current_hp,
+          }));
+        }
       }
-    }
 
-    // helper to create a new unit with default selected=false
-    const makeUnit = (slotIndex) => ({
-      id: `u-${index}-${slotIndex}`,
-      current_hp: maxHp,
-      selected: false,
-      // charged_effects will be filled by syncUnitChargesForMinion
+      // helper to create a new unit with default selected=false
+      const makeUnit = (slotIndex) => ({
+        id: `u-${index}-${slotIndex}`,
+        current_hp: maxHp,
+        selected: false,
+        // charged_effects will be filled by syncUnitChargesForMinion
+      });
+
+      // --- handle amount change: length of units === amount ---
+      if (units.length < amount) {
+        const toAdd = amount - units.length;
+        for (let i = 0; i < toAdd; i++) {
+          const slotIndex = units.length + i;
+          units.push(makeUnit(slotIndex)); // new instances start at full HP
+        }
+      } else if (units.length > amount) {
+        units = units.slice(0, amount); // removing minions chops from the end
+      }
+
+      // Build the intermediate minion
+      let updated = {
+        ...rawNext,
+        amount,
+        max_hp: maxHp,
+        units,
+      };
+
+      // Always sync per-unit charged_effects against current effects
+      updated = {
+        ...updated,
+        units: syncUnitChargesForMinion(updated),
+      };
+
+      next[index] = updated;
+
+      // debounce save with full object
+      debouncedSave(index, updated);
+      return next;
     });
+  };
 
-    // --- handle amount change: length of units === amount ---
-    if (units.length < amount) {
-      const toAdd = amount - units.length;
-      for (let i = 0; i < toAdd; i++) {
-        const slotIndex = units.length + i;
-        units.push(makeUnit(slotIndex)); // new instances start at full HP
+  useEffect(() => {
+    async function onSelectMinion() {
+      try {
+        const data = await fetchAllMonsterNames();
+        setMonsterNames(data);
+      } catch (err) {
+        console.error("Failed to load options", err);
       }
-    } else if (units.length > amount) {
-      units = units.slice(0, amount); // removing minions chops from the end
     }
+    onSelectMinion();
+  }, []);
 
-    // Build the intermediate minion
-    let updated = {
-      ...rawNext,
-      amount,
-      max_hp: maxHp,
-      units,
-    };
-
-    // Always sync per-unit charged_effects against current effects
-    updated = {
-      ...updated,
-      units: syncUnitChargesForMinion(updated),
-    };
-
-    next[index] = updated;
-
-    // debounce save with full object
-    debouncedSave(index, updated);
-    return next;
-  });
-};
+  async function onImportMinion() {
+    await importMinion(selectedMinion,charData.name)
+  }
+  
 
 
   const onCreateMinion = async () => {
@@ -245,7 +271,7 @@ const handleFieldChange = (index, field, value) => {
   const onDeleteMinion = async (index) => {
     const m = drafts[index];
     if (!m || !charData?.name) return;
-   
+
     const res = await deleteMinion(m, charData.name);
     if (res !== null) {
       await fetchMinions(charData.name);
@@ -270,7 +296,25 @@ const handleFieldChange = (index, field, value) => {
         >
           Create Minion
         </button>
+
+        <Select
+          options={options}
+          isSearchable={true}
+          placeholder="Select monster..."
+          onChange={(opt) => setSelectedMinion(opt.value)}
+          className="w-56 text-black border rounded-xl text-sm"
+          styles={selectStyle}
+        />
+
+        <button
+          onClick={onImportMinion}
+          className={buttonStyle}
+          disabled={!selectedMinion}
+          >
+          Import Minion
+        </button>
       </div>
+
 
       <div className="mt-4">
         {error && <p className="text-red-400 text-xs">Error: {error}</p>}

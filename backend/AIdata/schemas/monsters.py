@@ -131,8 +131,6 @@ class MonsterBase(BaseModel):
     ac: int
     max_hp: int
     cr: str
-    pb: int
-    exp: int
     alignment: str
 
     # Simple lists
@@ -143,6 +141,7 @@ class MonsterBase(BaseModel):
     gear: List[str] = Field(default_factory=list)
     immunities: List[str] = Field(default_factory=list)
     resistances: List[str] = Field(default_factory=list)
+    vulnerabilities : List[str] = Field(default_factory=list)
     skills: List[str] = Field(default_factory=list)
 
     # Complex stats

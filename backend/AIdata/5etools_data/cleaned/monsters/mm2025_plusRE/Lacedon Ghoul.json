@@ -1,0 +1,237 @@
+{
+    "name": "Lacedon Ghoul",
+    "size": "Medium",
+    "ac": 12,
+    "max_hp": 22,
+    "cr": "1",
+    "alignment": "Chaotic Evil",
+    "monster_types": [
+        "Undead"
+    ],
+    "languages": [
+        "Common"
+    ],
+    "treasure": [
+        "any"
+    ],
+    "habitats": [
+        "swamp",
+        "underdark",
+        "urban"
+    ],
+    "gear": [],
+    "immunities": [
+        "poison",
+        "charmed",
+        "exhaustion",
+        "poisoned"
+    ],
+    "resistances": [
+        "cold"
+    ],
+    "vulnerabilities": [],
+    "skills": [],
+    "speed": [
+        {
+            "type": "walk",
+            "value": 30
+        },
+        {
+            "type": "swim",
+            "value": 30
+        }
+    ],
+    "senses": [
+        {
+            "type": "darkvision",
+            "value": 60
+        },
+        {
+            "type": "passive perception",
+            "value": 10
+        }
+    ],
+    "ability_scores": {
+        "str": {
+            "score": 13,
+            "proficient": false,
+            "expertise": false,
+            "mod": 1,
+            "save": 1
+        },
+        "dex": {
+            "score": 15,
+            "proficient": false,
+            "expertise": false,
+            "mod": 2,
+            "save": 2
+        },
+        "con": {
+            "score": 10,
+            "proficient": false,
+            "expertise": false,
+            "mod": 0,
+            "save": 0
+        },
+        "int": {
+            "score": 7,
+            "proficient": false,
+            "expertise": false,
+            "mod": -2,
+            "save": -2
+        },
+        "wis": {
+            "score": 10,
+            "proficient": false,
+            "expertise": false,
+            "mod": 0,
+            "save": 0
+        },
+        "cha": {
+            "score": 6,
+            "proficient": false,
+            "expertise": false,
+            "mod": -2,
+            "save": -2
+        }
+    },
+    "effects": {
+        "actions": [
+            {
+                "name": "Multiattack",
+                "effect_type": "none",
+                "range_ft": null,
+                "attack": {
+                    "attack_type": "",
+                    "hit_bonus": null,
+                    "damages": []
+                },
+                "save": {
+                    "target": "",
+                    "dc_bonus": null,
+                    "damages": [],
+                    "half_damage": false
+                },
+                "damages": [],
+                "notes": "The ghoul makes two Icy Bite attacks.",
+                "charges": {
+                    "has": false,
+                    "max_charges": 0,
+                    "current_charges": 0,
+                    "reset_amount": 0
+                },
+                "open": false,
+                "active": true,
+                "id": "mij8reha-zg2z49"
+            },
+            {
+                "name": "Icy Bite",
+                "effect_type": "attack",
+                "range_ft": 5,
+                "attack": {
+                    "attack_type": "melee",
+                    "hit_bonus": 4,
+                    "damages": [
+                        {
+                            "dice_count": 2,
+                            "dice_size": "d6",
+                            "mod": 2,
+                            "damage_type": "Cold",
+                            "id": "mij8reha-l7hqx0"
+                        }
+                    ]
+                },
+                "save": {
+                    "target": "",
+                    "dc_bonus": null,
+                    "damages": [],
+                    "half_damage": false
+                },
+                "damages": [],
+                "notes": "Melee attack; on hit the target takes cold damage (2d6 + 2) and the target's speed decreases by 5 feet until the start of the ghoul's next turn.",
+                "charges": {
+                    "has": false,
+                    "max_charges": 0,
+                    "current_charges": 0,
+                    "reset_amount": 0
+                },
+                "open": false,
+                "active": true,
+                "id": "mij8reha-krb5mc"
+            },
+            {
+                "name": "Claw",
+                "effect_type": "attack_and_save",
+                "range_ft": 5,
+                "attack": {
+                    "attack_type": "melee",
+                    "hit_bonus": 4,
+                    "damages": [
+                        {
+                            "dice_count": 1,
+                            "dice_size": "d4",
+                            "mod": 2,
+                            "damage_type": "Slashing",
+                            "id": "mij8reha-u3jnng"
+                        }
+                    ]
+                },
+                "save": {
+                    "target": "con",
+                    "dc_bonus": 10,
+                    "damages": [],
+                    "half_damage": false
+                },
+                "damages": [],
+                "notes": "Melee attack; on hit the target takes slashing damage (1d4 + 2). If the target is not an undead or an elf, it must succeed on a DC 10 Constitution saving throw or be paralyzed until the end of its next turn.",
+                "charges": {
+                    "has": false,
+                    "max_charges": 0,
+                    "current_charges": 0,
+                    "reset_amount": 0
+                },
+                "open": false,
+                "active": true,
+                "id": "mij8reha-vnwxl4"
+            }
+        ],
+        "bonus_actions": [
+            {
+                "name": "Watery Rush",
+                "effect_type": "passive",
+                "range_ft": null,
+                "attack": {
+                    "attack_type": "",
+                    "hit_bonus": null,
+                    "damages": []
+                },
+                "save": {
+                    "target": "",
+                    "dc_bonus": null,
+                    "damages": [],
+                    "half_damage": false
+                },
+                "damages": [],
+                "notes": "While underwater, the ghoul can move up to half its swim speed without provoking opportunity attacks.",
+                "charges": {
+                    "has": false,
+                    "max_charges": 0,
+                    "current_charges": 0,
+                    "reset_amount": 0
+                },
+                "open": false,
+                "active": true,
+                "id": "mij8reha-vznbny"
+            }
+        ],
+        "reactions": [],
+        "legendary_actions": [],
+        "mythic_actions": [],
+        "lair_actions": [],
+        "regional_effects": [],
+        "traits": []
+    },
+    "pb": 2,
+    "xp": 200,
+    "initiative": 2
+}

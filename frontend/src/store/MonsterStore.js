@@ -83,6 +83,7 @@ const useMonsterStore = create((set, get) => ({
       });
 
       return created;
+
     } catch (err) {
       set({ error: err.message || "Unknown error", loading: false });
       return null;
@@ -120,7 +121,6 @@ const useMonsterStore = create((set, get) => ({
   }
 },
 
-
   deleteMinion: async (minionData, charName) => {
     set({ loading: true, error: null });
     try {
@@ -151,6 +151,69 @@ const useMonsterStore = create((set, get) => ({
       return null;
     }
   },
+
+  fetchAllMonsterNames: async () => {
+    set({ loading: true, error: null });
+    try {
+      const url = `${API_BASE_MONSTERS}/get_all_names`;
+      const token = localStorage.getItem("token");
+
+      const res = await fetch(url, {
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      if (!res.ok) throw new Error(`Failed to fetch monster names: ${res.status}`);
+      const data = await res.json();
+
+      return data
+      
+      
+    } catch (err) {
+      set({ error: err.message || "Unknown error", loading: false });
+    }
+  },
+
+  importMinion: async (selectedMinionObj, charName) => {
+    set({ loading: true, error: null });
+    try {
+      const url = `${API_BASE_MINIONS}/import?char_name=${encodeURIComponent(charName)}`;
+      const token = localStorage.getItem("token");
+
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { 
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+       },
+        body: JSON.stringify({
+        data: selectedMinionObj,    
+      }),
+
+      });
+
+      if (!res.ok) throw new Error(`Failed to fetch monster names: ${res.status}`);
+      const imported = await res.json();
+
+      // Append to minionsData and sync to localStorage
+      set((state) => {
+        const next = [...state.minionsData, imported];
+        localStorage.setItem("minionsData", JSON.stringify(next));
+        return { minionsData: next, loading: false };
+      });
+
+      return imported
+      
+      
+    } catch (err) {
+      set({ error: err.message || "Unknown error", loading: false });
+    }
+  },
+
+
+
+
+
 
 
 }));

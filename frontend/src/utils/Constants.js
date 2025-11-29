@@ -117,7 +117,7 @@ export const DEFAULT_MINION_DATA = {
   ac: 0,
   max_hp: 0,
   cr: 0,  // <<< dependant on pb
-  exp: 0, // <<< dependant on pb
+  xp: 0, // <<< dependant on pb
   pb: 2,
   size: "",
   alignment: "",
@@ -132,17 +132,18 @@ export const DEFAULT_MINION_DATA = {
   ability_scores: {},
   skills: [],
 
-  traits: [],
-  actions: [],
-  bonus_actions: [],
-  reactions: [],
-  legendary_actions: [],
-  mythic_actions: [],
-  lair_actions: [],
-  regional_effects: [],
+  effects:{
+    traits: [],
+    actions: [],
+    bonus_actions: [],
+    reactions: [],
+    legendary_actions: [],
+    mythic_actions: [],
+    lair_actions: [],
+    regional_effects: [],
+  },
 
-  initiative: 0,
-  legendary_resistance:0,  
+  initiative: 0,  
   units: [],
 };
 
