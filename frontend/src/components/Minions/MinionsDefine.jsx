@@ -112,6 +112,7 @@ export default function MinionsDefine() {
   const minionsData = useMonsterStore((s) => s.minionsData);
   const loading = useMonsterStore((s) => s.loading);
   const error = useMonsterStore((s) => s.error);
+  const [importing, setImporting] = useState(false);
 
   const [selectedMinion, setSelectedMinion] = useState({})
 
@@ -252,8 +253,20 @@ export default function MinionsDefine() {
   }, []);
 
   async function onImportMinion() {
-    await importMinion(selectedMinion,charData.name)
-  }
+    setImporting(true);
+    try {
+      await importMinion(selectedMinion, charData.name);
+
+      // Refresh names only if import succeeded
+      const data = await fetchAllMonsterNames();
+      setMonsterNames(data);
+    } catch (err) {
+      console.error("Import or refresh failed:", err);
+      // optionally show toast / set error state
+    } finally {
+      setImporting(false);
+    }
+}
   
 
 
@@ -309,9 +322,9 @@ export default function MinionsDefine() {
         <button
           onClick={onImportMinion}
           className={buttonStyle}
-          disabled={!selectedMinion}
+          disabled={importing}
           >
-          Import Minion
+           {importing ? "Importing..." : "Import Minion"}
         </button>
       </div>
 

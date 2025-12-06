@@ -1,0 +1,289 @@
+{
+    "core_traits":{
+        "class_name": "bard",
+        "primary_ability": "cha",
+        "hit_die": "d8",
+        "saving_throw_proficiencies": ["dex", "cha"],
+        "skill_proficiencies": {
+            "amount": 3,
+            "choices": [
+            "Acrobatics",
+            "Animal Handling",
+            "Arcana",
+            "Athletics",
+            "Deception",
+            "History",
+            "Insight",
+            "Intimidation",
+            "Investigation",
+            "Medicine",
+            "Nature",
+            "Perception",
+            "Performance",
+            "Persuasion",
+            "Religion",
+            "Sleight of Hand",
+            "Stealth",
+            "Survival"
+            ]
+        },
+        "weapon_proficiencies": ["simple"],
+        "armor_proficiencies": ["light"],
+        "tool_proficiencies": {
+            "amount": 3,
+            "choices": [
+            "Bagpipes",
+            "Drum",
+            "Dulcimer",
+            "Flute",
+            "Lute",
+            "Lyre",
+            "Horn",
+            "Pan Flute",
+            "Shawm",
+            "Viol"
+            ]
+        },
+
+        "starting_equipment": {
+            "amount": 1,
+            "choices": [
+            [
+                "Leather Armor",
+                "Dagger",
+                "Dagger",
+                "Musical Instrument (choice)",
+                "Entertainer's Pack",
+                "19 gp"
+            ],
+            ["90 gp"],
+            "custom"
+            ]
+        },
+
+        "multiclassing": {
+            "primary_ability": 13,
+            "armor_proficiencies": ["light"],
+            "skill_proficiencies": {
+            "amount": 1,
+            "choices": [
+                "Acrobatics",
+                "Animal Handling",
+                "Arcana",
+                "Athletics",
+                "Deception",
+                "History",
+                "Insight",
+                "Intimidation",
+                "Investigation",
+                "Medicine",
+                "Nature",
+                "Perception",
+                "Performance",
+                "Persuasion",
+                "Religion",
+                "Sleight of Hand",
+                "Stealth",
+                "Survival"
+            ]
+            },
+            "tool_proficiencies": {
+            "amount": 1,
+            "choices": [
+                "Bagpipes",
+                "Drum",
+                "Dulcimer",
+                "Flute",
+                "Lute",
+                "Lyre",
+                "Horn",
+                "Pan Flute",
+                "Shawm",
+                "Viol"
+            ]
+            }
+        }
+    },
+
+    "sub_classes":["Dance","Glamour","Lore","Valor"],
+
+    "caster_type":"full",
+
+   "levels": {
+    "1": {
+      "Bardic Inspiration": {
+        "die": "1d6",
+        "range_ft": 60,
+        "duration": "1 hour",
+        "action_type": "bonus_action",
+        "can_target": "creature_that_can_see_or_hear_you",
+        "dice_uses": {
+          "max": "@cha_mod (minimum 1)",
+          "long_rest": "full"
+        },
+        "higher_levels": {
+          "5": "1d8",
+          "10": "1d10",
+          "15": "1d12"
+        },
+        "notes": "Level 1: Bardic Inspiration\nPHB'24 p59\nYou can supernaturally inspire others through words, music, or dance. This inspiration is represented by your Bardic Inspiration die, which is a d6.\n\nUsing Bardic Inspiration. As a Bonus Action, you can inspire another creature within 60 feet of yourself who can see or hear you. That creature gains one of your Bardic Inspiration dice. A creature can have only one Bardic Inspiration die at a time.\n\nOnce within the next hour when the creature fails a D20 Test, the creature can roll the Bardic Inspiration die and add the number rolled to the d20, potentially turning the failure into a success. A Bardic Inspiration die is expended when it's rolled.\n\nNumber of Uses. You can confer a Bardic Inspiration die a number of times equal to your Charisma modifier (minimum of once), and you regain all expended uses when you finish a Long Rest.\n\nAt Higher Levels. Your Bardic Inspiration die changes when you reach certain Bard levels: d8 at level 5, d10 at level 10, and d12 at level 15."
+      },
+
+      "Spellcasting": {
+        "cantrips_known": "@level_table",
+        "prepared_spells": "@level_table",
+        "spell_slots": "@spellcasting_table",
+        "focus": "musical_instrument",
+        "ability": "cha",
+        "notes": "Level 1: Spellcasting\nPHB'24 p59\nYou have learned to cast spells through your bardic arts. See chapter 7 for the rules on spellcasting.\n\nCantrips. You know two Bard cantrips of your choice. Dancing Lights and Vicious Mockery are recommended.\n\nWhenever you gain a Bard level, you can replace one of your cantrips. You learn additional cantrips at Bard levels 4 and 10.\n\nSpell Slots. The Bard Features table shows how many spell slots you have to cast your level 1+ spells.\n\nPrepared Spells. You prepare a number of spells from the Bard spell list equal to the Prepared Spells column of the Bard Features table. Prepared spells must be of a level you have slots for.\n\nChanging Spells. Whenever you gain a Bard level, you can replace one prepared spell.\n\nSpellcasting Ability. Charisma is your spellcasting ability.\n\nSpellcasting Focus. You can use a Musical Instrument as a Spellcasting Focus."
+      }
+    },
+
+    "2": {
+      "Expertise": {
+        "amount": 2,
+        "recommended": ["Performance", "Persuasion"],
+        "notes": "Level 2: Expertise\nPHB'24 p60\nYou gain Expertise in two of your skill proficiencies of your choice. Performance and Persuasion are recommended if you are proficient in them.\n\nAt Bard level 9, you gain Expertise in two more of your skill proficiencies."
+      },
+      "Jack of All Trades": {
+        "bonus": "half_proficiency (round_down)",
+        "applies_to": "any_ability_check_with_skill_you_lack_proficiency_in",
+        "notes": "Level 2: Jack of All Trades\nPHB'24 p60\nYou can add half your Proficiency Bonus (round down) to any ability check you make using a skill you lack proficiency in and that doesn't otherwise use your Proficiency Bonus."
+      }
+    },
+
+    "3": {
+      "Subclass Feature": {
+        "notes": "Level 3: Bard Subclass\nPHB'24 p60\nYou gain a Bard subclass of your choice. You gain each subclass feature of your Bard level or lower."
+      }
+    },
+
+    "4": {
+      "Ability Score Improvement": {
+        "ASI": [],
+        "feat": "",
+        "notes": "Level 4: Ability Score Improvement\nPHB'24 p61\nYou gain an Ability Score Improvement or a feat of your choice. You gain this feature again at levels 8, 12, and 16."
+      }
+    },
+
+    "5": {
+      "Font of Inspiration": {
+        "regain_uses": ["short_rest", "long_rest"],
+        "spell_slot_recovery": {
+          "action_type": "none",
+          "effect": "regain_one_use_of_bardic_inspiration"
+        },
+        "notes": "Level 5: Font of Inspiration\nPHB'24 p61\nYou now regain all expended uses of Bardic Inspiration after a Short or Long Rest.\n\nAdditionally, you can expend a spell slot (no action required) to regain one expended use."
+      }
+    },
+
+    "6": {
+      "Subclass Feature": {
+        "notes": "Level 6: Subclass Feature\nPHB'24 p61\nYou gain a feature from your Bard Subclass."
+      }
+    },
+
+    "7": {
+      "Countercharm": {
+        "range_ft": 30,
+        "trigger": "creature_fails_save_vs_charmed_or_frightened",
+        "action_type": "reaction",
+        "effect": "reroll_save_with_advantage",
+        "notes": "Level 7: Countercharm\nPHB'24 p61\nIf you or a creature within 30 feet fails a saving throw against being Charmed or Frightened, you can use a Reaction to make them reroll with Advantage."
+      }
+    },
+
+    "8": {
+      "Ability Score Improvement": {
+        "ASI": [],
+        "feat": "",
+        "notes": "Level 8: Ability Score Improvement\nPHB'24 p61"
+      }
+    },
+
+    "9": {
+      "Expertise": {
+        "amount": 2,
+        "notes": "Level 9: Expertise\nPHB'24 p61\nYou gain Expertise in two of your skill proficiencies."
+      }
+    },
+
+    "10": {
+      "Magical Secrets": {
+        "expanded_lists": ["bard", "cleric", "druid", "wizard"],
+        "applies_when": ["whenever_prepared_spells_increases"],
+        "notes": "Level 10: Magical Secrets\nPHB'24 p61\nWhenever your Prepared Spells number increases, you may choose your new spells from the Bard, Cleric, Druid, or Wizard lists.\n\nWhen you replace prepared spells, you may also choose from these lists."
+      }
+    },
+
+    "12": {
+      "Ability Score Improvement": {
+        "ASI": [],
+        "feat": "",
+        "notes": "Level 12: Ability Score Improvement\nPHB'24 p61"
+      }
+    },
+
+    "14": {
+      "Subclass Feature": {
+        "notes": "Level 14: Subclass Feature\nPHB'24 p61\nYou gain a feature from your Bard Subclass."
+      }
+    },
+
+    "16": {
+      "Ability Score Improvement": {
+        "ASI": [],
+        "feat": "",
+        "notes": "Level 16: Ability Score Improvement\nPHB'24 p61"
+      }
+    },
+
+    "18": {
+      "Superior Inspiration": {
+        "trigger": "roll_initiative",
+        "effect": "if_bardic_inspiration_uses < 2, set_to_2",
+        "notes": "Level 18: Superior Inspiration\nPHB'24 p61\nWhen you roll Initiative, if you have fewer than two uses of Bardic Inspiration, you regain uses until you have two."
+      }
+    },
+
+    "19": {
+      "Epic Boon": {
+        "notes": "Level 19: Epic Boon\nPHB'24 p61\nYou gain an Epic Boon feat or another feat of your choice."
+      }
+    },
+
+    "20": {
+      "Words of Creation": {
+        "always_prepared": ["Power Word Heal", "Power Word Kill"],
+        "targeting_bonus": {
+          "additional_target_within_ft": 10
+        },
+        "notes": "Level 20: Words of Creation\nPHB'24 p61\nYou always have Power Word Heal and Power Word Kill prepared. When you cast either, you may target a second creature within 10 feet of the first."
+      }
+    }
+  },
+
+    "levels_table": {
+    "1":  { "bardic_die": "1d6",  "cantrips": 2, "prepared_spells": 4 },
+    "2":  { "bardic_die": "1d6",  "cantrips": 2, "prepared_spells": 5 },
+    "3":  { "bardic_die": "1d6",  "cantrips": 2, "prepared_spells": 6 },
+    "4":  { "bardic_die": "1d6",  "cantrips": 3, "prepared_spells": 7 },
+    "5":  { "bardic_die": "1d8",  "cantrips": 3, "prepared_spells": 9 },
+    "6":  { "bardic_die": "1d8",  "cantrips": 3, "prepared_spells": 10 },
+    "7":  { "bardic_die": "1d8",  "cantrips": 3, "prepared_spells": 11 },
+    "8":  { "bardic_die": "1d8",  "cantrips": 3, "prepared_spells": 12 },
+    "9":  { "bardic_die": "1d8",  "cantrips": 3, "prepared_spells": 14 },
+    "10": { "bardic_die": "1d10", "cantrips": 4, "prepared_spells": 15 },
+    "11": { "bardic_die": "1d10", "cantrips": 4, "prepared_spells": 16 },
+    "12": { "bardic_die": "1d10", "cantrips": 4, "prepared_spells": 16 },
+    "13": { "bardic_die": "1d10", "cantrips": 4, "prepared_spells": 17 },
+    "14": { "bardic_die": "1d10", "cantrips": 4, "prepared_spells": 17 },
+    "15": { "bardic_die": "1d12", "cantrips": 4, "prepared_spells": 18 },
+    "16": { "bardic_die": "1d12", "cantrips": 4, "prepared_spells": 18 },
+    "17": { "bardic_die": "1d12", "cantrips": 4, "prepared_spells": 19 },
+    "18": { "bardic_die": "1d12", "cantrips": 4, "prepared_spells": 20 },
+    "19": { "bardic_die": "1d12", "cantrips": 4, "prepared_spells": 21 },
+    "20": { "bardic_die": "1d12", "cantrips": 4, "prepared_spells": 22 }
+}
+
+}

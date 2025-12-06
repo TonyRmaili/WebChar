@@ -1,0 +1,104 @@
+{
+  "name": "College of the Moon",
+  "levels": {
+    "3": {
+      "Moon's Inspiration": {
+        "Inspired Eclipse": {
+          "action_type": "bonus_action",
+          "trigger": "when_you_grant_bardic_inspiration",
+          "effects": {
+            "condition": "invisible",
+            "teleport": 30
+          },
+          "ends_when": [
+            "start_of_next_turn",
+            "after_attack_roll",
+            "after_dealing_damage",
+            "after_casting_spell"
+          ],
+          "notes": "When you grant Bardic Inspiration, you become Invisible and teleport up to 30 ft as part of the same Bonus Action. The invisibility ends early if you attack, deal damage, or cast a spell."
+        },
+
+        "Lunar Vitality": {
+          "trigger": "when_you_restore_hit_points_with_spell",
+          "once_per_turn": true,
+          "resource_cost": "bardic_inspiration_die",
+          "effects": {
+            "increase_healing": "@bardic_inspiration_die",
+            "target_speed_increase_ft": 10,
+            "duration": "until_end_of_target_next_turn"
+          },
+          "notes": "Once per turn when you heal a creature with a spell, you can expend a Bardic Inspiration die to add the die roll to healing and increase the target’s Speed by 10 ft until end of its next turn."
+        }
+      },
+
+      "Primal Lore": {
+        "druidic_language": true,
+        "bonus_cantrip": {
+          "from_list": "druid",
+          "counts_as_bard_spell": true,
+          "does_not_count_against_known": true,
+          "replacable_on_level_up": true
+        },
+        "additional_skill_proficiency": {
+          "choices": [
+            "Animal Handling",
+            "Insight",
+            "Medicine",
+            "Nature",
+            "Perception",
+            "Survival"
+          ],
+          "amount": 1
+        },
+        "notes": "You learn Druidic and one Druid cantrip, which doesn't count against cantrips known. You also gain proficiency in one nature-themed skill."
+      }
+    },
+
+    "6": {
+      "Blessing of Moonlight": {
+        "always_prepared": ["Moonbeam"],
+        "moonbeam_modification": {
+          "glow": true,
+          "light": "dim_5ft",
+          "healing_trigger": {
+            "trigger": "creature_fails_save_against_your_moonbeam",
+            "range_ft": 60,
+            "heal": "2d4",
+            "target": "creature_you_choose"
+          }
+        },
+        "usage": {
+          "limit": 1,
+          "reset": "long_rest"
+        },
+        "notes": "Moonbeam is always prepared. When casting it, you can glow and heal another creature when a target fails its save. Usable once per Long Rest."
+      }
+    },
+
+    "14": {
+      "Eventide's Splendor": {
+        "Shadow of the New Moon": {
+          "upgrade_of": "Inspired Eclipse",
+          "effects": {
+            "benefits_recipient": true,
+            "recipient_invisibility": true,
+            "recipient_teleport": 30,
+            "recipient_uses_reaction": true,
+            "invisibility_duration": "until_start_of_next_turn"
+          },
+          "notes": "When you use Inspired Eclipse, the creature you inspire also becomes Invisible and may teleport 30 ft as a Reaction."
+        },
+
+        "Vibrance of the Full Moon": {
+          "upgrade_of": "Lunar Vitality",
+          "effects": {
+            "alternative_roll": "1d6",
+            "replaces_bardic_inspiration_die": true
+          },
+          "notes": "When using Lunar Vitality, you may roll 1d6 instead of expending a Bardic Inspiration die."
+        }
+      }
+    }
+  }
+}

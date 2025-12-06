@@ -1,0 +1,117 @@
+{
+  "name": "Artillerist",
+  "levels": {
+    "3": {
+      "Tools of the Trade": {
+        "weapon_proficiencies": ["martial_ranged"],
+        "tool_proficiencies": {
+          "gained": ["Woodcarver's Tools"],
+          "if_already_proficient": {
+            "source": "artisan_tools",
+            "amount_if_one": 1,
+            "notes": "If you already have proficiency with Woodcarver's Tools, you gain proficiency with one other type of Artisan's Tools of your choice."
+          }
+        },
+        "crafting": {
+          "item_type": "magic_wand",
+          "time_multiplier": 0.5
+        },
+        "notes": "Level 3: Tools of the Trade\nEFA\nYou gain the following benefits.\n\nRanged Weaponry. You gain proficiency with Martial Ranged weapons.\n\nTool Proficiency. You gain proficiency with Woodcarver's Tools. If you already have this proficiency, you gain proficiency with one other type of Artisan's Tools of your choice.\n\nWand Crafting. When you craft a magic Wand, the amount of time required to craft it is halved."
+      },
+
+      "Artillerist Spells": {
+        "always_prepared": {
+          "3": ["Shield", "Thunderwave"],
+          "5": ["Scorching Ray", "Shatter"],
+          "9": ["Fireball", "Wind Wall"],
+          "13": ["Ice Storm", "Wall of Fire"],
+          "17": ["Cone of Cold", "Wall of Force"]
+        },
+        "counts_against_prepared": false,
+        "notes": "Level 3: Artillerist Spells\nEFA\nWhen you reach an Artificer level specified in the Artillerist Spells table, you thereafter always have the listed spells prepared.\n\nArtillerist Spells\nArtificer Level    Spells\n3    Shield, Thunderwave\n5    Scorching Ray, Shatter\n9    Fireball, Wind Wall\n13    Ice Storm, Wall of Fire\n17    Cone of Cold, Wall of Force"
+      },
+
+      "Eldritch Cannon": {
+        "creation": {
+          "action_type": "magic_action",
+          "required_tools": ["Smith's Tools", "Woodcarver's Tools"],
+          "space_requirement": "unoccupied_space_within_5_ft_on_horizontal_surface",
+          "size_options": ["tiny", "small"],
+          "appearance_customizable": true,
+          "duration": "1 hour or until reduced_to_0_hp",
+          "dismiss_action": "magic_action",
+          "limit": {
+            "max_cannons": 1,
+            "long_rest": "full",
+            "can_expend_spell_slot": true
+          }
+        },
+        "notes": "Level 3: Eldritch Cannon\nEFA\nUsing Smith's Tools or Woodcarver's Tools, you can take a Magic action to create a Small or Tiny Eldritch Cannon in an unoccupied space on a horizontal surface within 5 feet of yourself. You determine its appearance, including whether you carry it or not (and your choice of legs or wheels, for the latter). It disappears if it is reduced to 0 Hit Points or after 1 hour. You can dismiss it early as a Magic action.\n\nOnce you create a cannon, you can't do so again until you finish a Long Rest or expend a spell slot to create one. You can have only one cannon at a time and can't create one while you already have one."
+      }
+    },
+
+    "5": {
+      "Arcane Firearm": {
+        "creation": {
+          "trigger": "finish_long_rest",
+          "required_tools": ["Woodcarver's Tools"],
+          "valid_items": ["Rod", "Staff", "Wand", "Martial Ranged weapon"],
+          "effect": "inscribe_sigils_to_turn_item_into_arcane_firearm",
+          "overwrite_previous": true
+        },
+        "spellcasting_focus": true,
+        "damage_bonus": {
+          "roll": "1d8",
+          "applies_to": "one_damage_roll_of_artificer_spell_cast_through_firearm"
+        },
+        "notes": "Level 5: Arcane Firearm\nEFA\nWhen you finish a Long Rest, you can use Woodcarver's Tools to carve special sigils into a Rod, Staff, Wand, or Martial Ranged weapon and thereby turn it into your Arcane Firearm. The sigils disappear from the object if you later carve them on a different item. The sigils otherwise last indefinitely.\n\nYou can use your Arcane Firearm as a Spellcasting Focus for your Artificer spells. When you cast an Artificer spell through the firearm, roll 1d8, and you gain a bonus to one of the spell's damage rolls equal to the number rolled."
+      }
+    },
+
+    "9": {
+      "Explosive Cannon": {
+        "detonate": {
+          "trigger": "when_cannon_takes_damage",
+          "range_ft": 60,
+          "action_type": "reaction",
+          "area": "20_ft_radius",
+          "save": {
+            "ability": "dex",
+            "dc": "@spell_save_dc"
+          },
+          "damage": "3d10 force",
+          "half_on_success": true,
+          "effect": "destroys_cannon"
+        },
+        "firepower": {
+          "damage_bonus": "1d8",
+          "protector_temp_hp_bonus": "1d8"
+        },
+        "notes": "Level 9: Explosive Cannon\nEFA\nEvery Eldritch Cannon you create is now more destructive. You gain the following benefits.\n\nDetonate. When your cannon takes damage, you can take a Reaction to command the cannon to detonate if you are within 60 feet of it. Doing so destroys the cannon and forces each creature within 20 feet of it to make a Dexterity saving throw against your spell save DC, taking 3d10 Force damage on a failed save or half as much damage on a successful one.\n\nFirepower. The cannon's damage rolls and the number of Temporary Hit Points granted by Protector increase by 1d8."
+      }
+    },
+
+    "15": {
+      "Fortified Position": {
+        "double_firepower": {
+          "max_cannons": 2,
+          "creation": {
+            "can_create_two_in_one_magic_action": true,
+            "spell_slot_cost_rule": "if_first_requires_slot_second_requires_slot_too"
+          },
+          "activation": {
+            "action_type": "bonus_action",
+            "can_activate_both": true,
+            "can_use_same_or_different_activation_options": true
+          }
+        },
+        "shimmering_field_projection": {
+          "effect": "grant_half_cover_within_radius",
+          "radius_ft": 10,
+          "applies_to": ["you", "allies"]
+        },
+        "notes": "Level 15: Fortified Position\nEFA\nYou're a master at forming well-defended emplacements using your Eldritch Cannon. You gain the following benefits.\n\nDouble Firepower. You can now have two cannons at the same time, and you can create two with the same Magic action. (If you expend a spell slot to create the first cannon, you must expend another spell slot to create the second.) You can activate both of them with the same Bonus Action, ordering them to use the same activation option or different ones. You can't create a third cannon while you have two.\n\nShimmering Field Projection. You and your allies have Half Cover while within 10 feet of your Eldritch Cannon."
+      }
+    }
+  }
+}

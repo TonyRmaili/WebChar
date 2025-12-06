@@ -1,0 +1,90 @@
+{
+  "name": "Life Domain",
+  "levels": {
+    "3": {
+      "Life Domain Spells": {
+        "always_prepared": {
+          "3": [
+            "Aid",
+            "Bless",
+            "Cure Wounds",
+            "Lesser Restoration"
+          ],
+          "5": [
+            "Mass Healing Word",
+            "Revivify"
+          ],
+          "7": [
+            "Aura of Life",
+            "Death Ward"
+          ],
+          "9": [
+            "Greater Restoration",
+            "Mass Cure Wounds"
+          ]
+        },
+        "notes": "Level 3: Life Domain Spells (PHB'24 p73)\nWhen you reach a Cleric level specified in the Life Domain Spells table, you thereafter always have the listed spells prepared. These spells are always prepared and don’t count against the number of spells you can prepare each day."
+      },
+
+      "Disciple of Life": {
+        "trigger": "when_spell_with_spell_slot_restores_hit_points",
+        "target": "each_creature_healed_by_that_spell_on_the_turn_you_cast_it",
+        "extra_healing": {
+          "formula": "2 + spell_slot_level"
+        },
+        "notes": "Level 3: Disciple of Life (PHB'24 p73)\nWhen a spell you cast with a spell slot restores Hit Points to a creature, that creature regains additional Hit Points on the turn you cast the spell. The additional Hit Points equal 2 plus the spell slot's level."
+      },
+
+      "Preserve Life": {
+        "action_type": "magic_action",
+        "resource_cost": {
+          "type": "channel_divinity",
+          "amount": 1
+        },
+        "healing_pool": {
+          "formula": "5 * cleric_level"
+        },
+        "range_ft": 30,
+        "targets": {
+          "condition": "bloodied",
+          "can_include_self": true
+        },
+        "distribution": {
+          "divide_pool_freely": true,
+          "per_target_cap": "no_more_than_half_target_max_hp"
+        },
+        "notes": "Level 3: Preserve Life (PHB'24 p73)\nAs a Magic action, you present your Holy Symbol and expend a use of your Channel Divinity to restore a number of Hit Points equal to five times your Cleric level. Choose Bloodied creatures within 30 feet of yourself (including you), and divide those Hit Points among them. This feature can restore a creature to no more than half its Hit Point maximum."
+      }
+    },
+
+    "6": {
+      "Blessed Healer": {
+        "trigger": "after_you_cast_healing_spell_on_creature_other_than_you",
+        "requirements": {
+          "spell_uses_slot": true,
+          "spell_restores_hit_points": true,
+          "primary_target_is_not_you": true
+        },
+        "self_healing": {
+          "formula": "2 + spell_slot_level"
+        },
+        "timing": "immediately_after_spell_is_cast",
+        "notes": "Level 6: Blessed Healer (PHB'24 p74)\nImmediately after you cast a spell with a spell slot that restores Hit Points to one creature other than you, you regain Hit Points equal to 2 plus the spell slot's level."
+      }
+    },
+
+    "17": {
+      "Supreme Healing": {
+        "applies_to": {
+          "sources": ["spells", "channel_divinity"],
+          "condition": "when_you_would_roll_one_or_more_dice_to_restore_hit_points"
+        },
+        "effect": {
+          "replace_rolls_with_max": true,
+          "example": "2d6 healing becomes 12 instead of rolling"
+        },
+        "notes": "Level 17: Supreme Healing (PHB'24 p74)\nWhen you would normally roll one or more dice to restore Hit Points to a creature with a spell or Channel Divinity, don’t roll those dice; instead use the highest number possible for each die (for example, 2d6 becomes 12)."
+      }
+    }
+  }
+}

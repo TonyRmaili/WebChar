@@ -1,0 +1,196 @@
+{
+  "name": "Armorer",
+  "levels": {
+    "3": {
+      "Tools of the Trade": {
+        "armor_training": ["heavy"],
+        "tool_proficiencies": {
+          "gained": ["Smith's Tools"],
+          "if_already_proficient": {
+            "source": "artisan_tools",
+            "amount_if_one": 1,
+            "notes": "If you already have proficiency with Smith's Tools, you gain proficiency with one other type of Artisan's Tools of your choice."
+          }
+        },
+        "crafting": {
+          "types": ["nonmagical_armor", "magic_armor"],
+          "time_multiplier": 0.5
+        },
+        "notes": "Level 3: Tools of the Trade\nEFA\nYou gain the following benefits.\n\nArmor Training. You gain training with Heavy armor.\n\nTool Proficiency. You gain proficiency with Smith's Tools. If you already have this tool proficiency, you gain proficiency with one other type of Artisan's Tools of your choice.\n\nArmor Crafting. When you craft nonmagical or magic armor, the amount of time required to craft it is halved."
+      },
+
+      "Armorer Spells": {
+        "always_prepared": {
+          "3": ["Magic Missile", "Thunderwave"],
+          "5": ["Mirror Image", "Shatter"],
+          "9": ["Hypnotic Pattern", "Lightning Bolt"],
+          "13": ["Fire Shield", "Greater Invisibility"],
+          "17": ["Passwall", "Wall of Force"]
+        },
+        "counts_against_prepared": false,
+        "notes": "Level 3: Armorer Spells\nEFA\nWhen you reach an Artificer level specified in the Armorer Spells table, you thereafter always have the listed spells prepared.\n\nArmorer Spells\nArtificer Level    Spells\n3    Magic Missile, Thunderwave\n5    Mirror Image, Shatter\n9    Hypnotic Pattern, Lightning Bolt\n13    Fire Shield, Greater Invisibility\n17    Passwall, Wall of Force"
+      },
+
+      "Arcane Armor": {
+        "action_type": "magic_action",
+        "required_tools": ["Smith's Tools"],
+        "target": "a suit of armor you are wearing",
+        "effects": {
+          "no_strength_requirement": true,
+          "quick_don_doff": {
+            "action_type": "utilize_action",
+            "cannot_be_removed_against_will": true
+          },
+          "spellcasting_focus": true
+        },
+        "notes": "Level 3: Arcane Armor\nEFA\nAs a Magic action while you have Smith's Tools in hand, you can turn a suit of armor you are wearing into Arcane Armor. The armor continues to be Arcane Armor until you don another suit of armor or you die.\n\nYou gain the following benefits while wearing your Arcane Armor.\n\nNo Strength Requirement. If the armor normally has a Strength requirement, the Arcane Armor lacks this requirement for you.\n\nQuick Don and Doff. You can don or doff the armor as a Utilize action. The armor can't be removed against your will.\n\nSpellcasting Focus. You can use the Arcane Armor as a Spellcasting Focus for your Artificer spells."
+      },
+
+      "Armor Model": {
+        "models": {
+          "Dreadnaught": {
+            "weapon_name": "Force Demolisher",
+            "weapon_type": "simple_melee",
+            "damage": "1d10 force",
+            "properties": ["reach"],
+            "forced_movement": {
+              "distance_ft": 10,
+              "directions": ["push_away", "pull_toward"],
+              "size_limit": "target_at_least_one_size_smaller"
+            },
+            "giant_stature": {
+              "action_type": "bonus_action",
+              "duration": "1 minute",
+              "reach_bonus_ft": 5,
+              "size": {
+                "min_size": "current",
+                "max_size": "large",
+                "condition": "if there isn't enough room for you to increase your size, your size doesn't change"
+              },
+              "uses": {
+                "max": "@int_mod (minimum 1)",
+                "long_rest": "full"
+              }
+            }
+          },
+          "Guardian": {
+            "weapon_name": "Thunder Pulse",
+            "weapon_type": "simple_melee",
+            "damage": "1d8 thunder",
+            "on_hit": {
+              "effect": "target_has_disadvantage_on_attack_rolls_against_targets_other_than_you_until_start_of_your_next_turn"
+            },
+            "defensive_field": {
+              "trigger": "while_bloodied",
+              "action_type": "bonus_action",
+              "temp_hp": "@artificer_level",
+              "ends_if": ["you_doff_the_armor"]
+            }
+          },
+          "Infiltrator": {
+            "weapon_name": "Lightning Launcher",
+            "weapon_type": "simple_ranged",
+            "range": {
+              "normal_ft": 90,
+              "long_ft": 300
+            },
+            "damage": "1d6 lightning",
+            "extra_damage": {
+              "amount": "1d6 lightning",
+              "frequency": "once_per_turn_on_hit"
+            },
+            "powered_steps": {
+              "speed_bonus_ft": 5
+            },
+            "dampening_field": {
+              "advantage_on": ["dexterity_stealth_checks"],
+              "disadvantage_cancellation": "if_armor_imposes_disadvantage_on_dexterity_stealth_checks_the_advantage_and_disadvantage_cancel_each_other"
+            }
+          }
+        },
+        "change_model": {
+          "when": ["short_rest", "long_rest"],
+          "required_tools": ["Smith's Tools"]
+        },
+        "notes": "Level 3: Armor Model\nEFA\nYou can customize your Arcane Armor. When you do so, choose one of the following armor models: Dreadnaught, Guardian, or Infiltrator. The model you choose gives you special benefits while you wear it.\n\nEach model includes a special weapon. When you attack with that weapon, you can add your Intelligence modifier, instead of your Strength or Dexterity modifier, to the attack and damage rolls.\n\nYou can change the armor's model whenever you finish a Short or Long Rest if you have Smith's Tools in hand.\n\nDreadnaught. You design your armor to become a towering juggernaut in battle. It has the following features:\n\nForce Demolisher. An arcane wrecking ball or sledgehammer projects from your armor. The demolisher counts as a Simple Melee weapon with the Reach property, and it deals 1d10 Force damage on a hit. If you hit a creature that is at least one size smaller than you with the demolisher, you can push the creature up to 10 feet straight away from yourself or pull the creature up to 10 feet toward yourself.\n\nGiant Stature. As a Bonus Action, you transform and enlarge your armor for 1 minute. For the duration, your reach increases by 5 feet, and if you are smaller than Large, you become Large, along with anything you are wearing. If there isn't enough room for you to increase your size, your size doesn't change. You can use this Bonus Action a number of times equal to your Intelligence modifier (minimum of once). You regain all expended uses when you finish a Long Rest.\n\nGuardian. You design your armor to be in the front line of conflict. It has the following features:\n\nThunder Pulse. You can discharge concussive blasts with strikes from your armor. The pulse counts as a Simple Melee weapon and deals 1d8 Thunder damage on a hit. A creature hit by the pulse has Disadvantage on attack rolls against targets other than you until the start of your next turn.\n\nDefensive Field. While Bloodied, you can take a Bonus Action to gain Temporary Hit Points equal to your Artificer level. You lose these Temporary Hit Points if you doff the armor.\n\nInfiltrator. You customize your armor for subtler undertakings. It has the following features:\n\nLightning Launcher. A gemlike node appears on your armor, from which you can shoot bolts of lightning. The launcher counts as a Simple Ranged weapon with a normal range of 90 feet and a long range of 300 feet, and it deals 1d6 Lightning damage on a hit. Once on each of your turns when you hit a creature with the launcher, you can deal an extra 1d6 Lightning damage to that target.\n\nPowered Steps. Your Speed increases by 5 feet.\n\nDampening Field. You have Advantage on Dexterity (Stealth) checks. If the armor imposes Disadvantage on such checks, the Advantage and Disadvantage cancel each other, as normal."
+      }
+    },
+
+    "5": {
+      "Extra Attack": {
+        "total_attacks": 2,
+        "notes": "Level 5: Extra Attack\nEFA\nYou can attack twice instead of once whenever you take the Attack action on your turn."
+      }
+    },
+
+    "9": {
+      "Improved Armorer": {
+        "armor_replication": {
+          "extra_plans": 1,
+          "plan_category": "armor",
+          "replacement_rule": "if_you_replace_that_plan_you_must_replace_it_with_another_armor_plan",
+          "extra_magic_items_from_replicate": 1,
+          "extra_item_category": "armor"
+        },
+        "improved_arsenal": {
+          "attack_bonus": 1,
+          "damage_bonus": 1,
+          "applies_to": "special_weapon_of_your_arcane_armor_model"
+        },
+        "notes": "Level 9: Improved Armorer\nEFA\nYou gain the following benefits.\n\nArmor Replication. You learn an additional plan for your Replicate Magic Item feature, and it must be in the Armor category. If you replace that plan, you must replace it with another Armor plan.\n\nIn addition, you can create an additional item with that feature, and the item must also be in the Armor category.\n\nImproved Arsenal. You gain a +1 bonus to attack and damage rolls made with the special weapon of your Arcane Armor model."
+      }
+    },
+
+    "15": {
+      "Perfected Armor": {
+        "dreadnaught": {
+          "force_demolisher_damage": "2d6 force",
+          "giant_stature": {
+            "reach_bonus_ft": 10,
+            "size_options": ["large", "huge"],
+            "advantage_on": ["strength_checks", "strength_saving_throws"]
+          }
+        },
+        "guardian": {
+          "thunder_pulse_damage": "1d10 thunder",
+          "pull_reaction": {
+            "range_ft": 30,
+            "save": {
+              "ability": "strength",
+              "dc": "@spell_save_dc"
+            },
+            "pull_distance_ft": 25,
+            "size_limit": "huge_or_smaller",
+            "follow_up_attack": {
+              "condition": "if_pulled_to_space_within_5_ft_of_you",
+              "type": "melee_weapon_attack"
+            },
+            "uses": {
+              "max": "@int_mod (minimum 1)",
+              "long_rest": "full"
+            }
+          }
+        },
+        "infiltrator": {
+          "lightning_launcher_damage": "2d6 lightning",
+          "glimmer_effect": {
+            "light_radius_ft": 5,
+            "light_type": "dim_light",
+            "disadvantage_on": ["attack_rolls_against_you"],
+            "duration": "until_start_of_your_next_turn"
+          },
+          "flight": {
+            "action_type": "bonus_action",
+            "fly_speed": "2x_speed",
+            "duration": "until_end_of_current_turn",
+            "uses": {
+              "max": "@int_mod (minimum 1)",
+              "long_rest": "full"
+            }
+          }
+        },
+        "notes": "Level 15: Perfected Armor\nEFA\nYour Arcane Armor gains additional benefits based on its model, as detailed below.\n\nDreadnaught. The damage die of your Force Demolisher increases to 2d6 Force damage.\n\nIn addition, when you use your Giant Stature, your reach increases by 10 feet, your size can increase to Large or Huge (your choice), and you have Advantage on Strength checks and Strength saving throws for the duration.\n\nGuardian. The damage die of your Thunder Pulse increases to 1d10 Thunder damage.\n\nIn addition, when a Huge or smaller creature you can see ends its turn within 30 feet of you, you can take a Reaction to magically force that creature to make a Strength saving throw against your spell save DC. On a failed save, you pull the creature up to 25 feet directly toward you to an unoccupied space. If you pull the target to a space within 5 feet of yourself, you can make a melee weapon attack against it as part of this Reaction.\n\nYou can take this Reaction a number of times equal to your Intelligence modifier (minimum of once), and you regain all expended uses when you finish a Long Rest.\n\nInfiltrator. The damage die of your Lightning Launcher increases to 2d6 Lightning damage. Any creature that takes Lightning damage from your Lightning Launcher glimmers with magical light until the start of your next turn. The glimmering creature sheds Dim Light in a 5-foot radius, and it has Disadvantage on attack rolls against you, as the light jolts it if it attacks you.\n\nAdditionally, as a Bonus Action, you can gain a Fly Speed equal to twice your Speed until the end of the current turn. You can take this Bonus Action a number of times equal to your Intelligence modifier (minimum of once), and you regain all expended uses when you finish a Long Rest."
+      }
+    }
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "name": "Alchemist",
+  "alchemist_spells": {
+    "3": ["Healing Word", "Ray of Sickness"],
+    "5": ["Flaming Sphere", "Melf's Acid Arrow"],
+    "9": ["Gaseous Form", "Mass Healing Word"],
+    "13": ["Death Ward", "Vitriolic Sphere"],
+    "17": ["Cloudkill", "Raise Dead"]
+  },
+  "experimental_elixir_table": [
+    {
+      "roll": 1,
+      "name": "Healing",
+      "effect": "The drinker regains Hit Points equal to 2d8 + your Intelligence modifier.",
+      "scaling": {
+        "9": "3d8 + Int modifier",
+        "15": "4d8 + Int modifier"
+      }
+    },
+    {
+      "roll": 2,
+      "name": "Swiftness",
+      "effect": "The drinker's Speed increases by 10 feet for 1 hour.",
+      "scaling": {
+        "9": "+15 feet for 1 hour",
+        "15": "+20 feet for 1 hour"
+      }
+    },
+    {
+      "roll": 3,
+      "name": "Resilience",
+      "effect": "The drinker gains a +1 bonus to AC for 10 minutes.",
+      "scaling": {
+        "9": "+1 AC for 1 hour",
+        "15": "+1 AC for 8 hours"
+      }
+    },
+    {
+      "roll": 4,
+      "name": "Boldness",
+      "effect": "For 1 minute, the drinker can roll 1d4 and add it to every attack roll and saving throw.",
+      "scaling": {
+        "9": "Duration 10 minutes",
+        "15": "Duration 1 hour"
+      }
+    },
+    {
+      "roll": 5,
+      "name": "Flight",
+      "effect": "The drinker gains a Fly Speed of 10 feet for 10 minutes.",
+      "scaling": {
+        "9": "Fly Speed 20 feet for 10 minutes",
+        "15": "Fly Speed 30 feet for 10 minutes"
+      }
+    },
+    {
+      "roll": 6,
+      "name": "Choice",
+      "effect": "You choose one of the other effects (1–5) for this elixir instead of rolling randomly."
+    }
+  ],
+  "levels": {
+    "3": [
+      {
+        "name": "Tools of the Trade",
+        "notes": "You gain proficiency with Alchemist's Supplies and the Herbalism Kit. If you already have one of these proficiencies, you instead gain proficiency with one other type of Artisan's Tools of your choice (or with two other types if you already have both).\nWhen you brew a potion using the crafting rules in the Dungeon Master's Guide, the crafting time is halved."
+      },
+      {
+        "name": "Alchemist Spells",
+        "notes": "At the Artificer levels shown in the Alchemist Spells table, you always have those spells prepared.\nThese spells count as Artificer spells for you.",
+        "spells_object_ref": "alchemist_spells"
+      },
+      {
+        "name": "Experimental Elixir",
+        "notes": "When you finish a Long Rest while holding Alchemist's Supplies, you magically produce two elixirs. For each elixir, roll on the Experimental Elixir table to determine its effect. The elixir appears in a vial. The vial and elixir vanish when the elixir is drunk, poured out, or when you finish your next Long Rest.\nAs a Bonus Action, a creature can drink an elixir or administer it to another creature within 5 feet.\nAs a Magic action while holding Alchemist's Supplies, you can expend one spell slot to create an additional elixir and choose its effect from the Experimental Elixir table instead of rolling.\nYou create more free elixirs at higher levels: three at level 5, four at level 9, and five at level 15, all created at the end of a Long Rest.",
+        "table_object_ref": "experimental_elixir_table"
+      }
+    ],
+    "5": [
+      {
+        "name": "Alchemical Savant",
+        "notes": "When you cast a spell using your Alchemist's Supplies as the Spellcasting Focus, you gain a bonus to one roll of the spell. That roll must either restore Hit Points or be a damage roll that deals Acid, Fire, or Poison damage. The bonus equals your Intelligence modifier (minimum +1)."
+      }
+    ],
+    "9": [
+      {
+        "name": "Restorative Reagents",
+        "notes": "You can cast Lesser Restoration without expending a spell slot and without preparing the spell, provided you use Alchemist's Supplies as the Spellcasting Focus.\nYou can do so a number of times equal to your Intelligence modifier (minimum of once), and you regain all expended uses when you finish a Long Rest."
+      }
+    ],
+    "15": [
+      {
+        "name": "Chemical Mastery",
+        "notes": "Alchemical Eruption. When you cast an Artificer spell that deals Acid, Fire, or Poison damage to a target, you can also deal 2d8 Force damage to that target. You can use this benefit only once on each of your turns.\nChemical Resistance. You gain Resistance to Acid damage and Poison damage, and Immunity to the Poisoned condition.\nConjured Cauldron. You can cast Tasha's Bubbling Cauldron without expending a spell slot, without preparing the spell, and without Material components, provided you use Alchemist's Supplies as the Spellcasting Focus. Once you cast the spell in this way, you must finish a Long Rest before you can do so again."
+      }
+    ]
+  }
+}

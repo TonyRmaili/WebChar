@@ -1,0 +1,121 @@
+{
+  "name": "Battle Smith",
+  "levels": {
+    "3": {
+      "Tools of the Trade": {
+        "tool_proficiencies": {
+          "gained": ["Smith's Tools"],
+          "if_already_proficient": {
+            "source": "artisan_tools",
+            "amount_if_one": 1,
+            "notes": "If you already have this proficiency, you gain proficiency with one other type of Artisan's Tools of your choice."
+          }
+        },
+        "crafting": {
+          "item_types": ["nonmagical_weapon", "magic_weapon"],
+          "time_multiplier": 0.5
+        },
+        "notes": "Level 3: Tools of the Trade\nEFA\nYou gain the following benefits.\n\nTool Proficiency. You gain proficiency with Smith's Tools. If you already have this proficiency, you gain proficiency with one other type of Artisan's Tools of your choice.\n\nWeapon Crafting. When you craft a nonmagical or magic weapon, the amount of time required to craft it is halved."
+      },
+
+      "Battle Smith Spells": {
+        "always_prepared": {
+          "3": ["Heroism", "Shield"],
+          "5": ["Shining Smite", "Warding Bond"],
+          "9": ["Aura of Vitality", "Conjure Barrage"],
+          "13": ["Aura of Purity", "Fire Shield"],
+          "17": ["Banishing Smite", "Mass Cure Wounds"]
+        },
+        "counts_against_prepared": false,
+        "notes": "Level 3: Battle Smith Spells\nEFA\nWhen you reach an Artificer level specified in the Battle Smith Spells table, you thereafter always have the listed spells prepared.\n\nBattle Smith Spells\nArtificer Level    Spells\n3    Heroism, Shield\n5    Shining Smite, Warding Bond\n9    Aura of Vitality, Conjure Barrage\n13    Aura of Purity, Fire Shield\n17    Banishing Smite, Mass Cure Wounds"
+      },
+
+      "Battle Ready": {
+        "arcane_empowerment": {
+          "uses_int_for_attack_and_damage": true,
+          "condition": "when_attacking_with_magic_weapon"
+        },
+        "weapon_knowledge": {
+          "weapon_proficiencies": ["martial"],
+          "weapon_as_focus": true
+        },
+        "notes": "Level 3: Battle Ready\nEFA\nYour combat training and your experiments with magic have paid off in two ways.\n\nArcane Empowerment. When you attack with a magic weapon, you can use your Intelligence modifier, instead of your Strength or Dexterity modifier, for the attack and damage rolls.\n\nWeapon Knowledge. You gain proficiency with Martial weapons. You can use a weapon with which you have proficiency as a Spellcasting Focus for your Artificer spells."
+      },
+
+      "Steel Defender": {
+        "general": {
+          "companion_type": "steel_defender",
+          "friend_to": ["you", "your_allies"],
+          "obeys_you": true,
+          "disappears_on": ["your_death"]
+        },
+        "combat_behavior": {
+          "acts_on_your_turn": true,
+          "default_action": "dodge",
+          "bonus_action_command": true,
+          "incapacitated_override": "if_you_are_incapacitated_the_defender_acts_on_its_own_and_is_not_limited_to_dodge"
+        },
+        "restoration": {
+          "revive_window": "1 hour",
+          "revive_action_type": "magic_action",
+          "revive_cost": "spell_slot",
+          "revive_time": "1 minute",
+          "revive_result": "returns_with_full_hit_points"
+        },
+        "replacement": {
+          "trigger": "finish_long_rest",
+          "required_tools": ["Smith's Tools"],
+          "replaces_existing": true
+        },
+        "notes": "Level 3: Steel Defender\nEFA\nYour tinkering has borne you a companion, a Steel Defender. You determine the defender's appearance and whether it has two legs or four; your choices don't affect the defender's game statistics.\n\nThe defender is Friendly to you and your allies and obeys you. It vanishes if you die.\n\nThe Defender in Combat. In combat, the defender acts during your turn. It can move and take its Reaction on its own, but the only action it takes is the Dodge action unless you take a Bonus Action to command it to take an action. If you have the Incapacitated condition, the defender acts on its own and isn't limited to the Dodge action.\n\nRestoring or Replacing the Defender. If the defender has died within the last hour, you can take a Magic action to touch it and expend a spell slot. The defender returns to life after 1 minute with all its Hit Points restored.\n\nWhenever you finish a Long Rest, you can create a new defender if you have Smith's Tools in hand. If you already have a defender from this feature, the first one vanishes."
+      }
+    },
+
+    "5": {
+      "Extra Attack": {
+        "total_attacks": 2,
+        "can_convert_attack_to_command_defender": true,
+        "converted_action": "Force-Empowered Rend",
+        "notes": "Level 5: Extra Attack\nEFA\nYou can attack twice instead of once whenever you take the Attack action on your turn. You can forgo one of your attacks when you take the Attack action to command your Steel Defender to take the Force-Empowered Rend action."
+      }
+    },
+
+    "9": {
+      "Arcane Jolt": {
+        "trigger": "when_you_hit_with_magic_weapon_or_steel_defender_hits",
+        "effects": {
+          "destructive_energy": {
+            "extra_damage": "2d6 force"
+          },
+          "restorative_energy": {
+            "range_ft": 30,
+            "healing": "2d6",
+            "target_type": ["creature", "object"]
+          }
+        },
+        "uses": {
+          "max": "@int_mod (minimum 1)",
+          "limit": "once_per_turn",
+          "long_rest": "full"
+        },
+        "notes": "Level 9: Arcane Jolt\nEFA\nWhen either you hit a target with an attack roll using a magic weapon or your Steel Defender hits a target, you can channel magical energy through the strike to create one of the following effects:\n\nDestructive Energy. The target takes an extra 2d6 Force damage.\n\nRestorative Energy. Choose one creature or object you can see within 30 feet of the target. Healing energy flows into the chosen recipient, restoring 2d6 Hit Points to it.\n\nYou can use this energy a number of times equal to your Intelligence modifier (minimum of once), but you can do so no more than once per turn. You regain all expended uses when you finish a Long Rest."
+      }
+    },
+
+    "15": {
+      "Improved Defender": {
+        "improved_jolt": {
+          "extra_damage": "4d6",
+          "extra_healing": "4d6"
+        },
+        "improved_deflection": {
+          "trigger": "whenever_steel_defender_uses_deflect_attack",
+          "damage": "1d4 + @int_mod",
+          "damage_type": "force",
+          "target": "attacker"
+        },
+        "notes": "Level 15: Improved Defender\nEFA\nYour Arcane Jolt and Steel Defender have become more powerful, granting these benefits.\n\nImproved Jolt. The extra damage and healing of your Arcane Jolt both increase to 4d6.\n\nImproved Deflection. Whenever your Steel Defender uses its Deflect Attack, the attacker takes Force damage equal to 1d4 plus your Intelligence modifier."
+      }
+    }
+  }
+}

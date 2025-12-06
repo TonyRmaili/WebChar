@@ -32,11 +32,18 @@ class DataHandler:
         self.models = ["gpt-5-mini"]
 
         # base paths
-        self.raw_data_path = "AIdata/5etools_data/raw/"
-        self.cleaned_data_path = "AIdata/5etools_data/cleaned/"
-        self.instructions_path = "AIdata/instructions/"
+        # self.raw_data_path = "AIdata/5etools_data/raw/"
+        # self.cleaned_data_path = "AIdata/5etools_data/cleaned/"
+        # self.instructions_path = "AIdata/instructions/"
+
+        self.raw_data_path = "5etools_data/raw/"
+        self.cleaned_data_path = "5etools_data/cleaned/"
+        self.instructions_path = "instructions/"
+
+
+
         self.output_path = "outputs/"
-        # self.pdf_path = os.path.join(self.output_path,"pdf_extracts/",pdf_name)
+        self.pdf_path = os.path.join(self.output_path,"pdf_extracts")
 
        
         self.SECTION_RE = re.compile(r'^\{([A-Z_ ]+)\}\s*$', re.MULTILINE)
@@ -89,6 +96,21 @@ class DataHandler:
         "29": {"xp": 135000, "pb": 9},
         "30": {"xp": 155000, "pb": 9},
     }
+
+        self.class_pagenumbers = {
+            "barbarian":[50,56],
+            "bard":[58,66],
+            "cleric":[68,76],
+            "druid":[78,88],
+            "fighter":[90,98],
+            "monk":[100,106],
+            "paladin":[108,116],
+            "ranger":[118,126],
+            "rogue":[128,136],
+            "sorcerer":[138,150],
+            "warlock":[152,162],
+            "wizard":[164,174],
+        }
 
 
     # ---------- PDF Methods
@@ -419,17 +441,53 @@ class DataHandler:
 
         return cleaned_monster
 
+    # ------- Clean Class Methodsx------------
+
+    def extract_class_by_pages(self,class_name):
+        path = os.path.join(self.pdf_path,"players_handbook_new.json") 
+        pdf_data = self.load_json_data(path)
+
+        start_page, end_page = self.class_pagenumbers[class_name]
+        start_page -= 1
+
+        pages = []
+
+        for page in pdf_data[start_page:end_page]:
+            pages.append(page["text"])
+
+        return pages
+    
+    def clean_class_p1(self,class_name):
+        pages = self.extract_class_by_pages(class_name=class_name)
+        instructions_path = os.path.join(self.instructions_path,"classes","clean_classes_phase01.md")
+        instructions = self.load_data(path=instructions_path,encoding=True)
+
+        save_path = os.path.join(self.cleaned_data_path,"classes",class_name,"cleaned_pages")
+        os.makedirs(save_path,exist_ok=True)
+
+        for i,page in enumerate(pages):
+            input = [
+            {"role":"user",
+             "content":page}
+            ]   
+            cleaned_page = self.openai_response(
+                model=self.models[0],
+                instructions=instructions,
+                input=input,
+                reasoning="high"
+            )
+
+            save_filename = f"page_{i+1:02}.md"
+            full_path = os.path.join(save_path,save_filename)
+            self.save_as_text(data=cleaned_page,path=full_path)
+
+
 if __name__=="__main__":
     handler = DataHandler()
     
     start = time.perf_counter()
 
-    handler.clean_monster(
-        raw_monsters_filename="mm2025_plusRE.json",
-        instructions_filename="clean_monsters.md",
-        monster_name="Lacedon Ghoul",
-        reasoning="high"
-    )
+    handler.clean_class_p1(class_name="barbarian")
 
     end = time.perf_counter()
     elapsed_minutes = (end - start) / 60

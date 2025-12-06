@@ -1,0 +1,51 @@
+{
+  "name": "College of Valor",
+  "levels": {
+    "3": {
+      "Combat Inspiration": {
+        "effects": {
+          "defense": {
+            "trigger": "when_hit_by_attack",
+            "reaction": true,
+            "use_bardic_inspiration_die": true,
+            "apply_to": "AC",
+            "notes": "Roll the Bardic Inspiration die and add to AC against the triggering attack."
+          },
+          "offense": {
+            "trigger": "after_hitting_with_attack",
+            "use_bardic_inspiration_die": true,
+            "apply_to": "damage",
+            "notes": "Roll the Bardic Inspiration die and add the result to the attack's damage."
+          }
+        },
+        "notes": "Creatures with your Bardic Inspiration can use the die for offensive or defensive combat boosts."
+      },
+
+      "Martial Training": {
+        "weapon_proficiencies": ["martial"],
+        "armor_proficiencies": ["medium", "shields"],
+        "spellcasting_focus": ["simple_weapon", "martial_weapon"],
+        "notes": "You gain proficiency with Martial weapons, Medium armor, and Shields, and you can use weapons as a Spellcasting Focus."
+      }
+    },
+
+    "6": {
+      "Extra Attack": {
+        "total_attacks": 2,
+        "cantrip_replacement": {
+          "allowed": true,
+          "condition": "cantrip_with_action_cast_time"
+        },
+        "notes": "You can attack twice when taking the Attack action, and you may replace one attack with a cantrip that has a casting time of an action."
+      }
+    },
+
+    "14": {
+      "Battle Magic": {
+        "trigger": "after_casting_spell_with_action_cast_time",
+        "bonus_action_attack": true,
+        "notes": "After casting a spell with a casting time of an action, you can make one weapon attack as a Bonus Action."
+      }
+    }
+  }
+}

@@ -1,0 +1,358 @@
+{
+    "caster_type":"half",
+    "core_traits": {
+        "class_name": "artificer",
+        "primary_ability": "int",
+        "hit_die": "d8",
+
+        "saving_throw_proficiencies": ["con", "int"],
+
+        "skill_proficiencies": {
+            "amount": 2,
+            "choices": [
+            "Arcana",
+            "History",
+            "Investigation",
+            "Medicine",
+            "Nature",
+            "Perception",
+            "Sleight of Hand"
+            ]
+        },
+
+        "weapon_proficiencies": ["simple"],
+        "armor_proficiencies": ["light", "medium", "shields"],
+
+        "tool_proficiencies": {
+            "fixed": [
+            "Thieves' Tools",
+            "Tinker's Tools"
+            ],
+            "amount": 1,
+            "choices": [
+            "Alchemist's Supplies",
+            "Brewer's Supplies",
+            "Calligrapher's Supplies",
+            "Carpenter's Tools",
+            "Cartographer's Tools",
+            "Cobbler's Tools",
+            "Cook's Utensils",
+            "Glassblower's Tools",
+            "Jeweler's Tools",
+            "Leatherworker's Tools",
+            "Mason's Tools",
+            "Painter's Supplies",
+            "Potter's Tools",
+            "Smith's Tools",
+            "Weaver's Tools",
+            "Woodcarver's Tools"
+            ]
+        },
+
+        "starting_equipment": {
+            "amount": 1,
+            "choices": [
+            [
+                "Studded Leather Armor",
+                "Dagger",
+                "Thieves' Tools",
+                "Tinker's Tools",
+                "Dungeoneer's Pack",
+                "16 gp"
+            ],
+            ["150 gp"],
+            "custom"
+            ]
+        },
+
+        "multiclassing": {
+            "primary_ability": 13,
+            "armor_proficiencies": ["light", "medium", "shields"],
+            "tool_proficiencies": {
+            "amount": 1,
+            "choices": ["Tinker's Tools"]
+            },
+            "skill_proficiencies": {
+            "amount": 1,
+            "choices": [
+                "Arcana",
+                "History",
+                "Investigation",
+                "Medicine",
+                "Nature",
+                "Perception",
+                "Sleight of Hand"
+            ]
+            }
+        }
+    },
+    "sub_classes":["alchemist","armorer","artillerist","battle_smith","cartographer"],
+    "levels_table": {
+    "1":  { "plans_known": 0, "magic_items": 0, "cantrips": 2, "prepared_spells": 2 },
+    "2":  { "plans_known": 4, "magic_items": 2, "cantrips": 2, "prepared_spells": 3 },
+    "3":  { "plans_known": 4, "magic_items": 2, "cantrips": 2, "prepared_spells": 4 },
+    "4":  { "plans_known": 4, "magic_items": 2, "cantrips": 2, "prepared_spells": 5 },
+    "5":  { "plans_known": 4, "magic_items": 2, "cantrips": 2, "prepared_spells": 6 },
+    "6":  { "plans_known": 5, "magic_items": 3, "cantrips": 2, "prepared_spells": 6 },
+    "7":  { "plans_known": 5, "magic_items": 3, "cantrips": 2, "prepared_spells": 7 },
+    "8":  { "plans_known": 5, "magic_items": 3, "cantrips": 2, "prepared_spells": 7 },
+    "9":  { "plans_known": 5, "magic_items": 3, "cantrips": 2, "prepared_spells": 9 },
+    "10": { "plans_known": 6, "magic_items": 4, "cantrips": 3, "prepared_spells": 9 },
+    "11": { "plans_known": 6, "magic_items": 4, "cantrips": 3, "prepared_spells": 10 },
+    "12": { "plans_known": 6, "magic_items": 4, "cantrips": 3, "prepared_spells": 10 },
+    "13": { "plans_known": 6, "magic_items": 4, "cantrips": 3, "prepared_spells": 11 },
+    "14": { "plans_known": 7, "magic_items": 5, "cantrips": 4, "prepared_spells": 11 },
+    "15": { "plans_known": 7, "magic_items": 5, "cantrips": 4, "prepared_spells": 12 },
+    "16": { "plans_known": 7, "magic_items": 5, "cantrips": 4, "prepared_spells": 12 },
+    "17": { "plans_known": 7, "magic_items": 5, "cantrips": 4, "prepared_spells": 14 },
+    "18": { "plans_known": 8, "magic_items": 6, "cantrips": 4, "prepared_spells": 14 },
+    "19": { "plans_known": 8, "magic_items": 6, "cantrips": 4, "prepared_spells": 15 },
+    "20": { "plans_known": 8, "magic_items": 6, "cantrips": 4, "prepared_spells": 15 }
+    },
+
+    "levels": {
+    "1": {
+        "Spellcasting": {
+        "spellcasting_ability": "int",
+        "cantrips_known": "@level_table",
+        "prepared_spells": "@level_table",
+        "spell_slots": "@spell_slots_table",
+        "focus_tools": [
+            "Thieves' Tools",
+            "Tinker's Tools",
+            "Artisan's Tools (proficient)"
+        ],
+        "notes": "You learn to channel magic through tools. You know two Artificer cantrips of your choice and prepare a list of Artificer spells each day based on your level and Intelligence modifier. You must hold Thieves' Tools, Tinker's Tools, or another set of Artisan's Tools you are proficient with as a spellcasting focus when casting Artificer spells that have a material component. You regain all expended spell slots when you finish a Long Rest, and you can change your prepared spells after a Long Rest."
+        },
+
+        "Tinker’s Magic": {
+        "granted_cantrips": ["Mending"],
+        "created_items": [
+            "Ball Bearings",
+            "Basket",
+            "Bedroll",
+            "Bell",
+            "Blanket",
+            "Block and Tackle",
+            "Bottle, Glass",
+            "Bucket",
+            "Caltrops",
+            "Candle",
+            "Crowbar",
+            "Flask",
+            "Grappling Hook",
+            "Hunting Trap",
+            "Jug",
+            "Lamp",
+            "Manacles",
+            "Net",
+            "Oil",
+            "Paper",
+            "Parchment",
+            "Pole",
+            "Pouch",
+            "Rope",
+            "Sack",
+            "Shovel",
+            "Spikes, Iron",
+            "String",
+            "Tinderbox",
+            "Torch",
+            "Vial"
+        ],
+        "range": 5,
+        "charges": {
+            "max": "@int_mod (min 1)",
+            "long_rest": "full"
+        },
+        "notes": "While holding Tinker's Tools, you can use a Magic action to create simple mundane items from a predefined list in an unoccupied space within 5 feet of you. Each created item lasts until you finish a Long Rest. You can use this feature a number of times equal to your Intelligence modifier (minimum 1), and you regain all expended uses when you finish a Long Rest."
+        }
+    },
+
+    "2": {
+        "Replicate Magic Item": {
+        "plans_known": "@level_table",
+        "max_magic_items": "@level_table",
+        "tools_required": ["Tinker's Tools"],
+        "notes": "You learn magic item plans that allow you to create temporary magic items. When you finish a Long Rest, you can create one or more magic items based on plans you know, up to the maximum number of items from the Artificer Features table. Created items function like the normal magic items but are not permanent and vanish if you die or replace their plan. Items made with this feature can be used as a spellcasting focus if appropriate (for example, certain wands or weapons). Each time you gain an Artificer level, you can replace one known plan with another plan for which you qualify."
+        }
+    },
+
+    "3": {
+        "Artificer Subclass": {
+        "subclass": "",
+        "notes": "You choose an Artificer subclass, such as Alchemist, Armorer, Artillerist, Battle Smith, or Cartographer. The subclass grants you features at this level and additional features at higher levels, as specified in the subclass description."
+        }
+    },
+
+    "4": {
+        "Ability Score Improvement": {
+        "ASI": [],
+        "feat": "",
+        "notes": "You gain the Ability Score Improvement feat or another feat of your choice for which you qualify."
+        }
+    },
+
+    "5": {
+        "Subclass Feature": {
+        "notes": "You gain a feature from your chosen Artificer subclass."
+        }
+    },
+
+    "6": {
+        "Magic Item Tinker": {
+        "charge_magic_item": {
+            "action_type": "bonus_action",
+            "range_ft": 5,
+            "slot_cost": "level_1_plus",
+            "effect": "Recharge a magic item created by Replicate Magic Item that uses charges; it regains charges equal to the level of the expended spell slot."
+        },
+        "drain_magic_item": {
+            "action_type": "bonus_action",
+            "range_ft": 5,
+            "charges": {
+            "max": 1,
+            "long_rest": "full"
+            },
+            "effect": "Cause a magic item you created with Replicate Magic Item to vanish and convert it into a spell slot (level 1 if the item is Common, level 2 if Uncommon or Rare). Any slot created this way is lost when you finish a Long Rest."
+        },
+        "transmute_magic_item": {
+            "action_type": "magic_action",
+            "range_ft": 5,
+            "charges": {
+            "max": 1,
+            "long_rest": "full"
+            },
+            "effect": "Transform one of your Replicate Magic Item creations into a different magic item based on another plan you know."
+        },
+        "notes": "You gain additional ways to manipulate magic items created through your Replicate Magic Item feature: recharging them, sacrificing them for spell slots, or transforming them into other items you have plans for."
+        }
+    },
+
+    "7": {
+        "Flash of Genius": {
+        "range_ft": 30,
+        "bonus": "@int_mod (min +1)",
+        "charges": {
+            "max": "@int_mod (min 1)",
+            "long_rest": "full"
+        },
+        "notes": "When you or a creature you can see within 30 feet fails an ability check or a saving throw, you can use your Reaction to add your Intelligence modifier to the roll, potentially turning failure into success. You can use this feature a number of times equal to your Intelligence modifier (minimum 1), regaining all expended uses when you finish a Long Rest."
+        }
+    },
+
+    "8": {
+        "Ability Score Improvement": {
+        "ASI": [],
+        "feat": "",
+        "notes": "You gain the Ability Score Improvement feat or another feat of your choice for which you qualify."
+        }
+    },
+
+    "9": {
+        "Subclass Feature": {
+        "notes": "You gain an additional feature from your chosen Artificer subclass."
+        }
+    },
+
+    "10": {
+        "Magic Item Adept": {
+        "attunement_cap": 4,
+        "notes": "Your bond with magic items deepens. You can now be attuned to up to four magic items at once (instead of the normal three)."
+        }
+    },
+
+    "11": {
+        "Spell-Storing Item": {
+        "valid_targets": [
+            "Simple weapon",
+            "Martial weapon",
+            "Item usable as a spellcasting focus"
+        ],
+        "stored_spell_level": {
+            "min": 1,
+            "max": 3
+        },
+        "uses": {
+            "base": "@int_mod * 2 (min 2)",
+            "replenish": "Re-store after Long Rest"
+        },
+        "notes": "When you finish a Long Rest, you can store a level 1–3 Artificer spell (with casting time of an action and no consumed material components) in a chosen weapon or focus. While holding the item, a creature can use a Magic action to cast the stored spell using your spellcasting ability. Once the spell has been cast a number of times equal to twice your Intelligence modifier (minimum 2), or you store a new spell, the stored spell is lost."
+        }
+    },
+
+    "12": {
+        "Ability Score Improvement": {
+        "ASI": [],
+        "feat": "",
+        "notes": "You gain the Ability Score Improvement feat or another feat of your choice for which you qualify."
+        }
+    },
+
+    "14": {
+        "Advanced Artifice": {
+        "magic_item_savant": {
+            "attunement_cap": 5,
+            "notes": "You can now attune to up to five magic items at once."
+        },
+        "refreshed_genius": {
+            "rest_type": "short_rest",
+            "effect": "Regain one expended use of Flash of Genius when you finish a Short Rest."
+        },
+        "notes": "Your expertise with magic items improves, allowing additional attunements and faster recovery of your Flash of Genius uses."
+        }
+    },
+
+    "15": {
+        "Subclass Feature": {
+        "notes": "You gain another feature from your chosen Artificer subclass."
+        }
+    },
+
+    "16": {
+        "Ability Score Improvement": {
+        "ASI": [],
+        "feat": "",
+        "notes": "You gain the Ability Score Improvement feat or another feat of your choice for which you qualify."
+        }
+    },
+
+    "18": {
+        "Magic Item Master": {
+        "attunement_cap": 6,
+        "notes": "Your connection to magic items reaches its peak. You can now be attuned to up to six magic items at once."
+        }
+    },
+
+    "19": {
+        "Epic Boon": {
+        "notes": "You gain an Epic Boon feat or another feat of your choice for which you qualify."
+        }
+    },
+
+    "20": {
+        "Soul of Artifice": {
+        "cheat_death": {
+            "effect": "If you would be reduced to 0 HP but not killed outright, you can disintegrate one or more Uncommon or Rare magic items created by your Replicate Magic Item feature. Your HP instead becomes 20 times the number of items sacrificed.",
+            "cost": "Disintegrate Uncommon or Rare magic items created by Replicate Magic Item"
+        },
+        "magical_guidance": {
+            "condition": "Have Attunement to at least one magic item",
+            "rest_type": "short_rest",
+            "effect": "Regain all expended uses of Flash of Genius when you finish a Short Rest."
+        },
+        "notes": "You forge a deep mystical bond with your magic items, allowing you to draw on them to survive lethal blows and to rapidly restore your Flash of Genius."
+        }
+    }
+    }
+
+
+}
+
+
+
+
+
+
+
+

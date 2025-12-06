@@ -1,0 +1,376 @@
+{
+  "caster_type": "full",
+  "core_traits": {
+    "class_name": "cleric",
+    "primary_ability": "wis",
+    "hit_die": "d8",
+
+    "saving_throw_proficiencies": ["wis", "cha"],
+
+    "skill_proficiencies": {
+      "amount": 2,
+      "choices": ["History", "Insight", "Medicine", "Persuasion", "Religion"]
+    },
+
+    "weapon_proficiencies": ["simple"],
+    "armor_proficiencies": ["light", "medium", "shields"],
+
+    "starting_equipment": {
+      "amount": 1,
+      "choices": [
+        [
+          "Chain Shirt",
+          "Shield",
+          "Mace",
+          "Holy Symbol",
+          "Priest's Pack",
+          "7 gp"
+        ],
+        ["110 gp"],
+        "custom"
+      ]
+    },
+
+    "multiclassing": {
+      "primary_ability": 13,
+      "armor_proficiencies": ["light", "medium", "shields"]
+    }
+  },
+  "sub_classes": ["knowledge", "life", "light", "trickery", "war"],
+  "levels": {
+    "1": {
+      "Spellcasting": {
+        "cantrips_known": "@level_table",
+        "prepared_spells": "@level_table",
+        "spell_slots": "@spellcasting_table",
+        "ability": "wis",
+        "focus": "holy_symbol",
+        "notes": "Level 1: Spellcasting (PHB'24 p70)\nYou have learned to cast spells through prayer and meditation.\n\nCantrips. You know three cantrips of your choice from the Cleric spell list. Guidance, Sacred Flame, and Thaumaturgy are recommended. Whenever you gain a Cleric level, you can replace one of your cantrips with another Cleric cantrip of your choice. At Cleric levels 4 and 10, you learn one additional cantrip, as shown in the Cantrips column of the Cleric Features table.\n\nSpell Slots. The Cleric Features table shows how many spell slots you have for your level 1+ spells. You regain all expended spell slots when you finish a Long Rest.\n\nPrepared Spells of Level 1+. You prepare a list of Cleric spells of level 1+ that you can cast. To start, choose four level 1 Cleric spells. Bless, Cure Wounds, Guiding Bolt, and Shield of Faith are recommended. The number of prepared spells increases with your Cleric level, as shown in the Prepared Spells column of the Cleric Features table. Prepared spells must be of levels for which you have spell slots. If a Cleric feature gives you spells that are always prepared, they don’t count against this number but are still Cleric spells for you.\n\nChanging Prepared Spells. When you finish a Long Rest, you can change your prepared list, replacing any number of prepared spells with other Cleric spells for which you have spell slots.\n\nSpellcasting Ability. Wisdom is your spellcasting ability for your Cleric spells.\n\nSpellcasting Focus. You can use a Holy Symbol as a Spellcasting Focus for your Cleric spells."
+      },
+
+      "Divine Order": {
+        "choice_required": true,
+        "options": {
+          "Protector": {
+            "weapon_proficiencies": ["martial"],
+            "armor_proficiencies": ["heavy"],
+            "notes": "Protector. You gain proficiency with Martial weapons and training with Heavy armor."
+          },
+          "Thaumaturge": {
+            "extra_cantrip": {
+              "from_list": "cleric",
+              "counts_as_cleric_spell": true,
+              "does_not_count_against_known": false
+            },
+            "skill_bonus": {
+              "skills": ["Arcana", "Religion"],
+              "ability": "int",
+              "bonus_from": "wis_mod",
+              "minimum_bonus": 1
+            },
+            "notes": "Thaumaturge. You know one extra Cleric cantrip. In addition, you add your Wisdom modifier (minimum +1) as a bonus to your Intelligence (Arcana or Religion) checks."
+          }
+        },
+        "notes": "Level 1: Divine Order (PHB'24 p70)\nYou dedicate yourself to one sacred role: Protector or Thaumaturge, gaining benefits as described for your choice."
+      }
+    },
+
+    "2": {
+      "Channel Divinity": {
+        "uses": {
+          "max": "@level_table",
+          "short_rest": 1,
+          "long_rest": "full"
+        },
+        "save_dc": "@spell_save_dc",
+        "effects": {
+          "Divine Spark": {
+            "action_type": "magic_action",
+            "range_ft": 30,
+            "target": "creature_you_can_see",
+            "roll": "1d8 + @wis_mod",
+            "mode": ["heal", "damage"],
+            "damage_types": ["necrotic", "radiant"],
+            "save": {
+              "ability": "con",
+              "on_fail": "full_damage",
+              "on_success": "half_damage_round_down"
+            },
+            "scaling": {
+              "7": "2d8 + @wis_mod",
+              "13": "3d8 + @wis_mod",
+              "18": "4d8 + @wis_mod"
+            }
+          },
+          "Turn Undead": {
+            "action_type": "magic_action",
+            "range_ft": 30,
+            "target": "any_number_of_undead_of_your_choice_in_range",
+            "save": {
+              "ability": "wis",
+              "on_fail": {
+                "conditions": ["frightened", "incapacitated"],
+                "duration": "up_to_1_minute",
+                "forced_movement": "moves_away_from_you_on_its_turn"
+              },
+              "on_success": "no_effect"
+            },
+            "ends_early_if": [
+              "target_takes_any_damage",
+              "you_become_incapacitated",
+              "you_die"
+            ]
+          }
+        },
+        "notes": "Level 2: Channel Divinity (PHB'24 p70)\nYou can use Channel Divinity to fuel magical effects: Divine Spark and Turn Undead. You can use this class’s Channel Divinity twice, regaining one use on a Short Rest and all uses on a Long Rest. Higher levels grant additional uses as shown in the Channel Divinity column of the Cleric Features table. Channel Divinity save DCs use your Cleric Spellcasting spell save DC.\n\nDivine Spark. As a Magic action, you target a creature within 30 feet, rolling 1d8 + your Wisdom modifier. You either heal that amount or force a Constitution save; on a failure the creature takes Necrotic or Radiant damage (your choice) equal to the total, or half on a success. Roll extra d8s at levels 7 (2d8), 13 (3d8), and 18 (4d8).\n\nTurn Undead. As a Magic action, you present your Holy Symbol, forcing chosen Undead within 30 feet to make a Wisdom save. On a failure, they are Frightened and Incapacitated for up to 1 minute and must move away from you on their turns. The effect ends early if they take damage, you become Incapacitated, or you die."
+      }
+    },
+
+    "3": {
+      "Subclass Feature": {
+        "notes": "Level 3: Cleric Subclass (PHB'24 p71)\nYou gain a Cleric subclass, granting features at various Cleric levels."
+      }
+    },
+
+    "4": {
+      "Ability Score Improvement": {
+        "ASI": [],
+        "feat": "",
+        "notes": "Level 4: Ability Score Improvement (PHB'24 p71)\nYou gain an Ability Score Improvement or a feat of your choice. You gain this feature again at levels 8, 12, and 16."
+      }
+    },
+
+    "5": {
+      "Sear Undead": {
+        "trigger": "when_you_use_turn_undead",
+        "damage_roll": {
+          "dice": "@wis_mod d8 (minimum 1d8)",
+          "type": "radiant"
+        },
+        "applies_to": "each_undead_that_fails_turn_undead_save",
+        "does_not_end_turn_effect": true,
+        "notes": "Level 5: Sear Undead (PHB'24 p71)\nWhenever you use Turn Undead, roll a number of d8s equal to your Wisdom modifier (minimum 1d8). Each Undead that fails its saving throw against that Turn Undead takes Radiant damage equal to the total. This damage does not end the Turn Undead effect."
+      }
+    },
+
+    "6": {
+      "Subclass Feature": {
+        "notes": "Level 6: Subclass Feature (PHB'24 p71)\nYou gain a feature from your Cleric Subclass."
+      }
+    },
+
+    "7": {
+      "Blessed Strikes": {
+        "choice_required": true,
+        "options": {
+          "Divine Strike": {
+            "trigger": "once_on_each_of_your_turns",
+            "condition": "when_you_hit_with_a_weapon_attack",
+            "extra_damage": {
+              "dice": "1d8",
+              "type": ["necrotic", "radiant"]
+            }
+          },
+          "Potent Spellcasting": {
+            "applies_to": "cleric_cantrips_that_deal_damage",
+            "effect": "add_wisdom_modifier_to_damage"
+          }
+        },
+        "notes": "Level 7: Blessed Strikes (PHB'24 p71)\nChoose Divine Strike or Potent Spellcasting.\n\nDivine Strike. Once on each of your turns when you hit with a weapon attack, you can deal an extra 1d8 Necrotic or Radiant damage (your choice).\n\nPotent Spellcasting. You add your Wisdom modifier to the damage you deal with any Cleric cantrip."
+      }
+    },
+
+    "8": {
+      "Ability Score Improvement": {
+        "ASI": [],
+        "feat": "",
+        "notes": "Level 8: Ability Score Improvement (PHB'24 p71)"
+      }
+    },
+
+    "10": {
+      "Divine Intervention": {
+        "action_type": "magic_action",
+        "spell_choice": {
+          "class": "cleric",
+          "max_level": 5,
+          "must_not_require_reaction": true
+        },
+        "casting": {
+          "slot_cost": 0,
+          "material_components_required": false
+        },
+        "uses": {
+          "max": 1,
+          "long_rest": "full"
+        },
+        "notes": "Level 10: Divine Intervention (PHB'24 p71)\nAs a Magic action, choose a Cleric spell of level 5 or lower that doesn’t require a Reaction, and cast it without expending a spell slot or needing Material components. Once you use this feature, you can’t use it again until you finish a Long Rest."
+      }
+    },
+
+    "12": {
+      "Ability Score Improvement": {
+        "ASI": [],
+        "feat": "",
+        "notes": "Level 12: Ability Score Improvement (PHB'24 p71)"
+      }
+    },
+
+    "14": {
+      "Improved Blessed Strikes": {
+        "upgrade_of": "Blessed Strikes",
+        "options": {
+          "Divine Strike": {
+            "extra_damage": {
+              "dice": "2d8",
+              "type": ["necrotic", "radiant"]
+            }
+          },
+          "Potent Spellcasting": {
+            "temp_hp_on_damage": {
+              "range_ft": 60,
+              "amount": "2 * @wis_mod",
+              "target": "you_or_creature_within_range"
+            }
+          }
+        },
+        "notes": "Level 14: Improved Blessed Strikes (PHB'24 p71)\nYour Blessed Strikes option improves.\n\nDivine Strike. The extra damage increases to 2d8.\n\nPotent Spellcasting. When you deal damage to a creature with a Cleric cantrip, you can grant yourself or another creature within 60 feet Temporary Hit Points equal to twice your Wisdom modifier."
+      }
+    },
+
+    "16": {
+      "Ability Score Improvement": {
+        "ASI": [],
+        "feat": "",
+        "notes": "Level 16: Ability Score Improvement (PHB'24 p71)"
+      }
+    },
+
+    "17": {
+      "Subclass Feature": {
+        "notes": "Level 17: Subclass Feature (PHB'24 p71)\nYou gain a feature from your Cleric Subclass."
+      }
+    },
+
+    "19": {
+      "Epic Boon": {
+        "notes": "Level 19: Epic Boon (PHB'24 p71)\nYou gain an Epic Boon feat or another feat of your choice."
+      }
+    },
+
+    "20": {
+      "Greater Divine Intervention": {
+        "upgrade_of": "Divine Intervention",
+        "wish_option": {
+          "allowed": true,
+          "spell": "Wish",
+          "cooldown": "2d4_long_rests",
+          "lockout_note": "If you use Wish with Divine Intervention, you cannot use Divine Intervention again until you finish 2d4 Long Rests."
+        },
+        "notes": "Level 20: Greater Divine Intervention (PHB'24 p71)\nWhen you use Divine Intervention, you can choose Wish as the spell. If you do so, you can’t use Divine Intervention again until you finish 2d4 Long Rests."
+      }
+    }
+  },
+  "levels_table": {
+    "1": {
+      "channel_divinity": null,
+      "cantrips": 3,
+      "prepared_spells": 4
+    },
+    "2": {
+      "channel_divinity": 2,
+      "cantrips": 3,
+      "prepared_spells": 5
+    },
+    "3": {
+      "channel_divinity": 2,
+      "cantrips": 3,
+      "prepared_spells": 6
+    },
+    "4": {
+      "channel_divinity": 2,
+      "cantrips": 4,
+      "prepared_spells": 7
+    },
+    "5": {
+      "channel_divinity": 2,
+      "cantrips": 4,
+      "prepared_spells": 9
+    },
+    "6": {
+      "channel_divinity": 3,
+      "cantrips": 4,
+      "prepared_spells": 10
+    },
+    "7": {
+      "channel_divinity": 3,
+      "cantrips": 4,
+      "prepared_spells": 11
+    },
+    "8": {
+      "channel_divinity": 3,
+      "cantrips": 4,
+      "prepared_spells": 12
+    },
+    "9": {
+      "channel_divinity": 3,
+      "cantrips": 4,
+      "prepared_spells": 14
+    },
+    "10": {
+      "channel_divinity": 3,
+      "cantrips": 5,
+      "prepared_spells": 15
+    },
+    "11": {
+      "channel_divinity": 3,
+      "cantrips": 5,
+      "prepared_spells": 16
+    },
+    "12": {
+      "channel_divinity": 3,
+      "cantrips": 5,
+      "prepared_spells": 16
+    },
+    "13": {
+      "channel_divinity": 3,
+      "cantrips": 5,
+      "prepared_spells": 17
+    },
+    "14": {
+      "channel_divinity": 3,
+      "cantrips": 5,
+      "prepared_spells": 17
+    },
+    "15": {
+      "channel_divinity": 3,
+      "cantrips": 5,
+      "prepared_spells": 18
+    },
+    "16": {
+      "channel_divinity": 3,
+      "cantrips": 5,
+      "prepared_spells": 18
+    },
+    "17": {
+      "channel_divinity": 3,
+      "cantrips": 5,
+      "prepared_spells": 19
+    },
+    "18": {
+      "channel_divinity": 4,
+      "cantrips": 5,
+      "prepared_spells": 20
+    },
+    "19": {
+      "channel_divinity": 4,
+      "cantrips": 5,
+      "prepared_spells": 21
+    },
+    "20": {
+      "channel_divinity": 4,
+      "cantrips": 5,
+      "prepared_spells": 22
+    }
+  }
+}

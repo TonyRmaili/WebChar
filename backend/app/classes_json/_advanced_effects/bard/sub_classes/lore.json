@@ -1,0 +1,59 @@
+{
+  "name": "College of Lore",
+  "levels": {
+    "3": {
+      "Bonus Proficiencies": {
+        "additional_skill_proficiencies": {
+          "choices": "@all_skill_proficiencies",
+          "amount": 3
+        },
+        "notes": "You gain proficiency with three skills of your choice."
+      },
+
+      "Cutting Words": {
+        "action_type": "reaction",
+        "range_ft": 60,
+        "resource_cost": "bardic_inspiration",
+        "effect": {
+          "trigger": [
+            "target_makes_damage_roll",
+            "target_succeeds_on_ability_check",
+            "target_succeeds_on_attack_roll"
+          ],
+          "roll": "@bardic_inspiration_die",
+          "subtract_from": [
+            "damage",
+            "ability_check",
+            "attack_roll"
+          ]
+        },
+        "notes": "When a creature you can see within 60 ft makes a damage roll or succeeds on an ability check or attack roll, you can expend a use of Bardic Inspiration as a Reaction to subtract the die roll from their roll."
+      }
+    },
+
+    "6": {
+      "Magical Discoveries": {
+        "spells_learned": 2,
+        "spell_list": ["cleric", "druid", "wizard"],
+        "must_be": ["cantrip_or_spell_with_available_spell_slot"],
+        "always_prepared": true,
+        "replacements": {
+          "when": "on_level_up",
+          "amount": 1
+        },
+        "notes": "You learn two spells from Cleric, Druid, or Wizard lists. They are always prepared and can be replaced on level up."
+      }
+    },
+
+    "14": {
+      "Peerless Skill": {
+        "trigger": "when_you_fail_ability_check_or_attack_roll",
+        "resource_cost": "bardic_inspiration",
+        "roll": "@bardic_inspiration_die",
+        "add_to": "failed_d20_roll",
+        "refund_on_failure": true,
+        "notes": "When you fail an ability check or attack roll, you can expend Bardic Inspiration to add the die to the roll. If the roll still fails, the die isn’t expended."
+      }
+    }
+  }
+}

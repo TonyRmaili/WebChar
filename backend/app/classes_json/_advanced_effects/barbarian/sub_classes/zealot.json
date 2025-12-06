@@ -1,0 +1,58 @@
+{
+  "name": "Zealot",
+  "levels": {
+    "3": [
+      {
+        "name": "Divine Fury",
+        "damage":{
+          "die":"d6 + @barbarian_level//2",
+          "type":["Necrotic","Radiant"]
+        },
+        "notes": "On each of your turns while your Rage is active, the first creature you hit with a weapon or an Unarmed Strike takes extra damage equal to 1d6 + half your Barbarian level (round down). The damage is Necrotic or Radiant; choose each time you deal it."
+      },
+      {
+        "name": "Warrior of the Gods",
+        "action_type":"bonus_action",
+        "charges":{
+          "amount":4,
+          "long_rest":"full"
+        },
+        "notes": "You have a pool of 4d12 healing dice. As a Bonus Action, you can expend any number of the dice, roll them, and regain Hit Points equal to the total. The pool regains all expended dice on a Long Rest. The pool increases to 5 dice at level 6, 6 dice at level 12, and 7 dice at level 17."
+      }
+    ],
+
+    "6": [
+      {
+        "name": "Fanatical Focus",
+        "notes": "Once per active Rage, if you fail a saving throw, you can reroll it and add your Rage Damage bonus. You must use the new roll."
+      }
+    ],
+
+    "10": [
+      {
+        "name": "Zealous Presence",
+        "action_type":"bonus_action",
+        "charges":{
+          "amount":1,
+          "long_rest":"full"
+        },
+        "notes": "As a Bonus Action, choose up to ten creatures within 60 feet. They gain Advantage on attack rolls and saving throws until the start of your next turn. Once you use this feature, you cannot use it again until a Long Rest unless you expend a use of your Rage (no action required) to restore it."
+      }
+    ],
+
+    "14": [
+      {
+        "name": "Rage of the Gods",
+        "duration":{
+          "time":1,
+          "type":"min"
+        },
+        "charges":{
+          "amount":1,
+          "long_rest":"full"
+        },
+        "notes": "When you activate your Rage, you can assume a divine form for 1 minute or until you drop to 0 Hit Points. Once used, it cannot be used again until a Long Rest. While transformed: (1) You gain a Fly Speed equal to your Speed and can hover. (2) You gain Resistance to Necrotic, Psychic, and Radiant damage. (3) When a creature within 30 feet would drop to 0 HP, you can use a Reaction and expend a Rage use to instead set their HP to your Barbarian level."
+      }
+    ]
+  }
+}

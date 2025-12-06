@@ -26,7 +26,6 @@ def roll_dice(size:int,modifier: int, roll_type:bool=None) -> int:
         roll2 = randint(1, size) + modifier
         return max(roll1,roll2) 
 
-
 def roll_save(
     size: int,
     mod: int,
@@ -88,7 +87,6 @@ def roll_save(
         output["damages"] = handle_save_damage(damages, half=False)
 
     return output
-
 
 def handle_save_damage(damages, half: bool = False):
     """
@@ -190,6 +188,32 @@ def roll_damage(dice_size,dice_count,mod):
     roll_total += mod
 
     return roll_total
+
+
+def score_to_mod(score):
+    return (score - 10) // 2
+
+def roll_4d6_drop_lowest():
+    """
+    Roll four six-sided dice, drop the lowest roll, and return the sum of the highest three.
+    """
+    rolls = [randint(1, 6) for _ in range(4)]
+    return sum(rolls) - min(rolls)
+
+def generate_ability_scores():
+    """
+    Roll 7 ability scores (4d6 drop lowest each), drop the lowest total,
+    and return a list of the remaining 6 scores.
+    """
+    # Roll 7 totals
+    totals = [roll_4d6_drop_lowest() for _ in range(7)]
+    # Remove the lowest total
+    lowest = min(totals)
+    totals.remove(lowest)
+    # Now totals has exactly 6 scores
+    return totals
+
+
 
 if __name__=="__main__":
     roll = roll_dice(20,3,roll_type=None)

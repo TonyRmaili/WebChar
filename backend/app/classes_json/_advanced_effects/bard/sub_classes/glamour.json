@@ -1,0 +1,110 @@
+{
+  "name": "College of Glamour",
+  "levels": {
+    "3": {
+      "Beguiling Magic": {
+        "always_prepared": ["Charm Person", "Mirror Image"],
+        "rider_effect": {
+          "trigger": "immediately_after_you_cast_enchantment_or_illusion_spell_using_spell_slot",
+          "range_ft": 60,
+          "save": {
+            "ability": "wis",
+            "dc": "@spell_save_dc"
+          },
+          "conditions": ["charmed", "frightened"],
+          "duration": "1 minute",
+          "save_repeats": {
+            "timing": "end_of_each_of_target_turns",
+            "ends_on_success": true
+          }
+        },
+        "uses": {
+          "max": 1,
+          "long_rest": "full",
+          "restore_by": [
+            {
+              "resource": "bardic_inspiration",
+              "amount": 1,
+              "action_type": "none"
+            }
+          ]
+        },
+        "notes": "Level 3: Beguiling Magic\nPHB'24 p65\nYou always have the Charm Person and Mirror Image spells prepared.\n\nIn addition, immediately after you cast an Enchantment or Illusion spell using a spell slot, you can cause a creature you can see within 60 feet of yourself to make a Wisdom saving throw against your spell save DC. On a failed save, the target has the Charmed or Frightened condition (your choice) for 1 minute. The target repeats the save at the end of each of its turns, ending the effect on itself on a success.\n\nOnce you use this benefit, you can't use it again until you finish a Long Rest. You can also restore your use of it by expending one use of your Bardic Inspiration (no action required)."
+      },
+
+      "Mantle of Inspiration": {
+        "action_type": "bonus_action",
+        "resource_cost": "expend_one_use_of_bardic_inspiration",
+        "range_ft": 60,
+        "targets": {
+          "type": "other_creatures",
+          "max_number": "@cha_mod (minimum 1)"
+        },
+        "effect": {
+          "temp_hp": "2 * (roll(@bardic_inspiration_die))",
+          "movement": {
+            "uses_reaction": true,
+            "distance": "up_to_speed",
+            "provokes_opportunity_attacks": false
+          }
+        },
+        "notes": "Level 3: Mantle of Inspiration\nPHB'24 p65\nYou can weave fey magic into a song or dance to fill others with vigor. As a Bonus Action, you can expend a use of Bardic Inspiration, rolling a Bardic Inspiration die. When you do so, choose a number of other creatures within 60 feet of yourself, up to a number equal to your Charisma modifier (minimum of one creature). Each of those creatures gains a number of Temporary Hit Points equal to two times the number rolled on the Bardic Inspiration die, and then each can use its Reaction to move up to its Speed without provoking Opportunity Attacks."
+      }
+    },
+
+    "6": {
+      "Mantle of Majesty": {
+        "always_prepared": ["Command"],
+        "activation": {
+          "action_type": "bonus_action",
+          "spell": "Command",
+          "slot_cost": 0,
+          "concentration": true,
+          "duration": "1 minute_or_until_concentration_ends",
+          "appearance": "unearthly"
+        },
+        "ongoing_effect": {
+          "can_cast_command_as_bonus_action_without_slot": true,
+          "condition_for_auto_fail": {
+            "creatures_charmed_by_you_auto_fail_save_vs_command_from_this_feature": true
+          }
+        },
+        "uses": {
+          "max": 1,
+          "long_rest": "full",
+          "restore_by": [
+            {
+              "resource": "spell_slot",
+              "level": "3+",
+              "action_type": "none"
+            }
+          ]
+        },
+        "notes": "Level 6: Mantle of Majesty\nPHB'24 p65\nYou always have the Command spell prepared.\n\nAs a Bonus Action, you cast Command without expending a spell slot, and you take on an unearthly appearance for 1 minute or until your Concentration ends. During this time, you can cast Command as a Bonus Action without expending a spell slot.\n\nAny creature Charmed by you automatically fails its saving throw against the Command you cast with this feature.\n\nOnce you use this feature, you can't use it again until you finish a Long Rest. You can also restore your use of it by expending a level 3+ spell slot (no action required)."
+      }
+    },
+
+    "14": {
+      "Unbreakable Majesty": {
+        "activation": {
+          "action_type": "bonus_action",
+          "duration": "1 minute_or_until_incapacitated"
+        },
+        "effect": {
+          "trigger": "whenever_a_creature_hits_you_with_an_attack_roll_for_first_time_on_its_turn",
+          "save": {
+            "ability": "cha",
+            "dc": "@spell_save_dc"
+          },
+          "on_fail": "attack_misses_instead_as_creature_recoils_from_your_majesty"
+        },
+        "uses": {
+          "max": 1,
+          "short_rest": "full",
+          "long_rest": "full"
+        },
+        "notes": "Level 14: Unbreakable Majesty\nPHB'24 p66\nAs a Bonus Action, you can assume a magically majestic presence for 1 minute or until you have the Incapacitated condition. For the duration, whenever any creature hits you with an attack roll for the first time on a turn, the attacker must succeed on a Charisma saving throw against your spell save DC, or the attack misses instead, as the creature recoils from your majesty.\n\nOnce you assume this majestic presence, you can't do so again until you finish a Short or Long Rest."
+      }
+    }
+  }
+}

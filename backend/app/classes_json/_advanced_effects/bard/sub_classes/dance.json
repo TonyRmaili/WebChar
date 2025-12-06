@@ -1,0 +1,90 @@
+{
+  "name": "Dance",
+  "levels": {
+    "3": {
+      "Dazzling Footwork": {
+        "requirements": {
+          "no_armor": true,
+          "no_shield": true
+        },
+        "dance_virtuoso": {
+          "advantage_on_checks": [
+            {
+              "ability": "cha",
+              "skill": "performance",
+              "condition": "check_involves_dancing"
+            }
+          ]
+        },
+        "unarmored_defense": {
+          "ac_formula": "10 + @dex_mod + @cha_mod"
+        },
+        "agile_strikes": {
+          "trigger": "when_you_expend_bardic_inspiration_as_part_of_action_bonus_action_or_reaction",
+          "effect": "you_can_make_one_unarmed_strike_as_part_of_that_same_action_bonus_action_or_reaction"
+        },
+        "bardic_damage": {
+          "use_dex_for_attacks": true,
+          "damage_formula": "@bardic_inspiration_die + @dex_mod",
+          "damage_type": "bludgeoning",
+          "does_not_expend_die": true
+        },
+        "notes": "Level 3: Dazzling Footwork\nPHB'24 p64\nWhile you aren't wearing armor or wielding a Shield, you gain the following benefits.\n\nDance Virtuoso. You have Advantage on any Charisma (Performance) check you make that involves you dancing.\n\nUnarmored Defense. Your base Armor Class equals 10 plus your Dexterity and Charisma modifiers.\n\nAgile Strikes. When you expend a use of your Bardic Inspiration as part of an action, a Bonus Action, or a Reaction, you can make one Unarmed Strike as part of that action, Bonus Action, or Reaction.\n\nBardic Damage. You can use Dexterity instead of Strength for the attack rolls of your Unarmed Strikes. When you deal damage with an Unarmed Strike, you can deal Bludgeoning damage equal to a roll of your Bardic Inspiration die plus your Dexterity modifier, instead of the strike's normal damage. This roll doesn't expend the die."
+      }
+    },
+
+    "6": {
+      "Inspiring Movement": {
+        "trigger": "enemy_you_can_see_ends_its_turn_within_5_ft_of_you",
+        "action_type": "reaction",
+        "resource_cost": "expend_one_use_of_bardic_inspiration",
+        "movement": {
+          "self": {
+            "distance": "half_speed",
+            "provokes_opportunity_attacks": false
+          },
+          "ally": {
+            "range_ft": 30,
+            "uses_reaction": true,
+            "distance": "half_speed",
+            "provokes_opportunity_attacks": false
+          }
+        },
+        "notes": "Level 6: Inspiring Movement\nPHB'24 p64\nWhen an enemy you can see ends its turn within 5 feet of you, you can take a Reaction and expend one use of your Bardic Inspiration to move up to half your Speed. Then one ally of your choice within 30 feet of you can also move up to half their Speed using their Reaction.\n\nNone of this feature's movement provokes Opportunity Attacks."
+      },
+
+      "Tandem Footwork": {
+        "trigger": "when_you_roll_initiative",
+        "condition": "you_do_not_have_incapacitated_condition",
+        "resource_cost": "expend_one_use_of_bardic_inspiration",
+        "effect": {
+          "roll_die": "@bardic_inspiration_die",
+          "bonus_applied_to": [
+            "you",
+            "allies_within_30_ft_who_can_see_or_hear_you"
+          ],
+          "bonus_type": "initiative",
+          "bonus_value": "result_of_bardic_inspiration_die"
+        },
+        "notes": "Level 6: Tandem Footwork\nPHB'24 p64\nWhen you roll Initiative, you can expend one use of your Bardic Inspiration if you don't have the Incapacitated condition. When you do so, roll your Bardic Inspiration die; you and each ally within 30 feet of you who can see or hear you gains a bonus to Initiative equal to the number rolled."
+      }
+    },
+
+    "14": {
+      "Leading Evasion": {
+        "trigger": "you_are_subjected_to_effect_allowing_dex_save_for_half_damage",
+        "cannot_use_if_incapacitated": true,
+        "self_effect": {
+          "on_successful_save": "take_no_damage",
+          "on_failed_save": "take_half_damage"
+        },
+        "share_with_others": {
+          "range_ft": 5,
+          "applies_to": "creatures_within_5_ft_making_same_dex_save",
+          "effect": "they_gain_same_evasion_benefit_for_that_save"
+        },
+        "notes": "Level 14: Leading Evasion\nPHB'24 p65\nWhen you are subjected to an effect that allows you to make a Dexterity saving throw to take only half damage, you instead take no damage if you succeed on the saving throw and only half damage if you fail. If any creatures within 5 feet of you are making the same Dexterity saving throw, you can share this benefit with them for that save.\n\nYou can't use this feature if you have the Incapacitated condition."
+      }
+    }
+  }
+}

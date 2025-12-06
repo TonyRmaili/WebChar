@@ -1,0 +1,31 @@
+{"psionic_energy_dice": {
+    "description": "A pool of psionic dice powering your subclass features. You regain 1 die on a Short Rest and all dice on a Long Rest. Only Soulknife features may use these dice.",
+    "dice_progression": [
+      { "rogue_level": 3, "die_size": "d6", "number": 4 },
+      { "rogue_level": 5, "die_size": "d8", "number": 6 },
+      { "rogue_level": 9, "die_size": "d8", "number": 8 },
+      { "rogue_level": 11, "die_size": "d10", "number": 8 },
+      { "rogue_level": 13, "die_size": "d10", "number": 10 },
+      { "rogue_level": 17, "die_size": "d12", "number": 12 }
+    ],
+    "features": {
+      "psi_bolstered_knack": "When you fail an ability check using a proficient skill or tool, roll a Psionic Energy Die and add it. The die is expended only if this turns the failure into success.",
+      "psychic_whispers": "Magic Action: Choose up to PB creatures and roll a Psionic Energy Die. For hours equal to the roll, you and chosen creatures communicate telepathically within 1 mile. First use each Long Rest does not expend the die; all later uses do."
+    }
+  },
+
+  "psychic_blades": {
+    "description": "You manifest blades of pure psychic energy. Used when you take the Attack action or make an Opportunity Attack.",
+    "weapon_stats": {
+      "name": "Psychic Blade",
+      "type": "Melee Weapon",
+      "category": "Simple",
+      "damage": "1d6 Psychic",
+      "properties": ["Finesse", "Thrown (60/120 ft.)", "Mastery: Vex"],
+      "bonus_action_attack": "After attacking with the blade on your turn, you may create a second blade and make a melee or ranged attack as a Bonus Action (damage: 1d4 Psychic)."
+    },
+    "mastery": {
+      "vex": "If you hit and deal damage, you gain Advantage on your next attack roll against that creature before the end of your next turn."
+    }
+  }
+}
