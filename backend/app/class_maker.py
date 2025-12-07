@@ -2,8 +2,13 @@ import os
 import json
 import random
 import math
+from openai import OpenAI
+from dotenv import load_dotenv
 
 from dice_handler import generate_ability_scores, score_to_mod
+from quick_class_schema import QuickClassSchema
+
+
 
 
 class ClassMaker:
@@ -15,6 +20,16 @@ class ClassMaker:
 
         self.backgrounds_path = os.path.join(self.classes_path,"backgrounds")
 
+        self.instructions_path = "quick_class_instructions.md"
+        
+        # AI config
+        load_dotenv(override=True)
+        self.api_key = os.getenv("OPENAI_API_KEY")
+        self.client = OpenAI(
+            api_key=self.api_key
+        )
+        self.model = "gpt-5-mini"
+        self.reasoning = {"effort" : f""}
 
         # constants
         self.classes = [
@@ -323,8 +338,6 @@ class ClassMaker:
 
         self.save_json(filepath=save_path,data=output_class)
 
-        
-
     def handle_spellslots(self,caster_type,level):
         caster_level = 0
         if caster_type == "full":
@@ -482,6 +495,7 @@ class ClassMaker:
 
     def handle_max_hp(self, avg=True):
         max_hp = 0
+        mod = self.ability_scores["con"]["mod"]
 
         for values in self.hit_dice.values():
             size = values["size"]
@@ -491,18 +505,34 @@ class ClassMaker:
                 continue
             if values["first_class"]:
                 amount -= 1
-                max_hp += size
+                max_hp += size + mod
                 if amount <= 0:
                     continue
                 
                 for i in range(amount):
-                    max_hp += average
+                    max_hp += average + mod
             
             else:
                 for i in range(amount):
-                    max_hp += average
+                    max_hp += average + mod
         
         return max_hp
+
+    def openai_parse(self,input,reasoning,text_format):
+        self.reasoning["effort"] = reasoning
+
+        response = self.client.responses.parse(
+            model=self.model,
+            input=input,
+            reasoning=self.reasoning,
+            text_format=text_format
+        )
+        parsed = response.output_parsed
+
+        try:
+            return parsed.model_dump()      
+        except AttributeError:
+            return parsed      
 
 
     def load_json(self,filepath):
@@ -522,34 +552,55 @@ class ClassMaker:
 if __name__=="__main__":
     class_maker = ClassMaker()
 
-    classes_data = []
-    barb_class = {
-        "name":"barbarian",
-        "sub_class":"Berserker",
-        "level":4,
-        "first_class":True
-    }
+    path = class_maker.instructions_path
 
-    bard_class = {
-        "name":"bard",
-        "sub_class":None,
-        "level":1,
-        "first_class":False
-    }
+    with open(path) as f:
+        instructions = f.read()
 
-    general_data = {
-        "race":"orc",
-        "sub_race":None,
-        "background":"Soldier",
-    }
-    
+    input=[
+        {"role": "system", "content": instructions},
+        {"role": "user", "content": "Make a wizard necromancer level 5 and cleric level 2"}
+        ]
 
-    classes_data.append(barb_class)
-    classes_data.append(bard_class)
-    
-    class_maker.quick_maker(
-        char_name="Goop",
-        classes_data=classes_data,
-        general_data=general_data
+
+    class_test = class_maker.openai_parse(
+        input=input,
+        reasoning="high",
+        text_format=QuickClassSchema
     )
+
+    save_path = os.path.join(class_maker.output_test_path,"test_class")    
+
+    class_maker.save_json(data=class_test,filepath=save_path)
+
+    # classes_data = []
+    # barb_class = {
+    #     "name":"barbarian",
+    #     "sub_class":"Berserker",
+    #     "level":4,
+    #     "first_class":True
+    # }
+
+    # bard_class = {
+    #     "name":"bard",
+    #     "sub_class":None,
+    #     "level":1,
+    #     "first_class":False
+    # }
+
+    # general_data = {
+    #     "race":"orc",
+    #     "sub_race":None,
+    #     "background":"Soldier",
+    # }
+    
+
+    # classes_data.append(barb_class)
+    # classes_data.append(bard_class)
+    
+    # class_maker.quick_maker(
+    #     char_name="Goop",
+    #     classes_data=classes_data,
+    #     general_data=general_data
+    # )
 
