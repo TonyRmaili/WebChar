@@ -22,6 +22,7 @@ from pathlib import Path
 from app.dice_handler import roll_dice
 from app.combat_functions import heal_health, damage_health,load_character,on_longrest,on_shortrest,grant_experience
 from app.minion_functions import handle_minionEffects,filter_monster_data,get_minion_data
+from app.class_maker import ClassMaker
 
 # uvicorn app.main:app --reload
 
@@ -246,6 +247,41 @@ def get_char_file(
         char_file = json.load(f)
     
     return char_file
+
+
+@app.post("/quick_class", tags=["character"])
+def create_quick_class(
+    current_user: Annotated[User,Depends(get_current_user)],
+    prompt: str = Body(...)
+):
+    
+    class_maker = ClassMaker()
+
+    
+    instructions_path = "app/quick_class_instructions.md"
+    save_path = "app/classes_json/_output_test"
+
+    with open(instructions_path, encoding="utf-8") as f:
+        instructions = f.read()
+
+    input= [
+        {"role": "system", "content": instructions},
+        {"role": "user", "content": prompt}
+        ]
+
+    response = class_maker.openai_parse(
+        input=input,
+        reasoning="high",
+        text_format=class_maker.schema
+    )
+    filename = "test_class.json"
+    full_savepath = os.path.join(save_path,filename)
+
+    with open(full_savepath,'w', encoding="utf-8") as f:
+        json.dump(response,f,indent=4)
+    
+    return response
+
 
 
 # ------------------------Party-----------------------------

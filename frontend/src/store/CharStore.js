@@ -212,6 +212,45 @@ const useCharStore = create((set, get) => ({
   },
 
 
+  createQuickClass: async (prompt) => {
+    try {
+      const token = localStorage.getItem("token");
+      
+
+      if (!token) {
+        throw new Error("Token not found in localStorage");
+      }
+      
+      const response = await fetch("http://localhost:8000/quick_class", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify(prompt),  
+
+      });
+
+    
+      if (!response.ok) {
+        throw new Error("Failed to post QuickClass to the endpoint");
+      }
+
+      // Optionally, handle the response if needed
+      const responseData = await response.json();
+      console.log("QuickClass posted successfully:", responseData);
+      return responseData
+
+      
+    } catch (error) {
+      console.error("Error posting QuickClass:", error.message);
+    }
+  },
+
+
+  
+
+
 }));
 
 export default useCharStore;

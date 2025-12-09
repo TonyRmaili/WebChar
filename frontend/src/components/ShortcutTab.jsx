@@ -6,14 +6,14 @@ function ShortcutTab({ tabs, onSelect }) {
 
   return (
     <div>
-      <ul className="flex flex-wrap gap-2 font-medium text-center">
+      <ul className="flex justify-center gap-4 font-medium py-2">
         {tabs.map(tab =>
           <li className="" key={tab.id}>
             <button
               onClick={() => {
                 onSelect(tab);
               }}
-              className="inline-block p-4 rounded-t-lg active bg-orange-400 hover:bg-orange-600 text-white"
+              className="p-2 rounded-lg active bg-orange-400 hover:bg-orange-600 text-white"
             >
               {tab.name}
             </button>
@@ -24,3 +24,5 @@ function ShortcutTab({ tabs, onSelect }) {
   )
 }
 export default ShortcutTab;  
+
+

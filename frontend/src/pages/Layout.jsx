@@ -9,12 +9,12 @@ function Layout() {
       <header>
         <Header></Header>
       </header>
-      <div className="min-h-screen bg-slate-700">
+      <div className="min-h-screen bg-slate-900">
         <Outlet />
       </div>
-      <footer>
+      {/* <footer>
         <Footer></Footer>
-      </footer>
+      </footer> */}
     </div>
   );
 }

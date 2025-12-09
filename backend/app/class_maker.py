@@ -5,8 +5,8 @@ import math
 from openai import OpenAI
 from dotenv import load_dotenv
 
-from dice_handler import generate_ability_scores, score_to_mod
-from quick_class_schema import QuickClassSchema
+from .dice_handler import generate_ability_scores, score_to_mod
+from .quick_class_schema import QuickClassSchema
 
 
 
@@ -30,6 +30,9 @@ class ClassMaker:
         )
         self.model = "gpt-5-mini"
         self.reasoning = {"effort" : f""}
+
+
+        self.schema = QuickClassSchema
 
         # constants
         self.classes = [
@@ -559,7 +562,7 @@ if __name__=="__main__":
 
     input=[
         {"role": "system", "content": instructions},
-        {"role": "user", "content": "Make a wizard necromancer level 5 and cleric level 2"}
+        {"role": "user", "content": "Marlosh the handsome paladin lvl 7 with charisma 17 and strenght 15"}
         ]
 
 
