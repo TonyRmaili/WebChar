@@ -1,0 +1,246 @@
+{
+    "name": "Air Elemental",
+    "size": "Large",
+    "ac": 15,
+    "max_hp": 90,
+    "cr": "5",
+    "alignment": "Neutral",
+    "monster_types": [
+        "elemental"
+    ],
+    "languages": [
+        "Primordial (Auran)"
+    ],
+    "treasure": [],
+    "habitats": [
+        "desert",
+        "mountain",
+        "planar",
+        "air"
+    ],
+    "gear": [],
+    "immunities": [
+        "poison",
+        "thunder",
+        "exhaustion",
+        "grappled",
+        "paralyzed",
+        "petrified",
+        "poisoned",
+        "prone",
+        "restrained",
+        "unconscious"
+    ],
+    "resistances": [
+        "bludgeoning",
+        "lightning",
+        "piercing",
+        "slashing"
+    ],
+    "vulnerabilities": [],
+    "skills": [],
+    "speed": [
+        {
+            "type": "walk",
+            "value": 10
+        },
+        {
+            "type": "fly",
+            "value": 90
+        }
+    ],
+    "senses": [
+        {
+            "type": "darkvision",
+            "value": 60
+        },
+        {
+            "type": "passive perception",
+            "value": 10
+        }
+    ],
+    "ability_scores": {
+        "str": {
+            "score": 14,
+            "proficient": false,
+            "expertise": false,
+            "mod": 2,
+            "save": 2
+        },
+        "dex": {
+            "score": 20,
+            "proficient": false,
+            "expertise": false,
+            "mod": 5,
+            "save": 5
+        },
+        "con": {
+            "score": 14,
+            "proficient": false,
+            "expertise": false,
+            "mod": 2,
+            "save": 2
+        },
+        "int": {
+            "score": 6,
+            "proficient": false,
+            "expertise": false,
+            "mod": -2,
+            "save": -2
+        },
+        "wis": {
+            "score": 10,
+            "proficient": false,
+            "expertise": false,
+            "mod": 0,
+            "save": 0
+        },
+        "cha": {
+            "score": 6,
+            "proficient": false,
+            "expertise": false,
+            "mod": -2,
+            "save": -2
+        }
+    },
+    "effects": {
+        "actions": [
+            {
+                "name": "Multiattack",
+                "effect_type": "none",
+                "range_ft": null,
+                "attack": {
+                    "attack_type": "melee",
+                    "hit_bonus": null,
+                    "damages": []
+                },
+                "save": {
+                    "target": "",
+                    "dc_bonus": null,
+                    "damages": [],
+                    "half_damage": false
+                },
+                "damages": [],
+                "notes": "The elemental makes two Thunderous Slam attacks.",
+                "charges": {
+                    "has": false,
+                    "max_charges": 0,
+                    "current_charges": 0,
+                    "reset_amount": 0
+                },
+                "open": false,
+                "active": true,
+                "id": "mj3cc9ho-jtgwjq"
+            },
+            {
+                "name": "Thunderous Slam",
+                "effect_type": "attack",
+                "range_ft": 10,
+                "attack": {
+                    "attack_type": "melee",
+                    "hit_bonus": 8,
+                    "damages": [
+                        {
+                            "dice_count": 2,
+                            "dice_size": "d8",
+                            "mod": 5,
+                            "damage_type": "thunder",
+                            "id": "mj3cc9ho-r6glam"
+                        }
+                    ]
+                },
+                "save": {
+                    "target": "",
+                    "dc_bonus": null,
+                    "damages": [],
+                    "half_damage": false
+                },
+                "damages": [],
+                "notes": "Melee attack: +8 to hit, reach 10 ft. Hit: 14 (2d8 + 5) thunder damage.",
+                "charges": {
+                    "has": false,
+                    "max_charges": 0,
+                    "current_charges": 0,
+                    "reset_amount": 0
+                },
+                "open": false,
+                "active": true,
+                "id": "mj3cc9ho-az2oct"
+            },
+            {
+                "name": "Whirlwind",
+                "effect_type": "save",
+                "range_ft": null,
+                "attack": {
+                    "attack_type": "melee",
+                    "hit_bonus": null,
+                    "damages": []
+                },
+                "save": {
+                    "target": "str",
+                    "dc_bonus": 13,
+                    "damages": [
+                        {
+                            "dice_count": 4,
+                            "dice_size": "d10",
+                            "mod": 2,
+                            "damage_type": "thunder",
+                            "id": "mj3cc9ho-vemzqd"
+                        }
+                    ],
+                    "half_damage": true
+                },
+                "damages": [],
+                "notes": "Strength saving throw DC 13 for one Medium or smaller creature in the elemental's space. On a failed save, the target takes 24 (4d10 + 2) thunder damage, is pushed up to 20 feet away from the elemental, and is prone. On a successful save, the target takes half damage.",
+                "charges": {
+                    "has": true,
+                    "max_charges": 1,
+                    "current_charges": 1,
+                    "reset_amount": 0
+                },
+                "open": false,
+                "active": true,
+                "id": "mj3cc9ho-n4bbou"
+            }
+        ],
+        "bonus_actions": [],
+        "reactions": [],
+        "legendary_actions": [],
+        "mythic_actions": [],
+        "lair_actions": [],
+        "regional_effects": [],
+        "traits": [
+            {
+                "name": "Air Form",
+                "effect_type": "none",
+                "range_ft": null,
+                "attack": {
+                    "attack_type": "melee",
+                    "hit_bonus": null,
+                    "damages": []
+                },
+                "save": {
+                    "target": "",
+                    "dc_bonus": null,
+                    "damages": [],
+                    "half_damage": false
+                },
+                "damages": [],
+                "notes": "The elemental can enter a creature's space and stop there. It can move through a space as narrow as 1 inch without expending extra movement to do so.",
+                "charges": {
+                    "has": false,
+                    "max_charges": 0,
+                    "current_charges": 0,
+                    "reset_amount": 0
+                },
+                "open": false,
+                "active": true,
+                "id": "mj3cc9ho-1cfnp5"
+            }
+        ]
+    },
+    "pb": 3,
+    "xp": 1800,
+    "initiative": 5,
+    "amount": 1
+}

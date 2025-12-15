@@ -247,10 +247,7 @@ const useCharStore = create((set, get) => ({
     }
   },
 
-
   
-
-
 }));
 
 export default useCharStore;

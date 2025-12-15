@@ -71,7 +71,6 @@ async def csp_middleware(request, call_next):
     return resp
 
 
-
 # ------------------------User-----------------------------
 
 @app.post("/create_account", status_code=status.HTTP_201_CREATED,tags=["user"])
@@ -549,6 +548,7 @@ def catch_minion_effects(
     messages = handle_minionEffects(payload)
 
     return messages
+
 
 
 

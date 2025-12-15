@@ -32,13 +32,13 @@ class DataHandler:
         self.models = ["gpt-5-mini"]
 
         # base paths
-        # self.raw_data_path = "AIdata/5etools_data/raw/"
-        # self.cleaned_data_path = "AIdata/5etools_data/cleaned/"
-        # self.instructions_path = "AIdata/instructions/"
+        self.raw_data_path = "AIdata/5etools_data/raw/"
+        self.cleaned_data_path = "AIdata/5etools_data/cleaned/"
+        self.instructions_path = "AIdata/instructions/"
 
-        self.raw_data_path = "5etools_data/raw/"
-        self.cleaned_data_path = "5etools_data/cleaned/"
-        self.instructions_path = "instructions/"
+        # self.raw_data_path = "5etools_data/raw/"
+        # self.cleaned_data_path = "5etools_data/cleaned/"
+        # self.instructions_path = "instructions/"
 
 
 
