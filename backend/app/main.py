@@ -7,7 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from typing import Annotated
 from fastapi import Query
 from app.database.models import User,Character
-from app.database.schemas import UserSchema,CharacterSchema, QueryRequest, CharacterIn, HealthData,TakeRestData, TakeRestAllData, GrantExperienceAll, MinionEffects,ImportMinion
+from app.database.schemas import UserSchema,CharacterSchema, QueryRequest, CharacterIn, HealthData,TakeRestData, TakeRestAllData, GrantExperienceAll, MinionEffects,ImportMinion, QuickClassPayload
 from app.security import hash_password, verify_password, create_access_token, get_current_user
 from app.db_setup import init_db, get_db
 from fastapi.security import OAuth2PasswordRequestForm
@@ -23,6 +23,7 @@ from app.dice_handler import roll_dice
 from app.combat_functions import heal_health, damage_health,load_character,on_longrest,on_shortrest,grant_experience
 from app.minion_functions import handle_minionEffects,filter_monster_data,get_minion_data
 from app.class_maker import ClassMaker
+
 
 # uvicorn app.main:app --reload
 
@@ -251,23 +252,32 @@ def get_char_file(
 @app.post("/quick_class", tags=["character"])
 def create_quick_class(
     current_user: Annotated[User,Depends(get_current_user)],
-    prompt: str = Body(...)
+    payload: QuickClassPayload
 ):
     
+    char_name = payload.char_name
+    prompt = payload.prompt
+
     class_maker = ClassMaker()
 
-    
+
+    if not char_name:
+        char_name_missing_prompt = "character_name is missing please generate one."
+        prompt += char_name_missing_prompt
+        
+
     instructions_path = "app/quick_class_instructions.md"
     save_path = "app/classes_json/_output_test"
 
     with open(instructions_path, encoding="utf-8") as f:
         instructions = f.read()
-
+    
+    
     input= [
         {"role": "system", "content": instructions},
         {"role": "user", "content": prompt}
         ]
-
+    
     response = class_maker.openai_parse(
         input=input,
         reasoning="high",
@@ -275,6 +285,9 @@ def create_quick_class(
     )
     filename = "test_class.json"
     full_savepath = os.path.join(save_path,filename)
+
+    if char_name:
+        response["general"]["character_name"] = char_name
 
     with open(full_savepath,'w', encoding="utf-8") as f:
         json.dump(response,f,indent=4)

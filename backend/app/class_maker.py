@@ -5,10 +5,15 @@ import math
 from openai import OpenAI
 from dotenv import load_dotenv
 
-from .dice_handler import generate_ability_scores, score_to_mod
-from .quick_class_schema import QuickClassSchema
+# from .dice_handler import generate_ability_scores, score_to_mod
+# from .quick_class_schema import QuickClassSchema
 
 
+from dice_handler import generate_ability_scores, score_to_mod, generate_remaining_ability_scores
+from quick_class_schema import QuickClassSchema
+
+# from app.dice_handler import generate_ability_scores, score_to_mod
+# from app.quick_class_schema import QuickClassSchema
 
 
 class ClassMaker:
@@ -33,6 +38,8 @@ class ClassMaker:
 
 
         self.schema = QuickClassSchema
+
+        self.char_blueprint = {}
 
         # constants
         self.classes = [
@@ -550,31 +557,117 @@ class ClassMaker:
             json.dump(data,f,indent=4)
         
 
+
+    # ------ Version 2 ---------------
+
+    def format_int_str_scores(self,ability_scores) -> dict:
+        ability_scores["int"] = ability_scores.pop("inte")
+        ability_scores["str"] = ability_scores.pop("stre")
+        return ability_scores
+
+    def run(self):
+        # paths
+        char_filepath = os.path.join(self.output_test_path,"test_class")
+        empty_filepath = os.path.join(self.output_test_path,"empty_class")
+        bg_filepath = os.path.join(self.classes_path,"backgrounds")
+        races_filepath = os.path.join(self.classes_path,"races")
+        feats_filepath = os.path.join(self.classes_path,"feats")
+
+        # data
+        char_data = self.load_json(filepath=char_filepath)
+        backgrounds_data = self.load_json(filepath=bg_filepath)
+        races_data = self.load_json(filepath=races_filepath)
+        feats_data = self.load_json(filepath=feats_filepath)
+
+
+        # top level data
+        classes = char_data["classes"]
+        general = char_data["general"]
+        skills = char_data["skills"]
+        biography = char_data["biography"]
+        inventory = char_data["inventory"]
+
+        ability_scores = char_data["ability_scores"]
+        ability_scores = self.format_int_str_scores(ability_scores)
+
+
+        # nested data
+        char_name = general["character_name"]
+        background = general["background"]
+
+
+        # handle background
+        if not background:
+            bg_name, bg_data = random.choice(list(backgrounds_data.items()))
+            self.char_blueprint["background"] = bg_name
+        else:
+            self.char_blueprint["background"] = background
+            bg_data = backgrounds_data["background"]
+
+
+        self.handle_ability_scores_v2(bg_data,ability_scores)
+
+
+    def count_remaining_ability_scores(self,ability_scores) -> int:
+        count = 0
+        for key,value in ability_scores.items():
+            if key == "score_prio":
+                continue
+            if value:
+                count +=1  
+
+        remaining_scores = 6 - count              
+        return remaining_scores
     
+    
+
+    def handle_ability_scores_v2(self,bg_data,ability_scores):
+        remaining_scores = self.count_remaining_ability_scores(ability_scores)
+        
+        if remaining_scores != 0:
+            scores = generate_remaining_ability_scores(remaining_scores)
+
+        
+
+
+
 
 if __name__=="__main__":
     class_maker = ClassMaker()
 
-    path = class_maker.instructions_path
 
-    with open(path) as f:
-        instructions = f.read()
-
-    input=[
-        {"role": "system", "content": instructions},
-        {"role": "user", "content": "Marlosh the handsome paladin lvl 7 with charisma 17 and strenght 15"}
-        ]
+    class_maker.run()
 
 
-    class_test = class_maker.openai_parse(
-        input=input,
-        reasoning="high",
-        text_format=QuickClassSchema
-    )
 
-    save_path = os.path.join(class_maker.output_test_path,"test_class")    
 
-    class_maker.save_json(data=class_test,filepath=save_path)
+
+
+
+
+
+
+
+    # path = class_maker.instructions_path
+
+    # with open(path) as f:
+    #     instructions = f.read()
+
+    # input=[
+    #     {"role": "system", "content": instructions},
+    #     {"role": "user", "content": "Marlosh the handsome paladin lvl 7 with charisma 17 and strenght 15"}
+    #     ]
+
+
+    # class_test = class_maker.openai_parse(
+    #     input=input,
+    #     reasoning="high",
+    #     text_format=QuickClassSchema
+    # )
+
+    # save_path = os.path.join(class_maker.output_test_path,"test_class")    
+
+    # class_maker.save_json(data=class_test,filepath=save_path)
 
     # classes_data = []
     # barb_class = {

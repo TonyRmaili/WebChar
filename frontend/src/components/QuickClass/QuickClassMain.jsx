@@ -10,13 +10,14 @@ function QuickClassMain() {
   const createQuickClass = useCharStore((s) => s.createQuickClass)
   
   const [prompt, setPrompt] = useState("")
+  const [charName, setCharName] = useState("")
+  const [generatingChar, setGeneratingChar] = useState(false)
 
   async function sendPrompt() {
-    
-    const response = await createQuickClass(prompt) 
-    console.log(response)
-
-    setPrompt(response)
+    setGeneratingChar(true)
+    const response = await createQuickClass(prompt,charName)
+    setGeneratingChar(false)
+    console.log(charName)
 
   } 
 
@@ -33,9 +34,22 @@ function QuickClassMain() {
         >
         </textarea>
 
+        <div className="flex gap-12">
+          <p className="text-amber-500">
+            File/Character Name
+          </p>
+          <input 
+          type="text" 
+          value={charName}
+          onChange={(e) => setCharName(e.target.value)}
+          className="rounded-lg px-2"
+          />
+        </div>
+
         <button 
           className="bg-amber-500 p-2 rounded-xl font-semibold"
           onClick={sendPrompt}
+          disabled={generatingChar}
         >
           Create Quick Class
         </button>

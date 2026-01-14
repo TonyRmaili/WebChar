@@ -33,6 +33,7 @@ GLOBAL RULES
    - Arrays → []
    - Boolean flags → false, unless specified
    - Currency (cp, sp, ep, gp, pp) → 0 if not specified
+   If character_name is not provided generate one ONLY if the user asks too otherwise leave as null.  
 
 4) Never invent or guess details that are not strongly implied by the user. The purpose is to fill out as much as the user wants, not to create a fully detailed character by default.
 
@@ -42,7 +43,7 @@ SECTION: general
 
 The "general" object contains basic character identity:
 
-- "character_name": null or a string if the user gives a name.
+- "character_name": null or a string if the user gives a name or asks to generate one.
 - "race": null or a string if the user specifies a race.
 - "subrace": null or a string if the user specifies a subrace.
 - "background": null or a string if the user specifies a background.

@@ -212,7 +212,7 @@ const useCharStore = create((set, get) => ({
   },
 
 
-  createQuickClass: async (prompt) => {
+  createQuickClass: async (prompt,charName) => {
     try {
       const token = localStorage.getItem("token");
       
@@ -220,6 +220,11 @@ const useCharStore = create((set, get) => ({
       if (!token) {
         throw new Error("Token not found in localStorage");
       }
+
+      const payload = {
+        prompt: prompt,  
+        char_name: charName  
+      };
       
       const response = await fetch("http://localhost:8000/quick_class", {
         method: "POST",
@@ -227,7 +232,7 @@ const useCharStore = create((set, get) => ({
           "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`
         },
-        body: JSON.stringify(prompt),  
+        body: JSON.stringify(payload),  
 
       });
 

@@ -53,7 +53,7 @@ class AbilityScores(BaseModel):
 # ---------- General / Biography ----------
 
 class GeneralData(BaseModel):
-    name: Optional[str] = None
+    character_name: Optional[str] = None
     background: Optional[str] = None
     race: Optional[str] = None
     subrace: Optional[str] = None

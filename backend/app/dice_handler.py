@@ -214,6 +214,19 @@ def generate_ability_scores():
     return totals
 
 
+def generate_remaining_ability_scores(remaining_scores:int):
+    """
+    Roll X+1 ability scores (4d6 drop lowest each), drop the lowest total,
+    and return a list of the remaining X scores.
+    """
+    # Roll X+1 totals
+    totals = [roll_4d6_drop_lowest() for _ in range(remaining_scores+1)]
+    # Remove the lowest total
+    lowest = min(totals)
+    totals.remove(lowest)
+    # Now totals has exactly X scores
+    return totals
+
 
 if __name__=="__main__":
     roll = roll_dice(20,3,roll_type=None)
