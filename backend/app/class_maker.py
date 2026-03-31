@@ -40,7 +40,6 @@ class ClassMaker:
         # data
         self.char_blueprint = {}
 
-        
 
         self.full_class_data_paths = {}
         for name in os.listdir(self.classes_data_path):
@@ -448,12 +447,21 @@ class ClassMaker:
                 subclass_path = os.path.join(subclasses_path,subclass_name)
                 subclass_data = self.file_handler.load_json(subclass_path)
 
-                print(cls_level)
                 for lvl , traits in subclass_data["levels"].items():
                     if int(lvl) <= cls_level:
                         cls["subclass_data"].append(traits)
                         
-  
+    def handle_race(self,races_data,race_name):  
+        if not race_name:
+            race_name, race_data = random.choice(list(races_data.items()))
+        
+        else:
+            race_data = races_data[race_name]
+
+        race_data["name"] = race_name
+        self.char_blueprint["race"] = race_data
+
+
     def run(self):
         # paths
         char_filepath = os.path.join(self.output_test_path,"test_class")
@@ -484,6 +492,7 @@ class ClassMaker:
         # nested data
         char_name = general["character_name"]
         background = general["background"]
+        race = general["race"]
 
 
         # main
@@ -501,6 +510,7 @@ class ClassMaker:
 
         self.handle_subclasses()
 
+        self.handle_race(races_data,race)
         
 
         save_path = os.path.join(self.output_test_path,char_name)
