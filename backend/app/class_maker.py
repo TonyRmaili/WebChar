@@ -16,14 +16,11 @@ from file_handler import FileHandler
 
 class ClassMaker:
     def __init__(self):
-
         # paths
         self.character_data_path = "character_data/"
         self.classes_data_path = os.path.join(self.character_data_path,"classes_data")
         self.output_test_path = os.path.join(self.character_data_path,"_output_test")
-
         self.backgrounds_path = os.path.join(self.character_data_path,"backgrounds")
-
         self.instructions_path = "quick_class_instructions.md"
         
         # AI config
@@ -54,7 +51,7 @@ class ClassMaker:
         
 
         # constants
-        self.classes = [
+        self.legit_classes = [
             "barbarian",
             "bard",
             "cleric",
@@ -217,8 +214,6 @@ class ClassMaker:
             "20": 6,
         }
 
-
-
     def adjust_ability_score_from_bg(self,score_prio):
         bg_scores = self.char_blueprint["background"]["data"]["ability_scores"]
         score_dist_pool = 3
@@ -226,7 +221,6 @@ class ClassMaker:
             if score_dist_pool <= 0:
                 break
             if ab in bg_scores:
-                print(f"{ab} {self.ability_scores[ab]['score']}")
                 if self.ability_scores[ab]["score"] % 2 == 0:
                     if score_dist_pool >= 2:
                         self.ability_scores[ab]["score"] += 2
@@ -284,6 +278,7 @@ class ClassMaker:
   
     def add_class_data(self):
         for cls in self.char_blueprint["classes"]:
+            cls["class_data"] = []
             cls_name = cls["name"]
             class_path = self.full_class_data_paths[cls_name]
             core_path = os.path.join(class_path,"core_data")
@@ -291,6 +286,10 @@ class ClassMaker:
 
             cls["core_traits"] = core_data["core_traits"]
             cls["caster_type"] = core_data["caster_type"]
+            
+            for lvl, traits in core_data["levels"].items():
+                if int(lvl) <= cls["level"]:
+                    cls["class_data"].append(traits)
             
     def handle_class_levels(self,classes_data):
         total_level = 0
@@ -371,9 +370,90 @@ class ClassMaker:
             if min_val <= value <= max_val:
                 return value
 
-    def random_class_picks(self,total_level):
-        pass
+    def random_class_picks(self):
+        classes = []
+        legit_classes = self.legit_classes.copy() 
+        multiclass_coeff = 4
+        count = 1
+        first_class = True
+        remaining_levels = 20
+        total_levels = 0
+        center = 8
 
+        while True:
+            if remaining_levels <= 0:
+                break
+            if count > 1:
+                first_class = False
+                multiclass_int = random.randint(1,multiclass_coeff)
+                if multiclass_int != multiclass_coeff:
+                    break
+            
+            level = self.randomize_total_level(
+                min_val=1,
+                max_val= remaining_levels,
+                center=center,
+                spread=3
+            )
+            
+
+            if level > remaining_levels:
+                level = remaining_levels
+
+            class_index = random.randint(0,len(legit_classes)-1)
+            
+            class_name = legit_classes.pop(class_index)
+
+            class_data = {
+            "name": class_name,
+            "sub_class": None,
+            "level": level,
+            "first_class": first_class 
+            }
+
+            classes.append(class_data)
+
+
+            total_levels += level
+            count +=1
+            center -= 2
+            remaining_levels -= level
+
+            if center < 1:
+                center = 1
+
+        return classes
+
+    def handle_subclasses(self):
+        for cls in self.char_blueprint["classes"]:
+            cls_name = cls["name"]
+            cls_level = cls["level"]
+            subcls_name = cls["sub_class"]
+            cls["subclass_data"] = []
+            subclasses_path = os.path.join(self.classes_data_path,cls_name,"sub_classes")
+            
+            if cls_level >= 3:
+                
+                # randomize subclass if it's missing
+                if not subcls_name:
+                    subclasses = os.listdir(subclasses_path)
+                    subclass_index = random.randint(0,len(subclasses)-1)
+                    subclass = subclasses[subclass_index]
+                    subclass_name, ext = os.path.splitext(subclass)
+                    subclass_path = os.path.join(subclasses_path,subclass_name)
+                    subclass_data = self.file_handler.load_json(subclass_path)
+                    cls["sub_class"] = subclass_data["name"]
+                
+                subclass_name, ext = os.path.splitext(subclass)
+                subclass_path = os.path.join(subclasses_path,subclass_name)
+                subclass_data = self.file_handler.load_json(subclass_path)
+
+                print(cls_level)
+                for lvl , traits in subclass_data["levels"].items():
+                    if int(lvl) <= cls_level:
+                        cls["subclass_data"].append(traits)
+                        
+  
     def run(self):
         # paths
         char_filepath = os.path.join(self.output_test_path,"test_class")
@@ -384,7 +464,7 @@ class ClassMaker:
 
 
         # data
-        char_data = self.file_handler.load_json(filepath=char_filepath)
+        char_data = self.file_handler.load_json(filepath=empty_filepath)
         backgrounds_data = self.file_handler.load_json(filepath=bg_filepath)
         races_data = self.file_handler.load_json(filepath=races_filepath)
         feats_data = self.file_handler.load_json(filepath=feats_filepath)
@@ -407,6 +487,10 @@ class ClassMaker:
 
 
         # main
+        if not classes or not classes[0]["name"]:
+            classes = self.random_class_picks()
+            char_name = "Empty"
+
         self.handle_background(background,backgrounds_data)
         
         self.handle_class_levels(classes)
@@ -414,6 +498,10 @@ class ClassMaker:
         self.add_class_data()
 
         self.handle_ability_scores(ability_scores)
+
+        self.handle_subclasses()
+
+        
 
         save_path = os.path.join(self.output_test_path,char_name)
         self.file_handler.save_json(save_path,self.char_blueprint)
