@@ -267,7 +267,7 @@ def create_quick_class(
         
 
     instructions_path = "app/quick_class_instructions.md"
-    save_path = "app/classes_json/_output_test"
+    save_path = "app/character_data/_output_test"
 
     with open(instructions_path, encoding="utf-8") as f:
         instructions = f.read()

@@ -10,9 +10,9 @@ from dice_handler import generate_ability_scores, score_to_mod, generate_remaini
 from quick_class_schema import QuickClassSchema
 from file_handler import FileHandler
 
-# from app.dice_handler import generate_ability_scores, score_to_mod
+# from app.dice_handler import generate_ability_scores, score_to_mod, generate_remaining_ability_scores
 # from app.quick_class_schema import QuickClassSchema
-
+# from app.file_handler import FileHandler
 
 class ClassMaker:
     def __init__(self):
@@ -212,6 +212,29 @@ class ClassMaker:
             "19": 6,
             "20": 6,
         }
+
+        self.feats = {
+            "origin":[],
+            "general":[],
+            "fighting_style":[],
+            "epic_boon":[]
+        }
+
+    def openai_parse(self,input,reasoning,text_format):
+        self.reasoning["effort"] = reasoning
+
+        response = self.client.responses.parse(
+            model=self.model,
+            input=input,
+            reasoning=self.reasoning,
+            text_format=text_format
+        )
+        parsed = response.output_parsed
+
+        try:
+            return parsed.model_dump()      
+        except AttributeError:
+            return parsed      
 
     def adjust_ability_score_from_bg(self,score_prio):
         bg_scores = self.char_blueprint["background"]["data"]["ability_scores"]
@@ -461,7 +484,14 @@ class ClassMaker:
         race_data["name"] = race_name
         self.char_blueprint["race"] = race_data
 
-
+    def handle_feats(self,feats_data,feats):
+        if not feats:
+            print("no feats found")
+        
+        else:
+            for feat in feats:
+                print(feat)
+    
     def run(self):
         # paths
         char_filepath = os.path.join(self.output_test_path,"test_class")
@@ -484,6 +514,7 @@ class ClassMaker:
         skills = char_data["skills"]
         biography = char_data["biography"]
         inventory = char_data["inventory"]
+        feats = char_data["feats"]
 
         ability_scores = char_data["ability_scores"]
         ability_scores = self.format_int_str_scores(ability_scores)
@@ -512,6 +543,7 @@ class ClassMaker:
 
         self.handle_race(races_data,race)
         
+        self.handle_feats(feats_data,feats)
 
         save_path = os.path.join(self.output_test_path,char_name)
         self.file_handler.save_json(save_path,self.char_blueprint)

@@ -99,6 +99,8 @@ class QuickClassSchema(BaseModel):
     skills: List[Skill] = Field(default_factory=list)
     biography: Biography
     inventory: Inventory
+    feats: List[str] = Field(default_factory=list)
+    
 
     @model_validator(mode="after")
     def ensure_single_first_class(self) -> "QuickClassSchema":

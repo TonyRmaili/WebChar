@@ -12,6 +12,7 @@ Your JSON object has the following logical sections:
 - skills
 - biography
 - inventory
+- feats
 
 All keys and nested structures must match the schema exactly, but the values are mostly optional and may be null or empty according to the rules below.
 
@@ -231,6 +232,16 @@ SECTION: skills
 Rules:
 - If the user mentions specific skills or expertise, fill these entries.
 - Otherwise, leave "skills": [] (an empty array).
+- 
+============================================================
+SECTION: feats
+============================================================
+
+"feats" is an array of strings:
+
+Rules:
+- If the user mentions specific feats, fill these entries.
+- Otherwise, leave "feats": [] (an empty array).
 
 ============================================================
 SECTION: biography
