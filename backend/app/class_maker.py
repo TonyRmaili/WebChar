@@ -50,6 +50,8 @@ class ClassMaker:
         
 
         # constants
+        self.score_prio = None
+
         self.legit_classes = [
             "barbarian",
             "bard",
@@ -184,10 +186,10 @@ class ClassMaker:
         }
         
         self.hit_dice = {
-            "d6":  {"amount":0, "average":4, "size":6, "first_class":False},
-            "d8":  {"amount":0, "average":5, "size":8, "first_class":False},
-            "d10": {"amount":0, "average":6, "size":10, "first_class":False},
-            "d12": {"amount":0, "average":7, "size":12, "first_class":False},
+            "d6":  {"amount":0, "average":4, "size":6},
+            "d8":  {"amount":0, "average":5, "size":8},
+            "d10": {"amount":0, "average":6, "size":10},
+            "d12": {"amount":0, "average":7, "size":12},
         }
          
         self.pb_table = {
@@ -288,6 +290,7 @@ class ClassMaker:
             if ab not in score_prio:
                 score_prio.append(ab)
 
+        self.score_prio = score_prio
         return score_prio
          
     def group_primary_abilities(self):
@@ -357,6 +360,7 @@ class ClassMaker:
                     cls["level"] +=1
             extra_levels -= 1
 
+        
         return None
 
     def handle_background(self,background,backgrounds_data):
@@ -484,14 +488,204 @@ class ClassMaker:
         race_data["name"] = race_name
         self.char_blueprint["race"] = race_data
 
-    def handle_feats(self,feats_data,feats):
-        if not feats:
-            print("no feats found")
-        
-        else:
-            for feat in feats:
-                print(feat)
+    def handle_feats(self,feats_data,selected_feats):
+        feats_count = {
+            "origin":1,  
+            "general":0,
+            "epic_boon":0,
+        }
+        self.char_blueprint["feats"] = []
+
+        # count max feats for character
+        for race_effect in self.char_blueprint["race"]["effects"]:
+            if race_effect["name"] == "Versatile":
+                feats_count["origin"] += 1
+
+
+        if self.char_blueprint["background"]["data"]["feat"]:
+            if self.char_blueprint["background"]["data"]["feat"] not in selected_feats:
+                selected_feats.append(self.char_blueprint["background"]["data"]["feat"])
+                
+
+        for cls in self.char_blueprint["classes"]:
+            for data in cls["class_data"]:
+                try:
+                    for effect in data:
+                        if effect["name"] == "Ability Score Improvement":
+                            feats_count["general"] += 1
+                        elif effect["name"] == "Epic Boon":
+                            feats_count["epic_boon"] += 1
+                except TypeError:
+                    pass
+
+        # add feats from raw
+        if selected_feats:
+            for feat_name in selected_feats:
+                if feat_name in feats_data:
+                    feats_data[feat_name]["name"] = feat_name
+                    self.char_blueprint["feats"].append(feats_data[feat_name])
+                    feats_count[feats_data[feat_name]["category"]] -= 1
+
+        # add remaining feats (change this later for safer eligable listed feats with no while loop)
+        for category,count in feats_count.items():
+            max_retries = 5
+            while count > 0 and max_retries >=0:
+                name, data = random.choice(list(feats_data.items()))
+                if name not in selected_feats and category == data["category"]:
+                    data["name"] = name
+                    self.char_blueprint["feats"].append(data)
+                    selected_feats.append(name)
+                    count -= 1
+                max_retries -= 1
+
+    def add_asi_from_feats(self):     
+        for feat in self.char_blueprint["feats"]:
+            score_dist = 2
+            if feat["ability_score_increase"]:
+                if feat["ability_score_increase"] == "any":
+                    for score in self.score_prio:
+                        if score_dist <= 0:
+                            break
+                        if self.char_blueprint["abilities"][score]["score"] % 2 == 0:
+                            if score_dist >= 2:
+                                self.char_blueprint["abilities"][score]["score"] += 2
+                                score_dist -= 2
+                            else:
+                                self.char_blueprint["abilities"][score]["score"] += 1
+                                score_dist -= 1
+                        else:
+                            self.char_blueprint["abilities"][score]["score"] += 1
+                            score_dist -= 1
+                
+                else:
+                    for score in self.score_prio:
+                        if score_dist <= 0:
+                            break
+                        if score in feat["ability_score_increase"]:
+                            if len(feat["ability_score_increase"]) == 1:
+                                self.char_blueprint["abilities"][score]["score"] += 2
+                                break
+                            elif self.char_blueprint["abilities"][score]["score"] % 2 == 0:
+                                if score_dist >= 2:
+                                    self.char_blueprint["abilities"][score]["score"] += 2
+                                    score_dist -= 2
+                                else:
+                                    self.char_blueprint["abilities"][score]["score"] += 1
+                                    score_dist -= 1
+                            else:
+                                self.char_blueprint["abilities"][score]["score"] += 1
+                                score_dist -= 1
+
+    def handle_tool_prof(self):
+        pass
+
+    def handle_armor_prof(self):
+        pass
+
+    def handle_weapon_prof(self):
+        pass
+
+    def handle_saving_throw_prof(self):
+        first_class = None
+        for cls in self.char_blueprint["classes"]:
+            if cls["first_class"]:
+                first_class = cls
+                break
+
+        saving_throws = first_class["core_traits"]["saving_throw_proficiencies"]
+
+        for ab in saving_throws:
+            self.char_blueprint["abilities"][ab]["proficient"] = True
+
+
+    def handle_pb(self):
+        "calc total level"
+        total_level = 0
+        for cls in self.char_blueprint["classes"]:
+            total_level += cls["level"]
+
+        if total_level > 20:
+            pb = 6
+        pb = self.pb_table[str(total_level)]
+
+        self.char_blueprint["total_level"] = total_level
+        self.char_blueprint["pb"] = pb
+
+    def handle_skill_prof(self,selected_skills):
+        available_skills = []
+        bg_skills = self.char_blueprint["background"]["data"]["skill_proficiencies"]
     
+        # races later
+
+        # first class
+        first_cls_data = None
+        for cls in self.char_blueprint["classes"]:
+            if cls["first_class"]:
+                first_cls_data = cls
+                break
+
+        cls_skills = first_cls_data["core_traits"]["skill_proficiencies"]
+        
+        for skill in bg_skills:
+            if skill not in selected_skills:
+                selected_skills.append(skill)
+        
+        for skill in self.skills:
+            if skill not in selected_skills:
+                available_skills.append(skill)
+        
+        for i in range(cls_skills["amount"]):
+            if len(available_skills) >= 1:
+                skill_index = random.randint(0,len(available_skills)-1)
+                skill = available_skills.pop(skill_index)
+                selected_skills.append(skill)
+
+        self.char_blueprint["skill_proficiencies"] = selected_skills
+
+    def handle_hit_dice(self):
+        for cls in self.char_blueprint["classes"]:
+            hit_die = cls["core_traits"]["hit_die"]
+            level = cls["level"]
+            self.hit_dice[hit_die]["amount"] += level
+
+        self.char_blueprint["hit_dice"] = self.hit_dice
+
+    def calc_ability_score_data(self):
+        for ab,data in self.char_blueprint["abilities"].items():
+            mod = score_to_mod(data["score"])
+            data["mod"] = mod
+            data["check"] = mod
+            if data["proficient"]:
+                data["save"] = mod + self.char_blueprint["pb"]
+
+    def handle_max_hp(self):
+        hp_mod = 0
+        max_hp = 0
+        first_class_die = None
+        # adjust hp mod for Tough feat
+        for feat in self.char_blueprint["feats"]:
+            if feat["name"] == "Tough":
+                hp_mod += 2
+        
+        hp_mod += self.char_blueprint["abilities"]["con"]["mod"]
+
+        for die,data in self.char_blueprint["hit_dice"].items():
+            if data["amount"] > 0:
+                max_hp += (data["average"] + hp_mod) * data["amount"]
+
+
+        # adjust for first_class bonus
+        for cls in self.char_blueprint["classes"]:
+            if cls["first_class"]:
+                first_class_die = cls["core_traits"]["hit_die"]
+                break
+
+        hp_diff = self.hit_dice[first_class_die]["size"] - self.hit_dice[first_class_die]["average"]
+        max_hp += hp_diff
+
+        self.char_blueprint["max_hp"] = max_hp
+
+
     def run(self):
         # paths
         char_filepath = os.path.join(self.output_test_path,"test_class")
@@ -500,13 +694,11 @@ class ClassMaker:
         races_filepath = os.path.join(self.character_data_path,"races")
         feats_filepath = os.path.join(self.character_data_path,"feats")
 
-
         # data
         char_data = self.file_handler.load_json(filepath=empty_filepath)
         backgrounds_data = self.file_handler.load_json(filepath=bg_filepath)
         races_data = self.file_handler.load_json(filepath=races_filepath)
         feats_data = self.file_handler.load_json(filepath=feats_filepath)
-
 
         # top level data
         classes = char_data["classes"]
@@ -524,6 +716,7 @@ class ClassMaker:
         char_name = general["character_name"]
         background = general["background"]
         race = general["race"]
+        max_hp = general["max_hp"]
 
 
         # main
@@ -544,6 +737,23 @@ class ClassMaker:
         self.handle_race(races_data,race)
         
         self.handle_feats(feats_data,feats)
+
+        self.add_asi_from_feats()
+
+        self.handle_pb()
+
+        self.handle_saving_throw_prof()
+
+        self.calc_ability_score_data()
+
+        self.handle_skill_prof(skills)
+
+        self.handle_hit_dice()
+
+        if not max_hp:
+            self.handle_max_hp()
+        else:
+            self.char_blueprint["max_hp"] = max_hp
 
         save_path = os.path.join(self.output_test_path,char_name)
         self.file_handler.save_json(save_path,self.char_blueprint)
