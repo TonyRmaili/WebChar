@@ -6,23 +6,24 @@ from openai import OpenAI
 from dotenv import load_dotenv
 from collections import Counter
 
-from dice_handler import generate_ability_scores, score_to_mod, generate_remaining_ability_scores
-from quick_class_schema import QuickClassSchema
-from file_handler import FileHandler
+# from dice_handler import generate_ability_scores, score_to_mod, generate_remaining_ability_scores
+# from quick_class_schema import QuickClassSchema
+# from file_handler import FileHandler
 
-# from app.dice_handler import generate_ability_scores, score_to_mod, generate_remaining_ability_scores
-# from app.quick_class_schema import QuickClassSchema
-# from app.file_handler import FileHandler
+from app.dice_handler import generate_ability_scores, score_to_mod, generate_remaining_ability_scores
+from app.quick_class_schema import QuickClassSchema
+from app.file_handler import FileHandler
 
 class ClassMaker:
     def __init__(self):
         # paths
-        self.character_data_path = "character_data/"
+        # self.character_data_path = "character_data/"
+        self.character_data_path = "./app/character_data/"
         self.classes_data_path = os.path.join(self.character_data_path,"classes_data")
         self.output_test_path = os.path.join(self.character_data_path,"_output_test")
         self.backgrounds_path = os.path.join(self.character_data_path,"backgrounds")
         self.instructions_path = "quick_class_instructions.md"
-        
+
         # AI config
         load_dotenv(override=True)
         self.api_key = os.getenv("OPENAI_API_KEY")
@@ -685,17 +686,20 @@ class ClassMaker:
 
         self.char_blueprint["max_hp"] = max_hp
 
+    def load_empty_class_data(self):
+        empty_filepath = os.path.join(self.output_test_path,"empty_class")
+        char_data = self.file_handler.load_json(filepath=empty_filepath)
+        return char_data
 
-    def run(self):
+    def run(self,char_data):
         # paths
         char_filepath = os.path.join(self.output_test_path,"test_class")
-        empty_filepath = os.path.join(self.output_test_path,"empty_class")
         bg_filepath = os.path.join(self.character_data_path,"backgrounds")
         races_filepath = os.path.join(self.character_data_path,"races")
         feats_filepath = os.path.join(self.character_data_path,"feats")
 
         # data
-        char_data = self.file_handler.load_json(filepath=empty_filepath)
+        # char_data = self.file_handler.load_json(filepath=empty_filepath)
         backgrounds_data = self.file_handler.load_json(filepath=bg_filepath)
         races_data = self.file_handler.load_json(filepath=races_filepath)
         feats_data = self.file_handler.load_json(filepath=feats_filepath)
@@ -722,7 +726,9 @@ class ClassMaker:
         # main
         if not classes or not classes[0]["name"]:
             classes = self.random_class_picks()
-            char_name = "Empty"
+            
+        if not char_name:
+            char_name = "Empty Voidborn"
 
         self.handle_background(background,backgrounds_data)
         
@@ -757,6 +763,7 @@ class ClassMaker:
 
         save_path = os.path.join(self.output_test_path,char_name)
         self.file_handler.save_json(save_path,self.char_blueprint)
+        return self.char_blueprint
     
 if __name__=="__main__":
     class_maker = ClassMaker()

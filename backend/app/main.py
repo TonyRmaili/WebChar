@@ -260,15 +260,21 @@ def create_quick_class(
 
     class_maker = ClassMaker()
 
-
+    if not prompt:
+        char_data = class_maker.load_empty_class_data()
+        if char_name:
+            char_data["general"]["character_name"] = char_name
+        complete_char_data = class_maker.run(char_data=char_data)
+        return complete_char_data
+    
+    
     if not char_name:
         char_name_missing_prompt = "character_name is missing please generate one."
         prompt += char_name_missing_prompt
         
 
     instructions_path = "app/quick_class_instructions.md"
-    save_path = "app/character_data/_output_test"
-
+   
     with open(instructions_path, encoding="utf-8") as f:
         instructions = f.read()
     
@@ -283,16 +289,16 @@ def create_quick_class(
         reasoning="high",
         text_format=class_maker.schema
     )
-    filename = "test_class.json"
-    full_savepath = os.path.join(save_path,filename)
+    
 
     if char_name:
         response["general"]["character_name"] = char_name
+    else:
+        char_name = response["general"]["character_name"]
 
-    with open(full_savepath,'w', encoding="utf-8") as f:
-        json.dump(response,f,indent=4)
-    
-    return response
+    complete_char_data = class_maker.run(char_data=response)
+
+    return complete_char_data
 
 
 

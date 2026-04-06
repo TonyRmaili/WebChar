@@ -1,19 +1,19 @@
 {
     "background": {
-        "name": "Artisan",
+        "name": "Merchant",
         "data": {
             "ability_scores": [
-                "str",
-                "dex",
-                "int"
+                "con",
+                "int",
+                "cha"
             ],
-            "feat": "Crafter",
+            "feat": "Lucky",
             "skill_proficiencies": [
-                "Investigation",
+                "Animal Handling",
                 "Persuasion"
             ],
             "tool_proficiencies": [
-                "Artisan's Tools (choice)"
+                "Navigator's Tools"
             ],
             "equipment": {
                 "amount": 1,
@@ -21,10 +21,10 @@
                     {
                         "id": "A",
                         "items": [
-                            "Artisan's Tools (chosen type)",
+                            "Navigator's Tools",
                             "Pouch ×2",
                             "Traveler's Clothes",
-                            "32 GP"
+                            "22 GP"
                         ]
                     },
                     {
@@ -40,8 +40,8 @@
     "classes": [
         {
             "name": "monk",
-            "sub_class": "Way of the Open Hand",
-            "level": 8,
+            "sub_class": "Way of Shadow",
+            "level": 6,
             "first_class": true,
             "class_data": [
                 [
@@ -110,19 +110,6 @@
                         "feature": {},
                         "notes": "You gain a level 6 feature from your Monk subclass."
                     }
-                ],
-                [
-                    {
-                        "name": "Evasion",
-                        "notes": "When an effect allows you to make a Dexterity saving throw to take only half damage, you instead take no damage on a successful save and only half damage on a failed save.\nYou don’t benefit from this feature if you are Incapacitated."
-                    }
-                ],
-                [
-                    {
-                        "name": "Ability Score Improvement",
-                        "feature": {},
-                        "notes": "You gain the Ability Score Improvement feat or another feat of your choice for which you qualify."
-                    }
                 ]
             ],
             "core_traits": {
@@ -182,14 +169,14 @@
             "subclass_data": [
                 [
                     {
-                        "name": "Open Hand Technique",
-                        "notes": "Whenever you hit a creature with an attack granted by your Flurry of Blows, you can impose one of the following effects:\n\nAddle. The target can't make Opportunity Attacks until the start of its next turn.\n\nPush. The target must succeed on a Strength saving throw or be pushed up to 15 feet away from you.\n\nTopple. The target must succeed on a Dexterity saving throw or become Prone."
+                        "name": "Shadow Arts",
+                        "notes": "You draw upon the power of the Shadowfell, gaining the following benefits:\n\nDarkness. Expend 1 Focus Point to cast the Darkness spell without components. You can see within its area. At the start of each of your turns, you may move the area of Darkness to a space within 60 feet.\n\nDarkvision. You gain Darkvision out to 60 feet; if you already have Darkvision, its range increases by 60 feet.\n\nShadowy Figments. You know the Minor Illusion spell. Wisdom is your spellcasting ability for it."
                     }
                 ],
                 [
                     {
-                        "name": "Wholeness of Body",
-                        "notes": "As a Bonus Action, roll your Martial Arts die. You regain Hit Points equal to the roll + your Wisdom modifier (minimum of 1).\n\nYou can use this feature a number of times equal to your Wisdom modifier (minimum of one), regaining all uses when you finish a Long Rest."
+                        "name": "Shadow Step",
+                        "notes": "While entirely in Dim Light or Darkness, you can use a Bonus Action to teleport up to 60 feet to another unoccupied space you can see that is also in Dim Light or Darkness. You then have Advantage on the next melee attack you make before the end of the current turn."
                     }
                 ]
             ]
@@ -197,47 +184,47 @@
     ],
     "abilities": {
         "str": {
-            "score": 12,
-            "mod": 0,
-            "check": 0,
-            "save": 0,
-            "proficient": false,
+            "score": 14,
+            "mod": 2,
+            "check": 2,
+            "save": 5,
+            "proficient": true,
             "expertise": false
         },
         "dex": {
-            "score": 12,
-            "mod": 0,
-            "check": 0,
-            "save": 0,
-            "proficient": false,
+            "score": 18,
+            "mod": 4,
+            "check": 4,
+            "save": 7,
+            "proficient": true,
             "expertise": false
         },
         "con": {
-            "score": 11,
-            "mod": 0,
-            "check": 0,
+            "score": 16,
+            "mod": 3,
+            "check": 3,
             "save": 0,
             "proficient": false,
             "expertise": false
         },
         "int": {
-            "score": 9,
-            "mod": 0,
-            "check": 0,
+            "score": 12,
+            "mod": 1,
+            "check": 1,
             "save": 0,
             "proficient": false,
             "expertise": false
         },
         "wis": {
-            "score": 11,
-            "mod": 0,
-            "check": 0,
+            "score": 16,
+            "mod": 3,
+            "check": 3,
             "save": 0,
             "proficient": false,
             "expertise": false
         },
         "cha": {
-            "score": 7,
+            "score": 10,
             "mod": 0,
             "check": 0,
             "save": 0,
@@ -248,30 +235,143 @@
     "race": {
         "creature_type": "Humanoid",
         "sizes": [
-            "medium",
-            "small"
+            "medium"
         ],
         "speed": {
-            "walk": 30
+            "walk": 35
         },
         "resistances": [],
         "effects": [
             {
-                "name": "Resourceful",
-                "notes": "You gain Heroic Inspiration whenever you finish a Long Rest."
+                "name": "Giant Ancestry",
+                "notes": "You are descended from Giants. Choose one of the following benefits—a supernatural boon from your ancestry; you can use the chosen benefit a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest:"
             },
             {
-                "name": "Skillful",
-                "notes": "You gain proficiency in one skill of your choice."
+                "name": "Large Form",
+                "notes": "Starting at character level 5, you can change your size to Large as a Bonus Action if you're in a big enough space. This transformation lasts for 10 minutes or until you end it (no action required). For that duration, you have Advantage on Strength checks, and your Speed increases by 10 feet. Once you use this trait, you can't use it again until you finish a Long Rest."
             },
             {
-                "name": "Versatile",
-                "notes": "You gain an Origin feat of your choice."
+                "name": "Powerful Build",
+                "notes": "You have Advantage on any ability check you make to end the Grappled condition. You also count as one size larger when determining your carrying capacity."
             }
         ],
         "senses": {},
-        "sub_races": [],
+        "sub_races": [
+            {
+                "name": "Cloud Giant",
+                "effects": [
+                    {
+                        "name": "Cloud's Jaunt",
+                        "notes": "As a Bonus Action, you magically teleport up to 30 feet to an unoccupied space you can see."
+                    }
+                ]
+            },
+            {
+                "name": "Fire Giant",
+                "effects": [
+                    {
+                        "name": "Fire's Burn",
+                        "notes": "When you hit a target with an attack roll and deal damage to it, you can also deal 1d10 Fire damage to that target."
+                    }
+                ]
+            },
+            {
+                "name": "Frost Giant",
+                "effects": [
+                    {
+                        "name": "Frost's Chill",
+                        "notes": "When you hit a target with an attack roll and deal damage to it, you can also deal 1d6 Cold damage to that target and reduce its Speed by 10 feet until the start of your next turn."
+                    }
+                ]
+            },
+            {
+                "name": "Hill Giant",
+                "effects": [
+                    {
+                        "name": "Hill's Tumble",
+                        "notes": "When you hit a Large or smaller creature with an attack roll and deal damage to it, you can give that target the Prone condition."
+                    }
+                ]
+            },
+            {
+                "name": "Stone Giant",
+                "effects": [
+                    {
+                        "name": "Stone's Endurance",
+                        "notes": "When you take damage, you can take a Reaction to roll 1d12. Add your Constitution modifier to the number rolled and reduce the damage by that total."
+                    }
+                ]
+            },
+            {
+                "name": "Storm Giant",
+                "effects": [
+                    {
+                        "name": "Storm's Thunder",
+                        "notes": "When you take damage from a creature within 60 feet of you, you can take a Reaction to deal 1d8 Thunder damage to that creature."
+                    }
+                ]
+            }
+        ],
         "source": "phb_24",
-        "name": "Human"
-    }
+        "name": "Goliath"
+    },
+    "feats": [
+        {
+            "prerequisite": [],
+            "source": "phb24",
+            "category": "origin",
+            "ability_score_increase": [],
+            "repeatable": false,
+            "has_table": false,
+            "notes": "Luck Points. You have a number of Luck Points equal to your Proficiency Bonus and can spend the points on the benefits below. You regain your expended Luck Points when you finish a Long Rest.Advantage. When you roll a d20 for a D20 Test, you can spend 1 Luck Point to give yourself Advantage on the roll.Disadvantage. When a creature rolls a d20 for an attack roll against you, you can spend 1 Luck Point to impose Disadvantage on that roll.",
+            "name": "Lucky"
+        },
+        {
+            "prerequisite": [
+                "level 4+",
+                "str or dex 13+"
+            ],
+            "source": "phb24",
+            "category": "general",
+            "ability_score_increase": [
+                "str",
+                "dex"
+            ],
+            "repeatable": false,
+            "has_table": false,
+            "notes": "Enhanced Dual Wielding. When you take the Attack action on your turn and attack with a weapon that has the Light property, you can make one extra attack as a Bonus Action later on the same turn with a different weapon, which must be a Melee weapon that lacks the Two-Handed property. You don't add your ability modifier to the extra attack's damage unless that modifier is negative.Quick Draw. You can draw or stow two weapons that lack the Two-Handed property when you would normally be able to draw or stow only one.",
+            "name": "Dual Wielder"
+        }
+    ],
+    "total_level": 6,
+    "pb": 3,
+    "skill_proficiencies": [
+        "Animal Handling",
+        "Persuasion",
+        "Perception",
+        "Stealth"
+    ],
+    "hit_dice": {
+        "d6": {
+            "amount": 0,
+            "average": 4,
+            "size": 6
+        },
+        "d8": {
+            "amount": 6,
+            "average": 5,
+            "size": 8
+        },
+        "d10": {
+            "amount": 0,
+            "average": 6,
+            "size": 10
+        },
+        "d12": {
+            "amount": 0,
+            "average": 7,
+            "size": 12
+        }
+    },
+    "max_hp": 45
 }

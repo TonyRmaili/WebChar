@@ -124,37 +124,6 @@
  }
 
 
-# Class Cleaning
+# QuickClass Bug Fixes and Improvments
 
-
-character name 
-
-case 1
-
-prompt : true 
-entry : true 
-differant : true
-=> entry override
-
-case 2 
-differant : false
-=> doesnt matter
-
-case 3
-prompt: false
-entry: true 
-=> use entry
-
-case 4
-prompt: true
-entry : false
-=> use prompt
-
-
-case 5 
-prompt: false
-entry : false 
-
-=> generate name
-
-
+1. prompted ability score gets increased via feats adding (lock pre-defined scores?)
