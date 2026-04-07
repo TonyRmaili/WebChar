@@ -1,215 +1,291 @@
-import React , { useState} from "react";
+import React, { useState } from "react";
 import useCharStore from "../../store/CharStore";
-
+import { NumberInput, AbilityStat, Collapsible } from "./Widgets";
+import { ABILITY_ORDER } from "../../utils/Constants";
 
 function QuickClassMain() {
-  
-  const createQuickClass = useCharStore((s) => s.createQuickClass)
-  
-  const [prompt, setPrompt] = useState("")
-  const [charName, setCharName] = useState("")
-  const [generatingChar, setGeneratingChar] = useState(false)
+  const createQuickClass = useCharStore((s) => s.createQuickClass);
+
+  const [prompt, setPrompt] = useState("");
+  const [charName, setCharName] = useState("");
+  const [generatingChar, setGeneratingChar] = useState(false);
   const [response, setResponse] = useState(null);
 
   async function sendPrompt() {
-    setGeneratingChar(true)
-    const result = await createQuickClass(prompt,charName)
-    setResponse(result)
-    setGeneratingChar(false)
-    console.log(charName)
-
-  } 
+    setGeneratingChar(true);
+    const result = await createQuickClass(prompt, charName);
+    setResponse(result);
+    setGeneratingChar(false);
+    console.log(charName);
+  }
 
   return (
     <div className="w-full min-h-screen bg-slate-900">
+      {/* Prompt Area */}
+      <div className="flex justify-center mt-6">
+        <div className="w-full max-w-2xl border border-stone-700 bg-gradient-to-b from-stone-900 via-zinc-950 to-black rounded-lg p-6 shadow-[0_0_30px_rgba(0,0,0,0.6)]">
+          <p className="text-sm uppercase tracking-[0.25em] text-red-400 mb-4">
+            Who are you?
+          </p>
 
-      <div className="flex flex-col items-center mt-4 gap-2">
-        <p className="text-amber-500 text-xl">Who are you?</p>
+          {/* textarea */}
+          <div className="relative p-[2px] bg-gradient-to-b from-stone-600 to-black rounded-md mb-4">
+            <textarea
+              value={prompt}
+              onChange={(e) => setPrompt(e.target.value)}
+              placeholder="Describe your character..."
+              className="
+                w-full h-24 resize-none
+                bg-zinc-950 rounded-md
+                px-3 py-2
+                text-stone-200
+                placeholder:text-stone-500
+                outline-none
+                shadow-[inset_0_0_12px_rgba(0,0,0,0.7)]
+                focus:shadow-[inset_0_0_14px_rgba(0,0,0,0.85),0_0_10px_rgba(120,0,0,0.25)]
+              "
+            />
+          </div>
 
-        <textarea 
-          className="w-1/3 h-20 rounded-lg p-2"
-          value={prompt}                    
-          onChange={(e) => setPrompt(e.target.value)}   
-        >
-        </textarea>
- 
-        <input 
-          type="text" 
-          value={charName}
-          placeholder="Character Name"
-          onChange={(e) => setCharName(e.target.value)}
-          className="rounded-lg px-2"
-        />
-       
-        <button 
-          className="bg-amber-500 p-2 rounded-xl font-semibold"
-          onClick={sendPrompt}
-          disabled={generatingChar}
-        >
-          Create Quick Class
-        </button>
+          {/* Name input */}
+          <div className="relative p-[2px] bg-gradient-to-b from-stone-600 to-black rounded-md mb-6">
+            <input
+              type="text"
+              value={charName}
+              placeholder="Character Name"
+              onChange={(e) => setCharName(e.target.value)}
+              className="
+                w-full
+                bg-zinc-950 rounded-md
+                px-3 py-2
+                text-red-300 font-semibold
+                placeholder:text-stone-500
+                outline-none
+                shadow-[inset_0_0_10px_rgba(0,0,0,0.7)]
+                focus:shadow-[inset_0_0_12px_rgba(0,0,0,0.85),0_0_8px_rgba(120,0,0,0.3)]
+              "
+            />
+          </div>
+
+          {/* Button */}
+          <button
+            onClick={sendPrompt}
+            disabled={generatingChar}
+            className="
+              w-full
+              border border-red-900/50
+              bg-gradient-to-b from-red-900 to-black
+              text-red-300 font-bold uppercase tracking-widest
+              py-2 rounded-md
+              transition
+              hover:from-red-800 hover:text-white
+              hover:shadow-[0_0_12px_rgba(120,0,0,0.4)]
+              disabled:opacity-50 disabled:cursor-not-allowed
+            "
+          >
+            {generatingChar ? "Summoning..." : "Create Character"}
+          </button>
+        </div>
       </div>
-      
-    <div className="py-6 px-32">
-        <div className="rounded-2xl border border-slate-700 bg-slate-800/70 p-6 shadow-lg">
+      {/* Character Sheet */}
+      <div className="py-6 px-20">
+        <div className="rounded-lg border-2 border-stone-700 bg-gradient-to-b from-stone-900 via-zinc-950 to-black p-6 shadow-[0_0_30px_rgba(0,0,0,0.6)]">
+          {/* Sheet Header */}
+          <div className="flex items-center gap-3 mb-6 border-b border-red-900/40 pb-3">
+            <h2 className="text-xl font-bold uppercase tracking-[0.2em] text-red-400">
+              Character Sheet:
+            </h2>
+
+            {response && (
+              <input
+                type="text"
+                value={response.char_name ?? ""}
+                onChange={(e) =>
+                  setResponse({
+                    ...response,
+                    char_name: e.target.value,
+                  })
+                }
+                className="
+                  bg-transparent
+                  text-xl font-bold
+                  text-red-300
+                  outline-none
+                  border-none
+                  border-b border-transparent
+                  focus:border-red-700
+                  px-1
+                "
+              />
+            )}
+          </div>
+
+          {/* Sheet Body*/}
           {response && (
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-10">
-              <div className="rounded-xl border border-slate-700 bg-slate-900 p-4">
-                <label className="mb-2 block text-sm font-medium text-slate-300">
-                  Max HP
-                </label>
-                <input
-                  type="number"
-                  value={response.max_hp ?? ""}
-                  onChange={(e) =>
-                    setResponse({
-                      ...response,
-                      max_hp: Number(e.target.value),
-                    })
-                  }
-                  className="w-full rounded-lg border border-slate-600 bg-slate-800 px-3 py-2 text-white outline-none transition focus:border-amber-500 focus:ring-2 focus:ring-amber-500/30"
-                />
-              </div>
+            <div className="flex flex-col gap-6">
+              {/* General Stats*/}
+              <Collapsible title="General Stats">
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-6">
+                  <NumberInput
+                    label="Max HP"
+                    type="number"
+                    value={response.max_hp}
+                    onChange={(e) =>
+                      setResponse({
+                        ...response,
+                        max_hp: Number(e.target.value),
+                      })
+                    }
+                  />
+                  <NumberInput
+                    label="Total Level"
+                    type="number"
+                    value={response.total_level}
+                    onChange={(e) =>
+                      setResponse({
+                        ...response,
+                        total_level: Number(e.target.value),
+                      })
+                    }
+                  />
+                  <NumberInput
+                    label="Prof. Bonus"
+                    type="number"
+                    value={response.pb}
+                    onChange={(e) =>
+                      setResponse({
+                        ...response,
+                        pb: Number(e.target.value),
+                      })
+                    }
+                  />
+                </div>
+              </Collapsible>
+
+              {/* General Stats*/}
+
+
+              {/* Ability Scores*/}
+              <Collapsible title="Ability Scores">
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-6">
+                  {ABILITY_ORDER.map((ability) => (
+                    <AbilityStat
+                      key={ability}
+                      label={ability.toUpperCase()}
+                      data={response.abilities[ability]}
+                      onChange={(field, value) =>
+                        setResponse({
+                          ...response,
+                          abilities: {
+                            ...response.abilities,
+                            [ability]: {
+                              ...response.abilities[ability],
+                              [field]: value,
+                            },
+                          },
+                        })
+                      }
+                    />
+                  ))}
+                </div>
+              </Collapsible>
+
+              {/* Class Data*/}
+              <Collapsible title="Classes">
+                {response.classes.map((cls, i) => (
+                  <Collapsible
+                    key={i}
+                    title={
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-red-400 font-semibold tracking-wider italic">
+                          {cls.sub_class}
+                        </span>
+                        <span className="text-amber-500">{cls.name}</span>
+                        <span className="text-gray-300">level: {cls.level}</span>
+                      </div>
+                    }
+                  >
+                    <div className="flex flex-col gap-2">
+                      {Object.entries(cls.class_data).map(([lvl, lvlFeatures]) => (
+                        <Collapsible
+                          key={`${i}-lvl-${lvl}`}
+                          title={
+                            <div className="flex items-baseline gap-2">
+                              <span className="text-stone-300 font-semibold">
+                                Level {lvl}
+                              </span>
+                              <span className="text-stone-500 text-xs uppercase tracking-wider">
+                                {lvlFeatures.length} feature{lvlFeatures.length !== 1 ? "s" : ""}
+                              </span>
+                            </div>
+                          }
+                        >
+                          <div className="flex flex-col gap-2">
+                            {lvlFeatures.map((feature, featureIndex) => (
+                              <Collapsible
+                                key={`${i}-${lvl}-${featureIndex}`}
+                                title={
+                                  <div className="flex items-baseline gap-2">
+                                    <span className="text-stone-200 font-medium">
+                                      {feature.name}
+                                    </span>
+                                    <span
+                                      className={
+                                        feature.feature_type === "sub_class"
+                                          ? "text-red-400 text-xs uppercase tracking-wider"
+                                          : "text-amber-500 text-xs uppercase tracking-wider"
+                                      }
+                                    >
+                                      {feature.feature_type}
+                                    </span>
+                                  </div>
+                                }
+                              >
+                                <div className="rounded-md border border-stone-800 bg-black/30 p-3">
+                                  <p className="whitespace-pre-line text-sm text-stone-300">
+                                    {feature.notes}
+                                  </p>
+                                </div>
+                              </Collapsible>
+                            ))}
+                          </div>
+                        </Collapsible>
+                      ))}
+                    </div>
+                  </Collapsible>
+                ))}
+              </Collapsible>
               
-              
+              {/* Feats */}
+              <Collapsible title="Feats">
+                <div className="flex flex-col gap-2">
+                  {response.feats.map((feat, i) => (
+                    <Collapsible
+                      key={i}
+                      title={
+                        <span className="text-stone-200 font-medium">
+                          {feat.name}
+                        </span>
+                      }
+                    >
+                      <div className="rounded-md border border-stone-800 bg-black/30 p-3">
+                        <p className="whitespace-pre-line text-sm text-stone-300">
+                          {feat.notes}
+                        </p>
+                      </div>
+                    </Collapsible>
+                  ))}
+                </div>
+              </Collapsible>
+
+
+
+ 
             </div>
           )}
         </div>
       </div>
-
     </div>
-    
   );
-
 }
-export default QuickClassMain
-
-
-
-// Claude first try
-// import React, { useState } from "react";
-// import useCharStore from "../../store/CharStore";
-// import CharacterOverview from "./CharacterOverview";
-
-
-// function QuickClassMain() {
-//   const createQuickClass = useCharStore((s) => s.createQuickClass);
-
-//   const [prompt, setPrompt] = useState("");
-//   const [charName, setCharName] = useState("");
-//   const [generatingChar, setGeneratingChar] = useState(false);
-//   const [charData, setCharData] = useState(null);
-
-//   async function sendPrompt() {
-//     setGeneratingChar(true);
-//     setCharData(null);
-//     try {
-//       const response = await createQuickClass(prompt, charName);
-//       if (response) {
-//         setCharData(response);
-//       }
-//     } catch (err) {
-//       console.error("Failed to generate character:", err);
-//     }
-//     setGeneratingChar(false);
-//   }
-
-//   function handleReset() {
-//     setCharData(null);
-//     setPrompt("");
-//     setCharName("");
-//   }
-
-//   return (
-//     <div className="w-full min-h-screen bg-slate-900 text-slate-100">
-      
-//       {/* ── Prompt Section ── */}
-//       <div className="flex flex-col items-center pt-6 gap-3 px-4">
-//         <p className="text-amber-500 text-xl font-semibold">Who are you?</p>
-
-//         <textarea
-//           className="w-full max-w-lg h-24 rounded-lg p-3 bg-slate-800 border border-slate-600 text-slate-100
-//                      placeholder-slate-500 focus:outline-none focus:border-amber-500/60 focus:ring-1 focus:ring-amber-500/30 resize-y"
-//           value={prompt}
-//           onChange={(e) => setPrompt(e.target.value)}
-//           placeholder="Describe your character concept..."
-//         />
-
-//         <div className="flex items-center gap-4">
-//           <label className="text-amber-500 text-sm">Character Name</label>
-//           <input
-//             type="text"
-//             value={charName}
-//             onChange={(e) => setCharName(e.target.value)}
-//             className="rounded-lg px-3 py-1.5 bg-slate-800 border border-slate-600 text-slate-100
-//                        focus:outline-none focus:border-amber-500/60"
-//             placeholder="Optional"
-//           />
-//         </div>
-
-//         <div className="flex gap-3">
-//           <button
-//             className="bg-amber-500 hover:bg-amber-400 disabled:bg-slate-600 disabled:text-slate-400
-//                        px-5 py-2 rounded-xl font-semibold text-slate-900 transition-colors"
-//             onClick={sendPrompt}
-//             disabled={generatingChar}
-//           >
-//             {generatingChar ? "Generating..." : "Create Quick Class"}
-//           </button>
-
-//           {charData && (
-//             <button
-//               className="border border-slate-600 hover:border-slate-500 px-4 py-2 rounded-xl text-slate-300 hover:text-slate-100 transition-colors"
-//               onClick={handleReset}
-//             >
-//               Start Over
-//             </button>
-//           )}
-//         </div>
-
-//         {generatingChar && (
-//           <div className="flex items-center gap-2 mt-2">
-//             <div className="w-4 h-4 border-2 border-amber-500 border-t-transparent rounded-full animate-spin" />
-//             <span className="text-slate-400 text-sm">AI is crafting your character...</span>
-//           </div>
-//         )}
-//       </div>
-
-//       {/* ── Character Overview ── */}
-//       {charData && (
-//         <div className="mt-8 px-4">
-//           <CharacterOverview data={charData} onChange={setCharData} />
-
-//           {/* Save / Export actions */}
-//           <div className="max-w-4xl mx-auto flex justify-center gap-4 py-6">
-//             <button
-//               className="bg-emerald-600 hover:bg-emerald-500 px-6 py-2 rounded-xl font-semibold text-white transition-colors"
-//               onClick={() => {
-//                 console.log("Character data to save:", charData);
-//                 // TODO: hook up save endpoint
-//               }}
-//             >
-//               Save Character
-//             </button>
-//             <button
-//               className="border border-slate-600 hover:border-slate-500 px-5 py-2 rounded-xl text-slate-300 hover:text-slate-100 transition-colors"
-//               onClick={() => {
-//                 const blob = new Blob([JSON.stringify(charData, null, 2)], { type: "application/json" });
-//                 const url = URL.createObjectURL(blob);
-//                 const a = document.createElement("a");
-//                 a.href = url;
-//                 a.download = `${charData?.general?.character_name || "character"}.json`;
-//                 a.click();
-//                 URL.revokeObjectURL(url);
-//               }}
-//             >
-//               Export JSON
-//             </button>
-//           </div>
-//         </div>
-//       )}
-//     </div>
-//   );
-// }
-
-// export default QuickClassMain;
+export default QuickClassMain;

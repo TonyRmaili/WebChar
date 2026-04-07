@@ -10,7 +10,7 @@ from collections import Counter
 # from quick_class_schema import QuickClassSchema
 # from file_handler import FileHandler
 
-from app.dice_handler import generate_ability_scores, score_to_mod, generate_remaining_ability_scores
+from app.dice_handler import score_to_mod, generate_remaining_ability_scores
 from app.quick_class_schema import QuickClassSchema
 from app.file_handler import FileHandler
 
@@ -88,6 +88,37 @@ class ClassMaker:
             "Stealth",
             "Survival"
         ]
+
+        self.categorized_skills = {
+            "str": [
+                "Athletics"
+            ],
+            "dex": [
+                "Acrobatics",
+                "Sleight of Hand",
+                "Stealth"
+            ],
+            "int": [
+                "Arcana",
+                "History",
+                "Investigation",
+                "Nature",
+                "Religion"
+            ],
+            "wis": [
+                "Animal Handling",
+                "Insight",
+                "Medicine",
+                "Perception",
+                "Survival"
+            ],
+            "cha": [
+                "Deception",
+                "Intimidation",
+                "Performance",
+                "Persuasion"
+            ],
+        }
 
         self.spell_slots = {
         "1":  { "1": 2 },
@@ -304,7 +335,7 @@ class ClassMaker:
   
     def add_class_data(self):
         for cls in self.char_blueprint["classes"]:
-            cls["class_data"] = []
+            cls["class_data"] = {}
             cls_name = cls["name"]
             class_path = self.full_class_data_paths[cls_name]
             core_path = os.path.join(class_path,"core_data")
@@ -315,8 +346,13 @@ class ClassMaker:
             
             for lvl, traits in core_data["levels"].items():
                 if int(lvl) <= cls["level"]:
-                    cls["class_data"].append(traits)
-            
+                    if traits:
+                        cls["class_data"][lvl] = []
+                        for trait in traits:
+                            if trait["name"] != "Subclass Feature":
+                                trait["feature_type"] = "core"
+                                cls["class_data"][lvl].append(trait)
+
     def handle_class_levels(self,classes_data):
         total_level = 0
         missing_class_levels = []
@@ -456,7 +492,6 @@ class ClassMaker:
             cls_name = cls["name"]
             cls_level = cls["level"]
             subcls_name = cls["sub_class"]
-            cls["subclass_data"] = []
             subclasses_path = os.path.join(self.classes_data_path,cls_name,"sub_classes")
             
             if cls_level >= 3:
@@ -477,17 +512,58 @@ class ClassMaker:
 
                 for lvl , traits in subclass_data["levels"].items():
                     if int(lvl) <= cls_level:
-                        cls["subclass_data"].append(traits)
+                        for trait in traits:
+                            trait["feature_type"] = "sub_class"
+                            cls["class_data"][lvl].append(trait)
                         
-    def handle_race(self,races_data,race_name):  
+    def handle_race(self,races_data,race_name,subrace_name):  
         if not race_name:
             race_name, race_data = random.choice(list(races_data.items()))
         
         else:
             race_data = races_data[race_name]
 
-        race_data["name"] = race_name
-        self.char_blueprint["race"] = race_data
+        clean_data = {}
+        resistances = []
+
+        clean_data["name"] = race_name
+        clean_data["traits"] = race_data["effects"]
+
+        size = random.choice(race_data["sizes"])
+        clean_data["size"] = size
+        clean_data["movements"] = race_data["speed"]
+        clean_data["creature_type"] = race_data["creature_type"]
+
+        clean_data["senses"] = race_data["senses"]
+
+        if race_data["resistances"]:
+            for res in race_data["resistances"]:
+                if res not in resistances:
+                    resistances.append(res)
+
+        if not subrace_name:
+            if race_data["sub_races"]:
+                subrace_name = random.choice(race_data["sub_races"])["name"]
+        
+        if subrace_name:
+            for subrace in race_data["sub_races"]:
+                if subrace_name == subrace["name"]:
+                    clean_data["subrace"] = subrace
+        else:
+            clean_data["subrace"] = None
+
+        try:
+            if clean_data["subrace"]:
+                if clean_data["subrace"]["resistances"]:
+                    for res in clean_data["subrace"]["resistances"]:
+                        if res not in resistances:
+                            resistances.append(res)
+        except KeyError:
+            pass
+
+        clean_data["resistances"] = resistances
+
+        self.char_blueprint["race"] = clean_data
 
     def handle_feats(self,feats_data,selected_feats):
         feats_count = {
@@ -498,7 +574,7 @@ class ClassMaker:
         self.char_blueprint["feats"] = []
 
         # count max feats for character
-        for race_effect in self.char_blueprint["race"]["effects"]:
+        for race_effect in self.char_blueprint["race"]["traits"]:
             if race_effect["name"] == "Versatile":
                 feats_count["origin"] += 1
 
@@ -509,7 +585,7 @@ class ClassMaker:
                 
 
         for cls in self.char_blueprint["classes"]:
-            for data in cls["class_data"]:
+            for data in cls["class_data"].values():
                 try:
                     for effect in data:
                         if effect["name"] == "Ability Score Improvement":
@@ -598,7 +674,6 @@ class ClassMaker:
         for ab in saving_throws:
             self.char_blueprint["abilities"][ab]["proficient"] = True
 
-
     def handle_pb(self):
         "calc total level"
         total_level = 0
@@ -658,6 +733,17 @@ class ClassMaker:
             data["check"] = mod
             if data["proficient"]:
                 data["save"] = mod + self.char_blueprint["pb"]
+            else:
+                data["save"] = mod 
+
+    def calc_skill_prof_data(self):
+        categorized_skills = {}
+        for skill in self.char_blueprint["skill_proficiencies"]:
+            for ab, skills in self.categorized_skills.items():
+                if skill in skills:
+                    categorized_skills[ab] = skill
+
+        print(categorized_skills)
 
     def handle_max_hp(self):
         hp_mod = 0
@@ -685,6 +771,23 @@ class ClassMaker:
         max_hp += hp_diff
 
         self.char_blueprint["max_hp"] = max_hp
+
+    def clean_class_data(self):
+        "removes Ability Score Improvement trait from class data"
+
+        for cls in self.char_blueprint["classes"]:
+            new_class_data = {}
+
+            for lvl, traits in cls["class_data"].items():
+                filtered = [
+                    trait for trait in traits
+                    if trait["name"] != "Ability Score Improvement"
+                ]
+
+                if filtered:  # only keep non-empty
+                    new_class_data[lvl] = filtered
+
+            cls["class_data"] = new_class_data
 
     def load_empty_class_data(self):
         empty_filepath = os.path.join(self.output_test_path,"empty_class")
@@ -720,6 +823,7 @@ class ClassMaker:
         char_name = general["character_name"]
         background = general["background"]
         race = general["race"]
+        subrace = general["subrace"]
         max_hp = general["max_hp"]
 
 
@@ -740,7 +844,7 @@ class ClassMaker:
 
         self.handle_subclasses()
 
-        self.handle_race(races_data,race)
+        self.handle_race(races_data,race,subrace)
         
         self.handle_feats(feats_data,feats)
 
@@ -754,13 +858,18 @@ class ClassMaker:
 
         self.handle_skill_prof(skills)
 
+        self.calc_skill_prof_data()
+
         self.handle_hit_dice()
+
+        self.clean_class_data()
 
         if not max_hp:
             self.handle_max_hp()
         else:
             self.char_blueprint["max_hp"] = max_hp
 
+        self.char_blueprint["char_name"] = char_name
         save_path = os.path.join(self.output_test_path,char_name)
         self.file_handler.save_json(save_path,self.char_blueprint)
         return self.char_blueprint

@@ -127,3 +127,10 @@
 # QuickClass Bug Fixes and Improvments
 
 1. prompted ability score gets increased via feats adding (lock pre-defined scores?)
+2. Changable expertise/prof. for saves in frontend?
+
+
+Data additons:
+1. AC
+2. Senses and movements
+3. race; front

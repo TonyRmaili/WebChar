@@ -19,7 +19,6 @@ All keys and nested structures must match the schema exactly, but the values are
 ============================================================
 GLOBAL RULES
 ============================================================
-
 1) Output only raw JSON. Do NOT use markdown, code fences, or explanations.
 
 2) Always produce the full JSON structure required by the schema:
@@ -41,7 +40,6 @@ GLOBAL RULES
 ============================================================
 SECTION: general
 ============================================================
-
 The "general" object contains basic character identity:
 
 - "character_name": null or a string if the user gives a name or asks to generate one.
@@ -58,7 +56,6 @@ Rules:
 ============================================================
 SECTION: ability_scores
 ============================================================
-
 The "ability_scores" object describes scores and priority:
 
 - "score_prio": an array of strings describing priority order for abilities; default [] if not mentioned.
@@ -72,7 +69,6 @@ Rules:
 ============================================================
 SECTION: classes
 ============================================================
-
 The "classes" field is an array of class objects.
 
 Each class object has:
@@ -221,9 +217,63 @@ Class and subclass rules:
    - If the user does not say which is primary, choose the most central or first-mentioned class as "first_class": true by intuition.
 
 ============================================================
+SECTION: race and subrace
+============================================================
+The "race" and "subrace" fields must follow the allowed options below.
+
+Rules:
+
+1) Valid races and subraces:
+   
+- Changeling → subrace: null
+- Kalashtar → subrace: null
+- Khoravar → subrace: null
+- Shifter → subrace: null
+- Warforged → subrace: null
+- Tiefling → ["Abyssal", "Chthonic", "Infernal"]
+- Orc → subrace: null
+- Aasimar → subrace: null
+- Dragonborn → ["Black", "Blue", "Brass", "Bronze", "Copper", "Gold", "Green", "Red", "Silver", "White"]
+- Dwarf → subrace: null
+- Elf → ["Drow", "High Elf", "Wood Elf"]
+- Gnome → ["Forest Gnome", "Rock Gnome"]
+- Goliath → ["Cloud Giant", "Fire Giant", "Frost Giant", "Hill Giant", "Stone Giant", "Storm Giant"]
+- Halfling → subrace: null
+- Human → subrace: null
+
+All values must use the exact identifiers shown above (including capitalization and spacing).
+
+2) Mapping user input:
+
+- If the user specifies a race, map it to the corresponding identifier.
+- If the user specifies a valid subrace, set both:
+  - "race" to the parent race
+  - "subrace" to the correct identifier
+
+Example:
+- “High Elf” → race: "Elf", subrace: "High Elf"
+
+3) Missing values:
+
+- If the user specifies a race but no subrace, set:
+  - "race": valid value
+  - "subrace": null
+
+- If the user specifies a subrace but not the race, infer the race automatically.
+
+- If the user does not specify either race or subrace, set both to null.
+
+4) Invalid input:
+
+- If the user provides a race or subrace that is not in the allowed list, set both fields to null.
+
+5) Do not invent:
+
+- Do not assign a race or subrace unless it is clearly stated or strongly implied by the user.
+  
+============================================================
 SECTION: skills
 ============================================================
-
 "skills" is an array of objects:
 - Each has:
   - "skill": a string (skill name) or "" if not specified.
@@ -232,11 +282,10 @@ SECTION: skills
 Rules:
 - If the user mentions specific skills or expertise, fill these entries.
 - Otherwise, leave "skills": [] (an empty array).
-- 
+  
 ============================================================
 SECTION: feats
 ============================================================
-
 "feats" is an array of strings:
 
 Rules:
@@ -246,7 +295,6 @@ Rules:
 ============================================================
 SECTION: biography
 ============================================================
-
 The "biography" object contains:
 
 - "backstory": null or a string backstory if the user provides one.
@@ -265,7 +313,6 @@ Rules:
 ============================================================
 SECTION: inventory
 ============================================================
-
 The "inventory" object has:
 
 - "treasure": an object with numeric fields:
@@ -282,7 +329,6 @@ Rules:
 ============================================================
 FINAL OUTPUT REQUIREMENT
 ============================================================
-
 Your response must be:
 - A single JSON object.
 - Valid JSON.

@@ -1,0 +1,333 @@
+{
+    "background": {
+        "name": "Scribe",
+        "data": {
+            "ability_scores": [
+                "dex",
+                "int",
+                "wis"
+            ],
+            "feat": "Skilled",
+            "skill_proficiencies": [
+                "Investigation",
+                "Perception"
+            ],
+            "tool_proficiencies": [
+                "Calligrapher's Supplies"
+            ],
+            "equipment": {
+                "amount": 1,
+                "choices": [
+                    {
+                        "id": "A",
+                        "items": [
+                            "Calligrapher's Supplies",
+                            "Fine Clothes",
+                            "Lamp",
+                            "Oil (3 flasks)",
+                            "Parchment (12 sheets)",
+                            "23 GP"
+                        ]
+                    },
+                    {
+                        "id": "B",
+                        "items": [
+                            "50 GP"
+                        ]
+                    }
+                ]
+            }
+        }
+    },
+    "classes": [
+        {
+            "name": "wizard",
+            "sub_class": "Abjurer",
+            "level": 13,
+            "first_class": true,
+            "class_data": {
+                "1": [
+                    {
+                        "name": "Spellcasting",
+                        "notes": "You have learned to cast spells as a student of arcane magic.\n\nCantrips. You know three Wizard cantrips of your choice (Light, Mage Hand, and Ray of Frost are recommended). Whenever you finish a Long Rest, you can replace one of these cantrips with another Wizard cantrip of your choice. At Wizard levels 4 and 10, you learn one additional Wizard cantrip, as shown in the class table.\n\nSpellbook. Your studies culminated in the creation of your spellbook. It is a Tiny object (3 pounds, 100 pages) that can be read only by you or by someone casting Identify. You determine its appearance and materials.\nThe book contains the level 1+ Wizard spells you know. It begins with six level 1 Wizard spells of your choice (Detect Magic, Feather Fall, Mage Armor, Magic Missile, Sleep, and Thunderwave are recommended).\nWhenever you gain a Wizard level after 1, you add two Wizard spells of your choice to your spellbook. Each spell must be of a level for which you have spell slots, as shown in the Wizard Features table.\n\nSpell Slots. The Wizard Features table shows how many spell slots you have to cast your level 1+ spells. You regain all expended spell slots when you finish a Long Rest.\n\nPrepared Spells of Level 1+. You prepare a list of Wizard spells of level 1+ that you can cast. To start, choose four spells from your spellbook. Each prepared spell must be of a level for which you have spell slots.\nThe number of prepared spells increases as you gain Wizard levels, as shown in the Prepared Spells column of the Wizard Features table; whenever that number increases, you choose additional spells from your spellbook to match the new total.\nIf another Wizard feature gives you spells that are always prepared, those spells don’t count against the number of spells you can prepare, but they count as Wizard spells for you.\n\nChanging Prepared Spells. Whenever you finish a Long Rest, you can change your list of prepared spells, replacing any of them with other spells from your spellbook.\n\nSpellcasting Ability. Intelligence is your spellcasting ability for Wizard spells.\n\nSpellcasting Focus. You can use an Arcane Focus or your spellbook as a Spellcasting Focus for your Wizard spells.\n\nExpanding and Replacing a Spellbook. The spells you gain when leveling reflect your ongoing research, but you can also add spells you find:\n• Copying a Spell into the Book. When you find a level 1+ Wizard spell, you can copy it into your spellbook if it is of a level you can prepare and you have the time and resources. Copying takes 2 hours and 50 GP per spell level. Once copied, you can prepare the spell like any other in your book.\n• Copying the Book. You can copy spells from your spellbook into another book. This is faster because you already know the spells: it takes 1 hour and 10 GP per spell level.\n• Replacing a Lost Book. If you lose your spellbook, you can use the same process to transcribe the Wizard spells you currently have prepared into a new book. Filling out the remainder of the new spellbook requires you to find additional spells. Many wizards keep a backup spellbook for this reason.",
+                        "feature_type": "core"
+                    },
+                    {
+                        "name": "Ritual Adept",
+                        "notes": "You can cast any spell as a Ritual if the spell has the Ritual tag and is in your spellbook. You need not have the spell prepared, but you must read from your spellbook when casting it as a Ritual.",
+                        "feature_type": "core"
+                    },
+                    {
+                        "name": "Arcane Recovery",
+                        "notes": "You can regain some of your magical energy by studying your spellbook. When you finish a Short Rest, you can recover expended spell slots with a combined level equal to no more than half your Wizard level (round up), and none of the recovered slots can be level 6 or higher.\nFor example, as a level 4 Wizard, you can recover up to two levels’ worth of spell slots (one level 2 slot or two level 1 slots).\nOnce you use this feature, you can’t use it again until you finish a Long Rest.",
+                        "feature_type": "core"
+                    }
+                ],
+                "2": [
+                    {
+                        "name": "Scholar",
+                        "notes": "In addition to your magical studies, you specialized in another field of study. Choose one of the following skills in which you have proficiency: Arcana, History, Investigation, Medicine, Nature, or Religion. You gain Expertise in the chosen skill.",
+                        "feature_type": "core"
+                    }
+                ],
+                "3": [
+                    {
+                        "name": "Abjuration Savant",
+                        "notes": "Add two level 1–2 Abjuration Wizard spells to your spellbook for free.\n\nWhenever you gain a new level of spell slots, add one free Abjuration Wizard spell of a level you can cast to your spellbook.",
+                        "feature_type": "sub_class"
+                    },
+                    {
+                        "name": "Arcane Ward",
+                        "notes": "When you cast an Abjuration spell with a spell slot, you can create a magical ward on yourself that lasts until you finish a Long Rest.\n\nWard HP = 2 × your Wizard level + your Intelligence modifier.\n\nDamage rules:\n- Damage is applied to the ward instead of you.\n- Apply your Resistances/Vulnerabilities before damage reduces the ward.\n- If the ward drops to 0 HP, you take any remaining damage.\n\nRestoring the ward:\n- Each time you cast an Abjuration spell with a spell slot, the ward regains HP equal to 2 × the slot level.\n- As a Bonus Action, you may expend a spell slot to restore the ward by the same amount.\n\nYou cannot create the ward again until finishing a Long Rest.",
+                        "feature_type": "sub_class"
+                    }
+                ],
+                "5": [
+                    {
+                        "name": "Memorize Spell",
+                        "notes": "Whenever you finish a Short Rest, you can study your spellbook and replace one of the level 1+ Wizard spells you have prepared for your Spellcasting feature with a different level 1+ Wizard spell from your spellbook.",
+                        "feature_type": "core"
+                    }
+                ],
+                "6": [
+                    {
+                        "name": "Projected Ward",
+                        "notes": "When a creature you can see within 30 ft. takes damage, you may use a Reaction to have your Arcane Ward absorb that damage instead.\n\nIf this reduces the ward to 0 HP, the protected creature takes leftover damage. Apply the creature’s Resistances/Vulnerabilities before reduction.",
+                        "feature_type": "sub_class"
+                    }
+                ],
+                "10": [
+                    {
+                        "name": "Spell Breaker",
+                        "notes": "You always have Counterspell and Dispel Magic prepared.\n\nBenefits:\n- You can cast Dispel Magic as a Bonus Action.\n- Add your Proficiency Bonus to the Dispel Magic ability check.\n- When Counterspell or Dispel Magic fails to stop a spell, the spell slot used is not expended.",
+                        "feature_type": "sub_class"
+                    }
+                ]
+            },
+            "core_traits": {
+                "class_name": "wizard",
+                "primary_abilities": [
+                    "int"
+                ],
+                "hit_die": "d6",
+                "saving_throw_proficiencies": [
+                    "int",
+                    "wis"
+                ],
+                "skill_proficiencies": {
+                    "amount": 2,
+                    "choices": [
+                        "Arcana",
+                        "History",
+                        "Insight",
+                        "Investigation",
+                        "Medicine",
+                        "Nature",
+                        "Religion"
+                    ]
+                },
+                "weapon_proficiencies": [
+                    "simple"
+                ],
+                "starting_equipment": {
+                    "amount": 1,
+                    "choices": [
+                        [
+                            "Daggers (2)",
+                            "Arcane Focus (Quarterstaff)",
+                            "Robe",
+                            "Spellbook",
+                            "Scholar's Pack",
+                            "5 gp"
+                        ],
+                        [
+                            "55 gp"
+                        ],
+                        "custom"
+                    ]
+                },
+                "multiclassing": {
+                    "primary_ability": 13
+                }
+            },
+            "caster_type": "full"
+        }
+    ],
+    "abilities": {
+        "str": {
+            "score": 10,
+            "mod": 0,
+            "check": 0,
+            "save": 0,
+            "proficient": false,
+            "expertise": false
+        },
+        "dex": {
+            "score": 11,
+            "mod": 0,
+            "check": 0,
+            "save": 0,
+            "proficient": false,
+            "expertise": false
+        },
+        "con": {
+            "score": 15,
+            "mod": 2,
+            "check": 2,
+            "save": 2,
+            "proficient": false,
+            "expertise": false
+        },
+        "int": {
+            "score": 24,
+            "mod": 7,
+            "check": 7,
+            "save": 12,
+            "proficient": true,
+            "expertise": false
+        },
+        "wis": {
+            "score": 8,
+            "mod": -1,
+            "check": -1,
+            "save": 4,
+            "proficient": true,
+            "expertise": false
+        },
+        "cha": {
+            "score": 7,
+            "mod": -2,
+            "check": -2,
+            "save": -2,
+            "proficient": false,
+            "expertise": false
+        }
+    },
+    "race": {
+        "creature_type": "Humanoid",
+        "sizes": [
+            "medium"
+        ],
+        "speed": {
+            "walk": 35
+        },
+        "resistances": [],
+        "effects": [
+            {
+                "name": "Giant Ancestry",
+                "notes": "You are descended from Giants. Choose one of the following benefits—a supernatural boon from your ancestry; you can use the chosen benefit a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest:"
+            },
+            {
+                "name": "Large Form",
+                "notes": "Starting at character level 5, you can change your size to Large as a Bonus Action if you're in a big enough space. This transformation lasts for 10 minutes or until you end it (no action required). For that duration, you have Advantage on Strength checks, and your Speed increases by 10 feet. Once you use this trait, you can't use it again until you finish a Long Rest."
+            },
+            {
+                "name": "Powerful Build",
+                "notes": "You have Advantage on any ability check you make to end the Grappled condition. You also count as one size larger when determining your carrying capacity."
+            }
+        ],
+        "senses": {},
+        "sub_races": [
+            {
+                "name": "Cloud Giant",
+                "effects": [
+                    {
+                        "name": "Cloud's Jaunt",
+                        "notes": "As a Bonus Action, you magically teleport up to 30 feet to an unoccupied space you can see."
+                    }
+                ]
+            },
+            {
+                "name": "Fire Giant",
+                "effects": [
+                    {
+                        "name": "Fire's Burn",
+                        "notes": "When you hit a target with an attack roll and deal damage to it, you can also deal 1d10 Fire damage to that target."
+                    }
+                ]
+            },
+            {
+                "name": "Frost Giant",
+                "effects": [
+                    {
+                        "name": "Frost's Chill",
+                        "notes": "When you hit a target with an attack roll and deal damage to it, you can also deal 1d6 Cold damage to that target and reduce its Speed by 10 feet until the start of your next turn."
+                    }
+                ]
+            },
+            {
+                "name": "Hill Giant",
+                "effects": [
+                    {
+                        "name": "Hill's Tumble",
+                        "notes": "When you hit a Large or smaller creature with an attack roll and deal damage to it, you can give that target the Prone condition."
+                    }
+                ]
+            },
+            {
+                "name": "Stone Giant",
+                "effects": [
+                    {
+                        "name": "Stone's Endurance",
+                        "notes": "When you take damage, you can take a Reaction to roll 1d12. Add your Constitution modifier to the number rolled and reduce the damage by that total."
+                    }
+                ]
+            },
+            {
+                "name": "Storm Giant",
+                "effects": [
+                    {
+                        "name": "Storm's Thunder",
+                        "notes": "When you take damage from a creature within 60 feet of you, you can take a Reaction to deal 1d8 Thunder damage to that creature."
+                    }
+                ]
+            }
+        ],
+        "source": "phb_24",
+        "name": "Goliath"
+    },
+    "feats": [
+        {
+            "prerequisite": [],
+            "source": "phb24",
+            "category": "origin",
+            "ability_score_increase": [],
+            "repeatable": true,
+            "has_table": false,
+            "notes": "You gain proficiency in any combination of three skills or tools of your choice.",
+            "name": "Skilled"
+        }
+    ],
+    "total_level": 13,
+    "pb": 5,
+    "skill_proficiencies": [
+        "Investigation",
+        "Perception",
+        "Intimidation",
+        "Performance"
+    ],
+    "hit_dice": {
+        "d6": {
+            "amount": 13,
+            "average": 4,
+            "size": 6
+        },
+        "d8": {
+            "amount": 0,
+            "average": 5,
+            "size": 8
+        },
+        "d10": {
+            "amount": 0,
+            "average": 6,
+            "size": 10
+        },
+        "d12": {
+            "amount": 0,
+            "average": 7,
+            "size": 12
+        }
+    },
+    "max_hp": 80,
+    "char_name": "Tharok Emberpeak"
+}
