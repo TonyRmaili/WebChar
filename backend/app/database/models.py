@@ -33,7 +33,7 @@ class User(Base):
     name :Mapped[str] = mapped_column(String, unique=True)
     password :Mapped[str] = mapped_column(String)
     email: Mapped[str] = mapped_column(String,unique=True)
-
+    selected_campaign: Mapped[str | None] = mapped_column(String, nullable=True)
     characters: Mapped[list[Character]] = relationship("Character", back_populates="user")
 
 

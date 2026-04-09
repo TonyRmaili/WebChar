@@ -9,6 +9,16 @@ export const DICE_TYPES = [
 ]
 
 
+
+export const ABILITY_LABELS = {
+  str: "STR",
+  dex: "DEX",
+  con: "CON",
+  int: "INT",
+  wis: "WIS",
+  cha: "CHA",
+};
+
 export const DIE_ORDER = ["d4", "d6", "d8", "d10", "d12", "d20"];
 
 export const ABILITY_ORDER = ["str", "dex", "con", "int", "wis", "cha"];

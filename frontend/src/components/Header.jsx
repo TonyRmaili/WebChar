@@ -33,6 +33,10 @@ function Header() {
           <img src={LogOutLogo} className="h-16" />
           <p>DM-Tools</p>
         </Link>
+        <Link to="/Campaigns" className="flex flex-col gap-2">
+          <img src={LogOutLogo} className="h-16" />
+          <p>Campaigns</p>
+        </Link>
         <Link to="/Embedder" className="flex flex-col gap-2">
           <img src={LogOutLogo} className="h-16" />
           <p>Embedder</p>

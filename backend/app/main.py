@@ -84,7 +84,9 @@ def create_account(user: UserSchema, db: Session = Depends(get_db)):
         db.commit()
         username = new_user.name
         profile_path = savefiles_path + username
+        campaigns_path = os.path.join(profile_path,"campaigns")
         os.makedirs(profile_path,exist_ok=True)
+        os.makedirs(campaigns_path,exist_ok=True)
 
     except IntegrityError:
         raise HTTPException(detail="User already exists", status_code=status.HTTP_400_BAD_REQUEST) # ?Might not be secure?
@@ -545,8 +547,6 @@ def import_minion(
 
     
 
- 
-
 # ------------------------Dice-----------------------------
 @app.post("/dice", tags=["dice"])
 def handle_dice_payload(
@@ -567,7 +567,6 @@ def catch_minion_effects(
     messages = handle_minionEffects(payload)
 
     return messages
-
 
 
 
@@ -669,4 +668,72 @@ def get_races():
         return {"file not found"}
 
  
+# ------------------------Campaigns-----------------------------
 
+@app.get("/campaign", tags=["campaign"])
+def get_campaigns(
+    current_user: Annotated[User, Depends(get_current_user)],
+):
+    try:
+        campaigns_path = os.path.join(savefiles_path,current_user.name,"campaigns")
+        campaigns = os.listdir(campaigns_path)
+        return campaigns
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/campaign", tags=["campaign"])
+def create_campaign(
+    current_user: Annotated[User, Depends(get_current_user)],
+    campaign_name: str
+):
+    campaign_path = os.path.join(
+        savefiles_path,
+        current_user.name,
+        "campaigns",
+        campaign_name
+    )
+
+    os.makedirs(campaign_path, exist_ok=True)
+
+    return {
+        "message": "Campaign created",
+        "campaign_name": campaign_name
+    }
+
+@app.put("/campaign", tags=["campaign"])
+def select_campaign(
+    current_user: Annotated[User, Depends(get_current_user)],
+    campaign_name: str,
+    db: Session = Depends(get_db),
+):
+    try:
+        # Optional: validate campaign exists
+        campaign_path = os.path.join(
+            savefiles_path,
+            current_user.name,
+            "campaigns",
+            campaign_name
+        )
+
+        if not os.path.isdir(campaign_path):
+            raise HTTPException(status_code=404, detail="Campaign not found")
+
+        # Update user
+        current_user.selected_campaign = campaign_name
+
+        db.add(current_user)
+        db.commit()
+        db.refresh(current_user)
+
+        return {
+            "message": "Selected campaign updated",
+            "selected_campaign": current_user.selected_campaign
+        }
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=500, detail=str(e))

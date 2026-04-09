@@ -90,34 +90,34 @@ class ClassMaker:
         ]
 
         self.categorized_skills = {
-            "str": [
-                "Athletics"
-            ],
-            "dex": [
-                "Acrobatics",
-                "Sleight of Hand",
-                "Stealth"
-            ],
-            "int": [
-                "Arcana",
-                "History",
-                "Investigation",
-                "Nature",
-                "Religion"
-            ],
-            "wis": [
-                "Animal Handling",
-                "Insight",
-                "Medicine",
-                "Perception",
-                "Survival"
-            ],
-            "cha": [
-                "Deception",
-                "Intimidation",
-                "Performance",
-                "Persuasion"
-            ],
+            "str": {
+                "Athletics": {"proficient": False, "expertise": False, "check": None}
+            },
+            "dex": {
+                "Acrobatics": {"proficient": False, "expertise": False, "check": None},
+                "Sleight of Hand": {"proficient": False, "expertise": False, "check": None},
+                "Stealth": {"proficient": False, "expertise": False, "check": None},
+            },
+            "int": {
+                "Arcana": {"proficient": False, "expertise": False, "check": None},
+                "History": {"proficient": False, "expertise": False, "check": None},
+                "Investigation": {"proficient": False, "expertise": False, "check": None},
+                "Nature": {"proficient": False, "expertise": False, "check": None},
+                "Religion": {"proficient": False, "expertise": False, "check": None},
+            },
+            "wis": {
+                "Animal Handling": {"proficient": False, "expertise": False, "check": None},
+                "Insight": {"proficient": False, "expertise": False, "check": None},
+                "Medicine": {"proficient": False, "expertise": False, "check": None},
+                "Perception": {"proficient": False, "expertise": False, "check": None},
+                "Survival": {"proficient": False, "expertise": False, "check": None},
+            },
+            "cha": {
+                "Deception": {"proficient": False, "expertise": False, "check": None},
+                "Intimidation": {"proficient": False, "expertise": False, "check": None},
+                "Performance": {"proficient": False, "expertise": False, "check": None},
+                "Persuasion": {"proficient": False, "expertise": False, "check": None},
+            },
         }
 
         self.spell_slots = {
@@ -561,7 +561,7 @@ class ClassMaker:
         except KeyError:
             pass
 
-        clean_data["resistances"] = resistances
+        self.char_blueprint["resistances"] = resistances
 
         self.char_blueprint["race"] = clean_data
 
@@ -737,13 +737,18 @@ class ClassMaker:
                 data["save"] = mod 
 
     def calc_skill_prof_data(self):
-        categorized_skills = {}
-        for skill in self.char_blueprint["skill_proficiencies"]:
-            for ab, skills in self.categorized_skills.items():
-                if skill in skills:
-                    categorized_skills[ab] = skill
+        for ab, skills in self.categorized_skills.items():
+            mod = self.char_blueprint["abilities"][ab]["mod"]
+            for name, data in skills.items():
+                if name in self.char_blueprint["skill_proficiencies"]:
+                    data["check"] = mod + self.char_blueprint["pb"]
+                    data["proficient"] = True
+                else:
+                    data["check"] = mod 
 
-        print(categorized_skills)
+        self.char_blueprint["skills"] = self.categorized_skills
+        print(self.char_blueprint["skill_proficiencies"])
+        del self.char_blueprint["skill_proficiencies"]
 
     def handle_max_hp(self):
         hp_mod = 0

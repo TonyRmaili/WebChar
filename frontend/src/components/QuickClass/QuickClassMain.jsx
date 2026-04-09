@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import useCharStore from "../../store/CharStore";
-import { NumberInput, AbilityStat, Collapsible } from "./Widgets";
+import { InputBlock, AbilityStat, Collapsible, SkillsBlock } from "./Widgets";
 import { ABILITY_ORDER } from "../../utils/Constants";
 
 function QuickClassMain() {
@@ -97,26 +97,68 @@ function QuickClassMain() {
             </h2>
 
             {response && (
-              <input
-                type="text"
-                value={response.char_name ?? ""}
-                onChange={(e) =>
-                  setResponse({
-                    ...response,
-                    char_name: e.target.value,
-                  })
-                }
-                className="
-                  bg-transparent
-                  text-xl font-bold
-                  text-red-300
-                  outline-none
-                  border-none
-                  border-b border-transparent
-                  focus:border-red-700
-                  px-1
-                "
-              />
+              <div className="">
+                <input
+                  type="text"
+                  value={response.char_name ?? ""}
+                  onChange={(e) =>
+                    setResponse({
+                      ...response,
+                      char_name: e.target.value,
+                    })
+                  }
+                  className="
+                    bg-transparent
+                    text-xl font-bold
+                    text-red-300
+                    outline-none
+                    border-none
+                    border-b border-transparent
+                    focus:border-red-700
+                    px-1
+                  "
+                />
+                <input
+                  type="text"
+                  value={response.race.name ?? ""}
+                  onChange={(e) =>
+                    setResponse({
+                      ...response,
+                      char_name: e.target.value,
+                    })
+                  }
+                  className="
+                    bg-transparent
+                    text-xl font-bold
+                    text-red-300
+                    outline-none
+                    border-none
+                    border-b border-transparent
+                    focus:border-red-700
+                    px-1
+                  "
+                />
+                <input
+                  type="text"
+                  value={response.background.name ?? ""}
+                  onChange={(e) =>
+                    setResponse({
+                      ...response,
+                      char_name: e.target.value,
+                    })
+                  }
+                  className="
+                    bg-transparent
+                    text-xl font-bold
+                    text-red-300
+                    outline-none
+                    border-none
+                    border-b border-transparent
+                    focus:border-red-700
+                    px-1
+                  "
+                />
+              </div>
             )}
           </div>
 
@@ -126,7 +168,7 @@ function QuickClassMain() {
               {/* General Stats*/}
               <Collapsible title="General Stats">
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-6">
-                  <NumberInput
+                  <InputBlock
                     label="Max HP"
                     type="number"
                     value={response.max_hp}
@@ -137,7 +179,7 @@ function QuickClassMain() {
                       })
                     }
                   />
-                  <NumberInput
+                  <InputBlock
                     label="Total Level"
                     type="number"
                     value={response.total_level}
@@ -148,7 +190,7 @@ function QuickClassMain() {
                       })
                     }
                   />
-                  <NumberInput
+                  <InputBlock
                     label="Prof. Bonus"
                     type="number"
                     value={response.pb}
@@ -161,9 +203,6 @@ function QuickClassMain() {
                   />
                 </div>
               </Collapsible>
-
-              {/* General Stats*/}
-
 
               {/* Ability Scores*/}
               <Collapsible title="Ability Scores">
@@ -201,61 +240,200 @@ function QuickClassMain() {
                           {cls.sub_class}
                         </span>
                         <span className="text-amber-500">{cls.name}</span>
-                        <span className="text-gray-300">level: {cls.level}</span>
+                        <span className="text-gray-300">
+                          level: {cls.level}
+                        </span>
                       </div>
                     }
                   >
                     <div className="flex flex-col gap-2">
-                      {Object.entries(cls.class_data).map(([lvl, lvlFeatures]) => (
-                        <Collapsible
-                          key={`${i}-lvl-${lvl}`}
-                          title={
-                            <div className="flex items-baseline gap-2">
-                              <span className="text-stone-300 font-semibold">
-                                Level {lvl}
-                              </span>
-                              <span className="text-stone-500 text-xs uppercase tracking-wider">
-                                {lvlFeatures.length} feature{lvlFeatures.length !== 1 ? "s" : ""}
-                              </span>
-                            </div>
-                          }
-                        >
-                          <div className="flex flex-col gap-2">
-                            {lvlFeatures.map((feature, featureIndex) => (
-                              <Collapsible
-                                key={`${i}-${lvl}-${featureIndex}`}
-                                title={
-                                  <div className="flex items-baseline gap-2">
-                                    <span className="text-stone-200 font-medium">
-                                      {feature.name}
-                                    </span>
-                                    <span
-                                      className={
-                                        feature.feature_type === "sub_class"
-                                          ? "text-red-400 text-xs uppercase tracking-wider"
-                                          : "text-amber-500 text-xs uppercase tracking-wider"
-                                      }
-                                    >
-                                      {feature.feature_type}
-                                    </span>
+                      {Object.entries(cls.class_data).map(
+                        ([lvl, lvlFeatures]) => (
+                          <Collapsible
+                            key={`${i}-lvl-${lvl}`}
+                            title={
+                              <div className="flex items-baseline gap-2">
+                                <span className="text-stone-300 font-semibold">
+                                  Level {lvl}
+                                </span>
+                                <span className="text-stone-500 text-xs uppercase tracking-wider">
+                                  {lvlFeatures.length} feature
+                                  {lvlFeatures.length !== 1 ? "s" : ""}
+                                </span>
+                              </div>
+                            }
+                          >
+                            <div className="flex flex-col gap-2">
+                              {lvlFeatures.map((feature, featureIndex) => (
+                                <Collapsible
+                                  key={`${i}-${lvl}-${featureIndex}`}
+                                  title={
+                                    <div className="flex items-baseline gap-2">
+                                      <span className="text-stone-200 font-medium">
+                                        {feature.name}
+                                      </span>
+                                      <span
+                                        className={
+                                          feature.feature_type === "sub_class"
+                                            ? "text-red-400 text-xs uppercase tracking-wider"
+                                            : "text-amber-500 text-xs uppercase tracking-wider"
+                                        }
+                                      >
+                                        {feature.feature_type}
+                                      </span>
+                                    </div>
+                                  }
+                                >
+                                  <div className="rounded-md border border-stone-800 bg-black/30 p-3">
+                                    <p className="whitespace-pre-line text-sm text-stone-300">
+                                      {feature.notes}
+                                    </p>
                                   </div>
-                                }
-                              >
-                                <div className="rounded-md border border-stone-800 bg-black/30 p-3">
-                                  <p className="whitespace-pre-line text-sm text-stone-300">
-                                    {feature.notes}
-                                  </p>
-                                </div>
-                              </Collapsible>
-                            ))}
-                          </div>
-                        </Collapsible>
-                      ))}
+                                </Collapsible>
+                              ))}
+                            </div>
+                          </Collapsible>
+                        ),
+                      )}
                     </div>
                   </Collapsible>
                 ))}
               </Collapsible>
-              
+
+              {/* Race Data*/}
+              <Collapsible
+                title={
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-amber-500 font-semibold">
+                      {response.race.name}
+                    </span>
+
+                    {response.race.subrace?.name && (
+                      <span className="text-red-400 italic tracking-wider">
+                        {response.race.subrace.name}
+                      </span>
+                    )}
+                  </div>
+                }
+              >
+                <div className="flex flex-col gap-3">
+                  {/* Race details */}
+                  <div className="rounded-md border border-stone-800 bg-black/30 p-3">
+                    <div className="grid grid-cols-1 gap-2 md:grid-cols-2 xl:grid-cols-3">
+                      {response.race.size && (
+                        <div className="rounded-md border border-stone-800 bg-zinc-950 p-2">
+                          <p className="text-[10px] uppercase tracking-[0.15em] text-stone-500">
+                            Size
+                          </p>
+                          <p className="text-stone-200">{response.race.size}</p>
+                        </div>
+                      )}
+
+                      {response.race.creature_type && (
+                        <div className="rounded-md border border-stone-800 bg-zinc-950 p-2">
+                          <p className="text-[10px] uppercase tracking-[0.15em] text-stone-500">
+                            Creature Type
+                          </p>
+                          <p className="text-stone-200">
+                            {response.race.creature_type}
+                          </p>
+                        </div>
+                      )}
+
+                      {response.race.movements &&
+                        Object.keys(response.race.movements).length > 0 && (
+                          <div className="rounded-md border border-stone-800 bg-zinc-950 p-2">
+                            <p className="text-[10px] uppercase tracking-[0.15em] text-stone-500">
+                              Movement
+                            </p>
+                            <div className="flex flex-col gap-1">
+                              {Object.entries(response.race.movements).map(
+                                ([moveType, value]) => (
+                                  <p key={moveType} className="text-stone-200">
+                                    <span className="text-stone-400 capitalize">
+                                      {moveType}:
+                                    </span>{" "}
+                                    {value}
+                                  </p>
+                                ),
+                              )}
+                            </div>
+                          </div>
+                        )}
+
+                      {response.race.senses &&
+                        Object.keys(response.race.senses).length > 0 && (
+                          <div className="rounded-md border border-stone-800 bg-zinc-950 p-2">
+                            <p className="text-[10px] uppercase tracking-[0.15em] text-stone-500">
+                              Senses
+                            </p>
+                            <div className="flex flex-col gap-1">
+                              {Object.entries(response.race.senses).map(
+                                ([sense, value]) => (
+                                  <p key={sense} className="text-stone-200">
+                                    <span className="text-stone-400 capitalize">
+                                      {sense}:
+                                    </span>{" "}
+                                    {value}
+                                  </p>
+                                ),
+                              )}
+                            </div>
+                          </div>
+                        )}
+                    </div>
+                  </div>
+
+                  {/* Race traits */}
+                  {response.race.traits?.length > 0 && (
+                    <div className="flex flex-col gap-2">
+                      {response.race.traits.map((trait, i) => (
+                        <Collapsible
+                          key={`race-trait-${i}`}
+                          title={
+                            <span className="text-stone-200 font-medium">
+                              {trait.name}
+                            </span>
+                          }
+                        >
+                          <div className="rounded-md border border-stone-800 bg-black/30 p-3">
+                            <p className="whitespace-pre-line text-sm text-stone-300">
+                              {trait.notes}
+                            </p>
+                          </div>
+                        </Collapsible>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Subrace traits */}
+                  {response.race.subrace && (
+                  <div className="rounded-md border border-stone-800 bg-black/30 p-3">
+                    <p className="mb-2 text-[10px] uppercase tracking-[0.15em] text-red-400">
+                      Subrace
+                    </p>
+
+                    <p className="text-stone-200 font-medium">
+                      {response.race.subrace.name}
+                    </p>
+
+                    {response.race.subrace.notes && (
+                      <p className="mt-2 whitespace-pre-line text-sm text-stone-300">
+                        {response.race.subrace.notes}
+                      </p>
+                    )}
+                  </div>
+                )}
+                </div>
+              </Collapsible>
+
+              {/* Skills*/}
+              <SkillsBlock
+                skills={response.skills}
+                response={response}
+                setResponse={setResponse}
+              />
+
               {/* Feats */}
               <Collapsible title="Feats">
                 <div className="flex flex-col gap-2">
@@ -278,9 +456,8 @@ function QuickClassMain() {
                 </div>
               </Collapsible>
 
+              
 
-
- 
             </div>
           )}
         </div>

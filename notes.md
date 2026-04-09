@@ -128,9 +128,9 @@
 
 1. prompted ability score gets increased via feats adding (lock pre-defined scores?)
 2. Changable expertise/prof. for saves in frontend?
+3. Feats not calculating enough
+4. investigate skill prof addition (specifically bard)
 
 
 Data additons:
 1. AC
-2. Senses and movements
-3. race; front

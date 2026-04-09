@@ -1,19 +1,19 @@
 {
     "background": {
-        "name": "Mythalkeeper",
+        "name": "Noble",
         "data": {
             "ability_scores": [
+                "str",
                 "int",
-                "wis",
                 "cha"
             ],
-            "feat": "Crafter",
+            "feat": "Skilled",
             "skill_proficiencies": [
-                "Arcana",
-                "History"
+                "History",
+                "Persuasion"
             ],
             "tool_proficiencies": [
-                "Jeweler's Tools"
+                "Gaming Set (choice)"
             ],
             "equipment": {
                 "amount": 1,
@@ -21,15 +21,10 @@
                     {
                         "id": "A",
                         "items": [
-                            "Quarterstaff",
-                            "Jeweler's Tools",
+                            "Gaming Set (chosen type)",
+                            "Fine Clothes",
                             "Perfume",
-                            "Pouch",
-                            "Robe",
-                            "Shovel",
-                            "String",
-                            "Waterskin",
-                            "16 GP"
+                            "29 GP"
                         ]
                     },
                     {
@@ -44,98 +39,108 @@
     },
     "classes": [
         {
-            "name": "cleric",
-            "sub_class": "Life Domain",
-            "level": 11,
+            "name": "barbarian",
+            "sub_class": "World Tree",
+            "level": 7,
             "first_class": true,
             "class_data": {
                 "1": [
                     {
-                        "name": "Spellcasting",
-                        "notes": "You have learned to cast spells through prayer and meditation.\n\nCantrips. You know three cantrips of your choice from the Cleric spell list. Guidance, Sacred Flame, and Thaumaturgy are recommended. Whenever you gain a Cleric level, you can replace one of your cantrips with another Cleric cantrip of your choice. At Cleric levels 4 and 10, you learn one additional cantrip, as shown in the Cantrips column of the Cleric Features table.\n\nSpell Slots. The Cleric Features table shows how many spell slots you have for your level 1+ spells. You regain all expended spell slots when you finish a Long Rest.\n\nPrepared Spells of Level 1+. You prepare a list of Cleric spells of level 1+ that you can cast. To start, choose four level 1 Cleric spells. Bless, Cure Wounds, Guiding Bolt, and Shield of Faith are recommended. The number of prepared spells increases with your Cleric level, as shown in the Prepared Spells column of the Cleric Features table. Prepared spells must be of levels for which you have spell slots. If a Cleric feature gives you spells that are always prepared, they don’t count against this number but are still Cleric spells for you.\n\nChanging Prepared Spells. When you finish a Long Rest, you can change your prepared list, replacing any number of prepared spells with other Cleric spells for which you have spell slots.\n\nSpellcasting Ability. Wisdom is your spellcasting ability for your Cleric spells.\n\nSpellcasting Focus. You can use a Holy Symbol as a Spellcasting Focus for your Cleric spells.",
+                        "name": "Rage",
+                        "notes": "You can imbue yourself with a primal power called Rage, granting extraordinary might and resilience. You can enter a Rage as a Bonus Action if you aren't wearing Heavy armor. You can enter your Rage a number of times equal to the Rages column of the Barbarian Features table. You regain one expended use when you finish a Short Rest and all expended uses when you finish a Long Rest.\n\nWhile active, your Rage grants the following benefits:\nDamage Resistance. You have Resistance to Bludgeoning, Piercing, and Slashing damage.\nRage Damage. When you make an attack using Strength with a weapon or an Unarmed Strike and deal damage, you add a bonus that increases as you gain levels.\nStrength Advantage. You have Advantage on Strength checks and Strength saving throws.\nNo Concentration or Spells. You cannot maintain Concentration or cast spells.\n\nDuration. Rage lasts until the end of your next turn. It ends early if you don Heavy armor or become Incapacitated. On each subsequent turn, you may extend your Rage to the end of your next turn by making an attack roll against an enemy, forcing an enemy to make a saving throw, or taking a Bonus Action to extend your Rage. A Rage can last up to 10 minutes.",
                         "feature_type": "core"
                     },
                     {
-                        "name": "Divine Order",
-                        "notes": "You dedicate yourself to one sacred role: Protector or Thaumaturge, gaining benefits based on your choice.\n\nProtector. You gain proficiency with Martial weapons and training with Heavy armor.\n\nThaumaturge. You know one extra Cleric cantrip. In addition, you add your Wisdom modifier (minimum +1) as a bonus to your Intelligence (Arcana or Religion) checks.",
+                        "name": "Unarmored Defense",
+                        "notes": "While you aren't wearing any armor, your base Armor Class equals 10 + your Dexterity modifier + your Constitution modifier. You can use a Shield and still gain this benefit.",
+                        "feature_type": "core"
+                    },
+                    {
+                        "name": "Weapon Mastery",
+                        "notes": "You can use the mastery properties of two Simple or Martial Melee weapons of your choice. Whenever you finish a Long Rest, you can change one of your chosen weapons. You gain additional mastery choices at higher Barbarian levels.",
                         "feature_type": "core"
                     }
                 ],
                 "2": [
                     {
-                        "name": "Channel Divinity",
-                        "notes": "You can use Channel Divinity to fuel magical effects, such as Divine Spark and Turn Undead. You can use this class’s Channel Divinity twice, regaining one use on a Short Rest and all uses on a Long Rest. At higher levels, you gain additional uses as shown in the Channel Divinity column of the Cleric Features table. Channel Divinity save DCs use your Cleric spell save DC.\n\nDivine Spark. As a Magic action, you target a creature within 30 feet and roll 1d8 + your Wisdom modifier. You either heal that amount or force the target to make a Constitution saving throw. On a failed save, it takes Necrotic or Radiant damage (your choice) equal to the total; on a success, it takes half as much damage, rounded down. The damage increases to 2d8 + your Wisdom modifier at level 7, 3d8 + your Wisdom modifier at level 13, and 4d8 + your Wisdom modifier at level 18.\n\nTurn Undead. As a Magic action, you present your Holy Symbol and choose any number of Undead within 30 feet of yourself. Each chosen Undead must make a Wisdom saving throw. On a failed save, the creature is Frightened and Incapacitated for up to 1 minute and must use its movement to move away from you on its turns. The effect ends early if the creature takes any damage, if you become Incapacitated, or if you die.",
+                        "name": "Danger Sense",
+                        "notes": "You have Advantage on Dexterity saving throws against effects you can see. You do not gain this benefit if you are Incapacitated.",
+                        "feature_type": "core"
+                    },
+                    {
+                        "name": "Reckless Attack",
+                        "notes": "When you make your first attack on your turn, you can attack recklessly, granting Advantage on Strength-based attack rolls until the start of your next turn. Attack rolls against you have Advantage for the same duration.",
                         "feature_type": "core"
                     }
                 ],
                 "3": [
                     {
-                        "name": "Life Domain Spells",
-                        "notes": "You always have the listed spells prepared when you reach the specified Cleric level. See spell_table for details.",
-                        "feature_type": "sub_class"
+                        "name": "Primal Knowledge",
+                        "notes": "You gain proficiency in one skill of your choice from the Barbarian’s level 1 skill list. In addition, while your Rage is active, you can use Strength for Acrobatics, Intimidation, Perception, Stealth, or Survival checks instead of their normal ability.",
+                        "feature_type": "core"
                     },
                     {
-                        "name": "Disciple of Life",
-                        "notes": "When you cast a spell with a spell slot that restores Hit Points, the target regains additional Hit Points equal to 2 + the spell slot's level on the turn you cast the spell.",
-                        "feature_type": "sub_class"
-                    },
-                    {
-                        "name": "Preserve Life",
-                        "notes": "As a Magic action, you present your Holy Symbol and expend Channel Divinity to restore Hit Points equal to 5 × your Cleric level. Choose Bloodied creatures within 30 feet and divide the healing among them. This feature can’t raise a creature above half its Hit Point maximum.",
+                        "name": "Vitality of the Tree",
+                        "notes": "Your Rage channels the life force of the World Tree.\n\n• **Vitality Surge** — When you activate your Rage, you gain Temporary Hit Points equal to your Barbarian level.\n• **Life-Giving Force** — At the start of each of your turns while raging, choose a creature within 10 feet. That creature gains Temporary Hit Points equal to a roll of d6s equal to your Rage Damage bonus. Any remaining Temporary Hit Points vanish when your Rage ends.",
                         "feature_type": "sub_class"
                     }
                 ],
                 "5": [
                     {
-                        "name": "Sear Undead",
-                        "notes": "Whenever you use Turn Undead, roll a number of d8s equal to your Wisdom modifier (minimum of 1d8). Each Undead that fails its saving throw against that use of Turn Undead takes Radiant damage equal to the total rolled. This damage does not end the Turn Undead effect.",
+                        "name": "Extra Attack",
+                        "notes": "You can attack twice, instead of once, whenever you take the Attack action on your turn.",
+                        "feature_type": "core"
+                    },
+                    {
+                        "name": "Fast Movement",
+                        "notes": "Your Speed increases by 10 feet while you aren’t wearing Heavy armor.",
                         "feature_type": "core"
                     }
                 ],
                 "6": [
                     {
-                        "name": "Blessed Healer",
-                        "notes": "When you cast a healing spell on another creature using a spell slot, you regain Hit Points equal to 2 + the spell slot's level.",
+                        "name": "Branches of the Tree",
+                        "notes": "When a creature you can see starts its turn within 30 feet of you while you are raging, you can take a Reaction to summon spectral branches around it. The target must succeed on a Strength save (DC = 8 + your Strength modifier + Proficiency Bonus) or be teleported to an unoccupied space within 5 feet of you (or the nearest unoccupied space you can see). After the teleport, you can reduce the target's Speed to 0 until the end of the current turn.",
                         "feature_type": "sub_class"
                     }
                 ],
                 "7": [
                     {
-                        "name": "Blessed Strikes",
-                        "notes": "You gain one of the following options: Divine Strike or Potent Spellcasting.\n\nDivine Strike. Once on each of your turns when you hit a creature with a weapon attack, you can cause the attack to deal an extra 1d8 Necrotic or Radiant damage (your choice).\n\nPotent Spellcasting. You add your Wisdom modifier to the damage you deal with any Cleric cantrip.",
+                        "name": "Feral Instinct",
+                        "notes": "Your instincts are honed to a supernatural degree. You have Advantage on Initiative rolls.",
                         "feature_type": "core"
-                    }
-                ],
-                "10": [
+                    },
                     {
-                        "name": "Divine Intervention",
-                        "notes": "As a Magic action, you choose a Cleric spell of level 5 or lower that does not require a Reaction and cast it without expending a spell slot or needing Material components. Once you use this feature, you can’t use it again until you finish a Long Rest.",
+                        "name": "Instinctive Pounce",
+                        "notes": "As part of the Bonus Action used to enter your Rage, you can move up to half your Speed.",
                         "feature_type": "core"
                     }
                 ]
             },
             "core_traits": {
-                "class_name": "cleric",
+                "class_name": "barbarian",
                 "primary_abilities": [
-                    "wis"
+                    "str"
                 ],
-                "hit_die": "d8",
+                "hit_die": "d12",
                 "saving_throw_proficiencies": [
-                    "wis",
-                    "cha"
+                    "str",
+                    "con"
                 ],
                 "skill_proficiencies": {
                     "amount": 2,
                     "choices": [
-                        "History",
-                        "Insight",
-                        "Medicine",
-                        "Persuasion",
-                        "Religion"
+                        "Animal Handling",
+                        "Athletics",
+                        "Intimidation",
+                        "Nature",
+                        "Perception",
+                        "Survival"
                     ]
                 },
                 "weapon_proficiencies": [
-                    "simple"
+                    "simple",
+                    "martial"
                 ],
                 "armor_proficiencies": [
                     "light",
@@ -146,29 +151,28 @@
                     "amount": 1,
                     "choices": [
                         [
-                            "Chain Shirt",
-                            "Shield",
-                            "Mace",
-                            "Holy Symbol",
-                            "Priest's Pack",
-                            "7 gp"
+                            "Greataxe",
+                            "4 Handaxe",
+                            "Explorer's Pack",
+                            "15 gp"
                         ],
                         [
-                            "110 gp"
+                            "75 gp"
                         ],
                         "custom"
                     ]
                 },
                 "multiclassing": {
                     "primary_ability": 13,
+                    "weapon_proficiencies": [
+                        "martial"
+                    ],
                     "armor_proficiencies": [
-                        "light",
-                        "medium",
                         "shields"
                     ]
                 }
             },
-            "caster_type": "full"
+            "caster_type": null
         }
     ],
     "abilities": {
@@ -176,11 +180,27 @@
             "score": 16,
             "mod": 3,
             "check": 3,
-            "save": 3,
-            "proficient": false,
+            "save": 6,
+            "proficient": true,
             "expertise": false
         },
         "dex": {
+            "score": 14,
+            "mod": 2,
+            "check": 2,
+            "save": 2,
+            "proficient": false,
+            "expertise": false
+        },
+        "con": {
+            "score": 13,
+            "mod": 1,
+            "check": 1,
+            "save": 4,
+            "proficient": true,
+            "expertise": false
+        },
+        "int": {
             "score": 12,
             "mod": 1,
             "check": 1,
@@ -188,67 +208,48 @@
             "proficient": false,
             "expertise": false
         },
-        "con": {
-            "score": 14,
-            "mod": 2,
-            "check": 2,
-            "save": 2,
-            "proficient": false,
-            "expertise": false
-        },
-        "int": {
-            "score": 14,
-            "mod": 2,
-            "check": 2,
-            "save": 2,
-            "proficient": false,
-            "expertise": false
-        },
         "wis": {
-            "score": 18,
-            "mod": 4,
-            "check": 4,
-            "save": 8,
-            "proficient": true,
+            "score": 10,
+            "mod": 0,
+            "check": 0,
+            "save": 0,
+            "proficient": false,
             "expertise": false
         },
         "cha": {
             "score": 9,
             "mod": -1,
             "check": -1,
-            "save": 3,
-            "proficient": true,
+            "save": -1,
+            "proficient": false,
             "expertise": false
         }
     },
+    "resistances": [],
     "race": {
-        "name": "Dwarf",
+        "name": "Gnome",
         "traits": [
             {
-                "name": "Dwarven Resilience",
-                "notes": "You have Resistance to Poison damage. You also have Advantage on saving throws you make to avoid or end the Poisoned condition."
+                "name": "Gnomish Cunning",
+                "notes": "You have Advantage on Intelligence, Wisdom, and Charisma saving throws."
             },
             {
-                "name": "Dwarven Toughness",
-                "notes": "Your Hit Point maximum increases by 1, and it increases by 1 again whenever you gain a level."
-            },
-            {
-                "name": "Stonecunning",
-                "notes": "As a Bonus Action, you gain Tremorsense with a range of 60 feet for 10 minutes. You must be on a stone surface or touching a stone surface to use this Tremorsense. The stone can be natural or worked. You can use this Bonus Action a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest."
+                "name": "Gnomish Lineage",
+                "notes": "You are part of a lineage that grants you supernatural abilities. Choose one of the following options; whichever one you choose, Intelligence, Wisdom, or Charisma is your spellcasting ability for the spells you cast with this trait (choose the ability when you select the lineage):"
             }
         ],
-        "size": "medium",
+        "size": "small",
         "movements": {
             "walk": 30
         },
         "creature_type": "Humanoid",
         "senses": {
-            "darkvision": 120
+            "darkvision": 60
         },
-        "subrace": null,
-        "resistances": [
-            "poison"
-        ]
+        "subrace": {
+            "name": "Forest Gnome",
+            "notes": "You know the Minor Illusion cantrip. You also always have the Speak with Animals spell prepared. You can cast it without a spell slot a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest. You can also use any spell slots you have to cast the spell."
+        }
     },
     "feats": [
         {
@@ -256,10 +257,10 @@
             "source": "phb24",
             "category": "origin",
             "ability_score_increase": [],
-            "repeatable": false,
-            "has_table": true,
-            "notes": "Tool Proficiency. You gain proficiency with three different Artisan's Tools of your choice from the Fast Crafting table.Discount. Whenever you buy a nonmagical item, you receive a 20 percent discount on it.Fast Crafting. When you finish a Long Rest, you can craft one piece of gear from the Fast Crafting table, provided you have the Artisan's Tools associated with that item and have proficiency with those tools. The item lasts until you finish another Long Rest, at which point the item falls apart.",
-            "name": "Crafter"
+            "repeatable": true,
+            "has_table": false,
+            "notes": "You gain proficiency in any combination of three skills or tools of your choice.",
+            "name": "Skilled"
         },
         {
             "prerequisite": [
@@ -268,38 +269,119 @@
             "source": "phb24",
             "category": "general",
             "ability_score_increase": [
-                "str",
-                "dex"
-            ],
-            "repeatable": false,
-            "has_table": false,
-            "notes": "Armor Training. You gain training with Light armor and Shields.",
-            "name": "Lightly Armored"
-        },
-        {
-            "prerequisite": [
-                "level 4+",
-                "int 13+"
-            ],
-            "source": "phb24",
-            "category": "general",
-            "ability_score_increase": [
+                "dex",
                 "int"
             ],
             "repeatable": false,
             "has_table": false,
-            "notes": "ore Knowledge. Choose one of the following skills: Arcana, History, Investigation, Nature, or Religion. If you lack proficiency in the chosen skill, you gain proficiency in it, and if you already have proficiency in it, you gain Expertise in it.Quick Study. You can take the Study action as a Bonus Action.",
-            "name": "Keen Mind"
+            "notes": "Potent Poison. When you make a damage roll that deals Poison damage, it ignores Resistance to Poison damage.Brew Poison. You gain proficiency with the Poisoner's Kit. With 1 hour of work using such a kit and expending 50 GP worth of materials, you can create a number of poison doses equal to your Proficiency Bonus. As a Bonus Action, you can apply a poison dose to a weapon or piece of ammunition. Once applied, the poison retains its potency for 1 minute or until you deal damage with the poisoned item, whichever is shorter. When a creature takes damage from the poisoned item, that creature must succeed on a Constitution saving throw (DC 8 plus the modifier of the ability increased by this feat and your Proficiency Bonus) or take 2d8 Poison damage and have the Poisoned condition until the end of your next turn.",
+            "name": "Poisoner"
         }
     ],
-    "total_level": 11,
-    "pb": 4,
-    "skill_proficiencies": [
-        "Arcana",
-        "History",
-        "Deception",
-        "Animal Handling"
-    ],
+    "total_level": 7,
+    "pb": 3,
+    "skills": {
+        "str": {
+            "Athletics": {
+                "proficient": false,
+                "expertise": false,
+                "check": 3
+            }
+        },
+        "dex": {
+            "Acrobatics": {
+                "proficient": false,
+                "expertise": false,
+                "check": 2
+            },
+            "Sleight of Hand": {
+                "proficient": false,
+                "expertise": false,
+                "check": 2
+            },
+            "Stealth": {
+                "proficient": false,
+                "expertise": false,
+                "check": 2
+            }
+        },
+        "int": {
+            "Arcana": {
+                "proficient": false,
+                "expertise": false,
+                "check": 1
+            },
+            "History": {
+                "proficient": true,
+                "expertise": false,
+                "check": 4
+            },
+            "Investigation": {
+                "proficient": true,
+                "expertise": false,
+                "check": 4
+            },
+            "Nature": {
+                "proficient": true,
+                "expertise": false,
+                "check": 4
+            },
+            "Religion": {
+                "proficient": false,
+                "expertise": false,
+                "check": 1
+            }
+        },
+        "wis": {
+            "Animal Handling": {
+                "proficient": false,
+                "expertise": false,
+                "check": 0
+            },
+            "Insight": {
+                "proficient": false,
+                "expertise": false,
+                "check": 0
+            },
+            "Medicine": {
+                "proficient": false,
+                "expertise": false,
+                "check": 0
+            },
+            "Perception": {
+                "proficient": false,
+                "expertise": false,
+                "check": 0
+            },
+            "Survival": {
+                "proficient": false,
+                "expertise": false,
+                "check": 0
+            }
+        },
+        "cha": {
+            "Deception": {
+                "proficient": false,
+                "expertise": false,
+                "check": -1
+            },
+            "Intimidation": {
+                "proficient": false,
+                "expertise": false,
+                "check": -1
+            },
+            "Performance": {
+                "proficient": false,
+                "expertise": false,
+                "check": -1
+            },
+            "Persuasion": {
+                "proficient": true,
+                "expertise": false,
+                "check": 2
+            }
+        }
+    },
     "hit_dice": {
         "d6": {
             "amount": 0,
@@ -307,7 +389,7 @@
             "size": 6
         },
         "d8": {
-            "amount": 11,
+            "amount": 0,
             "average": 5,
             "size": 8
         },
@@ -317,11 +399,11 @@
             "size": 10
         },
         "d12": {
-            "amount": 0,
+            "amount": 7,
             "average": 7,
             "size": 12
         }
     },
-    "max_hp": 80,
+    "max_hp": 61,
     "char_name": "Empty Voidborn"
 }
