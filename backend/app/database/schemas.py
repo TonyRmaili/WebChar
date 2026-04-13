@@ -3,6 +3,18 @@ from enum import Enum
 from datetime import datetime, timezone
 
 
+class UpdateFileRequest(BaseModel):
+    path: str
+    content: str
+
+class CreateFileRequest(BaseModel):
+    campaign_name: str
+    file_name: str
+    path: str
+
+class DeleteFileRequest(BaseModel):
+    file_name: str
+    path: str
 
 class TokenPayload(BaseModel):
     sub: str = None

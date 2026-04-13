@@ -11,7 +11,7 @@ import LogIn from "./pages/LogIn"
 import Embedder from "./pages/Embedder"
 import DMToolsPage from "./pages/DMTools";
 import UserProfile from "./pages/UserProfile";
-import Campaigns from "./pages/Campaigns";
+import MainCampaigns from "./pages/Campaigns/MainCampaigns";
  
 
 
@@ -27,7 +27,7 @@ function App() {
           <Route path="/Embedder" element={<Embedder />}></Route>
           <Route path="/DM-Tools" element={<DMToolsPage />}></Route>
           <Route path="/UserProfile" element={<UserProfile />}></Route>
-          <Route path="/Campaigns" element={<Campaigns />}></Route>
+          <Route path="/MainCampaigns" element={<MainCampaigns />}></Route>
         </Route>
       </Routes>
     </BrowserRouter>

@@ -1,19 +1,19 @@
 {
     "background": {
-        "name": "Noble",
+        "name": "Charlatan",
         "data": {
             "ability_scores": [
-                "str",
-                "int",
+                "dex",
+                "con",
                 "cha"
             ],
             "feat": "Skilled",
             "skill_proficiencies": [
-                "History",
-                "Persuasion"
+                "Deception",
+                "Sleight of Hand"
             ],
             "tool_proficiencies": [
-                "Gaming Set (choice)"
+                "Forgery Kit"
             ],
             "equipment": {
                 "amount": 1,
@@ -21,10 +21,10 @@
                     {
                         "id": "A",
                         "items": [
-                            "Gaming Set (chosen type)",
+                            "Forgery Kit",
+                            "Costume",
                             "Fine Clothes",
-                            "Perfume",
-                            "29 GP"
+                            "15 GP"
                         ]
                     },
                     {
@@ -39,165 +39,225 @@
     },
     "classes": [
         {
-            "name": "barbarian",
-            "sub_class": "World Tree",
-            "level": 7,
+            "name": "bard",
+            "sub_class": "College of Lore",
+            "level": 10,
             "first_class": true,
             "class_data": {
                 "1": [
                     {
-                        "name": "Rage",
-                        "notes": "You can imbue yourself with a primal power called Rage, granting extraordinary might and resilience. You can enter a Rage as a Bonus Action if you aren't wearing Heavy armor. You can enter your Rage a number of times equal to the Rages column of the Barbarian Features table. You regain one expended use when you finish a Short Rest and all expended uses when you finish a Long Rest.\n\nWhile active, your Rage grants the following benefits:\nDamage Resistance. You have Resistance to Bludgeoning, Piercing, and Slashing damage.\nRage Damage. When you make an attack using Strength with a weapon or an Unarmed Strike and deal damage, you add a bonus that increases as you gain levels.\nStrength Advantage. You have Advantage on Strength checks and Strength saving throws.\nNo Concentration or Spells. You cannot maintain Concentration or cast spells.\n\nDuration. Rage lasts until the end of your next turn. It ends early if you don Heavy armor or become Incapacitated. On each subsequent turn, you may extend your Rage to the end of your next turn by making an attack roll against an enemy, forcing an enemy to make a saving throw, or taking a Bonus Action to extend your Rage. A Rage can last up to 10 minutes.",
+                        "name": "Bardic Inspiration",
+                        "notes": "You can supernaturally inspire others through words, music, or dance. This inspiration is represented by your Bardic Inspiration die, which starts as a d6.\n\nUsing Bardic Inspiration. As a Bonus Action, you can inspire a creature within 60 feet of yourself who can see or hear you. That creature gains one Bardic Inspiration die. A creature can have only one Bardic Inspiration die at a time.\n\nWithin the next hour, when the creature fails a D20 Test, it can roll the Bardic Inspiration die and add the result to the d20, potentially turning failure into success. The die is expended when rolled.\n\nNumber of Uses. You can use Bardic Inspiration a number of times equal to your Charisma modifier (minimum of one) and regain all uses when you finish a Long Rest.\n\nAt Higher Levels. The Bardic Inspiration die increases to a d8 at level 5, a d10 at level 10, and a d12 at level 15.",
                         "feature_type": "core"
                     },
                     {
-                        "name": "Unarmored Defense",
-                        "notes": "While you aren't wearing any armor, your base Armor Class equals 10 + your Dexterity modifier + your Constitution modifier. You can use a Shield and still gain this benefit.",
-                        "feature_type": "core"
-                    },
-                    {
-                        "name": "Weapon Mastery",
-                        "notes": "You can use the mastery properties of two Simple or Martial Melee weapons of your choice. Whenever you finish a Long Rest, you can change one of your chosen weapons. You gain additional mastery choices at higher Barbarian levels.",
+                        "name": "Spellcasting",
+                        "notes": "You have learned to cast spells through your bardic arts.\n\nCantrips. You know two Bard cantrips of your choice. Dancing Lights and Vicious Mockery are recommended. You learn more cantrips at Bard levels 4 and 10. When you gain a Bard level, you may replace one cantrip you know.\n\nSpell Slots. You use the Bard Features table to determine how many spell slots you have to cast level 1+ spells.\n\nPrepared Spells. You prepare a list of Bard spells equal to the Prepared Spells column of the Bard Features table. Prepared spells must be of a level for which you have spell slots.\n\nChanging Spells. When you gain a Bard level, you may replace one prepared spell.\n\nSpellcasting Ability. Charisma is your spellcasting ability.\n\nSpellcasting Focus. You may use a Musical Instrument as a Spellcasting Focus.",
                         "feature_type": "core"
                     }
                 ],
                 "2": [
                     {
-                        "name": "Danger Sense",
-                        "notes": "You have Advantage on Dexterity saving throws against effects you can see. You do not gain this benefit if you are Incapacitated.",
+                        "name": "Expertise",
+                        "notes": "You gain Expertise in two of your skill proficiencies. Performance and Persuasion are recommended. At Bard level 9, you gain Expertise in two additional skills.",
                         "feature_type": "core"
                     },
                     {
-                        "name": "Reckless Attack",
-                        "notes": "When you make your first attack on your turn, you can attack recklessly, granting Advantage on Strength-based attack rolls until the start of your next turn. Attack rolls against you have Advantage for the same duration.",
+                        "name": "Jack of All Trades",
+                        "notes": "You can add half your Proficiency Bonus (round down) to any ability check you make using a skill for which you lack proficiency and that does not otherwise add your Proficiency Bonus.",
                         "feature_type": "core"
                     }
                 ],
                 "3": [
                     {
-                        "name": "Primal Knowledge",
-                        "notes": "You gain proficiency in one skill of your choice from the Barbarian’s level 1 skill list. In addition, while your Rage is active, you can use Strength for Acrobatics, Intimidation, Perception, Stealth, or Survival checks instead of their normal ability.",
-                        "feature_type": "core"
+                        "name": "Bonus Proficiencies",
+                        "notes": "You gain proficiency with three skills of your choice.",
+                        "feature_type": "sub_class"
                     },
                     {
-                        "name": "Vitality of the Tree",
-                        "notes": "Your Rage channels the life force of the World Tree.\n\n• **Vitality Surge** — When you activate your Rage, you gain Temporary Hit Points equal to your Barbarian level.\n• **Life-Giving Force** — At the start of each of your turns while raging, choose a creature within 10 feet. That creature gains Temporary Hit Points equal to a roll of d6s equal to your Rage Damage bonus. Any remaining Temporary Hit Points vanish when your Rage ends.",
+                        "name": "Cutting Words",
+                        "notes": "When a creature you can see within 60 feet makes a damage roll or succeeds on an ability check or attack roll, you can take a Reaction to expend one use of Bardic Inspiration. Roll your Bardic Inspiration die and subtract the number rolled from the creature's roll, potentially reducing the damage or turning the success into a failure.",
                         "feature_type": "sub_class"
                     }
                 ],
                 "5": [
                     {
-                        "name": "Extra Attack",
-                        "notes": "You can attack twice, instead of once, whenever you take the Attack action on your turn.",
-                        "feature_type": "core"
-                    },
-                    {
-                        "name": "Fast Movement",
-                        "notes": "Your Speed increases by 10 feet while you aren’t wearing Heavy armor.",
+                        "name": "Font of Inspiration",
+                        "notes": "You now regain all expended uses of Bardic Inspiration after a Short or Long Rest.\n\nAdditionally, you can expend a spell slot (no action required) to regain one use of Bardic Inspiration.",
                         "feature_type": "core"
                     }
                 ],
                 "6": [
                     {
-                        "name": "Branches of the Tree",
-                        "notes": "When a creature you can see starts its turn within 30 feet of you while you are raging, you can take a Reaction to summon spectral branches around it. The target must succeed on a Strength save (DC = 8 + your Strength modifier + Proficiency Bonus) or be teleported to an unoccupied space within 5 feet of you (or the nearest unoccupied space you can see). After the teleport, you can reduce the target's Speed to 0 until the end of the current turn.",
+                        "name": "Magical Discoveries",
+                        "notes": "Learn two spells of your choice from the Cleric, Druid, or Wizard spell lists. Each chosen spell must be a cantrip or a spell for which you have spell slots. You always have these spells prepared. Whenever you gain a Bard level, you may replace one of these spells with another that meets the same requirements.",
                         "feature_type": "sub_class"
                     }
                 ],
                 "7": [
                     {
-                        "name": "Feral Instinct",
-                        "notes": "Your instincts are honed to a supernatural degree. You have Advantage on Initiative rolls.",
+                        "name": "Countercharm",
+                        "notes": "If you or a creature within 30 feet fails a saving throw against being Charmed or Frightened, you can use a Reaction to make the creature reroll the saving throw with Advantage.",
                         "feature_type": "core"
-                    },
+                    }
+                ],
+                "9": [
                     {
-                        "name": "Instinctive Pounce",
-                        "notes": "As part of the Bonus Action used to enter your Rage, you can move up to half your Speed.",
+                        "name": "Expertise",
+                        "notes": "You gain Expertise in two additional skill proficiencies of your choice.",
+                        "feature_type": "core"
+                    }
+                ],
+                "10": [
+                    {
+                        "name": "Magical Secrets",
+                        "notes": "Whenever your number of prepared spells increases, you may choose new spells from the Bard, Cleric, Druid, or Wizard spell lists. When replacing prepared spells, you may also select spells from these lists.",
                         "feature_type": "core"
                     }
                 ]
             },
             "core_traits": {
-                "class_name": "barbarian",
+                "class_name": "bard",
                 "primary_abilities": [
-                    "str"
+                    "cha"
                 ],
-                "hit_die": "d12",
+                "hit_die": "d8",
                 "saving_throw_proficiencies": [
-                    "str",
-                    "con"
+                    "dex",
+                    "cha"
                 ],
                 "skill_proficiencies": {
-                    "amount": 2,
+                    "amount": 3,
                     "choices": [
+                        "Acrobatics",
                         "Animal Handling",
+                        "Arcana",
                         "Athletics",
+                        "Deception",
+                        "History",
+                        "Insight",
                         "Intimidation",
+                        "Investigation",
+                        "Medicine",
                         "Nature",
                         "Perception",
+                        "Performance",
+                        "Persuasion",
+                        "Religion",
+                        "Sleight of Hand",
+                        "Stealth",
                         "Survival"
                     ]
                 },
                 "weapon_proficiencies": [
-                    "simple",
-                    "martial"
+                    "simple"
                 ],
                 "armor_proficiencies": [
-                    "light",
-                    "medium",
-                    "shields"
+                    "light"
                 ],
+                "tool_proficiencies": {
+                    "amount": 3,
+                    "choices": [
+                        "Bagpipes",
+                        "Drum",
+                        "Dulcimer",
+                        "Flute",
+                        "Lute",
+                        "Lyre",
+                        "Horn",
+                        "Pan Flute",
+                        "Shawm",
+                        "Viol"
+                    ]
+                },
                 "starting_equipment": {
                     "amount": 1,
                     "choices": [
                         [
-                            "Greataxe",
-                            "4 Handaxe",
-                            "Explorer's Pack",
-                            "15 gp"
+                            "Leather Armor",
+                            "Dagger",
+                            "Dagger",
+                            "Musical Instrument (choice)",
+                            "Entertainer's Pack",
+                            "19 gp"
                         ],
                         [
-                            "75 gp"
+                            "90 gp"
                         ],
                         "custom"
                     ]
                 },
                 "multiclassing": {
                     "primary_ability": 13,
-                    "weapon_proficiencies": [
-                        "martial"
-                    ],
                     "armor_proficiencies": [
-                        "shields"
-                    ]
+                        "light"
+                    ],
+                    "skill_proficiencies": {
+                        "amount": 1,
+                        "choices": [
+                            "Acrobatics",
+                            "Animal Handling",
+                            "Arcana",
+                            "Athletics",
+                            "Deception",
+                            "History",
+                            "Insight",
+                            "Intimidation",
+                            "Investigation",
+                            "Medicine",
+                            "Nature",
+                            "Perception",
+                            "Performance",
+                            "Persuasion",
+                            "Religion",
+                            "Sleight of Hand",
+                            "Stealth",
+                            "Survival"
+                        ]
+                    },
+                    "tool_proficiencies": {
+                        "amount": 1,
+                        "choices": [
+                            "Bagpipes",
+                            "Drum",
+                            "Dulcimer",
+                            "Flute",
+                            "Lute",
+                            "Lyre",
+                            "Horn",
+                            "Pan Flute",
+                            "Shawm",
+                            "Viol"
+                        ]
+                    }
                 }
             },
-            "caster_type": null
+            "caster_type": "full"
         }
     ],
     "abilities": {
         "str": {
-            "score": 16,
-            "mod": 3,
-            "check": 3,
-            "save": 6,
-            "proficient": true,
+            "score": 12,
+            "mod": 1,
+            "check": 1,
+            "save": 1,
+            "proficient": false,
             "expertise": false
         },
         "dex": {
             "score": 14,
             "mod": 2,
             "check": 2,
-            "save": 2,
-            "proficient": false,
+            "save": 6,
+            "proficient": true,
             "expertise": false
         },
         "con": {
-            "score": 13,
-            "mod": 1,
-            "check": 1,
-            "save": 4,
-            "proficient": true,
+            "score": 16,
+            "mod": 3,
+            "check": 3,
+            "save": 3,
+            "proficient": false,
             "expertise": false
         },
         "int": {
@@ -209,7 +269,7 @@
             "expertise": false
         },
         "wis": {
-            "score": 10,
+            "score": 11,
             "mod": 0,
             "check": 0,
             "save": 0,
@@ -217,39 +277,48 @@
             "expertise": false
         },
         "cha": {
-            "score": 9,
-            "mod": -1,
-            "check": -1,
-            "save": -1,
-            "proficient": false,
+            "score": 18,
+            "mod": 4,
+            "check": 4,
+            "save": 8,
+            "proficient": true,
             "expertise": false
         }
     },
-    "resistances": [],
+    "resistances": [
+        "poison"
+    ],
     "race": {
-        "name": "Gnome",
+        "name": "Warforged",
         "traits": [
             {
-                "name": "Gnomish Cunning",
-                "notes": "You have Advantage on Intelligence, Wisdom, and Charisma saving throws."
+                "name": "Construct Resilience",
+                "notes": "You have Resistance to Poison damage. You also have Advantage on saving throws to avoid or end the Poisoned condition."
             },
             {
-                "name": "Gnomish Lineage",
-                "notes": "You are part of a lineage that grants you supernatural abilities. Choose one of the following options; whichever one you choose, Intelligence, Wisdom, or Charisma is your spellcasting ability for the spells you cast with this trait (choose the ability when you select the lineage):"
+                "name": "Integrated Protection",
+                "notes": "You gain a +1 bonus to your Armor Class. In addition, armor you have donned can't be removed against your will while you're alive."
+            },
+            {
+                "name": "Sentry's Rest",
+                "notes": "You don't need to sleep, and magic can't put you to sleep. You can finish a Long Rest in 6 hours if you spend those hours in an inactive, motionless state. During this time, you appear inert but remain conscious."
+            },
+            {
+                "name": "Specialized Design",
+                "notes": "You gain one skill proficiency and one tool proficiency of your choice."
+            },
+            {
+                "name": "Tireless",
+                "notes": "You don't gain Exhaustion levels from dehydration, malnutrition, or suffocation."
             }
         ],
-        "size": "small",
+        "size": "medium",
         "movements": {
             "walk": 30
         },
-        "creature_type": "Humanoid",
-        "senses": {
-            "darkvision": 60
-        },
-        "subrace": {
-            "name": "Forest Gnome",
-            "notes": "You know the Minor Illusion cantrip. You also always have the Speak with Animals spell prepared. You can cast it without a spell slot a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest. You can also use any spell slots you have to cast the spell."
-        }
+        "creature_type": "Construct",
+        "senses": {},
+        "subrace": null
     },
     "feats": [
         {
@@ -269,23 +338,38 @@
             "source": "phb24",
             "category": "general",
             "ability_score_increase": [
-                "dex",
-                "int"
+                "con",
+                "wis"
             ],
             "repeatable": false,
             "has_table": false,
-            "notes": "Potent Poison. When you make a damage roll that deals Poison damage, it ignores Resistance to Poison damage.Brew Poison. You gain proficiency with the Poisoner's Kit. With 1 hour of work using such a kit and expending 50 GP worth of materials, you can create a number of poison doses equal to your Proficiency Bonus. As a Bonus Action, you can apply a poison dose to a weapon or piece of ammunition. Once applied, the poison retains its potency for 1 minute or until you deal damage with the poisoned item, whichever is shorter. When a creature takes damage from the poisoned item, that creature must succeed on a Constitution saving throw (DC 8 plus the modifier of the ability increased by this feat and your Proficiency Bonus) or take 2d8 Poison damage and have the Poisoned condition until the end of your next turn.",
-            "name": "Poisoner"
+            "notes": "Cook's Utensils. You gain proficiency with Cook's Utensils if you don't already have it.Replenishing Meal. As part of a Short Rest, you can cook special food if you have ingredients and Cook's Utensils on hand. You can prepare enough of this food for a number of creatures equal to 4 plus your Proficiency Bonus. At the end of the Short Rest, any creature who eats the food and spends one or more Hit Dice to regain Hit Points regains an extra 1d8 Hit Points.Bolstering Treats. With 1 hour of work or when you finish a Long Rest, you can cook a number of treats equal to your Proficiency Bonus if you have ingredients and Cook's Utensils on hand. These special treats last 8 hours after being made. A creature can use a Bonus Action to eat one of those treats to gain a number of Temporary Hit Points equal to your Proficiency Bonus.",
+            "name": "Chef"
+        },
+        {
+            "prerequisite": [
+                "level 4+",
+                "dex 13+"
+            ],
+            "source": "phb24",
+            "category": "general",
+            "ability_score_increase": [
+                "dex"
+            ],
+            "repeatable": false,
+            "has_table": false,
+            "notes": "Parry. If you're holding a Finesse weapon and another creature hits you with a melee attack, you can take a Reaction to add your Proficiency Bonus to your Armor Class, potentially causing the attack to miss you. You gain this bonus to your AC against melee attacks until the start of your next turn.",
+            "name": "Defensive Duelist"
         }
     ],
-    "total_level": 7,
-    "pb": 3,
+    "total_level": 10,
+    "pb": 4,
     "skills": {
         "str": {
             "Athletics": {
                 "proficient": false,
                 "expertise": false,
-                "check": 3
+                "check": 1
             }
         },
         "dex": {
@@ -295,9 +379,9 @@
                 "check": 2
             },
             "Sleight of Hand": {
-                "proficient": false,
+                "proficient": true,
                 "expertise": false,
-                "check": 2
+                "check": 6
             },
             "Stealth": {
                 "proficient": false,
@@ -312,19 +396,19 @@
                 "check": 1
             },
             "History": {
-                "proficient": true,
+                "proficient": false,
                 "expertise": false,
-                "check": 4
+                "check": 1
             },
             "Investigation": {
                 "proficient": true,
                 "expertise": false,
-                "check": 4
+                "check": 5
             },
             "Nature": {
-                "proficient": true,
+                "proficient": false,
                 "expertise": false,
-                "check": 4
+                "check": 1
             },
             "Religion": {
                 "proficient": false,
@@ -344,9 +428,9 @@
                 "check": 0
             },
             "Medicine": {
-                "proficient": false,
+                "proficient": true,
                 "expertise": false,
-                "check": 0
+                "check": 4
             },
             "Perception": {
                 "proficient": false,
@@ -354,31 +438,31 @@
                 "check": 0
             },
             "Survival": {
-                "proficient": false,
+                "proficient": true,
                 "expertise": false,
-                "check": 0
+                "check": 4
             }
         },
         "cha": {
             "Deception": {
-                "proficient": false,
+                "proficient": true,
                 "expertise": false,
-                "check": -1
+                "check": 8
             },
             "Intimidation": {
                 "proficient": false,
                 "expertise": false,
-                "check": -1
+                "check": 4
             },
             "Performance": {
                 "proficient": false,
                 "expertise": false,
-                "check": -1
+                "check": 4
             },
             "Persuasion": {
-                "proficient": true,
+                "proficient": false,
                 "expertise": false,
-                "check": 2
+                "check": 4
             }
         }
     },
@@ -389,7 +473,7 @@
             "size": 6
         },
         "d8": {
-            "amount": 0,
+            "amount": 10,
             "average": 5,
             "size": 8
         },
@@ -399,11 +483,11 @@
             "size": 10
         },
         "d12": {
-            "amount": 7,
+            "amount": 0,
             "average": 7,
             "size": 12
         }
     },
-    "max_hp": 61,
+    "max_hp": 83,
     "char_name": "Empty Voidborn"
 }

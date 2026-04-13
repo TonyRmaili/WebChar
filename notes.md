@@ -134,3 +134,7 @@
 
 Data additons:
 1. AC
+
+
+Campaigns idees
+1. implement tags for generated npcs/monsters for easier searching 
