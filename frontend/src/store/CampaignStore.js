@@ -10,11 +10,57 @@ const patchNodeContent = (nodes, path, content) =>
     return n;
   });
 
+
+const ACTIVE_PROMPTS_KEY = (campaignName) => `activePrompts_${campaignName}`;
+
+const loadActivePrompts = (campaignName) => {
+  try {
+    const raw = localStorage.getItem(ACTIVE_PROMPTS_KEY(campaignName));
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+};
+
+const saveActivePrompts = (campaignName, paths) => {
+  localStorage.setItem(ACTIVE_PROMPTS_KEY(campaignName), JSON.stringify(paths));
+};
+
+// Walk a tree to find a node by path and return its content
+const findNodeContent = (nodes, path) => {
+  for (const n of nodes) {
+    if (n.path === path) return n.content ?? "";
+    if (n.children) {
+      const found = findNodeContent(n.children, path);
+      if (found !== null) return found;
+    }
+  }
+  return null;
+};
+
+// Collect all file paths from a tree (skips folders)
+const collectFilePaths = (nodes) => {
+  const paths = [];
+  const walk = (arr) => {
+    for (const n of arr) {
+      if (n.type === "folder") {
+        if (n.children) walk(n.children);
+      } else {
+        paths.push(n.path);
+      }
+    }
+  };
+  walk(nodes);
+  return paths;
+};
+
 const useCampaignStore = create((set, get) => ({
   loading: false,
   error: null,
   campaignData: [],
   currentCampaignName: null,
+  promptsData: [],
+  activePrompts: [], // array of paths
 
   setError: (error) => set({ error }),
   clearError: () => set({ error: null }),
@@ -135,7 +181,7 @@ const useCampaignStore = create((set, get) => ({
       });
       if (!res.ok) throw new Error(`Failed to create file: ${res.status}`);
       const data = await res.json();
-      await get().refreshCampaignData();
+      await Promise.all([get().refreshCampaignData(), get().refreshPromptsData()]);
       return data;
     } catch (err) {
       set({ error: err.message || "Unknown error" });
@@ -161,7 +207,7 @@ const useCampaignStore = create((set, get) => ({
       });
       if (!res.ok) throw new Error(`Failed to create folder: ${res.status}`);
       const data = await res.json();
-      await get().refreshCampaignData();
+      await Promise.all([get().refreshCampaignData(), get().refreshPromptsData()]);
       return data;
     } catch (err) {
       set({ error: err.message || "Unknown error" });
@@ -181,7 +227,7 @@ const useCampaignStore = create((set, get) => ({
         body: JSON.stringify({ file_name: fileName, path: path }),
       });
       if (!res.ok) throw new Error(`Failed to delete file: ${res.status}`);
-      await get().refreshCampaignData();
+      await Promise.all([get().refreshCampaignData(), get().refreshPromptsData()]);
     } catch (err) {
       set({ error: err.message || "Unknown error" });
     }
@@ -201,10 +247,9 @@ const useCampaignStore = create((set, get) => ({
       if (!res.ok) throw new Error(`Failed to save file: ${res.status}`);
       const data = await res.json();
 
-      // Sync the in-memory tree with what we just wrote to disk,
-      // so reopening the file shows the latest content.
       set({
         campaignData: patchNodeContent(get().campaignData, path, content),
+        promptsData: patchNodeContent(get().promptsData, path, content),
       });
 
       return data;
@@ -212,6 +257,90 @@ const useCampaignStore = create((set, get) => ({
       set({ error: err.message || "Unknown error" });
     }
   },
+
+  fetchPromptsData: async (campaignName) => {
+    try {
+      const url = `${API_BASE_CAMPAIGN}/prompts?campaign_name=${encodeURIComponent(campaignName)}`;
+      const token = localStorage.getItem("token");
+      const res = await fetch(url, {
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (!res.ok) throw new Error(`Failed to fetch prompts: ${res.status}`);
+      const data = await res.json();
+
+      // Prune active prompts that no longer exist on disk
+      const existingPaths = new Set(collectFilePaths(data));
+      const stored = loadActivePrompts(campaignName);
+      const pruned = stored.filter((p) => existingPaths.has(p));
+      if (pruned.length !== stored.length) {
+        saveActivePrompts(campaignName, pruned);
+      }
+
+      set({
+        promptsData: data,
+        activePrompts: pruned,
+      });
+      return data;
+    } catch (err) {
+      set({ error: err.message || "Unknown error" });
+    }
+  },
+
+  refreshPromptsData: async () => {
+    const name = get().currentCampaignName;
+    if (!name) return;
+    await get().fetchPromptsData(name);
+  },
+
+  toggleActivePrompt: (path) => {
+    const campaignName = get().currentCampaignName;
+    if (!campaignName) return;
+
+    const current = get().activePrompts;
+    const next = current.includes(path)
+      ? current.filter((p) => p !== path)
+      : [...current, path];
+
+    saveActivePrompts(campaignName, next);
+    set({ activePrompts: next });
+  },
+
+  // Concatenate all active prompt contents — used later by the chat feature
+  getActivePromptText: () => {
+    const { promptsData, activePrompts } = get();
+    const pieces = activePrompts
+      .map((path) => findNodeContent(promptsData, path))
+      .filter((c) => c !== null && c !== "");
+    return pieces.join("\n\n---\n\n");
+  },
+
+  sendChat: async (chatInput, instructions, campaignName) => {
+    set({ loading: true, error: null });
+    try {
+      const token = localStorage.getItem("token");
+      const res = await fetch(`${API_BASE_CAMPAIGN}/dm_assistant`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          chat_input: chatInput,
+          instructions: instructions,
+          campaign_name: campaignName,
+        }),
+      });
+      if (!res.ok) throw new Error(`Chat request failed: ${res.status}`);
+      const data = await res.json();
+      set({ loading: false });
+      return data;
+    } catch (err) {
+      set({ error: err.message || "Unknown error", loading: false });
+    }
+  },
+
+
 }));
 
 export default useCampaignStore;

@@ -4,104 +4,151 @@ import {
   PlusIcon,
   MinusIcon,
   DownArrowIcon,
-  UpArrowIcon,
   FolderPlusIcon,
+  FolderIcon,
+  FolderOpenIcon,
+  FileIcon,
+  ChevronRightIcon,
 } from "./CampaignWidgets";
 
-function CampaignNode({ node, campaignName, depth = 0, onOpenFile }) {
+function CampaignNode({
+  node,
+  campaignName,
+  depth = 0,
+  onOpenFile,
+  activePrompts,
+  onToggleActive,
+}) {
   const [collapsed, setCollapsed] = useState(false);
   const isFolder = node.type === "folder";
+  const showCheckbox = !isFolder && typeof onToggleActive === "function";
+  const isActive = showCheckbox && activePrompts?.includes(node.path);
 
   const deleteFile = useCampaignStore((s) => s.deleteFile);
   const createFile = useCampaignStore((s) => s.createFile);
   const createFolder = useCampaignStore((s) => s.createFolder);
 
   const handleMainClick = () => {
-    if (isFolder) {
-      setCollapsed((prev) => !prev);
-    } else {
-      onOpenFile?.(node);
-    }
+    if (isFolder) setCollapsed((prev) => !prev);
+    else onOpenFile?.(node);
   };
 
-  const handleAddFile = () => {
-    if (!isFolder) return;
+  const handleAddFile = (e) => {
+    e.stopPropagation();
     const fileName = prompt(`Enter file name for "${node.name}"`);
     if (!fileName) return;
-
     createFile(fileName, campaignName, node.path);
+    setCollapsed(false);
   };
 
-  const handleAddFolder = () => {
-    if (!isFolder) return;
+  const handleAddFolder = (e) => {
+    e.stopPropagation();
     const folderName = prompt(`Enter folder name for "${node.name}"`);
     if (!folderName) return;
-
     createFolder(folderName, campaignName, node.path);
+    setCollapsed(false);
   };
 
-  const handleDeleteFile = () => {
+  const handleDelete = (e) => {
+    e.stopPropagation();
+    const msg = isFolder
+      ? `Delete folder "${node.name}" and everything inside?`
+      : `Delete file "${node.name}"?`;
+    if (!window.confirm(msg)) return;
     deleteFile(node.name, node.path);
+  };
+
+  const handleToggleActive = (e) => {
+    e.stopPropagation();
+    onToggleActive(node.path);
   };
 
   return (
     <div>
       <div
-        className="flex items-center ml-2"
-        style={{ marginLeft: `${depth * 16}px` }}
+        onClick={handleMainClick}
+        className="group flex items-center h-7 pr-1 rounded-md hover:bg-slate-800/70 cursor-pointer transition-colors select-none"
+        style={{ paddingLeft: `${8 + depth * 14}px` }}
       >
-        <button
-          onClick={handleMainClick}
-          className="px-2 text-left border rounded-sm border-r-0 bg-slate-800 min-w-[240px] h-6 text-white flex items-center"
-        >
-          <span className="w-4 flex items-center justify-center shrink-0 mr-2">
-            {isFolder ? (
-              collapsed ? (
-                <DownArrowIcon className="w-4 h-4 text-amber-500" />
-              ) : (
-                <UpArrowIcon className="w-4 h-4 text-amber-500" />
-              )
+        {/* checkbox (prompts only) */}
+        {showCheckbox && (
+          <input
+            type="checkbox"
+            checked={!!isActive}
+            onClick={(e) => e.stopPropagation()}
+            onChange={handleToggleActive}
+            className="mr-2 accent-amber-500 cursor-pointer"
+          />
+        )}
+
+        {/* chevron */}
+        <span className="w-4 flex items-center justify-center shrink-0 text-slate-500">
+          {isFolder &&
+            (collapsed ? (
+              <ChevronRightIcon className="w-3.5 h-3.5" />
             ) : (
-              <span className="text-sky-400">•</span>
-            )}
-          </span>
+              <DownArrowIcon className="w-3.5 h-3.5" />
+            ))}
+        </span>
 
-          <span className={`truncate ${isFolder ? "text-amber-300" : "text-sky-300"}`}>
-            {node.name}
-          </span>
-        </button>
+        {/* icon */}
+        <span className={`shrink-0 ml-1 mr-2 ${isFolder ? "text-amber-400" : "text-sky-400"}`}>
+          {isFolder ? (
+            collapsed ? (
+              <FolderIcon className="w-4 h-4" />
+            ) : (
+              <FolderOpenIcon className="w-4 h-4" />
+            )
+          ) : (
+            <FileIcon className="w-4 h-4" />
+          )}
+        </span>
 
-        {isFolder && (
-          <button
-            onClick={handleAddFile}
-            className="w-6 h-6 text-sky-400 border border-l-0 bg-slate-800 flex items-center justify-center"
-            title="Add file"
-          >
-            <PlusIcon className="w-4 h-4" />
-          </button>
-        )}
-
-        {isFolder && (
-          <button
-            onClick={handleAddFolder}
-            className="w-6 h-6 text-amber-400 border border-l-0 bg-slate-800 flex items-center justify-center"
-            title="Add folder"
-          >
-            <FolderPlusIcon className="w-4 h-4" />
-          </button>
-        )}
-
-        <button
-          onClick={handleDeleteFile}
-          className="w-6 h-6 text-red-400 border border-l-0 bg-slate-800 rounded-sm flex items-center justify-center"
-          title="Delete"
+        {/* name */}
+        <span
+          className={`truncate text-sm ${
+            isFolder
+              ? "text-amber-100 font-medium"
+              : isActive
+              ? "text-amber-200 font-medium"
+              : "text-slate-200"
+          }`}
         >
-          <MinusIcon className="w-4 h-4" />
-        </button>
+          {node.name}
+        </span>
+
+        {/* hover actions */}
+        <div className="ml-auto flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
+          {isFolder && (
+            <>
+              <button
+                onClick={handleAddFile}
+                className="w-6 h-6 flex items-center justify-center rounded hover:bg-slate-700 text-sky-400"
+                title="New file"
+              >
+                <PlusIcon className="w-3.5 h-3.5" />
+              </button>
+              <button
+                onClick={handleAddFolder}
+                className="w-6 h-6 flex items-center justify-center rounded hover:bg-slate-700 text-amber-400"
+                title="New folder"
+              >
+                <FolderPlusIcon className="w-3.5 h-3.5" />
+              </button>
+            </>
+          )}
+          <button
+            onClick={handleDelete}
+            className="w-6 h-6 flex items-center justify-center rounded hover:bg-red-900/60 text-red-400"
+            title="Delete"
+          >
+            <MinusIcon className="w-3.5 h-3.5" />
+          </button>
+        </div>
       </div>
 
       {isFolder && !collapsed && node.children?.length > 0 && (
-        <div className="mt-1">
+        <div>
           {node.children.map((child) => (
             <CampaignNode
               key={child.path}
@@ -109,6 +156,8 @@ function CampaignNode({ node, campaignName, depth = 0, onOpenFile }) {
               depth={depth + 1}
               campaignName={campaignName}
               onOpenFile={onOpenFile}
+              activePrompts={activePrompts}
+              onToggleActive={onToggleActive}
             />
           ))}
         </div>

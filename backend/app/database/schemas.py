@@ -3,6 +3,11 @@ from enum import Enum
 from datetime import datetime, timezone
 
 
+class DMAssistantRequest(BaseModel):
+    chat_input: str
+    instructions: str
+    campaign_name: str
+
 class UpdateFileRequest(BaseModel):
     path: str
     content: str

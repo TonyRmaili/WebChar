@@ -138,3 +138,9 @@ Data additons:
 
 Campaigns idees
 1. implement tags for generated npcs/monsters for easier searching 
+2. Settings button for config of AI stuff
+3. Add selectable files to pass in with the prompt
+4. RAG!!
+
+
+

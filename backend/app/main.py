@@ -10,7 +10,7 @@ from app.database.models import User,Character
 from app.security import hash_password, verify_password, create_access_token, get_current_user
 from app.db_setup import init_db, get_db
 from fastapi.security import OAuth2PasswordRequestForm
-from datetime import timedelta, datetime
+from datetime import timedelta
 from dotenv import load_dotenv
 import os
 import json
@@ -23,6 +23,7 @@ from app.combat_functions import heal_health, damage_health,load_character,on_lo
 from app.minion_functions import handle_minionEffects,filter_monster_data,get_minion_data
 from app.class_maker import ClassMaker
 from app.file_handler import FileHandler
+from app.open_ai_api import OpenAIApi
 from app.database.schemas import (
     UserSchema,
     CharacterSchema,
@@ -37,9 +38,32 @@ from app.database.schemas import (
     QuickClassPayload,
     CreateFileRequest,
     DeleteFileRequest,
-    UpdateFileRequest
+    UpdateFileRequest,
+    DMAssistantRequest
 )
 # uvicorn app.main:app --reload
+
+
+DEFAULT_PROMPT_TEXT = """# Dungeon Master Assistant
+
+You are an experienced Dungeon Master assistant helping run a Dungeons & Dragons 5th edition campaign. Your role is to support the human DM by:
+
+- Answering rules questions accurately, citing the relevant 5e mechanics
+- Helping improvise NPCs, locations, and encounters consistent with the established campaign
+- Tracking narrative threads, character relationships, and ongoing plot hooks
+- Suggesting dramatic twists and consequences that respect player agency
+- Reading the provided campaign notes as the source of truth for world lore, NPCs, and past events
+
+## Tone
+
+Be concise and practical. Favor specific, actionable suggestions over generic advice. When you're uncertain about a rule or a lore detail, say so rather than inventing something.
+
+## Boundaries
+
+- Never contradict established facts from the campaign notes
+- Never make decisions for the players — only the human DM
+- When suggesting NPCs or encounters, offer 2-3 options rather than a single prescription
+"""
 
 
 #------------------------Setup-----------------------------
@@ -703,18 +727,20 @@ def create_campaign(
     campaign_name: str
 ):
     campaign_path = os.path.join(
-        savefiles_path,
-        current_user.name,
-        "campaigns",
-        campaign_name
+        savefiles_path, current_user.name, "campaigns", campaign_name
     )
-
     os.makedirs(campaign_path, exist_ok=True)
 
-    return {
-        "message": "Campaign created",
-        "campaign_name": campaign_name
-    }
+    prompts_path = os.path.join(campaign_path, "prompts")
+    os.makedirs(prompts_path, exist_ok=True)
+
+    default_prompt_file = os.path.join(prompts_path, "default.md")
+    if not os.path.exists(default_prompt_file):
+        with open(default_prompt_file, "w", encoding="utf-8") as f:
+            f.write(DEFAULT_PROMPT_TEXT)
+
+    return {"message": "Campaign created", "campaign_name": campaign_name}
+
 
 @app.put("/campaign", tags=["campaign"])
 def select_campaign(
@@ -780,15 +806,41 @@ def get_campaign_data(
 ):
     try:
         campaign_path = Path(savefiles_path) / current_user.name / "campaigns" / campaign_name
-
         if not campaign_path.exists():
             raise HTTPException(status_code=404, detail="Campaign not found")
 
         data = FileHandler().build_dir_tree(campaign_path)
-        return data.get("children",[])
-    
+        children = data.get("children", [])
+        # Exclude the prompts folder from the main file tree
+        children = [c for c in children if c.get("name") != "prompts"]
+        return children
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/campaign/prompts", tags=["campaign"])
+def get_campaign_prompts(
+    current_user: Annotated[User, Depends(get_current_user)],
+    campaign_name: str
+):
+    try:
+        prompts_path = (
+            Path(savefiles_path)
+            / current_user.name
+            / "campaigns"
+            / campaign_name
+            / "prompts"
+        )
+        prompts_path.mkdir(parents=True, exist_ok=True)
+
+        data = FileHandler().build_dir_tree(prompts_path)
+        return data.get("children", [])
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+
 
 @app.post("/campaign/create_file", tags=["campaign"])
 def create_file(
@@ -868,4 +920,17 @@ def update_file(
     return {"message": "File saved", "path": str(file_path)}
 
 
-
+@app.post("/campaign/dm_assistant", tags=["campaign"])
+def handle_dm_assistant(
+    payload: DMAssistantRequest,
+    current_user: Annotated[User, Depends(get_current_user)]
+):
+    
+    open_ai = OpenAIApi()
+    response = open_ai.chat(
+        chat_input=payload.chat_input,
+        instructions=payload.instructions,
+        reasoning="low",
+        )
+    
+    return response
