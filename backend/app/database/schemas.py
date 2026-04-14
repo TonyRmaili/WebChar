@@ -1,12 +1,33 @@
-from pydantic import BaseModel, Field, ConfigDict, EmailStr,constr
-from enum import Enum
-from datetime import datetime, timezone
+from pydantic import BaseModel
 
+
+class SaveResponseRequest(BaseModel):
+    campaign_name: str
+    content: str
+    file_name: str  # stem only, no extension
+    folder_path: str = ""  # empty = campaign root
+
+class CopyRequest(BaseModel):
+    path: str
+
+class MoveRequest(BaseModel):
+    source_path: str
+    target_folder: str  # must be a folder path
+
+class RenameRequest(BaseModel):
+    path: str
+    new_name: str  # stem only, extension is preserved from original
+
+class ChatMessage(BaseModel):
+    role: str
+    content: str
 
 class DMAssistantRequest(BaseModel):
-    chat_input: str
+    messages: list[ChatMessage]
     instructions: str
     campaign_name: str
+    active_files: list[str] = []
+
 
 class UpdateFileRequest(BaseModel):
     path: str

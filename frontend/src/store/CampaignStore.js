@@ -10,8 +10,8 @@ const patchNodeContent = (nodes, path, content) =>
     return n;
   });
 
-
 const ACTIVE_PROMPTS_KEY = (campaignName) => `activePrompts_${campaignName}`;
+const ACTIVE_FILES_KEY = (campaignName) => `activeFiles_${campaignName}`;
 
 const loadActivePrompts = (campaignName) => {
   try {
@@ -24,6 +24,19 @@ const loadActivePrompts = (campaignName) => {
 
 const saveActivePrompts = (campaignName, paths) => {
   localStorage.setItem(ACTIVE_PROMPTS_KEY(campaignName), JSON.stringify(paths));
+};
+
+const loadActiveFiles = (campaignName) => {
+  try {
+    const raw = localStorage.getItem(ACTIVE_FILES_KEY(campaignName));
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+};
+
+const saveActiveFiles = (campaignName, paths) => {
+  localStorage.setItem(ACTIVE_FILES_KEY(campaignName), JSON.stringify(paths));
 };
 
 // Walk a tree to find a node by path and return its content
@@ -60,7 +73,8 @@ const useCampaignStore = create((set, get) => ({
   campaignData: [],
   currentCampaignName: null,
   promptsData: [],
-  activePrompts: [], // array of paths
+  activePrompts: [],
+  activeFiles: [],
 
   setError: (error) => set({ error }),
   clearError: () => set({ error: null }),
@@ -144,9 +158,19 @@ const useCampaignStore = create((set, get) => ({
       });
       if (!res.ok) throw new Error(`Failed to fetch campaign data: ${res.status}`);
       const data = await res.json();
+
+      // Prune active files that no longer exist on disk
+      const existingPaths = new Set(collectFilePaths(data));
+      const stored = loadActiveFiles(campaignName);
+      const pruned = stored.filter((p) => existingPaths.has(p));
+      if (pruned.length !== stored.length) {
+        saveActiveFiles(campaignName, pruned);
+      }
+
       set({
         campaignData: data,
         currentCampaignName: campaignName,
+        activeFiles: pruned,
         loading: false,
       });
       return data;
@@ -155,7 +179,6 @@ const useCampaignStore = create((set, get) => ({
     }
   },
 
-  // Re-fetch the tree for whatever campaign is currently loaded
   refreshCampaignData: async () => {
     const name = get().currentCampaignName;
     if (!name) return;
@@ -293,17 +316,34 @@ const useCampaignStore = create((set, get) => ({
     await get().fetchPromptsData(name);
   },
 
-  toggleActivePrompt: (path) => {
+  toggleActivePrompt: (paths) => {
     const campaignName = get().currentCampaignName;
     if (!campaignName) return;
 
     const current = get().activePrompts;
-    const next = current.includes(path)
-      ? current.filter((p) => p !== path)
-      : [...current, path];
+    const next = new Set(current);
+    const allActive = paths.length > 0 && paths.every((p) => next.has(p));
+    if (allActive) paths.forEach((p) => next.delete(p));
+    else paths.forEach((p) => next.add(p));
 
-    saveActivePrompts(campaignName, next);
-    set({ activePrompts: next });
+    const arr = Array.from(next);
+    saveActivePrompts(campaignName, arr);
+    set({ activePrompts: arr });
+  },
+
+  toggleActiveFiles: (paths) => {
+    const campaignName = get().currentCampaignName;
+    if (!campaignName) return;
+
+    const current = get().activeFiles;
+    const next = new Set(current);
+    const allActive = paths.length > 0 && paths.every((p) => next.has(p));
+    if (allActive) paths.forEach((p) => next.delete(p));
+    else paths.forEach((p) => next.add(p));
+
+    const arr = Array.from(next);
+    saveActiveFiles(campaignName, arr);
+    set({ activeFiles: arr });
   },
 
   // Concatenate all active prompt contents — used later by the chat feature
@@ -315,7 +355,7 @@ const useCampaignStore = create((set, get) => ({
     return pieces.join("\n\n---\n\n");
   },
 
-  sendChat: async (chatInput, instructions, campaignName) => {
+  sendChat: async (messages, instructions, campaignName) => {
     set({ loading: true, error: null });
     try {
       const token = localStorage.getItem("token");
@@ -326,9 +366,10 @@ const useCampaignStore = create((set, get) => ({
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          chat_input: chatInput,
-          instructions: instructions,
+          messages,
+          instructions,
           campaign_name: campaignName,
+          active_files: get().activeFiles,
         }),
       });
       if (!res.ok) throw new Error(`Chat request failed: ${res.status}`);
@@ -340,6 +381,106 @@ const useCampaignStore = create((set, get) => ({
     }
   },
 
+  renameNode: async (path, newName) => {
+    set({ error: null });
+    try {
+      const token = localStorage.getItem("token");
+      const res = await fetch(`${API_BASE_CAMPAIGN}/rename`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ path, new_name: newName }),
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.detail || `Rename failed: ${res.status}`);
+      }
+      const data = await res.json();
+      await Promise.all([get().refreshCampaignData(), get().refreshPromptsData()]);
+      return data;
+    } catch (err) {
+      set({ error: err.message || "Unknown error" });
+    }
+  },
+
+  moveNode: async (sourcePath, targetFolder) => {
+    set({ error: null });
+    try {
+      const token = localStorage.getItem("token");
+      const res = await fetch(`${API_BASE_CAMPAIGN}/move`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ source_path: sourcePath, target_folder: targetFolder }),
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.detail || `Move failed: ${res.status}`);
+      }
+      const data = await res.json();
+      await Promise.all([get().refreshCampaignData(), get().refreshPromptsData()]);
+      return data;
+    } catch (err) {
+      set({ error: err.message || "Unknown error" });
+    }
+  },
+
+  copyNode: async (path) => {
+    set({ error: null });
+    try {
+      const token = localStorage.getItem("token");
+      const res = await fetch(`${API_BASE_CAMPAIGN}/copy`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ path }),
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.detail || `Copy failed: ${res.status}`);
+      }
+      const data = await res.json();
+      await Promise.all([get().refreshCampaignData(), get().refreshPromptsData()]);
+      return data;
+    } catch (err) {
+      set({ error: err.message || "Unknown error" });
+    }
+  },
+
+  saveResponse: async (campaignName, content, fileName, folderPath = "") => {
+    set({ error: null });
+    try {
+      const token = localStorage.getItem("token");
+      const res = await fetch(`${API_BASE_CAMPAIGN}/save_response`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          campaign_name: campaignName,
+          content,
+          file_name: fileName,
+          folder_path: folderPath,
+        }),
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.detail || `Save failed: ${res.status}`);
+      }
+      const data = await res.json();
+      await get().refreshCampaignData();
+      return data;
+    } catch (err) {
+      set({ error: err.message || "Unknown error" });
+    }
+  },
 
 }));
 

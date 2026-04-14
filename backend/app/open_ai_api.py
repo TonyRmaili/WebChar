@@ -15,21 +15,17 @@ class OpenAIApi:
         self.reasoning = {"effort" : f""}
 
     
-    def chat(self, chat_input, instructions, reasoning="low"):
-        input_messages = [
-            {"role": "system", "content": instructions},
-            {"role": "user", "content": chat_input},
-        ]
-
+    def chat(self, messages, instructions, reasoning="low"):
         response = self.client.responses.create(
             model=self.model,
-            input=input_messages,
+            input=messages,
             reasoning={"effort": reasoning},
+            instructions = instructions   
         )
 
         return response.output_text
 
-
+    
     def parse(self,chat_input,instructions,reasoning,text_format):
         input = [
             {"role": "system", "content": instructions},

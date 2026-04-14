@@ -136,11 +136,12 @@ Data additons:
 1. AC
 
 
-Campaigns idees
+# Campaigns 
 1. implement tags for generated npcs/monsters for easier searching 
 2. Settings button for config of AI stuff
 3. Add selectable files to pass in with the prompt
 4. RAG!!
+5. Extend the chatlog similar to the standard assistant/user view
 
 
 

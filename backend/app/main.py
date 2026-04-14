@@ -23,7 +23,7 @@ from app.combat_functions import heal_health, damage_health,load_character,on_lo
 from app.minion_functions import handle_minionEffects,filter_monster_data,get_minion_data
 from app.class_maker import ClassMaker
 from app.file_handler import FileHandler
-from app.open_ai_api import OpenAIApi
+from app.chat_manager import ChatManager
 from app.database.schemas import (
     UserSchema,
     CharacterSchema,
@@ -39,7 +39,11 @@ from app.database.schemas import (
     CreateFileRequest,
     DeleteFileRequest,
     UpdateFileRequest,
-    DMAssistantRequest
+    DMAssistantRequest,
+    RenameRequest,
+    MoveRequest,
+    CopyRequest,
+    SaveResponseRequest
 )
 # uvicorn app.main:app --reload
 
@@ -925,12 +929,126 @@ def handle_dm_assistant(
     payload: DMAssistantRequest,
     current_user: Annotated[User, Depends(get_current_user)]
 ):
-    
-    open_ai = OpenAIApi()
-    response = open_ai.chat(
-        chat_input=payload.chat_input,
-        instructions=payload.instructions,
-        reasoning="low",
+   
+
+    messages = [m.model_dump() for m in payload.messages]
+    chat_manager = ChatManager()
+   
+    response = chat_manager.chat_log(
+        instructions= payload.instructions,
+        files= payload.active_files,
+        messages= messages
         )
     
     return response
+
+
+
+
+@app.put("/campaign/rename", tags=["campaign"])
+def rename_node(
+    payload: RenameRequest,
+    current_user: Annotated[User, Depends(get_current_user)],
+):
+    file_handler = FileHandler()
+    src = file_handler.validate_campaign_path(savefiles_path, current_user.name, Path(payload.path))
+    if not src.exists():
+        raise HTTPException(status_code=404, detail="Path not found")
+
+    new_name = payload.new_name.strip()
+    if not new_name:
+        raise HTTPException(status_code=400, detail="New name cannot be empty")
+    if any(c in new_name for c in r'\/:*?"<>|'):
+        raise HTTPException(status_code=400, detail="Invalid characters in name")
+
+    if src.is_file():
+        dest = src.parent / f"{new_name}{src.suffix}"
+    else:
+        dest = src.parent / new_name
+
+    dest = file_handler.validate_campaign_path(savefiles_path, current_user.name, dest)
+
+    if dest.exists():
+        raise HTTPException(status_code=400, detail="A file with that name already exists")
+
+    src.rename(dest)
+    return {"message": "Renamed", "path": str(dest), "name": dest.name}
+
+
+@app.put("/campaign/move", tags=["campaign"])
+def move_node(
+    payload: MoveRequest,
+    current_user: Annotated[User, Depends(get_current_user)],
+):
+    file_handler = FileHandler()
+    src = file_handler.validate_campaign_path(savefiles_path, current_user.name, Path(payload.source_path))
+    target_folder = file_handler.validate_campaign_path(savefiles_path, current_user.name, Path(payload.target_folder))
+
+    if not src.exists():
+        raise HTTPException(status_code=404, detail="Source not found")
+    if not target_folder.is_dir():
+        raise HTTPException(status_code=400, detail="Target is not a folder")
+
+    if not file_handler.same_subtree(savefiles_path,current_user.name, src, target_folder):
+        raise HTTPException(
+            status_code=400,
+            detail="Cannot move between prompts and campaign files",
+        )
+
+    # Prevent moving a folder into itself or a descendant
+    if src.is_dir():
+        try:
+            target_folder.relative_to(src)
+            raise HTTPException(status_code=400, detail="Cannot move a folder into itself")
+        except ValueError:
+            pass  # good — target is not inside src
+
+    if src.parent.resolve() == target_folder.resolve():
+        return {"message": "Already in target folder", "path": str(src)}
+
+    dest = file_handler.unique_destination(target_folder / src.name)
+    shutil.move(str(src), str(dest))
+    return {"message": "Moved", "path": str(dest), "name": dest.name}
+
+
+@app.post("/campaign/copy", tags=["campaign"])
+def copy_node(
+    payload: CopyRequest,
+    current_user: Annotated[User, Depends(get_current_user)],
+):
+    file_handler = FileHandler()
+    src = file_handler.validate_campaign_path(savefiles_path, current_user.name, Path(payload.path))
+    if not src.is_file():
+        raise HTTPException(status_code=400, detail="Only files can be copied")
+
+    dest = file_handler.unique_destination(src.parent / src.name)
+    shutil.copy2(src, dest)
+    return {"message": "Copied", "path": str(dest), "name": dest.name}
+
+
+@app.post("/campaign/save_response", tags=["campaign"])
+def save_response(
+    payload: SaveResponseRequest,
+    current_user: Annotated[User, Depends(get_current_user)],
+):
+    file_handler = FileHandler()
+    campaign_root = (
+        Path(savefiles_path) / current_user.name / "campaigns" / payload.campaign_name
+    )
+    if not campaign_root.is_dir():
+        raise HTTPException(status_code=404, detail="Campaign not found")
+
+    if payload.folder_path:
+        target_folder = file_handler.validate_campaign_path(savefiles_path, current_user.name, Path(payload.folder_path))
+        if not target_folder.is_dir():
+            raise HTTPException(status_code=400, detail="Target folder not found")
+    else:
+        target_folder = campaign_root.resolve()
+
+    name = payload.file_name.strip() or file_handler.slugify_response(payload.content)
+    if any(c in name for c in r'\/:*?"<>|'):
+        raise HTTPException(status_code=400, detail="Invalid characters in name")
+
+    dest = file_handler.unique_destination(target_folder / f"{name}.md")
+    dest.write_text(payload.content, encoding="utf-8")
+    return {"message": "Saved", "path": str(dest), "name": dest.name}
