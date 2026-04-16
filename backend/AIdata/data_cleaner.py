@@ -5,36 +5,26 @@ import time, random, string
 
 from dotenv import load_dotenv
 from openai import OpenAI
-from .schemas.classes import GeneralStats, FeatureList
-from .schemas.monsters import MonsterBase
+# from .schemas.classes import GeneralStats, FeatureList
+# from .schemas.monsters import MonsterBase
+
+from backend.app.file_handler import FileHandler
+# from open_ai_api import OpenAIApi
 
 import re
 from collections import OrderedDict
 from pathlib import Path
 
-class DataHandler:
+class DataCleaner:
     def __init__(self):
-        # setup
-        load_dotenv(override=True)
-        self.api_key = os.getenv("OPENAI_API_KEY")
-        self.client = OpenAI(
-            api_key=self.api_key
-        )
-
-        # templates
-        self.user_input = [{"role": "user","content": f""}]
-        self.assistant_input = [{"role": "assistant","content": f""}]
-        self.system_input = [{"role": "system","content": f""}]
         
-        self.reasoning = {"effort" : f""}
-
-        # AI data
-        self.models = ["gpt-5-mini"]
-
         # base paths
-        self.raw_data_path = "AIdata/5etools_data/raw/"
-        self.cleaned_data_path = "AIdata/5etools_data/cleaned/"
+        self.raw_data_path = "backend/AIdata/5etools_data/raw/"
+        self.cleaned_data_path = "backend/AIdata/5etools_data/cleaned/"
         self.instructions_path = "AIdata/instructions/"
+
+        self.raw_items_path = os.path.join(self.raw_data_path,"items")
+        self.cleaned_items_path = os.path.join(self.cleaned_data_path,"items")
 
         # self.raw_data_path = "5etools_data/raw/"
         # self.cleaned_data_path = "5etools_data/cleaned/"
@@ -163,40 +153,7 @@ class DataHandler:
 
         return chunked_pages
 
-    # ---------- AI Methods
-    def openai_response(self,model,instructions,input,reasoning) -> str:
-        # self.user_input["content"] = input
-        self.reasoning["effort"] = reasoning
-
-        response = self.client.responses.create(
-            model=model,
-            instructions=instructions,
-            input=input,
-            reasoning=self.reasoning,
-            
-        )
-
-        return response.output_text
-
-    def openai_parse(self,model,input,reasoning,text_format):
-        self.reasoning["effort"] = reasoning
-
-        response = self.client.responses.parse(
-            model=model,
-            input=input,
-            reasoning=self.reasoning,
-            text_format=text_format
-        )
-        parsed = response.output_parsed
-
-        try:
-            return parsed.model_dump()      
-        except AttributeError:
-            return parsed      
-
-    def openai_embed(self):
-        pass
-
+   
     # ------ General Methods
     def combine_texts(self,input_path,output_path,output_filename):
         combined_doc = ""
@@ -212,30 +169,7 @@ class DataHandler:
         base_name, _ = os.path.splitext(file_name)
         return base_name
 
-    def load_json_data(self,path):
-        with open(path,encoding="utf-8") as f:
-            data = json.load(f)
-        return data
-    
-    def load_data(self,path,encoding=False):
-        if encoding:
-            with open(path,encoding="utf-8") as f:
-                data = f.read()
-        else:
-            with open(path) as f:
-                data = f.read()
-        return data
-
-    def save_as_json(self,data,path,filename):
-        os.makedirs(path,exist_ok=True)
-        full_path = os.path.join(path,filename+".json")
-        with open(full_path,"w",encoding="utf-8") as f:
-            json.dump(data,f,indent=4,ensure_ascii=False)
-
-    def save_as_text(self,data,path):
-        with open(path,"w",encoding="utf-8") as f:
-            f.write(data)
-
+   
     def base36(self,n: int) -> str:
         chars = "0123456789abcdefghijklmnopqrstuvwxyz"
         if n == 0:
@@ -441,7 +375,7 @@ class DataHandler:
 
         return cleaned_monster
 
-    # ------- Clean Class Methodsx------------
+    # ------- Clean Class Methods------------
 
     def extract_class_by_pages(self,class_name):
         path = os.path.join(self.pdf_path,"players_handbook_new.json") 
@@ -482,20 +416,96 @@ class DataHandler:
             self.save_as_text(data=cleaned_page,path=full_path)
 
 
+    # ------- Clean Items Section ------------
+
+
+    def compare_items(self):
+        filename = "items"
+        path = os.path.join(self.raw_items_path, filename)
+        data = FileHandler().load_json(path)
+
+        item_data = data["item"]
+        item_group_data = data["itemGroup"]
+
+        # Build lookup: name -> list of (source, category)
+        lookup = {}
+        for it in item_data:
+            lookup.setdefault(it["name"], []).append((it.get("source"), "item"))
+        for it in item_group_data:
+            lookup.setdefault(it["name"], []).append((it.get("source"), "itemGroup"))
+
+        # Find names that appear in both categories
+        overlaps = {
+            name: entries
+            for name, entries in lookup.items()
+            if len({cat for _, cat in entries}) > 1
+        }
+
+        print(f"Found {len(overlaps)} overlapping names:\n")
+        for name, entries in overlaps.items():
+            print(f"  {name}")
+            for source, category in entries:
+                print(f"    - {category} (source: {source})")
+
+        return overlaps
+
+    def split_items_by_source(self):
+        filename = "items"
+        path = os.path.join(self.raw_items_path, filename)
+        data = FileHandler().load_json(path)
+
+        item_data = data["item"]
+
+        item_source = {}
+
+        for item in item_data:
+            if item["source"] not in item_source:
+                item_source[item["source"]] = []
+            
+            item_source[item["source"]].append(item)
+
+        save_path = os.path.join(self.cleaned_items_path,"sourced_items")
+        FileHandler().save_json(save_path,item_source)
+
+    def item_keyword_tracker(self):
+        filename = "items_removed_keys"
+        path = os.path.join(self.raw_items_path, filename)
+        data = FileHandler().load_json(path)
+
+        key_words = []
+
+        for item in data:
+            for key in item.keys():
+                if key not in key_words:
+                    key_words.append(key)
+
+        save_path = os.path.join(self.cleaned_items_path,"key_words")
+        FileHandler().save_json(save_path,key_words)
+
+    def remove_item_key(self,keyword):
+        filename = "items_removed_keys"
+        path = os.path.join(self.raw_items_path, filename)
+        data = FileHandler().load_json(path)
+
+        
+
+        for item in data:
+            for key in list(item.keys()):
+                if key == keyword:
+                    del item[key]
+
+        save_path = os.path.join(self.raw_items_path,"items_removed_keys")
+        FileHandler().save_json(save_path,data)
+
+
+
 if __name__=="__main__":
-    handler = DataHandler()
+    cleaner = DataCleaner()
     
-    start = time.perf_counter()
-
-    handler.clean_class_p1(class_name="barbarian")
-
-    end = time.perf_counter()
-    elapsed_minutes = (end - start) / 60
-    print(f"Elapsed time: {elapsed_minutes:.2f} minutes")
-
-
     
-
+    cleaner.remove_item_key("hasRefs")
+    cleaner.item_keyword_tracker()
+   
 
 
     

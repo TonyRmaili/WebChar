@@ -12,6 +12,8 @@ export const useDnDStore = create((set, get) => ({
   error: null,
   loadingSpell: false,
   spellData: JSON.parse(localStorage.getItem("spellData") || "{}"),
+  items: [],
+  loadingItems: false,
 
   loadFiles: async () => {
     set({ loadingFiles: true, error: null });
@@ -25,6 +27,29 @@ export const useDnDStore = create((set, get) => ({
       set({ files: [], error: e.message });
     } finally {
       set({ loadingFiles: false });
+    }
+  },
+
+  loadItems: async () => {
+    set({ loadingItems: true, error: null });
+    try {
+      const token = localStorage.getItem("token");
+      const res = await fetch(`${API_BASE}/5etools/items`, {
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      const list = Array.isArray(data)
+        ? data
+        : Array.isArray(data?.items)
+        ? data.items
+        : [];
+      set({ items: list });
+    } catch (e) {
+      console.error(e);
+      set({ items: [], error: e.message });
+    } finally {
+      set({ loadingItems: false });
     }
   },
 

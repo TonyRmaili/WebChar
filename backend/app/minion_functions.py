@@ -3,7 +3,7 @@ import os
 import json
 from collections import defaultdict
 from .dice_handler import roll_attack, roll_save
-from AIdata.data_handler import DataHandler
+# from ..AIdata.data_cleaner import DataCleaner
 
 # Simple label tags you can color in the frontend
 HIT_LABEL = {
@@ -302,7 +302,7 @@ def get_minion_data(selected_minion,user_name,char_name):
         return minion_data
     
     else:
-        data_handler = DataHandler()
+        data_handler = DataCleaner()
         
         cleaned_monster =data_handler.clean_monster(
             raw_monsters_filename=subfolder_name+".json",

@@ -20,8 +20,8 @@ from embedder.xembedder import Embedder
 from pathlib import Path
 from app.dice_handler import roll_dice
 from app.combat_functions import heal_health, damage_health,load_character,on_longrest,on_shortrest,grant_experience
-from app.minion_functions import handle_minionEffects,filter_monster_data,get_minion_data
-from app.class_maker import ClassMaker
+from app.minion_functions import handle_minionEffects, filter_monster_data, get_minion_data
+from app.class_maker import ClassMaker 
 from app.file_handler import FileHandler
 from app.chat_manager import ChatManager
 from app.database.schemas import (
@@ -708,8 +708,22 @@ def get_races():
     
     except FileNotFoundError:
         return {"file not found"}
+    
 
- 
+@app.get("/5etools/items",tags=["5etools"])
+def get_items():
+    try:
+        path = os.path.join(fiveEtools_path,"raw","items","items_removed_keys")
+        data = FileHandler().load_json(path)
+        return data
+    except FileNotFoundError:
+        return {"file not found"}
+
+
+
+
+
+
 # ------------------------Campaigns-----------------------------
 
 @app.get("/campaign", tags=["campaign"])

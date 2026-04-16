@@ -1,12 +1,12 @@
 import React, { useMemo, useState } from "react";
 
 
-const DEFAULT_WIDTH = 520;
-const DEFAULT_HEIGHT = 360;
+const DEFAULT_WIDTH = 900;
+const DEFAULT_HEIGHT = 600;
 const MIN_WIDTH = 260;
 const MIN_HEIGHT = 180;
-const START_X = 120;
-const START_Y = 80;
+const START_X = 300;
+const START_Y = 40;
 const OFFSET_X = 28;
 const OFFSET_Y = 24;
 
