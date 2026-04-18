@@ -698,29 +698,16 @@ def select_spell(file_name,spell_name):
             return spell
 
  
-@app.get("/5etools/races",tags=["5etools"])
-def get_races():
-    try:
-        with open("./app/database/5etools_json/races.json") as f:
-            races = json.load(f)
-        
-        return [races["race"],races["subrace"]]
-    
-    except FileNotFoundError:
-        return {"file not found"}
-    
+
 
 @app.get("/5etools/items",tags=["5etools"])
 def get_items():
     try:
-        path = os.path.join(fiveEtools_path,"raw","items","items_removed_keys")
+        path = os.path.join(fiveEtools_path,"cleaned","items","all_items")
         data = FileHandler().load_json(path)
         return data
     except FileNotFoundError:
         return {"file not found"}
-
-
-
 
 
 

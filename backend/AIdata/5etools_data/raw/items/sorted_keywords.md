@@ -45,14 +45,14 @@
 "spellScrollLevel",
 "grantsLanguage",
 
-# abbreviation translation (Fixed)
+# abbreviation translation (done)
 "type"
 "property",
 "dmgType",
 
 
 
-# too specific data
+# too specific data (low prio)
 "crew"
 "vehAc",
 "vehHp",
@@ -71,7 +71,7 @@
 "travelCost",
 "shippingCost",
 
-# new keyword storing
+# new keyword storing (done)
 tattoo
 "poison",
 "staff",
@@ -101,26 +101,34 @@ tattoo
 
 
 # nested data 
-"focus",
-"light",
-"entries",
-"attachedSpells",
-"_copy",
-"conditionImmune",
-"modifySpeed",
-"ability",
-"vulnerable"
-"inherits",
-"poisonTypes",
-"immune",
-"containerCapacity",
-"packContents",
-"additionalEntries"
-"requires",
-"excludes"
+"focus",  # no change 
+"light", # no change 
+"conditionImmune", # no change 
+"modifySpeed", # no change 
+
+"vulnerable"  # no change 
+
+"poisonTypes",  # no change 
+"immune", # no change
+
+"packContents", # later
+
+
+"inherits", # doen
+"_copy",  # done
+"additionalEntries" # done
+
+"attachedSpells", # done
+"entries",   # done
+"ability", # done
+
 
 # remove
 [
+    "requires",
+    "excludes",
+
+    "containerCapacity",
     "basicRules2024",
     "srd",
     "srd52",
