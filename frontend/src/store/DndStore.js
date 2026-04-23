@@ -14,6 +14,26 @@ export const useDnDStore = create((set, get) => ({
   spellData: JSON.parse(localStorage.getItem("spellData") || "{}"),
   items: [],
   loadingItems: false,
+  races: [],
+  loadingRaces: false,
+
+
+  loadRaces: async () => {
+    set({ loadingRaces: true, error: null });
+    try {
+      const res = await fetch(`${API_BASE}/5etools/races`);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      set({ races: Array.isArray(data) ? data : [] });
+    } catch (e) {
+      console.error(e);
+      set({ races: [], error: e.message });
+    } finally {
+      set({ loadingRaces: false });
+    }
+  },
+
+
 
   loadFiles: async () => {
     set({ loadingFiles: true, error: null });

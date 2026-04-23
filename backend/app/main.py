@@ -698,8 +698,6 @@ def select_spell(file_name,spell_name):
             return spell
 
  
-
-
 @app.get("/5etools/items",tags=["5etools"])
 def get_items():
     try:
@@ -708,6 +706,17 @@ def get_items():
         return data
     except FileNotFoundError:
         return {"file not found"}
+    
+
+@app.get("/5etools/races",tags=["5etools"])
+def get_races():
+    try:
+        path = "app/output/races/all_races_final"
+        data = FileHandler().load_json(path)
+        return data
+    except FileNotFoundError:
+        return {"file not found"}
+
 
 
 

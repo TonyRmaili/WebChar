@@ -19,9 +19,11 @@ alias
 
 # complex
 _versions
+_copy
+
+
 skillProficiencies
 toolProficiencies
-_copy
 feats
 weaponProficiencies
 blindsight

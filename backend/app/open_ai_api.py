@@ -25,18 +25,14 @@ class OpenAIApi:
 
         return response.output_text
 
-    
-    def parse(self,chat_input,instructions,reasoning,text_format):
-        input = [
-            {"role": "system", "content": instructions},
-            {"role": "user", "content": chat_input}  
-        ]
-
+      
+    def parse(self,instructions,input,reasoning,text_format):
         self.reasoning["effort"] = reasoning
-        
+
         response = self.client.responses.parse(
             model=self.model,
             input=input,
+            instructions=instructions,
             reasoning=self.reasoning,
             text_format=text_format
         )
@@ -44,7 +40,7 @@ class OpenAIApi:
         
         if text_format:
             try:
-                return parsed.model_dump()      
+                return parsed.model_dump(by_alias=True)     
             except AttributeError:
                 return parsed    
 
