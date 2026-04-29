@@ -4,39 +4,9 @@
             "name": "Wizard",
             "source": "PHB",
             "edition": "classic",
-            "hd": {
-                "number": 1,
-                "faces": 6
-            },
-            "proficiency": [
-                "int",
-                "wis"
-            ],
             "spellcastingAbility": "int",
             "casterProgression": "full",
             "preparedSpells": "<$level$> + <$int_mod$>",
-            "cantripProgression": [
-                3,
-                3,
-                3,
-                4,
-                4,
-                4,
-                4,
-                4,
-                4,
-                5,
-                5,
-                5,
-                5,
-                5,
-                5,
-                5,
-                5,
-                5,
-                5,
-                5
-            ],
             "spellsKnownProgressionFixed": [
                 6,
                 2,
@@ -132,309 +102,418 @@
                     "int": 13
                 }
             },
-            "classTableGroups": [
+            "hit_dice": "d6",
+            "saving_throw_proficiency": [
+                "int",
+                "wis"
+            ],
+            "level_progression": [
                 {
-                    "colLabels": [
-                        "{@filter Cantrips Known|spells|level=0|class=Wizard}"
+                    "level": 1,
+                    "proficiency_bonus": 2,
+                    "feature_names": [
+                        "Arcane Recovery",
+                        "Spellcasting"
                     ],
-                    "rows": [
-                        [
-                            3
-                        ],
-                        [
-                            3
-                        ],
-                        [
-                            3
-                        ],
-                        [
-                            4
-                        ],
-                        [
-                            4
-                        ],
-                        [
-                            4
-                        ],
-                        [
-                            4
-                        ],
-                        [
-                            4
-                        ],
-                        [
-                            4
-                        ],
-                        [
-                            5
-                        ],
-                        [
-                            5
-                        ],
-                        [
-                            5
-                        ],
-                        [
-                            5
-                        ],
-                        [
-                            5
-                        ],
-                        [
-                            5
-                        ],
-                        [
-                            5
-                        ],
-                        [
-                            5
-                        ],
-                        [
-                            5
-                        ],
-                        [
-                            5
-                        ],
-                        [
-                            5
-                        ]
-                    ]
+                    "spell_slots": [
+                        2,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "extras": {
+                        "cantrips_known": 3
+                    }
                 },
                 {
-                    "title": "Spell Slots per Spell Level",
-                    "colLabels": [
-                        "{@filter 1st|spells|level=1|class=Wizard}",
-                        "{@filter 2nd|spells|level=2|class=Wizard}",
-                        "{@filter 3rd|spells|level=3|class=Wizard}",
-                        "{@filter 4th|spells|level=4|class=Wizard}",
-                        "{@filter 5th|spells|level=5|class=Wizard}",
-                        "{@filter 6th|spells|level=6|class=Wizard}",
-                        "{@filter 7th|spells|level=7|class=Wizard}",
-                        "{@filter 8th|spells|level=8|class=Wizard}",
-                        "{@filter 9th|spells|level=9|class=Wizard}"
+                    "level": 2,
+                    "proficiency_bonus": 2,
+                    "feature_names": [
+                        "Arcane Tradition"
                     ],
-                    "rowsSpellProgression": [
-                        [
-                            2,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0
-                        ],
-                        [
-                            3,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0
-                        ],
-                        [
-                            4,
-                            2,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0
-                        ],
-                        [
-                            4,
-                            3,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0
-                        ],
-                        [
-                            4,
-                            3,
-                            2,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0
-                        ],
-                        [
-                            4,
-                            3,
-                            3,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0
-                        ],
-                        [
-                            4,
-                            3,
-                            3,
-                            1,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0
-                        ],
-                        [
-                            4,
-                            3,
-                            3,
-                            2,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0
-                        ],
-                        [
-                            4,
-                            3,
-                            3,
-                            3,
-                            1,
-                            0,
-                            0,
-                            0,
-                            0
-                        ],
-                        [
-                            4,
-                            3,
-                            3,
-                            3,
-                            2,
-                            0,
-                            0,
-                            0,
-                            0
-                        ],
-                        [
-                            4,
-                            3,
-                            3,
-                            3,
-                            2,
-                            1,
-                            0,
-                            0,
-                            0
-                        ],
-                        [
-                            4,
-                            3,
-                            3,
-                            3,
-                            2,
-                            1,
-                            0,
-                            0,
-                            0
-                        ],
-                        [
-                            4,
-                            3,
-                            3,
-                            3,
-                            2,
-                            1,
-                            1,
-                            0,
-                            0
-                        ],
-                        [
-                            4,
-                            3,
-                            3,
-                            3,
-                            2,
-                            1,
-                            1,
-                            0,
-                            0
-                        ],
-                        [
-                            4,
-                            3,
-                            3,
-                            3,
-                            2,
-                            1,
-                            1,
-                            1,
-                            0
-                        ],
-                        [
-                            4,
-                            3,
-                            3,
-                            3,
-                            2,
-                            1,
-                            1,
-                            1,
-                            0
-                        ],
-                        [
-                            4,
-                            3,
-                            3,
-                            3,
-                            2,
-                            1,
-                            1,
-                            1,
-                            1
-                        ],
-                        [
-                            4,
-                            3,
-                            3,
-                            3,
-                            3,
-                            1,
-                            1,
-                            1,
-                            1
-                        ],
-                        [
-                            4,
-                            3,
-                            3,
-                            3,
-                            3,
-                            2,
-                            1,
-                            1,
-                            1
-                        ],
-                        [
-                            4,
-                            3,
-                            3,
-                            3,
-                            3,
-                            2,
-                            2,
-                            1,
-                            1
-                        ]
-                    ]
+                    "spell_slots": [
+                        3,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "extras": {
+                        "cantrips_known": 3
+                    }
+                },
+                {
+                    "level": 3,
+                    "proficiency_bonus": 2,
+                    "feature_names": [
+                        "Cantrip Formulas"
+                    ],
+                    "spell_slots": [
+                        4,
+                        2,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "extras": {
+                        "cantrips_known": 3
+                    }
+                },
+                {
+                    "level": 4,
+                    "proficiency_bonus": 2,
+                    "feature_names": [
+                        "Ability Score Improvement"
+                    ],
+                    "spell_slots": [
+                        4,
+                        3,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "extras": {
+                        "cantrips_known": 4
+                    }
+                },
+                {
+                    "level": 5,
+                    "proficiency_bonus": 3,
+                    "feature_names": [],
+                    "spell_slots": [
+                        4,
+                        3,
+                        2,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "extras": {
+                        "cantrips_known": 4
+                    }
+                },
+                {
+                    "level": 6,
+                    "proficiency_bonus": 3,
+                    "feature_names": [
+                        "Arcane Tradition feature"
+                    ],
+                    "spell_slots": [
+                        4,
+                        3,
+                        3,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "extras": {
+                        "cantrips_known": 4
+                    }
+                },
+                {
+                    "level": 7,
+                    "proficiency_bonus": 3,
+                    "feature_names": [],
+                    "spell_slots": [
+                        4,
+                        3,
+                        3,
+                        1,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "extras": {
+                        "cantrips_known": 4
+                    }
+                },
+                {
+                    "level": 8,
+                    "proficiency_bonus": 3,
+                    "feature_names": [
+                        "Ability Score Improvement"
+                    ],
+                    "spell_slots": [
+                        4,
+                        3,
+                        3,
+                        2,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "extras": {
+                        "cantrips_known": 4
+                    }
+                },
+                {
+                    "level": 9,
+                    "proficiency_bonus": 4,
+                    "feature_names": [],
+                    "spell_slots": [
+                        4,
+                        3,
+                        3,
+                        3,
+                        1,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "extras": {
+                        "cantrips_known": 4
+                    }
+                },
+                {
+                    "level": 10,
+                    "proficiency_bonus": 4,
+                    "feature_names": [
+                        "Arcane Tradition feature"
+                    ],
+                    "spell_slots": [
+                        4,
+                        3,
+                        3,
+                        3,
+                        2,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "extras": {
+                        "cantrips_known": 5
+                    }
+                },
+                {
+                    "level": 11,
+                    "proficiency_bonus": 4,
+                    "feature_names": [],
+                    "spell_slots": [
+                        4,
+                        3,
+                        3,
+                        3,
+                        2,
+                        1,
+                        0,
+                        0,
+                        0
+                    ],
+                    "extras": {
+                        "cantrips_known": 5
+                    }
+                },
+                {
+                    "level": 12,
+                    "proficiency_bonus": 4,
+                    "feature_names": [
+                        "Ability Score Improvement"
+                    ],
+                    "spell_slots": [
+                        4,
+                        3,
+                        3,
+                        3,
+                        2,
+                        1,
+                        0,
+                        0,
+                        0
+                    ],
+                    "extras": {
+                        "cantrips_known": 5
+                    }
+                },
+                {
+                    "level": 13,
+                    "proficiency_bonus": 5,
+                    "feature_names": [],
+                    "spell_slots": [
+                        4,
+                        3,
+                        3,
+                        3,
+                        2,
+                        1,
+                        1,
+                        0,
+                        0
+                    ],
+                    "extras": {
+                        "cantrips_known": 5
+                    }
+                },
+                {
+                    "level": 14,
+                    "proficiency_bonus": 5,
+                    "feature_names": [
+                        "Arcane Tradition feature"
+                    ],
+                    "spell_slots": [
+                        4,
+                        3,
+                        3,
+                        3,
+                        2,
+                        1,
+                        1,
+                        0,
+                        0
+                    ],
+                    "extras": {
+                        "cantrips_known": 5
+                    }
+                },
+                {
+                    "level": 15,
+                    "proficiency_bonus": 5,
+                    "feature_names": [],
+                    "spell_slots": [
+                        4,
+                        3,
+                        3,
+                        3,
+                        2,
+                        1,
+                        1,
+                        1,
+                        0
+                    ],
+                    "extras": {
+                        "cantrips_known": 5
+                    }
+                },
+                {
+                    "level": 16,
+                    "proficiency_bonus": 5,
+                    "feature_names": [
+                        "Ability Score Improvement"
+                    ],
+                    "spell_slots": [
+                        4,
+                        3,
+                        3,
+                        3,
+                        2,
+                        1,
+                        1,
+                        1,
+                        0
+                    ],
+                    "extras": {
+                        "cantrips_known": 5
+                    }
+                },
+                {
+                    "level": 17,
+                    "proficiency_bonus": 6,
+                    "feature_names": [],
+                    "spell_slots": [
+                        4,
+                        3,
+                        3,
+                        3,
+                        2,
+                        1,
+                        1,
+                        1,
+                        1
+                    ],
+                    "extras": {
+                        "cantrips_known": 5
+                    }
+                },
+                {
+                    "level": 18,
+                    "proficiency_bonus": 6,
+                    "feature_names": [
+                        "Spell Mastery"
+                    ],
+                    "spell_slots": [
+                        4,
+                        3,
+                        3,
+                        3,
+                        3,
+                        1,
+                        1,
+                        1,
+                        1
+                    ],
+                    "extras": {
+                        "cantrips_known": 5
+                    }
+                },
+                {
+                    "level": 19,
+                    "proficiency_bonus": 6,
+                    "feature_names": [
+                        "Ability Score Improvement"
+                    ],
+                    "spell_slots": [
+                        4,
+                        3,
+                        3,
+                        3,
+                        3,
+                        2,
+                        1,
+                        1,
+                        1
+                    ],
+                    "extras": {
+                        "cantrips_known": 5
+                    }
+                },
+                {
+                    "level": 20,
+                    "proficiency_bonus": 6,
+                    "feature_names": [
+                        "Signature Spells"
+                    ],
+                    "spell_slots": [
+                        4,
+                        3,
+                        3,
+                        3,
+                        3,
+                        2,
+                        2,
+                        1,
+                        1
+                    ],
+                    "extras": {
+                        "cantrips_known": 5
+                    }
                 }
             ]
         },
@@ -1631,61 +1710,9 @@
                     "int": true
                 }
             ],
-            "hd": {
-                "number": 1,
-                "faces": 6
-            },
-            "proficiency": [
-                "int",
-                "wis"
-            ],
             "spellcastingAbility": "int",
             "casterProgression": "full",
-            "preparedSpellsProgression": [
-                4,
-                5,
-                6,
-                7,
-                9,
-                10,
-                11,
-                12,
-                14,
-                15,
-                16,
-                16,
-                17,
-                18,
-                19,
-                21,
-                22,
-                23,
-                24,
-                25
-            ],
             "preparedSpellsChange": "restLong",
-            "cantripProgression": [
-                3,
-                3,
-                3,
-                4,
-                4,
-                4,
-                4,
-                4,
-                4,
-                5,
-                5,
-                5,
-                5,
-                5,
-                5,
-                5,
-                5,
-                5,
-                5,
-                5
-            ],
             "spellsKnownProgressionFixed": [
                 6,
                 2,
@@ -1767,330 +1794,441 @@
                 ]
             },
             "multiclassing": {},
-            "classTableGroups": [
+            "hit_dice": "d6",
+            "saving_throw_proficiency": [
+                "int",
+                "wis"
+            ],
+            "level_progression": [
                 {
-                    "colLabels": [
-                        "{@filter Cantrips|spells|level=0|class=Wizard}",
-                        "{@filter Prepared Spells|spells|level=!0|class=Wizard}"
+                    "level": 1,
+                    "proficiency_bonus": 2,
+                    "feature_names": [
+                        "Arcane Recovery",
+                        "Ritual Adept",
+                        "Spellcasting"
                     ],
-                    "rows": [
-                        [
-                            3,
-                            4
-                        ],
-                        [
-                            3,
-                            5
-                        ],
-                        [
-                            3,
-                            6
-                        ],
-                        [
-                            4,
-                            7
-                        ],
-                        [
-                            4,
-                            9
-                        ],
-                        [
-                            4,
-                            10
-                        ],
-                        [
-                            4,
-                            11
-                        ],
-                        [
-                            4,
-                            12
-                        ],
-                        [
-                            4,
-                            14
-                        ],
-                        [
-                            5,
-                            15
-                        ],
-                        [
-                            5,
-                            16
-                        ],
-                        [
-                            5,
-                            16
-                        ],
-                        [
-                            5,
-                            17
-                        ],
-                        [
-                            5,
-                            18
-                        ],
-                        [
-                            5,
-                            19
-                        ],
-                        [
-                            5,
-                            21
-                        ],
-                        [
-                            5,
-                            22
-                        ],
-                        [
-                            5,
-                            23
-                        ],
-                        [
-                            5,
-                            24
-                        ],
-                        [
-                            5,
-                            25
-                        ]
-                    ]
+                    "spell_slots": [
+                        2,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "extras": {
+                        "cantrips": 3,
+                        "prepared_spells": 4
+                    }
                 },
                 {
-                    "title": "Spell Slots per Spell Level",
-                    "colLabels": [
-                        "{@filter 1st|spells|level=1|class=Wizard}",
-                        "{@filter 2nd|spells|level=2|class=Wizard}",
-                        "{@filter 3rd|spells|level=3|class=Wizard}",
-                        "{@filter 4th|spells|level=4|class=Wizard}",
-                        "{@filter 5th|spells|level=5|class=Wizard}",
-                        "{@filter 6th|spells|level=6|class=Wizard}",
-                        "{@filter 7th|spells|level=7|class=Wizard}",
-                        "{@filter 8th|spells|level=8|class=Wizard}",
-                        "{@filter 9th|spells|level=9|class=Wizard}"
+                    "level": 2,
+                    "proficiency_bonus": 2,
+                    "feature_names": [
+                        "Scholar"
                     ],
-                    "rowsSpellProgression": [
-                        [
-                            2,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0
-                        ],
-                        [
-                            3,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0
-                        ],
-                        [
-                            4,
-                            2,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0
-                        ],
-                        [
-                            4,
-                            3,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0
-                        ],
-                        [
-                            4,
-                            3,
-                            2,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0
-                        ],
-                        [
-                            4,
-                            3,
-                            3,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0
-                        ],
-                        [
-                            4,
-                            3,
-                            3,
-                            1,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0
-                        ],
-                        [
-                            4,
-                            3,
-                            3,
-                            2,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0
-                        ],
-                        [
-                            4,
-                            3,
-                            3,
-                            3,
-                            1,
-                            0,
-                            0,
-                            0,
-                            0
-                        ],
-                        [
-                            4,
-                            3,
-                            3,
-                            3,
-                            2,
-                            0,
-                            0,
-                            0,
-                            0
-                        ],
-                        [
-                            4,
-                            3,
-                            3,
-                            3,
-                            2,
-                            1,
-                            0,
-                            0,
-                            0
-                        ],
-                        [
-                            4,
-                            3,
-                            3,
-                            3,
-                            2,
-                            1,
-                            0,
-                            0,
-                            0
-                        ],
-                        [
-                            4,
-                            3,
-                            3,
-                            3,
-                            2,
-                            1,
-                            1,
-                            0,
-                            0
-                        ],
-                        [
-                            4,
-                            3,
-                            3,
-                            3,
-                            2,
-                            1,
-                            1,
-                            0,
-                            0
-                        ],
-                        [
-                            4,
-                            3,
-                            3,
-                            3,
-                            2,
-                            1,
-                            1,
-                            1,
-                            0
-                        ],
-                        [
-                            4,
-                            3,
-                            3,
-                            3,
-                            2,
-                            1,
-                            1,
-                            1,
-                            0
-                        ],
-                        [
-                            4,
-                            3,
-                            3,
-                            3,
-                            2,
-                            1,
-                            1,
-                            1,
-                            1
-                        ],
-                        [
-                            4,
-                            3,
-                            3,
-                            3,
-                            3,
-                            1,
-                            1,
-                            1,
-                            1
-                        ],
-                        [
-                            4,
-                            3,
-                            3,
-                            3,
-                            3,
-                            2,
-                            1,
-                            1,
-                            1
-                        ],
-                        [
-                            4,
-                            3,
-                            3,
-                            3,
-                            3,
-                            2,
-                            2,
-                            1,
-                            1
-                        ]
-                    ]
+                    "spell_slots": [
+                        3,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "extras": {
+                        "cantrips": 3,
+                        "prepared_spells": 5
+                    }
+                },
+                {
+                    "level": 3,
+                    "proficiency_bonus": 2,
+                    "feature_names": [
+                        "Wizard Subclass"
+                    ],
+                    "spell_slots": [
+                        4,
+                        2,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "extras": {
+                        "cantrips": 3,
+                        "prepared_spells": 6
+                    }
+                },
+                {
+                    "level": 4,
+                    "proficiency_bonus": 2,
+                    "feature_names": [
+                        "Ability Score Improvement"
+                    ],
+                    "spell_slots": [
+                        4,
+                        3,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "extras": {
+                        "cantrips": 4,
+                        "prepared_spells": 7
+                    }
+                },
+                {
+                    "level": 5,
+                    "proficiency_bonus": 3,
+                    "feature_names": [
+                        "Memorize Spell"
+                    ],
+                    "spell_slots": [
+                        4,
+                        3,
+                        2,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "extras": {
+                        "cantrips": 4,
+                        "prepared_spells": 9
+                    }
+                },
+                {
+                    "level": 6,
+                    "proficiency_bonus": 3,
+                    "feature_names": [
+                        "Subclass Feature"
+                    ],
+                    "spell_slots": [
+                        4,
+                        3,
+                        3,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "extras": {
+                        "cantrips": 4,
+                        "prepared_spells": 10
+                    }
+                },
+                {
+                    "level": 7,
+                    "proficiency_bonus": 3,
+                    "feature_names": [],
+                    "spell_slots": [
+                        4,
+                        3,
+                        3,
+                        1,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "extras": {
+                        "cantrips": 4,
+                        "prepared_spells": 11
+                    }
+                },
+                {
+                    "level": 8,
+                    "proficiency_bonus": 3,
+                    "feature_names": [
+                        "Ability Score Improvement"
+                    ],
+                    "spell_slots": [
+                        4,
+                        3,
+                        3,
+                        2,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "extras": {
+                        "cantrips": 4,
+                        "prepared_spells": 12
+                    }
+                },
+                {
+                    "level": 9,
+                    "proficiency_bonus": 4,
+                    "feature_names": [],
+                    "spell_slots": [
+                        4,
+                        3,
+                        3,
+                        3,
+                        1,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "extras": {
+                        "cantrips": 4,
+                        "prepared_spells": 14
+                    }
+                },
+                {
+                    "level": 10,
+                    "proficiency_bonus": 4,
+                    "feature_names": [
+                        "Subclass Feature"
+                    ],
+                    "spell_slots": [
+                        4,
+                        3,
+                        3,
+                        3,
+                        2,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "extras": {
+                        "cantrips": 5,
+                        "prepared_spells": 15
+                    }
+                },
+                {
+                    "level": 11,
+                    "proficiency_bonus": 4,
+                    "feature_names": [],
+                    "spell_slots": [
+                        4,
+                        3,
+                        3,
+                        3,
+                        2,
+                        1,
+                        0,
+                        0,
+                        0
+                    ],
+                    "extras": {
+                        "cantrips": 5,
+                        "prepared_spells": 16
+                    }
+                },
+                {
+                    "level": 12,
+                    "proficiency_bonus": 4,
+                    "feature_names": [
+                        "Ability Score Improvement"
+                    ],
+                    "spell_slots": [
+                        4,
+                        3,
+                        3,
+                        3,
+                        2,
+                        1,
+                        0,
+                        0,
+                        0
+                    ],
+                    "extras": {
+                        "cantrips": 5,
+                        "prepared_spells": 16
+                    }
+                },
+                {
+                    "level": 13,
+                    "proficiency_bonus": 5,
+                    "feature_names": [],
+                    "spell_slots": [
+                        4,
+                        3,
+                        3,
+                        3,
+                        2,
+                        1,
+                        1,
+                        0,
+                        0
+                    ],
+                    "extras": {
+                        "cantrips": 5,
+                        "prepared_spells": 17
+                    }
+                },
+                {
+                    "level": 14,
+                    "proficiency_bonus": 5,
+                    "feature_names": [
+                        "Subclass Feature"
+                    ],
+                    "spell_slots": [
+                        4,
+                        3,
+                        3,
+                        3,
+                        2,
+                        1,
+                        1,
+                        0,
+                        0
+                    ],
+                    "extras": {
+                        "cantrips": 5,
+                        "prepared_spells": 18
+                    }
+                },
+                {
+                    "level": 15,
+                    "proficiency_bonus": 5,
+                    "feature_names": [],
+                    "spell_slots": [
+                        4,
+                        3,
+                        3,
+                        3,
+                        2,
+                        1,
+                        1,
+                        1,
+                        0
+                    ],
+                    "extras": {
+                        "cantrips": 5,
+                        "prepared_spells": 19
+                    }
+                },
+                {
+                    "level": 16,
+                    "proficiency_bonus": 5,
+                    "feature_names": [
+                        "Ability Score Improvement"
+                    ],
+                    "spell_slots": [
+                        4,
+                        3,
+                        3,
+                        3,
+                        2,
+                        1,
+                        1,
+                        1,
+                        0
+                    ],
+                    "extras": {
+                        "cantrips": 5,
+                        "prepared_spells": 21
+                    }
+                },
+                {
+                    "level": 17,
+                    "proficiency_bonus": 6,
+                    "feature_names": [],
+                    "spell_slots": [
+                        4,
+                        3,
+                        3,
+                        3,
+                        2,
+                        1,
+                        1,
+                        1,
+                        1
+                    ],
+                    "extras": {
+                        "cantrips": 5,
+                        "prepared_spells": 22
+                    }
+                },
+                {
+                    "level": 18,
+                    "proficiency_bonus": 6,
+                    "feature_names": [
+                        "Spell Mastery"
+                    ],
+                    "spell_slots": [
+                        4,
+                        3,
+                        3,
+                        3,
+                        3,
+                        1,
+                        1,
+                        1,
+                        1
+                    ],
+                    "extras": {
+                        "cantrips": 5,
+                        "prepared_spells": 23
+                    }
+                },
+                {
+                    "level": 19,
+                    "proficiency_bonus": 6,
+                    "feature_names": [
+                        "Epic Boon"
+                    ],
+                    "spell_slots": [
+                        4,
+                        3,
+                        3,
+                        3,
+                        3,
+                        2,
+                        1,
+                        1,
+                        1
+                    ],
+                    "extras": {
+                        "cantrips": 5,
+                        "prepared_spells": 24
+                    }
+                },
+                {
+                    "level": 20,
+                    "proficiency_bonus": 6,
+                    "feature_names": [
+                        "Signature Spells"
+                    ],
+                    "spell_slots": [
+                        4,
+                        3,
+                        3,
+                        3,
+                        3,
+                        2,
+                        2,
+                        1,
+                        1
+                    ],
+                    "extras": {
+                        "cantrips": 5,
+                        "prepared_spells": 25
+                    }
                 }
             ]
         },

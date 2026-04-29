@@ -4,14 +4,6 @@
             "name": "Monk",
             "source": "PHB",
             "edition": "classic",
-            "hd": {
-                "number": 1,
-                "faces": 8
-            },
-            "proficiency": [
-                "str",
-                "dex"
-            ],
             "startingProficiencies": {
                 "weapons": [
                     "simple",
@@ -93,355 +85,525 @@
                     ]
                 }
             },
-            "classTableGroups": [
+            "hit_dice": "d8",
+            "saving_throw_proficiency": [
+                "str",
+                "dex"
+            ],
+            "level_progression": [
                 {
-                    "colLabels": [
+                    "level": 1,
+                    "proficiency_bonus": 2,
+                    "feature_names": [
                         "Martial Arts",
-                        "Ki Points",
+                        "Unarmored Defense"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "martial_arts": {
+                            "type": "dice",
+                            "toRoll": [
+                                {
+                                    "number": 1,
+                                    "faces": 4
+                                }
+                            ],
+                            "rollable": true
+                        },
+                        "ki_points": 0,
+                        "unarmored_movement": {
+                            "type": "bonusSpeed",
+                            "value": 0
+                        }
+                    }
+                },
+                {
+                    "level": 2,
+                    "proficiency_bonus": 2,
+                    "feature_names": [
+                        "Dedicated Weapon",
+                        "Flurry of Blows",
+                        "Ki",
+                        "Patient Defense",
+                        "Step of the Wind",
                         "Unarmored Movement"
                     ],
-                    "rows": [
-                        [
-                            {
-                                "type": "dice",
-                                "toRoll": [
-                                    {
-                                        "number": 1,
-                                        "faces": 4
-                                    }
-                                ],
-                                "rollable": true
-                            },
-                            0,
-                            {
-                                "type": "bonusSpeed",
-                                "value": 0
-                            }
-                        ],
-                        [
-                            {
-                                "type": "dice",
-                                "toRoll": [
-                                    {
-                                        "number": 1,
-                                        "faces": 4
-                                    }
-                                ],
-                                "rollable": true
-                            },
-                            2,
-                            {
-                                "type": "bonusSpeed",
-                                "value": 10
-                            }
-                        ],
-                        [
-                            {
-                                "type": "dice",
-                                "toRoll": [
-                                    {
-                                        "number": 1,
-                                        "faces": 4
-                                    }
-                                ],
-                                "rollable": true
-                            },
-                            3,
-                            {
-                                "type": "bonusSpeed",
-                                "value": 10
-                            }
-                        ],
-                        [
-                            {
-                                "type": "dice",
-                                "toRoll": [
-                                    {
-                                        "number": 1,
-                                        "faces": 4
-                                    }
-                                ],
-                                "rollable": true
-                            },
-                            4,
-                            {
-                                "type": "bonusSpeed",
-                                "value": 10
-                            }
-                        ],
-                        [
-                            {
-                                "type": "dice",
-                                "toRoll": [
-                                    {
-                                        "number": 1,
-                                        "faces": 6
-                                    }
-                                ],
-                                "rollable": true
-                            },
-                            5,
-                            {
-                                "type": "bonusSpeed",
-                                "value": 10
-                            }
-                        ],
-                        [
-                            {
-                                "type": "dice",
-                                "toRoll": [
-                                    {
-                                        "number": 1,
-                                        "faces": 6
-                                    }
-                                ],
-                                "rollable": true
-                            },
-                            6,
-                            {
-                                "type": "bonusSpeed",
-                                "value": 15
-                            }
-                        ],
-                        [
-                            {
-                                "type": "dice",
-                                "toRoll": [
-                                    {
-                                        "number": 1,
-                                        "faces": 6
-                                    }
-                                ],
-                                "rollable": true
-                            },
-                            7,
-                            {
-                                "type": "bonusSpeed",
-                                "value": 15
-                            }
-                        ],
-                        [
-                            {
-                                "type": "dice",
-                                "toRoll": [
-                                    {
-                                        "number": 1,
-                                        "faces": 6
-                                    }
-                                ],
-                                "rollable": true
-                            },
-                            8,
-                            {
-                                "type": "bonusSpeed",
-                                "value": 15
-                            }
-                        ],
-                        [
-                            {
-                                "type": "dice",
-                                "toRoll": [
-                                    {
-                                        "number": 1,
-                                        "faces": 6
-                                    }
-                                ],
-                                "rollable": true
-                            },
-                            9,
-                            {
-                                "type": "bonusSpeed",
-                                "value": 15
-                            }
-                        ],
-                        [
-                            {
-                                "type": "dice",
-                                "toRoll": [
-                                    {
-                                        "number": 1,
-                                        "faces": 6
-                                    }
-                                ],
-                                "rollable": true
-                            },
-                            10,
-                            {
-                                "type": "bonusSpeed",
-                                "value": 20
-                            }
-                        ],
-                        [
-                            {
-                                "type": "dice",
-                                "toRoll": [
-                                    {
-                                        "number": 1,
-                                        "faces": 8
-                                    }
-                                ],
-                                "rollable": true
-                            },
-                            11,
-                            {
-                                "type": "bonusSpeed",
-                                "value": 20
-                            }
-                        ],
-                        [
-                            {
-                                "type": "dice",
-                                "toRoll": [
-                                    {
-                                        "number": 1,
-                                        "faces": 8
-                                    }
-                                ],
-                                "rollable": true
-                            },
-                            12,
-                            {
-                                "type": "bonusSpeed",
-                                "value": 20
-                            }
-                        ],
-                        [
-                            {
-                                "type": "dice",
-                                "toRoll": [
-                                    {
-                                        "number": 1,
-                                        "faces": 8
-                                    }
-                                ],
-                                "rollable": true
-                            },
-                            13,
-                            {
-                                "type": "bonusSpeed",
-                                "value": 20
-                            }
-                        ],
-                        [
-                            {
-                                "type": "dice",
-                                "toRoll": [
-                                    {
-                                        "number": 1,
-                                        "faces": 8
-                                    }
-                                ],
-                                "rollable": true
-                            },
-                            14,
-                            {
-                                "type": "bonusSpeed",
-                                "value": 25
-                            }
-                        ],
-                        [
-                            {
-                                "type": "dice",
-                                "toRoll": [
-                                    {
-                                        "number": 1,
-                                        "faces": 8
-                                    }
-                                ],
-                                "rollable": true
-                            },
-                            15,
-                            {
-                                "type": "bonusSpeed",
-                                "value": 25
-                            }
-                        ],
-                        [
-                            {
-                                "type": "dice",
-                                "toRoll": [
-                                    {
-                                        "number": 1,
-                                        "faces": 8
-                                    }
-                                ],
-                                "rollable": true
-                            },
-                            16,
-                            {
-                                "type": "bonusSpeed",
-                                "value": 25
-                            }
-                        ],
-                        [
-                            {
-                                "type": "dice",
-                                "toRoll": [
-                                    {
-                                        "number": 1,
-                                        "faces": 10
-                                    }
-                                ],
-                                "rollable": true
-                            },
-                            17,
-                            {
-                                "type": "bonusSpeed",
-                                "value": 25
-                            }
-                        ],
-                        [
-                            {
-                                "type": "dice",
-                                "toRoll": [
-                                    {
-                                        "number": 1,
-                                        "faces": 10
-                                    }
-                                ],
-                                "rollable": true
-                            },
-                            18,
-                            {
-                                "type": "bonusSpeed",
-                                "value": 30
-                            }
-                        ],
-                        [
-                            {
-                                "type": "dice",
-                                "toRoll": [
-                                    {
-                                        "number": 1,
-                                        "faces": 10
-                                    }
-                                ],
-                                "rollable": true
-                            },
-                            19,
-                            {
-                                "type": "bonusSpeed",
-                                "value": 30
-                            }
-                        ],
-                        [
-                            {
-                                "type": "dice",
-                                "toRoll": [
-                                    {
-                                        "number": 1,
-                                        "faces": 10
-                                    }
-                                ],
-                                "rollable": true
-                            },
-                            20,
-                            {
-                                "type": "bonusSpeed",
-                                "value": 30
-                            }
-                        ]
-                    ]
+                    "spell_slots": null,
+                    "extras": {
+                        "martial_arts": {
+                            "type": "dice",
+                            "toRoll": [
+                                {
+                                    "number": 1,
+                                    "faces": 4
+                                }
+                            ],
+                            "rollable": true
+                        },
+                        "ki_points": 2,
+                        "unarmored_movement": {
+                            "type": "bonusSpeed",
+                            "value": 10
+                        }
+                    }
+                },
+                {
+                    "level": 3,
+                    "proficiency_bonus": 2,
+                    "feature_names": [
+                        "Deflect Missiles",
+                        "Ki-Fueled Attack",
+                        "Monastic Tradition"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "martial_arts": {
+                            "type": "dice",
+                            "toRoll": [
+                                {
+                                    "number": 1,
+                                    "faces": 4
+                                }
+                            ],
+                            "rollable": true
+                        },
+                        "ki_points": 3,
+                        "unarmored_movement": {
+                            "type": "bonusSpeed",
+                            "value": 10
+                        }
+                    }
+                },
+                {
+                    "level": 4,
+                    "proficiency_bonus": 2,
+                    "feature_names": [
+                        "Ability Score Improvement",
+                        "Quickened Healing",
+                        "Slow Fall"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "martial_arts": {
+                            "type": "dice",
+                            "toRoll": [
+                                {
+                                    "number": 1,
+                                    "faces": 4
+                                }
+                            ],
+                            "rollable": true
+                        },
+                        "ki_points": 4,
+                        "unarmored_movement": {
+                            "type": "bonusSpeed",
+                            "value": 10
+                        }
+                    }
+                },
+                {
+                    "level": 5,
+                    "proficiency_bonus": 3,
+                    "feature_names": [
+                        "Extra Attack",
+                        "Focused Aim",
+                        "Stunning Strike"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "martial_arts": {
+                            "type": "dice",
+                            "toRoll": [
+                                {
+                                    "number": 1,
+                                    "faces": 6
+                                }
+                            ],
+                            "rollable": true
+                        },
+                        "ki_points": 5,
+                        "unarmored_movement": {
+                            "type": "bonusSpeed",
+                            "value": 10
+                        }
+                    }
+                },
+                {
+                    "level": 6,
+                    "proficiency_bonus": 3,
+                    "feature_names": [
+                        "Ki-Empowered Strikes",
+                        "Monastic Tradition feature"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "martial_arts": {
+                            "type": "dice",
+                            "toRoll": [
+                                {
+                                    "number": 1,
+                                    "faces": 6
+                                }
+                            ],
+                            "rollable": true
+                        },
+                        "ki_points": 6,
+                        "unarmored_movement": {
+                            "type": "bonusSpeed",
+                            "value": 15
+                        }
+                    }
+                },
+                {
+                    "level": 7,
+                    "proficiency_bonus": 3,
+                    "feature_names": [
+                        "Evasion",
+                        "Stillness of Mind"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "martial_arts": {
+                            "type": "dice",
+                            "toRoll": [
+                                {
+                                    "number": 1,
+                                    "faces": 6
+                                }
+                            ],
+                            "rollable": true
+                        },
+                        "ki_points": 7,
+                        "unarmored_movement": {
+                            "type": "bonusSpeed",
+                            "value": 15
+                        }
+                    }
+                },
+                {
+                    "level": 8,
+                    "proficiency_bonus": 3,
+                    "feature_names": [
+                        "Ability Score Improvement"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "martial_arts": {
+                            "type": "dice",
+                            "toRoll": [
+                                {
+                                    "number": 1,
+                                    "faces": 6
+                                }
+                            ],
+                            "rollable": true
+                        },
+                        "ki_points": 8,
+                        "unarmored_movement": {
+                            "type": "bonusSpeed",
+                            "value": 15
+                        }
+                    }
+                },
+                {
+                    "level": 9,
+                    "proficiency_bonus": 4,
+                    "feature_names": [
+                        "Unarmored Movement improvement"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "martial_arts": {
+                            "type": "dice",
+                            "toRoll": [
+                                {
+                                    "number": 1,
+                                    "faces": 6
+                                }
+                            ],
+                            "rollable": true
+                        },
+                        "ki_points": 9,
+                        "unarmored_movement": {
+                            "type": "bonusSpeed",
+                            "value": 15
+                        }
+                    }
+                },
+                {
+                    "level": 10,
+                    "proficiency_bonus": 4,
+                    "feature_names": [
+                        "Purity of Body"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "martial_arts": {
+                            "type": "dice",
+                            "toRoll": [
+                                {
+                                    "number": 1,
+                                    "faces": 6
+                                }
+                            ],
+                            "rollable": true
+                        },
+                        "ki_points": 10,
+                        "unarmored_movement": {
+                            "type": "bonusSpeed",
+                            "value": 20
+                        }
+                    }
+                },
+                {
+                    "level": 11,
+                    "proficiency_bonus": 4,
+                    "feature_names": [
+                        "Monastic Tradition feature"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "martial_arts": {
+                            "type": "dice",
+                            "toRoll": [
+                                {
+                                    "number": 1,
+                                    "faces": 8
+                                }
+                            ],
+                            "rollable": true
+                        },
+                        "ki_points": 11,
+                        "unarmored_movement": {
+                            "type": "bonusSpeed",
+                            "value": 20
+                        }
+                    }
+                },
+                {
+                    "level": 12,
+                    "proficiency_bonus": 4,
+                    "feature_names": [
+                        "Ability Score Improvement"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "martial_arts": {
+                            "type": "dice",
+                            "toRoll": [
+                                {
+                                    "number": 1,
+                                    "faces": 8
+                                }
+                            ],
+                            "rollable": true
+                        },
+                        "ki_points": 12,
+                        "unarmored_movement": {
+                            "type": "bonusSpeed",
+                            "value": 20
+                        }
+                    }
+                },
+                {
+                    "level": 13,
+                    "proficiency_bonus": 5,
+                    "feature_names": [
+                        "Tongue of the Sun and Moon"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "martial_arts": {
+                            "type": "dice",
+                            "toRoll": [
+                                {
+                                    "number": 1,
+                                    "faces": 8
+                                }
+                            ],
+                            "rollable": true
+                        },
+                        "ki_points": 13,
+                        "unarmored_movement": {
+                            "type": "bonusSpeed",
+                            "value": 20
+                        }
+                    }
+                },
+                {
+                    "level": 14,
+                    "proficiency_bonus": 5,
+                    "feature_names": [
+                        "Diamond Soul"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "martial_arts": {
+                            "type": "dice",
+                            "toRoll": [
+                                {
+                                    "number": 1,
+                                    "faces": 8
+                                }
+                            ],
+                            "rollable": true
+                        },
+                        "ki_points": 14,
+                        "unarmored_movement": {
+                            "type": "bonusSpeed",
+                            "value": 25
+                        }
+                    }
+                },
+                {
+                    "level": 15,
+                    "proficiency_bonus": 5,
+                    "feature_names": [
+                        "Timeless Body"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "martial_arts": {
+                            "type": "dice",
+                            "toRoll": [
+                                {
+                                    "number": 1,
+                                    "faces": 8
+                                }
+                            ],
+                            "rollable": true
+                        },
+                        "ki_points": 15,
+                        "unarmored_movement": {
+                            "type": "bonusSpeed",
+                            "value": 25
+                        }
+                    }
+                },
+                {
+                    "level": 16,
+                    "proficiency_bonus": 5,
+                    "feature_names": [
+                        "Ability Score Improvement"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "martial_arts": {
+                            "type": "dice",
+                            "toRoll": [
+                                {
+                                    "number": 1,
+                                    "faces": 8
+                                }
+                            ],
+                            "rollable": true
+                        },
+                        "ki_points": 16,
+                        "unarmored_movement": {
+                            "type": "bonusSpeed",
+                            "value": 25
+                        }
+                    }
+                },
+                {
+                    "level": 17,
+                    "proficiency_bonus": 6,
+                    "feature_names": [
+                        "Monastic Tradition feature"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "martial_arts": {
+                            "type": "dice",
+                            "toRoll": [
+                                {
+                                    "number": 1,
+                                    "faces": 10
+                                }
+                            ],
+                            "rollable": true
+                        },
+                        "ki_points": 17,
+                        "unarmored_movement": {
+                            "type": "bonusSpeed",
+                            "value": 25
+                        }
+                    }
+                },
+                {
+                    "level": 18,
+                    "proficiency_bonus": 6,
+                    "feature_names": [
+                        "Empty Body"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "martial_arts": {
+                            "type": "dice",
+                            "toRoll": [
+                                {
+                                    "number": 1,
+                                    "faces": 10
+                                }
+                            ],
+                            "rollable": true
+                        },
+                        "ki_points": 18,
+                        "unarmored_movement": {
+                            "type": "bonusSpeed",
+                            "value": 30
+                        }
+                    }
+                },
+                {
+                    "level": 19,
+                    "proficiency_bonus": 6,
+                    "feature_names": [
+                        "Ability Score Improvement"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "martial_arts": {
+                            "type": "dice",
+                            "toRoll": [
+                                {
+                                    "number": 1,
+                                    "faces": 10
+                                }
+                            ],
+                            "rollable": true
+                        },
+                        "ki_points": 19,
+                        "unarmored_movement": {
+                            "type": "bonusSpeed",
+                            "value": 30
+                        }
+                    }
+                },
+                {
+                    "level": 20,
+                    "proficiency_bonus": 6,
+                    "feature_names": [
+                        "Perfect Self"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "martial_arts": {
+                            "type": "dice",
+                            "toRoll": [
+                                {
+                                    "number": 1,
+                                    "faces": 10
+                                }
+                            ],
+                            "rollable": true
+                        },
+                        "ki_points": 20,
+                        "unarmored_movement": {
+                            "type": "bonusSpeed",
+                            "value": 30
+                        }
+                    }
                 }
             ]
         },
@@ -1872,14 +2034,6 @@
                     "wis": true
                 }
             ],
-            "hd": {
-                "number": 1,
-                "faces": 8
-            },
-            "proficiency": [
-                "str",
-                "dex"
-            ],
             "startingProficiencies": {
                 "weapons": [
                     "simple",
@@ -1957,355 +2111,525 @@
                 ]
             },
             "multiclassing": {},
-            "classTableGroups": [
+            "hit_dice": "d8",
+            "saving_throw_proficiency": [
+                "str",
+                "dex"
+            ],
+            "level_progression": [
                 {
-                    "colLabels": [
+                    "level": 1,
+                    "proficiency_bonus": 2,
+                    "feature_names": [
+                        "Bonus Unarmed Strike",
+                        "Dexterous Attacks",
                         "Martial Arts",
-                        "Focus Points",
-                        "Unarmored Movement"
+                        "Martial Arts Die",
+                        "Unarmored Defense"
                     ],
-                    "rows": [
-                        [
-                            {
-                                "type": "dice",
-                                "toRoll": [
-                                    {
-                                        "number": 1,
-                                        "faces": 6
-                                    }
-                                ],
-                                "rollable": true
-                            },
-                            0,
-                            {
-                                "type": "bonusSpeed",
-                                "value": 0
-                            }
-                        ],
-                        [
-                            {
-                                "type": "dice",
-                                "toRoll": [
-                                    {
-                                        "number": 1,
-                                        "faces": 6
-                                    }
-                                ],
-                                "rollable": true
-                            },
-                            2,
-                            {
-                                "type": "bonusSpeed",
-                                "value": 10
-                            }
-                        ],
-                        [
-                            {
-                                "type": "dice",
-                                "toRoll": [
-                                    {
-                                        "number": 1,
-                                        "faces": 6
-                                    }
-                                ],
-                                "rollable": true
-                            },
-                            3,
-                            {
-                                "type": "bonusSpeed",
-                                "value": 10
-                            }
-                        ],
-                        [
-                            {
-                                "type": "dice",
-                                "toRoll": [
-                                    {
-                                        "number": 1,
-                                        "faces": 6
-                                    }
-                                ],
-                                "rollable": true
-                            },
-                            4,
-                            {
-                                "type": "bonusSpeed",
-                                "value": 10
-                            }
-                        ],
-                        [
-                            {
-                                "type": "dice",
-                                "toRoll": [
-                                    {
-                                        "number": 1,
-                                        "faces": 8
-                                    }
-                                ],
-                                "rollable": true
-                            },
-                            5,
-                            {
-                                "type": "bonusSpeed",
-                                "value": 10
-                            }
-                        ],
-                        [
-                            {
-                                "type": "dice",
-                                "toRoll": [
-                                    {
-                                        "number": 1,
-                                        "faces": 8
-                                    }
-                                ],
-                                "rollable": true
-                            },
-                            6,
-                            {
-                                "type": "bonusSpeed",
-                                "value": 15
-                            }
-                        ],
-                        [
-                            {
-                                "type": "dice",
-                                "toRoll": [
-                                    {
-                                        "number": 1,
-                                        "faces": 8
-                                    }
-                                ],
-                                "rollable": true
-                            },
-                            7,
-                            {
-                                "type": "bonusSpeed",
-                                "value": 15
-                            }
-                        ],
-                        [
-                            {
-                                "type": "dice",
-                                "toRoll": [
-                                    {
-                                        "number": 1,
-                                        "faces": 8
-                                    }
-                                ],
-                                "rollable": true
-                            },
-                            8,
-                            {
-                                "type": "bonusSpeed",
-                                "value": 15
-                            }
-                        ],
-                        [
-                            {
-                                "type": "dice",
-                                "toRoll": [
-                                    {
-                                        "number": 1,
-                                        "faces": 8
-                                    }
-                                ],
-                                "rollable": true
-                            },
-                            9,
-                            {
-                                "type": "bonusSpeed",
-                                "value": 15
-                            }
-                        ],
-                        [
-                            {
-                                "type": "dice",
-                                "toRoll": [
-                                    {
-                                        "number": 1,
-                                        "faces": 8
-                                    }
-                                ],
-                                "rollable": true
-                            },
-                            10,
-                            {
-                                "type": "bonusSpeed",
-                                "value": 20
-                            }
-                        ],
-                        [
-                            {
-                                "type": "dice",
-                                "toRoll": [
-                                    {
-                                        "number": 1,
-                                        "faces": 10
-                                    }
-                                ],
-                                "rollable": true
-                            },
-                            11,
-                            {
-                                "type": "bonusSpeed",
-                                "value": 20
-                            }
-                        ],
-                        [
-                            {
-                                "type": "dice",
-                                "toRoll": [
-                                    {
-                                        "number": 1,
-                                        "faces": 10
-                                    }
-                                ],
-                                "rollable": true
-                            },
-                            12,
-                            {
-                                "type": "bonusSpeed",
-                                "value": 20
-                            }
-                        ],
-                        [
-                            {
-                                "type": "dice",
-                                "toRoll": [
-                                    {
-                                        "number": 1,
-                                        "faces": 10
-                                    }
-                                ],
-                                "rollable": true
-                            },
-                            13,
-                            {
-                                "type": "bonusSpeed",
-                                "value": 20
-                            }
-                        ],
-                        [
-                            {
-                                "type": "dice",
-                                "toRoll": [
-                                    {
-                                        "number": 1,
-                                        "faces": 10
-                                    }
-                                ],
-                                "rollable": true
-                            },
-                            14,
-                            {
-                                "type": "bonusSpeed",
-                                "value": 25
-                            }
-                        ],
-                        [
-                            {
-                                "type": "dice",
-                                "toRoll": [
-                                    {
-                                        "number": 1,
-                                        "faces": 10
-                                    }
-                                ],
-                                "rollable": true
-                            },
-                            15,
-                            {
-                                "type": "bonusSpeed",
-                                "value": 25
-                            }
-                        ],
-                        [
-                            {
-                                "type": "dice",
-                                "toRoll": [
-                                    {
-                                        "number": 1,
-                                        "faces": 10
-                                    }
-                                ],
-                                "rollable": true
-                            },
-                            16,
-                            {
-                                "type": "bonusSpeed",
-                                "value": 25
-                            }
-                        ],
-                        [
-                            {
-                                "type": "dice",
-                                "toRoll": [
-                                    {
-                                        "number": 1,
-                                        "faces": 12
-                                    }
-                                ],
-                                "rollable": true
-                            },
-                            17,
-                            {
-                                "type": "bonusSpeed",
-                                "value": 25
-                            }
-                        ],
-                        [
-                            {
-                                "type": "dice",
-                                "toRoll": [
-                                    {
-                                        "number": 1,
-                                        "faces": 12
-                                    }
-                                ],
-                                "rollable": true
-                            },
-                            18,
-                            {
-                                "type": "bonusSpeed",
-                                "value": 30
-                            }
-                        ],
-                        [
-                            {
-                                "type": "dice",
-                                "toRoll": [
-                                    {
-                                        "number": 1,
-                                        "faces": 12
-                                    }
-                                ],
-                                "rollable": true
-                            },
-                            19,
-                            {
-                                "type": "bonusSpeed",
-                                "value": 30
-                            }
-                        ],
-                        [
-                            {
-                                "type": "dice",
-                                "toRoll": [
-                                    {
-                                        "number": 1,
-                                        "faces": 12
-                                    }
-                                ],
-                                "rollable": true
-                            },
-                            20,
-                            {
-                                "type": "bonusSpeed",
-                                "value": 30
-                            }
-                        ]
-                    ]
+                    "spell_slots": null,
+                    "extras": {
+                        "martial_arts": {
+                            "type": "dice",
+                            "toRoll": [
+                                {
+                                    "number": 1,
+                                    "faces": 6
+                                }
+                            ],
+                            "rollable": true
+                        },
+                        "focus_points": 0,
+                        "unarmored_movement": {
+                            "type": "bonusSpeed",
+                            "value": 0
+                        }
+                    }
+                },
+                {
+                    "level": 2,
+                    "proficiency_bonus": 2,
+                    "feature_names": [
+                        "Flurry of Blows",
+                        "Monk's Focus",
+                        "Patient Defense",
+                        "Step of the Wind",
+                        "Unarmored Movement",
+                        "Uncanny Metabolism"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "martial_arts": {
+                            "type": "dice",
+                            "toRoll": [
+                                {
+                                    "number": 1,
+                                    "faces": 6
+                                }
+                            ],
+                            "rollable": true
+                        },
+                        "focus_points": 2,
+                        "unarmored_movement": {
+                            "type": "bonusSpeed",
+                            "value": 10
+                        }
+                    }
+                },
+                {
+                    "level": 3,
+                    "proficiency_bonus": 2,
+                    "feature_names": [
+                        "Deflect Attacks",
+                        "Monk Subclass"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "martial_arts": {
+                            "type": "dice",
+                            "toRoll": [
+                                {
+                                    "number": 1,
+                                    "faces": 6
+                                }
+                            ],
+                            "rollable": true
+                        },
+                        "focus_points": 3,
+                        "unarmored_movement": {
+                            "type": "bonusSpeed",
+                            "value": 10
+                        }
+                    }
+                },
+                {
+                    "level": 4,
+                    "proficiency_bonus": 2,
+                    "feature_names": [
+                        "Ability Score Improvement",
+                        "Slow Fall"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "martial_arts": {
+                            "type": "dice",
+                            "toRoll": [
+                                {
+                                    "number": 1,
+                                    "faces": 6
+                                }
+                            ],
+                            "rollable": true
+                        },
+                        "focus_points": 4,
+                        "unarmored_movement": {
+                            "type": "bonusSpeed",
+                            "value": 10
+                        }
+                    }
+                },
+                {
+                    "level": 5,
+                    "proficiency_bonus": 3,
+                    "feature_names": [
+                        "Extra Attack",
+                        "Stunning Strike"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "martial_arts": {
+                            "type": "dice",
+                            "toRoll": [
+                                {
+                                    "number": 1,
+                                    "faces": 8
+                                }
+                            ],
+                            "rollable": true
+                        },
+                        "focus_points": 5,
+                        "unarmored_movement": {
+                            "type": "bonusSpeed",
+                            "value": 10
+                        }
+                    }
+                },
+                {
+                    "level": 6,
+                    "proficiency_bonus": 3,
+                    "feature_names": [
+                        "Empowered Strikes",
+                        "Subclass Feature"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "martial_arts": {
+                            "type": "dice",
+                            "toRoll": [
+                                {
+                                    "number": 1,
+                                    "faces": 8
+                                }
+                            ],
+                            "rollable": true
+                        },
+                        "focus_points": 6,
+                        "unarmored_movement": {
+                            "type": "bonusSpeed",
+                            "value": 15
+                        }
+                    }
+                },
+                {
+                    "level": 7,
+                    "proficiency_bonus": 3,
+                    "feature_names": [
+                        "Evasion"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "martial_arts": {
+                            "type": "dice",
+                            "toRoll": [
+                                {
+                                    "number": 1,
+                                    "faces": 8
+                                }
+                            ],
+                            "rollable": true
+                        },
+                        "focus_points": 7,
+                        "unarmored_movement": {
+                            "type": "bonusSpeed",
+                            "value": 15
+                        }
+                    }
+                },
+                {
+                    "level": 8,
+                    "proficiency_bonus": 3,
+                    "feature_names": [
+                        "Ability Score Improvement"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "martial_arts": {
+                            "type": "dice",
+                            "toRoll": [
+                                {
+                                    "number": 1,
+                                    "faces": 8
+                                }
+                            ],
+                            "rollable": true
+                        },
+                        "focus_points": 8,
+                        "unarmored_movement": {
+                            "type": "bonusSpeed",
+                            "value": 15
+                        }
+                    }
+                },
+                {
+                    "level": 9,
+                    "proficiency_bonus": 4,
+                    "feature_names": [
+                        "Acrobatic Movement"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "martial_arts": {
+                            "type": "dice",
+                            "toRoll": [
+                                {
+                                    "number": 1,
+                                    "faces": 8
+                                }
+                            ],
+                            "rollable": true
+                        },
+                        "focus_points": 9,
+                        "unarmored_movement": {
+                            "type": "bonusSpeed",
+                            "value": 15
+                        }
+                    }
+                },
+                {
+                    "level": 10,
+                    "proficiency_bonus": 4,
+                    "feature_names": [
+                        "Heightened Focus",
+                        "Self-Restoration"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "martial_arts": {
+                            "type": "dice",
+                            "toRoll": [
+                                {
+                                    "number": 1,
+                                    "faces": 8
+                                }
+                            ],
+                            "rollable": true
+                        },
+                        "focus_points": 10,
+                        "unarmored_movement": {
+                            "type": "bonusSpeed",
+                            "value": 20
+                        }
+                    }
+                },
+                {
+                    "level": 11,
+                    "proficiency_bonus": 4,
+                    "feature_names": [
+                        "Subclass Feature"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "martial_arts": {
+                            "type": "dice",
+                            "toRoll": [
+                                {
+                                    "number": 1,
+                                    "faces": 10
+                                }
+                            ],
+                            "rollable": true
+                        },
+                        "focus_points": 11,
+                        "unarmored_movement": {
+                            "type": "bonusSpeed",
+                            "value": 20
+                        }
+                    }
+                },
+                {
+                    "level": 12,
+                    "proficiency_bonus": 4,
+                    "feature_names": [
+                        "Ability Score Improvement"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "martial_arts": {
+                            "type": "dice",
+                            "toRoll": [
+                                {
+                                    "number": 1,
+                                    "faces": 10
+                                }
+                            ],
+                            "rollable": true
+                        },
+                        "focus_points": 12,
+                        "unarmored_movement": {
+                            "type": "bonusSpeed",
+                            "value": 20
+                        }
+                    }
+                },
+                {
+                    "level": 13,
+                    "proficiency_bonus": 5,
+                    "feature_names": [
+                        "Deflect Energy"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "martial_arts": {
+                            "type": "dice",
+                            "toRoll": [
+                                {
+                                    "number": 1,
+                                    "faces": 10
+                                }
+                            ],
+                            "rollable": true
+                        },
+                        "focus_points": 13,
+                        "unarmored_movement": {
+                            "type": "bonusSpeed",
+                            "value": 20
+                        }
+                    }
+                },
+                {
+                    "level": 14,
+                    "proficiency_bonus": 5,
+                    "feature_names": [
+                        "Disciplined Survivor"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "martial_arts": {
+                            "type": "dice",
+                            "toRoll": [
+                                {
+                                    "number": 1,
+                                    "faces": 10
+                                }
+                            ],
+                            "rollable": true
+                        },
+                        "focus_points": 14,
+                        "unarmored_movement": {
+                            "type": "bonusSpeed",
+                            "value": 25
+                        }
+                    }
+                },
+                {
+                    "level": 15,
+                    "proficiency_bonus": 5,
+                    "feature_names": [
+                        "Perfect Focus"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "martial_arts": {
+                            "type": "dice",
+                            "toRoll": [
+                                {
+                                    "number": 1,
+                                    "faces": 10
+                                }
+                            ],
+                            "rollable": true
+                        },
+                        "focus_points": 15,
+                        "unarmored_movement": {
+                            "type": "bonusSpeed",
+                            "value": 25
+                        }
+                    }
+                },
+                {
+                    "level": 16,
+                    "proficiency_bonus": 5,
+                    "feature_names": [
+                        "Ability Score Improvement"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "martial_arts": {
+                            "type": "dice",
+                            "toRoll": [
+                                {
+                                    "number": 1,
+                                    "faces": 10
+                                }
+                            ],
+                            "rollable": true
+                        },
+                        "focus_points": 16,
+                        "unarmored_movement": {
+                            "type": "bonusSpeed",
+                            "value": 25
+                        }
+                    }
+                },
+                {
+                    "level": 17,
+                    "proficiency_bonus": 6,
+                    "feature_names": [
+                        "Subclass Feature"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "martial_arts": {
+                            "type": "dice",
+                            "toRoll": [
+                                {
+                                    "number": 1,
+                                    "faces": 12
+                                }
+                            ],
+                            "rollable": true
+                        },
+                        "focus_points": 17,
+                        "unarmored_movement": {
+                            "type": "bonusSpeed",
+                            "value": 25
+                        }
+                    }
+                },
+                {
+                    "level": 18,
+                    "proficiency_bonus": 6,
+                    "feature_names": [
+                        "Superior Defense"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "martial_arts": {
+                            "type": "dice",
+                            "toRoll": [
+                                {
+                                    "number": 1,
+                                    "faces": 12
+                                }
+                            ],
+                            "rollable": true
+                        },
+                        "focus_points": 18,
+                        "unarmored_movement": {
+                            "type": "bonusSpeed",
+                            "value": 30
+                        }
+                    }
+                },
+                {
+                    "level": 19,
+                    "proficiency_bonus": 6,
+                    "feature_names": [
+                        "Epic Boon"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "martial_arts": {
+                            "type": "dice",
+                            "toRoll": [
+                                {
+                                    "number": 1,
+                                    "faces": 12
+                                }
+                            ],
+                            "rollable": true
+                        },
+                        "focus_points": 19,
+                        "unarmored_movement": {
+                            "type": "bonusSpeed",
+                            "value": 30
+                        }
+                    }
+                },
+                {
+                    "level": 20,
+                    "proficiency_bonus": 6,
+                    "feature_names": [
+                        "Body and Mind"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "martial_arts": {
+                            "type": "dice",
+                            "toRoll": [
+                                {
+                                    "number": 1,
+                                    "faces": 12
+                                }
+                            ],
+                            "rollable": true
+                        },
+                        "focus_points": 20,
+                        "unarmored_movement": {
+                            "type": "bonusSpeed",
+                            "value": 30
+                        }
+                    }
                 }
             ]
         },

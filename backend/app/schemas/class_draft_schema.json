@@ -1,0 +1,74 @@
+{
+"description": "Clean markdown prose body",
+"choices": [
+{
+    "count": 1,
+    "options": [
+    {"name": "Archery", "description": null}
+    ]
+}
+],
+
+
+"ability_scores": [
+    {"ability": "STR", "increase": 4, "max_override": 24}
+],
+"saving_throws": [
+    {"abilities": ["STR", "CON"], "type": "proficiency"},
+    {"abilities": ["STR"], "type": "advantage"}
+],
+"ability_checks": [
+    {"abilities": ["STR"], "type": "advantage"}
+],
+"skill_proficiencies": [
+    {"choose_count": 2, "from": ["acrobatics", "animal handling", "athletics", "history", "insight", "intimidation", "perception", "survival"]}
+],
+"weapon_proficiencies": [
+    {"items": ["simple", "martial"]}
+],
+"armor_proficiencies": [
+    {"items": ["light", "medium", "heavy", "shield"]}
+],
+"tool_proficiencies": [
+    {"choose_count": 1, "from": ["artisan's tools"], "notes": "one type of artisan's tools of your choice"}
+],
+"languages": [],
+"movement": [
+    {"type": "walk", "modifier": "+10"},
+    {"type": "fly", "value": "equal_to_walk_speed"}
+],
+"senses": [
+    {"type": "darkvision", "range_ft": 60}
+],
+"resistances": [
+    {"damage_types": ["bludgeoning", "piercing", "slashing"]}
+],
+"immunities": [
+    {"conditions": ["charmed", "frightened"]}
+],
+"vulnerabilities": [],
+"damage_bonus": [
+    {"bonus": "+2", "applies_to": "melee weapon attack using STR"}
+],
+"attack_bonus": [],
+"extra_attacks": [
+    {"count": 1, "notes": "increases to 2 at level 11, 3 at level 20"}
+],
+"actions": [
+    {"name": "Second Wind", "action_type": "bonus_action", "uses": {"amount": 1, "recharge": "short_rest"}, "effect_summary": "Regain 1d10 + fighter level HP."}
+],
+"bonus_actions": [],
+"reactions": [
+    {"name": "Retaliation", "uses": null, "effect_summary": "Make one melee weapon attack against the attacker when hit by a creature within 5 ft."}
+],
+"spellcasting": [
+    {"ability": "CHA", "type": "pact", "ritual_casting": false, "focus": "arcane"}
+],
+"resources": [
+    {"name": "Rage", "uses_formula": "by_level_table", "recharge": "long_rest"},
+    {"name": "Superiority Die", "die": "d8", "count_formula": "by_level_table", "recharge": "short_rest"}
+],
+"hit_points": [
+    {"effect": "when reduced to 0 HP, make DC 10 CON save; on success drop to 1 HP instead"}
+]
+}

@@ -4,74 +4,8 @@
             "name": "Warlock",
             "source": "PHB",
             "edition": "classic",
-            "hd": {
-                "number": 1,
-                "faces": 8
-            },
-            "proficiency": [
-                "wis",
-                "cha"
-            ],
             "spellcastingAbility": "cha",
             "casterProgression": "pact",
-            "cantripProgression": [
-                2,
-                2,
-                2,
-                3,
-                3,
-                3,
-                3,
-                3,
-                3,
-                4,
-                4,
-                4,
-                4,
-                4,
-                4,
-                4,
-                4,
-                4,
-                4,
-                4
-            ],
-            "spellsKnownProgression": [
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8,
-                9,
-                10,
-                10,
-                11,
-                11,
-                12,
-                12,
-                13,
-                13,
-                14,
-                14,
-                15,
-                15
-            ],
-            "spellsKnownProgressionFixedByLevel": {
-                "11": {
-                    "6": 1
-                },
-                "13": {
-                    "7": 1
-                },
-                "15": {
-                    "8": 1
-                },
-                "17": {
-                    "9": 1
-                }
-            },
             "optionalfeatureProgression": [
                 {
                     "name": "Eldritch Invocations",
@@ -201,157 +135,305 @@
                     ]
                 }
             },
-            "classTableGroups": [
+            "hit_dice": "d8",
+            "saving_throw_proficiency": [
+                "wis",
+                "cha"
+            ],
+            "level_progression": [
                 {
-                    "colLabels": [
-                        "{@filter Cantrips Known|spells|level=0|class=Warlock}",
-                        "{@filter Spells Known|spells|class=Warlock}",
-                        "Spell Slots",
-                        "Slot Level",
-                        "{@filter Invocations Known|optionalfeatures|feature type=ei}"
+                    "level": 1,
+                    "proficiency_bonus": 2,
+                    "feature_names": [
+                        "Otherworldly Patron",
+                        "Pact Magic"
                     ],
-                    "rows": [
-                        [
-                            2,
-                            2,
-                            1,
-                            "{@filter 1st|spells|level=1|class=Warlock}",
-                            0
-                        ],
-                        [
-                            2,
-                            3,
-                            2,
-                            "{@filter 1st|spells|level=1|class=Warlock}",
-                            2
-                        ],
-                        [
-                            2,
-                            4,
-                            2,
-                            "{@filter 2nd|spells|level=2|class=Warlock}",
-                            2
-                        ],
-                        [
-                            3,
-                            5,
-                            2,
-                            "{@filter 2nd|spells|level=2|class=Warlock}",
-                            2
-                        ],
-                        [
-                            3,
-                            6,
-                            2,
-                            "{@filter 3rd|spells|level=3|class=Warlock}",
-                            3
-                        ],
-                        [
-                            3,
-                            7,
-                            2,
-                            "{@filter 3rd|spells|level=3|class=Warlock}",
-                            3
-                        ],
-                        [
-                            3,
-                            8,
-                            2,
-                            "{@filter 4th|spells|level=4|class=Warlock}",
-                            4
-                        ],
-                        [
-                            3,
-                            9,
-                            2,
-                            "{@filter 4th|spells|level=4|class=Warlock}",
-                            4
-                        ],
-                        [
-                            3,
-                            10,
-                            2,
-                            "{@filter 5th|spells|level=5|class=Warlock}",
-                            5
-                        ],
-                        [
-                            4,
-                            10,
-                            2,
-                            "{@filter 5th|spells|level=5|class=Warlock}",
-                            5
-                        ],
-                        [
-                            4,
-                            11,
-                            3,
-                            "{@filter 5th|spells|level=5|class=Warlock}",
-                            5
-                        ],
-                        [
-                            4,
-                            11,
-                            3,
-                            "{@filter 5th|spells|level=5|class=Warlock}",
-                            6
-                        ],
-                        [
-                            4,
-                            12,
-                            3,
-                            "{@filter 5th|spells|level=5|class=Warlock}",
-                            6
-                        ],
-                        [
-                            4,
-                            12,
-                            3,
-                            "{@filter 5th|spells|level=5|class=Warlock}",
-                            6
-                        ],
-                        [
-                            4,
-                            13,
-                            3,
-                            "{@filter 5th|spells|level=5|class=Warlock}",
-                            7
-                        ],
-                        [
-                            4,
-                            13,
-                            3,
-                            "{@filter 5th|spells|level=5|class=Warlock}",
-                            7
-                        ],
-                        [
-                            4,
-                            14,
-                            4,
-                            "{@filter 5th|spells|level=5|class=Warlock}",
-                            7
-                        ],
-                        [
-                            4,
-                            14,
-                            4,
-                            "{@filter 5th|spells|level=5|class=Warlock}",
-                            8
-                        ],
-                        [
-                            4,
-                            15,
-                            4,
-                            "{@filter 5th|spells|level=5|class=Warlock}",
-                            8
-                        ],
-                        [
-                            4,
-                            15,
-                            4,
-                            "{@filter 5th|spells|level=5|class=Warlock}",
-                            8
-                        ]
-                    ]
+                    "spell_slots": null,
+                    "extras": {
+                        "cantrips_known": 2,
+                        "spells_known": 2,
+                        "spell_slots": 1,
+                        "slot_level": "1st",
+                        "invocations_known": 0
+                    }
+                },
+                {
+                    "level": 2,
+                    "proficiency_bonus": 2,
+                    "feature_names": [
+                        "Eldritch Invocations"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "cantrips_known": 2,
+                        "spells_known": 3,
+                        "spell_slots": 2,
+                        "slot_level": "1st",
+                        "invocations_known": 2
+                    }
+                },
+                {
+                    "level": 3,
+                    "proficiency_bonus": 2,
+                    "feature_names": [
+                        "Pact Boon"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "cantrips_known": 2,
+                        "spells_known": 4,
+                        "spell_slots": 2,
+                        "slot_level": "2nd",
+                        "invocations_known": 2
+                    }
+                },
+                {
+                    "level": 4,
+                    "proficiency_bonus": 2,
+                    "feature_names": [
+                        "Ability Score Improvement",
+                        "Eldritch Versatility"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "cantrips_known": 3,
+                        "spells_known": 5,
+                        "spell_slots": 2,
+                        "slot_level": "2nd",
+                        "invocations_known": 2
+                    }
+                },
+                {
+                    "level": 5,
+                    "proficiency_bonus": 3,
+                    "feature_names": [],
+                    "spell_slots": null,
+                    "extras": {
+                        "cantrips_known": 3,
+                        "spells_known": 6,
+                        "spell_slots": 2,
+                        "slot_level": "3rd",
+                        "invocations_known": 3
+                    }
+                },
+                {
+                    "level": 6,
+                    "proficiency_bonus": 3,
+                    "feature_names": [
+                        "Otherworldly Patron feature"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "cantrips_known": 3,
+                        "spells_known": 7,
+                        "spell_slots": 2,
+                        "slot_level": "3rd",
+                        "invocations_known": 3
+                    }
+                },
+                {
+                    "level": 7,
+                    "proficiency_bonus": 3,
+                    "feature_names": [],
+                    "spell_slots": null,
+                    "extras": {
+                        "cantrips_known": 3,
+                        "spells_known": 8,
+                        "spell_slots": 2,
+                        "slot_level": "4th",
+                        "invocations_known": 4
+                    }
+                },
+                {
+                    "level": 8,
+                    "proficiency_bonus": 3,
+                    "feature_names": [
+                        "Ability Score Improvement"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "cantrips_known": 3,
+                        "spells_known": 9,
+                        "spell_slots": 2,
+                        "slot_level": "4th",
+                        "invocations_known": 4
+                    }
+                },
+                {
+                    "level": 9,
+                    "proficiency_bonus": 4,
+                    "feature_names": [],
+                    "spell_slots": null,
+                    "extras": {
+                        "cantrips_known": 3,
+                        "spells_known": 10,
+                        "spell_slots": 2,
+                        "slot_level": "5th",
+                        "invocations_known": 5
+                    }
+                },
+                {
+                    "level": 10,
+                    "proficiency_bonus": 4,
+                    "feature_names": [
+                        "Otherworldly Patron feature"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "cantrips_known": 4,
+                        "spells_known": 10,
+                        "spell_slots": 2,
+                        "slot_level": "5th",
+                        "invocations_known": 5
+                    }
+                },
+                {
+                    "level": 11,
+                    "proficiency_bonus": 4,
+                    "feature_names": [
+                        "Mystic Arcanum (6th level)"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "cantrips_known": 4,
+                        "spells_known": 11,
+                        "spell_slots": 3,
+                        "slot_level": "5th",
+                        "invocations_known": 5
+                    }
+                },
+                {
+                    "level": 12,
+                    "proficiency_bonus": 4,
+                    "feature_names": [
+                        "Ability Score Improvement"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "cantrips_known": 4,
+                        "spells_known": 11,
+                        "spell_slots": 3,
+                        "slot_level": "5th",
+                        "invocations_known": 6
+                    }
+                },
+                {
+                    "level": 13,
+                    "proficiency_bonus": 5,
+                    "feature_names": [
+                        "Mystic Arcanum (7th level)"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "cantrips_known": 4,
+                        "spells_known": 12,
+                        "spell_slots": 3,
+                        "slot_level": "5th",
+                        "invocations_known": 6
+                    }
+                },
+                {
+                    "level": 14,
+                    "proficiency_bonus": 5,
+                    "feature_names": [
+                        "Otherworldly Patron feature"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "cantrips_known": 4,
+                        "spells_known": 12,
+                        "spell_slots": 3,
+                        "slot_level": "5th",
+                        "invocations_known": 6
+                    }
+                },
+                {
+                    "level": 15,
+                    "proficiency_bonus": 5,
+                    "feature_names": [
+                        "Mystic Arcanum (8th level)"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "cantrips_known": 4,
+                        "spells_known": 13,
+                        "spell_slots": 3,
+                        "slot_level": "5th",
+                        "invocations_known": 7
+                    }
+                },
+                {
+                    "level": 16,
+                    "proficiency_bonus": 5,
+                    "feature_names": [
+                        "Ability Score Improvement"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "cantrips_known": 4,
+                        "spells_known": 13,
+                        "spell_slots": 3,
+                        "slot_level": "5th",
+                        "invocations_known": 7
+                    }
+                },
+                {
+                    "level": 17,
+                    "proficiency_bonus": 6,
+                    "feature_names": [
+                        "Mystic Arcanum (9th level)"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "cantrips_known": 4,
+                        "spells_known": 14,
+                        "spell_slots": 4,
+                        "slot_level": "5th",
+                        "invocations_known": 7
+                    }
+                },
+                {
+                    "level": 18,
+                    "proficiency_bonus": 6,
+                    "feature_names": [],
+                    "spell_slots": null,
+                    "extras": {
+                        "cantrips_known": 4,
+                        "spells_known": 14,
+                        "spell_slots": 4,
+                        "slot_level": "5th",
+                        "invocations_known": 8
+                    }
+                },
+                {
+                    "level": 19,
+                    "proficiency_bonus": 6,
+                    "feature_names": [
+                        "Ability Score Improvement"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "cantrips_known": 4,
+                        "spells_known": 15,
+                        "spell_slots": 4,
+                        "slot_level": "5th",
+                        "invocations_known": 8
+                    }
+                },
+                {
+                    "level": 20,
+                    "proficiency_bonus": 6,
+                    "feature_names": [
+                        "Eldritch Master"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "cantrips_known": 4,
+                        "spells_known": 15,
+                        "spell_slots": 4,
+                        "slot_level": "5th",
+                        "invocations_known": 8
+                    }
                 }
             ]
         },
@@ -1967,75 +2049,9 @@
                     "cha": true
                 }
             ],
-            "hd": {
-                "number": 1,
-                "faces": 8
-            },
-            "proficiency": [
-                "wis",
-                "cha"
-            ],
             "spellcastingAbility": "cha",
             "casterProgression": "pact",
-            "preparedSpellsProgression": [
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8,
-                9,
-                10,
-                10,
-                11,
-                11,
-                12,
-                12,
-                13,
-                13,
-                14,
-                14,
-                15,
-                15
-            ],
             "preparedSpellsChange": "level",
-            "cantripProgression": [
-                2,
-                2,
-                2,
-                3,
-                3,
-                3,
-                3,
-                3,
-                3,
-                4,
-                4,
-                4,
-                4,
-                4,
-                4,
-                4,
-                4,
-                4,
-                4,
-                4
-            ],
-            "spellsKnownProgressionFixedByLevel": {
-                "11": {
-                    "6": 1
-                },
-                "13": {
-                    "7": 1
-                },
-                "15": {
-                    "8": 1
-                },
-                "17": {
-                    "9": 1
-                }
-            },
             "additionalSpells": [
                 {
                     "prepared": {
@@ -2145,157 +2161,307 @@
                     ]
                 }
             },
-            "classTableGroups": [
+            "hit_dice": "d8",
+            "saving_throw_proficiency": [
+                "wis",
+                "cha"
+            ],
+            "level_progression": [
                 {
-                    "colLabels": [
-                        "{@filter Invocations|optionalfeatures|feature type=ei}",
-                        "{@filter Cantrips|spells|level=0|class=Warlock}",
-                        "{@filter Prepared Spells|spells|level=!0|class=Warlock}",
-                        "Spell Slots",
-                        "Slot Level"
+                    "level": 1,
+                    "proficiency_bonus": 2,
+                    "feature_names": [
+                        "Eldritch Invocation Options",
+                        "Eldritch Invocations",
+                        "Pact Magic"
                     ],
-                    "rows": [
-                        [
-                            1,
-                            2,
-                            2,
-                            1,
-                            1
-                        ],
-                        [
-                            3,
-                            2,
-                            3,
-                            2,
-                            1
-                        ],
-                        [
-                            3,
-                            2,
-                            4,
-                            2,
-                            2
-                        ],
-                        [
-                            3,
-                            3,
-                            5,
-                            2,
-                            2
-                        ],
-                        [
-                            5,
-                            3,
-                            6,
-                            2,
-                            3
-                        ],
-                        [
-                            5,
-                            3,
-                            7,
-                            2,
-                            3
-                        ],
-                        [
-                            6,
-                            3,
-                            8,
-                            2,
-                            4
-                        ],
-                        [
-                            6,
-                            3,
-                            9,
-                            2,
-                            4
-                        ],
-                        [
-                            7,
-                            3,
-                            10,
-                            2,
-                            5
-                        ],
-                        [
-                            7,
-                            4,
-                            10,
-                            2,
-                            5
-                        ],
-                        [
-                            7,
-                            4,
-                            11,
-                            3,
-                            5
-                        ],
-                        [
-                            8,
-                            4,
-                            11,
-                            3,
-                            5
-                        ],
-                        [
-                            8,
-                            4,
-                            12,
-                            3,
-                            5
-                        ],
-                        [
-                            8,
-                            4,
-                            12,
-                            3,
-                            5
-                        ],
-                        [
-                            9,
-                            4,
-                            13,
-                            3,
-                            5
-                        ],
-                        [
-                            9,
-                            4,
-                            13,
-                            3,
-                            5
-                        ],
-                        [
-                            9,
-                            4,
-                            14,
-                            4,
-                            5
-                        ],
-                        [
-                            10,
-                            4,
-                            14,
-                            4,
-                            5
-                        ],
-                        [
-                            10,
-                            4,
-                            15,
-                            4,
-                            5
-                        ],
-                        [
-                            10,
-                            4,
-                            15,
-                            4,
-                            5
-                        ]
-                    ]
+                    "spell_slots": null,
+                    "extras": {
+                        "invocations": 1,
+                        "cantrips": 2,
+                        "prepared_spells": 2,
+                        "spell_slots": 1,
+                        "slot_level": 1
+                    }
+                },
+                {
+                    "level": 2,
+                    "proficiency_bonus": 2,
+                    "feature_names": [
+                        "Magical Cunning"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "invocations": 3,
+                        "cantrips": 2,
+                        "prepared_spells": 3,
+                        "spell_slots": 2,
+                        "slot_level": 1
+                    }
+                },
+                {
+                    "level": 3,
+                    "proficiency_bonus": 2,
+                    "feature_names": [
+                        "Warlock Subclass"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "invocations": 3,
+                        "cantrips": 2,
+                        "prepared_spells": 4,
+                        "spell_slots": 2,
+                        "slot_level": 2
+                    }
+                },
+                {
+                    "level": 4,
+                    "proficiency_bonus": 2,
+                    "feature_names": [
+                        "Ability Score Improvement"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "invocations": 3,
+                        "cantrips": 3,
+                        "prepared_spells": 5,
+                        "spell_slots": 2,
+                        "slot_level": 2
+                    }
+                },
+                {
+                    "level": 5,
+                    "proficiency_bonus": 3,
+                    "feature_names": [],
+                    "spell_slots": null,
+                    "extras": {
+                        "invocations": 5,
+                        "cantrips": 3,
+                        "prepared_spells": 6,
+                        "spell_slots": 2,
+                        "slot_level": 3
+                    }
+                },
+                {
+                    "level": 6,
+                    "proficiency_bonus": 3,
+                    "feature_names": [
+                        "Subclass Feature"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "invocations": 5,
+                        "cantrips": 3,
+                        "prepared_spells": 7,
+                        "spell_slots": 2,
+                        "slot_level": 3
+                    }
+                },
+                {
+                    "level": 7,
+                    "proficiency_bonus": 3,
+                    "feature_names": [],
+                    "spell_slots": null,
+                    "extras": {
+                        "invocations": 6,
+                        "cantrips": 3,
+                        "prepared_spells": 8,
+                        "spell_slots": 2,
+                        "slot_level": 4
+                    }
+                },
+                {
+                    "level": 8,
+                    "proficiency_bonus": 3,
+                    "feature_names": [
+                        "Ability Score Improvement"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "invocations": 6,
+                        "cantrips": 3,
+                        "prepared_spells": 9,
+                        "spell_slots": 2,
+                        "slot_level": 4
+                    }
+                },
+                {
+                    "level": 9,
+                    "proficiency_bonus": 4,
+                    "feature_names": [
+                        "Contact Patron"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "invocations": 7,
+                        "cantrips": 3,
+                        "prepared_spells": 10,
+                        "spell_slots": 2,
+                        "slot_level": 5
+                    }
+                },
+                {
+                    "level": 10,
+                    "proficiency_bonus": 4,
+                    "feature_names": [
+                        "Subclass Feature"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "invocations": 7,
+                        "cantrips": 4,
+                        "prepared_spells": 10,
+                        "spell_slots": 2,
+                        "slot_level": 5
+                    }
+                },
+                {
+                    "level": 11,
+                    "proficiency_bonus": 4,
+                    "feature_names": [
+                        "Mystic Arcanum"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "invocations": 7,
+                        "cantrips": 4,
+                        "prepared_spells": 11,
+                        "spell_slots": 3,
+                        "slot_level": 5
+                    }
+                },
+                {
+                    "level": 12,
+                    "proficiency_bonus": 4,
+                    "feature_names": [
+                        "Ability Score Improvement"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "invocations": 8,
+                        "cantrips": 4,
+                        "prepared_spells": 11,
+                        "spell_slots": 3,
+                        "slot_level": 5
+                    }
+                },
+                {
+                    "level": 13,
+                    "proficiency_bonus": 5,
+                    "feature_names": [
+                        "Mystic Arcanum"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "invocations": 8,
+                        "cantrips": 4,
+                        "prepared_spells": 12,
+                        "spell_slots": 3,
+                        "slot_level": 5
+                    }
+                },
+                {
+                    "level": 14,
+                    "proficiency_bonus": 5,
+                    "feature_names": [
+                        "Subclass Feature"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "invocations": 8,
+                        "cantrips": 4,
+                        "prepared_spells": 12,
+                        "spell_slots": 3,
+                        "slot_level": 5
+                    }
+                },
+                {
+                    "level": 15,
+                    "proficiency_bonus": 5,
+                    "feature_names": [
+                        "Mystic Arcanum"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "invocations": 9,
+                        "cantrips": 4,
+                        "prepared_spells": 13,
+                        "spell_slots": 3,
+                        "slot_level": 5
+                    }
+                },
+                {
+                    "level": 16,
+                    "proficiency_bonus": 5,
+                    "feature_names": [
+                        "Ability Score Improvement"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "invocations": 9,
+                        "cantrips": 4,
+                        "prepared_spells": 13,
+                        "spell_slots": 3,
+                        "slot_level": 5
+                    }
+                },
+                {
+                    "level": 17,
+                    "proficiency_bonus": 6,
+                    "feature_names": [
+                        "Mystic Arcanum"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "invocations": 9,
+                        "cantrips": 4,
+                        "prepared_spells": 14,
+                        "spell_slots": 4,
+                        "slot_level": 5
+                    }
+                },
+                {
+                    "level": 18,
+                    "proficiency_bonus": 6,
+                    "feature_names": [],
+                    "spell_slots": null,
+                    "extras": {
+                        "invocations": 10,
+                        "cantrips": 4,
+                        "prepared_spells": 14,
+                        "spell_slots": 4,
+                        "slot_level": 5
+                    }
+                },
+                {
+                    "level": 19,
+                    "proficiency_bonus": 6,
+                    "feature_names": [
+                        "Epic Boon"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "invocations": 10,
+                        "cantrips": 4,
+                        "prepared_spells": 15,
+                        "spell_slots": 4,
+                        "slot_level": 5
+                    }
+                },
+                {
+                    "level": 20,
+                    "proficiency_bonus": 6,
+                    "feature_names": [
+                        "Eldritch Master"
+                    ],
+                    "spell_slots": null,
+                    "extras": {
+                        "invocations": 10,
+                        "cantrips": 4,
+                        "prepared_spells": 15,
+                        "spell_slots": 4,
+                        "slot_level": 5
+                    }
                 }
             ]
         },
