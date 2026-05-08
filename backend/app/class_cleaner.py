@@ -64,6 +64,8 @@ class ClassCleaner:
             "proficiency":"saving_throw_proficiency",
         }
 
+
+
         
     def _strip_markup(self, text):
         """Convert '{@filter Cantrips|spells|level=0}' -> 'Cantrips'."""
@@ -315,25 +317,72 @@ class ClassCleaner:
 
 
     def run_feature_LLM_cleaning(self):
+        skip_features = [
+            "Ability Score Improvement",
+            "Subclass feature",
+            "Subclass Feature",
+            "Primal Path",
+            "Primal Path feature",
+            "Bard College",
+            "Bard College feature",
+            "Divine Domain feature",
+            "Divine Domain",
+            "Druid Circle",
+            "Druid Circle feature",
+            "Martial Archetype",
+            "Martial Archetype feature",
+            "Monastic Tradition",
+            "Monastic Tradition feature",
+            "Sacred Oath",
+            "Sacred Oath feature",
+            "Ranger Archetype",
+            "Ranger Archetype feature",
+            "Roguish Archetype",
+            "Roguish Archetype feature",
+            "Sorcerous Origin",
+            "Sorcerous Origin feature",
+            "Otherworldly Patron",
+            "Otherworldly Patron feature",
+            "Arcane Tradition",
+            "Arcane Tradition feature"
+        ]
+
+        skip_classes = [
+            "artificer",
+            "barbarian",
+            "bard",
+            "cleric",
+            "druid",           
+            "fighter",
+            "monk",
+            "paladin",
+            "ranger",  
+            "rogue",         
+            "sorcerer",
+            "warlock"
+            
+            ]
+        
         open_ai = OpenAIApi()
         instr_path = os.path.join(self.instructions_path,"feature_cleaning.md")
         instructions = self.file_handler.load_md(instr_path)
 
         for file in os.listdir(self.output_path):
             name, ext = os.path.splitext(file)
-            filepath = os.path.join(self.output_path,name)
-            data = self.file_handler.load_json(filepath)
+            if name not in skip_classes:
+                filepath = os.path.join(self.output_path,name)
+                data = self.file_handler.load_json(filepath)
 
-            print(f"processing {name}")
+                print(f"processing {name}")
 
-            for edition, values in data.items():
-                if edition != "classic":
+                for edition, values in data.items():
+                    
                     print(f"edition {edition}")
 
                     for i,feature in enumerate(values["class_features"]):
 
                         print(f"feature {feature["name"]} {i+1}/{len(values["class_features"])}")
-                        if feature["name"] != "Ability Score Improvement":
+                        if feature["name"] not in skip_features:
                             input = [
                                 {"role":"user", "content":json.dumps(feature, indent=2)}
                             ]
@@ -349,14 +398,52 @@ class ClassCleaner:
 
                             self.file_handler.save_json(filepath, data)
 
-                for subclass in values["subclasses"]:
-                    print(f"processing subclass {subclass["name"]}")
+                    for subclass in values["subclasses"]:
+                        print(f"processing subclass {subclass["name"]}")
 
-                    for i, feature in enumerate(subclass["features"]):
-                        print(f"feature {feature["name"]} {i+1}/{len(subclass["features"])}")
+                        for i, feature in enumerate(subclass["features"]):
+                            print(f"feature {feature["name"]} {i+1}/{len(subclass["features"])}")
+                            input = [
+                                {"role":"user", "content":json.dumps(feature, indent=2)}
+                            ]
+
+                            response = open_ai.parse(
+                                instructions= instructions,
+                                input= input,
+                                reasoning="high",
+                                text_format=CleanedFeature
+                            )
+
+                            feature["clean_entries"] = response
+
+                            self.file_handler.save_json(filepath, data)
+        
+        print("done")
+
+    def run_trageted_cleaning(self,class_name,feature_type,edition,feature_name,single_feature=False):
+
+        # cleric "one" left entirly
+        # ranger Swarmkeeper Classic Gathered Swarm only left; Super problematic; and the "one" entirly
+        
+        open_ai = OpenAIApi()
+        instr_path = os.path.join(self.instructions_path,"feature_cleaning.md")
+        instructions = self.file_handler.load_md(instr_path)
+
+        class_path = os.path.join(self.output_path,class_name)
+        data = self.file_handler.load_json(class_path)
+        
+        features = data[edition][feature_type]
+
+        for feature in features:
+            if feature["name"] == feature_name:
+                print(f"processing feature {feature["name"]}")
+
+                if not single_feature:
+                    for i, subfeat in enumerate(feature["features"]):
+                        print(f" {subfeat["name"]} {i+1}/{len(feature["features"])}")
                         input = [
-                            {"role":"user", "content":json.dumps(feature, indent=2)}
-                        ]
+                                    {"role":"user", "content":json.dumps(subfeat, indent=2)}
+                                ]
 
                         response = open_ai.parse(
                             instructions= instructions,
@@ -365,17 +452,64 @@ class ClassCleaner:
                             text_format=CleanedFeature
                         )
 
-                        feature["clean_entries"] = response
+                        subfeat["clean_entries"] = response
 
-                        self.file_handler.save_json(filepath, data)
-        
-        print("done")
+                        self.file_handler.save_json(class_path, data)
 
-                        
+                else:
+                    for subfeat in feature["features"]:
+                        if subfeat["name"] == single_feature:
+                            print(f"proccessing subfeat {subfeat["name"]}")
+
+                            # slim_subfeat = {}
+
+                            # for key,value in subfeat.items():
+                            #     if key != "entries":
+                            #         slim_subfeat[key] = value
+                            
+                            # slim_entries = []
+
+                            # for lines in subfeat["entries"]:
+                            #     if isinstance(lines,str):
+                            #         slim_entries.append(lines)
+                            #     if isinstance(lines, dict):
+                            #         if lines["type"] != "inset" and lines["type"] != "table" and lines["type"] != "list":
+                            #             slim_entries.append(lines)
+
+                            # slim_subfeat["entries"] = slim_entries
+
+                            # print(slim_subfeat)
+
+                            input = [
+                                    {"role":"user", "content":json.dumps(subfeat, indent=2)}
+                                ]
+
+                            
+                            response = open_ai.parse(
+                                instructions= instructions,
+                                input= input,
+                                reasoning="high",
+                                text_format=CleanedFeature
+                            )
+
+                            subfeat["clean_entries"] = response
+
+                            self.file_handler.save_json(class_path, data)
+
+                            
 
 
 if __name__ == "__main__":
     cleaner = ClassCleaner()    
     # cleaner.run_cleaning()
+
     cleaner.run_feature_LLM_cleaning()
-    
+
+    # cleaner.run_trageted_cleaning(
+    #     class_name="ranger",
+    #     feature_type="subclasses",
+    #     feature_name="Swarmkeeper",
+    #     edition="classic",
+    #     single_feature="Gathered Swarm"
+    # )
+   

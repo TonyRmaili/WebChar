@@ -104,10 +104,7 @@
 
 # Class Cleaning
 
-1. add passive slot that follows actions logic
-2. Expand the choices field to handle "choice" like entries (fighter classic Martial Versitiliy) the problem its defined as a type list. 
-3. 
-
+1.
 
 # Monster Cleaning
 (example from "Erinyes")

@@ -3,7 +3,7 @@ You clean D&D 5e feature data from 5etools JSON into structured output for a web
 Input: a feature object with `name`, `level`, an `entries` array, and possibly other fields (`isClassFeatureVariant`, `consumes`, etc.).
 
 Output: a JSON object with three fields — `description`, `options`, and `effects`.
-
+Return only valid JSON. In JSON strings, all newlines must be escaped as `\n`. Do not use literal multi-line strings.
 Fields besides `entries` are passed for context only. Do not reproduce them in the output.
 
 # Markup stripping
@@ -28,13 +28,16 @@ When a third pipe-segment exists it is display text — use it: `{@item arrows (
 
 The description is the single most important field. It must contain ALL information from the feature entries without data loss, written as clean markdown prose. It is the fallback for anything that cannot be expressed in the structured fields.
 
+Description must be one JSON string. Do not format description as a literal multi-line string. Use escaped newline characters (`\n`) inside the string for paragraph breaks, lists, headings, and tables.
+
 Rules:
 - Top-level prose strings → paragraphs (blank lines between them).
 - `{"type": "entries", "name": "X", "entries": [...]}` → `## X` heading, then content.
 - `{"type": "entries"}` with no name → inline content, no heading.
-- `{"type": "list", "items": [...]}` plain strings → markdown bulleted list.
+- `{"type": "list", "items": [...]}` plain strings → keep as prose in the description, separated with semicolons, unless the list is long or named.
 - `{"type": "list", "style": "list-hang-notitle", "items": [{"name": "X", "entry": "..."}]}` → `- **X.** entry`
 - `{"type": "table", ...}` → markdown table preceded by `**caption**` on its own line.
+- `{"type": "inset", ...}` → include only a brief summary in description unless it contains mechanical rules.
 - Strip all markup tags as described above.
 - Preserve second-person voice ("you", "your").
 - Do not paraphrase mechanical text.
@@ -293,7 +296,7 @@ OUTPUT:
       }
     ],
     "special_options": []
-  }
+  },
   "effects": null
 }
 
@@ -312,7 +315,10 @@ INPUT:
 OUTPUT:
 {
   "description": "Beginning at 9th level, you can reroll a saving throw that you fail. If you do so, you must use the new roll, and you can't use this feature again until you finish a long rest.\\n\\nYou can use this feature twice between long rests starting at 13th level and three times between long rests starting at 17th level.",
-  "options": [],
+  "options": {
+    "choices": [],
+    "special_options": []
+  },
   "effects": {
     "saving_throws": [
       {
@@ -366,7 +372,10 @@ INPUT:
 OUTPUT:
 {
   "description": "## Armor\\n\\nAll armor, shields\\n\\n## Weapons\\n\\nSimple weapons, martial weapons\\n\\n## Saving Throws\\n\\nStrength, Constitution\\n\\n## Skills\\n\\nChoose two skills from Acrobatics, Animal Handling, Athletics, History, Insight, Intimidation, Perception, and Survival",
-  "options": [],
+  "options": {
+    "choices": [],
+    "special_options": []
+  },
   "effects": {
     "saving_throws": [
       {"abilities": ["str", "con"], "type": "proficiency"}
@@ -397,7 +406,10 @@ INPUT:
 OUTPUT:
 {
   "description": "Starting at 5th level, you can interfere with the flow of ki in an opponent's body. When you hit another creature with a melee weapon attack, you can spend 1 ki point to attempt a stunning strike. The target must succeed on a Constitution saving throw or be stunned until the end of your next turn.",
-  "options": [],
+  "options": {
+    "choices": [],
+    "special_options": []
+  },
   "effects": {
     "actions": [
       {
@@ -444,7 +456,7 @@ INPUT:
 OUTPUT:
 {
   "description": "Your exposure to the Feywild's magic grants you the following benefits.\\n\\n## Ability Score Increase\\n\\nIncrease your Intelligence, Wisdom, or Charisma by 1, to a maximum of 20.\\n\\n## Fey Magic\\n\\nChoose one level 1 spell from the Divination or Enchantment school of magic. You always have that spell and the Misty Step spell prepared. You can cast each of these spells without expending a spell slot. Once you cast either spell in this way, you can't cast that spell in this way again until you finish a Long Rest. You can also cast these spells using spell slots you have of the appropriate level.",
-  "options":[
+  "options":{
     "choices": [
       {
         "count": 1,
@@ -453,8 +465,8 @@ OUTPUT:
         ]
       }
     ],
-    "special_options:[]
-  ]
+    "special_options":[]
+  },
   "effects": {
     "ability_scores": [
       {"ability": "int", "increase": 1},
@@ -506,7 +518,10 @@ INPUT:
 OUTPUT:
 {
   "description": "You have a limited well of stamina that you can draw on to protect yourself from harm. On your turn, you can use a bonus action to regain hit points equal to 1d10 + your fighter level. Once you use this feature, you must finish a short or long rest before you can use it again.",
-  "options": [],
+  "options": {
+    "choices": [],
+    "special_options": []
+  },
   "effects": {
     "bonus_actions": [
       {
@@ -551,6 +566,9 @@ INPUT:
 OUTPUT:
 {
   "description": "When you reach 3rd level, you augment your martial prowess with the ability to cast spells.\\n\\n## Cantrips\\n\\nYou learn two cantrips of your choice from the wizard spell list.\\n\\n## Spellcasting Ability\\n\\nIntelligence is your spellcasting ability for your wizard spells.",
-  "options": [],
+ "options": {
+    "choices": [],
+    "special_options": []
+  },
   "effects": null
 }
