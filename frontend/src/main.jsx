@@ -12,7 +12,7 @@ import Embedder from "./pages/Embedder"
 import DMToolsPage from "./pages/DMTools";
 import UserProfile from "./pages/UserProfile";
 import MainCampaigns from "./pages/Campaigns/MainCampaigns";
- 
+import CataloguesMain from "./pages/Catalogues/CataloguesMain"
 
 
 function App() {
@@ -28,6 +28,7 @@ function App() {
           <Route path="/DM-Tools" element={<DMToolsPage />}></Route>
           <Route path="/UserProfile" element={<UserProfile />}></Route>
           <Route path="/MainCampaigns" element={<MainCampaigns />}></Route>
+          <Route path="/CataloguesMain" element={<CataloguesMain />}></Route>
         </Route>
       </Routes>
     </BrowserRouter>

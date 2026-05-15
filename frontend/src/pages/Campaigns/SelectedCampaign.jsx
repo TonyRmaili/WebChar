@@ -6,8 +6,8 @@ import FilePopup from "./FilePopup";
 import CampaignContextMenu from "./CampaignContextMenu";
 import MoveToModal from "./MoveToModal";
 import DMAssistant from "./DMAssistant";
-import Items from "../Catalogues/Items";
-import Races from "../Catalogues/Races"
+import Items from "../Catalogues/Items/Items";
+import Races from "../Catalogues/Races/Races"
 
 const TOOLS = [
   { id: "assistant", label: "Assistant" },
@@ -16,12 +16,6 @@ const TOOLS = [
   { id: "npcs", label: "NPC's" },
   { id: "tables", label: "Tables" }, 
   { id: "templates", label: "Templates" }, 
-  { id: "races", label: "Races" },                // catalogue
-  { id: "items", label: "Items" },                // catalogue
-  { id: "classes", label: "Classes" },            // catalogue
-  { id: "feats", label: "Feats" },                // catalogue
-  { id: "backgrounds", label: "Backgrounds" },    // catalogue
-  { id: "spells", label: "Spells" },              // catalogue
 ];
 
 
@@ -402,10 +396,6 @@ function SelectedCampaign({ campaignName }) {
          {activeTool === "assistant" && (
             <DMAssistant campaignName={campaignName} />
           )}
-
-          {activeTool === "items" && <Items />}
-
-          {activeTool === "races" && <Races />}
 
           {activeTool === "initiative" && (
             <div className="bg-slate-900/40 border border-slate-700 rounded-lg flex items-center justify-center h-[640px] text-slate-500 italic text-sm">

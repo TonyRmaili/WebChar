@@ -6125,7 +6125,15 @@
                                 "type": "refSubclassFeature",
                                 "subclassFeature": "Primal Companion|Ranger|XPHB|Beast Master|XPHB|3"
                             }
-                        ]
+                        ],
+                        "clean_entries": {
+                            "description": "*Bond with a Primal Beast*\n\nA Beast Master forms a mystical bond with a special animal, drawing on primal magic and a deep connection to the natural world.",
+                            "options": {
+                                "choices": [],
+                                "special_options": []
+                            },
+                            "effects": null
+                        }
                     },
                     {
                         "name": "Primal Companion",
@@ -6153,7 +6161,99 @@
                                     }
                                 ]
                             }
-                        ]
+                        ],
+                        "clean_entries": {
+                            "description": "You magically summon a primal beast, which draws strength from your bond with nature. You also determine the kind of animal it is, choosing a kind appropriate for the stat block. Whatever beast you choose, it bears primal markings indicating its supernatural origin.\n\nThe beast is friendly to you and your allies and obeys your commands. It vanishes if you die.\n\n## The Beast in Combat\n\nIn combat, the beast acts during your turn. It can move and use its Reaction on its own, but the only action it takes is the Dodge action unless you take a Bonus Action to command it to take an action in its stat block or some other action. You can also sacrifice one of your attacks when you take the Attack action to command the beast to take the Beast's Strike action. If you have the incapacitated condition, the beast acts on its own and isn't limited to the Dodge action.\n\n## Restoring or Replacing the Beast\n\nIf the beast has died within the last hour, you can take a Magic action to touch it and expend a spell slot. The beast returns to life after 1 minute with all its Hit Points restored.\n\nWhenever you finish a Long Rest, you can summon a different primal beast, which appears in an unoccupied space within 5 feet of you. You choose its stat block and appearance. If you already have a beast from this feature, the old one vanishes when the new one appears.",
+                            "options": {
+                                "choices": [
+                                    {
+                                        "count": 1,
+                                        "options": [
+                                            {
+                                                "name": "Beast of the Land",
+                                                "description": null
+                                            },
+                                            {
+                                                "name": "Beast of the Sea",
+                                                "description": null
+                                            },
+                                            {
+                                                "name": "Beast of the Sky",
+                                                "description": null
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "count": 1,
+                                        "options": [
+                                            {
+                                                "name": "Kind of animal",
+                                                "description": "Choose a kind of animal appropriate for the chosen stat block."
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "special_options": [
+                                    {
+                                        "name": "Replace primal beast on a long rest",
+                                        "description": "Whenever you finish a Long Rest, you can summon a different primal beast, which appears in an unoccupied space within 5 feet of you. You choose its stat block and appearance. If you already have a beast from this feature, the old one vanishes when the new one appears."
+                                    },
+                                    {
+                                        "name": "Sacrifice an attack to command Beast's Strike",
+                                        "description": "When you take the Attack action, you can sacrifice one of your attacks to command the beast to take the Beast's Strike action."
+                                    }
+                                ]
+                            },
+                            "effects": {
+                                "ability_scores": null,
+                                "saving_throws": null,
+                                "ability_checks": null,
+                                "skill_proficiencies": null,
+                                "tool_proficiencies": null,
+                                "weapon_proficiencies": null,
+                                "armor_proficiencies": null,
+                                "languages": null,
+                                "movement": null,
+                                "senses": null,
+                                "resistances": null,
+                                "immunities": null,
+                                "vulnerabilities": null,
+                                "actions": [
+                                    {
+                                        "name": "Restore the Beast",
+                                        "consumes": "Spell Slot",
+                                        "attack": null,
+                                        "save": null,
+                                        "conditions_applied": [],
+                                        "effect_summary": "Touch a beast that died within the last hour and expend a spell slot. The beast returns to life after 1 minute with all its Hit Points restored."
+                                    }
+                                ],
+                                "bonus_actions": [
+                                    {
+                                        "name": "Command the Beast",
+                                        "consumes": null,
+                                        "attack": null,
+                                        "save": null,
+                                        "conditions_applied": [],
+                                        "effect_summary": "Command the beast to take an action from its stat block or another action."
+                                    }
+                                ],
+                                "reactions": null,
+                                "passives": [
+                                    {
+                                        "name": "Primal Companion",
+                                        "consumes": null,
+                                        "attack": null,
+                                        "save": null,
+                                        "conditions_applied": [],
+                                        "effect_summary": "The beast is friendly to you and your allies and obeys your commands. It vanishes if you die. In combat, the beast acts during your turn: it can move and use its Reaction, but by default its only action is the Dodge action unless you command it with your Bonus Action. If you are incapacitated, the beast acts on its own and isn't limited to the Dodge action."
+                                    }
+                                ],
+                                "spells_granted": null,
+                                "resources": null,
+                                "table": null
+                            }
+                        }
                     },
                     {
                         "name": "Exceptional Training",
@@ -6161,7 +6261,58 @@
                         "entries": [
                             "When you take a {@variantrule Bonus Action|XPHB} to command your Primal Companion beast to take an action, you can also command it to take the {@action Dash|XPHB}, {@action Disengage|XPHB}, {@action Dodge|XPHB}, or {@action Help|XPHB} action using its {@variantrule Bonus Action|XPHB}.",
                             "In addition, whenever it hits with an attack roll and deals damage, it can deal your choice of Force damage or its normal damage type."
-                        ]
+                        ],
+                        "clean_entries": {
+                            "description": "When you take a Bonus Action to command your Primal Companion beast to take an action, you can also command it to take the Dash, Disengage, Dodge, or Help action using its Bonus Action.\n\nIn addition, whenever it hits with an attack roll and deals damage, it can deal your choice of Force damage or its normal damage type.",
+                            "options": {
+                                "choices": [],
+                                "special_options": [
+                                    {
+                                        "name": "Force damage option",
+                                        "description": "Whenever it hits with an attack roll and deals damage, it can deal your choice of Force damage or its normal damage type."
+                                    }
+                                ]
+                            },
+                            "effects": {
+                                "ability_scores": null,
+                                "saving_throws": null,
+                                "ability_checks": null,
+                                "skill_proficiencies": null,
+                                "tool_proficiencies": null,
+                                "weapon_proficiencies": null,
+                                "armor_proficiencies": null,
+                                "languages": null,
+                                "movement": null,
+                                "senses": null,
+                                "resistances": null,
+                                "immunities": null,
+                                "vulnerabilities": null,
+                                "actions": null,
+                                "bonus_actions": null,
+                                "reactions": null,
+                                "passives": [
+                                    {
+                                        "name": "Exceptional Training — Commanded Actions",
+                                        "consumes": null,
+                                        "attack": null,
+                                        "save": null,
+                                        "conditions_applied": null,
+                                        "effect_summary": "When you take a Bonus Action to command your Primal Companion beast to take an action, you can also command it to take the Dash, Disengage, Dodge, or Help action using its Bonus Action."
+                                    },
+                                    {
+                                        "name": "Exceptional Training — Damage Type Choice",
+                                        "consumes": null,
+                                        "attack": null,
+                                        "save": null,
+                                        "conditions_applied": null,
+                                        "effect_summary": "Whenever it hits with an attack roll and deals damage, it can deal your choice of Force damage or its normal damage type."
+                                    }
+                                ],
+                                "spells_granted": null,
+                                "resources": null,
+                                "table": null
+                            }
+                        }
                     },
                     {
                         "name": "Bestial Fury",
@@ -6169,14 +6320,98 @@
                         "entries": [
                             "When you command your Primal Companion beast to take the Beast's Strike action, the beast can use it twice.",
                             "In addition, the first time each turn it hits a creature under the effect of your {@spell Hunter's Mark|XPHB} spell, the beast deals extra Force damage equal to the bonus damage of that spell."
-                        ]
+                        ],
+                        "clean_entries": {
+                            "description": "When you command your Primal Companion beast to take the Beast's Strike action, the beast can use it twice.\n\nIn addition, the first time each turn it hits a creature under the effect of your Hunter's Mark spell, the beast deals extra force damage equal to the bonus damage of that spell.",
+                            "options": {
+                                "choices": [],
+                                "special_options": []
+                            },
+                            "effects": {
+                                "ability_scores": null,
+                                "saving_throws": null,
+                                "ability_checks": null,
+                                "skill_proficiencies": null,
+                                "tool_proficiencies": null,
+                                "weapon_proficiencies": null,
+                                "armor_proficiencies": null,
+                                "languages": null,
+                                "movement": null,
+                                "senses": null,
+                                "resistances": null,
+                                "immunities": null,
+                                "vulnerabilities": null,
+                                "actions": null,
+                                "bonus_actions": null,
+                                "reactions": null,
+                                "passives": [
+                                    {
+                                        "name": "Bestial Fury - Beast's Strike",
+                                        "consumes": null,
+                                        "attack": null,
+                                        "save": null,
+                                        "conditions_applied": null,
+                                        "effect_summary": "When you command your Primal Companion beast to take the Beast's Strike action, the beast can use it twice."
+                                    },
+                                    {
+                                        "name": "Bestial Fury - Hunter's Mark Bonus Damage",
+                                        "consumes": null,
+                                        "attack": null,
+                                        "save": null,
+                                        "conditions_applied": null,
+                                        "effect_summary": "The first time each turn the beast hits a creature under the effect of your Hunter's Mark spell, the beast deals extra force damage equal to the bonus damage of that spell."
+                                    }
+                                ],
+                                "spells_granted": null,
+                                "resources": null,
+                                "table": null
+                            }
+                        }
                     },
                     {
                         "name": "Share Spells",
                         "level": 15,
                         "entries": [
                             "When you cast a spell targeting yourself, you can also affect your Primal Companion beast with the spell if the beast is within 30 feet of you."
-                        ]
+                        ],
+                        "clean_entries": {
+                            "description": "When you cast a spell targeting yourself, you can also affect your Primal Companion beast with the spell if the beast is within 30 feet of you.",
+                            "options": {
+                                "choices": [],
+                                "special_options": []
+                            },
+                            "effects": {
+                                "ability_scores": null,
+                                "saving_throws": null,
+                                "ability_checks": null,
+                                "skill_proficiencies": null,
+                                "tool_proficiencies": null,
+                                "weapon_proficiencies": null,
+                                "armor_proficiencies": null,
+                                "languages": null,
+                                "movement": null,
+                                "senses": null,
+                                "resistances": null,
+                                "immunities": null,
+                                "vulnerabilities": null,
+                                "actions": null,
+                                "bonus_actions": null,
+                                "reactions": null,
+                                "passives": [
+                                    {
+                                        "name": "Share Spells",
+                                        "consumes": null,
+                                        "attack": null,
+                                        "save": null,
+                                        "conditions_applied": null,
+                                        "effect_summary": "When you cast a spell targeting yourself, you can also affect your Primal Companion beast with the spell if the beast is within 30 feet of you."
+                                    }
+                                ],
+                                "spells_granted": null,
+                                "resources": null,
+                                "table": null
+                            }
+                        }
                     }
                 ]
             },
@@ -6222,14 +6457,60 @@
                                 "type": "refSubclassFeature",
                                 "subclassFeature": "Otherworldly Glamour|Ranger|XPHB|Fey Wanderer|XPHB|3"
                             }
-                        ]
+                        ],
+                        "clean_entries": {
+                            "description": "*Wield Fey Mirth and Fury*\n\nA fey mystique surrounds you, thanks to the boon of an archfey or a location in the Feywild that transformed you. However you gained fey magic, you are now a Fey Wanderer. Your joyful laughter brightens the hearts of the downtrodden, and your martial prowess strikes terror in your foes, for great is the mirth of the fey and dreadful is their fury.",
+                            "options": {
+                                "choices": [],
+                                "special_options": []
+                            },
+                            "effects": null
+                        }
                     },
                     {
                         "name": "Dreadful Strikes",
                         "level": 3,
                         "entries": [
                             "You can augment your weapon strikes with mind-scarring magic drawn from the murky hollows of the Feywild. When you hit a creature with a weapon, you can deal an extra {@damage 1d4} Psychic damage to the target, which can take this extra damage only once per turn. The extra damage increases to {@damage 1d6} when you reach Ranger level 11."
-                        ]
+                        ],
+                        "clean_entries": {
+                            "description": "You can augment your weapon strikes with mind-scarring magic drawn from the murky hollows of the Feywild. When you hit a creature with a weapon, you can deal an extra 1d4 Psychic damage to the target, which can take this extra damage only once per turn. The extra damage increases to 1d6 when you reach Ranger level 11.",
+                            "options": {
+                                "choices": [],
+                                "special_options": []
+                            },
+                            "effects": {
+                                "ability_scores": null,
+                                "saving_throws": null,
+                                "ability_checks": null,
+                                "skill_proficiencies": null,
+                                "tool_proficiencies": null,
+                                "weapon_proficiencies": null,
+                                "armor_proficiencies": null,
+                                "languages": null,
+                                "movement": null,
+                                "senses": null,
+                                "resistances": null,
+                                "immunities": null,
+                                "vulnerabilities": null,
+                                "actions": null,
+                                "bonus_actions": null,
+                                "reactions": null,
+                                "passives": [
+                                    {
+                                        "name": "Dreadful Strikes",
+                                        "consumes": null,
+                                        "attack": null,
+                                        "save": null,
+                                        "conditions_applied": [],
+                                        "effect_summary": "When you hit a creature with a weapon, you can deal an extra 1d4 psychic damage to the target, which can take this extra damage only once per turn. The extra damage increases to 1d6 when you reach ranger level 11."
+                                    }
+                                ],
+                                "spells_granted": null,
+                                "resources": null,
+                                "table": null
+                            }
+                        }
                     },
                     {
                         "name": "Fey Wanderer Spells",
@@ -6309,7 +6590,102 @@
                                     ]
                                 ]
                             }
-                        ]
+                        ],
+                        "clean_entries": {
+                            "description": "When you reach a Ranger level specified in the Fey Wanderer Spells table, you thereafter always have the listed spells prepared.\n\n**Fey Wanderer Spells**\n\n| Ranger Level | Spells |\n|---|---|\n| 3rd | Charm Person |\n| 5th | Misty Step |\n| 9th | Summon Fey |\n| 13th | Dimension Door |\n| 17th | Mislead |\n\nYou also possess a fey blessing. Choose it from the Feywild Gifts table or determine it randomly.",
+                            "options": {
+                                "choices": [
+                                    {
+                                        "count": 1,
+                                        "options": [
+                                            {
+                                                "name": "Illusory butterflies",
+                                                "description": "Illusory butterflies flutter around you while you take a Short or Long Rest."
+                                            },
+                                            {
+                                                "name": "Flowers bloom",
+                                                "description": "Flowers bloom from your hair each dawn."
+                                            },
+                                            {
+                                                "name": "Scent of spices",
+                                                "description": "You faintly smell of cinnamon, lavender, nutmeg, or another comforting herb or spice."
+                                            },
+                                            {
+                                                "name": "Dancing shadow",
+                                                "description": "Your shadow dances while no one is looking directly at it."
+                                            },
+                                            {
+                                                "name": "Horns or antlers",
+                                                "description": "Horns or antlers sprout from your head."
+                                            },
+                                            {
+                                                "name": "Color-changing skin and hair",
+                                                "description": "Your skin and hair change color each dawn."
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "special_options": []
+                            },
+                            "effects": {
+                                "ability_scores": null,
+                                "saving_throws": null,
+                                "ability_checks": null,
+                                "skill_proficiencies": null,
+                                "tool_proficiencies": null,
+                                "weapon_proficiencies": null,
+                                "armor_proficiencies": null,
+                                "languages": null,
+                                "movement": null,
+                                "senses": null,
+                                "resistances": null,
+                                "immunities": null,
+                                "vulnerabilities": null,
+                                "actions": null,
+                                "bonus_actions": null,
+                                "reactions": null,
+                                "passives": null,
+                                "spells_granted": [
+                                    {
+                                        "type": "extended_list",
+                                        "spells": [
+                                            "charm person"
+                                        ],
+                                        "consumes": null
+                                    },
+                                    {
+                                        "type": "extended_list",
+                                        "spells": [
+                                            "misty step"
+                                        ],
+                                        "consumes": null
+                                    },
+                                    {
+                                        "type": "extended_list",
+                                        "spells": [
+                                            "summon fey"
+                                        ],
+                                        "consumes": null
+                                    },
+                                    {
+                                        "type": "extended_list",
+                                        "spells": [
+                                            "dimension door"
+                                        ],
+                                        "consumes": null
+                                    },
+                                    {
+                                        "type": "extended_list",
+                                        "spells": [
+                                            "mislead"
+                                        ],
+                                        "consumes": null
+                                    }
+                                ],
+                                "resources": null,
+                                "table": null
+                            }
+                        }
                     },
                     {
                         "name": "Otherworldly Glamour",
@@ -6317,7 +6693,65 @@
                         "entries": [
                             "Whenever you make a Charisma check, you gain a bonus to the check equal to your Wisdom modifier (minimum of +1).",
                             "You also gain proficiency in one of these skills of your choice: {@skill Deception|XPHB}, {@skill Performance|XPHB}, or {@skill Persuasion|XPHB}."
-                        ]
+                        ],
+                        "clean_entries": {
+                            "description": "Whenever you make a Charisma check, you gain a bonus to the check equal to your Wisdom modifier (minimum of +1).\n\nYou also gain proficiency in one of these skills of your choice.",
+                            "options": {
+                                "choices": [
+                                    {
+                                        "count": 1,
+                                        "options": [
+                                            {
+                                                "name": "Deception},{",
+                                                "description": null
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "special_options": []
+                            },
+                            "effects": {
+                                "ability_scores": null,
+                                "saving_throws": null,
+                                "ability_checks": [
+                                    {
+                                        "abilities": [
+                                            "cha"
+                                        ],
+                                        "type": "bonus",
+                                        "value": null,
+                                        "consumes": null
+                                    }
+                                ],
+                                "skill_proficiencies": [
+                                    {
+                                        "choose_count": 1,
+                                        "from": [
+                                            "deception",
+                                            "performance",
+                                            "persuasion"
+                                        ],
+                                        "type": "proficiency"
+                                    }
+                                ],
+                                "tool_proficiencies": null,
+                                "weapon_proficiencies": null,
+                                "armor_proficiencies": null,
+                                "languages": null,
+                                "movement": null,
+                                "senses": null,
+                                "resistances": null,
+                                "immunities": null,
+                                "vulnerabilities": null,
+                                "actions": null,
+                                "bonus_actions": null,
+                                "reactions": null,
+                                "passives": null,
+                                "spells_granted": null,
+                                "resources": null,
+                                "table": null
+                            }
+                        }
                     },
                     {
                         "name": "Beguiling Twist",
@@ -6325,7 +6759,66 @@
                         "entries": [
                             "The magic of the Feywild guards your mind. You have {@variantrule Advantage|XPHB} on saving throws to avoid or end the {@condition Charmed|XPHB} or {@condition Frightened|XPHB} condition.",
                             "In addition, whenever you or a creature you can see within 120 feet of you succeeds on a saving throw to avoid or end the {@condition Charmed|XPHB} or {@condition Frightened|XPHB} condition, you can take a {@variantrule Reaction|XPHB} to force a different creature you can see within 120 feet of yourself to make a Wisdom save against your spell save DC. On a failed save, the target is {@condition Charmed|XPHB} or {@condition Frightened|XPHB} (your choice) for 1 minute. The target repeats the save at the end of each of its turns, ending the effect on itself on a success."
-                        ]
+                        ],
+                        "clean_entries": {
+                            "description": "The magic of the Feywild guards your mind. You have Advantage on saving throws to avoid or end the charmed or frightened condition.\n\nIn addition, whenever you or a creature you can see within 120 feet of you succeeds on a saving throw to avoid or end the charmed or frightened condition, you can take a Reaction to force a different creature you can see within 120 feet of yourself to make a Wisdom save against your spell save DC. On a failed save, the target is charmed or frightened (your choice) for 1 minute. The target repeats the save at the end of each of its turns, ending the effect on itself on a success.",
+                            "options": {
+                                "choices": [],
+                                "special_options": []
+                            },
+                            "effects": {
+                                "ability_scores": null,
+                                "saving_throws": [
+                                    {
+                                        "abilities": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "type": "advantage",
+                                        "value": null,
+                                        "consumes": null
+                                    }
+                                ],
+                                "ability_checks": null,
+                                "skill_proficiencies": null,
+                                "tool_proficiencies": null,
+                                "weapon_proficiencies": null,
+                                "armor_proficiencies": null,
+                                "languages": null,
+                                "movement": null,
+                                "senses": null,
+                                "resistances": null,
+                                "immunities": null,
+                                "vulnerabilities": null,
+                                "actions": null,
+                                "bonus_actions": null,
+                                "reactions": [
+                                    {
+                                        "name": "Beguiling Twist",
+                                        "consumes": null,
+                                        "attack": null,
+                                        "save": {
+                                            "ability": "wis",
+                                            "dc_ability": null,
+                                            "damage": null
+                                        },
+                                        "conditions_applied": [
+                                            "charmed",
+                                            "frightened"
+                                        ],
+                                        "effect_summary": "Trigger: when you or a creature you can see within 120 feet succeeds on a saving throw to avoid or end the charmed or frightened condition; as a Reaction, force a different creature you can see within 120 feet to make a Wisdom saving throw against your spell save DC. On a failed save, the target is charmed or frightened (your choice) for 1 minute. The target repeats the save at the end of each of its turns, ending the effect on itself on a success."
+                                    }
+                                ],
+                                "passives": null,
+                                "spells_granted": null,
+                                "resources": null,
+                                "table": null
+                            }
+                        }
                     },
                     {
                         "name": "Fey Reinforcements",
@@ -6333,7 +6826,69 @@
                         "entries": [
                             "You can cast {@spell Summon Fey|XPHB} without a Material component. You can also cast it once without a spell slot, and you regain the ability to cast it in this way when you finish a {@variantrule Long Rest|XPHB}.",
                             "Whenever you start casting the spell, you can modify it so that it doesn't require {@status Concentration|XPHB}. If you do so, the spell's duration becomes 1 minute for that casting."
-                        ]
+                        ],
+                        "clean_entries": {
+                            "description": "You can cast Summon Fey without a Material component. You can also cast it once without a spell slot, and you regain the ability to cast it in this way when you finish a Long Rest.\n\nWhenever you start casting the spell, you can modify it so that it doesn't require Concentration. If you do so, the spell's duration becomes 1 minute for that casting.",
+                            "options": {
+                                "choices": [],
+                                "special_options": [
+                                    {
+                                        "name": "Modify Summon Fey (no Concentration)",
+                                        "description": "Whenever you start casting Summon Fey, you can modify it so that it doesn't require Concentration. If you do so, the spell's duration becomes 1 minute for that casting."
+                                    }
+                                ]
+                            },
+                            "effects": {
+                                "ability_scores": null,
+                                "saving_throws": null,
+                                "ability_checks": null,
+                                "skill_proficiencies": null,
+                                "tool_proficiencies": null,
+                                "weapon_proficiencies": null,
+                                "armor_proficiencies": null,
+                                "languages": null,
+                                "movement": null,
+                                "senses": null,
+                                "resistances": null,
+                                "immunities": null,
+                                "vulnerabilities": null,
+                                "actions": null,
+                                "bonus_actions": null,
+                                "reactions": null,
+                                "passives": [
+                                    {
+                                        "name": "Summon Fey (no Material component)",
+                                        "consumes": null,
+                                        "attack": null,
+                                        "save": null,
+                                        "conditions_applied": null,
+                                        "effect_summary": "You can cast Summon Fey without a Material component."
+                                    }
+                                ],
+                                "spells_granted": [
+                                    {
+                                        "type": "innate",
+                                        "spells": [
+                                            "summon fey"
+                                        ],
+                                        "consumes": "Summon Fey Cast"
+                                    }
+                                ],
+                                "resources": [
+                                    {
+                                        "name": "Summon Fey Cast",
+                                        "base": 1,
+                                        "scaling": "static",
+                                        "scale_ability": null,
+                                        "recharge": "long_rest",
+                                        "recharge_amount": "all",
+                                        "die": null,
+                                        "formula_text": null
+                                    }
+                                ],
+                                "table": null
+                            }
+                        }
                     },
                     {
                         "name": "Misty Wanderer",
@@ -6341,7 +6896,64 @@
                         "entries": [
                             "You can cast {@spell Misty Step|XPHB} without expending a spell slot. You can do so a number of times equal to your Wisdom modifier (minimum of once), and you regain all expended uses when you finish a {@variantrule Long Rest|XPHB}.",
                             "In addition, whenever you cast {@spell Misty Step|XPHB}, you can bring along one willing creature you can see within 5 feet of yourself. That creature teleports to an unoccupied space of your choice within 5 feet of your destination space."
-                        ]
+                        ],
+                        "clean_entries": {
+                            "description": "You can cast Misty Step without expending a spell slot. You can do so a number of times equal to your Wisdom modifier (minimum of once), and you regain all expended uses when you finish a Long Rest.\n\nIn addition, whenever you cast Misty Step, you can bring along one willing creature you can see within 5 feet of yourself. That creature teleports to an unoccupied space of your choice within 5 feet of your destination space.",
+                            "options": {
+                                "choices": [],
+                                "special_options": []
+                            },
+                            "effects": {
+                                "ability_scores": null,
+                                "saving_throws": null,
+                                "ability_checks": null,
+                                "skill_proficiencies": null,
+                                "tool_proficiencies": null,
+                                "weapon_proficiencies": null,
+                                "armor_proficiencies": null,
+                                "languages": null,
+                                "movement": null,
+                                "senses": null,
+                                "resistances": null,
+                                "immunities": null,
+                                "vulnerabilities": null,
+                                "actions": null,
+                                "bonus_actions": null,
+                                "reactions": null,
+                                "passives": [
+                                    {
+                                        "name": "Companion Teleport",
+                                        "consumes": null,
+                                        "attack": null,
+                                        "save": null,
+                                        "conditions_applied": null,
+                                        "effect_summary": "Whenever you cast Misty Step, you can bring along one willing creature you can see within 5 feet of yourself. That creature teleports to an unoccupied space of your choice within 5 feet of your destination space."
+                                    }
+                                ],
+                                "spells_granted": [
+                                    {
+                                        "type": "innate",
+                                        "spells": [
+                                            "misty step"
+                                        ],
+                                        "consumes": "Misty Step Cast"
+                                    }
+                                ],
+                                "resources": [
+                                    {
+                                        "name": "Misty Step Cast",
+                                        "base": 1,
+                                        "scaling": "by_ability_modifier",
+                                        "scale_ability": "wis",
+                                        "recharge": "long_rest",
+                                        "recharge_amount": "all",
+                                        "die": null,
+                                        "formula_text": null
+                                    }
+                                ],
+                                "table": null
+                            }
+                        }
                     }
                 ]
             },
@@ -6395,7 +7007,78 @@
                                     "When you roll {@variantrule Initiative|XPHB}, you can add your Wisdom modifier to the roll."
                                 ]
                             }
-                        ]
+                        ],
+                        "clean_entries": {
+                            "description": "You have mastered the art of creating fearsome ambushes, granting you the following benefits.\n\n## Ambusher's Leap\n\nAt the start of your first turn of each combat, your Speed increases by 10 feet until the end of that turn.\n\n## Dreadful Strike\n\nWhen you attack a creature and hit it with a weapon, you can deal an extra 2d6 Psychic damage. You can use this benefit only once per turn, you can use it a number of times equal to your Wisdom modifier (minimum of once), and you regain all expended uses when you finish a Long Rest.\n\n## Initiative Bonus\n\nWhen you roll Initiative, you can add your Wisdom modifier to the roll.",
+                            "options": {
+                                "choices": [],
+                                "special_options": []
+                            },
+                            "effects": {
+                                "ability_scores": null,
+                                "saving_throws": null,
+                                "ability_checks": null,
+                                "skill_proficiencies": null,
+                                "tool_proficiencies": null,
+                                "weapon_proficiencies": null,
+                                "armor_proficiencies": null,
+                                "languages": null,
+                                "movement": [
+                                    {
+                                        "type": "walk",
+                                        "modifier": "+10",
+                                        "value": null
+                                    }
+                                ],
+                                "senses": null,
+                                "resistances": null,
+                                "immunities": null,
+                                "vulnerabilities": null,
+                                "actions": null,
+                                "bonus_actions": null,
+                                "reactions": null,
+                                "passives": [
+                                    {
+                                        "name": "Ambusher's Leap",
+                                        "consumes": null,
+                                        "attack": null,
+                                        "save": null,
+                                        "conditions_applied": [],
+                                        "effect_summary": "At the start of your first turn of each combat, your Speed increases by 10 feet until the end of that turn."
+                                    },
+                                    {
+                                        "name": "Dreadful Strike",
+                                        "consumes": "Dreadful Strike",
+                                        "attack": null,
+                                        "save": null,
+                                        "conditions_applied": [],
+                                        "effect_summary": "When you attack a creature and hit it with a weapon, you can deal an extra 2d6 Psychic damage. You can use this benefit only once per turn, you can use it a number of times equal to your Wisdom modifier (minimum of once), and you regain all expended uses when you finish a Long Rest."
+                                    },
+                                    {
+                                        "name": "Initiative Bonus",
+                                        "consumes": null,
+                                        "attack": null,
+                                        "save": null,
+                                        "conditions_applied": [],
+                                        "effect_summary": "When you roll Initiative, you can add your Wisdom modifier to the roll."
+                                    }
+                                ],
+                                "spells_granted": null,
+                                "resources": [
+                                    {
+                                        "name": "Dreadful Strike",
+                                        "base": 1,
+                                        "scaling": "by_ability_modifier",
+                                        "scale_ability": "wis",
+                                        "recharge": "long_rest",
+                                        "recharge_amount": "all",
+                                        "die": null,
+                                        "formula_text": null
+                                    }
+                                ],
+                                "table": null
+                            }
+                        }
                     },
                     {
                         "name": "Gloom Stalker",
@@ -6415,7 +7098,15 @@
                                 "type": "refSubclassFeature",
                                 "subclassFeature": "Umbral Sight|Ranger|XPHB|Gloom Stalker|XPHB|3"
                             }
-                        ]
+                        ],
+                        "clean_entries": {
+                            "description": "*Draw on Shadow Magic to Fight Your Foes*\n\nGloom Stalkers are at home in the darkest places, wielding magic drawn from the Shadowfell to combat enemies that lurk in darkness.",
+                            "options": {
+                                "choices": [],
+                                "special_options": []
+                            },
+                            "effects": null
+                        }
                     },
                     {
                         "name": "Gloom Stalker Spells",
@@ -6456,7 +7147,48 @@
                                     ]
                                 ]
                             }
-                        ]
+                        ],
+                        "clean_entries": {
+                            "description": "When you reach a Ranger level specified in the Gloom Stalker Spells table, you thereafter always have the listed spells prepared.\n\n**Gloom Stalker Spells**\n\n| Ranger Level | Spells |\n|---|---|\n| 3rd | Disguise Self |\n| 5th | Rope Trick |\n| 9th | Fear |\n| 13th | Greater Invisibility |\n| 17th | Seeming |",
+                            "options": {
+                                "choices": [],
+                                "special_options": []
+                            },
+                            "effects": {
+                                "ability_scores": null,
+                                "saving_throws": null,
+                                "ability_checks": null,
+                                "skill_proficiencies": null,
+                                "tool_proficiencies": null,
+                                "weapon_proficiencies": null,
+                                "armor_proficiencies": null,
+                                "languages": null,
+                                "movement": null,
+                                "senses": null,
+                                "resistances": null,
+                                "immunities": null,
+                                "vulnerabilities": null,
+                                "actions": null,
+                                "bonus_actions": null,
+                                "reactions": null,
+                                "passives": null,
+                                "spells_granted": [
+                                    {
+                                        "type": "extended_list",
+                                        "spells": [
+                                            "disguise self",
+                                            "rope trick",
+                                            "fear",
+                                            "greater invisibility",
+                                            "seeming"
+                                        ],
+                                        "consumes": null
+                                    }
+                                ],
+                                "resources": null,
+                                "table": "gloom_stalker_spells"
+                            }
+                        }
                     },
                     {
                         "name": "Umbral Sight",
@@ -6464,14 +7196,102 @@
                         "entries": [
                             "You gain {@sense Darkvision|XPHB} with a range of 60 feet. If you already have {@sense Darkvision|XPHB} when you gain this feature, its range increases by 60 feet.",
                             "You are also adept at evading creatures that rely on {@sense Darkvision|XPHB}. While entirely in {@variantrule Darkness|XPHB}, you have the {@condition Invisible|XPHB} condition to any creature that relies on {@sense Darkvision|XPHB} to see you in that {@variantrule Darkness|XPHB}."
-                        ]
+                        ],
+                        "clean_entries": {
+                            "description": "You gain Darkvision with a range of 60 feet. If you already have Darkvision when you gain this feature, its range increases by 60 feet.\\n\\nYou are also adept at evading creatures that rely on Darkvision. While entirely in Darkness, you have the invisible condition to any creature that relies on Darkvision to see you in that Darkness.",
+                            "options": {
+                                "choices": [],
+                                "special_options": []
+                            },
+                            "effects": {
+                                "ability_scores": null,
+                                "saving_throws": null,
+                                "ability_checks": null,
+                                "skill_proficiencies": null,
+                                "tool_proficiencies": null,
+                                "weapon_proficiencies": null,
+                                "armor_proficiencies": null,
+                                "languages": null,
+                                "movement": null,
+                                "senses": [
+                                    {
+                                        "type": "darkvision",
+                                        "range_ft": 60
+                                    }
+                                ],
+                                "resistances": null,
+                                "immunities": null,
+                                "vulnerabilities": null,
+                                "actions": null,
+                                "bonus_actions": null,
+                                "reactions": null,
+                                "passives": [
+                                    {
+                                        "name": "Umbral Sight",
+                                        "consumes": null,
+                                        "attack": null,
+                                        "save": null,
+                                        "conditions_applied": [
+                                            "invisible"
+                                        ],
+                                        "effect_summary": "While entirely in Darkness, you are invisible to any creature that relies on Darkvision to see you in that Darkness."
+                                    }
+                                ],
+                                "spells_granted": null,
+                                "resources": null,
+                                "table": null
+                            }
+                        }
                     },
                     {
                         "name": "Iron Mind",
                         "level": 7,
                         "entries": [
                             "You have honed your ability to resist mind-altering powers. You gain proficiency in Wisdom saving throws. If you already have this proficiency, you instead gain proficiency in Intelligence or Charisma saving throws (your choice)."
-                        ]
+                        ],
+                        "clean_entries": {
+                            "description": "You have honed your ability to resist mind-altering powers. You gain proficiency in Wisdom saving throws. If you already have this proficiency, you instead gain proficiency in Intelligence or Charisma saving throws (your choice).",
+                            "options": {
+                                "choices": [],
+                                "special_options": [
+                                    {
+                                        "name": "Alternate saving throw proficiency",
+                                        "description": "If you already have proficiency in Wisdom saving throws, you instead gain proficiency in Intelligence or Charisma saving throws (your choice)."
+                                    }
+                                ]
+                            },
+                            "effects": {
+                                "ability_scores": null,
+                                "saving_throws": [
+                                    {
+                                        "abilities": [
+                                            "wis"
+                                        ],
+                                        "type": "proficiency",
+                                        "value": null,
+                                        "consumes": null
+                                    }
+                                ],
+                                "ability_checks": null,
+                                "skill_proficiencies": null,
+                                "tool_proficiencies": null,
+                                "weapon_proficiencies": null,
+                                "armor_proficiencies": null,
+                                "languages": null,
+                                "movement": null,
+                                "senses": null,
+                                "resistances": null,
+                                "immunities": null,
+                                "vulnerabilities": null,
+                                "actions": null,
+                                "bonus_actions": null,
+                                "reactions": null,
+                                "passives": null,
+                                "spells_granted": null,
+                                "resources": null,
+                                "table": null
+                            }
+                        }
                     },
                     {
                         "name": "Stalker's Flurry",
@@ -6492,14 +7312,117 @@
                                     "The target and each creature within 10 feet of it must make a Wisdom saving throw against your spell save DC. On a failed save, a creature has the {@condition Frightened|XPHB} condition until the start of your next turn."
                                 ]
                             }
-                        ]
+                        ],
+                        "clean_entries": {
+                            "description": "The Psychic damage of your Dreadful Strike becomes 2d8. In addition, when you use the Dreadful Strike effect of your Dread Ambusher feature, you can cause one of the following additional effects.\n\n## Sudden Strike\n\nYou can make another attack with the same weapon against a different creature that is within 5 feet of the original target and that is within the weapon's range.\n\n## Mass Fear\n\nThe target and each creature within 10 feet of it must make a Wisdom saving throw against your spell save DC. On a failed save, a creature has the frightened condition until the start of your next turn.",
+                            "options": {
+                                "choices": [],
+                                "special_options": [
+                                    {
+                                        "name": "Stalker's Flurry",
+                                        "description": "When you use the Dreadful Strike effect of your Dread Ambusher feature, you can cause one of the following additional effects:\n\n- **Sudden Strike.** You can make another attack with the same weapon against a different creature that is within 5 feet of the original target and that is within the weapon's range.\n- **Mass Fear.** The target and each creature within 10 feet of it must make a Wisdom saving throw against your spell save DC. On a failed save, a creature is frightened until the start of your next turn."
+                                    }
+                                ]
+                            },
+                            "effects": {
+                                "ability_scores": null,
+                                "saving_throws": null,
+                                "ability_checks": null,
+                                "skill_proficiencies": null,
+                                "tool_proficiencies": null,
+                                "weapon_proficiencies": null,
+                                "armor_proficiencies": null,
+                                "languages": null,
+                                "movement": null,
+                                "senses": null,
+                                "resistances": null,
+                                "immunities": null,
+                                "vulnerabilities": null,
+                                "actions": null,
+                                "bonus_actions": null,
+                                "reactions": null,
+                                "passives": [
+                                    {
+                                        "name": "Dreadful Strike damage",
+                                        "consumes": null,
+                                        "attack": null,
+                                        "save": null,
+                                        "conditions_applied": null,
+                                        "effect_summary": "The Psychic damage of your Dreadful Strike becomes 2d8."
+                                    },
+                                    {
+                                        "name": "Sudden Strike",
+                                        "consumes": null,
+                                        "attack": null,
+                                        "save": null,
+                                        "conditions_applied": null,
+                                        "effect_summary": "When you use the Dreadful Strike effect of your Dread Ambusher feature, you can make another attack with the same weapon against a different creature that is within 5 feet of the original target and that is within the weapon's range."
+                                    },
+                                    {
+                                        "name": "Mass Fear",
+                                        "consumes": null,
+                                        "attack": null,
+                                        "save": {
+                                            "ability": "wis",
+                                            "dc_ability": null,
+                                            "damage": null
+                                        },
+                                        "conditions_applied": [
+                                            "frightened"
+                                        ],
+                                        "effect_summary": "The target and each creature within 10 feet of it must make a Wisdom saving throw against your spell save DC. On a failed save, a creature is frightened until the start of your next turn."
+                                    }
+                                ],
+                                "spells_granted": null,
+                                "resources": null,
+                                "table": null
+                            }
+                        }
                     },
                     {
                         "name": "Shadowy Dodge",
                         "level": 15,
                         "entries": [
                             "When a creature makes an attack roll against you, you can take a {@variantrule Reaction|XPHB} to impose {@variantrule Disadvantage|XPHB} on that roll. Whether the attack hits or misses, you can then teleport up to 30 feet to an unoccupied space you can see."
-                        ]
+                        ],
+                        "clean_entries": {
+                            "description": "When a creature makes an attack roll against you, you can take a Reaction to impose Disadvantage on that roll. Whether the attack hits or misses, you can then teleport up to 30 feet to an unoccupied space you can see.",
+                            "options": {
+                                "choices": [],
+                                "special_options": []
+                            },
+                            "effects": {
+                                "ability_scores": null,
+                                "saving_throws": null,
+                                "ability_checks": null,
+                                "skill_proficiencies": null,
+                                "tool_proficiencies": null,
+                                "weapon_proficiencies": null,
+                                "armor_proficiencies": null,
+                                "languages": null,
+                                "movement": null,
+                                "senses": null,
+                                "resistances": null,
+                                "immunities": null,
+                                "vulnerabilities": null,
+                                "actions": null,
+                                "bonus_actions": null,
+                                "reactions": [
+                                    {
+                                        "name": "Shadowy Dodge",
+                                        "consumes": null,
+                                        "attack": null,
+                                        "save": null,
+                                        "conditions_applied": null,
+                                        "effect_summary": "When a creature makes an attack roll against you, you can take a Reaction to impose Disadvantage on that roll. Whether the attack hits or misses, you can then teleport up to 30 feet to an unoccupied space you can see."
+                                    }
+                                ],
+                                "passives": null,
+                                "spells_granted": null,
+                                "resources": null,
+                                "table": null
+                            }
+                        }
                     }
                 ]
             },
@@ -6520,14 +7443,60 @@
                                 "type": "refSubclassFeature",
                                 "subclassFeature": "Hunter's Lore|Ranger|XPHB|Hunter|XPHB|3"
                             }
-                        ]
+                        ],
+                        "clean_entries": {
+                            "description": "*Protect Nature and People from Destruction*\n\nYou stalk prey in the wilds and elsewhere, using your abilities as a Hunter to protect nature and people everywhere from forces that would destroy them.",
+                            "options": {
+                                "choices": [],
+                                "special_options": []
+                            },
+                            "effects": null
+                        }
                     },
                     {
                         "name": "Hunter's Lore",
                         "level": 3,
                         "entries": [
                             "You can call on the forces of nature to reveal certain strengths and weaknesses of your prey. While a creature is marked by your Hunter's Mark, you know whether that creature has any Immunities, Resistances, or Vulnerabilities, and if the creature has any, you know what they are."
-                        ]
+                        ],
+                        "clean_entries": {
+                            "description": "You can call on the forces of nature to reveal certain strengths and weaknesses of your prey. While a creature is marked by your Hunter's Mark, you know whether that creature has any Immunities, Resistances, or Vulnerabilities, and if the creature has any, you know what they are.",
+                            "options": {
+                                "choices": [],
+                                "special_options": []
+                            },
+                            "effects": {
+                                "ability_scores": null,
+                                "saving_throws": null,
+                                "ability_checks": null,
+                                "skill_proficiencies": null,
+                                "tool_proficiencies": null,
+                                "weapon_proficiencies": null,
+                                "armor_proficiencies": null,
+                                "languages": null,
+                                "movement": null,
+                                "senses": null,
+                                "resistances": null,
+                                "immunities": null,
+                                "vulnerabilities": null,
+                                "actions": null,
+                                "bonus_actions": null,
+                                "reactions": null,
+                                "passives": [
+                                    {
+                                        "name": "Hunter's Lore",
+                                        "consumes": null,
+                                        "attack": null,
+                                        "save": null,
+                                        "conditions_applied": null,
+                                        "effect_summary": "While a creature is marked by your Hunter's Mark, you know whether that creature has any Immunities, Resistances, or Vulnerabilities, and if the creature has any, you know what they are."
+                                    }
+                                ],
+                                "spells_granted": null,
+                                "resources": null,
+                                "table": null
+                            }
+                        }
                     },
                     {
                         "name": "Hunter's Prey",
@@ -6553,7 +7522,72 @@
                                     }
                                 ]
                             }
-                        ]
+                        ],
+                        "clean_entries": {
+                            "description": "You gain one of the following feature options of your choice. Whenever you finish a Short or Long Rest, you can replace the chosen option with the other one.\n\n## Colossus Slayer\n\nYour tenacity can wear down even the most resilient foes. When you hit a creature with a weapon, the weapon deals an extra 1d8 damage to the target if it's missing any of its Hit Points. You can deal this extra damage only once per turn.\n\n## Horde Breaker\n\nOnce on each of your turns when you make an attack with a weapon, you can make another attack with the same weapon against a different creature that is within 5 feet of the original target, that is within the weapon's range, and that you haven't attacked this turn.",
+                            "options": {
+                                "choices": [
+                                    {
+                                        "count": 1,
+                                        "options": [
+                                            {
+                                                "name": "Colossus Slayer",
+                                                "description": "Your tenacity can wear down even the most resilient foes. When you hit a creature with a weapon, the weapon deals an extra 1d8 damage to the target if it's missing any of its Hit Points. You can deal this extra damage only once per turn."
+                                            },
+                                            {
+                                                "name": "Horde Breaker",
+                                                "description": "Once on each of your turns when you make an attack with a weapon, you can make another attack with the same weapon against a different creature that is within 5 feet of the original target, that is within the weapon's range, and that you haven't attacked this turn."
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "special_options": [
+                                    {
+                                        "name": "Replace option on a rest",
+                                        "description": "Whenever you finish a Short or Long Rest, you can replace the chosen option with the other one."
+                                    }
+                                ]
+                            },
+                            "effects": {
+                                "ability_scores": null,
+                                "saving_throws": null,
+                                "ability_checks": null,
+                                "skill_proficiencies": null,
+                                "tool_proficiencies": null,
+                                "weapon_proficiencies": null,
+                                "armor_proficiencies": null,
+                                "languages": null,
+                                "movement": null,
+                                "senses": null,
+                                "resistances": null,
+                                "immunities": null,
+                                "vulnerabilities": null,
+                                "actions": null,
+                                "bonus_actions": null,
+                                "reactions": null,
+                                "passives": [
+                                    {
+                                        "name": "Colossus Slayer",
+                                        "consumes": null,
+                                        "attack": null,
+                                        "save": null,
+                                        "conditions_applied": null,
+                                        "effect_summary": "Your tenacity can wear down even the most resilient foes. When you hit a creature with a weapon, the weapon deals an extra 1d8 damage to the target if it's missing any of its Hit Points. You can deal this extra damage only once per turn."
+                                    },
+                                    {
+                                        "name": "Horde Breaker",
+                                        "consumes": null,
+                                        "attack": null,
+                                        "save": null,
+                                        "conditions_applied": null,
+                                        "effect_summary": "Once on each of your turns when you make an attack with a weapon, you can make another attack with the same weapon against a different creature that is within 5 feet of the original target, that is within the weapon's range, and that you haven't attacked this turn."
+                                    }
+                                ],
+                                "spells_granted": null,
+                                "resources": null,
+                                "table": null
+                            }
+                        }
                     },
                     {
                         "name": "Defensive Tactics",
@@ -6579,21 +7613,124 @@
                                     }
                                 ]
                             }
-                        ]
+                        ],
+                        "clean_entries": {
+                            "description": "You gain one of the following feature options of your choice. Whenever you finish a Short or Long Rest, you can replace the chosen option with the other one.",
+                            "options": {
+                                "choices": [
+                                    {
+                                        "count": 1,
+                                        "options": [
+                                            {
+                                                "name": "Escape the Horde",
+                                                "description": "Opportunity Attacks have Disadvantage against you."
+                                            },
+                                            {
+                                                "name": "Multiattack Defense",
+                                                "description": "When a creature hits you with an attack roll, that creature has Disadvantage on all other attack rolls against you this turn."
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "special_options": [
+                                    {
+                                        "name": "Replace chosen option",
+                                        "description": "Whenever you finish a Short or Long Rest, you can replace the chosen option with the other one."
+                                    }
+                                ]
+                            },
+                            "effects": null
+                        }
                     },
                     {
                         "name": "Superior Hunter's Prey",
                         "level": 11,
                         "entries": [
                             "Once per turn when you deal damage to a creature marked by your Hunter's Mark, you can also deal that spell's extra damage to a different creature that you can see within 30 feet of the first creature."
-                        ]
+                        ],
+                        "clean_entries": {
+                            "description": "Once per turn when you deal damage to a creature marked by your Hunter's Mark, you can also deal that spell's extra damage to a different creature that you can see within 30 feet of the first creature.",
+                            "options": {
+                                "choices": [],
+                                "special_options": []
+                            },
+                            "effects": {
+                                "ability_scores": null,
+                                "saving_throws": null,
+                                "ability_checks": null,
+                                "skill_proficiencies": null,
+                                "tool_proficiencies": null,
+                                "weapon_proficiencies": null,
+                                "armor_proficiencies": null,
+                                "languages": null,
+                                "movement": null,
+                                "senses": null,
+                                "resistances": null,
+                                "immunities": null,
+                                "vulnerabilities": null,
+                                "actions": null,
+                                "bonus_actions": null,
+                                "reactions": null,
+                                "passives": [
+                                    {
+                                        "name": "Superior Hunter's Prey",
+                                        "consumes": null,
+                                        "attack": null,
+                                        "save": null,
+                                        "conditions_applied": null,
+                                        "effect_summary": "Once per turn when you deal damage to a creature marked by your Hunter's Mark, you can also deal that spell's extra damage to a different creature that you can see within 30 feet of the first creature."
+                                    }
+                                ],
+                                "spells_granted": null,
+                                "resources": null,
+                                "table": null
+                            }
+                        }
                     },
                     {
                         "name": "Superior Hunter's Defense",
                         "level": 15,
                         "entries": [
                             "When you take damage, you can take a {@variantrule Reaction|XPHB} to give yourself {@variantrule Resistance|XPHB} to that damage and any other damage of the same type until the end of the current turn."
-                        ]
+                        ],
+                        "clean_entries": {
+                            "description": "When you take damage, you can take a Reaction to give yourself Resistance to that damage and any other damage of the same type until the end of the current turn.",
+                            "options": {
+                                "choices": [],
+                                "special_options": []
+                            },
+                            "effects": {
+                                "ability_scores": null,
+                                "saving_throws": null,
+                                "ability_checks": null,
+                                "skill_proficiencies": null,
+                                "tool_proficiencies": null,
+                                "weapon_proficiencies": null,
+                                "armor_proficiencies": null,
+                                "languages": null,
+                                "movement": null,
+                                "senses": null,
+                                "resistances": null,
+                                "immunities": null,
+                                "vulnerabilities": null,
+                                "actions": null,
+                                "bonus_actions": null,
+                                "reactions": [
+                                    {
+                                        "name": "Superior Hunter's Defense",
+                                        "consumes": null,
+                                        "attack": null,
+                                        "save": null,
+                                        "conditions_applied": [],
+                                        "effect_summary": "When you take damage, you can use your reaction to gain resistance to that damage and any other damage of the same type until the end of the current turn."
+                                    }
+                                ],
+                                "passives": null,
+                                "spells_granted": null,
+                                "resources": null,
+                                "table": null
+                            }
+                        }
                     }
                 ]
             },
@@ -6650,7 +7787,60 @@
                                     "When you hit a creature with an attack roll using a weapon, you can deal an extra {@damage 1d4} Cold damage to the target, which can take this extra damage only once per turn. When you reach Ranger level 11, this extra damage increases to {@dice 1d6}."
                                 ]
                             }
-                        ]
+                        ],
+                        "clean_entries": {
+                            "description": "You gain the following benefits.\n\n## Biting Cold\n\nDamage from your weapon attacks, Ranger spells, and Ranger features ignores Resistance to Cold damage.\n\n## Frost Resistance\n\nYou have Resistance to Cold damage.\n\n## Polar Strikes\n\nWhen you hit a creature with an attack roll using a weapon, you can deal an extra 1d4 Cold damage to the target, which can take this extra damage only once per turn. When you reach Ranger level 11, this extra damage increases to 1d6.",
+                            "options": {
+                                "choices": [],
+                                "special_options": []
+                            },
+                            "effects": {
+                                "ability_scores": null,
+                                "saving_throws": null,
+                                "ability_checks": null,
+                                "skill_proficiencies": null,
+                                "tool_proficiencies": null,
+                                "weapon_proficiencies": null,
+                                "armor_proficiencies": null,
+                                "languages": null,
+                                "movement": null,
+                                "senses": null,
+                                "resistances": [
+                                    {
+                                        "damage_types": [
+                                            "cold"
+                                        ],
+                                        "conditions": null
+                                    }
+                                ],
+                                "immunities": null,
+                                "vulnerabilities": null,
+                                "actions": null,
+                                "bonus_actions": null,
+                                "reactions": null,
+                                "passives": [
+                                    {
+                                        "name": "Biting Cold",
+                                        "consumes": null,
+                                        "attack": null,
+                                        "save": null,
+                                        "conditions_applied": null,
+                                        "effect_summary": "Damage from your weapon attacks, Ranger spells, and Ranger features ignores Resistance to Cold damage."
+                                    },
+                                    {
+                                        "name": "Polar Strikes",
+                                        "consumes": null,
+                                        "attack": null,
+                                        "save": null,
+                                        "conditions_applied": null,
+                                        "effect_summary": "When you hit a creature with an attack roll using a weapon, you can deal an extra 1d4 Cold damage to the target, which can take this extra damage only once per turn. When you reach Ranger level 11, this extra damage increases to 1d6."
+                                    }
+                                ],
+                                "spells_granted": null,
+                                "resources": null,
+                                "table": null
+                            }
+                        }
                     },
                     {
                         "name": "Hunter's Rime",
@@ -6658,7 +7848,53 @@
                         "entries": [
                             "Ice rimes you and your prey, protecting you and slowing them. When you cast {@spell Hunter's Mark|XPHB}, you gain {@variantrule Temporary Hit Points|XPHB} equal to {@dice 1d10} plus your {@class Ranger|XPHB} level.",
                             "Additionally, while a creature is marked by your {@spell Hunter's Mark|XPHB}, it can't take the {@action Disengage|XPHB} action."
-                        ]
+                        ],
+                        "clean_entries": {
+                            "description": "Ice rimes you and your prey, protecting you and slowing them. When you cast Hunter's Mark, you gain Temporary Hit Points equal to 1d10 plus your Ranger level.\\n\\nAdditionally, while a creature is marked by your Hunter's Mark, it can't take the Disengage action.",
+                            "options": {
+                                "choices": [],
+                                "special_options": []
+                            },
+                            "effects": {
+                                "ability_scores": null,
+                                "saving_throws": null,
+                                "ability_checks": null,
+                                "skill_proficiencies": null,
+                                "tool_proficiencies": null,
+                                "weapon_proficiencies": null,
+                                "armor_proficiencies": null,
+                                "languages": null,
+                                "movement": null,
+                                "senses": null,
+                                "resistances": null,
+                                "immunities": null,
+                                "vulnerabilities": null,
+                                "actions": null,
+                                "bonus_actions": null,
+                                "reactions": null,
+                                "passives": [
+                                    {
+                                        "name": "Hunter's Rime",
+                                        "consumes": null,
+                                        "attack": null,
+                                        "save": null,
+                                        "conditions_applied": null,
+                                        "effect_summary": "When you cast Hunter's Mark, you gain Temporary Hit Points equal to 1d10 plus your Ranger level."
+                                    },
+                                    {
+                                        "name": "Hunter's Rime",
+                                        "consumes": null,
+                                        "attack": null,
+                                        "save": null,
+                                        "conditions_applied": null,
+                                        "effect_summary": "While a creature is marked by your Hunter's Mark, it can't take the Disengage action."
+                                    }
+                                ],
+                                "spells_granted": null,
+                                "resources": null,
+                                "table": null
+                            }
+                        }
                     },
                     {
                         "name": "Winter Walker",
@@ -6678,7 +7914,15 @@
                                 "type": "refSubclassFeature",
                                 "subclassFeature": "Winter Walker Spells|Ranger|XPHB|Winter Walker|FRHoF|3|FRHoF"
                             }
-                        ]
+                        ],
+                        "clean_entries": {
+                            "description": "*Withstand the Horrors of Frigid Wastelands*\n\nWinter Walkers hone their craft in the bleak and frozen wilds of places like Icewind Dale. These ruthless, rimed Rangers hunt monsters that haunt arctic wastelands, eventually becoming frigid terrors themselves. Winter Walkers are well versed in the phenomena of Icewind Dale, including the latent magic of fallen Netherese cities, endemic monsters like yetis and crag cats, and the rising threat of Underdark invaders. Due to their cold pragmatism, terrifying magic, and mastery of the region, Winter Walkers are regarded with equal parts respect and fear. Ten-Towns citizens say that Winter Walkers' frequent exposure to malignant entities gives them their fearsome powers. Many Reghed nomads, on the other hand, believe that nature spirits bestow on Winter Walkers a unique curse.",
+                            "options": {
+                                "choices": [],
+                                "special_options": []
+                            },
+                            "effects": null
+                        }
                     },
                     {
                         "name": "Winter Walker Spells",
@@ -6718,7 +7962,48 @@
                                     ]
                                 ]
                             }
-                        ]
+                        ],
+                        "clean_entries": {
+                            "description": "When you reach a Ranger level specified in the Winter Walker Spells table, you thereafter always have the listed spells prepared.\n\n**Winter Walker Spells table**\n\n| Ranger Level | Spells |\n|---|---|\n| 3 | Ice Knife |\n| 5 | Hold Person |\n| 9 | Remove Curse |\n| 13 | Ice Storm |\n| 17 | Cone of Cold |",
+                            "options": {
+                                "choices": [],
+                                "special_options": []
+                            },
+                            "effects": {
+                                "ability_scores": null,
+                                "saving_throws": null,
+                                "ability_checks": null,
+                                "skill_proficiencies": null,
+                                "tool_proficiencies": null,
+                                "weapon_proficiencies": null,
+                                "armor_proficiencies": null,
+                                "languages": null,
+                                "movement": null,
+                                "senses": null,
+                                "resistances": null,
+                                "immunities": null,
+                                "vulnerabilities": null,
+                                "actions": null,
+                                "bonus_actions": null,
+                                "reactions": null,
+                                "passives": null,
+                                "spells_granted": [
+                                    {
+                                        "type": "extended_list",
+                                        "spells": [
+                                            "ice knife",
+                                            "hold person",
+                                            "remove curse",
+                                            "ice storm",
+                                            "cone of cold"
+                                        ],
+                                        "consumes": null
+                                    }
+                                ],
+                                "resources": null,
+                                "table": "winter_walker_spells"
+                            }
+                        }
                     },
                     {
                         "name": "Fortifying Soul",
@@ -6726,7 +8011,56 @@
                         "entries": [
                             "Your experience surviving harrowing environments allows you to bolster your allies in addition to yourself. As a {@action Magic|XPHB} action, choose a number of creatures you can see equal to your Wisdom modifier (minimum of one). Each chosen creature regains {@variantrule Hit Points|XPHB} equal to {@dice 1d10} plus your Ranger level and has {@variantrule Advantage|XPHB} on saving throws to avoid or end the {@condition Frightened|XPHB} condition for 1 hour.",
                             "Once you use this feature, you can't use it again until you finish a {@variantrule Long Rest|XPHB}."
-                        ]
+                        ],
+                        "clean_entries": {
+                            "description": "Your experience surviving harrowing environments allows you to bolster your allies in addition to yourself. As a Magic action, choose a number of creatures you can see equal to your Wisdom modifier (minimum of one). Each chosen creature regains hit points equal to 1d10 plus your ranger level and has advantage on saving throws to avoid or end the frightened condition for 1 hour.\n\nOnce you use this feature, you can't use it again until you finish a Long Rest.",
+                            "options": {
+                                "choices": [],
+                                "special_options": []
+                            },
+                            "effects": {
+                                "ability_scores": null,
+                                "saving_throws": null,
+                                "ability_checks": null,
+                                "skill_proficiencies": null,
+                                "tool_proficiencies": null,
+                                "weapon_proficiencies": null,
+                                "armor_proficiencies": null,
+                                "languages": null,
+                                "movement": null,
+                                "senses": null,
+                                "resistances": null,
+                                "immunities": null,
+                                "vulnerabilities": null,
+                                "actions": [
+                                    {
+                                        "name": "Fortifying Soul",
+                                        "consumes": "Fortifying Soul",
+                                        "attack": null,
+                                        "save": null,
+                                        "conditions_applied": [],
+                                        "effect_summary": "Each chosen creature regains 1d10 + your ranger level hit points and has advantage on saving throws to avoid or end the frightened condition for 1 hour."
+                                    }
+                                ],
+                                "bonus_actions": null,
+                                "reactions": null,
+                                "passives": null,
+                                "spells_granted": null,
+                                "resources": [
+                                    {
+                                        "name": "Fortifying Soul",
+                                        "base": 1,
+                                        "scaling": "static",
+                                        "scale_ability": null,
+                                        "recharge": "long_rest",
+                                        "recharge_amount": "all",
+                                        "die": null,
+                                        "formula_text": null
+                                    }
+                                ],
+                                "table": null
+                            }
+                        }
                     },
                     {
                         "name": "Chilling Retribution",
@@ -6734,7 +8068,62 @@
                         "entries": [
                             "When a creature hits you with an attack roll, you can take a {@variantrule Reaction|XPHB} to force the creature to make a Wisdom saving throw against your spell save DC. On a failed save, the target has the {@condition Stunned|XPHB} condition until the end of your next turn. While the target is {@condition Stunned|XPHB}, its {@variantrule Speed|XPHB} is reduced to 0 feet.",
                             "You can use this feature a number of times equal to your Wisdom modifier (minimum of once), and you regain all expended uses when you finish a {@variantrule Long Rest|XPHB}."
-                        ]
+                        ],
+                        "clean_entries": {
+                            "description": "When a creature hits you with an attack roll, you can take a Reaction to force the creature to make a Wisdom saving throw against your spell save DC. On a failed save, the target has the stunned condition until the end of your next turn. While the target is stunned, its Speed is reduced to 0 feet.\\n\\nYou can use this feature a number of times equal to your Wisdom modifier (minimum of once), and you regain all expended uses when you finish a Long Rest.",
+                            "options": {
+                                "choices": [],
+                                "special_options": []
+                            },
+                            "effects": {
+                                "ability_scores": null,
+                                "saving_throws": null,
+                                "ability_checks": null,
+                                "skill_proficiencies": null,
+                                "tool_proficiencies": null,
+                                "weapon_proficiencies": null,
+                                "armor_proficiencies": null,
+                                "languages": null,
+                                "movement": null,
+                                "senses": null,
+                                "resistances": null,
+                                "immunities": null,
+                                "vulnerabilities": null,
+                                "actions": null,
+                                "bonus_actions": null,
+                                "reactions": [
+                                    {
+                                        "name": "Chilling Retribution",
+                                        "consumes": "Chilling Retribution",
+                                        "attack": null,
+                                        "save": {
+                                            "ability": "wis",
+                                            "dc_ability": null,
+                                            "damage": null
+                                        },
+                                        "conditions_applied": [
+                                            "stunned"
+                                        ],
+                                        "effect_summary": "On a failed save, the target is stunned until the end of your next turn. While stunned, its speed is reduced to 0 feet."
+                                    }
+                                ],
+                                "passives": null,
+                                "spells_granted": null,
+                                "resources": [
+                                    {
+                                        "name": "Chilling Retribution",
+                                        "base": 1,
+                                        "scaling": "by_ability_modifier",
+                                        "scale_ability": "wis",
+                                        "recharge": "long_rest",
+                                        "recharge_amount": "all",
+                                        "die": null,
+                                        "formula_text": null
+                                    }
+                                ],
+                                "table": null
+                            }
+                        }
                     },
                     {
                         "name": "Frozen Haunt",
@@ -6757,7 +8146,76 @@
                                     "You have {@variantrule Immunity|XPHB} to the {@condition Grappled|XPHB}, {@condition Prone|XPHB}, and {@condition Restrained|XPHB} conditions. You can move through creatures and objects as if they were {@variantrule Difficult Terrain|XPHB}, but you take {@damage 1d10} Force damage if you end your turn inside a creature or an object. If the form ends while you are inside a creature or an object, you are shunted to the nearest unoccupied space."
                                 ]
                             }
-                        ]
+                        ],
+                        "clean_entries": {
+                            "description": "When you cast Hunter's Mark, you can adopt a ghostly, snowy form. This form lasts until the spell ends, and while you are in this form, you gain the following benefits. Once you use this feature, you can't use it again until you finish a Long Rest unless you expend a level 4+ spell slot (no action required).\n\n## Frozen Soul\n\nYou have Immunity to Cold damage. When you first adopt this form and at the start of each of your subsequent turns, each creature of your choice in a 15-foot Emanation originating from you takes 2d4 Cold damage.\n\n## Partially Incorporeal\n\nYou have Immunity to the grappled, prone, and restrained conditions. You can move through creatures and objects as if they were Difficult Terrain, but you take 1d10 Force damage if you end your turn inside a creature or an object. If the form ends while you are inside a creature or an object, you are shunted to the nearest unoccupied space.",
+                            "options": {
+                                "choices": [],
+                                "special_options": [
+                                    {
+                                        "name": "Expend a level 4+ spell slot",
+                                        "description": "Once you use this feature, you can't use it again until you finish a Long Rest unless you expend a level 4+ spell slot (no action required)."
+                                    }
+                                ]
+                            },
+                            "effects": {
+                                "ability_scores": null,
+                                "saving_throws": null,
+                                "ability_checks": null,
+                                "skill_proficiencies": null,
+                                "tool_proficiencies": null,
+                                "weapon_proficiencies": null,
+                                "armor_proficiencies": null,
+                                "languages": null,
+                                "movement": null,
+                                "senses": null,
+                                "resistances": null,
+                                "immunities": [
+                                    {
+                                        "damage_types": [
+                                            "cold"
+                                        ],
+                                        "conditions": null
+                                    },
+                                    {
+                                        "damage_types": null,
+                                        "conditions": [
+                                            "grappled",
+                                            "prone",
+                                            "restrained"
+                                        ]
+                                    }
+                                ],
+                                "vulnerabilities": null,
+                                "actions": null,
+                                "bonus_actions": null,
+                                "reactions": null,
+                                "passives": [
+                                    {
+                                        "name": "Frozen Haunt",
+                                        "consumes": "Frozen Haunt",
+                                        "attack": null,
+                                        "save": null,
+                                        "conditions_applied": [],
+                                        "effect_summary": "When you cast Hunter's Mark, you can adopt a ghostly, snowy form that lasts until the spell ends. While in this form: you are immune to Cold damage; when you first adopt the form and at the start of each of your subsequent turns, each creature of your choice in a 15-foot emanation originating from you takes 2d4 Cold damage; you are immune to the grappled, prone, and restrained conditions; you can move through creatures and objects as if they were Difficult Terrain; if you end your turn inside a creature or an object, you take 1d10 Force damage; if the form ends while you are inside a creature or an object, you are shunted to the nearest unoccupied space."
+                                    }
+                                ],
+                                "spells_granted": null,
+                                "resources": [
+                                    {
+                                        "name": "Frozen Haunt",
+                                        "base": 1,
+                                        "scaling": "static",
+                                        "scale_ability": null,
+                                        "recharge": "long_rest",
+                                        "recharge_amount": "all",
+                                        "die": null,
+                                        "formula_text": null
+                                    }
+                                ],
+                                "table": null
+                            }
+                        }
                     }
                 ]
             }
@@ -6769,7 +8227,55 @@
                 "entries": [
                     "You always have the {@spell Hunter's Mark|XPHB} spell prepared. You can cast it twice without expending a spell slot, and you regain all expended uses of this ability when you finish a {@variantrule Long Rest|XPHB}.",
                     "The number of times you can cast the spell without a spell slot increases when you reach certain Ranger levels, as shown in the Favored Enemy column of the Ranger Features table."
-                ]
+                ],
+                "clean_entries": {
+                    "description": "You always have the Hunter's Mark spell prepared. You can cast it twice without expending a spell slot, and you regain all expended uses of this ability when you finish a Long Rest.\n\nThe number of times you can cast the spell without a spell slot increases when you reach certain Ranger levels, as shown in the Favored Enemy column of the Ranger Features table.",
+                    "options": {
+                        "choices": [],
+                        "special_options": []
+                    },
+                    "effects": {
+                        "ability_scores": null,
+                        "saving_throws": null,
+                        "ability_checks": null,
+                        "skill_proficiencies": null,
+                        "tool_proficiencies": null,
+                        "weapon_proficiencies": null,
+                        "armor_proficiencies": null,
+                        "languages": null,
+                        "movement": null,
+                        "senses": null,
+                        "resistances": null,
+                        "immunities": null,
+                        "vulnerabilities": null,
+                        "actions": null,
+                        "bonus_actions": null,
+                        "reactions": null,
+                        "passives": null,
+                        "spells_granted": [
+                            {
+                                "type": "innate",
+                                "spells": [
+                                    "hunter's mark"
+                                ],
+                                "consumes": "Hunter's Mark Cast"
+                            }
+                        ],
+                        "resources": [
+                            {
+                                "name": "Hunter's Mark Cast",
+                                "base": 2,
+                                "scaling": "by_class_level",
+                                "scale_ability": null,
+                                "recharge": "long_rest",
+                                "recharge_amount": "all",
+                                "die": null,
+                                "formula_text": null
+                            }
+                        ],
+                        "table": null
+                    }
+                }
             },
             {
                 "name": "Spellcasting",
@@ -6818,7 +8324,25 @@
                             }
                         ]
                     }
-                ]
+                ],
+                "clean_entries": {
+                    "description": "You have learned to channel the magical essence of nature to cast spells. See chapter 7 for the rules on spellcasting. The information below details how you use those rules with Ranger spells, which appear in the Ranger spell list later in the class's description.\n\n## Spell Slots\n\nThe Ranger Features table shows how many spell slots you have to cast your level 1+ spells. You regain all expended slots when you finish a Long Rest.\n\n## Prepared Spells of Level 1+\n\nYou prepare the list of level 1+ spells that are available for you to cast with this feature. Cure Wounds and Ensnaring Strike are recommended.\n\nThe number of spells on your list increases as you gain Ranger levels, as shown in the Prepared Spells column of the Ranger Features table. Whenever that number increases, choose additional Ranger spells until the number of spells on your list matches the number in the Ranger Features table. The chosen spells must be of a level for which you have spell slots. For example, if you're a level 5 Ranger, your list of prepared spells can include six Ranger spells of level 1 or 2 in any combination.\n\nIf another Ranger feature gives you spells that you always have prepared, those spells don't count against the number of spells you can prepare with this feature, but those spells otherwise count as Ranger spells for you.\n\n## Changing Your Prepared Spells\n\nWhenever you finish a Long Rest, you can replace one spell on your list with another Ranger spell for which you have spell slots.\n\n## Spellcasting Ability\n\nWisdom is your spellcasting ability for your Ranger spells.\n\n## Spellcasting Focus\n\nYou can use a Druidic Focus as a Spellcasting Focus for your Ranger spells.",
+                    "options": {
+                        "choices": [
+                            {
+                                "count": 2,
+                                "options": [
+                                    {
+                                        "name": "Level 1 Ranger spell",
+                                        "description": "Choose two level 1 Ranger spells."
+                                    }
+                                ]
+                            }
+                        ],
+                        "special_options": []
+                    },
+                    "effects": null
+                }
             },
             {
                 "name": "Weapon Mastery",
@@ -6826,7 +8350,30 @@
                 "entries": [
                     "Your training with weapons allows you to use the {@variantrule weapon mastery properties|XPHB|mastery properties} of two kinds of {@filter weapons|items|type=simple weapon;martial weapon} of your choice with which you have proficiency, such as {@item Longbow|XPHB|Longbows} and {@item Shortsword|XPHB|Shortswords}.",
                     "Whenever you finish a {@variantrule Long Rest|XPHB}, you can change the kinds of weapons you chose. For example, you could switch to using the {@variantrule weapon mastery properties|XPHB|mastery properties} of {@item Scimitar|XPHB|Scimitars} and {@item Longsword|XPHB|Longswords}."
-                ]
+                ],
+                "clean_entries": {
+                    "description": "Your training with weapons allows you to use the mastery properties of two kinds of weapons of your choice with which you have proficiency, such as Longbows and Shortswords.\n\nWhenever you finish a Long Rest, you can change the kinds of weapons you chose. For example, you could switch to using the mastery properties of Scimitars and Longswords.",
+                    "options": {
+                        "choices": [
+                            {
+                                "count": 2,
+                                "options": [
+                                    {
+                                        "name": "Weapons you are proficient with",
+                                        "description": "Choose two kinds of weapons with which you have proficiency (simple or martial). Examples: Longbows, Shortswords."
+                                    }
+                                ]
+                            }
+                        ],
+                        "special_options": [
+                            {
+                                "name": "Change weapon mastery choices on a Long Rest",
+                                "description": "Whenever you finish a Long Rest, you can change the kinds of weapons you chose. For example, you could switch to using the mastery properties of Scimitars and Longswords."
+                            }
+                        ]
+                    },
+                    "effects": null
+                }
             },
             {
                 "name": "Deft Explorer",
@@ -6852,7 +8399,54 @@
                             }
                         ]
                     }
-                ]
+                ],
+                "clean_entries": {
+                    "description": "Thanks to your travels, you gain the following benefits.\n\n## Expertise\n\nChoose one of your skill proficiencies with which you lack Expertise. You gain Expertise in that skill.\n\n## Languages\n\nYou know two languages of your choice from the language tables.",
+                    "options": {
+                        "choices": [
+                            {
+                                "count": 1,
+                                "options": [
+                                    {
+                                        "name": "Expertise",
+                                        "description": "Choose one of your skill proficiencies with which you lack Expertise. You gain Expertise in that skill."
+                                    }
+                                ]
+                            }
+                        ],
+                        "special_options": []
+                    },
+                    "effects": {
+                        "ability_scores": null,
+                        "saving_throws": null,
+                        "ability_checks": null,
+                        "skill_proficiencies": [
+                            {
+                                "choose_count": 1,
+                                "from": [
+                                    "all"
+                                ],
+                                "type": "expertise"
+                            }
+                        ],
+                        "tool_proficiencies": null,
+                        "weapon_proficiencies": null,
+                        "armor_proficiencies": null,
+                        "languages": [],
+                        "movement": null,
+                        "senses": null,
+                        "resistances": null,
+                        "immunities": null,
+                        "vulnerabilities": null,
+                        "actions": null,
+                        "bonus_actions": null,
+                        "reactions": null,
+                        "passives": null,
+                        "spells_granted": null,
+                        "resources": null,
+                        "table": null
+                    }
+                }
             },
             {
                 "name": "Fighting Style",
@@ -6868,14 +8462,45 @@
                             }
                         ]
                     }
-                ]
+                ],
+                "clean_entries": {
+                    "description": "You gain a Fighting Style feat of your choice. Instead of choosing one of those feats, you can choose the option below.\n\nDruidic Warrior",
+                    "options": {
+                        "choices": [],
+                        "special_options": [
+                            {
+                                "name": "Druidic Warrior",
+                                "description": "Instead of choosing one of those feats, you can choose the Druidic Warrior feat."
+                            }
+                        ]
+                    },
+                    "effects": null
+                }
             },
             {
                 "name": "Ranger Subclass",
                 "level": 3,
                 "entries": [
                     "You gain a Ranger subclass of your choice. A subclass is a specialization that grants you features at certain Ranger levels. For the rest of your career, you gain each of your subclass's features that are of your Ranger level or lower."
-                ]
+                ],
+                "clean_entries": {
+                    "description": "You gain a Ranger subclass of your choice. A subclass is a specialization that grants you features at certain Ranger levels. For the rest of your career, you gain each of your subclass's features that are of your Ranger level or lower.",
+                    "options": {
+                        "choices": [
+                            {
+                                "count": 1,
+                                "options": [
+                                    {
+                                        "name": "Ranger Subclass",
+                                        "description": null
+                                    }
+                                ]
+                            }
+                        ],
+                        "special_options": []
+                    },
+                    "effects": null
+                }
             },
             {
                 "name": "Ability Score Improvement",
@@ -6889,14 +8514,97 @@
                 "level": 5,
                 "entries": [
                     "You can attack twice instead of once whenever you take the {@action Attack|XPHB} action on your turn."
-                ]
+                ],
+                "clean_entries": {
+                    "description": "You can attack twice instead of once whenever you take the Attack action on your turn.",
+                    "options": {
+                        "choices": [],
+                        "special_options": []
+                    },
+                    "effects": {
+                        "ability_scores": null,
+                        "saving_throws": null,
+                        "ability_checks": null,
+                        "skill_proficiencies": null,
+                        "tool_proficiencies": null,
+                        "weapon_proficiencies": null,
+                        "armor_proficiencies": null,
+                        "languages": null,
+                        "movement": null,
+                        "senses": null,
+                        "resistances": null,
+                        "immunities": null,
+                        "vulnerabilities": null,
+                        "actions": null,
+                        "bonus_actions": null,
+                        "reactions": null,
+                        "passives": [
+                            {
+                                "name": "Extra Attack",
+                                "consumes": null,
+                                "attack": null,
+                                "save": null,
+                                "conditions_applied": null,
+                                "effect_summary": "You can attack twice instead of once whenever you take the Attack action on your turn."
+                            }
+                        ],
+                        "spells_granted": null,
+                        "resources": null,
+                        "table": null
+                    }
+                }
             },
             {
                 "name": "Roving",
                 "level": 6,
                 "entries": [
                     "Your {@variantrule Speed|XPHB} increases by 10 feet while you aren't wearing Heavy armor. You also have a {@variantrule Climb Speed|XPHB} and a {@variantrule Swim Speed|XPHB} equal to your {@variantrule Speed|XPHB}."
-                ]
+                ],
+                "clean_entries": {
+                    "description": "Your Speed increases by 10 feet while you aren't wearing Heavy armor. You also have a Climb Speed and a Swim Speed equal to your Speed.",
+                    "options": {
+                        "choices": [],
+                        "special_options": []
+                    },
+                    "effects": {
+                        "ability_scores": null,
+                        "saving_throws": null,
+                        "ability_checks": null,
+                        "skill_proficiencies": null,
+                        "tool_proficiencies": null,
+                        "weapon_proficiencies": null,
+                        "armor_proficiencies": null,
+                        "languages": null,
+                        "movement": [
+                            {
+                                "type": "walk",
+                                "modifier": "+10",
+                                "value": null
+                            },
+                            {
+                                "type": "climb",
+                                "modifier": null,
+                                "value": "equal_to_walk_speed"
+                            },
+                            {
+                                "type": "swim",
+                                "modifier": null,
+                                "value": "equal_to_walk_speed"
+                            }
+                        ],
+                        "senses": null,
+                        "resistances": null,
+                        "immunities": null,
+                        "vulnerabilities": null,
+                        "actions": null,
+                        "bonus_actions": null,
+                        "reactions": null,
+                        "passives": null,
+                        "spells_granted": null,
+                        "resources": null,
+                        "table": null
+                    }
+                }
             },
             {
                 "name": "Subclass Feature",
@@ -6917,7 +8625,44 @@
                 "level": 9,
                 "entries": [
                     "Choose two of your skill proficiencies with which you lack {@variantrule Expertise|XPHB}. You gain {@variantrule Expertise|XPHB} in those skills."
-                ]
+                ],
+                "clean_entries": {
+                    "description": "Choose two of your skill proficiencies with which you lack Expertise. You gain Expertise in those skills.",
+                    "options": {
+                        "choices": [],
+                        "special_options": []
+                    },
+                    "effects": {
+                        "ability_scores": null,
+                        "saving_throws": null,
+                        "ability_checks": null,
+                        "skill_proficiencies": [
+                            {
+                                "choose_count": 2,
+                                "from": [
+                                    "all"
+                                ],
+                                "type": "expertise"
+                            }
+                        ],
+                        "tool_proficiencies": null,
+                        "weapon_proficiencies": null,
+                        "armor_proficiencies": null,
+                        "languages": null,
+                        "movement": null,
+                        "senses": null,
+                        "resistances": null,
+                        "immunities": null,
+                        "vulnerabilities": null,
+                        "actions": null,
+                        "bonus_actions": null,
+                        "reactions": null,
+                        "passives": null,
+                        "spells_granted": null,
+                        "resources": null,
+                        "table": null
+                    }
+                }
             },
             {
                 "name": "Tireless",
@@ -6943,7 +8688,75 @@
                             }
                         ]
                     }
-                ]
+                ],
+                "clean_entries": {
+                    "description": "Primal forces now help fuel you on your journeys, granting you the following benefits.\n\n## Temporary Hit Points\n\nAs a Magic action, you can give yourself a number of Temporary Hit Points equal to 1d8 plus your Wisdom modifier (minimum of 1). You can use this action a number of times equal to your Wisdom modifier (minimum of once), and you regain all expended uses when you finish a Long Rest.\n\n## Decrease Exhaustion\n\nWhenever you finish a Short Rest, your exhaustion level, if any, decreases by 1.",
+                    "options": {
+                        "choices": [],
+                        "special_options": []
+                    },
+                    "effects": {
+                        "ability_scores": null,
+                        "saving_throws": null,
+                        "ability_checks": null,
+                        "skill_proficiencies": null,
+                        "tool_proficiencies": null,
+                        "weapon_proficiencies": null,
+                        "armor_proficiencies": null,
+                        "languages": null,
+                        "movement": null,
+                        "senses": null,
+                        "resistances": null,
+                        "immunities": null,
+                        "vulnerabilities": null,
+                        "actions": [
+                            {
+                                "name": "Temporary Hit Points",
+                                "consumes": "Tireless",
+                                "attack": null,
+                                "save": null,
+                                "conditions_applied": [],
+                                "effect_summary": "Gain temporary hit points equal to 1d8 + your Wisdom modifier (minimum of 1)."
+                            }
+                        ],
+                        "bonus_actions": null,
+                        "reactions": null,
+                        "passives": [
+                            {
+                                "name": "Decrease Exhaustion",
+                                "consumes": null,
+                                "attack": null,
+                                "save": null,
+                                "conditions_applied": [],
+                                "effect_summary": "Whenever you finish a Short Rest, your exhaustion level, if any, decreases by 1."
+                            }
+                        ],
+                        "spells_granted": null,
+                        "resources": [
+                            {
+                                "name": "Tireless",
+                                "base": 1,
+                                "scaling": "by_ability_modifier",
+                                "scale_ability": "wis",
+                                "recharge": "long_rest",
+                                "recharge_amount": "all",
+                                "die": null,
+                                "formula_text": null
+                            },
+                            {
+                                "name": "Tireless",
+                                "base": 1,
+                                "scaling": "by_ability_modifier",
+                                "scale_ability": "wis",
+                                "recharge": "long_rest",
+                                "recharge_amount": "all",
+                                "die": null,
+                                "formula_text": null
+                            }
+                        ],
+                        "table": null
+                    }
+                }
             },
             {
                 "name": "Subclass Feature",
@@ -6964,7 +8777,45 @@
                 "level": 13,
                 "entries": [
                     "Taking damage can't break your {@status Concentration|XPHB} on Hunter's Mark."
-                ]
+                ],
+                "clean_entries": {
+                    "description": "Taking damage can't break your Concentration on Hunter's Mark.",
+                    "options": {
+                        "choices": [],
+                        "special_options": []
+                    },
+                    "effects": {
+                        "ability_scores": null,
+                        "saving_throws": null,
+                        "ability_checks": null,
+                        "skill_proficiencies": null,
+                        "tool_proficiencies": null,
+                        "weapon_proficiencies": null,
+                        "armor_proficiencies": null,
+                        "languages": null,
+                        "movement": null,
+                        "senses": null,
+                        "resistances": null,
+                        "immunities": null,
+                        "vulnerabilities": null,
+                        "actions": null,
+                        "bonus_actions": null,
+                        "reactions": null,
+                        "passives": [
+                            {
+                                "name": "Relentless Hunter",
+                                "consumes": null,
+                                "attack": null,
+                                "save": null,
+                                "conditions_applied": [],
+                                "effect_summary": "Taking damage can't break your Concentration on Hunter's Mark."
+                            }
+                        ],
+                        "spells_granted": null,
+                        "resources": null,
+                        "table": null
+                    }
+                }
             },
             {
                 "name": "Nature's Veil",
@@ -6972,7 +8823,58 @@
                 "entries": [
                     "You invoke spirits of nature to magically hide yourself. As a {@variantrule Bonus Action|XPHB}, you can give yourself the {@condition Invisible|XPHB} condition until the end of your next turn.",
                     "You can use this feature a number of times equal to your Wisdom modifier (minimum of once), and you regain all expended uses when you finish a {@variantrule Long Rest|XPHB}."
-                ]
+                ],
+                "clean_entries": {
+                    "description": "You invoke spirits of nature to magically hide yourself. As a Bonus Action, you can give yourself the invisible condition until the end of your next turn.\n\nYou can use this feature a number of times equal to your Wisdom modifier (minimum of once), and you regain all expended uses when you finish a Long Rest.",
+                    "options": {
+                        "choices": [],
+                        "special_options": []
+                    },
+                    "effects": {
+                        "ability_scores": null,
+                        "saving_throws": null,
+                        "ability_checks": null,
+                        "skill_proficiencies": null,
+                        "tool_proficiencies": null,
+                        "weapon_proficiencies": null,
+                        "armor_proficiencies": null,
+                        "languages": null,
+                        "movement": null,
+                        "senses": null,
+                        "resistances": null,
+                        "immunities": null,
+                        "vulnerabilities": null,
+                        "actions": null,
+                        "bonus_actions": [
+                            {
+                                "name": "Nature's Veil",
+                                "consumes": "Nature's Veil",
+                                "attack": null,
+                                "save": null,
+                                "conditions_applied": [
+                                    "invisible"
+                                ],
+                                "effect_summary": "Give yourself the invisible condition until the end of your next turn."
+                            }
+                        ],
+                        "reactions": null,
+                        "passives": null,
+                        "spells_granted": null,
+                        "resources": [
+                            {
+                                "name": "Nature's Veil",
+                                "base": 1,
+                                "scaling": "by_ability_modifier",
+                                "scale_ability": "wis",
+                                "recharge": "long_rest",
+                                "recharge_amount": "all",
+                                "die": null,
+                                "formula_text": null
+                            }
+                        ],
+                        "table": null
+                    }
+                }
             },
             {
                 "name": "Subclass Feature",
@@ -6993,28 +8895,160 @@
                 "level": 17,
                 "entries": [
                     "You have {@variantrule Advantage|XPHB} on attack rolls against the creature currently marked by your Hunter's Mark."
-                ]
+                ],
+                "clean_entries": {
+                    "description": "You have Advantage on attack rolls against the creature currently marked by your Hunter's Mark.",
+                    "options": {
+                        "choices": [],
+                        "special_options": []
+                    },
+                    "effects": {
+                        "ability_scores": null,
+                        "saving_throws": null,
+                        "ability_checks": null,
+                        "skill_proficiencies": null,
+                        "tool_proficiencies": null,
+                        "weapon_proficiencies": null,
+                        "armor_proficiencies": null,
+                        "languages": null,
+                        "movement": null,
+                        "senses": null,
+                        "resistances": null,
+                        "immunities": null,
+                        "vulnerabilities": null,
+                        "actions": null,
+                        "bonus_actions": null,
+                        "reactions": null,
+                        "passives": [
+                            {
+                                "name": "Precise Hunter",
+                                "consumes": null,
+                                "attack": null,
+                                "save": null,
+                                "conditions_applied": null,
+                                "effect_summary": "You have Advantage on attack rolls against the creature currently marked by your Hunter's Mark."
+                            }
+                        ],
+                        "spells_granted": null,
+                        "resources": null,
+                        "table": null
+                    }
+                }
             },
             {
                 "name": "Feral Senses",
                 "level": 18,
                 "entries": [
                     "Your connection to the forces of nature grants you {@sense Blindsight|XPHB} with a range of 30 feet."
-                ]
+                ],
+                "clean_entries": {
+                    "description": "Your connection to the forces of nature grants you Blindsight with a range of 30 feet.",
+                    "options": {
+                        "choices": [],
+                        "special_options": []
+                    },
+                    "effects": {
+                        "ability_scores": null,
+                        "saving_throws": null,
+                        "ability_checks": null,
+                        "skill_proficiencies": null,
+                        "tool_proficiencies": null,
+                        "weapon_proficiencies": null,
+                        "armor_proficiencies": null,
+                        "languages": null,
+                        "movement": null,
+                        "senses": [
+                            {
+                                "type": "blindsight",
+                                "range_ft": 30
+                            }
+                        ],
+                        "resistances": null,
+                        "immunities": null,
+                        "vulnerabilities": null,
+                        "actions": null,
+                        "bonus_actions": null,
+                        "reactions": null,
+                        "passives": null,
+                        "spells_granted": null,
+                        "resources": null,
+                        "table": null
+                    }
+                }
             },
             {
                 "name": "Epic Boon",
                 "level": 19,
                 "entries": [
                     "You gain an {@filter Epic Boon feat|feats|category=EB} or another {@5etools feat|feats.html} of your choice for which you qualify. {@feat Boon of Dimensional Travel|XPHB} is recommended."
-                ]
+                ],
+                "clean_entries": {
+                    "description": "You gain an Epic Boon feat or another feat of your choice for which you qualify. Boon of Dimensional Travel is recommended.",
+                    "options": {
+                        "choices": [
+                            {
+                                "count": 1,
+                                "options": [
+                                    {
+                                        "name": "Epic Boon feat},{",
+                                        "description": null
+                                    },
+                                    {
+                                        "name": "Any other feat for which you qualify",
+                                        "description": null
+                                    }
+                                ]
+                            }
+                        ],
+                        "special_options": []
+                    },
+                    "effects": null
+                }
             },
             {
                 "name": "Foe Slayer",
                 "level": 20,
                 "entries": [
                     "The damage die of your Hunter's Mark is a {@damage d10} rather than a {@damage d6}."
-                ]
+                ],
+                "clean_entries": {
+                    "description": "The damage die of your Hunter's Mark is a d10 rather than a d6.",
+                    "options": {
+                        "choices": [],
+                        "special_options": []
+                    },
+                    "effects": {
+                        "ability_scores": null,
+                        "saving_throws": null,
+                        "ability_checks": null,
+                        "skill_proficiencies": null,
+                        "tool_proficiencies": null,
+                        "weapon_proficiencies": null,
+                        "armor_proficiencies": null,
+                        "languages": null,
+                        "movement": null,
+                        "senses": null,
+                        "resistances": null,
+                        "immunities": null,
+                        "vulnerabilities": null,
+                        "actions": null,
+                        "bonus_actions": null,
+                        "reactions": null,
+                        "passives": [
+                            {
+                                "name": "Foe Slayer",
+                                "consumes": null,
+                                "attack": null,
+                                "save": null,
+                                "conditions_applied": [],
+                                "effect_summary": "The damage die of your Hunter's Mark is a d10 rather than a d6."
+                            }
+                        ],
+                        "spells_granted": null,
+                        "resources": null,
+                        "table": null
+                    }
+                }
             }
         ]
     }

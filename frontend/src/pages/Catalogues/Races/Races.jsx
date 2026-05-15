@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { useDnDStore } from "../../store/DndStore";
+import { useDnDStore } from "../../../store/DndStore";
 import RaceRow from "./RaceRow";
 import RacePopupLayer, { useRacePopups } from "./RacePopupManager";
 import { collectUnique, cap, SIZE_LABELS } from "./raceHelpers";

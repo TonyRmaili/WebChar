@@ -143,3 +143,28 @@ Data additons:
 2. RAG!!
 3. implement an image generator
 4. handle image files
+5. make minimizing of windows not have a fixed location OR fixed initially but movable and
+    not stacking over each other from differant sources
+
+6. same grp statblock stack like cards (hanibal explains)
+
+
+# Catalogues
+
+1. Add in something useful one can do here,
+   "Wishlist" were one can add stuff that persists for easier tracking/theorycrafting.  
+
+
+# Header and overall navigation
+
+1. "Characters" and "Combat" absorbed into "Player"
+    1. in "Player" we create characters in 3 differant ways
+       1. Custom; follows the regular char creation
+       2. Wizard; a click and choose type of guided creation
+       3. QuickClass import- the randomizer with more starting options (maybe without AI too)
+
+2. DM-Tools gets removed and all its features will be accessed across the platform, mostly in Campaings
+
+3. Crossplatform features ; Embedder, DiceTower
+4. User Profile change into Settings. Here we configure account (with openai settings too and user private api key for later)
+ 

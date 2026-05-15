@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { useDnDStore } from "../../store/DndStore";
+import { useDnDStore } from "../../../store/DndStore";
 import ItemRow from "./ItemRow";
 import ItemPopupLayer, { useItemPopups } from "./ItemPopupManager";
 import { collectUnique } from "./itemHelpers";

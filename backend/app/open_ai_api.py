@@ -26,7 +26,7 @@ class OpenAIApi:
         return response.output_text
 
       
-    def parse(self,instructions,input,reasoning,text_format):
+    def parse(self,instructions,input,reasoning,text_format,timeout):
         self.reasoning["effort"] = reasoning
 
         try:
@@ -36,6 +36,7 @@ class OpenAIApi:
                 instructions=instructions,
                 reasoning=self.reasoning,
                 text_format=text_format,
+                timeout=timeout
             )
 
         except ValidationError as e:

@@ -37,6 +37,10 @@ function Header() {
           <img src={LogOutLogo} className="h-16" />
           <p>Campaigns</p>
         </Link>
+        <Link to="/CataloguesMain" className="flex flex-col gap-2">
+          <img src={LogOutLogo} className="h-16" />
+          <p>Catalogues</p>
+        </Link>
         <Link to="/Embedder" className="flex flex-col gap-2">
           <img src={LogOutLogo} className="h-16" />
           <p>Embedder</p>

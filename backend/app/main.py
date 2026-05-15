@@ -80,6 +80,8 @@ ACCESS_TOKEN_EXPIRE_MINUTES = os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES")
 savefiles_path = "./app/database/save_files/"
 fiveEtools_path = os.path.join(os.path.dirname(__file__), "../AIdata/5etools_data/")
 
+output_path = "./app/output/"
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     init_db() 
@@ -112,6 +114,8 @@ async def csp_middleware(request, call_next):
             "connect-src 'self' http://localhost:5173 http://localhost:8000 ws://localhost:5173;"
         )
     return resp
+
+
 
 
 # ------------------------User-----------------------------
@@ -642,60 +646,119 @@ def post_query(query: QueryRequest, pdf_name="players_handbook_5e"):
 
 # ------------------------5etools Data-----------------------------
 
-@app.get("/5etools/spells/filenames",tags=["5etools"])
-def get_spell_filenames():
+# @app.get("/5etools/spells/filenames",tags=["5etools"])
+# def get_spell_filenames():
 
-    path = os.path.join(fiveEtools_path,"spells/")
-    path = os.path.abspath(path)
+#     path = os.path.join(fiveEtools_path,"spells/")
+#     path = os.path.abspath(path)
 
-    try:
-        filenames = [
-        os.path.splitext(f)[0]
-        for f in os.listdir(path)
-        if os.path.isfile(os.path.join(path, f))
-    ]
+#     try:
+#         filenames = [
+#         os.path.splitext(f)[0]
+#         for f in os.listdir(path)
+#         if os.path.isfile(os.path.join(path, f))
+#     ]
 
-        return filenames
+#         return filenames
     
-    except FileNotFoundError:
-        return {"file not found"}
+#     except FileNotFoundError:
+#         return {"file not found"}
     
 
-@app.get("/5etools/spells/load_spells/{file_name}",tags=["5etools"])
-def get_spells(file_name):
+# @app.get("/5etools/spells/load_spells/{file_name}",tags=["5etools"])
+# def get_spells(file_name):
 
-    path = os.path.join(fiveEtools_path,"spells/",file_name+".json")
-    path = os.path.abspath(path)
+#     path = os.path.join(fiveEtools_path,"spells/",file_name+".json")
+#     path = os.path.abspath(path)
 
-    with open(path) as f:
-        spells_data = json.load(f)
+#     with open(path) as f:
+#         spells_data = json.load(f)
     
-    spells_data = spells_data["spell"]
-    spell_names = []
-    for spell in spells_data:
-        spell_names.append(spell["name"])
+#     spells_data = spells_data["spell"]
+#     spell_names = []
+#     for spell in spells_data:
+#         spell_names.append(spell["name"])
 
-    return spell_names
+#     return spell_names
 
-@app.get("/5etools/spells/select_spell/{file_name}/{spell_name}",tags=["5etools"])
-def select_spell(file_name,spell_name):
-    print(file_name)
-    print(spell_name)
+# @app.get("/5etools/spells/select_spell/{file_name}/{spell_name}",tags=["5etools"])
+# def select_spell(file_name,spell_name):
+#     print(file_name)
+#     print(spell_name)
    
-    file_path = os.path.join(fiveEtools_path,"spells/",file_name+".json")
-    file_path = os.path.abspath(file_path)
+#     file_path = os.path.join(fiveEtools_path,"spells/",file_name+".json")
+#     file_path = os.path.abspath(file_path)
 
-    with open(file_path) as f:
-        spells_data = json.load(f)
+#     with open(file_path) as f:
+#         spells_data = json.load(f)
 
-    spells_data = spells_data["spell"]
+#     spells_data = spells_data["spell"]
 
     
     
-    for spell in spells_data:
-        if spell["name"] == spell_name:
-            spell = clean_spell(spell)
-            return spell
+#     for spell in spells_data:
+#         if spell["name"] == spell_name:
+#             spell = clean_spell(spell)
+#             return spell
+
+
+@app.get("/5etools/classes", tags=["5etools"])
+def get_classes():
+    try:
+        classes_path = os.path.join(output_path, "classes")
+        filehandler = FileHandler()
+        classes_data = {}
+        for file in os.listdir(classes_path):
+            if not file.endswith(".json"):  
+                continue
+            name, ext = os.path.splitext(file)
+            path = os.path.join(classes_path, name)
+            data = filehandler.load_json(path)
+            classes_data[name] = data
+
+        return classes_data
+
+    except FileNotFoundError as e:
+        print("FileNotFoundError:", e)
+        return {"error": str(e)}
+
+
+@app.get("/5etools/feats", tags=["5etools"])
+def get_feats():
+    try:
+        filehandler = FileHandler()
+        feats_path = os.path.join(output_path,"feats","feats")
+        sources_path = os.path.join(output_path,"feats","sources")
+        categories_path = os.path.join(output_path,"feats","categories")
+
+        feats = filehandler.load_json(feats_path)
+        sources = filehandler.load_json(sources_path)
+        categories = filehandler.load_json(categories_path)
+
+        return {
+            "feats": feats,
+            "sources": sources,
+            "categories": categories
+        }
+
+
+    except FileNotFoundError as e:
+        print("FileNotFoundError:", e)
+        return {"error": str(e)}
+
+
+@app.get("/5etools/backgrounds", tags=["5etools"])
+def get_backgrounds():
+    try:
+        backgrounds_path = os.path.join(output_path,"backgrounds","backgrounds")
+        data = FileHandler().load_json(backgrounds_path)
+        return data
+
+    except FileNotFoundError as e:
+        print("FileNotFoundError:", e)
+        return {"error": str(e)}
+    
+
 
  
 @app.get("/5etools/items",tags=["5etools"])
@@ -716,6 +779,7 @@ def get_races():
         return data
     except FileNotFoundError:
         return {"file not found"}
+    
 
 
 

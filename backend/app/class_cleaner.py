@@ -356,10 +356,11 @@ class ClassCleaner:
             "fighter",
             "monk",
             "paladin",
-            "ranger",  
+           
             "rogue",         
             "sorcerer",
-            "warlock"
+            "warlock",
+            "wizard"
             
             ]
         
@@ -376,54 +377,53 @@ class ClassCleaner:
                 print(f"processing {name}")
 
                 for edition, values in data.items():
-                    
-                    print(f"edition {edition}")
+                    if edition == "one":
+                        print(f"edition {edition}")
 
-                    for i,feature in enumerate(values["class_features"]):
+                        for i,feature in enumerate(values["class_features"]):
 
-                        print(f"feature {feature["name"]} {i+1}/{len(values["class_features"])}")
-                        if feature["name"] not in skip_features:
-                            input = [
-                                {"role":"user", "content":json.dumps(feature, indent=2)}
-                            ]
+                            print(f"feature {feature["name"]} {i+1}/{len(values["class_features"])}")
+                            if feature["name"] not in skip_features:
+                                input = [
+                                    {"role":"user", "content":json.dumps(feature, indent=2)}
+                                ]
 
-                            response = open_ai.parse(
-                                instructions= instructions,
-                                input= input,
-                                reasoning="high",
-                                text_format=CleanedFeature
-                            )
+                                response = open_ai.parse(
+                                    instructions= instructions,
+                                    input= input,
+                                    reasoning="high",
+                                    text_format=CleanedFeature
+                                )
 
-                            feature["clean_entries"] = response
+                                feature["clean_entries"] = response
 
-                            self.file_handler.save_json(filepath, data)
+                                self.file_handler.save_json(filepath, data)
 
-                    for subclass in values["subclasses"]:
-                        print(f"processing subclass {subclass["name"]}")
+                        for subclass in values["subclasses"]:
+                            print(f"processing subclass {subclass["name"]}")
 
-                        for i, feature in enumerate(subclass["features"]):
-                            print(f"feature {feature["name"]} {i+1}/{len(subclass["features"])}")
-                            input = [
-                                {"role":"user", "content":json.dumps(feature, indent=2)}
-                            ]
+                            for i, feature in enumerate(subclass["features"]):
+                                print(f"feature {feature["name"]} {i+1}/{len(subclass["features"])}")
+                                input = [
+                                    {"role":"user", "content":json.dumps(feature, indent=2)}
+                                ]
 
-                            response = open_ai.parse(
-                                instructions= instructions,
-                                input= input,
-                                reasoning="high",
-                                text_format=CleanedFeature
-                            )
+                                response = open_ai.parse(
+                                    instructions= instructions,
+                                    input= input,
+                                    reasoning="high",
+                                    text_format=CleanedFeature
+                                )
 
-                            feature["clean_entries"] = response
+                                feature["clean_entries"] = response
 
-                            self.file_handler.save_json(filepath, data)
-        
+                                self.file_handler.save_json(filepath, data)
+            
         print("done")
 
     def run_trageted_cleaning(self,class_name,feature_type,edition,feature_name,single_feature=False):
 
-        # cleric "one" left entirly
-        # ranger Swarmkeeper Classic Gathered Swarm only left; Super problematic; and the "one" entirly
+        # ranger Swarmkeeper Classic Gathered Swarm only left; Super problematic;
         
         open_ai = OpenAIApi()
         instr_path = os.path.join(self.instructions_path,"feature_cleaning.md")
@@ -496,14 +496,14 @@ class ClassCleaner:
 
                             self.file_handler.save_json(class_path, data)
 
-                            
+
 
 
 if __name__ == "__main__":
     cleaner = ClassCleaner()    
     # cleaner.run_cleaning()
 
-    cleaner.run_feature_LLM_cleaning()
+    # cleaner.run_feature_LLM_cleaning()
 
     # cleaner.run_trageted_cleaning(
     #     class_name="ranger",
@@ -513,3 +513,4 @@ if __name__ == "__main__":
     #     single_feature="Gathered Swarm"
     # )
    
+  
