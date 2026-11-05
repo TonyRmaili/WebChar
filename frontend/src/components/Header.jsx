@@ -17,22 +17,15 @@ function Header() {
   return (
     <div className="h-32 bg-slate-800 flex gap-32 items-center justify-center text-orange-400 font-bold text-lg font-serif ">
       <div className="flex gap-6 p-2 ">
-        <Link to="/loadChar" className="flex flex-col p-2">
+        <Link to="/CharactersMain" className="flex flex-col p-2">
           <img src={CreateCharLogo} className="h-12" />
           <p>Characters</p>
         </Link>
-        <Link to="/" className="flex flex-col gap-2">
-          <img src={CombatLogo} alt="combat-logo" className="h-16" />
-          <p>Combat</p>
-        </Link>
+        
       </div>
 
 
       <div className="flex items-center justify-between gap-8 w-[400px] p-4">
-        <Link to="/DM-Tools" className="flex flex-col gap-2">
-          <img src={LogOutLogo} className="h-16" />
-          <p>DM-Tools</p>
-        </Link>
         <Link to="/MainCampaigns" className="flex flex-col gap-2">
           <img src={LogOutLogo} className="h-16" />
           <p>Campaigns</p>
@@ -41,16 +34,12 @@ function Header() {
           <img src={LogOutLogo} className="h-16" />
           <p>Catalogues</p>
         </Link>
-        <Link to="/Embedder" className="flex flex-col gap-2">
-          <img src={LogOutLogo} className="h-16" />
-          <p>Embedder</p>
-        </Link>
       </div>
 
       <div className="flex gap-10 items-center p-2"> 
-        <Link to="/UserProfile" className="flex flex-col items-center mt-4">
+        <Link to="/Settings" className="flex flex-col items-center mt-4">
           <img src={CreateCharLogo} className="h-12" />
-          <p>User Profile</p>
+          <p>Settings</p>
         </Link>
         <Link to="/logIn" className="flex flex-col items-center mt-4">
           <img src={LogInLogo} className="h-12" />

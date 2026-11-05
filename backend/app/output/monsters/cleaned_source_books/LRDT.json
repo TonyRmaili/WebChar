@@ -1,0 +1,515 @@
+[
+    {
+        "name": "Alax Jadescales",
+        "isNpc": true,
+        "source": "LRDT",
+        "size": [
+            "Medium"
+        ],
+        "type": {
+            "type": "humanoid",
+            "tags": [
+                "dragonborn"
+            ]
+        },
+        "alignment": [
+            "Neutral Good"
+        ],
+        "ac": [
+            {
+                "value": 10,
+                "from": [],
+                "condition": null,
+                "special": null
+            }
+        ],
+        "hp": {
+            "average": 58,
+            "formula": "9d8 + 18"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "skill": {
+            "animal handling": "+5",
+            "survival": "+5"
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "languages": [
+            "Common",
+            "Draconic"
+        ],
+        "cr": {
+            "base": "2",
+            "xp": 450,
+            "pb": 2,
+            "lair": null,
+            "xp_lair": null,
+            "coven": null,
+            "xp_coven": null,
+            "level": null
+        },
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "wis",
+                "save_dc": 13,
+                "spell_attack_bonus": null,
+                "notes": "Alax casts one of the following spells, using Wisdom as the spellcasting ability (spell save DC 13):",
+                "groups": [
+                    {
+                        "label": "At will",
+                        "uses": null,
+                        "each": false,
+                        "spells": [
+                            {
+                                "name": "druidcraft",
+                                "note": null
+                            },
+                            {
+                                "name": "resistance",
+                                "note": null
+                            }
+                        ]
+                    },
+                    {
+                        "label": "1/day each",
+                        "uses": 1,
+                        "each": true,
+                        "spells": [
+                            {
+                                "name": "cure wounds",
+                                "note": null
+                            },
+                            {
+                                "name": "faerie fire",
+                                "note": null
+                            },
+                            {
+                                "name": "purify food and drink",
+                                "note": null
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "actionTags": [
+            "Breath Weapon",
+            "Multiattack"
+        ],
+        "ability_scores": {
+            "str": {
+                "score": 11,
+                "proficient": false,
+                "expertise": false,
+                "mod": 0,
+                "save": 0
+            },
+            "dex": {
+                "score": 10,
+                "proficient": false,
+                "expertise": false,
+                "mod": 0,
+                "save": 0
+            },
+            "con": {
+                "score": 14,
+                "proficient": false,
+                "expertise": false,
+                "mod": 2,
+                "save": 2
+            },
+            "int": {
+                "score": 11,
+                "proficient": false,
+                "expertise": false,
+                "mod": 0,
+                "save": 0
+            },
+            "wis": {
+                "score": 16,
+                "proficient": false,
+                "expertise": false,
+                "mod": 3,
+                "save": 3
+            },
+            "cha": {
+                "score": 15,
+                "proficient": false,
+                "expertise": false,
+                "mod": 2,
+                "save": 2
+            }
+        },
+        "passive_perception": 13,
+        "resistances": {
+            "types": [
+                "poison"
+            ],
+            "conditional": [],
+            "special": null
+        },
+        "initiative": {
+            "total": 0,
+            "advantage": false
+        },
+        "forced_saving_throw": [
+            "dexterity"
+        ],
+        "effects": {
+            "actions": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Multiattack",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "Alax makes two Fire Strike attacks.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Fire Strike",
+                        "effect_type": "attack",
+                        "range": 60,
+                        "attack": {
+                            "attack_type": "ms_or_rs",
+                            "hit_bonus": 5,
+                            "damages": [
+                                {
+                                    "dice_count": 2,
+                                    "dice_size": "d6",
+                                    "mod": 3,
+                                    "damage_type": "Fire"
+                                }
+                            ]
+                        },
+                        "save": null,
+                        "notes": "Melee or Ranged Spell Attack Roll: +5 to hit, reach 5 ft. or range 60 ft., one target. Hit: 10 (2d6 + 3) fire damage.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Breath Weapon",
+                        "effect_type": "save",
+                        "range": 15,
+                        "attack": null,
+                        "save": {
+                            "target": "dex",
+                            "dc_bonus": 12,
+                            "damages": [
+                                {
+                                    "dice_count": 4,
+                                    "dice_size": "d6",
+                                    "mod": 0,
+                                    "damage_type": "Fire"
+                                }
+                            ],
+                            "half_damage": true,
+                            "conditions": []
+                        },
+                        "notes": "Alax exhales a 15-foot cone of fire. Each creature in that area must make a DC 12 Dexterity saving throw, taking 14 (4d6) fire damage on a failed save, or half as much damage on a successful one. Recharges after a Short or Long Rest.",
+                        "charges": {
+                            "max_charges": 1,
+                            "current_charges": 1,
+                            "reset_type": "special",
+                            "recharge_dice": null,
+                            "per_rest_count": null
+                        }
+                    }
+                ]
+            },
+            "bonus_actions": {
+                "header": null,
+                "items": []
+            },
+            "reactions": {
+                "header": null,
+                "items": []
+            },
+            "traits": {
+                "header": null,
+                "items": []
+            },
+            "legendary_actions": {
+                "header": null,
+                "items": []
+            },
+            "mythic_actions": {
+                "header": null,
+                "items": []
+            },
+            "lair_actions": {
+                "header": null,
+                "items": []
+            },
+            "regional_effects": {
+                "header": null,
+                "items": []
+            }
+        }
+    },
+    {
+        "name": "Ervan Soulfallen",
+        "isNpc": true,
+        "source": "LRDT",
+        "size": [
+            "Medium"
+        ],
+        "type": {
+            "type": "humanoid",
+            "tags": [
+                "human"
+            ]
+        },
+        "alignment": [
+            "Chaotic Evil"
+        ],
+        "ac": [
+            {
+                "value": 12,
+                "from": [],
+                "condition": null,
+                "special": null
+            },
+            {
+                "value": 15,
+                "from": [],
+                "condition": "with mage armor",
+                "special": null
+            }
+        ],
+        "hp": {
+            "average": 84,
+            "formula": "13d8 + 26"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "skill": {
+            "arcana": "3",
+            "deception": "+6"
+        },
+        "languages": [
+            "Common",
+            "Draconic"
+        ],
+        "cr": {
+            "base": "5",
+            "xp": 1800,
+            "pb": 3,
+            "lair": null,
+            "xp_lair": null,
+            "coven": null,
+            "xp_coven": null,
+            "level": null
+        },
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "cha",
+                "save_dc": 14,
+                "spell_attack_bonus": null,
+                "notes": "Ervan casts one of the following spells, using Charisma as the spellcasting ability (spell save DC 14):",
+                "groups": [
+                    {
+                        "label": "At will",
+                        "uses": null,
+                        "each": false,
+                        "spells": [
+                            {
+                                "name": "light",
+                                "note": null
+                            },
+                            {
+                                "name": "mage hand",
+                                "note": null
+                            }
+                        ]
+                    },
+                    {
+                        "label": "2/day",
+                        "uses": 2,
+                        "each": false,
+                        "spells": [
+                            {
+                                "name": "dimension door",
+                                "note": null
+                            }
+                        ]
+                    },
+                    {
+                        "label": "1/day each",
+                        "uses": 1,
+                        "each": true,
+                        "spells": [
+                            {
+                                "name": "disguise self",
+                                "note": null
+                            },
+                            {
+                                "name": "levitate",
+                                "note": null
+                            },
+                            {
+                                "name": "mage armor",
+                                "note": null
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "actionTags": [
+            "Multiattack"
+        ],
+        "ability_scores": {
+            "str": {
+                "score": 10,
+                "proficient": false,
+                "expertise": false,
+                "mod": 0,
+                "save": 0
+            },
+            "dex": {
+                "score": 15,
+                "proficient": false,
+                "expertise": false,
+                "mod": 2,
+                "save": 2
+            },
+            "con": {
+                "score": 14,
+                "proficient": false,
+                "expertise": false,
+                "mod": 2,
+                "save": 2
+            },
+            "int": {
+                "score": 11,
+                "proficient": false,
+                "expertise": false,
+                "mod": 0,
+                "save": 0
+            },
+            "wis": {
+                "score": 8,
+                "proficient": false,
+                "expertise": false,
+                "mod": -1,
+                "save": -1
+            },
+            "cha": {
+                "score": 17,
+                "proficient": false,
+                "expertise": false,
+                "mod": 3,
+                "save": 3
+            }
+        },
+        "passive_perception": 9,
+        "initiative": {
+            "total": 2,
+            "advantage": false
+        },
+        "forced_saving_throw": [
+            "dexterity",
+            "constitution"
+        ],
+        "effects": {
+            "actions": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Multiattack",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "Ervan uses his staff to make three Arcane Blast attacks.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Arcane Blast",
+                        "effect_type": "attack",
+                        "range": 120,
+                        "attack": {
+                            "attack_type": "ms_or_rs",
+                            "hit_bonus": 6,
+                            "damages": [
+                                {
+                                    "dice_count": 3,
+                                    "dice_size": "d6",
+                                    "mod": 3,
+                                    "damage_type": "Force"
+                                }
+                            ]
+                        },
+                        "save": null,
+                        "notes": "Melee or Ranged Spell Attack Roll: +6 to hit, reach 5 ft. or range 120 ft., one target. Hit: 13 (3d6 + 3) force damage.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Acid Rain",
+                        "effect_type": "save",
+                        "range": 10,
+                        "attack": null,
+                        "save": {
+                            "target": "dex",
+                            "dc_bonus": 14,
+                            "damages": [
+                                {
+                                    "dice_count": 4,
+                                    "dice_size": "d10",
+                                    "mod": 0,
+                                    "damage_type": "Acid"
+                                }
+                            ],
+                            "half_damage": true,
+                            "conditions": []
+                        },
+                        "notes": "Acid falls in a 10-foot-radius, 20-foot-high cylinder centered on a point Ervan can see within 120 feet of himself. Each creature in that area must make a DC 14 Dexterity saving throw, taking 22 (4d10) acid damage on a failed save, or half as much damage on a successful one.",
+                        "charges": {
+                            "max_charges": 1,
+                            "current_charges": 1,
+                            "reset_type": "special",
+                            "recharge_dice": null,
+                            "per_rest_count": null
+                        }
+                    }
+                ]
+            },
+            "bonus_actions": {
+                "header": null,
+                "items": []
+            },
+            "reactions": {
+                "header": null,
+                "items": []
+            },
+            "traits": {
+                "header": null,
+                "items": []
+            },
+            "legendary_actions": {
+                "header": null,
+                "items": []
+            },
+            "mythic_actions": {
+                "header": null,
+                "items": []
+            },
+            "lair_actions": {
+                "header": null,
+                "items": []
+            },
+            "regional_effects": {
+                "header": null,
+                "items": []
+            }
+        }
+    }
+]

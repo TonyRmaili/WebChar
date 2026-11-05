@@ -1,0 +1,670 @@
+[
+    {
+        "name": "Emo",
+        "source": "NRH-AT",
+        "size": [
+            "Large"
+        ],
+        "type": "aberration",
+        "alignment": [
+            "Lawful Evil"
+        ],
+        "ac": [
+            {
+                "value": 18,
+                "from": [
+                    "natural armor"
+                ],
+                "condition": null,
+                "special": null
+            }
+        ],
+        "hp": {
+            "average": 180,
+            "formula": "19d10 + 76"
+        },
+        "speed": {
+            "walk": 0,
+            "fly": {
+                "number": 20,
+                "condition": "(hover)"
+            },
+            "canHover": true
+        },
+        "skill": {
+            "perception": "+12"
+        },
+        "senses": {
+            "darkvision": 120
+        },
+        "languages": [
+            "Deep Speech",
+            "Undercommon"
+        ],
+        "cr": {
+            "base": "13",
+            "xp": 10000,
+            "pb": 5,
+            "lair": "14",
+            "xp_lair": 11500,
+            "coven": null,
+            "xp_coven": null,
+            "level": null
+        },
+        "trait": [
+            {
+                "name": "Antimagic Cone",
+                "entries": [
+                    "Emo's central eye creates an area of antimagic, as in the {@spell antimagic field} spell, in a 150-foot cone. At the start of each of its turns, Emo decides which way the cone faces and whether the cone is active. The area works against Emo's own eye rays."
+                ]
+            }
+        ],
+        "action": [
+            {
+                "name": "Bite",
+                "entries": [
+                    "{@atk mw} {@hit 5} to hit, reach 5 ft., one target. {@h}14 ({@damage 4d6}) piercing damage."
+                ]
+            },
+            {
+                "name": "Eye Rays",
+                "entries": [
+                    "Emo shoots three of the following magical eye rays at random (reroll duplicates), choosing one to three targets it can see within 120 feet of it:",
+                    {
+                        "type": "list",
+                        "style": "list-hang-notitle",
+                        "items": [
+                            {
+                                "name": "1. Happiness Ray",
+                                "entries": [
+                                    "The targeted creature must succeed on a {@dc 14} Wisdom saving throw or fall {@condition prone} with laughter, becoming {@condition incapacitated} and unable to stand up for 1 minute or until Emo harms the creature. The target can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success."
+                                ],
+                                "type": "item"
+                            },
+                            {
+                                "name": "2. Sadness Ray",
+                                "entries": [
+                                    "The targeted creature must succeed on a {@dc 15} Intelligence saving throw. On a failed save, the target is overcome by sorrow and takes {@damage 3d6} psychic damage, and it can't take a reaction until the end of its next turn. On its next turn, it can use either an action or a bonus action, not both. On a successful save, the target takes half as much damage and suffers none of the other effects."
+                                ],
+                                "type": "item"
+                            },
+                            {
+                                "name": "3. Anger Ray",
+                                "entries": [
+                                    "The targeted creature must succeed on a {@dc 14} Wisdom saving throw or be compelled to duel with Emo for 1 minute. The target has disadvantage on attack rolls against creatures other than Emo and must make a Wisdom saving throw each time it attempts to move more than 30 feet away from Emo."
+                                ],
+                                "type": "item"
+                            },
+                            {
+                                "name": "4. Anxiety Ray",
+                                "entries": [
+                                    "The targeted creature must succeed on a {@dc 15} Intelligence saving throw or lose the ability to distinguish friend from foe, regarding all creatures it can see as enemies for 1 minute. Each time the target takes damage, it can repeat the saving throw, ending the effect on itself on a success.",
+                                    "Whenever the affected creature targets another creature with an attack, spell, or other ability, it must choose the target at random from among the creatures it can see within range of the attack, spell, or other ability it's using. If an enemy provokes an opportunity attack from the affected creature, the creature must make that attack if it is able to."
+                                ],
+                                "type": "item"
+                            },
+                            {
+                                "name": "5. Fear Ray",
+                                "entries": [
+                                    "The targeted creature must succeed on a {@dc 14} Wisdom saving throw or be {@condition frightened} for 1 minute.",
+                                    "The target can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success."
+                                ],
+                                "type": "item"
+                            },
+                            {
+                                "name": "6. Desolation Ray",
+                                "entries": [
+                                    "The targeted creature must succeed on a {@dc 14} Intelligence saving throw. On a successful save, the target takes {@damage 5d10} psychic damage, and the spell ends. On a failed save, the target takes {@damage 5d10} psychic damage and perceives itself to be confined within an illusory stone cell for 1 minute. The target can't see or hear anything beyond the cell and is {@condition restrained}."
+                                ],
+                                "type": "item"
+                            },
+                            {
+                                "name": "7. Jealousy Ray",
+                                "entries": [
+                                    "The targeted creature must succeed on a {@dc 14} Wisdom saving throw or become {@condition charmed} for 1 minute. While the target is {@condition charmed} in this way, it must use its action before moving on each of its turns to make a melee attack against a creature that Emo chooses. The target can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success."
+                                ],
+                                "type": "item"
+                            },
+                            {
+                                "name": "8. Disgusting Ray",
+                                "entries": [
+                                    "The targeted creature must succeed on a {@dc 15} Constitution saving throw against poison. On a failed save, the target is enveloped in sphere of yellow, nauseating gas and spends its action on its next turn retching and reeling."
+                                ],
+                                "type": "item"
+                            },
+                            {
+                                "name": "9. Surprise Ray",
+                                "entries": [
+                                    "The targeted creature must succeed on a",
+                                    "{@dc 15} Dexterity saving throw or be {@condition blinded} by a spray of color until the end of its next turn."
+                                ],
+                                "type": "item"
+                            },
+                            {
+                                "name": "10. Trust Ray",
+                                "entries": [
+                                    "The targeted creature must succeed on a",
+                                    "{@dc 16} Wisdom saving throw or be {@condition charmed} by Emo for 1 hour or until Emo harms the creature."
+                                ],
+                                "type": "item"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "legendaryHeader": [
+            "Emo can take 3 legendary actions, using the Eye Ray option below. It can take only one legendary action at a time and only at the end of another creature's turn. Emo regains spent legendary actions at the start of its turn."
+        ],
+        "legendary": [
+            {
+                "name": "Eye Ray",
+                "entries": [
+                    "Emo uses one random eye ray."
+                ]
+            }
+        ],
+        "variant": [
+            {
+                "type": "inset",
+                "name": "Variant Abilities",
+                "entries": [
+                    "When a beholder's dream-imagination runs wild, the result can be an offspring that has an unusual or unique set of abilities. Rather than the standard powers of a beholder's central eye and eyestalks, the creature has one or more variant abilities—guaranteed to surprise any enemies who thought they knew what they were getting themselves into.",
+                    "This section provides several alternative spell effects for a beholder's eye. Each of these effects is designed to be of the same power level as the one it replaces, enabling you to create a custom beholder without altering the monster's challenge rating. As another option, you can switch any of the damaging eye rays in the {@book Monster Manual|MM} to an effect with a different damage type, such as replacing the enervation ray with a combustion ray that deals fire damage instead of necrotic damage.",
+                    "Unless otherwise indicated, an alternative ability has the same range as the eye ray it is replacing, and it affects only one creature per use (even if the ability is based on a spell that normally affects an area or multiple targets). The saving throw for an alternative ability uses the same DC and the same ability score as the spell the eye ray is based on.",
+                    {
+                        "type": "list",
+                        "style": "list-hang-notitle",
+                        "items": [
+                            {
+                                "type": "item",
+                                "name": "Antimagic Cone:",
+                                "entry": "{@spell mirage arcane}, {@spell power word stun} (affecting the weakest non-{@condition stunned} target in the cone each round)"
+                            },
+                            {
+                                "type": "item",
+                                "name": "Charm Ray:",
+                                "entry": "{@spell banishment} (1 minute), {@spell confusion} (1 minute)"
+                            },
+                            {
+                                "type": "item",
+                                "name": "Death Ray:",
+                                "entry": "{@spell circle of death} (10-foot-radius sphere; 4d6 necrotic damage to all creatures in the area), {@spell feeblemind}"
+                            },
+                            {
+                                "type": "item",
+                                "name": "Disintegration Ray:",
+                                "entry": "{@spell chain lightning} (primary target takes 6d8 lightning damage; two secondary targets within 30 feet of the primary target take 3d8 lightning damage each), {@spell eyebite} (sickened effect; 1 minute)"
+                            },
+                            {
+                                "type": "item",
+                                "name": "Enervation Ray:",
+                                "entry": "{@spell create undead} (usable regardless of the time of day), {@spell polymorph} (1 minute)"
+                            },
+                            {
+                                "type": "item",
+                                "name": "Fear Ray:",
+                                "entry": "{@spell gaseous form} (self or willing creature only), {@spell moonbeam}"
+                            },
+                            {
+                                "type": "item",
+                                "name": "Paralyzing Ray:",
+                                "entry": "{@spell modify memory}, {@spell silence} (1 minute)"
+                            },
+                            {
+                                "type": "item",
+                                "name": "Petrification Ray:",
+                                "entry": "{@spell Otto's irresistible dance} (1 minute), {@spell wall of ice} (1 minute; one 10-foot-square panel)"
+                            },
+                            {
+                                "type": "item",
+                                "name": "Sleep Ray:",
+                                "entry": "{@spell blindness/deafness}, {@spell misty step} (self or willing creature only)"
+                            },
+                            {
+                                "type": "item",
+                                "name": "Slowing Ray:",
+                                "entry": "{@spell bestow curse} (1 minute), {@spell sleet storm} (one 10-foot-cube)"
+                            },
+                            {
+                                "type": "item",
+                                "name": "Telekinesis Ray:",
+                                "entry": "{@spell geas} (1 hour), {@spell wall of force} (1 minute; one 10-foot-square panel)"
+                            }
+                        ]
+                    }
+                ],
+                "source": "VGM",
+                "page": 12,
+                "_version": {
+                    "name": "Beholder (Variant Abilities)",
+                    "addAs": "trait"
+                }
+            }
+        ],
+        "environment": [
+            "underdark"
+        ],
+        "lairActions": [
+            "When fighting inside its lair, a beholder can invoke the ambient magic to take lair actions. On initiative count 20 (losing initiative ties), Emo can take one lair action to cause one of the following effects:",
+            {
+                "type": "list",
+                "items": [
+                    "A 50-foot-square area of ground within 120 feet of Emo becomes slimy; that area is {@quickref difficult terrain||3} until initiative count 20 on the next round.",
+                    "Walls within 120 feet of Emo sprout grasping appendages until initiative count 20 on the round after next. Each creature of Emo's choice that starts its turn within 10 feet of such a wall must succeed on a {@dc 15} Dexterity saving throw or be {@condition grappled}. Escaping requires a successful {@dc 15} Strength ({@skill Athletics}) or Dexterity ({@skill Acrobatics}) check.",
+                    "An eye opens on a solid surface within 60 feet of Emo. One random eye ray of Emo shoots from that eye at a target of Emo's choice that it can see. The eye then closes and disappears."
+                ]
+            },
+            "Emo can't repeat an effect until they have all been used, and it can't use the same effect two rounds in a row."
+        ],
+        "regionalEffects": [
+            "A region containing a beholder's lair is warped by the creature's unnatural presence, which creates one or more of the following effects:",
+            {
+                "type": "list",
+                "items": [
+                    "Creatures within 1 mile of Emo's lair sometimes feel as if they're being watched when they aren't.",
+                    "When Emo sleeps, minor warps in reality occur within 1 mile of its lair and then vanish 24 hours later. Marks on cave walls might change subtly, an eerie trinket might appear where none existed before, harmless slime might coat a statue, and so on. These effects apply only to natural surfaces and to nonmagical objects that aren't on anyone's person."
+                ]
+            },
+            "If Emo dies, these effects fade over the course of {@dice 1d10} days."
+        ],
+        "isNpc": true,
+        "ability_scores": {
+            "str": {
+                "score": 10,
+                "proficient": false,
+                "expertise": false,
+                "mod": 0,
+                "save": 0
+            },
+            "dex": {
+                "score": 14,
+                "proficient": false,
+                "expertise": false,
+                "mod": 2,
+                "save": 2
+            },
+            "con": {
+                "score": 18,
+                "proficient": false,
+                "expertise": false,
+                "mod": 4,
+                "save": 4
+            },
+            "int": {
+                "score": 17,
+                "proficient": true,
+                "expertise": false,
+                "mod": 3,
+                "save": 8
+            },
+            "wis": {
+                "score": 15,
+                "proficient": true,
+                "expertise": false,
+                "mod": 2,
+                "save": 7
+            },
+            "cha": {
+                "score": 17,
+                "proficient": true,
+                "expertise": false,
+                "mod": 3,
+                "save": 8
+            }
+        },
+        "passive_perception": 22,
+        "condition_immunities": {
+            "types": [
+                "prone"
+            ],
+            "conditional": [],
+            "special": null
+        },
+        "initiative": {
+            "total": 2,
+            "advantage": false
+        },
+        "condition_inflict": [
+            "charmed",
+            "frightened",
+            "paralyzed",
+            "petrified",
+            "restrained",
+            "unconscious",
+            "grappled"
+        ],
+        "forced_saving_throw": [
+            "constitution",
+            "dexterity",
+            "strength",
+            "wisdom"
+        ],
+        "legendary_action_points": {
+            "legendary_actions": 3,
+            "lair_actions": null
+        }
+    },
+    {
+        "name": "Maude",
+        "source": "NRH-AT",
+        "size": [
+            "Medium"
+        ],
+        "type": {
+            "type": "humanoid",
+            "tags": [
+                "goblinoid"
+            ]
+        },
+        "alignment": [
+            "Chaotic Evil"
+        ],
+        "ac": [
+            {
+                "value": 17,
+                "from": [
+                    "chain shirt",
+                    "shield"
+                ],
+                "condition": null,
+                "special": null
+            }
+        ],
+        "hp": {
+            "average": 65,
+            "formula": "10d8 + 20"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "skill": {
+            "intimidation": "+2",
+            "stealth": "+6",
+            "survival": "+3"
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "languages": [
+            "Common",
+            "Goblin"
+        ],
+        "cr": {
+            "base": "3",
+            "xp": 700,
+            "pb": 2,
+            "lair": null,
+            "xp_lair": null,
+            "coven": null,
+            "xp_coven": null,
+            "level": null
+        },
+        "trait": [
+            {
+                "name": "Brute",
+                "entries": [
+                    "A melee weapon deals one extra die of its damage when Maude hits with it (included in the attack)."
+                ]
+            },
+            {
+                "name": "Surprise Attack",
+                "entries": [
+                    "If Maude surprises a creature and hits it with an attack during the first round of combat, the target takes an extra 7 ({@damage 2d6}) damage from the attack."
+                ]
+            },
+            {
+                "name": "Heart of Hruggek",
+                "entries": [
+                    "Maude has advantage on saving throws against being {@condition charmed}, {@condition frightened}, {@condition paralyzed}, {@condition poisoned}, {@condition stunned}, or put to sleep."
+                ]
+            }
+        ],
+        "action": [
+            {
+                "name": "Multiattack",
+                "entries": [
+                    "Maude makes two melee attacks."
+                ]
+            },
+            {
+                "name": "Morningstar",
+                "entries": [
+                    "{@atk mw} {@hit 5} to hit, reach 5 ft., one target. {@h}11 ({@damage 2d8 + 3}) piercing damage."
+                ]
+            },
+            {
+                "name": "Javelin",
+                "entries": [
+                    "{@atk mw,rw} {@hit 5} to hit, reach 5 ft. or range 30/120 ft., one target. {@h}9 ({@damage 2d6 + 3}) piercing damage in melee or 5 ({@damage 1d6 + 3}) piercing damage at range."
+                ]
+            }
+        ],
+        "environment": [
+            "underdark",
+            "grassland",
+            "forest"
+        ],
+        "traitTags": [
+            "Brute"
+        ],
+        "actionTags": [
+            "Multiattack"
+        ],
+        "isNpc": true,
+        "ability_scores": {
+            "str": {
+                "score": 17,
+                "proficient": false,
+                "expertise": false,
+                "mod": 3,
+                "save": 3
+            },
+            "dex": {
+                "score": 14,
+                "proficient": false,
+                "expertise": false,
+                "mod": 2,
+                "save": 2
+            },
+            "con": {
+                "score": 14,
+                "proficient": false,
+                "expertise": false,
+                "mod": 2,
+                "save": 2
+            },
+            "int": {
+                "score": 11,
+                "proficient": false,
+                "expertise": false,
+                "mod": 0,
+                "save": 0
+            },
+            "wis": {
+                "score": 12,
+                "proficient": false,
+                "expertise": false,
+                "mod": 1,
+                "save": 1
+            },
+            "cha": {
+                "score": 11,
+                "proficient": false,
+                "expertise": false,
+                "mod": 0,
+                "save": 0
+            }
+        },
+        "passive_perception": 11,
+        "initiative": {
+            "total": 2,
+            "advantage": false
+        },
+        "gear": [
+            {
+                "name": "javelin",
+                "source": "phb",
+                "quantity": 1
+            },
+            {
+                "name": "morningstar",
+                "source": "phb",
+                "quantity": 1
+            }
+        ]
+    },
+    {
+        "name": "Mr. Greystone",
+        "isNpc": true,
+        "source": "NRH-AT",
+        "size": [
+            "Medium"
+        ],
+        "type": {
+            "type": "humanoid",
+            "tags": [
+                "human"
+            ]
+        },
+        "alignment": [
+            "Lawful Evil"
+        ],
+        "ac": [
+            {
+                "value": 15,
+                "from": [
+                    "studded leather"
+                ],
+                "condition": null,
+                "special": null
+            }
+        ],
+        "hp": {
+            "average": 112,
+            "formula": "15d8 + 45"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "skill": {
+            "athletics": "+10",
+            "intimidation": "+5"
+        },
+        "languages": [
+            "Common",
+            "Goblin"
+        ],
+        "cr": {
+            "base": "5",
+            "xp": 1800,
+            "pb": 3,
+            "lair": null,
+            "xp_lair": null,
+            "coven": null,
+            "xp_coven": null,
+            "level": null
+        },
+        "trait": [
+            {
+                "name": "Brave",
+                "entries": [
+                    "Mr. Greystone has advantage on saving throws against being {@condition frightened}."
+                ]
+            },
+            {
+                "name": "Brute",
+                "entries": [
+                    "A melee weapon deals one extra die of its damage when Mr. Greystone hits with it (included in the attack)."
+                ]
+            }
+        ],
+        "action": [
+            {
+                "name": "Multiattack",
+                "entries": [
+                    "Mr. Greystone makes two melee attacks or two ranged attacks."
+                ]
+            },
+            {
+                "name": "Club",
+                "entries": [
+                    "{@atk mw} {@hit 7} to hit, reach 5 ft., one target. {@h}11 ({@damage 2d6 + 4}) bludgeoning damage."
+                ]
+            },
+            {
+                "name": "Hand Crossbow",
+                "entries": [
+                    "{@atk rw} {@hit 5} to hit, range 30/120 ft., one target. {@h}5 ({@damage 1d6 + 2}) piercing damage."
+                ]
+            }
+        ],
+        "traitTags": [
+            "Brute"
+        ],
+        "actionTags": [
+            "Multiattack"
+        ],
+        "ability_scores": {
+            "str": {
+                "score": 18,
+                "proficient": true,
+                "expertise": false,
+                "mod": 4,
+                "save": 7
+            },
+            "dex": {
+                "score": 15,
+                "proficient": true,
+                "expertise": false,
+                "mod": 2,
+                "save": 5
+            },
+            "con": {
+                "score": 16,
+                "proficient": true,
+                "expertise": false,
+                "mod": 3,
+                "save": 6
+            },
+            "int": {
+                "score": 10,
+                "proficient": false,
+                "expertise": false,
+                "mod": 0,
+                "save": 0
+            },
+            "wis": {
+                "score": 12,
+                "proficient": false,
+                "expertise": false,
+                "mod": 1,
+                "save": 1
+            },
+            "cha": {
+                "score": 15,
+                "proficient": false,
+                "expertise": false,
+                "mod": 2,
+                "save": 2
+            }
+        },
+        "passive_perception": 11,
+        "initiative": {
+            "total": 2,
+            "advantage": false
+        },
+        "gear": [
+            {
+                "name": "club",
+                "source": "phb",
+                "quantity": 1
+            },
+            {
+                "name": "hand crossbow",
+                "source": "phb",
+                "quantity": 1
+            }
+        ]
+    }
+]

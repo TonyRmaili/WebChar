@@ -111,15 +111,13 @@ def on_shortrest(user,character):
     except TypeError as e:
             print(e)  
     
-    # innate spells
+    # innate spells / uses
     try:
         spells = char_data["spellbook"]["spells"]
         for spell in spells:
-            if spell["innate"]:
+            if spell["uses"]:
                 try:
-                    spell["current_charges"] += spell["reset_amount"]
-                    if spell["current_charges"] > spell["max_charges"]:
-                        spell["current_charges"] = spell["max_charges"]
+                    spell["uses"]["current"] = spell["uses"]["max"]
                 except TypeError as e:
                     pass
                 except KeyError as e:
@@ -198,9 +196,9 @@ def on_longrest(user,character):
     try:
         innate_spells = char_data["spellbook"]["spells"]
         for spell in innate_spells:
-            if spell["innate"]:
+            if spell["uses"]:
                 try:
-                    spell["current_charges"] = spell["max_charges"]
+                    spell["uses"]["current"] = spell["uses"]["max"]
                 except KeyError as e:
                     print(e)
                 except TypeError as e:

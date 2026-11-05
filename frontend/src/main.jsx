@@ -4,15 +4,15 @@ import "./index.css";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 
 import Layout from "./pages/Layout";
-import CombatPage from "./pages/Combat";
-import LoadChar from "./pages/Characters"
+import CharactersMain from "./pages/Characters/CharactersMain";
 import CreateAccount from "./pages/CreateAccount"
 import LogIn from "./pages/LogIn"
 import Embedder from "./pages/Embedder"
 import DMToolsPage from "./pages/DMTools";
-import UserProfile from "./pages/UserProfile";
+import Settings from "./pages/Settings";
 import MainCampaigns from "./pages/Campaigns/MainCampaigns";
 import CataloguesMain from "./pages/Catalogues/CataloguesMain"
+
 
 
 function App() {
@@ -20,13 +20,13 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route element={<Layout />}>
-          <Route path="/" element={<CombatPage />}></Route>
-          <Route path="/loadChar" element={<LoadChar />}></Route>
+          <Route path="/" element={<CharactersMain />}></Route>
+          <Route path="/CharactersMain" element={<CharactersMain />}></Route>
           <Route path="/createAccount" element={<CreateAccount />}></Route>
           <Route path="/logIn" element={<LogIn />}></Route>
           <Route path="/Embedder" element={<Embedder />}></Route>
           <Route path="/DM-Tools" element={<DMToolsPage />}></Route>
-          <Route path="/UserProfile" element={<UserProfile />}></Route>
+          <Route path="/Settings" element={<Settings />}></Route>
           <Route path="/MainCampaigns" element={<MainCampaigns />}></Route>
           <Route path="/CataloguesMain" element={<CataloguesMain />}></Route>
         </Route>

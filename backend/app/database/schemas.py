@@ -90,6 +90,3 @@ class MinionEffects(BaseModel):
 class ImportMinion(BaseModel):
     data: dict
 
-class QuickClassPayload(BaseModel):
-    prompt: str
-    char_name: str

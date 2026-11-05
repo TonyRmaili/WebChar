@@ -1,0 +1,755 @@
+[
+    {
+        "name": "Apprentice",
+        "source": "HoL",
+        "size": [
+            "Medium"
+        ],
+        "type": "humanoid",
+        "ac": [
+            {
+                "value": 10,
+                "from": [],
+                "condition": null,
+                "special": null
+            }
+        ],
+        "hp": {
+            "average": 7,
+            "formula": "2d8 - 2"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "skill": {
+            "arcana": "+3",
+            "history": "+3"
+        },
+        "languages": [
+            "any one language (usually Common)"
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "int",
+                "save_dc": 11,
+                "spell_attack_bonus": null,
+                "notes": "You cast one of the following wizard spells (spell save DC 11), using Intelligence as the spellcasting ability:",
+                "groups": [
+                    {
+                        "label": "At will",
+                        "uses": null,
+                        "each": false,
+                        "spells": [
+                            {
+                                "name": "minor illusion",
+                                "note": null
+                            },
+                            {
+                                "name": "fire bolt",
+                                "note": null
+                            }
+                        ]
+                    },
+                    {
+                        "label": "2/day",
+                        "uses": 2,
+                        "each": false,
+                        "spells": [
+                            {
+                                "name": "grease",
+                                "note": null
+                            }
+                        ]
+                    },
+                    {
+                        "label": "2/day each",
+                        "uses": 2,
+                        "each": true,
+                        "spells": [
+                            {
+                                "name": "burning hands",
+                                "note": null
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "ability_scores": {
+            "str": {
+                "score": 8,
+                "proficient": false,
+                "expertise": false,
+                "mod": -1,
+                "save": -1
+            },
+            "dex": {
+                "score": 10,
+                "proficient": false,
+                "expertise": false,
+                "mod": 0,
+                "save": 0
+            },
+            "con": {
+                "score": 9,
+                "proficient": false,
+                "expertise": false,
+                "mod": -1,
+                "save": -1
+            },
+            "int": {
+                "score": 13,
+                "proficient": true,
+                "expertise": false,
+                "mod": 1,
+                "save": 3
+            },
+            "wis": {
+                "score": 11,
+                "proficient": false,
+                "expertise": false,
+                "mod": 0,
+                "save": 0
+            },
+            "cha": {
+                "score": 12,
+                "proficient": false,
+                "expertise": false,
+                "mod": 1,
+                "save": 1
+            }
+        },
+        "passive_perception": 10,
+        "initiative": {
+            "total": 0,
+            "advantage": false
+        },
+        "condition_inflict": [
+            "prone"
+        ],
+        "forced_saving_throw": [
+            "dexterity"
+        ],
+        "gear": [
+            {
+                "name": "quarterstaff",
+                "source": "phb",
+                "quantity": 1
+            }
+        ],
+        "effects": {
+            "actions": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Quarterstaff",
+                        "effect_type": "attack",
+                        "range": 5,
+                        "attack": {
+                            "attack_type": "mw",
+                            "hit_bonus": 1,
+                            "damages": [
+                                {
+                                    "dice_count": 1,
+                                    "dice_size": "d6",
+                                    "mod": -1,
+                                    "damage_type": "Bludgeoning"
+                                }
+                            ]
+                        },
+                        "save": null,
+                        "notes": "Melee Weapon Attack: +1 to hit, reach 5 ft., one target. Hit: 2 (1d6 - 1) bludgeoning damage, or 3 (1d8 - 1) bludgeoning damage if used with two hands.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Burning Hands",
+                        "effect_type": "save",
+                        "range": 15,
+                        "attack": null,
+                        "save": {
+                            "target": "dex",
+                            "dc_bonus": 11,
+                            "damages": [
+                                {
+                                    "dice_count": 3,
+                                    "dice_size": "d6",
+                                    "mod": 0,
+                                    "damage_type": "Fire"
+                                }
+                            ],
+                            "half_damage": true,
+                            "conditions": []
+                        },
+                        "notes": "You shoot forth a 15-foot cone of fire. Each creature in that area must make a DC 11 Dexterity saving throw. A creature takes 10 (3d6) fire damage on a failed save, or half as much damage on a successful one The fire ignites any flammable objects in the area that aren't being worn or carried.",
+                        "charges": {
+                            "max_charges": 2,
+                            "current_charges": 2,
+                            "reset_type": "long_rest",
+                            "recharge_dice": null,
+                            "per_rest_count": 2
+                        }
+                    },
+                    {
+                        "name": "Fire Bolt (Cantrip)",
+                        "effect_type": "attack",
+                        "range": 120,
+                        "attack": {
+                            "attack_type": "rs",
+                            "hit_bonus": 3,
+                            "damages": [
+                                {
+                                    "dice_count": 1,
+                                    "dice_size": "d10",
+                                    "mod": 0,
+                                    "damage_type": "Fire"
+                                }
+                            ]
+                        },
+                        "save": null,
+                        "notes": "Ranged Spell Attack: +3 to hit, range 120 ft., one target. Hit: 5 (1d10) fire damage. A flammable object hit by this spell ignites if it isn't being worn or carried.",
+                        "charges": null
+                    }
+                ]
+            },
+            "bonus_actions": {
+                "header": null,
+                "items": []
+            },
+            "reactions": {
+                "header": null,
+                "items": []
+            },
+            "traits": {
+                "header": null,
+                "items": []
+            },
+            "legendary_actions": {
+                "header": null,
+                "items": []
+            },
+            "mythic_actions": {
+                "header": null,
+                "items": []
+            },
+            "lair_actions": {
+                "header": null,
+                "items": []
+            },
+            "regional_effects": {
+                "header": null,
+                "items": []
+            }
+        }
+    },
+    {
+        "name": "Disciple",
+        "source": "HoL",
+        "size": [
+            "Medium"
+        ],
+        "type": "humanoid",
+        "ac": [
+            {
+                "value": 11,
+                "from": [
+                    "shield"
+                ],
+                "condition": null,
+                "special": null
+            }
+        ],
+        "hp": {
+            "average": 9,
+            "formula": "2d8"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "skill": {
+            "perception": "+3",
+            "religion": "+2"
+        },
+        "languages": [
+            "any one language (usually Common)"
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "wis",
+                "save_dc": 11,
+                "spell_attack_bonus": null,
+                "notes": "You cast one the following cleric spells (spell save DC 11), using Wisdom as the spellcasting ability:",
+                "groups": [
+                    {
+                        "label": "At will",
+                        "uses": null,
+                        "each": false,
+                        "spells": [
+                            {
+                                "name": "guidance",
+                                "note": null
+                            },
+                            {
+                                "name": "sacred flame",
+                                "note": null
+                            }
+                        ]
+                    },
+                    {
+                        "label": "2/day",
+                        "uses": 2,
+                        "each": false,
+                        "spells": [
+                            {
+                                "name": "cure wounds",
+                                "note": null
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "ability_scores": {
+            "str": {
+                "score": 12,
+                "proficient": false,
+                "expertise": false,
+                "mod": 1,
+                "save": 1
+            },
+            "dex": {
+                "score": 9,
+                "proficient": false,
+                "expertise": false,
+                "mod": -1,
+                "save": -1
+            },
+            "con": {
+                "score": 10,
+                "proficient": false,
+                "expertise": false,
+                "mod": 0,
+                "save": 0
+            },
+            "int": {
+                "score": 11,
+                "proficient": false,
+                "expertise": false,
+                "mod": 0,
+                "save": 0
+            },
+            "wis": {
+                "score": 13,
+                "proficient": true,
+                "expertise": false,
+                "mod": 1,
+                "save": 3
+            },
+            "cha": {
+                "score": 9,
+                "proficient": false,
+                "expertise": false,
+                "mod": -1,
+                "save": -1
+            }
+        },
+        "passive_perception": 13,
+        "initiative": {
+            "total": -1,
+            "advantage": false
+        },
+        "forced_saving_throw": [
+            "dexterity"
+        ],
+        "gear": [
+            {
+                "name": "mace",
+                "source": "phb",
+                "quantity": 1
+            }
+        ],
+        "effects": {
+            "actions": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Mace",
+                        "effect_type": "attack",
+                        "range": 5,
+                        "attack": {
+                            "attack_type": "mw",
+                            "hit_bonus": 3,
+                            "damages": [
+                                {
+                                    "dice_count": 1,
+                                    "dice_size": "d6",
+                                    "mod": 1,
+                                    "damage_type": "Bludgeoning"
+                                }
+                            ]
+                        },
+                        "save": null,
+                        "notes": "Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: 4 (1d6 + 1) bludgeoning damage.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Sacred Flame (Cantrip)",
+                        "effect_type": "save",
+                        "range": 60,
+                        "attack": null,
+                        "save": {
+                            "target": "dex",
+                            "dc_bonus": 11,
+                            "damages": [
+                                {
+                                    "dice_count": 1,
+                                    "dice_size": "d8",
+                                    "mod": 0,
+                                    "damage_type": "Radiant"
+                                }
+                            ],
+                            "half_damage": false,
+                            "conditions": []
+                        },
+                        "notes": "You target one creature you can see within 60 feet of you. The target must succeed on a DC 11 Dexterity saving throw or take 4 (1d8) radiant damage. The target gains no benefit from cover for this saving throw.",
+                        "charges": null
+                    }
+                ]
+            },
+            "bonus_actions": {
+                "header": null,
+                "items": []
+            },
+            "reactions": {
+                "header": null,
+                "items": []
+            },
+            "traits": {
+                "header": null,
+                "items": []
+            },
+            "legendary_actions": {
+                "header": null,
+                "items": []
+            },
+            "mythic_actions": {
+                "header": null,
+                "items": []
+            },
+            "lair_actions": {
+                "header": null,
+                "items": []
+            },
+            "regional_effects": {
+                "header": null,
+                "items": []
+            }
+        }
+    },
+    {
+        "name": "Sneak",
+        "source": "HoL",
+        "size": [
+            "Small"
+        ],
+        "type": "humanoid",
+        "ac": [
+            {
+                "value": 13,
+                "from": [
+                    "shield"
+                ],
+                "condition": null,
+                "special": null
+            }
+        ],
+        "hp": {
+            "average": 9,
+            "formula": "2d6 + 2"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "skill": {
+            "sleight of hand": "+3",
+            "stealth": "+3"
+        },
+        "languages": [
+            "any one language (usually Common)"
+        ],
+        "ability_scores": {
+            "str": {
+                "score": 8,
+                "proficient": false,
+                "expertise": false,
+                "mod": -1,
+                "save": -1
+            },
+            "dex": {
+                "score": 13,
+                "proficient": true,
+                "expertise": false,
+                "mod": 1,
+                "save": 3
+            },
+            "con": {
+                "score": 12,
+                "proficient": false,
+                "expertise": false,
+                "mod": 1,
+                "save": 1
+            },
+            "int": {
+                "score": 11,
+                "proficient": false,
+                "expertise": false,
+                "mod": 0,
+                "save": 0
+            },
+            "wis": {
+                "score": 12,
+                "proficient": false,
+                "expertise": false,
+                "mod": 1,
+                "save": 1
+            },
+            "cha": {
+                "score": 9,
+                "proficient": false,
+                "expertise": false,
+                "mod": -1,
+                "save": -1
+            }
+        },
+        "passive_perception": 11,
+        "initiative": {
+            "total": 1,
+            "advantage": false
+        },
+        "gear": [
+            {
+                "name": "dagger",
+                "source": "phb",
+                "quantity": 1
+            }
+        ],
+        "effects": {
+            "actions": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Dagger",
+                        "effect_type": "attack",
+                        "range": 20,
+                        "attack": {
+                            "attack_type": "mw_or_rw",
+                            "hit_bonus": 3,
+                            "damages": [
+                                {
+                                    "dice_count": 1,
+                                    "dice_size": "d4",
+                                    "mod": 1,
+                                    "damage_type": "Piercing"
+                                }
+                            ]
+                        },
+                        "save": null,
+                        "notes": "Melee or Ranged Weapon Attack: +3 to hit, reach 5 ft. or range 20/60 ft., one target. Hit: 3 (1d4 + 1) piercing damage.",
+                        "charges": null
+                    }
+                ]
+            },
+            "bonus_actions": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Disengage",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "You take the Disengage action.",
+                        "charges": null
+                    }
+                ]
+            },
+            "reactions": {
+                "header": null,
+                "items": []
+            },
+            "traits": {
+                "header": null,
+                "items": []
+            },
+            "legendary_actions": {
+                "header": null,
+                "items": []
+            },
+            "mythic_actions": {
+                "header": null,
+                "items": []
+            },
+            "lair_actions": {
+                "header": null,
+                "items": []
+            },
+            "regional_effects": {
+                "header": null,
+                "items": []
+            }
+        }
+    },
+    {
+        "name": "Squire",
+        "source": "HoL",
+        "size": [
+            "Medium"
+        ],
+        "type": "humanoid",
+        "ac": [
+            {
+                "value": 12,
+                "from": [
+                    "shield"
+                ],
+                "condition": null,
+                "special": null
+            }
+        ],
+        "hp": {
+            "average": 11,
+            "formula": "2d8 + 2"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "skill": {
+            "athletics": "+3"
+        },
+        "languages": [
+            "any one language (usually Common)"
+        ],
+        "ability_scores": {
+            "str": {
+                "score": 13,
+                "proficient": true,
+                "expertise": false,
+                "mod": 1,
+                "save": 3
+            },
+            "dex": {
+                "score": 10,
+                "proficient": false,
+                "expertise": false,
+                "mod": 0,
+                "save": 0
+            },
+            "con": {
+                "score": 12,
+                "proficient": false,
+                "expertise": false,
+                "mod": 1,
+                "save": 1
+            },
+            "int": {
+                "score": 8,
+                "proficient": false,
+                "expertise": false,
+                "mod": -1,
+                "save": -1
+            },
+            "wis": {
+                "score": 11,
+                "proficient": false,
+                "expertise": false,
+                "mod": 0,
+                "save": 0
+            },
+            "cha": {
+                "score": 9,
+                "proficient": false,
+                "expertise": false,
+                "mod": -1,
+                "save": -1
+            }
+        },
+        "passive_perception": 10,
+        "initiative": {
+            "total": 0,
+            "advantage": false
+        },
+        "gear": [
+            {
+                "name": "longsword",
+                "source": "phb",
+                "quantity": 1
+            }
+        ],
+        "effects": {
+            "actions": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Longsword",
+                        "effect_type": "attack",
+                        "range": 5,
+                        "attack": {
+                            "attack_type": "mw",
+                            "hit_bonus": 3,
+                            "damages": [
+                                {
+                                    "dice_count": 1,
+                                    "dice_size": "d8",
+                                    "mod": 1,
+                                    "damage_type": "Slashing"
+                                }
+                            ]
+                        },
+                        "save": null,
+                        "notes": "Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: 5 (1d8 + 1) slashing damage, or 6 (1d10 + 1) slashing damage if used with two hands.",
+                        "charges": null
+                    }
+                ]
+            },
+            "bonus_actions": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Shove",
+                        "effect_type": "utility",
+                        "range": 5,
+                        "attack": null,
+                        "save": null,
+                        "notes": "While wielding a shield, you try to shove one creature within 5 feet of you.",
+                        "charges": null
+                    }
+                ]
+            },
+            "reactions": {
+                "header": null,
+                "items": []
+            },
+            "traits": {
+                "header": null,
+                "items": []
+            },
+            "legendary_actions": {
+                "header": null,
+                "items": []
+            },
+            "mythic_actions": {
+                "header": null,
+                "items": []
+            },
+            "lair_actions": {
+                "header": null,
+                "items": []
+            },
+            "regional_effects": {
+                "header": null,
+                "items": []
+            }
+        }
+    }
+]

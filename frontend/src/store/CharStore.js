@@ -96,7 +96,7 @@ const useCharStore = create((set, get) => ({
     }
   },
 
-  createChar: async (name) => {
+  createChar: async (payload) => {
     try {
       const token = localStorage.getItem("token");
       
@@ -111,7 +111,7 @@ const useCharStore = create((set, get) => ({
           "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`
         },
-        body: JSON.stringify({ name }),  
+        body: JSON.stringify( payload ),  
 
       });
 
@@ -126,6 +126,7 @@ const useCharStore = create((set, get) => ({
       console.error("Error posting charData:", error.message);
     }
   },
+
 
   deleteChar: async (char_name) => {
     try {
@@ -211,48 +212,6 @@ const useCharStore = create((set, get) => ({
     }
   },
 
-
-  createQuickClass: async (prompt,charName) => {
-    try {
-      const token = localStorage.getItem("token");
-      
-
-      if (!token) {
-        throw new Error("Token not found in localStorage");
-      }
-
-      const payload = {
-        prompt: prompt,  
-        char_name: charName  
-      };
-      
-      const response = await fetch("http://localhost:8000/quick_class", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-        },
-        body: JSON.stringify(payload),  
-
-      });
-
-    
-      if (!response.ok) {
-        throw new Error("Failed to post QuickClass to the endpoint");
-      }
-
-      // Optionally, handle the response if needed
-      const responseData = await response.json();
-      console.log("QuickClass posted successfully:", responseData);
-      return responseData
-
-      
-    } catch (error) {
-      console.error("Error posting QuickClass:", error.message);
-    }
-  },
-
-  
 }));
 
 export default useCharStore;

@@ -1,20 +1,67 @@
 import React from "react";
-import { attuneLabel } from "./itemHelpers";
+import {
+  propertyDescription, masteryDescription, attuneLabel,
+  formatValue, formatCharged, formatModifySpeed,
+  formatRange, formatLight, formatTierRarity,
+} from "./itemHelpers";
 
-// Header line like: "Wondrous Item, Rare (Requires Attunement By A Wizard)"
+const cap = (s) => (s ? s[0].toUpperCase() + s.slice(1) : s);
+
+// Header line like: "Wondrous Item, Major Legendary (Requires Attunement By A Wizard)"
 const buildSubheader = (item) => {
   const parts = [];
   if (item.wondrous) parts.push("Wondrous Item");
-  if (item.type) parts.push(item.type);
-  if (item.rarity && item.rarity !== "none") parts.push(cap(item.rarity));
+  if (Array.isArray(item.types) && item.types.length) {
+    parts.push(item.types.join(", "));
+  } else if (item.type) {
+    parts.push(item.type);
+  }
+  const tr = formatTierRarity(item.tier, item.rarity);
+  if (tr) parts.push(tr);
   const head = parts.join(", ");
   const attune = attuneLabel(item.reqAttune);
   return attune ? `${head} (Requires ${attune.replace(/^Attunement/, "Attunement")})` : head;
 };
 
-const cap = (s) => s ? s[0].toUpperCase() + s.slice(1) : s;
+// Format a damage object into a human-readable string.
+function formatDamage(damage) {
+  if (!damage) return "";
+  if (damage.raw) {
+    return damage.type ? `${damage.raw} ${damage.type}` : damage.raw;
+  }
 
-// Format "+1", "+2d6" style bonus entries
+  const parts = [];
+  if (damage.dice) {
+    parts.push(`${damage.amount || 1}${damage.dice}`);
+  } else if (damage.amount != null) {
+    parts.push(String(damage.amount));
+  }
+
+  if (damage.mod != null && damage.mod !== 0) {
+    if (parts.length > 0) {
+      parts.push(damage.mod > 0 ? `+${damage.mod}` : String(damage.mod));
+    } else {
+      parts.push(String(damage.mod));
+    }
+  }
+
+  let result = parts.join("");
+  if (damage.type) {
+    result = result ? `${result} ${damage.type}` : damage.type;
+  }
+  return result;
+}
+
+function formatBonusValue(key, value) {
+  if (key === "spellDamage" && value && typeof value === "object") {
+    return formatDamage(value);
+  }
+  if (typeof value === "number") {
+    return value >= 0 ? `+${value}` : String(value);
+  }
+  return value == null ? "" : String(value);
+}
+
 const BONUS_LABELS = {
   ac: "AC",
   weapon: "Attack & Damage",
@@ -22,6 +69,7 @@ const BONUS_LABELS = {
   weaponDamage: "Weapon Damage",
   spellAttack: "Spell Attack",
   spellSaveDc: "Spell Save DC",
+  spellDamage: "Spell Damage",
   savingThrow: "Saving Throws",
   savingThrowConcentration: "Concentration Saves",
   proficiencyBonus: "Proficiency Bonus",
@@ -32,16 +80,46 @@ export default function ItemPopup({ item }) {
   if (!item) return null;
 
   const {
-    name, source, page, entries = [],
-    bonuses, ability, focus, charges, recharge,
-    weight, value, dmg1, dmg2, dmgType, property,
-    resist, immune, vulnerable, conditionImmune,
-    attachedSpells, lootTables,
+    name,
+    source,
+    page,
+    entries = [],
+    bonuses,
+    ability,
+    focus,
+    weight,
+    value,
+    damage,
+    resist,
+    immune,
+    vulnerable,
+    conditionImmune,
+    attachedSpells,
+    lootTables,
+    curse,
+    sentient,
+    age,
+    modifySpeed,
+    baseItem,
+    weaponCategory,
+    range,
+    light,
+    charged,
   } = item;
 
+  const tags = [
+    curse && "Cursed",
+    sentient && "Sentient",
+    age && cap(age),
+  ].filter(Boolean);
+
+  const speedMods = formatModifySpeed(modifySpeed);
+
   return (
-    <div className="bg-[#fdf6e3] text-stone-900 font-serif rounded-sm shadow-lg
-                    border border-stone-400 overflow-y-auto h-full">
+    <div
+      className="bg-[#fdf6e3] text-stone-900 font-serif rounded-sm shadow-lg
+                    border border-stone-400 overflow-y-auto h-full"
+    >
       <div className="px-5 py-4">
         {/* Title row */}
         <div className="flex justify-between items-baseline border-b border-stone-300 pb-1 mb-2">
@@ -49,32 +127,51 @@ export default function ItemPopup({ item }) {
             {name}
           </h2>
           <span className="text-xs text-stone-500">
-            {source}{page ? ` p${page}` : ""}
+            {source}
+            {page ? ` p${page}` : ""}
           </span>
         </div>
 
         {/* Subheader */}
-        <p className="italic text-sm text-stone-700 mb-3">
+        <p className="italic text-sm text-stone-700 mb-1">
           {buildSubheader(item)}
         </p>
+
+        {/* Cursed • Sentient • Era */}
+        {tags.length > 0 && (
+          <p className="italic text-xs text-stone-600 mb-3">
+            {tags.join(" • ")}
+          </p>
+        )}
 
         {/* Quick stats strip */}
         <QuickStats
           weight={weight}
           value={value}
-          dmg1={dmg1}
-          dmg2={dmg2}
-          dmgType={dmgType}
-          property={property}
-          charges={charges}
-          recharge={recharge}
+          damage={damage}
+          range={range}
+          light={light}
+          baseItem={baseItem}
+          weaponCategory={weaponCategory}
+          charged={charged}
         />
 
         {/* Bonuses */}
         {bonuses && Object.keys(bonuses).length > 0 && (
           <SectionStrip title="Bonuses">
             {Object.entries(bonuses).map(([k, v]) => (
-              <Chip key={k} label={BONUS_LABELS[k] || k}>{v}</Chip>
+              <Chip key={k} label={BONUS_LABELS[k] || k}>
+                {formatBonusValue(k, v)}
+              </Chip>
+            ))}
+          </SectionStrip>
+        )}
+
+        {/* Speed modifications */}
+        {speedMods.length > 0 && (
+          <SectionStrip title="Speed">
+            {speedMods.map((m, i) => (
+              <Chip key={`${m.label}-${i}`} label={m.label}>{m.value}</Chip>
             ))}
           </SectionStrip>
         )}
@@ -85,10 +182,18 @@ export default function ItemPopup({ item }) {
         {/* Resistances / immunities */}
         {(resist || immune || vulnerable || conditionImmune) && (
           <SectionStrip title="Defenses">
-            {resist?.map((r) => <Chip key={`r-${r}`} label="Resist">{r}</Chip>)}
-            {immune?.map((r) => <Chip key={`i-${r}`} label="Immune">{r}</Chip>)}
-            {vulnerable?.map((r) => <Chip key={`v-${r}`} label="Vulnerable">{r}</Chip>)}
-            {conditionImmune?.map((r) => <Chip key={`ci-${r}`} label="Cond. Immune">{r}</Chip>)}
+            {resist?.map((r) => (
+              <Chip key={`r-${r}`} label="Resist">{r}</Chip>
+            ))}
+            {immune?.map((r) => (
+              <Chip key={`i-${r}`} label="Immune">{r}</Chip>
+            ))}
+            {vulnerable?.map((r) => (
+              <Chip key={`v-${r}`} label="Vulnerable">{r}</Chip>
+            ))}
+            {conditionImmune?.map((r) => (
+              <Chip key={`ci-${r}`} label="Cond. Immune">{r}</Chip>
+            ))}
           </SectionStrip>
         )}
 
@@ -104,11 +209,48 @@ export default function ItemPopup({ item }) {
           {entries.map((e, i) => <EntryBlock key={i} entry={e} />)}
         </div>
 
+        {/* Properties */}
+        {item.properties?.length > 0 && (
+          <div className="mt-3">
+            <div className="text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">
+              Properties
+            </div>
+            <div className="space-y-1 text-sm leading-relaxed">
+              {item.properties.map((p) => {
+                const desc = propertyDescription(p);
+                return (
+                  <p key={p}>
+                    <span className="font-bold italic">{p}.</span>
+                    {desc && <span> {desc}</span>}
+                  </p>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* Mastery */}
+        {item.mastery && (
+          <div className="mt-3">
+            <div className="text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">
+              Mastery
+            </div>
+            <p className="text-sm leading-relaxed">
+              <span className="font-bold italic">{item.mastery}.</span>
+              {masteryDescription(item.mastery) && (
+                <span> {masteryDescription(item.mastery)}</span>
+              )}
+            </p>
+          </div>
+        )}
+
         {/* Attached spells */}
         {attachedSpells?.length > 0 && (
           <div className="mt-4 pt-2 border-t border-stone-300 text-sm">
             <span className="font-bold">Spells: </span>
-            <span className="italic text-stone-700">{attachedSpells.join(", ")}</span>
+            <span className="italic text-stone-700">
+              {attachedSpells.join(", ")}
+            </span>
           </div>
         )}
 
@@ -126,21 +268,24 @@ export default function ItemPopup({ item }) {
 
 // ───────── sub-components ─────────
 
-function QuickStats({ weight, value, dmg1, dmg2, dmgType, property, charges, recharge }) {
+function QuickStats({ weight, value, damage, range, light, baseItem, weaponCategory, charged }) {
   const rows = [];
-  if (dmg1) {
-    const dmg = [dmg1, dmg2 && `(${dmg2})`, dmgType].filter(Boolean).join(" ");
-    rows.push(["Damage", dmg]);
+  if (damage) {
+    const formatted = formatDamage(damage);
+    if (formatted) rows.push(["Damage", formatted]);
   }
-  if (property?.length) {
-    rows.push(["Properties", property.map((p) => p.name).join(", ")]);
-  }
+  const rangeStr = formatRange(range);
+  if (rangeStr) rows.push(["Range", rangeStr]);
   if (weight) rows.push(["Weight", `${weight} lb`]);
-  if (value) rows.push(["Value", `${value} cp`]);
-  if (charges) {
-    const rechargeStr = recharge ? ` (recharges at ${recharge})` : "";
-    rows.push(["Charges", `${charges}${rechargeStr}`]);
-  }
+  const valueStr = formatValue(value);
+  if (valueStr) rows.push(["Value", valueStr]);
+  if (baseItem) rows.push(["Base Item", baseItem]);
+  if (weaponCategory) rows.push(["Category", weaponCategory]);
+  const lightStr = formatLight(light);
+  if (lightStr) rows.push(["Light", lightStr]);
+  const chargedStr = formatCharged(charged);
+  if (chargedStr) rows.push(["Charges", chargedStr]);
+
   if (rows.length === 0) return null;
 
   return (
@@ -179,17 +324,24 @@ function AbilityBlock({ ability }) {
   const { set, increase, choose, count, amount } = ability;
   return (
     <SectionStrip title="Ability">
-      {set && Object.entries(set).map(([k, v]) => (
-        <Chip key={k} label={k.toUpperCase()}>set to {v}</Chip>
-      ))}
-      {increase && Object.entries(increase).map(([k, v]) => (
-        <Chip key={k} label={k.toUpperCase()}>+{v}</Chip>
-      ))}
+      {set &&
+        Object.entries(set).map(([k, v]) => (
+          <Chip key={k} label={k.toUpperCase()}>
+            set to {v}
+          </Chip>
+        ))}
+      {increase &&
+        Object.entries(increase).map(([k, v]) => (
+          <Chip key={k} label={k.toUpperCase()}>
+            +{v}
+          </Chip>
+        ))}
       {choose && (
         <Chip label="Choose">
-            {count} of [{choose.map((s) => String(s).toUpperCase()).join(", ")}], +{amount} each
+          {count} of [{choose.map((s) => String(s).toUpperCase()).join(", ")}],
+          +{amount} each
         </Chip>
-        )}
+      )}
     </SectionStrip>
   );
 }
@@ -209,13 +361,17 @@ function EntryTable({ table }) {
   return (
     <div className="my-2 border border-stone-400 rounded overflow-hidden">
       {table.caption && (
-        <div className="bg-stone-200 px-2 py-1 text-xs font-semibold">{table.caption}</div>
+        <div className="bg-stone-200 px-2 py-1 text-xs font-semibold">
+          {table.caption}
+        </div>
       )}
       <table className="w-full text-xs">
         <thead className="bg-stone-100 border-b border-stone-300">
           <tr>
             {table.columns.map((c, i) => (
-              <th key={i} className="text-left px-2 py-1 font-semibold">{c}</th>
+              <th key={i} className="text-left px-2 py-1 font-semibold">
+                {c}
+              </th>
             ))}
           </tr>
         </thead>
@@ -223,7 +379,9 @@ function EntryTable({ table }) {
           {table.rows.map((row, i) => (
             <tr key={i} className="border-t border-stone-200">
               {row.map((cell, j) => (
-                <td key={j} className="px-2 py-1 align-top">{cell}</td>
+                <td key={j} className="px-2 py-1 align-top">
+                  {cell}
+                </td>
               ))}
             </tr>
           ))}

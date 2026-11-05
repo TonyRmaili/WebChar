@@ -1,0 +1,753 @@
+[
+    {
+        "name": "Animated Coffin",
+        "source": "AATM",
+        "size": [
+            "Large"
+        ],
+        "type": "construct",
+        "alignment": [
+            "Unaligned"
+        ],
+        "ac": [
+            {
+                "value": 16,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 60,
+            "formula": "8d10 + 16"
+        },
+        "speed": {
+            "walk": 30,
+            "climb": 30
+        },
+        "senses": {
+            "blindsight": 60,
+            "note": "Blindsight: can't see beyond this radius"
+        },
+        "languages": [
+            "understands the languages of its creator but can't speak"
+        ],
+        "cr": {
+            "base": "3",
+            "xp": 700,
+            "pb": 2
+        },
+        "traitTags": [
+            "False Appearance",
+            "Spider Climb"
+        ],
+        "actionTags": [
+            "Multiattack"
+        ],
+        "ability_scores": {
+            "str": {
+                "score": 16,
+                "proficient": false,
+                "expertise": false,
+                "mod": 3,
+                "save": 3
+            },
+            "dex": {
+                "score": 12,
+                "proficient": false,
+                "expertise": false,
+                "mod": 1,
+                "save": 1
+            },
+            "con": {
+                "score": 15,
+                "proficient": false,
+                "expertise": false,
+                "mod": 2,
+                "save": 2
+            },
+            "int": {
+                "score": 3,
+                "proficient": false,
+                "expertise": false,
+                "mod": -4,
+                "save": -4
+            },
+            "wis": {
+                "score": 11,
+                "proficient": false,
+                "expertise": false,
+                "mod": 0,
+                "save": 0
+            },
+            "cha": {
+                "score": 3,
+                "proficient": false,
+                "expertise": false,
+                "mod": -4,
+                "save": -4
+            }
+        },
+        "passive_perception": 10,
+        "immunities": {
+            "types": [
+                "poison",
+                "psychic"
+            ]
+        },
+        "condition_immunities": {
+            "types": [
+                "blinded",
+                "charmed",
+                "deafened",
+                "exhaustion",
+                "frightened",
+                "paralyzed",
+                "petrified",
+                "poisoned"
+            ]
+        },
+        "initiative": {
+            "total": 1,
+            "advantage": false
+        },
+        "effects": {
+            "actions": {
+                "items": [
+                    {
+                        "name": "Multiattack",
+                        "effect_type": "utility",
+                        "notes": "The animated coffin makes two Slam attacks."
+                    },
+                    {
+                        "name": "Slam",
+                        "effect_type": "attack",
+                        "range": 5,
+                        "attack": {
+                            "attack_type": "mw",
+                            "hit_bonus": 5,
+                            "damages": [
+                                {
+                                    "dice_count": 2,
+                                    "dice_size": "d8",
+                                    "mod": 3,
+                                    "damage_type": "Bludgeoning"
+                                }
+                            ]
+                        },
+                        "notes": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 12 (2d8 + 3) bludgeoning damage."
+                    },
+                    {
+                        "name": "Entrap",
+                        "effect_type": "attack",
+                        "range": 5,
+                        "attack": {
+                            "attack_type": "mw",
+                            "hit_bonus": 5
+                        },
+                        "notes": "Melee Weapon Attack: +5 to hit, reach 5 ft., one Large or smaller creature. Hit: The target has the grappled condition (escape DC 13). Until this grapple ends, if the target is not an Undead, the target has the restrained condition and takes 14 (4d6) piercing damage at the start of each of its turns. The animated coffin can grapple only one creature at a time."
+                    }
+                ]
+            },
+            "traits": {
+                "items": [
+                    {
+                        "name": "False Appearance",
+                        "effect_type": "utility",
+                        "notes": "If the animated coffin is motionless at the start of combat, it has advantage on its initiative roll. Moreover, if a creature hasn't observed the coffin move or act, that creature must succeed on a DC 18 Intelligence (Investigation) check to discern that the coffin is animate."
+                    },
+                    {
+                        "name": "Spider Climb",
+                        "effect_type": "utility",
+                        "notes": "The animated coffin can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check."
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "name": "Factol Skall",
+        "source": "AATM",
+        "size": [
+            "Medium"
+        ],
+        "type": {
+            "type": "undead",
+            "tags": [
+                "wizard"
+            ]
+        },
+        "alignment": [
+            "Neutral Evil"
+        ],
+        "ac": [
+            {
+                "value": 17,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 210,
+            "formula": "28d8 + 84"
+        },
+        "speed": {
+            "walk": 30,
+            "fly": {
+                "number": 30,
+                "condition": "(hover)"
+            },
+            "canHover": true
+        },
+        "skill": {
+            "arcana": "+17",
+            "history": "+11",
+            "medicine": "+8",
+            "perception": "+8"
+        },
+        "senses": {
+            "truesight": 120
+        },
+        "languages": [
+            "all"
+        ],
+        "cr": {
+            "base": "17",
+            "xp": 18000,
+            "pb": 6
+        },
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "int",
+                "save_dc": 19,
+                "notes": "Skall casts one of the following spells, requiring no material components and using Intelligence as the spellcasting ability (spell save DC 19):",
+                "groups": [
+                    {
+                        "label": "At will",
+                        "each": false,
+                        "spells": [
+                            {
+                                "name": "detect magic"
+                            },
+                            {
+                                "name": "mage hand"
+                            },
+                            {
+                                "name": "prestidigitation"
+                            }
+                        ]
+                    },
+                    {
+                        "label": "1/day each",
+                        "uses": 1,
+                        "each": true,
+                        "spells": [
+                            {
+                                "name": "finger of death"
+                            },
+                            {
+                                "name": "plane shift",
+                                "note": "self only"
+                            },
+                            {
+                                "name": "project image"
+                            }
+                        ]
+                    },
+                    {
+                        "label": "2/day each",
+                        "uses": 2,
+                        "each": true,
+                        "spells": [
+                            {
+                                "name": "animate dead",
+                                "note": "as an action"
+                            },
+                            {
+                                "name": "dispel magic"
+                            },
+                            {
+                                "name": "speak with dead"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "traitTags": [
+            "Legendary Resistances",
+            "Rejuvenation",
+            "Turn Resistance"
+        ],
+        "actionTags": [
+            "Multiattack"
+        ],
+        "ability_scores": {
+            "str": {
+                "score": 11,
+                "proficient": false,
+                "expertise": false,
+                "mod": 0,
+                "save": 0
+            },
+            "dex": {
+                "score": 16,
+                "proficient": false,
+                "expertise": false,
+                "mod": 3,
+                "save": 3
+            },
+            "con": {
+                "score": 16,
+                "proficient": true,
+                "expertise": false,
+                "mod": 3,
+                "save": 9
+            },
+            "int": {
+                "score": 20,
+                "proficient": true,
+                "expertise": false,
+                "mod": 5,
+                "save": 11
+            },
+            "wis": {
+                "score": 14,
+                "proficient": true,
+                "expertise": false,
+                "mod": 2,
+                "save": 8
+            },
+            "cha": {
+                "score": 16,
+                "proficient": false,
+                "expertise": false,
+                "mod": 3,
+                "save": 3
+            }
+        },
+        "passive_perception": 18,
+        "immunities": {
+            "types": [
+                "necrotic",
+                "poison"
+            ]
+        },
+        "resistances": {
+            "types": [
+                "cold"
+            ],
+            "conditional": [
+                {
+                    "types": [
+                        "bludgeoning",
+                        "piercing",
+                        "slashing"
+                    ],
+                    "note": "from nonmagical attacks"
+                }
+            ]
+        },
+        "condition_immunities": {
+            "types": [
+                "charmed",
+                "exhaustion",
+                "frightened",
+                "paralyzed",
+                "poisoned",
+                "stunned"
+            ]
+        },
+        "initiative": {
+            "total": 3,
+            "advantage": false
+        },
+        "condition_inflict": [
+            "frightened",
+            "blinded",
+            "deafened"
+        ],
+        "forced_saving_throw": [
+            "constitution",
+            "wisdom",
+            "charisma"
+        ],
+        "effects": {
+            "actions": {
+                "items": [
+                    {
+                        "name": "Multiattack",
+                        "effect_type": "utility",
+                        "notes": "Skall makes one Withering Touch attack or uses Spellcasting. He also uses Death Knell twice."
+                    },
+                    {
+                        "name": "Withering Touch",
+                        "effect_type": "attack",
+                        "range": 5,
+                        "attack": {
+                            "attack_type": "ms",
+                            "hit_bonus": 11,
+                            "damages": [
+                                {
+                                    "dice_count": 6,
+                                    "dice_size": "d8",
+                                    "mod": 5,
+                                    "damage_type": "Cold"
+                                },
+                                {
+                                    "dice_count": 7,
+                                    "dice_size": "d8",
+                                    "mod": 0,
+                                    "damage_type": "Necrotic"
+                                }
+                            ]
+                        },
+                        "notes": "Melee Spell Attack Roll: +11 to hit, reach 5 ft., one target. Hit: 32 (6d8 + 5) cold damage plus 31 (7d8) necrotic damage, and if the target is a creature, it can't regain hit points until the start of Skall's next turn."
+                    },
+                    {
+                        "name": "Death Knell",
+                        "effect_type": "save",
+                        "range": 120,
+                        "save": {
+                            "target": "wis",
+                            "dc_bonus": 19,
+                            "damages": [
+                                {
+                                    "dice_count": 4,
+                                    "dice_size": "d6",
+                                    "mod": 0,
+                                    "damage_type": "Psychic"
+                                }
+                            ],
+                            "half_damage": false,
+                            "conditions": [
+                                "frightened"
+                            ]
+                        },
+                        "notes": "The target must succeed on a DC 19 Wisdom saving throw or take 14 (4d6) psychic damage and have the frightened condition until the start of Skall's next turn."
+                    },
+                    {
+                        "name": "Fog of Death",
+                        "effect_type": "save",
+                        "range": 30,
+                        "save": {
+                            "target": "con",
+                            "dc_bonus": 19,
+                            "damages": [
+                                {
+                                    "dice_count": 8,
+                                    "dice_size": "d6",
+                                    "mod": 0,
+                                    "damage_type": "Necrotic"
+                                },
+                                {
+                                    "dice_count": 8,
+                                    "dice_size": "d6",
+                                    "mod": 0,
+                                    "damage_type": "Poison"
+                                }
+                            ],
+                            "half_damage": true
+                        },
+                        "notes": "Skall exudes a killing fog in a 30-foot-radius sphere centered on himself. The sphere spreads around corners, and its area is heavily obscured. The fog lasts until the start of Skall's next turn, and it can't be dispersed by wind. It does not move with him. Each creature that enters the fog for the first time on a turn or starts its turn there must make a DC 19 Constitution saving throw, taking 28 (8d6) necrotic damage and 28 (8d6) poison damage on a failed save, or half as much damage on a successful one. A Medium or smaller Humanoid killed by this damage becomes a zombie under Skall's control. The zombie acts on Skall's initiative but immediately after his turn. Absent any other command, the zombie tries to kill any non-Undead creature it encounters.",
+                        "charges": {
+                            "max_charges": 1,
+                            "current_charges": 1,
+                            "reset_type": "long_rest",
+                            "per_rest_count": 1
+                        }
+                    }
+                ]
+            },
+            "reactions": {
+                "header": "Skall can take up to three reactions per round but only one per turn.",
+                "items": [
+                    {
+                        "name": "Baleful Counterspell",
+                        "effect_type": "utility",
+                        "range": 60,
+                        "notes": "Skall chatters his teeth to interrupt a creature he can see within 60 feet of himself that is casting a spell. If the spell is 4th level or lower, it fails and has no effect. If the spell is 5th level or higher, Skall makes an Intelligence check (DC 10 + the spell's level). On a successful check, the spell fails and has no effect. Whatever the spell's level, the caster takes 10 (3d6) necrotic damage if the spell fails."
+                    },
+                    {
+                        "name": "Near-Death Experience",
+                        "effect_type": "utility",
+                        "notes": "In response to being hit by an attack, Skall teleports, along with any equipment he is wearing or carrying, up to 30 feet to an unoccupied space he can see."
+                    }
+                ]
+            },
+            "traits": {
+                "items": [
+                    {
+                        "name": "Aura of Death",
+                        "effect_type": "utility",
+                        "range": 30,
+                        "notes": "Creatures within 30 feet of Skall have disadvantage on death saving throws."
+                    },
+                    {
+                        "name": "Cosmic Annihilation",
+                        "effect_type": "utility",
+                        "notes": "A creature killed by Skall can be restored to life only by means of a true resurrection or wish spell."
+                    },
+                    {
+                        "name": "Legendary Resistance",
+                        "effect_type": "utility",
+                        "notes": "If Skall fails a saving throw, he can choose to succeed instead.",
+                        "charges": {
+                            "max_charges": 4,
+                            "current_charges": 4,
+                            "reset_type": "long_rest",
+                            "per_rest_count": 4
+                        }
+                    },
+                    {
+                        "name": "Rejuvenation",
+                        "effect_type": "utility",
+                        "notes": "If Skall dies, he turns to dust. If his orrery of souls hasn't been destroyed, Skall re-forms within the Mortuary in 1d10 days. He appears within 5 feet of the orrery."
+                    },
+                    {
+                        "name": "Turn Resistance",
+                        "effect_type": "utility",
+                        "notes": "Skall has advantage on saving throws against any effect that turns Undead."
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "name": "Heralds of Dust Exorcist",
+        "source": "AATM",
+        "size": [
+            "Small",
+            "Medium"
+        ],
+        "type": "humanoid",
+        "alignment": [
+            "Any"
+        ],
+        "ac": [
+            {
+                "value": 13
+            },
+            {
+                "value": 16,
+                "condition": "with mage armor"
+            }
+        ],
+        "hp": {
+            "average": 112,
+            "formula": "15d8 + 45"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "skill": {
+            "arcana": "+6",
+            "perception": "+5",
+            "religion": "+6"
+        },
+        "senses": {
+            "truesight": 60
+        },
+        "languages": [
+            "Common plus three more languages"
+        ],
+        "cr": {
+            "base": "6",
+            "xp": 2300,
+            "pb": 3
+        },
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "int",
+                "save_dc": 14,
+                "spell_attack_bonus": 6,
+                "notes": "The exorcist casts one of the following spells, requiring no material components and using Intelligence as the spellcasting ability (spell save DC 14, +6 to hit with spell attacks):",
+                "groups": [
+                    {
+                        "label": "At will",
+                        "each": false,
+                        "spells": [
+                            {
+                                "name": "detect evil and good"
+                            },
+                            {
+                                "name": "mage armor",
+                                "note": "self only"
+                            },
+                            {
+                                "name": "mage hand"
+                            }
+                        ]
+                    },
+                    {
+                        "label": "1/day each",
+                        "uses": 1,
+                        "each": true,
+                        "spells": [
+                            {
+                                "name": "banishment"
+                            },
+                            {
+                                "name": "dispel evil and good"
+                            }
+                        ]
+                    },
+                    {
+                        "label": "2/day each",
+                        "uses": 2,
+                        "each": true,
+                        "spells": [
+                            {
+                                "name": "protection from evil and good"
+                            },
+                            {
+                                "name": "remove curse"
+                            },
+                            {
+                                "name": "speak with dead"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "actionTags": [
+            "Multiattack"
+        ],
+        "ability_scores": {
+            "str": {
+                "score": 8,
+                "proficient": false,
+                "expertise": false,
+                "mod": -1,
+                "save": -1
+            },
+            "dex": {
+                "score": 16,
+                "proficient": false,
+                "expertise": false,
+                "mod": 3,
+                "save": 3
+            },
+            "con": {
+                "score": 16,
+                "proficient": false,
+                "expertise": false,
+                "mod": 3,
+                "save": 3
+            },
+            "int": {
+                "score": 17,
+                "proficient": true,
+                "expertise": false,
+                "mod": 3,
+                "save": 6
+            },
+            "wis": {
+                "score": 14,
+                "proficient": true,
+                "expertise": false,
+                "mod": 2,
+                "save": 5
+            },
+            "cha": {
+                "score": 11,
+                "proficient": true,
+                "expertise": false,
+                "mod": 0,
+                "save": 3
+            }
+        },
+        "passive_perception": 15,
+        "resistances": {
+            "types": [
+                "necrotic"
+            ]
+        },
+        "condition_immunities": {
+            "types": [
+                "charmed",
+                "frightened"
+            ]
+        },
+        "initiative": {
+            "total": 3,
+            "advantage": false
+        },
+        "condition_inflict": [
+            "incapacitated"
+        ],
+        "forced_saving_throw": [
+            "charisma"
+        ],
+        "effects": {
+            "actions": {
+                "items": [
+                    {
+                        "name": "Multiattack",
+                        "effect_type": "utility",
+                        "notes": "The exorcist makes two Grave Burst attacks."
+                    },
+                    {
+                        "name": "Grave Burst",
+                        "effect_type": "attack",
+                        "range": 120,
+                        "attack": {
+                            "attack_type": "ms_or_rs",
+                            "hit_bonus": 6,
+                            "damages": [
+                                {
+                                    "dice_count": 3,
+                                    "dice_size": "d10",
+                                    "mod": 3,
+                                    "damage_type": "Necrotic or Radiant"
+                                }
+                            ]
+                        },
+                        "notes": "Melee or Ranged Spell Attack: +6 to hit, reach 5 ft. or range 120 ft., one target. Hit: 19 (3d10 + 3) necrotic or radiant damage (exorcist's choice)."
+                    },
+                    {
+                        "name": "Admit Entity",
+                        "effect_type": "save",
+                        "range": 60,
+                        "save": {
+                            "target": "cha",
+                            "dc_bonus": 14,
+                            "damages": [
+                                {
+                                    "dice_count": 8,
+                                    "dice_size": "d8",
+                                    "mod": 0,
+                                    "damage_type": "Psychic"
+                                }
+                            ],
+                            "half_damage": true,
+                            "conditions": [
+                                "incapacitated"
+                            ]
+                        },
+                        "notes": "The exorcist thins the veil of death for a creature it can see within 60 feet of itself, exposing the target to malevolent entities. The target must make a DC 14 Charisma saving throw. On a failed save, the target takes 36 (8d8) psychic damage and has the incapacitated condition for 1 minute, during which time it retches and babbles incoherently in a voice that is not its own. On a successful save, the target takes half as much damage only. An incapacitated target can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.",
+                        "charges": {
+                            "max_charges": 1,
+                            "current_charges": 1,
+                            "reset_type": "recharge_dice",
+                            "recharge_dice": "5"
+                        }
+                    }
+                ]
+            },
+            "traits": {
+                "items": [
+                    {
+                        "name": "Incorruptible Vessel",
+                        "effect_type": "utility",
+                        "notes": "The exorcist can't be possessed by Celestials, Fiends, or Undead."
+                    }
+                ]
+            }
+        }
+    }
+]

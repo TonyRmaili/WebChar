@@ -20,7 +20,7 @@ class BackgroundCleaner:
 
         self.removable_keywords = [
             "page",
-             "hasFluff",
+            "hasFluff",
             "hasFluffImages",
             "srd",
             "basicRules",
@@ -71,7 +71,7 @@ class BackgroundCleaner:
                 if key not in keywords:
                     keywords.append(key)
 
-        savepath = os.path.join(self.raw_bg_path,"keywords")
+        savepath = os.path.join(self.output_path,"keywords")
         self.file_handler.save_json(savepath,keywords)
     
     def inspect_object(self,data,obj):
@@ -311,10 +311,70 @@ class BackgroundCleaner:
                 self.file_handler.save_json(savepath,data)
 
 
+# -------- AFTER LLM CLEANING -------------
+
+    def gather_filter_tags(self,tag,tag_savename):
+        loadpath = os.path.join(self.output_path,"backgrounds")
+        data = self.file_handler.load_json(loadpath)
+
+        unique_tags = []
+        for bg in data:
+            if tag in bg:
+                if bg[tag] not in unique_tags:
+                    unique_tags.append(bg[tag])
+
+
+        savepath = os.path.join(self.output_path,tag_savename)
+        self.file_handler.save_json(savepath, unique_tags)
+
+
+    def gather_nester_filter_tags(self,tag,tag_savename):
+        loadpath = os.path.join(self.output_path,"backgrounds")
+        data = self.file_handler.load_json(loadpath)
+
+        unique_tags = []
+        for bg in data:
+            if tag in bg:
+                for value in bg[tag]:
+                    if value not in unique_tags:
+                        unique_tags.append(value)
+
+
+        savepath = os.path.join(self.output_path,tag_savename)
+        self.file_handler.save_json(savepath, unique_tags)
+
+
+    def extract_cleaned_data(self):
+        loadpath = os.path.join(self.output_path,"backgrounds")
+        data = self.file_handler.load_json(loadpath)
+
+
+        for bg in data:
+
+            cleaned_entries = bg.get("cleaned_entries",None)
+            if cleaned_entries:
+
+                cleaned_entries = cleaned_entries["entries"]
+
+                bg["entries"] = cleaned_entries
+
+                del bg["cleaned_entries"]
+
+
+        savepath = os.path.join(self.output_path,"extracted_backgrounds")
+        self.file_handler.save_json(savepath, data)
+
+    
+
 
 if __name__ == "__main__":
     cleaner = BackgroundCleaner()
 
     # cleaner.run_cleaning()
 
-    cleaner.run_LLM_cleaning()
+    # cleaner.run_LLM_cleaning()
+
+    # cleaner.gather_filter_tags("source","sources")
+    # cleaner.gather_nester_filter_tags("feats","feats")
+
+    cleaner.extract_cleaned_data()

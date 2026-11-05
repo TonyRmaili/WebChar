@@ -1,0 +1,337 @@
+[
+    {
+        "name": "Yarnspinner",
+        "source": "DoD",
+        "size": [
+            "Huge"
+        ],
+        "type": {
+            "type": "fey",
+            "tags": [
+                "archfey"
+            ]
+        },
+        "alignment": [
+            "Lawful Good"
+        ],
+        "ac": [
+            {
+                "value": 16,
+                "from": [
+                    "natural armor"
+                ],
+                "condition": null,
+                "special": null
+            }
+        ],
+        "hp": {
+            "average": 138,
+            "formula": "12d12 + 60"
+        },
+        "speed": {
+            "walk": 40,
+            "climb": 40
+        },
+        "skill": {
+            "perception": "+13",
+            "stealth": "+7"
+        },
+        "senses": {
+            "truesight": 120
+        },
+        "languages": [
+            "Common",
+            "Druidic",
+            "Sylvan"
+        ],
+        "cr": {
+            "base": "10",
+            "xp": 5900,
+            "pb": 4,
+            "lair": null,
+            "xp_lair": null,
+            "coven": null,
+            "xp_coven": null,
+            "level": null
+        },
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "wis",
+                "save_dc": 17,
+                "spell_attack_bonus": null,
+                "notes": "Yarnspinner casts one of the following spells, requiring no material components and using Wisdom as the spellcasting ability (spell save DC 17):",
+                "groups": [
+                    {
+                        "label": "At will",
+                        "uses": null,
+                        "each": false,
+                        "spells": [
+                            {
+                                "name": "faerie fire",
+                                "note": null
+                            },
+                            {
+                                "name": "speak with animals",
+                                "note": null
+                            }
+                        ]
+                    },
+                    {
+                        "label": "1/day each",
+                        "uses": 1,
+                        "each": true,
+                        "spells": [
+                            {
+                                "name": "awaken",
+                                "note": "as an action"
+                            },
+                            {
+                                "name": "pass without trace",
+                                "note": null
+                            }
+                        ]
+                    },
+                    {
+                        "label": "2/day each",
+                        "uses": 2,
+                        "each": true,
+                        "spells": [
+                            {
+                                "name": "animal friendship",
+                                "note": null
+                            },
+                            {
+                                "name": "create food and water",
+                                "note": null
+                            },
+                            {
+                                "name": "revivify",
+                                "note": null
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "traitTags": [
+            "Legendary Resistances",
+            "Spider Climb",
+            "Web Walker"
+        ],
+        "actionTags": [
+            "Multiattack"
+        ],
+        "ability_scores": {
+            "str": {
+                "score": 24,
+                "proficient": false,
+                "expertise": false,
+                "mod": 7,
+                "save": 7
+            },
+            "dex": {
+                "score": 16,
+                "proficient": false,
+                "expertise": false,
+                "mod": 3,
+                "save": 3
+            },
+            "con": {
+                "score": 21,
+                "proficient": true,
+                "expertise": false,
+                "mod": 5,
+                "save": 9
+            },
+            "int": {
+                "score": 18,
+                "proficient": false,
+                "expertise": false,
+                "mod": 4,
+                "save": 4
+            },
+            "wis": {
+                "score": 21,
+                "proficient": true,
+                "expertise": false,
+                "mod": 5,
+                "save": 9
+            },
+            "cha": {
+                "score": 19,
+                "proficient": true,
+                "expertise": false,
+                "mod": 4,
+                "save": 8
+            }
+        },
+        "passive_perception": 23,
+        "condition_immunities": {
+            "types": [
+                "charmed",
+                "frightened"
+            ],
+            "conditional": [],
+            "special": null
+        },
+        "initiative": {
+            "total": 3,
+            "advantage": false
+        },
+        "condition_inflict": [
+            "restrained",
+            "charmed"
+        ],
+        "forced_saving_throw": [
+            "strength",
+            "dexterity",
+            "wisdom"
+        ],
+        "effects": {
+            "actions": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Multiattack",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "Yarnspinner makes two Bite attacks and uses Spellcasting or Web once.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Bite",
+                        "effect_type": "attack",
+                        "range": 10,
+                        "attack": {
+                            "attack_type": "mw",
+                            "hit_bonus": 11,
+                            "damages": [
+                                {
+                                    "dice_count": 3,
+                                    "dice_size": "d6",
+                                    "mod": 7,
+                                    "damage_type": "Piercing"
+                                },
+                                {
+                                    "dice_count": 2,
+                                    "dice_size": "d10",
+                                    "mod": 0,
+                                    "damage_type": "Poison"
+                                }
+                            ]
+                        },
+                        "save": null,
+                        "notes": "Melee Weapon Attack: +11 to hit, reach 10 ft., one target. Hit: 17 (3d6 + 7) piercing damage plus 11 (2d10) poison damage.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Web",
+                        "effect_type": "save",
+                        "range": 120,
+                        "attack": null,
+                        "save": {
+                            "target": "str",
+                            "dc_bonus": 17,
+                            "damages": [],
+                            "half_damage": false,
+                            "conditions": [
+                                "restrained"
+                            ]
+                        },
+                        "notes": "Yarnspinner shoots webbing at one creature he can see within 120 feet of himself. The target must succeed on a DC 17 Strength saving throw or be restrained for 1 hour. The target can repeat the save at the end of each of its turns, ending the effect on itself on a success.",
+                        "charges": null
+                    }
+                ]
+            },
+            "bonus_actions": {
+                "header": null,
+                "items": []
+            },
+            "reactions": {
+                "header": null,
+                "items": []
+            },
+            "traits": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Fey Rebirth",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "If Yarnspinner dies in his Domain of Delight, he revives with all his hit points 1d4 days later in a safe location in that domain.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Legendary Resistance",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "If Yarnspinner fails a saving throw, he can choose to succeed instead.",
+                        "charges": {
+                            "max_charges": 3,
+                            "current_charges": 3,
+                            "reset_type": "long_rest",
+                            "recharge_dice": null,
+                            "per_rest_count": 3
+                        }
+                    },
+                    {
+                        "name": "Spider Climb",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "Yarnspinner can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Web Walker",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "Yarnspinner ignores movement restrictions caused by webbing.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Web Weaver",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "Yarnspinner can take 1 minute to craft one of the following structures out of webbing:\n\nA 3-inch-thick, opaque wall of webbing consisting of up to three 10-foot-square sections, each of which must be anchored on at least two sides by other walls or surfaces. Each section has AC 12; 20 hit points; vulnerability to fire damage; and immunity to bludgeoning, poison, and psychic damage.\nA hut small enough to fit in a 10-foot cube. The hut comes with a closable door and a comfortable bed made of webbing, sized for a Tiny, Small, or Medium creature.\nA message consisting of no more than twenty-five characters, anchored at various points so it hangs in the air.",
+                        "charges": {
+                            "max_charges": 3,
+                            "current_charges": 3,
+                            "reset_type": "long_rest",
+                            "recharge_dice": null,
+                            "per_rest_count": 3
+                        }
+                    }
+                ]
+            },
+            "legendary_actions": {
+                "header": null,
+                "items": []
+            },
+            "mythic_actions": {
+                "header": null,
+                "items": []
+            },
+            "lair_actions": {
+                "header": null,
+                "items": []
+            },
+            "regional_effects": {
+                "header": null,
+                "items": []
+            }
+        }
+    }
+]

@@ -1,0 +1,253 @@
+[
+    {
+        "name": "Acidic Mist Apparition",
+        "source": "GotSF",
+        "size": [
+            "Large"
+        ],
+        "type": "apparition",
+        "alignment": [
+            "Neutral"
+        ],
+        "ac": [
+            {
+                "value": 15,
+                "from": [],
+                "condition": null,
+                "special": null
+            }
+        ],
+        "hp": {
+            "average": 90,
+            "formula": "12d10 + 24"
+        },
+        "speed": {
+            "fly": {
+                "number": 90,
+                "condition": "(hover)"
+            },
+            "canHover": true
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "languages": [
+            "Auran"
+        ],
+        "cr": {
+            "base": "5",
+            "xp": 1800,
+            "pb": 3,
+            "lair": null,
+            "xp_lair": null,
+            "coven": null,
+            "xp_coven": null,
+            "level": null
+        },
+        "environment": [
+            "mountain",
+            "desert"
+        ],
+        "actionTags": [
+            "Multiattack"
+        ],
+        "ability_scores": {
+            "str": {
+                "score": 14,
+                "proficient": false,
+                "expertise": false,
+                "mod": 2,
+                "save": 2
+            },
+            "dex": {
+                "score": 20,
+                "proficient": false,
+                "expertise": false,
+                "mod": 5,
+                "save": 5
+            },
+            "con": {
+                "score": 14,
+                "proficient": false,
+                "expertise": false,
+                "mod": 2,
+                "save": 2
+            },
+            "int": {
+                "score": 6,
+                "proficient": false,
+                "expertise": false,
+                "mod": -2,
+                "save": -2
+            },
+            "wis": {
+                "score": 10,
+                "proficient": false,
+                "expertise": false,
+                "mod": 0,
+                "save": 0
+            },
+            "cha": {
+                "score": 6,
+                "proficient": false,
+                "expertise": false,
+                "mod": -2,
+                "save": -2
+            }
+        },
+        "passive_perception": 10,
+        "immunities": {
+            "types": [
+                "acid",
+                "poison"
+            ],
+            "conditional": [],
+            "special": null
+        },
+        "resistances": {
+            "types": [
+                "lightning",
+                "thunder"
+            ],
+            "conditional": [
+                {
+                    "types": [
+                        "bludgeoning",
+                        "piercing",
+                        "slashing"
+                    ],
+                    "note": "from nonmagical attacks"
+                }
+            ],
+            "special": null
+        },
+        "condition_immunities": {
+            "types": [
+                "exhaustion",
+                "grappled",
+                "paralyzed",
+                "petrified",
+                "poisoned",
+                "prone",
+                "restrained",
+                "unconscious"
+            ],
+            "conditional": [],
+            "special": null
+        },
+        "initiative": {
+            "total": 5,
+            "advantage": false
+        },
+        "condition_inflict": [
+            "prone"
+        ],
+        "forced_saving_throw": [
+            "strength"
+        ],
+        "effects": {
+            "actions": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Multiattack",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "The apparition makes two slam attacks.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Slam",
+                        "effect_type": "attack",
+                        "range": 5,
+                        "attack": {
+                            "attack_type": "mw",
+                            "hit_bonus": 8,
+                            "damages": [
+                                {
+                                    "dice_count": 2,
+                                    "dice_size": "d8",
+                                    "mod": 5,
+                                    "damage_type": "Acid"
+                                }
+                            ]
+                        },
+                        "save": null,
+                        "notes": "Melee Weapon Attack: +8 to hit, reach 5 ft., one target. Hit: 14 (2d8 + 5) acid damage.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Whirlwind",
+                        "effect_type": "save",
+                        "range": null,
+                        "attack": null,
+                        "save": {
+                            "target": "str",
+                            "dc_bonus": 13,
+                            "damages": [
+                                {
+                                    "dice_count": 3,
+                                    "dice_size": "d8",
+                                    "mod": 2,
+                                    "damage_type": "Bludgeoning"
+                                }
+                            ],
+                            "half_damage": true,
+                            "conditions": [
+                                "prone"
+                            ]
+                        },
+                        "notes": "Each creature in the apparition's space must make a DC 13 Strength saving throw. On a failure, a target takes 15 (3d8 + 2) bludgeoning damage and is flung up 20 feet away from the apparition in a random direction and knocked prone. If a thrown target strikes an object, such as a wall or floor, the target takes 3 (1d6) bludgeoning damage for every 10 feet it was thrown. If the target is thrown at another creature, that creature must succeed on a DC 13 Dexterity saving throw or take the same damage and be knocked prone.\n\nIf the saving throw is successful, the target takes half the bludgeoning damage and isn't flung away or knocked prone.",
+                        "charges": {
+                            "max_charges": 1,
+                            "current_charges": 1,
+                            "reset_type": "recharge_dice",
+                            "recharge_dice": "4",
+                            "per_rest_count": null
+                        }
+                    }
+                ]
+            },
+            "bonus_actions": {
+                "header": null,
+                "items": []
+            },
+            "reactions": {
+                "header": null,
+                "items": []
+            },
+            "traits": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Air Form",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "The apparition can enter a hostile creature's space and stop there. It can move through a space as narrow as 1 inch wide without squeezing.",
+                        "charges": null
+                    }
+                ]
+            },
+            "legendary_actions": {
+                "header": null,
+                "items": []
+            },
+            "mythic_actions": {
+                "header": null,
+                "items": []
+            },
+            "lair_actions": {
+                "header": null,
+                "items": []
+            },
+            "regional_effects": {
+                "header": null,
+                "items": []
+            }
+        }
+    }
+]

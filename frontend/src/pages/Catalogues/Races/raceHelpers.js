@@ -1,5 +1,36 @@
-// Shared helpers for the Races browser.
+// ─── Sources ───────────────────────────────────────────────────────
+export const SOURCE_NAMES = {
+  XPHB: "Player Handbook One",
+  PHB: "Player Handbook Classic",
+  SCAG: "Sword Coast Adventurer's Guide",
+  BGDIA: "Baldur's Gate: Descent into Avernus",
+  TCE: "Tasha's Cauldron of Everything",
+  XGE: "Xanathar's Guide to Everything",
+  ERLW: "Eberron: Rising from the Last War",
+  AAG: "Astral Adventure's Guide",
+  AI: "Acquisitions Incorporated",
+  BGG: "Bigby Presents: Glory of the Giants",
+  BMT: "The Book of Many Things",
+  DSotDQ: "Dragonlance: Shadow of the Dragon Queen",
+  EFA: "Eberron: Forge of the Artificer",
+  EGW: "Explorer's Guide to Wildemount",
+  FRHoF: "Forgotten Realms: Heroes of Faerun",
+  GGR: "Guildmasters Guide to Ravnica",
+  GoS: "Ghosts of Saltmarsh",
+  MOT: "Mythic Odysseys of Theros",
+  SCC: "Strixhaven: A Curriculum of Chaos",
+  ToA: "Tomb of Annihilation",
+  VRGR: "Van Richten's Guide to Ravenloft",
+  WBtW: "The Wild Beyond the Witchlight",
+  FTD: "Fizban's Treasury of Dragons",
+  MPMM: "Mordenkainen Presents: Monsters of the Multiverse",
+  MTF: "Mordenkainen's Tome of Foes",
+  VGM: "Volo's Guide to Monsters",
+  HOMEBREW: "Homebrew",
+};
+export const formatSource = (src) => SOURCE_NAMES[src] || src;
 
+// ─── Shared ────────────────────────────────────────────────────────
 export const ABILITY_LABELS = {
   str: "STR", dex: "DEX", con: "CON",
   int: "INT", wis: "WIS", cha: "CHA",
@@ -8,6 +39,8 @@ export const ABILITY_LABELS = {
 export const SIZE_LABELS = {
   tiny: "Tiny", small: "Small", medium: "Medium", large: "Large",
 };
+
+export const SIZE_ORDER = ["tiny", "small", "medium", "large"];
 
 // Collect unique top-level values (flattens arrays).
 export const collectUnique = (items, key) => {

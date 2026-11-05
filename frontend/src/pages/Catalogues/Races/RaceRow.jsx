@@ -1,50 +1,53 @@
 import React from "react";
-import { SIZE_LABELS, cap } from "./raceHelpers";
+import { formatSource, formatTypeAndSize } from "./raceHelpers";
 
-export default function RaceRow({ race, onOpen }) {
-  const { name, source, creature_type, sizes = [], sub_races = [] } = race || {};
-  const sizeText = sizes.map((s) => SIZE_LABELS[s] || cap(s)).join("/");
+export default function RaceRow({ race, onOpen, onContextMenu }) {
+  if (!race) return null;
+  const isHomebrew = race.source === "HOMEBREW";
+
+  const handleContext = (e) => {
+    if (onContextMenu) {
+      e.preventDefault();
+      onContextMenu(e, race);
+    }
+  };
 
   return (
     <button
       type="button"
       onClick={() => onOpen(race)}
+      onContextMenu={handleContext}
       className="w-full text-left flex items-center gap-3 px-3 py-2 rounded-lg
                  border border-slate-700 bg-slate-800/40 hover:bg-slate-800/80
                  hover:border-amber-500/40 transition-colors"
     >
       <span className="flex-1 min-w-0 truncate text-slate-100 font-medium text-sm">
-        {name || "Unnamed race"}
+        {race.name}
       </span>
 
-      {creature_type && (
-        <span className="hidden sm:inline text-[11px] text-slate-400 truncate max-w-[140px]">
-          {cap(creature_type)}
-        </span>
-      )}
+      <span className="hidden sm:inline text-[11px] text-slate-400 truncate max-w-[180px]">
+        {formatTypeAndSize(race)}
+      </span>
 
-      {sizeText && (
-        <span className="text-[10px] uppercase tracking-wider text-slate-300
-                         border border-slate-600/60 rounded px-1.5 py-0.5">
-          {sizeText}
-        </span>
-      )}
-
-      {sub_races.length > 0 && (
+      {isHomebrew ? (
         <span
-          className="text-[10px] uppercase tracking-wider text-amber-300
-                     border border-amber-500/40 rounded px-1.5 py-0.5"
-          title={`${sub_races.length} sub-race${sub_races.length === 1 ? "" : "s"}`}
+          className={`text-[10px] uppercase tracking-wider rounded px-1.5 py-0.5 border
+            ${race.visibility === "public"
+              ? "text-green-300 border-green-500/40"
+              : "text-blue-300 border-blue-500/40"}`}
         >
-          {sub_races.length} sub
+          {race.visibility === "public" ? "Public" : "Private"}
         </span>
-      )}
-
-      {source && (
-        <span className="text-[10px] uppercase tracking-wider text-slate-400
-                         border border-slate-600/40 rounded px-1.5 py-0.5">
-          {source}
-        </span>
+      ) : (
+        race.source && (
+          <span
+            className="text-[10px] uppercase tracking-wider text-slate-400
+                       border border-slate-600/40 rounded px-1.5 py-0.5"
+            title={formatSource(race.source)}
+          >
+            {race.source}
+          </span>
+        )
       )}
     </button>
   );

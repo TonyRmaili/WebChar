@@ -1,14 +1,14 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { useDnDStore } from "../../../store/DndStore";
+import { useCatalogueStore } from "../../../store/CatalogueStore";
 import ClassTraitsPanel from "./ClassTraitsPanel";
 import ClassProgressionTable from "./ClassProgressionTable";
 import ClassFeatureList from "./ClassFeatureList";
 
 export default function Classes() {
-  const classes = useDnDStore((s) => s.classes);
-  const loading = useDnDStore((s) => s.loadingClasses);
-  const error = useDnDStore((s) => s.error);
-  const loadClasses = useDnDStore((s) => s.loadClasses);
+  const classes = useCatalogueStore((s) => s.classes);
+  const loading = useCatalogueStore((s) => s.loadingClasses);
+  const error = useCatalogueStore((s) => s.error);
+  const loadClasses = useCatalogueStore((s) => s.loadClasses);
 
   const [edition, setEdition] = useState("one");
   const [selectedClass, setSelectedClass] = useState("wizard");

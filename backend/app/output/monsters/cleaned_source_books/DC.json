@@ -1,0 +1,1453 @@
+[
+    {
+        "name": "Ebondeath",
+        "isNpc": true,
+        "source": "DC",
+        "size": [
+            "Medium"
+        ],
+        "type": "undead",
+        "alignment": [
+            "Any"
+        ],
+        "ac": [
+            {
+                "value": 15,
+                "from": [],
+                "condition": null,
+                "special": null
+            }
+        ],
+        "hp": {
+            "average": 225,
+            "formula": "10d8"
+        },
+        "speed": {
+            "walk": 0,
+            "fly": 40
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "languages": [
+            "Any languages it knew in life"
+        ],
+        "cr": {
+            "base": "4",
+            "xp": 1100,
+            "pb": 2,
+            "lair": null,
+            "xp_lair": null,
+            "coven": null,
+            "xp_coven": null,
+            "level": null
+        },
+        "traitTags": [
+            "Ethereal Sight",
+            "Incorporeal Movement",
+            "Legendary Resistances"
+        ],
+        "ability_scores": {
+            "str": {
+                "score": 7,
+                "proficient": false,
+                "expertise": false,
+                "mod": -2,
+                "save": -2
+            },
+            "dex": {
+                "score": 13,
+                "proficient": false,
+                "expertise": false,
+                "mod": 1,
+                "save": 1
+            },
+            "con": {
+                "score": 10,
+                "proficient": false,
+                "expertise": false,
+                "mod": 0,
+                "save": 0
+            },
+            "int": {
+                "score": 10,
+                "proficient": false,
+                "expertise": false,
+                "mod": 0,
+                "save": 0
+            },
+            "wis": {
+                "score": 12,
+                "proficient": false,
+                "expertise": false,
+                "mod": 1,
+                "save": 1
+            },
+            "cha": {
+                "score": 17,
+                "proficient": false,
+                "expertise": false,
+                "mod": 3,
+                "save": 3
+            }
+        },
+        "passive_perception": 11,
+        "immunities": {
+            "types": [
+                "cold",
+                "necrotic",
+                "poison"
+            ],
+            "conditional": [],
+            "special": null
+        },
+        "resistances": {
+            "types": [
+                "acid",
+                "fire",
+                "lightning",
+                "thunder"
+            ],
+            "conditional": [
+                {
+                    "types": [
+                        "bludgeoning",
+                        "piercing",
+                        "slashing"
+                    ],
+                    "note": "from nonmagical attacks"
+                }
+            ],
+            "special": null
+        },
+        "condition_immunities": {
+            "types": [
+                "charmed",
+                "exhaustion",
+                "frightened",
+                "grappled",
+                "paralyzed",
+                "petrified",
+                "poisoned",
+                "prone",
+                "restrained"
+            ],
+            "conditional": [],
+            "special": null
+        },
+        "initiative": {
+            "total": 1,
+            "advantage": false
+        },
+        "condition_inflict": [
+            "frightened",
+            "incapacitated"
+        ],
+        "forced_saving_throw": [
+            "charisma",
+            "wisdom"
+        ],
+        "effects": {
+            "actions": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Withering Touch",
+                        "effect_type": "attack",
+                        "range": 5,
+                        "attack": {
+                            "attack_type": "mw",
+                            "hit_bonus": 5,
+                            "damages": [
+                                {
+                                    "dice_count": 4,
+                                    "dice_size": "d6",
+                                    "mod": 3,
+                                    "damage_type": "Necrotic"
+                                }
+                            ]
+                        },
+                        "save": null,
+                        "notes": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 17 (4d6 + 3) necrotic damage.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Etherealness",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "Ebondeath enters the Ethereal Plane from the Material Plane, or vice versa. It is visible on the Material Plane while it is in the Border Ethereal, and vice versa, yet it can't affect or be affected by anything on the other plane.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Horrifying Visage",
+                        "effect_type": "save",
+                        "range": 60,
+                        "attack": null,
+                        "save": {
+                            "target": "wis",
+                            "dc_bonus": 13,
+                            "damages": [],
+                            "half_damage": false,
+                            "conditions": [
+                                "frightened"
+                            ]
+                        },
+                        "notes": "Each non-undead creature within 60 feet of Ebondeath that can see it must succeed on a DC 13 Wisdom saving throw or be frightened for 1 minute. If the save fails by 5 or more, the target also ages 1d4 × 10 years. A frightened target can repeat the saving throw at the end of each of its turns, ending the frightened condition on itself on a success. If a target's saving throw is successful or the effect ends for it, the target is immune to this Ebondeath's Horrifying Visage for the next 24 hours. The aging effect can be reversed with a greater restoration spell, but only within 24 hours of it occurring.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Possession",
+                        "effect_type": "save",
+                        "range": 5,
+                        "attack": null,
+                        "save": {
+                            "target": "cha",
+                            "dc_bonus": 20,
+                            "damages": [],
+                            "half_damage": false,
+                            "conditions": [
+                                "incapacitated"
+                            ]
+                        },
+                        "notes": "One humanoid that Ebondeath can see within 5 feet of it must succeed on a DC 20 Charisma saving throw or be possessed by Ebondeath; Ebondeath then disappears, and the target is incapacitated and loses control of its body. Ebondeath now controls the body but doesn't deprive the target of awareness. Ebondeath can't be targeted by any attack, spell, or other effect, except ones that turn undead, and it retains its alignment, Intelligence, Wisdom, Charisma, and immunity to being charmed and frightened. It otherwise uses the possessed target's statistics, including gaining access to the target's knowledge, class features, and proficiencies.\n\nThe possession lasts until the body drops to 0 hit points, Ebondeath ends it as a bonus action, or Ebondeath is turned or forced out by an effect like the dispel evil and good spell. When the possession ends, Ebondeath reappears in an unoccupied space within 5 feet of the body. The target is immune to Ebondeath Possession for 24 hours after succeeding on the saving throw or after the possession ends.",
+                        "charges": {
+                            "max_charges": 1,
+                            "current_charges": 1,
+                            "reset_type": "special",
+                            "recharge_dice": null,
+                            "per_rest_count": null
+                        }
+                    }
+                ]
+            },
+            "bonus_actions": {
+                "header": null,
+                "items": []
+            },
+            "reactions": {
+                "header": null,
+                "items": []
+            },
+            "traits": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Ethereal Sight",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "Ebondeath can see 60 feet into the Ethereal Plane when it is on the Material Plane, and vice versa.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Incorporeal Movement",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "Ebondeath can move through other creatures and objects as if they were difficult terrain. It takes 5 (1d10) force damage if it ends its turn inside an object.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Legendary Resistance",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "If the dragon fails a saving throw, it can choose to succeed instead.",
+                        "charges": {
+                            "max_charges": 3,
+                            "current_charges": 3,
+                            "reset_type": "long_rest",
+                            "recharge_dice": null,
+                            "per_rest_count": 3
+                        }
+                    }
+                ]
+            },
+            "legendary_actions": {
+                "header": null,
+                "items": []
+            },
+            "mythic_actions": {
+                "header": null,
+                "items": []
+            },
+            "lair_actions": {
+                "header": null,
+                "items": []
+            },
+            "regional_effects": {
+                "header": null,
+                "items": []
+            }
+        }
+    },
+    {
+        "name": "Expert",
+        "source": "DC",
+        "size": [
+            "Medium"
+        ],
+        "type": {
+            "type": "humanoid",
+            "sidekickType": "expert",
+            "sidekickHidden": true
+        },
+        "ac": [
+            {
+                "value": 17,
+                "from": [
+                    "studded leather"
+                ],
+                "condition": null,
+                "special": null
+            }
+        ],
+        "hp": {
+            "average": 66,
+            "formula": "12d8 + 12"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "skill": {
+            "acrobatics": "+13",
+            "performance": "+6",
+            "persuasion": "+6",
+            "sleight of hand": "+9",
+            "stealth": "+13"
+        },
+        "languages": [
+            "Common",
+            "plus one of your choice"
+        ],
+        "ability_scores": {
+            "str": {
+                "score": 10,
+                "proficient": false,
+                "expertise": false,
+                "mod": 0,
+                "save": 0
+            },
+            "dex": {
+                "score": 20,
+                "proficient": true,
+                "expertise": false,
+                "mod": 5,
+                "save": 9
+            },
+            "con": {
+                "score": 12,
+                "proficient": false,
+                "expertise": false,
+                "mod": 1,
+                "save": 1
+            },
+            "int": {
+                "score": 14,
+                "proficient": false,
+                "expertise": false,
+                "mod": 2,
+                "save": 2
+            },
+            "wis": {
+                "score": 10,
+                "proficient": false,
+                "expertise": false,
+                "mod": 0,
+                "save": 0
+            },
+            "cha": {
+                "score": 14,
+                "proficient": false,
+                "expertise": false,
+                "mod": 2,
+                "save": 2
+            }
+        },
+        "passive_perception": 10,
+        "cr": {
+            "base": null,
+            "xp": null,
+            "pb": null,
+            "lair": null,
+            "xp_lair": null,
+            "coven": null,
+            "xp_coven": null,
+            "level": 11
+        },
+        "initiative": {
+            "total": 5,
+            "advantage": false
+        },
+        "gear": [
+            {
+                "name": "dagger",
+                "source": "phb",
+                "quantity": 1
+            },
+            {
+                "name": "shortbow",
+                "source": "phb",
+                "quantity": 1
+            },
+            {
+                "name": "shortsword",
+                "source": "phb",
+                "quantity": 1
+            }
+        ],
+        "effects": {
+            "actions": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Extra Attack",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "The expert can attack twice, instead of once, whenever it takes the attack action on its turn.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Shortsword",
+                        "effect_type": "attack",
+                        "range": 5,
+                        "attack": {
+                            "attack_type": "mw",
+                            "hit_bonus": 9,
+                            "damages": [
+                                {
+                                    "dice_count": 1,
+                                    "dice_size": "d6",
+                                    "mod": 5,
+                                    "damage_type": "Piercing"
+                                }
+                            ]
+                        },
+                        "save": null,
+                        "notes": "Melee Weapon Attack: +9 to hit, reach 5 ft., one target. Hit: 8 (1d6 + 5) piercing damage.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Dagger",
+                        "effect_type": "attack",
+                        "range": 20,
+                        "attack": {
+                            "attack_type": "mw_or_rw",
+                            "hit_bonus": 9,
+                            "damages": [
+                                {
+                                    "dice_count": 1,
+                                    "dice_size": "d4",
+                                    "mod": 5,
+                                    "damage_type": "Piercing"
+                                }
+                            ]
+                        },
+                        "save": null,
+                        "notes": "Melee or Ranged Weapon Attack: +9 to hit, reach 5 ft. or range 20/60 ft., one target. Hit: 7 (1d4 + 5) piercing damage.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Shortbow",
+                        "effect_type": "attack",
+                        "range": 80,
+                        "attack": {
+                            "attack_type": "rw",
+                            "hit_bonus": 9,
+                            "damages": [
+                                {
+                                    "dice_count": 1,
+                                    "dice_size": "d6",
+                                    "mod": 5,
+                                    "damage_type": "Piercing"
+                                }
+                            ]
+                        },
+                        "save": null,
+                        "notes": "Ranged Weapon Attack: +9 to hit, range 80/320 ft., one target. Hit: 8 (1d6 + 5) piercing damage.",
+                        "charges": null
+                    }
+                ]
+            },
+            "bonus_actions": {
+                "header": null,
+                "items": []
+            },
+            "reactions": {
+                "header": null,
+                "items": []
+            },
+            "traits": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Helpful",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "The expert can take the Help action as a bonus action, and the creature who receives the help gains a 1d6 bonus to the d20 roll. If that roll is an attack roll, the creature can forgo adding the bonus to it, and then if the attack hits, the creature can add the bonus to the attack's damage roll against one target.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Evasion",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "When the expert is not incapacitated and subjected to an effect that allows it to make a Dexterity saving throw to take only half damage, it instead takes no damage if it succeeds on the saving throw, and only half damage if it failed.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Reliable Talent",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "Whenever the expert makes an ability check that includes its whole proficiency bonus, it can treat a d20 roll of 9 or lower as a 10.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Tools",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "The expert has thieves' tools and a musical instrument.",
+                        "charges": null
+                    }
+                ]
+            },
+            "legendary_actions": {
+                "header": null,
+                "items": []
+            },
+            "mythic_actions": {
+                "header": null,
+                "items": []
+            },
+            "lair_actions": {
+                "header": null,
+                "items": []
+            },
+            "regional_effects": {
+                "header": null,
+                "items": []
+            }
+        }
+    },
+    {
+        "name": "Spellcaster (Healer)",
+        "source": "DC",
+        "size": [
+            "Medium"
+        ],
+        "type": {
+            "type": "humanoid",
+            "sidekickType": "spellcaster",
+            "tags": [
+                "healer"
+            ],
+            "sidekickHidden": true
+        },
+        "ac": [
+            {
+                "value": 13,
+                "from": [
+                    "studded leather"
+                ],
+                "condition": null,
+                "special": null
+            }
+        ],
+        "hp": {
+            "average": 54,
+            "formula": "12d8"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "skill": {
+            "arcana": "+6",
+            "investigation": "+6",
+            "religion": "+6"
+        },
+        "languages": [
+            "Common",
+            "plus one of your choice"
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting (Healer)",
+                "ability": "wis",
+                "save_dc": 16,
+                "spell_attack_bonus": 8,
+                "notes": "The spellcaster's spellcasting ability is Wisdom (spell save DC 16, +8 to hit with spell attacks). The spellcaster has following cleric spells prepared:",
+                "groups": [
+                    {
+                        "label": "Cantrips (at will)",
+                        "uses": null,
+                        "each": false,
+                        "spells": [
+                            {
+                                "name": "guidance",
+                                "note": null
+                            },
+                            {
+                                "name": "light",
+                                "note": null
+                            },
+                            {
+                                "name": "resistance",
+                                "note": null
+                            },
+                            {
+                                "name": "sacred flame",
+                                "note": null
+                            },
+                            {
+                                "name": "spare the dying",
+                                "note": null
+                            }
+                        ]
+                    },
+                    {
+                        "label": "1st level (4 slots)",
+                        "uses": 4,
+                        "each": false,
+                        "spells": [
+                            {
+                                "name": "bless",
+                                "note": null
+                            },
+                            {
+                                "name": "cure wounds",
+                                "note": null
+                            },
+                            {
+                                "name": "shield of faith",
+                                "note": null
+                            }
+                        ]
+                    },
+                    {
+                        "label": "2nd level (3 slots)",
+                        "uses": 3,
+                        "each": false,
+                        "spells": [
+                            {
+                                "name": "aid",
+                                "note": null
+                            },
+                            {
+                                "name": "lesser restoration",
+                                "note": null
+                            }
+                        ]
+                    },
+                    {
+                        "label": "3rd level (3 slots)",
+                        "uses": 3,
+                        "each": false,
+                        "spells": [
+                            {
+                                "name": "protection from energy",
+                                "note": null
+                            },
+                            {
+                                "name": "revivify",
+                                "note": null
+                            }
+                        ]
+                    },
+                    {
+                        "label": "4th level (3 slots)",
+                        "uses": 3,
+                        "each": false,
+                        "spells": [
+                            {
+                                "name": "banishment",
+                                "note": null
+                            },
+                            {
+                                "name": "death ward",
+                                "note": null
+                            }
+                        ]
+                    },
+                    {
+                        "label": "5th level (2 slots)",
+                        "uses": 2,
+                        "each": false,
+                        "spells": [
+                            {
+                                "name": "greater restoration",
+                                "note": null
+                            },
+                            {
+                                "name": "mass cure wounds",
+                                "note": null
+                            }
+                        ]
+                    },
+                    {
+                        "label": "6th level (1 slots)",
+                        "uses": 1,
+                        "each": false,
+                        "spells": [
+                            {
+                                "name": "heal",
+                                "note": null
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "ability_scores": {
+            "str": {
+                "score": 10,
+                "proficient": false,
+                "expertise": false,
+                "mod": 0,
+                "save": 0
+            },
+            "dex": {
+                "score": 12,
+                "proficient": false,
+                "expertise": false,
+                "mod": 1,
+                "save": 1
+            },
+            "con": {
+                "score": 10,
+                "proficient": false,
+                "expertise": false,
+                "mod": 0,
+                "save": 0
+            },
+            "int": {
+                "score": 15,
+                "proficient": false,
+                "expertise": false,
+                "mod": 2,
+                "save": 2
+            },
+            "wis": {
+                "score": 18,
+                "proficient": true,
+                "expertise": false,
+                "mod": 4,
+                "save": 8
+            },
+            "cha": {
+                "score": 13,
+                "proficient": false,
+                "expertise": false,
+                "mod": 1,
+                "save": 1
+            }
+        },
+        "passive_perception": 14,
+        "cr": {
+            "base": null,
+            "xp": null,
+            "pb": null,
+            "lair": null,
+            "xp_lair": null,
+            "coven": null,
+            "xp_coven": null,
+            "level": 11
+        },
+        "initiative": {
+            "total": 1,
+            "advantage": false
+        },
+        "condition_inflict": [
+            "incapacitated"
+        ],
+        "forced_saving_throw": [
+            "charisma",
+            "dexterity"
+        ],
+        "gear": [
+            {
+                "name": "quarterstaff",
+                "source": "phb",
+                "quantity": 1
+            }
+        ],
+        "effects": {
+            "actions": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Quarterstaff",
+                        "effect_type": "attack",
+                        "range": 5,
+                        "attack": {
+                            "attack_type": "mw",
+                            "hit_bonus": 4,
+                            "damages": [
+                                {
+                                    "dice_count": 1,
+                                    "dice_size": "d6",
+                                    "mod": 0,
+                                    "damage_type": "Bludgeoning"
+                                }
+                            ]
+                        },
+                        "save": null,
+                        "notes": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 3 (1d6) bludgeoning damage, or 4 (1d8) bludgeoning damage if used with two hands.",
+                        "charges": null
+                    }
+                ]
+            },
+            "bonus_actions": {
+                "header": null,
+                "items": []
+            },
+            "reactions": {
+                "header": null,
+                "items": []
+            },
+            "traits": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Empowered Spells",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "Whenever the spellcaster casts a spell of the evocation school by expending a spell slot, the spellcaster can add its spellcasting ability modifier to the spell's damage roll or healing roll, if any.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Potent Cantrip",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "The spellcaster can add its spellcasting ability modifier to the damage it deals with any cantrip.",
+                        "charges": null
+                    }
+                ]
+            },
+            "legendary_actions": {
+                "header": null,
+                "items": []
+            },
+            "mythic_actions": {
+                "header": null,
+                "items": []
+            },
+            "lair_actions": {
+                "header": null,
+                "items": []
+            },
+            "regional_effects": {
+                "header": null,
+                "items": []
+            }
+        }
+    },
+    {
+        "name": "Spellcaster (Mage)",
+        "source": "DC",
+        "size": [
+            "Medium"
+        ],
+        "type": {
+            "type": "humanoid",
+            "sidekickType": "spellcaster",
+            "tags": [
+                "mage"
+            ],
+            "sidekickHidden": true
+        },
+        "ac": [
+            {
+                "value": 13,
+                "from": [
+                    "studded leather"
+                ],
+                "condition": null,
+                "special": null
+            }
+        ],
+        "hp": {
+            "average": 54,
+            "formula": "12d8"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "skill": {
+            "arcana": "+8",
+            "investigation": "+8",
+            "religion": "+8"
+        },
+        "languages": [
+            "Common",
+            "plus one of your choice"
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting (Mage)",
+                "ability": "int",
+                "save_dc": 16,
+                "spell_attack_bonus": 8,
+                "notes": "The spellcaster's spellcasting ability is Intelligence (spell save DC 16, +8 to hit with spell attacks). The spellcaster has following wizard spells prepared:",
+                "groups": [
+                    {
+                        "label": "Cantrips (at will)",
+                        "uses": null,
+                        "each": false,
+                        "spells": [
+                            {
+                                "name": "fire bolt",
+                                "note": null
+                            },
+                            {
+                                "name": "light",
+                                "note": null
+                            },
+                            {
+                                "name": "mage hand",
+                                "note": null
+                            },
+                            {
+                                "name": "minor illusion",
+                                "note": null
+                            },
+                            {
+                                "name": "shocking grasp",
+                                "note": null
+                            }
+                        ]
+                    },
+                    {
+                        "label": "1st level (4 slots)",
+                        "uses": 4,
+                        "each": false,
+                        "spells": [
+                            {
+                                "name": "burning hands",
+                                "note": null
+                            },
+                            {
+                                "name": "shield",
+                                "note": null
+                            },
+                            {
+                                "name": "sleep",
+                                "note": null
+                            }
+                        ]
+                    },
+                    {
+                        "label": "2nd level (3 slots)",
+                        "uses": 3,
+                        "each": false,
+                        "spells": [
+                            {
+                                "name": "flaming sphere",
+                                "note": null
+                            },
+                            {
+                                "name": "invisibility",
+                                "note": null
+                            }
+                        ]
+                    },
+                    {
+                        "label": "3rd level (3 slots)",
+                        "uses": 3,
+                        "each": false,
+                        "spells": [
+                            {
+                                "name": "fireball",
+                                "note": null
+                            },
+                            {
+                                "name": "fly",
+                                "note": null
+                            }
+                        ]
+                    },
+                    {
+                        "label": "4th level (3 slots)",
+                        "uses": 3,
+                        "each": false,
+                        "spells": [
+                            {
+                                "name": "polymorph",
+                                "note": null
+                            },
+                            {
+                                "name": "wall of fire",
+                                "note": null
+                            }
+                        ]
+                    },
+                    {
+                        "label": "5th level (2 slots)",
+                        "uses": 2,
+                        "each": false,
+                        "spells": [
+                            {
+                                "name": "cone of cold",
+                                "note": null
+                            },
+                            {
+                                "name": "hold monster",
+                                "note": null
+                            }
+                        ]
+                    },
+                    {
+                        "label": "6th level (1 slots)",
+                        "uses": 1,
+                        "each": false,
+                        "spells": [
+                            {
+                                "name": "chain lightning",
+                                "note": null
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "ability_scores": {
+            "str": {
+                "score": 10,
+                "proficient": false,
+                "expertise": false,
+                "mod": 0,
+                "save": 0
+            },
+            "dex": {
+                "score": 12,
+                "proficient": false,
+                "expertise": false,
+                "mod": 1,
+                "save": 1
+            },
+            "con": {
+                "score": 10,
+                "proficient": false,
+                "expertise": false,
+                "mod": 0,
+                "save": 0
+            },
+            "int": {
+                "score": 18,
+                "proficient": false,
+                "expertise": false,
+                "mod": 4,
+                "save": 4
+            },
+            "wis": {
+                "score": 14,
+                "proficient": true,
+                "expertise": false,
+                "mod": 2,
+                "save": 6
+            },
+            "cha": {
+                "score": 14,
+                "proficient": false,
+                "expertise": false,
+                "mod": 2,
+                "save": 2
+            }
+        },
+        "passive_perception": 12,
+        "cr": {
+            "base": null,
+            "xp": null,
+            "pb": null,
+            "lair": null,
+            "xp_lair": null,
+            "coven": null,
+            "xp_coven": null,
+            "level": 11
+        },
+        "initiative": {
+            "total": 1,
+            "advantage": false
+        },
+        "condition_inflict": [
+            "invisible",
+            "paralyzed",
+            "unconscious"
+        ],
+        "forced_saving_throw": [
+            "constitution",
+            "dexterity",
+            "wisdom"
+        ],
+        "gear": [
+            {
+                "name": "quarterstaff",
+                "source": "phb",
+                "quantity": 1
+            }
+        ],
+        "effects": {
+            "actions": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Quarterstaff",
+                        "effect_type": "attack",
+                        "range": 5,
+                        "attack": {
+                            "attack_type": "mw",
+                            "hit_bonus": 4,
+                            "damages": [
+                                {
+                                    "dice_count": 1,
+                                    "dice_size": "d6",
+                                    "mod": 0,
+                                    "damage_type": "Bludgeoning"
+                                }
+                            ]
+                        },
+                        "save": null,
+                        "notes": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 3 (1d6) bludgeoning damage, or 4 (1d8) bludgeoning damage if used with two hands.",
+                        "charges": null
+                    }
+                ]
+            },
+            "bonus_actions": {
+                "header": null,
+                "items": []
+            },
+            "reactions": {
+                "header": null,
+                "items": []
+            },
+            "traits": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Empowered Spells",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "Whenever the spellcaster casts a spell of the evocation school by expending a spell slot, the spellcaster can add its spellcasting ability modifier to the spell's damage roll or healing roll, if any.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Potent Cantrip",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "The spellcaster can add its spellcasting ability modifier to the damage it deals with any cantrip.",
+                        "charges": null
+                    }
+                ]
+            },
+            "legendary_actions": {
+                "header": null,
+                "items": []
+            },
+            "mythic_actions": {
+                "header": null,
+                "items": []
+            },
+            "lair_actions": {
+                "header": null,
+                "items": []
+            },
+            "regional_effects": {
+                "header": null,
+                "items": []
+            }
+        }
+    },
+    {
+        "name": "Warrior",
+        "source": "DC",
+        "size": [
+            "Medium"
+        ],
+        "type": {
+            "type": "humanoid",
+            "sidekickType": "warrior",
+            "sidekickHidden": true
+        },
+        "ac": [
+            {
+                "value": 21,
+                "from": [
+                    "plate",
+                    "shield"
+                ],
+                "condition": null,
+                "special": null
+            }
+        ],
+        "hp": {
+            "average": 78,
+            "formula": "12d8 + 24"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "initiative": {
+            "total": 2,
+            "advantage": true
+        },
+        "skill": {
+            "athletics": "+8",
+            "perception": "+5",
+            "survival": "+5"
+        },
+        "languages": [
+            "Common",
+            "plus one of your choice"
+        ],
+        "ability_scores": {
+            "str": {
+                "score": 18,
+                "proficient": false,
+                "expertise": false,
+                "mod": 4,
+                "save": 4
+            },
+            "dex": {
+                "score": 14,
+                "proficient": false,
+                "expertise": false,
+                "mod": 2,
+                "save": 2
+            },
+            "con": {
+                "score": 14,
+                "proficient": true,
+                "expertise": false,
+                "mod": 2,
+                "save": 6
+            },
+            "int": {
+                "score": 10,
+                "proficient": false,
+                "expertise": false,
+                "mod": 0,
+                "save": 0
+            },
+            "wis": {
+                "score": 12,
+                "proficient": false,
+                "expertise": false,
+                "mod": 1,
+                "save": 1
+            },
+            "cha": {
+                "score": 10,
+                "proficient": false,
+                "expertise": false,
+                "mod": 0,
+                "save": 0
+            }
+        },
+        "passive_perception": 15,
+        "cr": {
+            "base": null,
+            "xp": null,
+            "pb": null,
+            "lair": null,
+            "xp_lair": null,
+            "coven": null,
+            "xp_coven": null,
+            "level": 11
+        },
+        "gear": [
+            {
+                "name": "longbow",
+                "source": "phb",
+                "quantity": 1
+            },
+            {
+                "name": "longsword",
+                "source": "phb",
+                "quantity": 1
+            }
+        ],
+        "effects": {
+            "actions": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Extra Attack",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "The warrior can attack three times, instead of once, whenever it takes the attack action on its turn.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Longsword",
+                        "effect_type": "attack",
+                        "range": 5,
+                        "attack": {
+                            "attack_type": "mw",
+                            "hit_bonus": 8,
+                            "damages": [
+                                {
+                                    "dice_count": 1,
+                                    "dice_size": "d8",
+                                    "mod": 4,
+                                    "damage_type": "Slashing"
+                                }
+                            ]
+                        },
+                        "save": null,
+                        "notes": "Melee Weapon Attack: +8 to hit, reach 5 ft., one target. Hit: 8 (1d8 + 4) slashing damage, or 9 (1d10 + 4) slashing damage if used with two hands.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Longbow",
+                        "effect_type": "attack",
+                        "range": 150,
+                        "attack": {
+                            "attack_type": "rw",
+                            "hit_bonus": 6,
+                            "damages": [
+                                {
+                                    "dice_count": 1,
+                                    "dice_size": "d8",
+                                    "mod": 2,
+                                    "damage_type": "Piercing"
+                                }
+                            ]
+                        },
+                        "save": null,
+                        "notes": "Ranged Weapon Attack: +6 to hit, range 150/600 ft., one target. Hit: 6 (1d8 + 2) piercing damage.",
+                        "charges": null
+                    }
+                ]
+            },
+            "bonus_actions": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Second Wind",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "The warrior can use a bonus action on its turn to regain hit points equal to 1d10 + its level.",
+                        "charges": {
+                            "max_charges": 1,
+                            "current_charges": 1,
+                            "reset_type": "special",
+                            "recharge_dice": null,
+                            "per_rest_count": null
+                        }
+                    }
+                ]
+            },
+            "reactions": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Protection (Defender Only)",
+                        "effect_type": "utility",
+                        "range": 5,
+                        "attack": null,
+                        "save": null,
+                        "notes": "When a creature the warrior can see attacks a target other than the warrior that is within 5 feet of the warrior, the warrior can use their reaction to impose disadvantage on the attack roll. The warrior must be wielding a shield.",
+                        "charges": null
+                    }
+                ]
+            },
+            "traits": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Battle Readiness",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "The warrior has advantage on initiative rolls.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Improved Critical",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "The warrior's attack rolls score a critical hit on a roll of 19 or 20 on the d20.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Improved Defense",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "The warrior's AC increases by 1.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Indomitable",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "The warrior can reroll a saving throw that it fails, but it must use the new result.",
+                        "charges": {
+                            "max_charges": 1,
+                            "current_charges": 1,
+                            "reset_type": "long_rest",
+                            "recharge_dice": null,
+                            "per_rest_count": 1
+                        }
+                    },
+                    {
+                        "name": "Martial Role",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "The warrior has one of the following traits of your choice:\nAttacker: The warrior gains a +2 bonus to attack rolls.\nDefender: The warrior gains the Protection reaction below.",
+                        "charges": null
+                    }
+                ]
+            },
+            "legendary_actions": {
+                "header": null,
+                "items": []
+            },
+            "mythic_actions": {
+                "header": null,
+                "items": []
+            },
+            "lair_actions": {
+                "header": null,
+                "items": []
+            },
+            "regional_effects": {
+                "header": null,
+                "items": []
+            }
+        }
+    }
+]

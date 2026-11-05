@@ -1,0 +1,528 @@
+[
+    {
+        "name": "Mercenary Envoy",
+        "source": "AitFR-FCD",
+        "size": [
+            "Medium"
+        ],
+        "type": "humanoid",
+        "ac": [
+            {
+                "value": 15,
+                "from": [
+                    "chain shirt"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 26,
+            "formula": "4d8 + 8"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "skill": {
+            "athletics": "+4",
+            "perception": "+3"
+        },
+        "languages": [
+            "Common"
+        ],
+        "cr": {
+            "base": "1",
+            "xp": 200,
+            "pb": 2
+        },
+        "actionTags": [
+            "Multiattack"
+        ],
+        "ability_scores": {
+            "str": {
+                "score": 15,
+                "proficient": true,
+                "expertise": false,
+                "mod": 2,
+                "save": 4
+            },
+            "dex": {
+                "score": 15,
+                "proficient": false,
+                "expertise": false,
+                "mod": 2,
+                "save": 2
+            },
+            "con": {
+                "score": 15,
+                "proficient": true,
+                "expertise": false,
+                "mod": 2,
+                "save": 4
+            },
+            "int": {
+                "score": 10,
+                "proficient": false,
+                "expertise": false,
+                "mod": 0,
+                "save": 0
+            },
+            "wis": {
+                "score": 12,
+                "proficient": false,
+                "expertise": false,
+                "mod": 1,
+                "save": 1
+            },
+            "cha": {
+                "score": 9,
+                "proficient": false,
+                "expertise": false,
+                "mod": -1,
+                "save": -1
+            }
+        },
+        "passive_perception": 13,
+        "initiative": {
+            "total": 2,
+            "advantage": false
+        },
+        "gear": [
+            {
+                "name": "heavy crossbow",
+                "source": "phb",
+                "quantity": 1
+            },
+            {
+                "name": "longsword",
+                "source": "phb",
+                "quantity": 1
+            }
+        ],
+        "effects": {
+            "actions": {
+                "items": [
+                    {
+                        "name": "Multiattack",
+                        "effect_type": "utility",
+                        "notes": "The mercenary makes two longsword attacks."
+                    },
+                    {
+                        "name": "Longsword",
+                        "effect_type": "attack",
+                        "range": 5,
+                        "attack": {
+                            "attack_type": "mw",
+                            "hit_bonus": 4,
+                            "damages": [
+                                {
+                                    "dice_count": 1,
+                                    "dice_size": "d8",
+                                    "mod": 2,
+                                    "damage_type": "Slashing"
+                                }
+                            ]
+                        },
+                        "notes": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 6 (1d8 + 2) slashing damage."
+                    },
+                    {
+                        "name": "Heavy Crossbow",
+                        "effect_type": "attack",
+                        "range": 100,
+                        "attack": {
+                            "attack_type": "rw",
+                            "hit_bonus": 4,
+                            "damages": [
+                                {
+                                    "dice_count": 1,
+                                    "dice_size": "d10",
+                                    "mod": 2,
+                                    "damage_type": "Piercing"
+                                }
+                            ]
+                        },
+                        "notes": "Ranged Weapon Attack: +4 to hit, range 100/400 ft., one target. Hit: 7 (1d10 + 2) piercing damage."
+                    }
+                ]
+            },
+            "traits": {
+                "items": [
+                    {
+                        "name": "Inspired Courage",
+                        "effect_type": "utility",
+                        "notes": "The mercenary has advantage on saving throws against being charmed, frightened, grappled, or restrained while within 5 feet of at least one ally."
+                    },
+                    {
+                        "name": "Martial Advantage",
+                        "effect_type": "utility",
+                        "notes": "Once per turn, the mercenary can deal an extra 7 (2d6) damage to a creature it hits with a weapon attack if that creature is within 5 feet of an ally of the mercenary that isn't incapacitated."
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "name": "Tyreus, Illusionist",
+        "isNpc": true,
+        "source": "AitFR-FCD",
+        "size": [
+            "Medium"
+        ],
+        "type": {
+            "type": "humanoid",
+            "tags": [
+                "human"
+            ]
+        },
+        "alignment": [
+            "Neutral Evil"
+        ],
+        "ac": [
+            {
+                "value": 13
+            }
+        ],
+        "hp": {
+            "average": 156,
+            "formula": "24d8 + 48"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "skill": {
+            "arcana": "+12",
+            "deception": "+8",
+            "history": "+10",
+            "perception": "+7"
+        },
+        "languages": [
+            "Common",
+            "Deep Speech",
+            "Draconic",
+            "Primordial",
+            "Sylvan"
+        ],
+        "cr": {
+            "base": "13",
+            "xp": 10000,
+            "pb": 5
+        },
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "int",
+                "save_dc": 18,
+                "spell_attack_bonus": 10,
+                "notes": "Tyreus is a 16th-level spellcaster. His spellcasting ability is Intelligence (spell save DC 18, +10 to hit with spell attacks). He has the following wizard spells prepared. *(Illusion spell of 1st level or higher)",
+                "groups": [
+                    {
+                        "label": "Cantrips (at will)",
+                        "each": false,
+                        "spells": [
+                            {
+                                "name": "fire bolt"
+                            },
+                            {
+                                "name": "light"
+                            },
+                            {
+                                "name": "mage hand"
+                            },
+                            {
+                                "name": "minor illusion"
+                            },
+                            {
+                                "name": "shocking grasp"
+                            }
+                        ]
+                    },
+                    {
+                        "label": "1st level (4 slots)",
+                        "uses": 4,
+                        "each": false,
+                        "spells": [
+                            {
+                                "name": "mage armor"
+                            },
+                            {
+                                "name": "magic missile"
+                            },
+                            {
+                                "name": "shield"
+                            },
+                            {
+                                "name": "thunderwave"
+                            }
+                        ]
+                    },
+                    {
+                        "label": "2nd level (3 slots)",
+                        "uses": 3,
+                        "each": false,
+                        "spells": [
+                            {
+                                "name": "invisibility"
+                            },
+                            {
+                                "name": "mirror image"
+                            },
+                            {
+                                "name": "phantasmal force"
+                            }
+                        ]
+                    },
+                    {
+                        "label": "3rd level (3 slots)",
+                        "uses": 3,
+                        "each": false,
+                        "spells": [
+                            {
+                                "name": "counterspell"
+                            },
+                            {
+                                "name": "fly"
+                            },
+                            {
+                                "name": "lightning bolt"
+                            },
+                            {
+                                "name": "major image"
+                            }
+                        ]
+                    },
+                    {
+                        "label": "4th level (3 slots)",
+                        "uses": 3,
+                        "each": false,
+                        "spells": [
+                            {
+                                "name": "banishment"
+                            },
+                            {
+                                "name": "hallucinatory terrain"
+                            },
+                            {
+                                "name": "phantasmal killer"
+                            },
+                            {
+                                "name": "stoneskin"
+                            }
+                        ]
+                    },
+                    {
+                        "label": "5th level (2 slots)",
+                        "uses": 2,
+                        "each": false,
+                        "spells": [
+                            {
+                                "name": "conjure elemental"
+                            },
+                            {
+                                "name": "mislead"
+                            },
+                            {
+                                "name": "telekinesis"
+                            }
+                        ]
+                    },
+                    {
+                        "label": "6th level (1 slots)",
+                        "uses": 1,
+                        "each": false,
+                        "spells": [
+                            {
+                                "name": "disintegrate"
+                            }
+                        ]
+                    },
+                    {
+                        "label": "7th level (1 slots)",
+                        "uses": 1,
+                        "each": false,
+                        "spells": [
+                            {
+                                "name": "plane shift"
+                            }
+                        ]
+                    },
+                    {
+                        "label": "8th level (1 slots)",
+                        "uses": 1,
+                        "each": false,
+                        "spells": [
+                            {
+                                "name": "maze"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "traitTags": [
+            "Legendary Resistances"
+        ],
+        "ability_scores": {
+            "str": {
+                "score": 10,
+                "proficient": false,
+                "expertise": false,
+                "mod": 0,
+                "save": 0
+            },
+            "dex": {
+                "score": 16,
+                "proficient": false,
+                "expertise": false,
+                "mod": 3,
+                "save": 3
+            },
+            "con": {
+                "score": 14,
+                "proficient": false,
+                "expertise": false,
+                "mod": 2,
+                "save": 2
+            },
+            "int": {
+                "score": 20,
+                "proficient": true,
+                "expertise": false,
+                "mod": 5,
+                "save": 10
+            },
+            "wis": {
+                "score": 15,
+                "proficient": true,
+                "expertise": false,
+                "mod": 2,
+                "save": 7
+            },
+            "cha": {
+                "score": 16,
+                "proficient": false,
+                "expertise": false,
+                "mod": 3,
+                "save": 3
+            }
+        },
+        "passive_perception": 17,
+        "resistances": {
+            "conditional": [
+                {
+                    "types": [
+                        "bludgeoning",
+                        "piercing",
+                        "slashing"
+                    ],
+                    "note": "(from stoneskin)"
+                }
+            ],
+            "special": "damage from spells"
+        },
+        "initiative": {
+            "total": 3,
+            "advantage": false
+        },
+        "condition_inflict": [
+            "blinded",
+            "deafened",
+            "frightened",
+            "incapacitated",
+            "invisible",
+            "restrained"
+        ],
+        "forced_saving_throw": [
+            "charisma",
+            "constitution",
+            "dexterity",
+            "intelligence",
+            "wisdom"
+        ],
+        "gear": [
+            {
+                "name": "dagger",
+                "source": "phb",
+                "quantity": 1
+            }
+        ],
+        "legendary_action_points": {
+            "legendary_actions": 3
+        },
+        "effects": {
+            "actions": {
+                "items": [
+                    {
+                        "name": "Dagger",
+                        "effect_type": "attack",
+                        "range": 20,
+                        "attack": {
+                            "attack_type": "mw_or_rw",
+                            "hit_bonus": 8,
+                            "damages": [
+                                {
+                                    "dice_count": 1,
+                                    "dice_size": "d4",
+                                    "mod": 3,
+                                    "damage_type": "Piercing"
+                                }
+                            ]
+                        },
+                        "notes": "Melee or Ranged Weapon Attack: +8 to hit, reach 5 ft. or range 20/60 ft., one target. Hit: 5 (1d4 + 3) piercing damage."
+                    },
+                    {
+                        "name": "Modify Illusion",
+                        "effect_type": "utility",
+                        "notes": "When Tyreus casts an illusion spell that has a duration of 1 minute or longer, he can use his action to change the nature of that illusion (using the spell's normal parameters for the illusion), provided that he can see the illusion."
+                    }
+                ]
+            },
+            "traits": {
+                "items": [
+                    {
+                        "name": "Legendary Resistance",
+                        "effect_type": "utility",
+                        "notes": "If Tyreus fails a saving throw, he can choose to succeed instead.",
+                        "charges": {
+                            "max_charges": 3,
+                            "current_charges": 3,
+                            "reset_type": "long_rest",
+                            "per_rest_count": 3
+                        }
+                    },
+                    {
+                        "name": "Illusory Reality",
+                        "effect_type": "utility",
+                        "notes": "When Tyreus casts an illusion spell of 1st level or higher, he can choose one inanimate, nonmagical object that is part of the illusion and make that object real. He can do this on his turn as a bonus action while the spell is ongoing.\n\nThe object remains real for 1 minute. The object can't deal damage or otherwise directly harm anyone."
+                    },
+                    {
+                        "name": "Displacement",
+                        "effect_type": "utility",
+                        "notes": "As a bonus action, Tyreus projects an illusion that makes him appear to be standing a few inches from his actual location, causing any creature to have disadvantage on attack rolls against Tyreus. The effect ends if Tyreus takes damage, he is incapacitated, or his speed becomes 0.",
+                        "charges": {
+                            "max_charges": 1,
+                            "current_charges": 1,
+                            "reset_type": "special"
+                        }
+                    }
+                ]
+            },
+            "legendary_actions": {
+                "items": [
+                    {
+                        "name": "Scrutinize",
+                        "effect_type": "utility",
+                        "notes": "Tyreus makes an Intelligence (Investigation) or Wisdom (Perception) check."
+                    },
+                    {
+                        "name": "Cast Cantrip",
+                        "effect_type": "utility",
+                        "notes": "Tyreus casts a cantrip from his spell list."
+                    },
+                    {
+                        "name": "Cast Spell (Costs 1-3 Actions)",
+                        "effect_type": "utility",
+                        "notes": "Tyreus uses a spell slot to cast a 1st-, 2nd-, or 3rd-level spell that he has prepared. Doing so costs 1 legendary action per level of the spell."
+                    }
+                ]
+            }
+        }
+    }
+]

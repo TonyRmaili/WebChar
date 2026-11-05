@@ -1,0 +1,215 @@
+[
+    {
+        "name": "Szikzith",
+        "source": "NRH-AWoL",
+        "size": [
+            "Medium"
+        ],
+        "type": "beast",
+        "alignment": [
+            "Unaligned"
+        ],
+        "ac": [
+            {
+                "value": 13,
+                "from": [],
+                "condition": null,
+                "special": null
+            }
+        ],
+        "hp": {
+            "average": 11,
+            "formula": "2d8 + 2"
+        },
+        "speed": {
+            "walk": 40,
+            "climb": 40
+        },
+        "skill": {
+            "perception": "+3",
+            "stealth": "+7"
+        },
+        "senses": {
+            "blindsight": 10,
+            "darkvision": 60
+        },
+        "cr": {
+            "base": "1/4",
+            "xp": 50,
+            "pb": 2,
+            "lair": null,
+            "xp_lair": null,
+            "coven": null,
+            "xp_coven": null,
+            "level": null
+        },
+        "environment": [
+            "grassland",
+            "forest",
+            "hill",
+            "desert",
+            "coastal"
+        ],
+        "traitTags": [
+            "Spider Climb",
+            "Web Sense",
+            "Web Walker"
+        ],
+        "isNpc": true,
+        "ability_scores": {
+            "str": {
+                "score": 12,
+                "proficient": false,
+                "expertise": false,
+                "mod": 1,
+                "save": 1
+            },
+            "dex": {
+                "score": 16,
+                "proficient": false,
+                "expertise": false,
+                "mod": 3,
+                "save": 3
+            },
+            "con": {
+                "score": 13,
+                "proficient": false,
+                "expertise": false,
+                "mod": 1,
+                "save": 1
+            },
+            "int": {
+                "score": 8,
+                "proficient": false,
+                "expertise": false,
+                "mod": -1,
+                "save": -1
+            },
+            "wis": {
+                "score": 12,
+                "proficient": false,
+                "expertise": false,
+                "mod": 1,
+                "save": 1
+            },
+            "cha": {
+                "score": 4,
+                "proficient": false,
+                "expertise": false,
+                "mod": -3,
+                "save": -3
+            }
+        },
+        "passive_perception": 13,
+        "initiative": {
+            "total": 3,
+            "advantage": false
+        },
+        "condition_inflict": [
+            "paralyzed",
+            "poisoned"
+        ],
+        "forced_saving_throw": [
+            "constitution"
+        ],
+        "effects": {
+            "actions": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Bite",
+                        "effect_type": "attack_and_save",
+                        "range": 5,
+                        "attack": {
+                            "attack_type": "mw",
+                            "hit_bonus": 3,
+                            "damages": [
+                                {
+                                    "dice_count": 1,
+                                    "dice_size": "d6",
+                                    "mod": 1,
+                                    "damage_type": "Piercing"
+                                }
+                            ]
+                        },
+                        "save": {
+                            "target": "con",
+                            "dc_bonus": 11,
+                            "damages": [
+                                {
+                                    "dice_count": 2,
+                                    "dice_size": "d6",
+                                    "mod": 0,
+                                    "damage_type": "Poison"
+                                }
+                            ],
+                            "half_damage": true,
+                            "conditions": [
+                                "poisoned",
+                                "paralyzed"
+                            ]
+                        },
+                        "notes": "Melee Weapon Attack: +3 to hit, reach 5 ft., one creature. Hit: 4 (1d6 + 1) piercing damage, and the target must make a DC 11 Constitution saving throw, taking 7 (2d6) poison damage on a failed save, or half as much damage on a successful one. If the poison damage reduces the target to 0 hit points, the target is stable but poisoned for 1 hour, even after regaining hit points, and is paralyzed while poisoned in this way.",
+                        "charges": null
+                    }
+                ]
+            },
+            "bonus_actions": {
+                "header": null,
+                "items": []
+            },
+            "reactions": {
+                "header": null,
+                "items": []
+            },
+            "traits": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Spider Climb",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "Szikzith can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Web Sense",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "While in contact with a web, Szikzith knows the exact location of any other creature in contact with the same web.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Web Walker",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "Szikzith ignores movement restrictions caused by webbing.",
+                        "charges": null
+                    }
+                ]
+            },
+            "legendary_actions": {
+                "header": null,
+                "items": []
+            },
+            "mythic_actions": {
+                "header": null,
+                "items": []
+            },
+            "lair_actions": {
+                "header": null,
+                "items": []
+            },
+            "regional_effects": {
+                "header": null,
+                "items": []
+            }
+        }
+    }
+]

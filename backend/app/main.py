@@ -1,7 +1,7 @@
-from fastapi import FastAPI, HTTPException, Depends, status, Request, Response, Body
+from fastapi import FastAPI, HTTPException, Depends, status, Response, Body
 from contextlib import asynccontextmanager
-from sqlalchemy.orm import Session, joinedload, selectinload
-from sqlalchemy import select, update, delete, insert
+from sqlalchemy.orm import Session, selectinload
+from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 from fastapi.middleware.cors import CORSMiddleware
 from typing import Annotated
@@ -15,27 +15,27 @@ from dotenv import load_dotenv
 import os
 import json
 import shutil
+import uuid
+from fictional_names import name_generator
 from fastapi.responses import JSONResponse
 from embedder.xembedder import Embedder
 from pathlib import Path
 from app.dice_handler import roll_dice
 from app.combat_functions import heal_health, damage_health,load_character,on_longrest,on_shortrest,grant_experience
-from app.minion_functions import handle_minionEffects, filter_monster_data, get_minion_data
-from app.class_maker import ClassMaker 
+from app.minion_functions import handle_minionEffects
+from app.routers.minions import router as minions_router
 from app.file_handler import FileHandler
-from app.chat_manager import ChatManager
+from app.open_ai_api import OpenAIApi
+from app.character_adjuster import CharacterAdjuster
 from app.database.schemas import (
     UserSchema,
     CharacterSchema,
     QueryRequest,
-    CharacterIn,
     HealthData,
     TakeRestData,
     TakeRestAllData,
     GrantExperienceAll,
     MinionEffects,
-    ImportMinion,
-    QuickClassPayload,
     CreateFileRequest,
     DeleteFileRequest,
     UpdateFileRequest,
@@ -48,26 +48,7 @@ from app.database.schemas import (
 # uvicorn app.main:app --reload
 
 
-DEFAULT_PROMPT_TEXT = """# Dungeon Master Assistant
-
-You are an experienced Dungeon Master assistant helping run a Dungeons & Dragons 5th edition campaign. Your role is to support the human DM by:
-
-- Answering rules questions accurately, citing the relevant 5e mechanics
-- Helping improvise NPCs, locations, and encounters consistent with the established campaign
-- Tracking narrative threads, character relationships, and ongoing plot hooks
-- Suggesting dramatic twists and consequences that respect player agency
-- Reading the provided campaign notes as the source of truth for world lore, NPCs, and past events
-
-## Tone
-
-Be concise and practical. Favor specific, actionable suggestions over generic advice. When you're uncertain about a rule or a lore detail, say so rather than inventing something.
-
-## Boundaries
-
-- Never contradict established facts from the campaign notes
-- Never make decisions for the players — only the human DM
-- When suggesting NPCs or encounters, offer 2-3 options rather than a single prescription
-"""
+DEFAULT_PROMPT_TEXT = FileHandler().load_md("app/default_campaign_instructions.md")
 
 
 #------------------------Setup-----------------------------
@@ -100,6 +81,8 @@ app.add_middleware(
     allow_headers=["Authorization", "Content-Type", "Accept"],
     # allow_headers=["*"]
 )
+
+app.include_router(minions_router)
 
 
 @app.middleware("http")
@@ -195,24 +178,32 @@ def read_users_me(current_user: Annotated[User, Depends(get_current_user)]):
 
 
 # ------------------------Characters-----------------------------
-
 @app.post("/character", tags=["characters"])
 def create_char(current_user: Annotated[User, Depends(get_current_user)],
-        form_data: CharacterIn,db:Session = Depends(get_db)):
+        payload: dict ,db:Session = Depends(get_db)):
     try:
-        directory = os.path.join(savefiles_path , current_user.name ,"characters")
-        file_name = f"{form_data.name}.json"
-        file_path = os.path.join(directory, file_name)
-        os.makedirs(directory, exist_ok=True)
+        
+        char_name = payload["name"]
 
-        with open(file_path, "w", encoding="utf-8") as json_file:
-            json.dump({"name": form_data.name}, json_file, indent=4, ensure_ascii=False)
+        if not char_name:
+            char_name = name_generator.generate_name()
+            payload["name"] = char_name
+            
+        adjuster = CharacterAdjuster(payload=payload,
+                                     user_name=current_user.name,
+                                     char_name=char_name,
+                                     save_path=savefiles_path
+                                    )
+ 
+        adjuster.run()
+
+        db_path =adjuster.save_path +".json"
 
         character_data = CharacterSchema(
-            user_id=current_user.id,
-            name=form_data.name,
-            file_path=file_path)
-        
+                    user_id=current_user.id,
+                    name=char_name,
+                    file_path=db_path)
+                
         db_char = Character(**character_data.model_dump())
         db.add(db_char)
         db.commit()
@@ -220,6 +211,8 @@ def create_char(current_user: Annotated[User, Depends(get_current_user)],
         return JSONResponse(content={"message": "JSON data saved successfully"}, status_code=200)
     except Exception as e:
         return JSONResponse(content={"message": f"Error: {str(e)}"}, status_code=500)
+
+
     
 @app.delete("/character/{char_name}",status_code=status.HTTP_204_NO_CONTENT,tags=["characters"])
 def delete_char_name(current_user: Annotated[User, Depends(get_current_user)],
@@ -272,14 +265,12 @@ def toggle_active_char(
 def update_char(
     form_data: dict,
     current_user: Annotated[User, Depends(get_current_user)],
-    db: Session = Depends(get_db),
-    
+    db: Session = Depends(get_db),    
 ):
     charpath = os.path.join(savefiles_path,current_user.name,"characters",form_data["name"]+".json")
 
     with open(charpath,'w') as f:
         json.dump(form_data,f,indent=4)
-
 
     return {"ok": True}
 
@@ -295,58 +286,6 @@ def get_char_file(
         char_file = json.load(f)
     
     return char_file
-
-
-@app.post("/quick_class", tags=["character"])
-def create_quick_class(
-    current_user: Annotated[User,Depends(get_current_user)],
-    payload: QuickClassPayload
-):
-    
-    char_name = payload.char_name
-    prompt = payload.prompt
-
-    class_maker = ClassMaker()
-
-    if not prompt:
-        char_data = class_maker.load_empty_class_data()
-        if char_name:
-            char_data["general"]["character_name"] = char_name
-        complete_char_data = class_maker.run(char_data=char_data)
-        return complete_char_data
-    
-    
-    if not char_name:
-        char_name_missing_prompt = "character_name is missing please generate one."
-        prompt += char_name_missing_prompt
-        
-
-    instructions_path = "app/quick_class_instructions.md"
-   
-    with open(instructions_path, encoding="utf-8") as f:
-        instructions = f.read()
-    
-    
-    input= [
-        {"role": "system", "content": instructions},
-        {"role": "user", "content": prompt}
-        ]
-    
-    response = class_maker.openai_parse(
-        input=input,
-        reasoning="high",
-        text_format=class_maker.schema
-    )
-    
-
-    if char_name:
-        response["general"]["character_name"] = char_name
-    else:
-        char_name = response["general"]["character_name"]
-
-    complete_char_data = class_maker.run(char_data=response)
-
-    return complete_char_data
 
 
 
@@ -494,104 +433,6 @@ def grant_all_exp(
     return {"ok": True}
 
 
-# ------------------------Monsters-----------------------------
-
-@app.post("/minions", tags=["monsters"])
-def create_minion(
-        current_user: Annotated[User, Depends(get_current_user)],
-        form_data:dict,
-        char_name: str = Query(...),
-        db:Session = Depends(get_db)):
-
-    dirr = os.path.join(savefiles_path,current_user.name,"minions",char_name)
-    os.makedirs(dirr,exist_ok=True)
-
-    file_name = f'{form_data["name"]}.json'
-    savepath = os.path.join(dirr,file_name)
-    form_data["file_path"] = savepath
-
-    with open(savepath,"w") as f:
-        json.dump(form_data,f,indent=4) 
-   
-    return savepath
-
-@app.get("/minions", tags=["monsters"])
-def get_minions(
-    current_user: Annotated[User, Depends(get_current_user)],
-    char_name: str = Query(...)
-    ):
-    
-    minions_path = os.path.join(savefiles_path,current_user.name,"minions",char_name)
-    minions = []
-    try:
-        for filename in os.listdir(minions_path):
-            filepath = os.path.join(minions_path, filename)
-            if os.path.isfile(filepath):
-
-                with open(filepath) as f:
-                    data = json.load(f)
-                minions.append(data)
-    except FileNotFoundError as e:
-        return []
-    return minions
-
-
-@app.put("/minions",tags=["monsters"])
-def update_minion(
-    current_user: Annotated[User, Depends(get_current_user)],
-    form_data:dict,
-    char_name: str = Query(...)
-    
-):
-    minion_path = os.path.join(savefiles_path,current_user.name,"minions",char_name,f"{form_data["name"]}.json")
-    with open(minion_path, "w") as f:
-        json.dump(form_data,f,indent=4)
-
-    return form_data
-
-@app.delete("/minions", tags=["monsters"])
-def delete_minion(
-    current_user: Annotated[User, Depends(get_current_user)],
-    char_name: str = Query(...),
-    form_data: dict = Body(...)
-):
-    
-    minion_path = os.path.join(
-        savefiles_path,
-        current_user.name,
-        "minions",
-        char_name,
-        f"{form_data.get('name')}.json"
-    )
-
-    if not os.path.exists(minion_path):
-        raise HTTPException(status_code=404, detail=f"Minion not found: {form_data.get('name')}")
-
-    try:
-        os.remove(minion_path)
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to delete minion: {e}")
-
-    return {"status": "success", "deleted": form_data.get("name")}
-
-@app.get("/monsters/get_all_names", tags=["monsters"])
-def get_all_monster_names(
-    current_user: Annotated[User, Depends(get_current_user)],
-):
-    monster_names = filter_monster_data()
-
-    return monster_names
-
-@app.post("/minions/import", tags=["monsters"])
-def import_minion(
-    current_user: Annotated[User, Depends(get_current_user)],
-    selected_minion: ImportMinion,
-    char_name: str = Query(...)
-):
-    minion_data = get_minion_data(selected_minion.data,current_user.name,char_name)
-    return minion_data
-
-    
 
 # ------------------------Dice-----------------------------
 @app.post("/dice", tags=["dice"])
@@ -644,65 +485,9 @@ def post_query(query: QueryRequest, pdf_name="players_handbook_5e"):
     
     return {"answer": summary}
 
-# ------------------------5etools Data-----------------------------
+# ------------------------Catalogue Data-----------------------------
 
-# @app.get("/5etools/spells/filenames",tags=["5etools"])
-# def get_spell_filenames():
-
-#     path = os.path.join(fiveEtools_path,"spells/")
-#     path = os.path.abspath(path)
-
-#     try:
-#         filenames = [
-#         os.path.splitext(f)[0]
-#         for f in os.listdir(path)
-#         if os.path.isfile(os.path.join(path, f))
-#     ]
-
-#         return filenames
-    
-#     except FileNotFoundError:
-#         return {"file not found"}
-    
-
-# @app.get("/5etools/spells/load_spells/{file_name}",tags=["5etools"])
-# def get_spells(file_name):
-
-#     path = os.path.join(fiveEtools_path,"spells/",file_name+".json")
-#     path = os.path.abspath(path)
-
-#     with open(path) as f:
-#         spells_data = json.load(f)
-    
-#     spells_data = spells_data["spell"]
-#     spell_names = []
-#     for spell in spells_data:
-#         spell_names.append(spell["name"])
-
-#     return spell_names
-
-# @app.get("/5etools/spells/select_spell/{file_name}/{spell_name}",tags=["5etools"])
-# def select_spell(file_name,spell_name):
-#     print(file_name)
-#     print(spell_name)
-   
-#     file_path = os.path.join(fiveEtools_path,"spells/",file_name+".json")
-#     file_path = os.path.abspath(file_path)
-
-#     with open(file_path) as f:
-#         spells_data = json.load(f)
-
-#     spells_data = spells_data["spell"]
-
-    
-    
-#     for spell in spells_data:
-#         if spell["name"] == spell_name:
-#             spell = clean_spell(spell)
-#             return spell
-
-
-@app.get("/5etools/classes", tags=["5etools"])
+@app.get("/catalogue/classes", tags=["catalogue"])
 def get_classes():
     try:
         classes_path = os.path.join(output_path, "classes")
@@ -723,20 +508,39 @@ def get_classes():
         return {"error": str(e)}
 
 
-@app.get("/5etools/feats", tags=["5etools"])
-def get_feats():
+@app.get("/catalogue/feats", tags=["catalogue"])
+def get_feats(current_user: Annotated[User, Depends(get_current_user)]):
     try:
         filehandler = FileHandler()
-        feats_path = os.path.join(output_path,"feats","feats")
+        og_feats_path = os.path.join(output_path,"feats","feats")
         sources_path = os.path.join(output_path,"feats","sources")
         categories_path = os.path.join(output_path,"feats","categories")
+        public_path = os.path.join(output_path,"feats","homebrew")
 
-        feats = filehandler.load_json(feats_path)
+        og_feats = filehandler.load_json(og_feats_path)
         sources = filehandler.load_json(sources_path)
         categories = filehandler.load_json(categories_path)
+        
+
+        try:
+            public_data = filehandler.load_json(public_path)
+        except FileNotFoundError:
+            public_data = []
+
+        try:
+            private_path = os.path.join(
+                savefiles_path, current_user.name, "homebrew_catalogue", "feats"
+            )
+            private_data = filehandler.load_json(private_path)
+        except FileNotFoundError:
+            private_data = []
+
+
 
         return {
-            "feats": feats,
+            "feats": og_feats,
+            "public_feats": public_data,
+            "private_feats":private_data,
             "sources": sources,
             "categories": categories
         }
@@ -747,41 +551,852 @@ def get_feats():
         return {"error": str(e)}
 
 
-@app.get("/5etools/backgrounds", tags=["5etools"])
-def get_backgrounds():
+@app.post("/catalogue/feats", tags=["catalogue"], status_code=status.HTTP_201_CREATED)
+def create_feat(
+    payload: dict,
+    current_user: Annotated[User, Depends(get_current_user)],
+):
+    visibility = payload.get("visibility", "private")
+    if visibility not in ("public", "private"):
+        raise HTTPException(status_code=400, detail="visibility must be 'public' or 'private'")
+
+    # Stamp identity + ownership at the boundary.
+    payload["id"] = str(uuid.uuid4())
+    payload["created_by"] = current_user.name
+
+    filehandler = FileHandler()
+    path = _resolve_homebrew_path(visibility, current_user.name, "feats")
+    data = _load_or_empty(path)
+    data.append(payload)
+    filehandler.save_json(path, data)
+
+    return payload  # return the stamped entry so frontend gets the id
+
+
+@app.put("/catalogue/feats/{feat_id}", tags=["catalogue"])
+def update_feat(
+    feat_id: str,
+    payload: dict,
+    current_user: Annotated[User, Depends(get_current_user)],
+):
+    new_visibility = payload.get("visibility", "private")
+    if new_visibility not in ("public", "private"):
+        raise HTTPException(status_code=400, detail="visibility must be 'public' or 'private'")
+
+    filehandler = FileHandler()
+    public_path = _resolve_homebrew_path("public", current_user.name, "feats")
+    private_path = _resolve_homebrew_path("private", current_user.name, "feats")
+
+    public_data = _load_or_empty(public_path)
+    private_data = _load_or_empty(private_path)
+
+    # Find the entry in either file.
+    existing = None
+    old_visibility = None
+    for entry in public_data:
+        if entry.get("id") == feat_id:
+            existing = entry
+            old_visibility = "public"
+            break
+    if existing is None:
+        for entry in private_data:
+            if entry.get("id") == feat_id:
+                existing = entry
+                old_visibility = "private"
+                break
+
+    if existing is None:
+        raise HTTPException(status_code=404, detail="Feat not found")
+
+    # Ownership check.
+    if existing.get("created_by") != current_user.name:
+        raise HTTPException(status_code=403, detail="You can only edit your own homebrew")
+
+    # Preserve identity fields.
+    payload["id"] = feat_id
+    payload["created_by"] = current_user.name
+
+    # Remove from old file.
+    if old_visibility == "public":
+        public_data = [e for e in public_data if e.get("id") != feat_id]
+        filehandler.save_json(public_path, public_data)
+    else:
+        private_data = [e for e in private_data if e.get("id") != feat_id]
+        filehandler.save_json(private_path, private_data)
+
+    # Add to new file (may be same file if visibility unchanged).
+    target_path = _resolve_homebrew_path(new_visibility, current_user.name, "feats")
+    target_data = _load_or_empty(target_path)
+    target_data.append(payload)
+    filehandler.save_json(target_path, target_data)
+
+    return payload
+
+
+@app.delete("/catalogue/feats/{feat_id}", tags=["catalogue"], status_code=status.HTTP_204_NO_CONTENT)
+def delete_feat(
+    feat_id: str,
+    current_user: Annotated[User, Depends(get_current_user)],
+):
+    filehandler = FileHandler()
+    public_path = _resolve_homebrew_path("public", current_user.name, "feats")
+    private_path = _resolve_homebrew_path("private", current_user.name, "feats")
+
+    for path in (public_path, private_path):
+        data = _load_or_empty(path)
+        for entry in data:
+            if entry.get("id") == feat_id:
+                if entry.get("created_by") != current_user.name:
+                    raise HTTPException(status_code=403, detail="You can only delete your own homebrew")
+                new_data = [e for e in data if e.get("id") != feat_id]
+                filehandler.save_json(path, new_data)
+                return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+    raise HTTPException(status_code=404, detail="Feat not found")
+
+
+
+
+@app.get("/catalogue/backgrounds", tags=["catalogue"])
+def get_backgrounds(current_user: Annotated[User, Depends(get_current_user)]):
     try:
-        backgrounds_path = os.path.join(output_path,"backgrounds","backgrounds")
-        data = FileHandler().load_json(backgrounds_path)
-        return data
+        filehandler = FileHandler()
+        
+        og_backgrounds_path = os.path.join(output_path,"backgrounds","backgrounds")
+        feat_tags_path = os.path.join(output_path,"backgrounds","feat_tags")
+        sources_path = os.path.join(output_path,"backgrounds","sources")
+        public_path = os.path.join(output_path,"backgrounds","homebrew")
+
+        og_bg_data = filehandler.load_json(og_backgrounds_path)
+        feats_data = filehandler.load_json(feat_tags_path)
+        sources_data = filehandler.load_json(sources_path)
+
+        try:
+            public_data = filehandler.load_json(public_path)
+        except FileNotFoundError:
+            public_data = []
+
+        try:
+            private_path = os.path.join(
+                savefiles_path, current_user.name, "homebrew_catalogue", "backgrounds"
+            )
+            private_data = filehandler.load_json(private_path)
+        except FileNotFoundError:
+            private_data = []
+
+        return {
+            "backgrounds": og_bg_data,
+            "public_backgrounds": public_data,
+            "private_backgrounds":private_data,
+            "feats": feats_data,
+            "sources": sources_data
+        }
+
 
     except FileNotFoundError as e:
         print("FileNotFoundError:", e)
         return {"error": str(e)}
     
 
+@app.post("/catalogue/backgrounds", tags=["catalogue"], status_code=status.HTTP_201_CREATED)
+def create_background(
+    payload: dict,
+    current_user: Annotated[User, Depends(get_current_user)],
+):
+    visibility = payload.get("visibility", "private")
+    if visibility not in ("public", "private"):
+        raise HTTPException(status_code=400, detail="visibility must be 'public' or 'private'")
 
- 
-@app.get("/5etools/items",tags=["5etools"])
-def get_items():
+    # Stamp identity + ownership at the boundary.
+    payload["id"] = str(uuid.uuid4())
+    payload["created_by"] = current_user.name
+
+    filehandler = FileHandler()
+    path = _resolve_homebrew_path(visibility, current_user.name, "backgrounds")
+    data = _load_or_empty(path)
+    data.append(payload)
+    filehandler.save_json(path, data)
+
+    return payload  # return the stamped entry so frontend gets the id
+    
+@app.put("/catalogue/backgrounds/{background_id}", tags=["catalogue"])
+def update_background(
+    background_id: str,
+    payload: dict,
+    current_user: Annotated[User, Depends(get_current_user)],
+):
+    new_visibility = payload.get("visibility", "private")
+    if new_visibility not in ("public", "private"):
+        raise HTTPException(status_code=400, detail="visibility must be 'public' or 'private'")
+
+    filehandler = FileHandler()
+    public_path = _resolve_homebrew_path("public", current_user.name, "backgrounds")
+    private_path = _resolve_homebrew_path("private", current_user.name, "backgrounds")
+
+    public_data = _load_or_empty(public_path)
+    private_data = _load_or_empty(private_path)
+
+    # Find the entry in either file.
+    existing = None
+    old_visibility = None
+    for entry in public_data:
+        if entry.get("id") == background_id:
+            existing = entry
+            old_visibility = "public"
+            break
+    if existing is None:
+        for entry in private_data:
+            if entry.get("id") == background_id:
+                existing = entry
+                old_visibility = "private"
+                break
+
+    if existing is None:
+        raise HTTPException(status_code=404, detail="Background not found")
+
+    # Ownership check.
+    if existing.get("created_by") != current_user.name:
+        raise HTTPException(status_code=403, detail="You can only edit your own homebrew")
+
+    # Preserve identity fields.
+    payload["id"] = background_id
+    payload["created_by"] = current_user.name
+
+    # Remove from old file.
+    if old_visibility == "public":
+        public_data = [e for e in public_data if e.get("id") != background_id]
+        filehandler.save_json(public_path, public_data)
+    else:
+        private_data = [e for e in private_data if e.get("id") != background_id]
+        filehandler.save_json(private_path, private_data)
+
+    # Add to new file (may be same file if visibility unchanged).
+    target_path = _resolve_homebrew_path(new_visibility, current_user.name, "backgrounds")
+    target_data = _load_or_empty(target_path)
+    target_data.append(payload)
+    filehandler.save_json(target_path, target_data)
+
+    return payload
+
+@app.delete("/catalogue/backgrounds/{background_id}", tags=["catalogue"], status_code=status.HTTP_204_NO_CONTENT)
+def delete_background(
+    background_id: str,
+    current_user: Annotated[User, Depends(get_current_user)],
+):
+    filehandler = FileHandler()
+    public_path = _resolve_homebrew_path("public", current_user.name, "backgrounds")
+    private_path = _resolve_homebrew_path("private", current_user.name, "backgrounds")
+
+    for path in (public_path, private_path):
+        data = _load_or_empty(path)
+        for entry in data:
+            if entry.get("id") == background_id:
+                if entry.get("created_by") != current_user.name:
+                    raise HTTPException(status_code=403, detail="You can only delete your own homebrew")
+                new_data = [e for e in data if e.get("id") != background_id]
+                filehandler.save_json(path, new_data)
+                return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+    raise HTTPException(status_code=404, detail="Background not found")
+
+
+
+@app.get("/catalogue/optional_features", tags=["catalogue"])
+def get_optional_features(current_user: Annotated[User, Depends(get_current_user)]):
     try:
-        path = os.path.join(fiveEtools_path,"cleaned","items","all_items")
-        data = FileHandler().load_json(path)
+        filehandler = FileHandler()
+        og_path = os.path.join(output_path, "optional_features", "all_features")
+        public_path = os.path.join(output_path, "optional_features", "homebrew")
+
+        og_data = filehandler.load_json(og_path)
+
+        try:
+            public_data = filehandler.load_json(public_path)
+        except FileNotFoundError:
+            public_data = []
+
+        try:
+            private_path = os.path.join(
+                savefiles_path, current_user.name, "homebrew_catalogue", "optional_features"
+            )
+            private_data = filehandler.load_json(private_path)
+        except FileNotFoundError:
+            private_data = []
+
+        return {
+            "features": og_data,
+            "public_features": public_data,
+            "private_features": private_data,
+        }
+    except FileNotFoundError as e:
+        print("FileNotFoundError:", e)
+        return {"error": str(e)}
+
+
+@app.post("/catalogue/optional_features", tags=["catalogue"], status_code=status.HTTP_201_CREATED)
+def create_optional_feature(
+    payload: dict,
+    current_user: Annotated[User, Depends(get_current_user)],
+):
+    visibility = payload.get("visibility", "private")
+    if visibility not in ("public", "private"):
+        raise HTTPException(status_code=400, detail="visibility must be 'public' or 'private'")
+
+    payload["id"] = str(uuid.uuid4())
+    payload["created_by"] = current_user.name
+
+    filehandler = FileHandler()
+    path = _resolve_homebrew_path(visibility, current_user.name, "optional_features")
+    data = _load_or_empty(path)
+    data.append(payload)
+    filehandler.save_json(path, data)
+    return payload
+
+
+@app.put("/catalogue/optional_features/{feature_id}", tags=["catalogue"])
+def update_optional_feature(
+    feature_id: str,
+    payload: dict,
+    current_user: Annotated[User, Depends(get_current_user)],
+):
+    new_visibility = payload.get("visibility", "private")
+    if new_visibility not in ("public", "private"):
+        raise HTTPException(status_code=400, detail="visibility must be 'public' or 'private'")
+
+    filehandler = FileHandler()
+    public_path = _resolve_homebrew_path("public", current_user.name, "optional_features")
+    private_path = _resolve_homebrew_path("private", current_user.name, "optional_features")
+    public_data = _load_or_empty(public_path)
+    private_data = _load_or_empty(private_path)
+
+    existing = None
+    old_visibility = None
+    for entry in public_data:
+        if entry.get("id") == feature_id:
+            existing = entry
+            old_visibility = "public"
+            break
+    if existing is None:
+        for entry in private_data:
+            if entry.get("id") == feature_id:
+                existing = entry
+                old_visibility = "private"
+                break
+
+    if existing is None:
+        raise HTTPException(status_code=404, detail="Optional feature not found")
+    if existing.get("created_by") != current_user.name:
+        raise HTTPException(status_code=403, detail="You can only edit your own homebrew")
+
+    payload["id"] = feature_id
+    payload["created_by"] = current_user.name
+
+    if old_visibility == "public":
+        public_data = [e for e in public_data if e.get("id") != feature_id]
+        filehandler.save_json(public_path, public_data)
+    else:
+        private_data = [e for e in private_data if e.get("id") != feature_id]
+        filehandler.save_json(private_path, private_data)
+
+    target_path = _resolve_homebrew_path(new_visibility, current_user.name, "optional_features")
+    target_data = _load_or_empty(target_path)
+    target_data.append(payload)
+    filehandler.save_json(target_path, target_data)
+    return payload
+
+
+@app.delete("/catalogue/optional_features/{feature_id}", tags=["catalogue"], status_code=status.HTTP_204_NO_CONTENT)
+def delete_optional_feature(
+    feature_id: str,
+    current_user: Annotated[User, Depends(get_current_user)],
+):
+    filehandler = FileHandler()
+    public_path = _resolve_homebrew_path("public", current_user.name, "optional_features")
+    private_path = _resolve_homebrew_path("private", current_user.name, "optional_features")
+
+    for path in (public_path, private_path):
+        data = _load_or_empty(path)
+        for entry in data:
+            if entry.get("id") == feature_id:
+                if entry.get("created_by") != current_user.name:
+                    raise HTTPException(status_code=403, detail="You can only delete your own homebrew")
+                new_data = [e for e in data if e.get("id") != feature_id]
+                filehandler.save_json(path, new_data)
+                return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+    raise HTTPException(status_code=404, detail="Optional feature not found")
+
+
+
+
+@app.get("/catalogue/spells", tags=["catalogue"])
+def get_spells():
+    try:
+        filehandler = FileHandler()
+        
+        spells_path = os.path.join(output_path,"spells","spells")
+        area_tags_path = os.path.join(output_path,"spells","area_tags")
+        sources_path = os.path.join(output_path,"spells","sources")
+        schools_path = os.path.join(output_path,"spells","schools")
+        class_list_path = os.path.join(output_path,"spells","class_list")
+
+        spells_data = filehandler.load_json(spells_path)
+        area_tags_data = filehandler.load_json(area_tags_path)
+        sources_data = filehandler.load_json(sources_path)
+        schools_data = filehandler.load_json(schools_path)
+        class_list_data = filehandler.load_json(class_list_path)
+
+        return {
+            "spells": spells_data,
+            "schools": schools_data,
+            "sources": sources_data,
+            "area_tags": area_tags_data,
+            "class_list": class_list_data
+        }
+
+
+    except FileNotFoundError as e:
+        print("FileNotFoundError:", e)
+        return {"error": str(e)}
+
+
+@app.get("/catalogue/monsters", tags=["catalogue"])
+def get_monsters(current_user: Annotated[User, Depends(get_current_user)]):
+    try:
+        data = {
+            "monsters": {},
+            "environments": None,
+            "traits": None,
+            "types": None,
+            "sizes": None,
+            "senses": None,
+            "public_monsters": [],
+            "private_monsters": [],
+        }
+        filehandler = FileHandler()
+        monsters_path = os.path.join(output_path, "monsters")
+        cleaned_path = os.path.join(monsters_path, "stripped_source_books")
+        for file in os.listdir(cleaned_path):
+            name, ext = os.path.splitext(file)
+            path = os.path.join(cleaned_path, name)
+            feature_data = filehandler.load_json(path)
+            data["monsters"][name] = feature_data
+
+        env_path = os.path.join(monsters_path, "environment_tags")
+        traits_path = os.path.join(monsters_path, "trait_tags")
+        types_path = os.path.join(monsters_path, "type_tags")
+        sizes_path = os.path.join(monsters_path, "size_tags")
+        senses_path = os.path.join(monsters_path, "senses_tags")
+
+        data["environments"] = filehandler.load_json(env_path)
+        data["types"] = filehandler.load_json(types_path)
+        data["traits"] = filehandler.load_json(traits_path)
+        data["sizes"] = filehandler.load_json(sizes_path)
+        data["senses"] = filehandler.load_json(senses_path)
+
+        # Homebrew lives in separate files and may not exist yet.
+        # _load_or_empty already swallows FileNotFoundError → [].
+        data["public_monsters"] = _load_or_empty(
+            _resolve_homebrew_path("public", current_user.name, "monsters")
+        )
+        data["private_monsters"] = _load_or_empty(
+            _resolve_homebrew_path("private", current_user.name, "monsters")
+        )
+
         return data
+
+    except FileNotFoundError as e:
+        print("FileNotFoundError:", e)
+        return {"error": str(e)}
+    
+@app.post("/catalogue/monsters", tags=["catalogue"], status_code=status.HTTP_201_CREATED)
+def create_monster(
+    payload: dict,
+    current_user: Annotated[User, Depends(get_current_user)],
+):
+    visibility = payload.get("visibility", "private")
+    if visibility not in ("public", "private"):
+        raise HTTPException(status_code=400, detail="visibility must be 'public' or 'private'")
+
+    # Stamp identity + ownership at the boundary.
+    payload["id"] = str(uuid.uuid4())
+    payload["created_by"] = current_user.name
+    payload["source"] = "HOMEBREW"
+
+    filehandler = FileHandler()
+    path = _resolve_homebrew_path(visibility, current_user.name, "monsters")
+    data = _load_or_empty(path)
+    data.append(payload)
+    filehandler.save_json(path, data)
+
+    return payload  # return the stamped entry so frontend gets the id
+
+
+@app.put("/catalogue/monsters/{monster_id}", tags=["catalogue"])
+def update_monster(
+    monster_id: str,
+    payload: dict,
+    current_user: Annotated[User, Depends(get_current_user)],
+):
+    new_visibility = payload.get("visibility", "private")
+    if new_visibility not in ("public", "private"):
+        raise HTTPException(status_code=400, detail="visibility must be 'public' or 'private'")
+
+    filehandler = FileHandler()
+    public_path = _resolve_homebrew_path("public", current_user.name, "monsters")
+    private_path = _resolve_homebrew_path("private", current_user.name, "monsters")
+
+    public_data = _load_or_empty(public_path)
+    private_data = _load_or_empty(private_path)
+
+    # Find the entry in either file.
+    existing = None
+    old_visibility = None
+    for entry in public_data:
+        if entry.get("id") == monster_id:
+            existing = entry
+            old_visibility = "public"
+            break
+    if existing is None:
+        for entry in private_data:
+            if entry.get("id") == monster_id:
+                existing = entry
+                old_visibility = "private"
+                break
+
+    if existing is None:
+        raise HTTPException(status_code=404, detail="Monster not found")
+
+    # Ownership check.
+    if existing.get("created_by") != current_user.name:
+        raise HTTPException(status_code=403, detail="You can only edit your own homebrew")
+
+    # Preserve identity fields.
+    payload["id"] = monster_id
+    payload["created_by"] = current_user.name
+    payload["source"] = "HOMEBREW"
+
+    # Remove from old file.
+    if old_visibility == "public":
+        public_data = [e for e in public_data if e.get("id") != monster_id]
+        filehandler.save_json(public_path, public_data)
+    else:
+        private_data = [e for e in private_data if e.get("id") != monster_id]
+        filehandler.save_json(private_path, private_data)
+
+    # Add to new file (may be the same file if visibility is unchanged).
+    target_path = _resolve_homebrew_path(new_visibility, current_user.name, "monsters")
+    target_data = _load_or_empty(target_path)
+    target_data.append(payload)
+    filehandler.save_json(target_path, target_data)
+
+    return payload
+
+
+@app.delete("/catalogue/monsters/{monster_id}", tags=["catalogue"], status_code=status.HTTP_204_NO_CONTENT)
+def delete_monster(
+    monster_id: str,
+    current_user: Annotated[User, Depends(get_current_user)],
+):
+    filehandler = FileHandler()
+    public_path = _resolve_homebrew_path("public", current_user.name, "monsters")
+    private_path = _resolve_homebrew_path("private", current_user.name, "monsters")
+
+    for path in (public_path, private_path):
+        data = _load_or_empty(path)
+        for entry in data:
+            if entry.get("id") == monster_id:
+                if entry.get("created_by") != current_user.name:
+                    raise HTTPException(status_code=403, detail="You can only delete your own homebrew")
+                new_data = [e for e in data if e.get("id") != monster_id]
+                filehandler.save_json(path, new_data)
+                return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+    raise HTTPException(status_code=404, detail="Monster not found")
+
+@app.get("/catalogue/items",tags=["catalogue"])
+def get_items(current_user: Annotated[User, Depends(get_current_user)]):
+    try:
+        filehandler = FileHandler()
+        og_path = os.path.join(output_path,"items","all_items")
+        public_path = os.path.join(output_path,"items","homebrew")
+
+        og_data = filehandler.load_json(og_path)
+
+        try:
+            public_data = filehandler.load_json(public_path)
+        except FileNotFoundError:
+            public_data = []
+
+        try:
+            private_path = os.path.join(
+                savefiles_path, current_user.name, "homebrew_catalogue", "items"
+            )
+            private_data = filehandler.load_json(private_path)
+        except FileNotFoundError:
+            private_data = []
+
+        return {
+            "original": og_data,
+            "public_homebrew": public_data,
+            "private_homebrew": private_data
+        }
     except FileNotFoundError:
-        return {"file not found"}
+        raise HTTPException(status_code=500, detail="Item data not found")
     
 
-@app.get("/5etools/races",tags=["5etools"])
-def get_races():
+@app.post("/catalogue/items", tags=["catalogue"], status_code=status.HTTP_201_CREATED)
+def create_item(
+    payload: dict,
+    current_user: Annotated[User, Depends(get_current_user)],
+):
+    visibility = payload.get("visibility", "private")
+    if visibility not in ("public", "private"):
+        raise HTTPException(status_code=400, detail="visibility must be 'public' or 'private'")
+
+    # Stamp identity + ownership at the boundary.
+    payload["id"] = str(uuid.uuid4())
+    payload["created_by"] = current_user.name
+
+    filehandler = FileHandler()
+    path = _resolve_homebrew_path(visibility, current_user.name,"items")
+    data = _load_or_empty(path)
+    data.append(payload)
+    filehandler.save_json(path, data)
+
+    return payload  # return the stamped entry so frontend gets the id
+
+
+@app.put("/catalogue/items/{item_id}", tags=["catalogue"])
+def update_item(
+    item_id: str,
+    payload: dict,
+    current_user: Annotated[User, Depends(get_current_user)],
+):
+    new_visibility = payload.get("visibility", "private")
+    if new_visibility not in ("public", "private"):
+        raise HTTPException(status_code=400, detail="visibility must be 'public' or 'private'")
+
+    filehandler = FileHandler()
+    public_path = _resolve_homebrew_path("public", current_user.name,"items")
+    private_path = _resolve_homebrew_path("private", current_user.name,"items")
+
+    public_data = _load_or_empty(public_path)
+    private_data = _load_or_empty(private_path)
+
+    # Find the entry in either file.
+    existing = None
+    old_visibility = None
+    for entry in public_data:
+        if entry.get("id") == item_id:
+            existing = entry
+            old_visibility = "public"
+            break
+    if existing is None:
+        for entry in private_data:
+            if entry.get("id") == item_id:
+                existing = entry
+                old_visibility = "private"
+                break
+
+    if existing is None:
+        raise HTTPException(status_code=404, detail="Item not found")
+
+    # Ownership check.
+    if existing.get("created_by") != current_user.name:
+        raise HTTPException(status_code=403, detail="You can only edit your own homebrew")
+
+    # Preserve identity fields.
+    payload["id"] = item_id
+    payload["created_by"] = current_user.name
+
+    # Remove from old file.
+    if old_visibility == "public":
+        public_data = [e for e in public_data if e.get("id") != item_id]
+        filehandler.save_json(public_path, public_data)
+    else:
+        private_data = [e for e in private_data if e.get("id") != item_id]
+        filehandler.save_json(private_path, private_data)
+
+    # Add to new file (may be same file if visibility unchanged).
+    target_path = _resolve_homebrew_path(new_visibility, current_user.name, "items")
+    target_data = _load_or_empty(target_path)
+    target_data.append(payload)
+    filehandler.save_json(target_path, target_data)
+
+    return payload
+
+@app.delete("/catalogue/items/{item_id}", tags=["catalogue"], status_code=status.HTTP_204_NO_CONTENT)
+def delete_item(
+    item_id: str,
+    current_user: Annotated[User, Depends(get_current_user)],
+):
+    filehandler = FileHandler()
+    public_path = _resolve_homebrew_path("public", current_user.name,"items")
+    private_path = _resolve_homebrew_path("private", current_user.name, "items")
+
+    for path in (public_path, private_path):
+        data = _load_or_empty(path)
+        for entry in data:
+            if entry.get("id") == item_id:
+                if entry.get("created_by") != current_user.name:
+                    raise HTTPException(status_code=403, detail="You can only delete your own homebrew")
+                new_data = [e for e in data if e.get("id") != item_id]
+                filehandler.save_json(path, new_data)
+                return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+    raise HTTPException(status_code=404, detail="Item not found")
+
+
+
+
+@app.get("/catalogue/races", tags=["catalogue"])
+def get_races(current_user: Annotated[User, Depends(get_current_user)]):
     try:
-        path = "app/output/races/all_races_final"
-        data = FileHandler().load_json(path)
-        return data
+        filehandler = FileHandler()
+        og_path = os.path.join(output_path, "races", "all_races_final")
+        public_homebrew_path = os.path.join(output_path, "races", "homebrew")
+
+        og_data = filehandler.load_json(og_path)
+
+        try:
+            public_homebrew_data = filehandler.load_json(public_homebrew_path)
+        except FileNotFoundError:
+            public_homebrew_data = []
+
+        try:
+            private_homebrew_path = os.path.join(
+                savefiles_path, current_user.name, "homebrew_catalogue", "races"
+            )
+            private_homebrew_data = filehandler.load_json(private_homebrew_path)
+        except FileNotFoundError:
+            private_homebrew_data = []
+
+        return {
+            "original": og_data,
+            "public_homebrew": public_homebrew_data,
+            "private_homebrew": private_homebrew_data,
+        }
     except FileNotFoundError:
-        return {"file not found"}
-    
+        raise HTTPException(status_code=500, detail="Race data not found")
+
+@app.post("/catalogue/races", tags=["catalogue"], status_code=status.HTTP_201_CREATED)
+def create_race(
+    payload: dict,
+    current_user: Annotated[User, Depends(get_current_user)],
+):
+    visibility = payload.get("visibility", "private")
+    if visibility not in ("public", "private"):
+        raise HTTPException(status_code=400, detail="visibility must be 'public' or 'private'")
+
+    # Stamp identity + ownership at the boundary.
+    payload["id"] = str(uuid.uuid4())
+    payload["created_by"] = current_user.name
+
+    filehandler = FileHandler()
+    path = _resolve_homebrew_path(visibility, current_user.name,"races")
+    data = _load_or_empty(path)
+    data.append(payload)
+    filehandler.save_json(path, data)
+
+    return payload  # return the stamped entry so frontend gets the id
+
+@app.put("/catalogue/races/{race_id}", tags=["catalogue"])
+def update_race(
+    race_id: str,
+    payload: dict,
+    current_user: Annotated[User, Depends(get_current_user)],
+):
+    new_visibility = payload.get("visibility", "private")
+    if new_visibility not in ("public", "private"):
+        raise HTTPException(status_code=400, detail="visibility must be 'public' or 'private'")
+
+    filehandler = FileHandler()
+    public_path = _resolve_homebrew_path("public", current_user.name, "races")
+    private_path = _resolve_homebrew_path("private", current_user.name, "races")
+
+    public_data = _load_or_empty(public_path)
+    private_data = _load_or_empty(private_path)
+
+    # Find the entry in either file.
+    existing = None
+    old_visibility = None
+    for entry in public_data:
+        if entry.get("id") == race_id:
+            existing = entry
+            old_visibility = "public"
+            break
+    if existing is None:
+        for entry in private_data:
+            if entry.get("id") == race_id:
+                existing = entry
+                old_visibility = "private"
+                break
+
+    if existing is None:
+        raise HTTPException(status_code=404, detail="Race not found")
+
+    # Ownership check.
+    if existing.get("created_by") != current_user.name:
+        raise HTTPException(status_code=403, detail="You can only edit your own homebrew")
+
+    # Preserve identity fields.
+    payload["id"] = race_id
+    payload["created_by"] = current_user.name
+
+    # Remove from old file.
+    if old_visibility == "public":
+        public_data = [e for e in public_data if e.get("id") != race_id]
+        filehandler.save_json(public_path, public_data)
+    else:
+        private_data = [e for e in private_data if e.get("id") != race_id]
+        filehandler.save_json(private_path, private_data)
+
+    # Add to new file (may be same file if visibility unchanged).
+    target_path = _resolve_homebrew_path(new_visibility, current_user.name, "races")
+    target_data = _load_or_empty(target_path)
+    target_data.append(payload)
+    filehandler.save_json(target_path, target_data)
+
+    return payload
+
+@app.delete("/catalogue/races/{race_id}", tags=["catalogue"], status_code=status.HTTP_204_NO_CONTENT)
+def delete_race(
+    race_id: str,
+    current_user: Annotated[User, Depends(get_current_user)],
+):
+    filehandler = FileHandler()
+    public_path = _resolve_homebrew_path("public", current_user.name,"races")
+    private_path = _resolve_homebrew_path("private", current_user.name, "races")
+
+    for path in (public_path, private_path):
+        data = _load_or_empty(path)
+        for entry in data:
+            if entry.get("id") == race_id:
+                if entry.get("created_by") != current_user.name:
+                    raise HTTPException(status_code=403, detail="You can only delete your own homebrew")
+                new_data = [e for e in data if e.get("id") != race_id]
+                filehandler.save_json(path, new_data)
+                return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+    raise HTTPException(status_code=404, detail="Race not found")
 
 
+def _resolve_homebrew_path(visibility: str, username: str, catalogue: str) -> str:
+    if visibility == "public":
+        return os.path.join(output_path, catalogue, "homebrew")
+    if visibility == "private":
+        folderpath = os.path.join(savefiles_path, username, "homebrew_catalogue")
+        os.makedirs(folderpath, exist_ok=True)
+        return os.path.join(folderpath, catalogue)
+    raise HTTPException(status_code=400, detail=f"Invalid visibility: {visibility}")
+
+
+def _load_or_empty(path: str) -> list:
+    try:
+        return FileHandler().load_json(path)
+    except FileNotFoundError:
+        return []
 
 
 # ------------------------Campaigns-----------------------------
@@ -1006,7 +1621,7 @@ def handle_dm_assistant(
    
 
     messages = [m.model_dump() for m in payload.messages]
-    chat_manager = ChatManager()
+    chat_manager = OpenAIApi()
    
     response = chat_manager.chat_log(
         instructions= payload.instructions,

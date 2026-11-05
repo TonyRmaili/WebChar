@@ -6,7 +6,9 @@ import Classes from "./Classes/Classes";
 import Feats from "./Feats/Feats";
 
 import Backgrounds from "./Backgrounds/Backgrounds";
-// import Spells from "./Spells/Spells";
+import Spells from "./Spells/Spells";
+import OptionalFeatures from "./OptionalFeatures/OptionalFeatures";
+import Monsters from "./Monsters/Monsters";
 
 const TOOLS = [
   { id: "races", label: "Races" },
@@ -15,6 +17,8 @@ const TOOLS = [
   { id: "feats", label: "Feats" },
   { id: "backgrounds", label: "Backgrounds" },
   { id: "spells", label: "Spells" },
+  { id: "monsters", label: "Monsters" },
+  { id: "optionalFeatures", label: "Optional Features" },
 ];
 
 function CataloguesMain() {
@@ -60,11 +64,17 @@ function CataloguesMain() {
 
         {activeTool === "backgrounds" && <Backgrounds />}
 
-        {activeTool === "spells" && (
-          <div className="text-slate-500 italic">
-            Spells catalogue coming soon
-          </div>
-        )}
+        {activeTool === "spells" && <Spells />}
+
+        {activeTool === "optionalFeatures" && <OptionalFeatures />}
+
+        {activeTool === "monsters" && <Monsters />}
+
+        
+        
+
+
+
       </div>
     </div>
   );

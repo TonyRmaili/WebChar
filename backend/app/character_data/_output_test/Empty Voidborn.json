@@ -1,19 +1,19 @@
 {
     "background": {
-        "name": "Charlatan",
+        "name": "Guard",
         "data": {
             "ability_scores": [
-                "dex",
-                "con",
-                "cha"
+                "str",
+                "int",
+                "wis"
             ],
-            "feat": "Skilled",
+            "feat": "Alert",
             "skill_proficiencies": [
-                "Deception",
-                "Sleight of Hand"
+                "Athletics",
+                "Perception"
             ],
             "tool_proficiencies": [
-                "Forgery Kit"
+                "Gaming Set (choice)"
             ],
             "equipment": {
                 "amount": 1,
@@ -21,10 +21,15 @@
                     {
                         "id": "A",
                         "items": [
-                            "Forgery Kit",
-                            "Costume",
-                            "Fine Clothes",
-                            "15 GP"
+                            "Spear",
+                            "Light Crossbow",
+                            "Bolts ×20",
+                            "Gaming Set (chosen type)",
+                            "Hooded Lantern",
+                            "Manacles",
+                            "Quiver",
+                            "Traveler's Clothes",
+                            "12 GP"
                         ]
                     },
                     {
@@ -39,224 +44,182 @@
     },
     "classes": [
         {
-            "name": "bard",
-            "sub_class": "College of Lore",
-            "level": 10,
+            "name": "ranger",
+            "sub_class": "Fey Wanderer",
+            "level": 8,
             "first_class": true,
             "class_data": {
                 "1": [
                     {
-                        "name": "Bardic Inspiration",
-                        "notes": "You can supernaturally inspire others through words, music, or dance. This inspiration is represented by your Bardic Inspiration die, which starts as a d6.\n\nUsing Bardic Inspiration. As a Bonus Action, you can inspire a creature within 60 feet of yourself who can see or hear you. That creature gains one Bardic Inspiration die. A creature can have only one Bardic Inspiration die at a time.\n\nWithin the next hour, when the creature fails a D20 Test, it can roll the Bardic Inspiration die and add the result to the d20, potentially turning failure into success. The die is expended when rolled.\n\nNumber of Uses. You can use Bardic Inspiration a number of times equal to your Charisma modifier (minimum of one) and regain all uses when you finish a Long Rest.\n\nAt Higher Levels. The Bardic Inspiration die increases to a d8 at level 5, a d10 at level 10, and a d12 at level 15.",
+                        "name": "Spellcasting",
+                        "notes": "You learn to channel the magic of nature to cast Ranger spells.\n\nSpell Slots. The Ranger Features table shows how many spell slots you have to cast level 1+ spells. You regain all expended spell slots when you finish a Long Rest.\n\nPrepared Spells of Level 1+. You prepare a list of Ranger spells of level 1+ that you can cast with this feature. To start, choose two level 1 spells (Cure Wounds and Ensnaring Strike are recommended). Your number of prepared spells increases as you gain Ranger levels, as shown in the class table. Prepared spells must be of a level for which you have spell slots.\nIf another Ranger feature grants you spells that are always prepared, they don’t count against your number of prepared spells.\n\nChanging Prepared Spells. When you finish a Long Rest, you may replace one prepared spell with another Ranger spell you can cast.\n\nSpellcasting Ability. Wisdom is your spellcasting ability.\n\nSpellcasting Focus. You can use a Druidic Focus as a Spellcasting Focus for your Ranger spells.",
                         "feature_type": "core"
                     },
                     {
-                        "name": "Spellcasting",
-                        "notes": "You have learned to cast spells through your bardic arts.\n\nCantrips. You know two Bard cantrips of your choice. Dancing Lights and Vicious Mockery are recommended. You learn more cantrips at Bard levels 4 and 10. When you gain a Bard level, you may replace one cantrip you know.\n\nSpell Slots. You use the Bard Features table to determine how many spell slots you have to cast level 1+ spells.\n\nPrepared Spells. You prepare a list of Bard spells equal to the Prepared Spells column of the Bard Features table. Prepared spells must be of a level for which you have spell slots.\n\nChanging Spells. When you gain a Bard level, you may replace one prepared spell.\n\nSpellcasting Ability. Charisma is your spellcasting ability.\n\nSpellcasting Focus. You may use a Musical Instrument as a Spellcasting Focus.",
+                        "name": "Favored Enemy",
+                        "notes": "You always have the Hunter’s Mark spell prepared. You can cast it twice without expending a spell slot, regaining all expended uses when you finish a Long Rest.\nYou gain additional free uses of Hunter’s Mark at higher levels, as shown in the class table.",
+                        "feature_type": "core"
+                    },
+                    {
+                        "name": "Weapon Mastery",
+                        "notes": "You can use the mastery properties of two kinds of weapons of your choice with which you have proficiency.\nWhenever you finish a Long Rest, you may change the weapon types whose mastery properties you can use (for example, switching from Longbows and Shortswords to Scimitars and Longswords).",
                         "feature_type": "core"
                     }
                 ],
                 "2": [
                     {
-                        "name": "Expertise",
-                        "notes": "You gain Expertise in two of your skill proficiencies. Performance and Persuasion are recommended. At Bard level 9, you gain Expertise in two additional skills.",
+                        "name": "Deft Explorer",
+                        "notes": "Your journeys have strengthened your survival skills.\n\nExpertise. Choose one of your skill proficiencies with which you lack Expertise; you gain Expertise in that skill.\n\nLanguages. You learn two additional languages of your choice from the standard language lists.",
                         "feature_type": "core"
                     },
                     {
-                        "name": "Jack of All Trades",
-                        "notes": "You can add half your Proficiency Bonus (round down) to any ability check you make using a skill for which you lack proficiency and that does not otherwise add your Proficiency Bonus.",
+                        "name": "Fighting Style",
+                        "notes": "You gain a Fighting Style feat of your choice.\n\nAlternatively, you may choose Druidic Warrior: you learn two Druid cantrips (Guidance and Starry Wisp are recommended). These cantrips count as Ranger spells for you, and Wisdom is your spellcasting ability for them. Whenever you gain a Ranger level, you may replace one of these cantrips with another Druid cantrip.",
                         "feature_type": "core"
                     }
                 ],
                 "3": [
                     {
-                        "name": "Bonus Proficiencies",
-                        "notes": "You gain proficiency with three skills of your choice.",
+                        "name": "Dreadful Strikes",
+                        "notes": "You can infuse your weapon attacks with Feywild magic. When you hit a creature with a weapon attack, you may deal an extra 1d4 Psychic damage. A creature can take this extra damage only once per turn. This extra damage increases to 1d6 at Ranger level 11.",
                         "feature_type": "sub_class"
                     },
                     {
-                        "name": "Cutting Words",
-                        "notes": "When a creature you can see within 60 feet makes a damage roll or succeeds on an ability check or attack roll, you can take a Reaction to expend one use of Bardic Inspiration. Roll your Bardic Inspiration die and subtract the number rolled from the creature's roll, potentially reducing the damage or turning the success into a failure.",
+                        "name": "Fey Wanderer Spells",
+                        "notes": "You always have the following spells prepared at the listed Ranger levels:\n\n3rd: Charm Person\n5th: Misty Step\n9th: Summon Fey\n13th: Dimension Door\n17th: Mislead\n\nYou also gain a Feywild Gift (roll or choose):\n1. Illusory butterflies appear during rests.\n2. Flowers bloom from your hair each dawn.\n3. You smell faintly of a comforting herb or spice.\n4. Your shadow moves independently when not observed.\n5. Horns or antlers grow from your head.\n6. Your skin and hair shift color each dawn.",
+                        "feature_type": "sub_class"
+                    },
+                    {
+                        "name": "Otherworldly Glamour",
+                        "notes": "You add your Wisdom modifier (minimum +1) to all Charisma checks.\n\nYou also gain proficiency in one: Deception, Performance, or Persuasion.",
                         "feature_type": "sub_class"
                     }
                 ],
                 "5": [
                     {
-                        "name": "Font of Inspiration",
-                        "notes": "You now regain all expended uses of Bardic Inspiration after a Short or Long Rest.\n\nAdditionally, you can expend a spell slot (no action required) to regain one use of Bardic Inspiration.",
+                        "name": "Extra Attack",
+                        "notes": "You can attack twice, instead of once, whenever you take the Attack action on your turn.",
                         "feature_type": "core"
                     }
                 ],
                 "6": [
                     {
-                        "name": "Magical Discoveries",
-                        "notes": "Learn two spells of your choice from the Cleric, Druid, or Wizard spell lists. Each chosen spell must be a cantrip or a spell for which you have spell slots. You always have these spells prepared. Whenever you gain a Bard level, you may replace one of these spells with another that meets the same requirements.",
-                        "feature_type": "sub_class"
+                        "name": "Roving",
+                        "notes": "Your Speed increases by 10 feet while you aren’t wearing Heavy armor. You also gain a Climb Speed and a Swim Speed equal to your walking Speed.",
+                        "feature_type": "core"
                     }
                 ],
                 "7": [
                     {
-                        "name": "Countercharm",
-                        "notes": "If you or a creature within 30 feet fails a saving throw against being Charmed or Frightened, you can use a Reaction to make the creature reroll the saving throw with Advantage.",
-                        "feature_type": "core"
-                    }
-                ],
-                "9": [
-                    {
-                        "name": "Expertise",
-                        "notes": "You gain Expertise in two additional skill proficiencies of your choice.",
-                        "feature_type": "core"
-                    }
-                ],
-                "10": [
-                    {
-                        "name": "Magical Secrets",
-                        "notes": "Whenever your number of prepared spells increases, you may choose new spells from the Bard, Cleric, Druid, or Wizard spell lists. When replacing prepared spells, you may also select spells from these lists.",
-                        "feature_type": "core"
+                        "name": "Beguiling Twist",
+                        "notes": "You have Advantage on saving throws to avoid or end the Charmed or Frightened condition.\n\nAdditionally, when you or a creature within 120 feet succeeds on a saving throw to avoid or end Charmed or Frightened, you may take a Reaction to force a different creature within 120 feet to make a Wisdom saving throw against your spell save DC. On a failure, it is Charmed or Frightened (your choice) for 1 minute. It repeats the save at the end of each of its turns, ending the effect on a success.",
+                        "feature_type": "sub_class"
                     }
                 ]
             },
             "core_traits": {
-                "class_name": "bard",
+                "class_name": "ranger",
                 "primary_abilities": [
-                    "cha"
-                ],
-                "hit_die": "d8",
-                "saving_throw_proficiencies": [
                     "dex",
-                    "cha"
+                    "wis"
+                ],
+                "hit_die": "d10",
+                "saving_throw_proficiencies": [
+                    "str",
+                    "dex"
                 ],
                 "skill_proficiencies": {
                     "amount": 3,
                     "choices": [
-                        "Acrobatics",
                         "Animal Handling",
-                        "Arcana",
                         "Athletics",
-                        "Deception",
-                        "History",
                         "Insight",
-                        "Intimidation",
                         "Investigation",
-                        "Medicine",
                         "Nature",
                         "Perception",
-                        "Performance",
-                        "Persuasion",
-                        "Religion",
-                        "Sleight of Hand",
                         "Stealth",
                         "Survival"
                     ]
                 },
                 "weapon_proficiencies": [
-                    "simple"
+                    "simple",
+                    "martial"
                 ],
                 "armor_proficiencies": [
-                    "light"
+                    "light",
+                    "medium",
+                    "shields"
                 ],
-                "tool_proficiencies": {
-                    "amount": 3,
-                    "choices": [
-                        "Bagpipes",
-                        "Drum",
-                        "Dulcimer",
-                        "Flute",
-                        "Lute",
-                        "Lyre",
-                        "Horn",
-                        "Pan Flute",
-                        "Shawm",
-                        "Viol"
-                    ]
-                },
                 "starting_equipment": {
                     "amount": 1,
                     "choices": [
                         [
-                            "Leather Armor",
-                            "Dagger",
-                            "Dagger",
-                            "Musical Instrument (choice)",
-                            "Entertainer's Pack",
-                            "19 gp"
+                            "Studded Leather Armor",
+                            "Scimitar",
+                            "Shortsword",
+                            "Longbow",
+                            "Arrows (20)",
+                            "Quiver",
+                            "Druidic Focus (sprig of mistletoe)",
+                            "Explorer's Pack",
+                            "7 gp"
                         ],
                         [
-                            "90 gp"
+                            "150 gp"
                         ],
                         "custom"
                     ]
                 },
                 "multiclassing": {
                     "primary_ability": 13,
-                    "armor_proficiencies": [
-                        "light"
-                    ],
                     "skill_proficiencies": {
                         "amount": 1,
                         "choices": [
-                            "Acrobatics",
                             "Animal Handling",
-                            "Arcana",
                             "Athletics",
-                            "Deception",
-                            "History",
                             "Insight",
-                            "Intimidation",
                             "Investigation",
-                            "Medicine",
                             "Nature",
                             "Perception",
-                            "Performance",
-                            "Persuasion",
-                            "Religion",
-                            "Sleight of Hand",
                             "Stealth",
                             "Survival"
                         ]
                     },
-                    "tool_proficiencies": {
-                        "amount": 1,
-                        "choices": [
-                            "Bagpipes",
-                            "Drum",
-                            "Dulcimer",
-                            "Flute",
-                            "Lute",
-                            "Lyre",
-                            "Horn",
-                            "Pan Flute",
-                            "Shawm",
-                            "Viol"
-                        ]
-                    }
+                    "weapon_proficiencies": [
+                        "martial"
+                    ],
+                    "armor_proficiencies": [
+                        "light",
+                        "medium",
+                        "shields"
+                    ]
                 }
             },
-            "caster_type": "full"
+            "caster_type": "half"
         }
     ],
     "abilities": {
         "str": {
-            "score": 12,
-            "mod": 1,
-            "check": 1,
-            "save": 1,
-            "proficient": false,
-            "expertise": false
-        },
-        "dex": {
-            "score": 14,
-            "mod": 2,
-            "check": 2,
+            "score": 17,
+            "mod": 3,
+            "check": 3,
             "save": 6,
             "proficient": true,
             "expertise": false
         },
+        "dex": {
+            "score": 18,
+            "mod": 4,
+            "check": 4,
+            "save": 7,
+            "proficient": true,
+            "expertise": false
+        },
         "con": {
-            "score": 16,
-            "mod": 3,
-            "check": 3,
-            "save": 3,
+            "score": 14,
+            "mod": 2,
+            "check": 2,
+            "save": 2,
             "proficient": false,
             "expertise": false
         },
@@ -269,56 +232,55 @@
             "expertise": false
         },
         "wis": {
-            "score": 11,
+            "score": 16,
+            "mod": 3,
+            "check": 3,
+            "save": 3,
+            "proficient": false,
+            "expertise": false
+        },
+        "cha": {
+            "score": 10,
             "mod": 0,
             "check": 0,
             "save": 0,
             "proficient": false,
             "expertise": false
-        },
-        "cha": {
-            "score": 18,
-            "mod": 4,
-            "check": 4,
-            "save": 8,
-            "proficient": true,
-            "expertise": false
         }
     },
-    "resistances": [
-        "poison"
-    ],
+    "resistances": [],
     "race": {
-        "name": "Warforged",
+        "name": "Elf",
         "traits": [
             {
-                "name": "Construct Resilience",
-                "notes": "You have Resistance to Poison damage. You also have Advantage on saving throws to avoid or end the Poisoned condition."
+                "name": "Elven Lineage",
+                "notes": "You are part of a lineage that grants you supernatural abilities. Choose a lineage from the Elven Lineages table. You gain the level 1 benefit of that lineage.When you reach character levels 3 and 5, you learn a higher-level spell, as shown on the table. You always have that spell prepared. You can cast it once without a spell slot, and you regain the ability to cast it in that way when you finish a Long Rest. You can also cast the spell using any spell slots you have of the appropriate level. Intelligence, Wisdom, or Charisma is your spellcasting ability for the spells you cast with this trait (choose the ability when you select the lineage)."
             },
             {
-                "name": "Integrated Protection",
-                "notes": "You gain a +1 bonus to your Armor Class. In addition, armor you have donned can't be removed against your will while you're alive."
+                "name": "Fey Ancestry",
+                "notes": "You have Advantage on saving throws you make to avoid or end the Charmed condition."
             },
             {
-                "name": "Sentry's Rest",
-                "notes": "You don't need to sleep, and magic can't put you to sleep. You can finish a Long Rest in 6 hours if you spend those hours in an inactive, motionless state. During this time, you appear inert but remain conscious."
+                "name": "Keen Senses",
+                "notes": "You have proficiency in the Insight, Perception, or Survival skill."
             },
             {
-                "name": "Specialized Design",
-                "notes": "You gain one skill proficiency and one tool proficiency of your choice."
-            },
-            {
-                "name": "Tireless",
-                "notes": "You don't gain Exhaustion levels from dehydration, malnutrition, or suffocation."
+                "name": "Trance",
+                "notes": "You don't need to sleep, and magic can't put you to sleep. You can finish a Long Rest in 4 hours if you spend those hours in a trancelike meditation, during which you retain consciousness"
             }
         ],
         "size": "medium",
         "movements": {
             "walk": 30
         },
-        "creature_type": "Construct",
-        "senses": {},
-        "subrace": null
+        "creature_type": "Humanoid",
+        "senses": {
+            "darkvision": 60
+        },
+        "subrace": {
+            "name": "High Elf",
+            "notes": "You know the Prestidigitation cantrip. Whenever you finish a Long Rest, you can replace that cantrip with a different cantrip from the Wizard spell list. Level2: - Detect Magic. Level3: - Misty Step"
+        }
     },
     "feats": [
         {
@@ -326,67 +288,53 @@
             "source": "phb24",
             "category": "origin",
             "ability_score_increase": [],
-            "repeatable": true,
-            "has_table": false,
-            "notes": "You gain proficiency in any combination of three skills or tools of your choice.",
-            "name": "Skilled"
-        },
-        {
-            "prerequisite": [
-                "level 4+"
-            ],
-            "source": "phb24",
-            "category": "general",
-            "ability_score_increase": [
-                "con",
-                "wis"
-            ],
             "repeatable": false,
             "has_table": false,
-            "notes": "Cook's Utensils. You gain proficiency with Cook's Utensils if you don't already have it.Replenishing Meal. As part of a Short Rest, you can cook special food if you have ingredients and Cook's Utensils on hand. You can prepare enough of this food for a number of creatures equal to 4 plus your Proficiency Bonus. At the end of the Short Rest, any creature who eats the food and spends one or more Hit Dice to regain Hit Points regains an extra 1d8 Hit Points.Bolstering Treats. With 1 hour of work or when you finish a Long Rest, you can cook a number of treats equal to your Proficiency Bonus if you have ingredients and Cook's Utensils on hand. These special treats last 8 hours after being made. A creature can use a Bonus Action to eat one of those treats to gain a number of Temporary Hit Points equal to your Proficiency Bonus.",
-            "name": "Chef"
+            "notes": "Initiative Proficiency. When you roll Initiative, you can add your Proficiency Bonus to the roll.Initiative Swap. Immediately after you roll Initiative, you can swap your Initiative with the Initiative of one willing ally in the same combat. You can't make this swap if you or the ally has the Incapacitated condition.",
+            "name": "Alert"
         },
         {
             "prerequisite": [
                 "level 4+",
-                "dex 13+"
+                "Light Armor Training"
             ],
             "source": "phb24",
             "category": "general",
             "ability_score_increase": [
+                "str",
                 "dex"
             ],
             "repeatable": false,
             "has_table": false,
-            "notes": "Parry. If you're holding a Finesse weapon and another creature hits you with a melee attack, you can take a Reaction to add your Proficiency Bonus to your Armor Class, potentially causing the attack to miss you. You gain this bonus to your AC against melee attacks until the start of your next turn.",
-            "name": "Defensive Duelist"
+            "notes": "Armor Training. You gain training with Medium armor.",
+            "name": "Moderately Armored"
         }
     ],
-    "total_level": 10,
-    "pb": 4,
+    "total_level": 8,
+    "pb": 3,
     "skills": {
         "str": {
             "Athletics": {
-                "proficient": false,
+                "proficient": true,
                 "expertise": false,
-                "check": 1
+                "check": 6
             }
         },
         "dex": {
             "Acrobatics": {
                 "proficient": false,
                 "expertise": false,
-                "check": 2
+                "check": 4
             },
             "Sleight of Hand": {
-                "proficient": true,
-                "expertise": false,
-                "check": 6
-            },
-            "Stealth": {
                 "proficient": false,
                 "expertise": false,
-                "check": 2
+                "check": 4
+            },
+            "Stealth": {
+                "proficient": true,
+                "expertise": false,
+                "check": 7
             }
         },
         "int": {
@@ -403,7 +351,7 @@
             "Investigation": {
                 "proficient": true,
                 "expertise": false,
-                "check": 5
+                "check": 4
             },
             "Nature": {
                 "proficient": false,
@@ -420,49 +368,49 @@
             "Animal Handling": {
                 "proficient": false,
                 "expertise": false,
-                "check": 0
+                "check": 3
             },
             "Insight": {
                 "proficient": false,
                 "expertise": false,
-                "check": 0
+                "check": 3
             },
             "Medicine": {
-                "proficient": true,
-                "expertise": false,
-                "check": 4
-            },
-            "Perception": {
                 "proficient": false,
                 "expertise": false,
-                "check": 0
+                "check": 3
+            },
+            "Perception": {
+                "proficient": true,
+                "expertise": false,
+                "check": 6
             },
             "Survival": {
                 "proficient": true,
                 "expertise": false,
-                "check": 4
+                "check": 6
             }
         },
         "cha": {
             "Deception": {
-                "proficient": true,
+                "proficient": false,
                 "expertise": false,
-                "check": 8
+                "check": 0
             },
             "Intimidation": {
                 "proficient": false,
                 "expertise": false,
-                "check": 4
+                "check": 0
             },
             "Performance": {
                 "proficient": false,
                 "expertise": false,
-                "check": 4
+                "check": 0
             },
             "Persuasion": {
                 "proficient": false,
                 "expertise": false,
-                "check": 4
+                "check": 0
             }
         }
     },
@@ -473,12 +421,12 @@
             "size": 6
         },
         "d8": {
-            "amount": 10,
+            "amount": 0,
             "average": 5,
             "size": 8
         },
         "d10": {
-            "amount": 0,
+            "amount": 8,
             "average": 6,
             "size": 10
         },
@@ -488,6 +436,6 @@
             "size": 12
         }
     },
-    "max_hp": 83,
+    "max_hp": 68,
     "char_name": "Empty Voidborn"
 }

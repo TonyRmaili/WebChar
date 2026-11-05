@@ -8,8 +8,6 @@ export const DICE_TYPES = [
     "d100"
 ]
 
-
-
 export const ABILITY_LABELS = {
   str: "STR",
   dex: "DEX",
@@ -332,3 +330,155 @@ export const ROLL_TYPES = [
   "advantage",
   "disadvantage"
 ]
+
+export const WEAPON_CATEGORY_OPTIONS = [
+  "simple",
+  "martial",
+];
+
+export const WEAPON_OPTIONS = [
+  // Simple melee
+  "club", "dagger", "greatclub", "handaxe", "javelin", "light hammer",
+  "mace", "quarterstaff", "sickle", "spear",
+  // Simple ranged
+  "light crossbow", "dart", "shortbow", "sling",
+  // Martial melee
+  "battleaxe", "flail", "glaive", "greataxe", "greatsword", "halberd",
+  "lance", "longsword", "maul", "morningstar", "pike", "rapier",
+  "scimitar", "shortsword", "trident", "war pick", "warhammer", "whip",
+  // Martial ranged
+  "blowgun", "hand crossbow", "heavy crossbow", "longbow", "musket",
+  "pistol", "net",
+];
+
+export const ARMOR_CATEGORY_OPTIONS = [
+  "light",
+  "medium",
+  "heavy",
+  "shield",
+];
+
+export const ARMOR_OPTIONS = [
+  // Light
+  "padded", "leather", "studded leather",
+  // Medium
+  "hide", "chain shirt", "scale mail", "breastplate", "half plate",
+  // Heavy
+  "ring mail", "chain mail", "splint", "plate",
+  // Shield
+  "shield",
+];
+
+
+
+export const ARTISAN_TOOLS = [
+  "alchemist's supplies", "brewer's supplies", "calligrapher's supplies",
+  "carpenter's tools", "cartographer's tools", "cobbler's tools",
+  "cook's utensils", "glassblower's tools", "jeweler's tools",
+  "leatherworker's tools", "mason's tools", "painter's supplies",
+  "potter's tools", "smith's tools", "tinker's tools", "weaver's tools",
+  "woodcarver's tools",
+];
+ 
+export const OTHER_TOOLS = [
+  "disguise kit", "forgery kit", "herbalism kit", "navigator's tools",
+  "poisoner's kit", "thieves' tools",
+];
+ 
+export const MUSICAL_INSTRUMENTS = [
+  "bagpipes", "drum", "dulcimer", "flute", "horn", "lute", "lyre",
+  "pan flute", "shawm", "viol",
+];
+ 
+export const GAMING_SETS = [
+  "dice set", "dragonchess set", "playing card set", "three-dragon ante set",
+];
+ 
+export const VEHICLE_TOOLS = [
+  "vehicles (land)", "vehicles (water)", "vehicles (air)",
+];
+ 
+// Superset of the previous TOOL_OPTIONS — replace the old export with this.
+export const TOOL_OPTIONS = [
+  ...ARTISAN_TOOLS,
+  ...OTHER_TOOLS,
+  ...MUSICAL_INSTRUMENTS,
+  ...GAMING_SETS,
+  ...VEHICLE_TOOLS,
+];
+ 
+// Category token → concrete options. Keys are matched lowercased and
+// trimmed; both singular and plural spellings appear in the data.
+export const TOOL_CATEGORY_TOKENS = {
+  "artisan's tools": ARTISAN_TOOLS,
+  "artisans tools": ARTISAN_TOOLS,
+  "artisan tools": ARTISAN_TOOLS,
+  "toolartisan": ARTISAN_TOOLS,          // {equipmentType: "toolArtisan"}
+  "gaming set": GAMING_SETS,
+  "gaming sets": GAMING_SETS,
+  "musical instrument": MUSICAL_INSTRUMENTS,
+  "musical instruments": MUSICAL_INSTRUMENTS,
+  "vehicles": VEHICLE_TOOLS,
+  "vehicle": VEHICLE_TOOLS,
+};
+ 
+// ─── Language categories ───────────────────────────────────────────
+ 
+export const STANDARD_LANGUAGES = [
+  "Common", "Dwarvish", "Elvish", "Giant", "Gnomish", "Goblin",
+  "Halfling", "Orc",
+];
+ 
+export const EXOTIC_LANGUAGES = [
+  "Abyssal", "Celestial", "Deep Speech", "Draconic", "Infernal",
+  "Primordial", "Sylvan", "Undercommon",
+];
+ 
+export const SECRET_LANGUAGES = ["Druidic", "Thieves' Cant"];
+ 
+// Player-facing language pool (excludes the monster-only entries that
+// LANGUAGE_OPTIONS keeps for the minion builder).
+export const PC_LANGUAGE_OPTIONS = [
+  ...STANDARD_LANGUAGES,
+  ...EXOTIC_LANGUAGES,
+];
+ 
+export const LANGUAGE_CATEGORY_TOKENS = {
+  standard: STANDARD_LANGUAGES,
+  any_standard: STANDARD_LANGUAGES,
+  exotic: EXOTIC_LANGUAGES,
+  any_exotic: EXOTIC_LANGUAGES,
+  any: PC_LANGUAGE_OPTIONS,
+  other: PC_LANGUAGE_OPTIONS,          // seen in GGR Boros Legionnaire
+  any_language: PC_LANGUAGE_OPTIONS,
+};
+ 
+// ─── Equipment ─────────────────────────────────────────────────────
+// starting_equipment groups keyed "_" are always granted; any other
+// key ("A"/"a"/"b"/"c"/"d") is one branch of a pick-one choice.
+export const EQUIPMENT_GRANTED_KEY = "_";
+ 
+
+export const XP_BY_LEVEL = [
+  0,        // (unused)
+  0,        // 1
+  300,      // 2
+  900,      // 3
+  2700,     // 4
+  6500,     // 5
+  14000,    // 6
+  23000,    // 7
+  34000,    // 8
+  48000,    // 9
+  64000,    // 10
+  85000,    // 11
+  100000,   // 12
+  120000,   // 13
+  140000,   // 14
+  165000,   // 15
+  195000,   // 16
+  225000,   // 17
+  265000,   // 18
+  305000,   // 19
+  355000,   // 20
+];

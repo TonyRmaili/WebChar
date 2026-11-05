@@ -1,7 +1,9 @@
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
 import Header from "../components/Header";
-import Footer from "../pages/Footer";
+import Footer from "../components/Footer";
+import GlobalPopupLayer from "../components/popups/GlobalPopupLayer"
+
 
 function Layout() {
   return (
@@ -11,10 +13,12 @@ function Layout() {
       </header>
       <div className="min-h-screen bg-slate-900">
         <Outlet />
+        <GlobalPopupLayer />
+       
       </div>
-      {/* <footer>
+      <footer>
         <Footer></Footer>
-      </footer> */}
+      </footer>
     </div>
   );
 }

@@ -1,0 +1,2601 @@
+[
+    {
+        "name": "Asteroid Spider",
+        "source": "MCV1SC",
+        "size": [
+            "Gargantuan"
+        ],
+        "type": "monstrosity",
+        "alignment": [
+            "Neutral Evil"
+        ],
+        "ac": [
+            {
+                "value": 17,
+                "from": [
+                    "natural armor"
+                ],
+                "condition": null,
+                "special": null
+            }
+        ],
+        "hp": {
+            "average": 348,
+            "formula": "24d20 + 96"
+        },
+        "speed": {
+            "walk": 60,
+            "fly": {
+                "number": 60,
+                "condition": "(hover)"
+            },
+            "canHover": true
+        },
+        "skill": {
+            "perception": "+11",
+            "stealth": "+5"
+        },
+        "senses": {
+            "blindsight": 120,
+            "darkvision": 120,
+            "note": "Blindsight: while the spider's eyes are closed"
+        },
+        "cr": {
+            "base": "15",
+            "xp": 13000,
+            "pb": 5,
+            "lair": null,
+            "xp_lair": null,
+            "coven": null,
+            "xp_coven": null,
+            "level": null
+        },
+        "traitTags": [
+            "False Appearance",
+            "Legendary Resistances",
+            "Unusual Nature"
+        ],
+        "actionTags": [
+            "Multiattack"
+        ],
+        "ability_scores": {
+            "str": {
+                "score": 26,
+                "proficient": false,
+                "expertise": false,
+                "mod": 8,
+                "save": 8
+            },
+            "dex": {
+                "score": 10,
+                "proficient": false,
+                "expertise": false,
+                "mod": 0,
+                "save": 0
+            },
+            "con": {
+                "score": 18,
+                "proficient": true,
+                "expertise": false,
+                "mod": 4,
+                "save": 9
+            },
+            "int": {
+                "score": 17,
+                "proficient": false,
+                "expertise": false,
+                "mod": 3,
+                "save": 3
+            },
+            "wis": {
+                "score": 13,
+                "proficient": true,
+                "expertise": false,
+                "mod": 1,
+                "save": 6
+            },
+            "cha": {
+                "score": 12,
+                "proficient": false,
+                "expertise": false,
+                "mod": 1,
+                "save": 1
+            }
+        },
+        "passive_perception": 21,
+        "initiative": {
+            "total": 0,
+            "advantage": false
+        },
+        "condition_inflict": [
+            "grappled"
+        ],
+        "effects": {
+            "actions": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Multiattack",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "The spider makes two Web Strand attacks, uses Reel, and makes two Bite attacks.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Bite",
+                        "effect_type": "attack",
+                        "range": 10,
+                        "attack": {
+                            "attack_type": "mw",
+                            "hit_bonus": 13,
+                            "damages": [
+                                {
+                                    "dice_count": 3,
+                                    "dice_size": "d8",
+                                    "mod": 8,
+                                    "damage_type": "Piercing"
+                                },
+                                {
+                                    "dice_count": 3,
+                                    "dice_size": "d6",
+                                    "mod": 0,
+                                    "damage_type": "Acid"
+                                }
+                            ]
+                        },
+                        "save": null,
+                        "notes": "Melee Weapon Attack: +13 to hit, reach 10 ft., one target. Hit: 21 (3d8 + 8) piercing damage plus 10 (3d6) acid damage.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Web Strand",
+                        "effect_type": "attack",
+                        "range": 120,
+                        "attack": {
+                            "attack_type": "rw",
+                            "hit_bonus": 13,
+                            "damages": []
+                        },
+                        "save": null,
+                        "notes": "Ranged Weapon Attack: +13 to hit, reach 120 ft., one creature. Hit: The target is grappled (escape DC 18). The web strand can be attacked and destroyed (AC 12; 20 hit points; vulnerability to fire damage; immunity to bludgeoning, poison, and psychic damage). The spider can grapple up to six creatures at a time using its web strands.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Reel",
+                        "effect_type": "utility",
+                        "range": 60,
+                        "attack": null,
+                        "save": null,
+                        "notes": "The spider pulls each creature grappled by it up to 60 feet straight toward itself.",
+                        "charges": null
+                    }
+                ]
+            },
+            "bonus_actions": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Snare Ship",
+                        "effect_type": "utility",
+                        "range": 120,
+                        "attack": null,
+                        "save": null,
+                        "notes": "The spider weaves a magical web around a spelljamming ship it can see within 120 feet of itself. The web lasts for 1 minute and suppresses the magic of any spelljamming helm aboard the ship. Decks and other surfaces of the ship that aren't enclosed become difficult terrain until the effect ends. The web is impervious to damage but is destroyed by a successful casting of dispel magic (DC 18).",
+                        "charges": {
+                            "max_charges": 1,
+                            "current_charges": 1,
+                            "reset_type": "long_rest",
+                            "recharge_dice": null,
+                            "per_rest_count": 1
+                        }
+                    }
+                ]
+            },
+            "reactions": {
+                "header": null,
+                "items": []
+            },
+            "traits": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "False Appearance",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "If the spider is motionless, has its eyes and mouth closed, and has its legs wrapped around its body at the start of combat, it has advantage on its initiative roll. Moreover, if a creature hasn't observed the spider move or act, that creature must succeed on a DC 18 Intelligence (Investigation) check to discern that the spider is anything other than an asteroid.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Legendary Resistance",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "If the spider fails a saving throw, it can choose to succeed instead.",
+                        "charges": {
+                            "max_charges": 3,
+                            "current_charges": 3,
+                            "reset_type": "long_rest",
+                            "recharge_dice": null,
+                            "per_rest_count": 3
+                        }
+                    },
+                    {
+                        "name": "Unusual Nature",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "The spider doesn't require air.",
+                        "charges": null
+                    }
+                ]
+            },
+            "legendary_actions": {
+                "header": null,
+                "items": []
+            },
+            "mythic_actions": {
+                "header": null,
+                "items": []
+            },
+            "lair_actions": {
+                "header": null,
+                "items": []
+            },
+            "regional_effects": {
+                "header": null,
+                "items": []
+            }
+        }
+    },
+    {
+        "name": "Clockwork Horror",
+        "source": "MCV1SC",
+        "size": [
+            "Small"
+        ],
+        "type": "construct",
+        "alignment": [
+            "Lawful Evil"
+        ],
+        "ac": [
+            {
+                "value": 18,
+                "from": [
+                    "natural armor"
+                ],
+                "condition": null,
+                "special": null
+            }
+        ],
+        "hp": {
+            "average": 60,
+            "formula": "8d6 + 32"
+        },
+        "speed": {
+            "walk": 30,
+            "climb": 30
+        },
+        "skill": {
+            "perception": "+6"
+        },
+        "senses": {
+            "darkvision": 120
+        },
+        "languages": [
+            "Thri-kreen",
+            "Ziklight"
+        ],
+        "cr": {
+            "base": "2",
+            "xp": 450,
+            "pb": 2,
+            "lair": null,
+            "xp_lair": null,
+            "coven": null,
+            "xp_coven": null,
+            "level": null
+        },
+        "traitTags": [
+            "Unusual Nature"
+        ],
+        "actionTags": [
+            "Multiattack"
+        ],
+        "ability_scores": {
+            "str": {
+                "score": 14,
+                "proficient": true,
+                "expertise": false,
+                "mod": 2,
+                "save": 4
+            },
+            "dex": {
+                "score": 14,
+                "proficient": false,
+                "expertise": false,
+                "mod": 2,
+                "save": 2
+            },
+            "con": {
+                "score": 18,
+                "proficient": false,
+                "expertise": false,
+                "mod": 4,
+                "save": 4
+            },
+            "int": {
+                "score": 13,
+                "proficient": false,
+                "expertise": false,
+                "mod": 1,
+                "save": 1
+            },
+            "wis": {
+                "score": 14,
+                "proficient": true,
+                "expertise": false,
+                "mod": 2,
+                "save": 4
+            },
+            "cha": {
+                "score": 10,
+                "proficient": false,
+                "expertise": false,
+                "mod": 0,
+                "save": 0
+            }
+        },
+        "passive_perception": 16,
+        "immunities": {
+            "types": [
+                "lightning",
+                "poison"
+            ],
+            "conditional": [],
+            "special": null
+        },
+        "condition_immunities": {
+            "types": [
+                "blinded",
+                "charmed",
+                "deafened",
+                "exhaustion",
+                "frightened",
+                "paralyzed",
+                "petrified",
+                "poisoned"
+            ],
+            "conditional": [],
+            "special": null
+        },
+        "initiative": {
+            "total": 2,
+            "advantage": false
+        },
+        "effects": {
+            "actions": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Multiattack",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "The horror makes one Bite attack and two Rotating Saw attacks, or it makes two Lightning Jolt attacks.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Bite",
+                        "effect_type": "attack",
+                        "range": 5,
+                        "attack": {
+                            "attack_type": "mw",
+                            "hit_bonus": 4,
+                            "damages": [
+                                {
+                                    "dice_count": 1,
+                                    "dice_size": "d8",
+                                    "mod": 2,
+                                    "damage_type": "Piercing"
+                                }
+                            ]
+                        },
+                        "save": null,
+                        "notes": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 6 (1d8 + 2) piercing damage.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Rotating Saw",
+                        "effect_type": "attack",
+                        "range": 5,
+                        "attack": {
+                            "attack_type": "mw",
+                            "hit_bonus": 4,
+                            "damages": [
+                                {
+                                    "dice_count": 1,
+                                    "dice_size": "d4",
+                                    "mod": 2,
+                                    "damage_type": "Slashing"
+                                }
+                            ]
+                        },
+                        "save": null,
+                        "notes": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 4 (1d4 + 2) slashing damage.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Lightning Jolt",
+                        "effect_type": "attack",
+                        "range": 120,
+                        "attack": {
+                            "attack_type": "rs",
+                            "hit_bonus": 4,
+                            "damages": [
+                                {
+                                    "dice_count": 1,
+                                    "dice_size": "d10",
+                                    "mod": 2,
+                                    "damage_type": "Lightning"
+                                }
+                            ]
+                        },
+                        "save": null,
+                        "notes": "Ranged Spell Attack: +4 to hit, range 120 ft., one target. Hit: 7 (1d10 + 2) lightning damage.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Spelljamming Helm Interface",
+                        "effect_type": "utility",
+                        "range": 5,
+                        "attack": null,
+                        "save": null,
+                        "notes": "The horror attaches to a spelljamming helm it can see within 5 feet of itself and attunes to the helm instantly. If another creature is already attuned to the helm, that creature's attunement to the helm ends when the horror's attunement begins. The horror can operate the helm even though it isn't a spellcaster. The horror can detach from the helm as a bonus action, which ends its attunement to the helm.",
+                        "charges": null
+                    }
+                ]
+            },
+            "bonus_actions": {
+                "header": null,
+                "items": []
+            },
+            "reactions": {
+                "header": null,
+                "items": []
+            },
+            "traits": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Shutdown",
+                        "effect_type": "save",
+                        "range": null,
+                        "attack": null,
+                        "save": {
+                            "target": "con",
+                            "dc_bonus": null,
+                            "damages": [],
+                            "half_damage": false,
+                            "conditions": [
+                                "unconscious"
+                            ]
+                        },
+                        "notes": "If targeted by dispel magic, the horror must succeed on a Constitution saving throw against the caster's spell save DC or fall unconscious for 1 minute or until it takes any damage.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Unusual Nature",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "The horror doesn't require air, food, drink, or sleep.",
+                        "charges": null
+                    }
+                ]
+            },
+            "legendary_actions": {
+                "header": null,
+                "items": []
+            },
+            "mythic_actions": {
+                "header": null,
+                "items": []
+            },
+            "lair_actions": {
+                "header": null,
+                "items": []
+            },
+            "regional_effects": {
+                "header": null,
+                "items": []
+            }
+        }
+    },
+    {
+        "name": "Eldritch Lich",
+        "source": "MCV1SC",
+        "size": [
+            "Medium"
+        ],
+        "type": "undead",
+        "alignment": [
+            "Neutral Evil"
+        ],
+        "ac": [
+            {
+                "value": 17,
+                "from": [
+                    "natural armor"
+                ],
+                "condition": null,
+                "special": null
+            }
+        ],
+        "hp": {
+            "average": 165,
+            "formula": "22d8 + 66"
+        },
+        "speed": {
+            "walk": 30,
+            "fly": {
+                "number": 30,
+                "condition": "(hover)"
+            },
+            "canHover": true
+        },
+        "skill": {
+            "arcana": "+14",
+            "perception": "+7"
+        },
+        "senses": {
+            "truesight": 120
+        },
+        "languages": [
+            "Common",
+            "Deep Speech",
+            "telepathy 120 ft."
+        ],
+        "cr": {
+            "base": "15",
+            "xp": 13000,
+            "pb": 5,
+            "lair": null,
+            "xp_lair": null,
+            "coven": null,
+            "xp_coven": null,
+            "level": null
+        },
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "int",
+                "save_dc": 17,
+                "spell_attack_bonus": null,
+                "notes": "The lich casts one of the following spells, using Intelligence as the spellcasting ability (spell save DC 17):",
+                "groups": [
+                    {
+                        "label": "At will",
+                        "uses": null,
+                        "each": false,
+                        "spells": [
+                            {
+                                "name": "detect magic",
+                                "note": null
+                            },
+                            {
+                                "name": "mage hand",
+                                "note": null
+                            },
+                            {
+                                "name": "prestidigitation",
+                                "note": null
+                            }
+                        ]
+                    },
+                    {
+                        "label": "1/day each",
+                        "uses": 1,
+                        "each": true,
+                        "spells": [
+                            {
+                                "name": "arcane eye",
+                                "note": null
+                            },
+                            {
+                                "name": "dimension door",
+                                "note": null
+                            },
+                            {
+                                "name": "plane shift",
+                                "note": "self only"
+                            }
+                        ]
+                    },
+                    {
+                        "label": "2/day each",
+                        "uses": 2,
+                        "each": true,
+                        "spells": [
+                            {
+                                "name": "dispel magic",
+                                "note": null
+                            },
+                            {
+                                "name": "hunger of hadar",
+                                "note": null
+                            },
+                            {
+                                "name": "lightning bolt",
+                                "note": null
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "traitTags": [
+            "Legendary Resistances",
+            "Unusual Nature"
+        ],
+        "actionTags": [
+            "Multiattack"
+        ],
+        "ability_scores": {
+            "str": {
+                "score": 11,
+                "proficient": false,
+                "expertise": false,
+                "mod": 0,
+                "save": 0
+            },
+            "dex": {
+                "score": 18,
+                "proficient": false,
+                "expertise": false,
+                "mod": 4,
+                "save": 4
+            },
+            "con": {
+                "score": 16,
+                "proficient": false,
+                "expertise": false,
+                "mod": 3,
+                "save": 3
+            },
+            "int": {
+                "score": 19,
+                "proficient": true,
+                "expertise": false,
+                "mod": 4,
+                "save": 9
+            },
+            "wis": {
+                "score": 14,
+                "proficient": true,
+                "expertise": false,
+                "mod": 2,
+                "save": 7
+            },
+            "cha": {
+                "score": 12,
+                "proficient": false,
+                "expertise": false,
+                "mod": 1,
+                "save": 1
+            }
+        },
+        "passive_perception": 17,
+        "resistances": {
+            "types": [
+                "necrotic",
+                "poison"
+            ],
+            "conditional": [],
+            "special": null
+        },
+        "condition_immunities": {
+            "types": [
+                "charmed",
+                "exhaustion",
+                "frightened",
+                "paralyzed",
+                "poisoned"
+            ],
+            "conditional": [],
+            "special": null
+        },
+        "initiative": {
+            "total": 4,
+            "advantage": false
+        },
+        "condition_inflict": [
+            "poisoned",
+            "stunned",
+            "blinded"
+        ],
+        "forced_saving_throw": [
+            "constitution",
+            "wisdom",
+            "charisma",
+            "dexterity"
+        ],
+        "effects": {
+            "actions": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Multiattack",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "The lich makes one Parasitic Tentacle attack or uses Spellcasting. The lich also uses Psychic Whisper twice.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Parasitic Tentacle",
+                        "effect_type": "attack_and_save",
+                        "range": 10,
+                        "attack": {
+                            "attack_type": "mw",
+                            "hit_bonus": 9,
+                            "damages": [
+                                {
+                                    "dice_count": 6,
+                                    "dice_size": "d6",
+                                    "mod": 4,
+                                    "damage_type": "Piercing"
+                                },
+                                {
+                                    "dice_count": 6,
+                                    "dice_size": "d6",
+                                    "mod": 4,
+                                    "damage_type": "Necrotic"
+                                }
+                            ]
+                        },
+                        "save": {
+                            "target": "con",
+                            "dc_bonus": 17,
+                            "damages": [],
+                            "half_damage": false,
+                            "conditions": [
+                                "poisoned"
+                            ]
+                        },
+                        "notes": "Melee Weapon Attack: +9 to hit, reach 10 ft., one creature. Hit: 25 (6d6 + 4) piercing damage plus 25 (6d6 + 4) necrotic damage. The target must succeed on a DC 17 Constitution saving throw or be poisoned. The poisoned target can repeat the save at the end of each of its turns, ending the effect on itself on a success. The third time the target fails the save, the target dies and dissolves into a gibbering mouther that obeys the lich and uses the target's initiative.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Psychic Whisper",
+                        "effect_type": "save",
+                        "range": 120,
+                        "attack": null,
+                        "save": {
+                            "target": "wis",
+                            "dc_bonus": 17,
+                            "damages": [
+                                {
+                                    "dice_count": 6,
+                                    "dice_size": "d6",
+                                    "mod": 4,
+                                    "damage_type": "Psychic"
+                                }
+                            ],
+                            "half_damage": false,
+                            "conditions": [
+                                "stunned"
+                            ]
+                        },
+                        "notes": "The lich targets one creature it can see within 120 feet of itself. The target must succeed on a DC 17 Wisdom saving throw or take 25 (6d6 + 4) psychic damage and be stunned until the end of the lich's next turn as incomprehensible whispers fill the target's mind.",
+                        "charges": null
+                    }
+                ]
+            },
+            "bonus_actions": {
+                "header": null,
+                "items": []
+            },
+            "reactions": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Far Realm Step",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "Immediately after taking damage, the lich, along with any equipment it is wearing or carrying, magically teleports up to 60 feet to an unoccupied space it can see.",
+                        "charges": null
+                    }
+                ]
+            },
+            "traits": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Far Realm Parasite",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "Inside the lich's torso dwells a wormlike parasite that contains the lich's soul. When the lich dies, it implodes into the parasite, which then vanishes into the Far Realm. In 2d4 days, the parasite causes the lich to reappear within 1d4 miles of where it died. If the lich died inside a magic circle cast to contain Undead, the lich instead reappears as an otyugh with all the lich's memories.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Legendary Resistance",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "If the lich fails a saving throw, it can choose to succeed instead.",
+                        "charges": {
+                            "max_charges": 4,
+                            "current_charges": 4,
+                            "reset_type": "long_rest",
+                            "recharge_dice": null,
+                            "per_rest_count": 4
+                        }
+                    },
+                    {
+                        "name": "Unusual Nature",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "The lich doesn't need air, food, drink, or sleep.",
+                        "charges": null
+                    }
+                ]
+            },
+            "legendary_actions": {
+                "header": null,
+                "items": []
+            },
+            "mythic_actions": {
+                "header": null,
+                "items": []
+            },
+            "lair_actions": {
+                "header": null,
+                "items": []
+            },
+            "regional_effects": {
+                "header": null,
+                "items": []
+            }
+        }
+    },
+    {
+        "name": "Fractine",
+        "source": "MCV1SC",
+        "size": [
+            "Large"
+        ],
+        "type": "construct",
+        "alignment": [
+            "Neutral"
+        ],
+        "ac": [
+            {
+                "value": 14,
+                "from": [
+                    "natural armor"
+                ],
+                "condition": null,
+                "special": null
+            }
+        ],
+        "hp": {
+            "average": 110,
+            "formula": "13d10 + 39"
+        },
+        "speed": {
+            "walk": 0,
+            "fly": {
+                "number": 60,
+                "condition": "(hover)"
+            },
+            "canHover": true
+        },
+        "skill": {
+            "perception": "+8"
+        },
+        "senses": {
+            "blindsight": 360,
+            "note": "Blindsight: blind beyond this radius"
+        },
+        "cr": {
+            "base": "9",
+            "xp": 5000,
+            "pb": 4,
+            "lair": null,
+            "xp_lair": null,
+            "coven": null,
+            "xp_coven": null,
+            "level": null
+        },
+        "traitTags": [
+            "Magic Resistance",
+            "Unusual Nature"
+        ],
+        "ability_scores": {
+            "str": {
+                "score": 1,
+                "proficient": false,
+                "expertise": false,
+                "mod": -5,
+                "save": -5
+            },
+            "dex": {
+                "score": 13,
+                "proficient": false,
+                "expertise": false,
+                "mod": 1,
+                "save": 1
+            },
+            "con": {
+                "score": 16,
+                "proficient": false,
+                "expertise": false,
+                "mod": 3,
+                "save": 3
+            },
+            "int": {
+                "score": 18,
+                "proficient": false,
+                "expertise": false,
+                "mod": 4,
+                "save": 4
+            },
+            "wis": {
+                "score": 18,
+                "proficient": false,
+                "expertise": false,
+                "mod": 4,
+                "save": 4
+            },
+            "cha": {
+                "score": 11,
+                "proficient": false,
+                "expertise": false,
+                "mod": 0,
+                "save": 0
+            }
+        },
+        "passive_perception": 18,
+        "condition_immunities": {
+            "types": [
+                "blinded",
+                "charmed",
+                "deafened",
+                "exhaustion",
+                "frightened",
+                "grappled",
+                "paralyzed",
+                "petrified",
+                "poisoned",
+                "prone",
+                "restrained",
+                "stunned"
+            ],
+            "conditional": [],
+            "special": null
+        },
+        "initiative": {
+            "total": 1,
+            "advantage": false
+        },
+        "forced_saving_throw": [
+            "constitution",
+            "dexterity"
+        ],
+        "effects": {
+            "actions": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Extradimensional Touch",
+                        "effect_type": "attack",
+                        "range": 5,
+                        "attack": {
+                            "attack_type": "ms",
+                            "hit_bonus": 5,
+                            "damages": [
+                                {
+                                    "dice_count": 8,
+                                    "dice_size": "d6",
+                                    "mod": 0,
+                                    "damage_type": "Force"
+                                }
+                            ]
+                        },
+                        "save": null,
+                        "notes": "Melee Spell Attack: +5 to hit, reach 5 ft., one target. Hit: 24 (8d6) force damage.",
+                        "charges": null
+                    }
+                ]
+            },
+            "bonus_actions": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Imprison",
+                        "effect_type": "save",
+                        "range": null,
+                        "attack": null,
+                        "save": {
+                            "target": "dex",
+                            "dc_bonus": 16,
+                            "damages": [],
+                            "half_damage": false,
+                            "conditions": [
+                                "other"
+                            ]
+                        },
+                        "notes": "The fractine targets one creature of its size or smaller in its space. The target must succeed on a DC 16 Dexterity saving throw or be imprisoned in a demiplane. While the creature is imprisoned, a distorted image of it can be seen on the fractine's two-dimensional surface. The demiplane moves with the fractine, has indestructible and opaque walls, and is only as big as it needs to be to contain the target, which doesn't suffer from hunger or thirst while imprisoned. No other creature can enter the demiplane, and the fractine can't be harmed from within the demiplane. The fractine can imprison only one creature at a time and can release that creature as a bonus action. If the fractine is reduced to 0 hit points, any creature in the fractine's demiplane is released instantly. A released creature reappears in an unoccupied space as close to the fractine (or where it died) as possible. A creature can leave the demiplane on its own by using magic that enables planar travel, such as the plane shift spell.",
+                        "charges": null
+                    }
+                ]
+            },
+            "reactions": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Mirrored Damage",
+                        "effect_type": "save",
+                        "range": 120,
+                        "attack": null,
+                        "save": {
+                            "target": "con",
+                            "dc_bonus": 16,
+                            "damages": [
+                                {
+                                    "dice_count": 8,
+                                    "dice_size": "d6",
+                                    "mod": 0,
+                                    "damage_type": "Force"
+                                }
+                            ],
+                            "half_damage": true,
+                            "conditions": []
+                        },
+                        "notes": "In response to being damaged by a creature it can see within 120 feet of itself, the fractine forces that creature to make a DC 16 Constitution saving throw. On a failed save, the creature takes 24 (8d6) force damage. On a successful save, the creature takes half as much damage.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Split",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "When a Large fractine that has at least 10 hit points remaining takes bludgeoning, piercing, slashing, or thunder damage from any source, it splits into two Medium fractines. The new fractines occupy the space formerly occupied by the original fractine, and each new fractine has hit points equal to half the original's, rounded down. If the original fractine had a creature trapped in its demiplane, that creature is released when the fractine splits, reappearing in an unoccupied space as close to the new fractines as possible.",
+                        "charges": null
+                    }
+                ]
+            },
+            "traits": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Magic Resistance",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "The fractine has advantage on saving throws against spells and other magical effects.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Scrying Focus",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "A spellcaster can use the fractine as a substitute focus when casting the scrying spell or similar magic, provided the spellcaster and the fractine are within 5 feet of each other.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Two-Dimensionality",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "The fractine can occupy another creature's space and vice versa. It can move through other creatures and objects as if they were difficult terrain, but it takes 5 (1d10) force damage if it ends its turn inside an object.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Unusual Nature",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "The fractine doesn't require air, drink, or sleep.",
+                        "charges": null
+                    }
+                ]
+            },
+            "legendary_actions": {
+                "header": null,
+                "items": []
+            },
+            "mythic_actions": {
+                "header": null,
+                "items": []
+            },
+            "lair_actions": {
+                "header": null,
+                "items": []
+            },
+            "regional_effects": {
+                "header": null,
+                "items": []
+            }
+        }
+    },
+    {
+        "name": "Gadabout",
+        "source": "MCV1SC",
+        "size": [
+            "Medium"
+        ],
+        "type": "plant",
+        "alignment": [
+            "Unaligned"
+        ],
+        "ac": [
+            {
+                "value": 11,
+                "from": [
+                    "natural armor"
+                ],
+                "condition": null,
+                "special": null
+            }
+        ],
+        "hp": {
+            "average": 11,
+            "formula": "2d8 + 2"
+        },
+        "speed": {
+            "walk": 10,
+            "fly": {
+                "number": 60,
+                "condition": "(hover)"
+            },
+            "canHover": true
+        },
+        "senses": {
+            "blindsight": 10,
+            "note": "Blindsight: blind beyond this radius"
+        },
+        "cr": {
+            "base": "1/8",
+            "xp": 25,
+            "pb": 2,
+            "lair": null,
+            "xp_lair": null,
+            "coven": null,
+            "xp_coven": null,
+            "level": null
+        },
+        "traitTags": [
+            "Unusual Nature"
+        ],
+        "actionTags": [
+            "Multiattack"
+        ],
+        "ability_scores": {
+            "str": {
+                "score": 12,
+                "proficient": false,
+                "expertise": false,
+                "mod": 1,
+                "save": 1
+            },
+            "dex": {
+                "score": 10,
+                "proficient": false,
+                "expertise": false,
+                "mod": 0,
+                "save": 0
+            },
+            "con": {
+                "score": 14,
+                "proficient": false,
+                "expertise": false,
+                "mod": 2,
+                "save": 2
+            },
+            "int": {
+                "score": 1,
+                "proficient": false,
+                "expertise": false,
+                "mod": -5,
+                "save": -5
+            },
+            "wis": {
+                "score": 6,
+                "proficient": false,
+                "expertise": false,
+                "mod": -2,
+                "save": -2
+            },
+            "cha": {
+                "score": 1,
+                "proficient": false,
+                "expertise": false,
+                "mod": -5,
+                "save": -5
+            }
+        },
+        "passive_perception": 8,
+        "vulnerabilities": {
+            "types": [
+                "fire"
+            ],
+            "conditional": [],
+            "special": null
+        },
+        "condition_immunities": {
+            "types": [
+                "blinded",
+                "charmed",
+                "deafened",
+                "exhaustion",
+                "frightened",
+                "paralyzed",
+                "petrified"
+            ],
+            "conditional": [],
+            "special": null
+        },
+        "initiative": {
+            "total": 0,
+            "advantage": false
+        },
+        "condition_inflict": [
+            "grappled"
+        ],
+        "effects": {
+            "actions": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Multiattack",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "The gadabout makes two Branch attacks.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Branch",
+                        "effect_type": "attack",
+                        "range": 5,
+                        "attack": {
+                            "attack_type": "mw",
+                            "hit_bonus": 3,
+                            "damages": [
+                                {
+                                    "dice_count": 1,
+                                    "dice_size": "d4",
+                                    "mod": 1,
+                                    "damage_type": "Slashing"
+                                }
+                            ]
+                        },
+                        "save": null,
+                        "notes": "Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: 3 (1d4 + 1) slashing damage.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Wrap",
+                        "effect_type": "utility",
+                        "range": 5,
+                        "attack": null,
+                        "save": null,
+                        "notes": "The gadabout enters the space of a willing Medium or Small creature within 5 feet of itself and gently wraps its branches around the target. The target is grappled (escape DC 0). Any attempt by the target to escape the grapple causes the gadabout to use its reaction to move into the nearest unoccupied space. While grappled by the gadabout, the target determines where the gadabout moves on the gadabout's turns and accompanies the gadabout wherever it goes.",
+                        "charges": null
+                    }
+                ]
+            },
+            "bonus_actions": {
+                "header": null,
+                "items": []
+            },
+            "reactions": {
+                "header": null,
+                "items": []
+            },
+            "traits": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Air Envelope",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "If it has at least 1 hit point, the gadabout can generate an air envelope around itself when in a vacuum. This air envelope can sustain the gadabout and one other creature in its space indefinitely.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Unusual Nature",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "The gadabout doesn't require food or sleep.",
+                        "charges": null
+                    }
+                ]
+            },
+            "legendary_actions": {
+                "header": null,
+                "items": []
+            },
+            "mythic_actions": {
+                "header": null,
+                "items": []
+            },
+            "lair_actions": {
+                "header": null,
+                "items": []
+            },
+            "regional_effects": {
+                "header": null,
+                "items": []
+            }
+        }
+    },
+    {
+        "name": "Goon Balloon",
+        "source": "MCV1SC",
+        "size": [
+            "Medium"
+        ],
+        "type": "aberration",
+        "alignment": [
+            "Chaotic Evil"
+        ],
+        "ac": [
+            {
+                "value": 10,
+                "from": [],
+                "condition": null,
+                "special": null
+            }
+        ],
+        "hp": {
+            "average": 6,
+            "formula": "1d8 + 2"
+        },
+        "speed": {
+            "walk": 20,
+            "climb": 20
+        },
+        "skill": {
+            "perception": "+6"
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "languages": [
+            "Deep Speech"
+        ],
+        "cr": {
+            "base": "1/8",
+            "xp": 25,
+            "pb": 2,
+            "lair": null,
+            "xp_lair": null,
+            "coven": null,
+            "xp_coven": null,
+            "level": null
+        },
+        "traitTags": [
+            "Unusual Nature"
+        ],
+        "actionTags": [
+            "Multiattack"
+        ],
+        "ability_scores": {
+            "str": {
+                "score": 10,
+                "proficient": false,
+                "expertise": false,
+                "mod": 0,
+                "save": 0
+            },
+            "dex": {
+                "score": 11,
+                "proficient": false,
+                "expertise": false,
+                "mod": 0,
+                "save": 0
+            },
+            "con": {
+                "score": 14,
+                "proficient": true,
+                "expertise": false,
+                "mod": 2,
+                "save": 4
+            },
+            "int": {
+                "score": 11,
+                "proficient": false,
+                "expertise": false,
+                "mod": 0,
+                "save": 0
+            },
+            "wis": {
+                "score": 14,
+                "proficient": true,
+                "expertise": false,
+                "mod": 2,
+                "save": 4
+            },
+            "cha": {
+                "score": 4,
+                "proficient": false,
+                "expertise": false,
+                "mod": -3,
+                "save": -3
+            }
+        },
+        "passive_perception": 16,
+        "vulnerabilities": {
+            "types": [
+                "piercing"
+            ],
+            "conditional": [],
+            "special": null
+        },
+        "initiative": {
+            "total": 0,
+            "advantage": false
+        },
+        "condition_inflict": [
+            "poisoned",
+            "prone"
+        ],
+        "forced_saving_throw": [
+            "constitution",
+            "wisdom"
+        ],
+        "effects": {
+            "actions": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Multiattack",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "The goon balloon makes two Claw attacks.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Claw",
+                        "effect_type": "attack",
+                        "range": 5,
+                        "attack": {
+                            "attack_type": "mw",
+                            "hit_bonus": 2,
+                            "damages": [
+                                {
+                                    "dice_count": 1,
+                                    "dice_size": "d6",
+                                    "mod": 0,
+                                    "damage_type": "Slashing"
+                                }
+                            ]
+                        },
+                        "save": null,
+                        "notes": "Melee Weapon Attack: +2 to hit, reach 5 ft., one target. Hit: 3 (1d6) slashing damage.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Scintillating Eye",
+                        "effect_type": "save",
+                        "range": 30,
+                        "attack": null,
+                        "save": {
+                            "target": "wis",
+                            "dc_bonus": 12,
+                            "damages": [
+                                {
+                                    "dice_count": 1,
+                                    "dice_size": "d12",
+                                    "mod": 0,
+                                    "damage_type": "Psychic"
+                                }
+                            ],
+                            "half_damage": true,
+                            "conditions": []
+                        },
+                        "notes": "Magical, kaleidoscopic light emanates from one of the goon balloon's eyes as the goon balloon targets one creature it can see within 30 feet of itself. The target must make a DC 12 Wisdom saving throw, taking 6 (1d12) psychic damage on a failed save, or half as much damage on a successful one.",
+                        "charges": null
+                    }
+                ]
+            },
+            "bonus_actions": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Float",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "The goon balloon moves up to 20 feet vertically in one direction without provoking opportunity attacks. If it ends this movement suspended in the air, it hovers in place. It can't be knocked prone while airborne.",
+                        "charges": null
+                    }
+                ]
+            },
+            "reactions": {
+                "header": null,
+                "items": []
+            },
+            "traits": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Burst",
+                        "effect_type": "save",
+                        "range": 10,
+                        "attack": null,
+                        "save": {
+                            "target": "con",
+                            "dc_bonus": 12,
+                            "damages": [],
+                            "half_damage": false,
+                            "conditions": [
+                                "poisoned"
+                            ]
+                        },
+                        "notes": "The goon balloon bursts when it drops to 0 hit points, releasing noxious gas in a 10-foot-radius sphere centered on itself. Creatures in that area must succeed on a DC 12 Constitution saving throw or be poisoned for 1 minute. A poisoned creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Unusual Nature",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "The goon balloon doesn't require air, food, or drink.",
+                        "charges": null
+                    }
+                ]
+            },
+            "legendary_actions": {
+                "header": null,
+                "items": []
+            },
+            "mythic_actions": {
+                "header": null,
+                "items": []
+            },
+            "lair_actions": {
+                "header": null,
+                "items": []
+            },
+            "regional_effects": {
+                "header": null,
+                "items": []
+            }
+        }
+    },
+    {
+        "name": "Nightmare Beast",
+        "source": "MCV1SC",
+        "size": [
+            "Gargantuan"
+        ],
+        "type": "monstrosity",
+        "alignment": [
+            "Chaotic Evil"
+        ],
+        "ac": [
+            {
+                "value": 17,
+                "from": [
+                    "natural armor"
+                ],
+                "condition": null,
+                "special": null
+            }
+        ],
+        "hp": {
+            "average": 232,
+            "formula": "15d20 + 75"
+        },
+        "speed": {
+            "walk": 30,
+            "climb": 30
+        },
+        "senses": {
+            "darkvision": 120
+        },
+        "languages": [
+            "understands the languages of its creator but can't speak"
+        ],
+        "cr": {
+            "base": "16",
+            "xp": 15000,
+            "pb": 5,
+            "lair": null,
+            "xp_lair": null,
+            "coven": null,
+            "xp_coven": null,
+            "level": null
+        },
+        "traitTags": [
+            "Legendary Resistances",
+            "Siege Monster"
+        ],
+        "actionTags": [
+            "Multiattack"
+        ],
+        "ability_scores": {
+            "str": {
+                "score": 26,
+                "proficient": false,
+                "expertise": false,
+                "mod": 8,
+                "save": 8
+            },
+            "dex": {
+                "score": 10,
+                "proficient": false,
+                "expertise": false,
+                "mod": 0,
+                "save": 0
+            },
+            "con": {
+                "score": 21,
+                "proficient": false,
+                "expertise": false,
+                "mod": 5,
+                "save": 5
+            },
+            "int": {
+                "score": 9,
+                "proficient": false,
+                "expertise": false,
+                "mod": -1,
+                "save": -1
+            },
+            "wis": {
+                "score": 12,
+                "proficient": false,
+                "expertise": false,
+                "mod": 1,
+                "save": 1
+            },
+            "cha": {
+                "score": 15,
+                "proficient": false,
+                "expertise": false,
+                "mod": 2,
+                "save": 2
+            }
+        },
+        "passive_perception": 11,
+        "initiative": {
+            "total": 0,
+            "advantage": false
+        },
+        "condition_inflict": [
+            "frightened",
+            "prone"
+        ],
+        "forced_saving_throw": [
+            "constitution",
+            "strength",
+            "wisdom"
+        ],
+        "legendary_action_points": {
+            "legendary_actions": 3,
+            "lair_actions": null
+        },
+        "effects": {
+            "actions": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Multiattack",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "The beast makes two Claw attacks and one Tusk attack.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Claw",
+                        "effect_type": "attack_and_save",
+                        "range": 15,
+                        "attack": {
+                            "attack_type": "mw",
+                            "hit_bonus": 13,
+                            "damages": [
+                                {
+                                    "dice_count": 1,
+                                    "dice_size": "d12",
+                                    "mod": 8,
+                                    "damage_type": "Slashing"
+                                }
+                            ]
+                        },
+                        "save": {
+                            "target": "str",
+                            "dc_bonus": 21,
+                            "damages": [],
+                            "half_damage": false,
+                            "conditions": [
+                                "prone"
+                            ]
+                        },
+                        "notes": "Melee Weapon Attack: +13 to hit, reach 15 ft., one target. Hit: 14 (1d12 + 8) slashing damage, and if the target is a creature, it must succeed on a DC 21 Strength saving throw or be knocked prone.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Tusk",
+                        "effect_type": "attack",
+                        "range": 15,
+                        "attack": {
+                            "attack_type": "mw",
+                            "hit_bonus": 13,
+                            "damages": [
+                                {
+                                    "dice_count": 2,
+                                    "dice_size": "d8",
+                                    "mod": 8,
+                                    "damage_type": "Slashing"
+                                }
+                            ]
+                        },
+                        "save": null,
+                        "notes": "Melee Weapon Attack: +13 to hit, reach 15 ft., one target. Hit: 17 (2d8 + 8) slashing damage.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Disintegration Gaze",
+                        "effect_type": "save",
+                        "range": 60,
+                        "attack": null,
+                        "save": {
+                            "target": "con",
+                            "dc_bonus": 18,
+                            "damages": [
+                                {
+                                    "dice_count": 10,
+                                    "dice_size": "d6",
+                                    "mod": 40,
+                                    "damage_type": "Force"
+                                }
+                            ],
+                            "half_damage": true,
+                            "conditions": []
+                        },
+                        "notes": "The beast targets one creature it can see within 60 feet of itself. The target must make a DC 18 Constitution saving throw, taking 70 (10d6 + 40) force damage on a failed save, or half as much damage on a successful one. If this magical effect reduces the target to 0 hit points, the target is disintegrated and leaves nothing behind, except a pile of ashes plus whatever equipment it was wearing or carrying.",
+                        "charges": {
+                            "max_charges": 1,
+                            "current_charges": 1,
+                            "reset_type": "recharge_dice",
+                            "recharge_dice": "5",
+                            "per_rest_count": null
+                        }
+                    }
+                ]
+            },
+            "bonus_actions": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Teleport",
+                        "effect_type": "utility",
+                        "range": 120,
+                        "attack": null,
+                        "save": null,
+                        "notes": "The beast magically teleports, along with any equipment it is wearing or carrying, up to 120 feet to an unoccupied space it can see.",
+                        "charges": {
+                            "max_charges": 2,
+                            "current_charges": 2,
+                            "reset_type": "long_rest",
+                            "recharge_dice": null,
+                            "per_rest_count": 2
+                        }
+                    }
+                ]
+            },
+            "reactions": {
+                "header": null,
+                "items": []
+            },
+            "traits": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Legendary Resistance",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "If the beast fails a saving throw, it can choose to succeed instead.",
+                        "charges": {
+                            "max_charges": 2,
+                            "current_charges": 2,
+                            "reset_type": "long_rest",
+                            "recharge_dice": null,
+                            "per_rest_count": 2
+                        }
+                    },
+                    {
+                        "name": "Siege Monster",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "The beast deals double damage to objects and structures.",
+                        "charges": null
+                    }
+                ]
+            },
+            "legendary_actions": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Tusk Attack",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "The beast makes one Tusk attack.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Charge",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "The beast moves up to its speed without provoking opportunity attacks, then makes two Tusk attacks.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Frightful Howl",
+                        "effect_type": "save",
+                        "range": 120,
+                        "attack": null,
+                        "save": {
+                            "target": "wis",
+                            "dc_bonus": 18,
+                            "damages": [],
+                            "half_damage": false,
+                            "conditions": [
+                                "frightened"
+                            ]
+                        },
+                        "notes": "The beast howls as it exhales a cloud of magical fear gas in a 120-foot cone. Any creature in that area must succeed on a DC 18 Wisdom saving throw or be frightened of the beast for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.",
+                        "charges": null
+                    }
+                ]
+            },
+            "mythic_actions": {
+                "header": null,
+                "items": []
+            },
+            "lair_actions": {
+                "header": null,
+                "items": []
+            },
+            "regional_effects": {
+                "header": null,
+                "items": []
+            }
+        }
+    },
+    {
+        "name": "Puppeteer Parasite",
+        "source": "MCV1SC",
+        "size": [
+            "Tiny"
+        ],
+        "type": "aberration",
+        "alignment": [
+            "Neutral Evil"
+        ],
+        "ac": [
+            {
+                "value": 15,
+                "from": [
+                    "natural armor"
+                ],
+                "condition": null,
+                "special": null
+            }
+        ],
+        "hp": {
+            "average": 71,
+            "formula": "11d4 + 44"
+        },
+        "speed": {
+            "walk": 10,
+            "fly": {
+                "number": 30,
+                "condition": "(hover)"
+            },
+            "canHover": true
+        },
+        "skill": {
+            "stealth": "+4"
+        },
+        "senses": {
+            "blindsight": 60,
+            "note": "Blindsight: blind beyond this radius"
+        },
+        "languages": [
+            "telepathy 30 ft."
+        ],
+        "cr": {
+            "base": "3",
+            "xp": 700,
+            "pb": 2,
+            "lair": null,
+            "xp_lair": null,
+            "coven": null,
+            "xp_coven": null,
+            "level": null
+        },
+        "traitTags": [
+            "Unusual Nature"
+        ],
+        "ability_scores": {
+            "str": {
+                "score": 2,
+                "proficient": false,
+                "expertise": false,
+                "mod": -4,
+                "save": -4
+            },
+            "dex": {
+                "score": 15,
+                "proficient": true,
+                "expertise": false,
+                "mod": 2,
+                "save": 4
+            },
+            "con": {
+                "score": 18,
+                "proficient": true,
+                "expertise": false,
+                "mod": 4,
+                "save": 6
+            },
+            "int": {
+                "score": 16,
+                "proficient": false,
+                "expertise": false,
+                "mod": 3,
+                "save": 3
+            },
+            "wis": {
+                "score": 10,
+                "proficient": true,
+                "expertise": false,
+                "mod": 0,
+                "save": 2
+            },
+            "cha": {
+                "score": 3,
+                "proficient": false,
+                "expertise": false,
+                "mod": -4,
+                "save": -4
+            }
+        },
+        "passive_perception": 10,
+        "resistances": {
+            "types": [
+                "fire",
+                "necrotic",
+                "poison"
+            ],
+            "conditional": [],
+            "special": null
+        },
+        "vulnerabilities": {
+            "types": [
+                "radiant"
+            ],
+            "conditional": [],
+            "special": null
+        },
+        "condition_immunities": {
+            "types": [
+                "charmed",
+                "frightened",
+                "poisoned"
+            ],
+            "conditional": [],
+            "special": null
+        },
+        "initiative": {
+            "total": 2,
+            "advantage": false
+        },
+        "effects": {
+            "actions": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Cling",
+                        "effect_type": "attack",
+                        "range": 5,
+                        "attack": {
+                            "attack_type": "mw",
+                            "hit_bonus": 4,
+                            "damages": [
+                                {
+                                    "dice_count": 3,
+                                    "dice_size": "d6",
+                                    "mod": 2,
+                                    "damage_type": "Necrotic"
+                                }
+                            ]
+                        },
+                        "save": null,
+                        "notes": "Melee Weapon Attack: +4 to hit, reach 5 ft., one creature. Hit: 12 (3d6 + 2) necrotic damage, and the parasite attaches to the target. While attached, the parasite can't make Cling attacks. The parasite can detach itself by spending 5 feet of its movement. As an action, a creature within reach of the parasite can try to detach it, doing so with a successful DC 14 Strength check.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Consume Life",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "The parasite deals 12 (3d6 + 2) necrotic damage to one creature it is physically attached to, provided that creature isn't a Construct or an Undead. The parasite regains hit points equal to the damage taken.",
+                        "charges": null
+                    }
+                ]
+            },
+            "bonus_actions": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Suggestion",
+                        "effect_type": "save",
+                        "range": null,
+                        "attack": null,
+                        "save": {
+                            "target": "wis",
+                            "dc_bonus": 13,
+                            "damages": [],
+                            "half_damage": false,
+                            "conditions": []
+                        },
+                        "notes": "The parasite casts the suggestion spell, requiring no spell components and using Intelligence as the spellcasting ability (spell save DC 13).",
+                        "charges": {
+                            "max_charges": 1,
+                            "current_charges": 1,
+                            "reset_type": "long_rest",
+                            "recharge_dice": null,
+                            "per_rest_count": 1
+                        }
+                    }
+                ]
+            },
+            "reactions": {
+                "header": null,
+                "items": []
+            },
+            "traits": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Unusual Nature",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "The parasite doesn't require air or sleep.",
+                        "charges": null
+                    }
+                ]
+            },
+            "legendary_actions": {
+                "header": null,
+                "items": []
+            },
+            "mythic_actions": {
+                "header": null,
+                "items": []
+            },
+            "lair_actions": {
+                "header": null,
+                "items": []
+            },
+            "regional_effects": {
+                "header": null,
+                "items": []
+            }
+        }
+    },
+    {
+        "name": "Star Lancer",
+        "source": "MCV1SC",
+        "size": [
+            "Large"
+        ],
+        "type": "celestial",
+        "alignment": [
+            "Neutral"
+        ],
+        "ac": [
+            {
+                "value": 15,
+                "from": [
+                    "natural armor"
+                ],
+                "condition": null,
+                "special": null
+            }
+        ],
+        "hp": {
+            "average": 60,
+            "formula": "8d10 + 16"
+        },
+        "speed": {
+            "walk": 0,
+            "fly": 50
+        },
+        "skill": {
+            "perception": "+3",
+            "stealth": "+4"
+        },
+        "languages": [
+            "Celestial",
+            "telepathy 120 ft."
+        ],
+        "cr": {
+            "base": "2",
+            "xp": 450,
+            "pb": 2,
+            "lair": null,
+            "xp_lair": null,
+            "coven": null,
+            "xp_coven": null,
+            "level": null
+        },
+        "traitTags": [
+            "Flyby"
+        ],
+        "ability_scores": {
+            "str": {
+                "score": 18,
+                "proficient": false,
+                "expertise": false,
+                "mod": 4,
+                "save": 4
+            },
+            "dex": {
+                "score": 15,
+                "proficient": true,
+                "expertise": false,
+                "mod": 2,
+                "save": 4
+            },
+            "con": {
+                "score": 15,
+                "proficient": true,
+                "expertise": false,
+                "mod": 2,
+                "save": 4
+            },
+            "int": {
+                "score": 10,
+                "proficient": false,
+                "expertise": false,
+                "mod": 0,
+                "save": 0
+            },
+            "wis": {
+                "score": 13,
+                "proficient": false,
+                "expertise": false,
+                "mod": 1,
+                "save": 1
+            },
+            "cha": {
+                "score": 8,
+                "proficient": false,
+                "expertise": false,
+                "mod": -1,
+                "save": -1
+            }
+        },
+        "passive_perception": 13,
+        "resistances": {
+            "types": [
+                "radiant"
+            ],
+            "conditional": [],
+            "special": null
+        },
+        "initiative": {
+            "total": 2,
+            "advantage": false
+        },
+        "condition_inflict": [
+            "invisible"
+        ],
+        "effects": {
+            "actions": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Horn",
+                        "effect_type": "attack",
+                        "range": 5,
+                        "attack": {
+                            "attack_type": "mw",
+                            "hit_bonus": 6,
+                            "damages": [
+                                {
+                                    "dice_count": 1,
+                                    "dice_size": "d6",
+                                    "mod": 4,
+                                    "damage_type": "Piercing"
+                                },
+                                {
+                                    "dice_count": 3,
+                                    "dice_size": "d6",
+                                    "mod": 0,
+                                    "damage_type": "Piercing"
+                                }
+                            ]
+                        },
+                        "save": null,
+                        "notes": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 7 (1d6 + 4) piercing damage. If the star lancer moved at least 20 feet straight toward the target immediately before the hit, the target takes an extra 10 (3d6) piercing damage.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Invisibility Cloak",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "The star lancer and one creature riding it (chosen by the star lancer) magically turn invisible. This effect lasts until the star lancer or a creature riding it attacks or casts a spell, or until the star lancer's concentration ends (as if concentration on a spell). Any equipment worn or carried by the invisible creatures is also invisible for the duration of the Invisibility Cloak.",
+                        "charges": {
+                            "max_charges": 3,
+                            "current_charges": 3,
+                            "reset_type": "long_rest",
+                            "recharge_dice": null,
+                            "per_rest_count": 3
+                        }
+                    }
+                ]
+            },
+            "bonus_actions": {
+                "header": null,
+                "items": []
+            },
+            "reactions": {
+                "header": null,
+                "items": []
+            },
+            "traits": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Flyby",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "The star lancer doesn't provoke opportunity attacks when it flies out of an enemy's reach.",
+                        "charges": null
+                    }
+                ]
+            },
+            "legendary_actions": {
+                "header": null,
+                "items": []
+            },
+            "mythic_actions": {
+                "header": null,
+                "items": []
+            },
+            "lair_actions": {
+                "header": null,
+                "items": []
+            },
+            "regional_effects": {
+                "header": null,
+                "items": []
+            }
+        }
+    },
+    {
+        "name": "Yggdrasti",
+        "source": "MCV1SC",
+        "size": [
+            "Gargantuan"
+        ],
+        "type": "plant",
+        "alignment": [
+            "Unaligned"
+        ],
+        "ac": [
+            {
+                "value": 15,
+                "from": [
+                    "natural armor"
+                ],
+                "condition": null,
+                "special": null
+            }
+        ],
+        "hp": {
+            "average": 112,
+            "formula": "9d20 + 18"
+        },
+        "speed": {
+            "walk": 30,
+            "fly": {
+                "number": 60,
+                "condition": "(hover)"
+            },
+            "canHover": true
+        },
+        "senses": {
+            "blindsight": 120,
+            "note": "Blindsight: blind beyond this radius"
+        },
+        "cr": {
+            "base": "7",
+            "xp": 2900,
+            "pb": 3,
+            "lair": null,
+            "xp_lair": null,
+            "coven": null,
+            "xp_coven": null,
+            "level": null
+        },
+        "traitTags": [
+            "False Appearance",
+            "Unusual Nature"
+        ],
+        "actionTags": [
+            "Multiattack"
+        ],
+        "ability_scores": {
+            "str": {
+                "score": 20,
+                "proficient": false,
+                "expertise": false,
+                "mod": 5,
+                "save": 5
+            },
+            "dex": {
+                "score": 10,
+                "proficient": false,
+                "expertise": false,
+                "mod": 0,
+                "save": 0
+            },
+            "con": {
+                "score": 15,
+                "proficient": false,
+                "expertise": false,
+                "mod": 2,
+                "save": 2
+            },
+            "int": {
+                "score": 3,
+                "proficient": false,
+                "expertise": false,
+                "mod": -4,
+                "save": -4
+            },
+            "wis": {
+                "score": 10,
+                "proficient": false,
+                "expertise": false,
+                "mod": 0,
+                "save": 0
+            },
+            "cha": {
+                "score": 3,
+                "proficient": false,
+                "expertise": false,
+                "mod": -4,
+                "save": -4
+            }
+        },
+        "passive_perception": 10,
+        "immunities": {
+            "types": [
+                "lightning"
+            ],
+            "conditional": [],
+            "special": null
+        },
+        "resistances": {
+            "types": [
+                "bludgeoning",
+                "piercing"
+            ],
+            "conditional": [],
+            "special": null
+        },
+        "vulnerabilities": {
+            "types": [
+                "fire"
+            ],
+            "conditional": [],
+            "special": null
+        },
+        "condition_immunities": {
+            "types": [
+                "blinded",
+                "deafened",
+                "exhaustion"
+            ],
+            "conditional": [],
+            "special": null
+        },
+        "initiative": {
+            "total": 0,
+            "advantage": false
+        },
+        "condition_inflict": [
+            "grappled"
+        ],
+        "forced_saving_throw": [
+            "dexterity"
+        ],
+        "effects": {
+            "actions": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Multiattack",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "The yggdrasti makes two Root attacks and uses Lightning Discharge (if available).",
+                        "charges": null
+                    },
+                    {
+                        "name": "Root",
+                        "effect_type": "attack",
+                        "range": 20,
+                        "attack": {
+                            "attack_type": "mw",
+                            "hit_bonus": 8,
+                            "damages": [
+                                {
+                                    "dice_count": 2,
+                                    "dice_size": "d6",
+                                    "mod": 5,
+                                    "damage_type": "Bludgeoning"
+                                }
+                            ]
+                        },
+                        "save": null,
+                        "notes": "Melee Weapon Attack: +8 to hit, reach 20 ft., one target. Hit: 12 (2d6 + 5) bludgeoning damage, and if the target is a creature, it is grappled (escape DC 15). The yggdrasti has four roots, each of which can grapple one target.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Lightning Discharge",
+                        "effect_type": "save",
+                        "range": 120,
+                        "attack": null,
+                        "save": {
+                            "target": "dex",
+                            "dc_bonus": 13,
+                            "damages": [
+                                {
+                                    "dice_count": 7,
+                                    "dice_size": "d8",
+                                    "mod": 0,
+                                    "damage_type": "Lightning"
+                                }
+                            ],
+                            "half_damage": true,
+                            "conditions": []
+                        },
+                        "notes": "The yggdrasti shoots lightning at one creature within 120 feet of itself. The target must make a DC 13 Dexterity saving throw, taking 31 (7d8) lightning damage on a failed save, or half as much damage on a successful one.",
+                        "charges": {
+                            "max_charges": 3,
+                            "current_charges": 3,
+                            "reset_type": "long_rest",
+                            "recharge_dice": null,
+                            "per_rest_count": 3
+                        }
+                    }
+                ]
+            },
+            "bonus_actions": {
+                "header": null,
+                "items": []
+            },
+            "reactions": {
+                "header": null,
+                "items": []
+            },
+            "traits": {
+                "header": null,
+                "items": [
+                    {
+                        "name": "Cavities",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "The yggdrasti has 1d4 + 2 cavities in its trunk. Each cavity is big enough to hold one Medium creature, two Small creatures, or eight Tiny creatures. A creature inside a cavity has Cover against attacks and other effects that originate outside the cavity. The yggdrasti's cavities aren't connected to one another.",
+                        "charges": null
+                    },
+                    {
+                        "name": "False Appearance",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "If the yggdrasti is motionless and rooted in the ground at the start of combat, it looks just like a dead tree and has advantage on its initiative roll. Moreover, if a creature hasn't observed the rooted yggdrasti move or act, that creature must succeed on a DC 18 Intelligence (Investigation) check to discern that the yggdrasti is animate.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Lightning Conduit",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "If the yggdrasti is subjected to lightning damage, it is unhurt, and the lightning damage is instead divided evenly among all creatures it is grappling. In addition, the yggdrasti regains one use of Lightning Discharge.",
+                        "charges": null
+                    },
+                    {
+                        "name": "Unusual Nature",
+                        "effect_type": "utility",
+                        "range": null,
+                        "attack": null,
+                        "save": null,
+                        "notes": "The yggdrasti doesn't require air or sleep.",
+                        "charges": null
+                    }
+                ]
+            },
+            "legendary_actions": {
+                "header": null,
+                "items": []
+            },
+            "mythic_actions": {
+                "header": null,
+                "items": []
+            },
+            "lair_actions": {
+                "header": null,
+                "items": []
+            },
+            "regional_effects": {
+                "header": null,
+                "items": []
+            }
+        }
+    }
+]
