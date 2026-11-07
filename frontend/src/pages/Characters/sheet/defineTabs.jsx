@@ -1,6 +1,7 @@
 import React from "react";
 
 import Effects from "./define/EffectsDefine";
+import Feats from "./define/FeatsDefine";
 import MinionsDefine from "./minions/MinionsDefine";
 import Spellbook from "./define/SpellbookDefine";
 import Inventory from "./define/InventoryDefine";
@@ -36,6 +37,18 @@ export const DEFINE_TABS = [
     icon: (
       <Icon>
         <path d="M12 3l1.6 4.2a2 2 0 0 0 1.2 1.2L19 10l-4.2 1.6a2 2 0 0 0-1.2 1.2L12 17l-1.6-4.2a2 2 0 0 0-1.2-1.2L5 10l4.2-1.6a2 2 0 0 0 1.2-1.2z" />
+      </Icon>
+    ),
+  },
+  {
+    id: "feats",
+    label: "Feats",
+    Component: Feats,
+    bare: true, // parchment style draws its own surface
+    icon: (
+      <Icon>
+        <circle cx="12" cy="9" r="5" />
+        <path d="M9 13.5 7.5 21l4.5-2.5 4.5 2.5L15 13.5" />
       </Icon>
     ),
   },

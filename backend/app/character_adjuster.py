@@ -1780,13 +1780,11 @@ class CharacterAdjuster:
 
         chosen = as_list(entry.get("feats"))
         for pick in chosen:
-            if isinstance(pick, dict):
-                self.apply_feat_token(
-                    pick.get("name") or "", owner=entry["display_name"],
-                    source=pick.get("source"),
-                )
-            elif pick:
-                self.apply_feat_token(str(pick), owner=entry["display_name"])
+            # The builder sends every pick as { name, source }.
+            self.apply_feat_token(
+                pick.get("name") or "", owner=entry["display_name"],
+                source=pick.get("source"), edition=entry["edition"],
+            )
 
         remaining = max(0, slots - len(chosen))
         if remaining <= 0:
@@ -2509,27 +2507,39 @@ class CharacterAdjuster:
             self._feats_cache = data if isinstance(data, list) else []
         return self._feats_cache
 
-    def find_feat(self, name, source=None):
+    def find_feat(self, name, source=None, edition=None):
         """
-        A feat by name, and by source when one is given.
+        A feat by name. Several feats can share a name — PHB and XPHB both
+        have an "Alert" — so when more than one matches:
 
-        Matching is case-blind because the catalogue uses Title Case
-        ("Magic Initiate") while a background grants it lowercase. A
-        name match with the wrong source is kept as a fallback rather
-        than discarded, since most grants name no source at all.
+        1. the one from `source`, when a source is given (class picks
+           from the builder always send one);
+        2. otherwise the one matching `edition` — background grants name
+           no source, but the background has an edition, and feats mark
+           theirs by having a `category` (see is_one_edition_feat);
+        3. otherwise the first match.
+
+        Name and source are compared case-blind, because the catalogue
+        uses Title Case ("Magic Initiate") while a background grants it
+        lowercase.
         """
         target = squash(name)
-        fallback = None
+        matches = [feat for feat in self.load_feats() if squash(feat.get("name")) == target]
+        if not matches:
+            return None
 
-        for feat in self.load_feats():
-            if squash(feat.get("name")) != target:
-                continue
-            if source and feat.get("source") != source:
-                fallback = fallback or feat
-                continue
-            return feat
+        if source:
+            for feat in matches:
+                if str(feat.get("source") or "").lower() == str(source).lower():
+                    return feat
 
-        return fallback
+        if edition:
+            want_one = edition == "one"
+            for feat in matches:
+                if is_one_edition_feat(feat) == want_one:
+                    return feat
+
+        return matches[0]
 
     def feat_prerequisites_met(self, feat, entry=None):
         """
@@ -2577,37 +2587,48 @@ class CharacterAdjuster:
         """
         pool = self.feat_pool_for(entry)
         picked = []
+        # Names rolled in this call. apply_feat marks them taken for the
+        # whole character once they are applied.
+        rolled = set()
 
         for _ in range(count):
             available = [
                 feat for feat in pool
                 if feat.get("repeatable")
-                or squash(feat.get("name")) not in self._taken_feats
+                or (squash(feat.get("name")) not in self._taken_feats
+                    and squash(feat.get("name")) not in rolled)
             ]
             if not available:
                 break
 
             feat = random.choice(available)
-            self._taken_feats.add(squash(feat.get("name")))
+            rolled.add(squash(feat.get("name")))
             picked.append(feat)
 
         return picked
 
-    def apply_feat_token(self, token, owner, source=None):
+    def apply_feat_token(self, token, owner, source=None, edition=None):
         """
         A feat named by a data token, as a background grants it:
-        "magic initiate; cleric".
+        "magic initiate; cleric". `source` and `edition` only help pick
+        between feats that share a name; see find_feat.
         """
         name, subtype = split_feat_token(token)
         if not name:
             return
 
-        feat = self.find_feat(name, source)
+        feat = self.find_feat(name, source, edition)
         if not feat:
-            # The raw string still goes on the list — losing it because a
-            # lookup failed would be worse than carrying it unresolved.
-            if token not in self.final_build["feats"]:
-                self.final_build["feats"].append(token)
+            # The feat still goes on the list as a bare row — losing it
+            # because a lookup failed would be worse than carrying it
+            # unresolved. The player can fill it in on the Feats tab.
+            if squash(name) not in self._taken_feats:
+                self._taken_feats.add(squash(name))
+                label = f"{title_case(name)} ({title_case(subtype)})" if subtype else title_case(name)
+                row = self.add_feat_row(label, "", owner)
+                row["source"] = source
+                row["category"] = None
+                row["unresolved"] = True
             self.add_unresolved(
                 "feat", f"feat.{snake(name)}",
                 name=name, subtype=subtype, raw=token, owner=owner,
@@ -2617,21 +2638,41 @@ class CharacterAdjuster:
 
         self.apply_feat(feat, subtype=subtype, owner=owner, raw=token)
 
+    def add_feat_row(self, name, notes, owner):
+        """
+        One row in final_build["feats"]. Feats are stored in the same shape
+        as effect rows (make_effect), so the sheet's Feats tab can set them
+        up for Play like any effect — but they live in their own list and
+        no longer appear under effects.
+        """
+        row = self.make_effect(name, "feat", notes)
+        row["owner"] = owner
+        self.final_build["feats"].append(row)
+        return row
+
     def apply_feat(self, feat, subtype=None, owner=None, raw=None):
         """
-        Everything one feat contributes: the raw string on the list, an
-        effect row, its proficiency grants, its defences, its ability
-        bonuses and its spells.
+        Everything one feat contributes: a row in final_build["feats"], its
+        proficiency grants, its defences, its ability bonuses and its
+        spells.
+
+        A feat the character already has (by name — PHB and XPHB "Alert"
+        count as the same feat) is not added twice unless it is
+        `repeatable`; the second grant is reported as unresolved instead,
+        e.g. a background's origin feat also picked in a class slot.
         """
         name = feat.get("name")
         if not name:
             return
 
+        if squash(name) in self._taken_feats and not feat.get("repeatable"):
+            self.add_unresolved(
+                "feat_duplicate", f"feat.{snake(name)}.duplicate",
+                name=name, source=feat.get("source"), owner=owner,
+                reason="the character already has this feat from another source",
+            )
+            return
         self._taken_feats.add(squash(name))
-
-        token = raw or (f"{name}; {subtype}" if subtype else name)
-        if token not in self.final_build["feats"]:
-            self.final_build["feats"].append(token)
 
         # "Magic Initiate (Cleric)", matching formatFeatTag in the
         # frontend. The catalogue name is already correctly cased, so it
@@ -2640,16 +2681,18 @@ class CharacterAdjuster:
         # needs casing, since it arrives lowercase from the token.
         label = f"{name} ({title_case(subtype)})" if subtype else name
 
-        effect = self.add_class_effect(
-            label, feat.get("entries") or "", owner, trait="feat"
-        )
-        if effect is not None:
-            effect["source"] = feat.get("source")
-            effect["category"] = feat.get("category")
-            # Carried, never checked — see feat_prerequisites_met.
-            effect["prerequisite"] = feat.get("prerequisite")
-            if subtype:
-                effect["subtype"] = subtype
+        entries = feat.get("entries")
+        if not isinstance(entries, str):
+            entries = "\n\n".join(e for e in as_list(entries) if isinstance(e, str))
+        row = self.add_feat_row(label, entries, owner)
+        row["source"] = feat.get("source")
+        # None on classic feats — the sheet groups by it (see is_one_edition_feat).
+        row["category"] = feat.get("category")
+        row["repeatable"] = bool(feat.get("repeatable"))
+        # Carried, never checked — see feat_prerequisites_met.
+        row["prerequisite"] = feat.get("prerequisite")
+        if subtype:
+            row["subtype"] = subtype
 
         # A subtype has to be one the feat actually offers; `versions`
         # lists them ("Cleric"/"Druid"/"Wizard" for Magic Initiate).
@@ -3561,7 +3604,9 @@ class CharacterAdjuster:
             bg_final["ability_options"] = as_list(ability_score_increase)
 
         for feat in as_list(feats):
-            self.apply_feat_token(feat, owner=name)
+            # Grants name no source, so the background's own edition
+            # decides between same-named feats (PHB vs XPHB "Alert").
+            self.apply_feat_token(feat, owner=name, edition=bg_final["edition"])
 
     def handle_bg(self):
 

@@ -5,6 +5,7 @@ import SpellPopup           from "../../pages/Catalogues/Spells/SpellPopup";
 import ItemPopup            from "../../pages/Catalogues/Items/ItemPopup";
 import BackgroundPopup      from "../../pages/Catalogues/Backgrounds/BackgroundPopup";
 import OptionalFeaturePopup from "../../pages/Catalogues/OptionalFeatures/OptionalFeaturePopup";
+import StatblockWindow, { statblockWindowId } from "../../pages/Campaigns/statblock/StatblockWindow";
 
 
 export const POPUP_REGISTRY = {
@@ -51,5 +52,15 @@ export const POPUP_REGISTRY = {
     defaultHeight: 620,
     // Disambiguate features with same name+source across feature types.
     buildId: (d) => `optionalFeature__${d.name}__${d.source}__${d.feature_type}`,
+  },
+  // A campaign copy's statblock (Campaign › NPCs). The data is only a
+  // reference { name, campaignName, kind, file }; openStatblock() in
+  // StatblockWindow places it at its standard size when first opened.
+  statblock: {
+    component: StatblockWindow,
+    propName: "statblock",
+    defaultWidth: 1180,
+    defaultHeight: 760,
+    buildId: statblockWindowId,
   },
 };

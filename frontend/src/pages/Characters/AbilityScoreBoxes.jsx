@@ -1,12 +1,17 @@
 import React, { useMemo } from "react";
 import { ABILITIES_ORDER } from "../../utils/Constants";
+import { INK, InkButton, InkChoice, InkNumber, InkSelect, Line } from "../../styles/parchment";
+
+/* Ability scores for the Builder, on parchment: pick a method, then the
+   six scores are written in a row, each with its modifier under it and
+   the control that sets it (a list, − / +, or a blank to write in). */
 
 /* ───────── config ───────── */
 const SCORE_RULES = [
-  { id: "standard", label: "Standard" },
-  { id: "pointBuy", label: "Point Buy" },
-  { id: "random", label: "Roll 3d6" },
-  { id: "custom", label: "Custom" },
+  { value: "standard", label: "Standard array" },
+  { value: "pointBuy", label: "Point buy" },
+  { value: "random", label: "Roll 3d6" },
+  { value: "custom", label: "Custom" },
 ];
 
 export const STANDARD_ARRAY = [15, 14, 13, 12, 10, 8];
@@ -46,63 +51,30 @@ function poolRemaining(pool, scores, exceptKey) {
   return rem;
 }
 
-/* ───────── small UI atoms ───────── */
-function StepBtn({ children, disabled, onClick }) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      disabled={disabled}
-      className="flex h-7 w-7 items-center justify-center rounded-md border border-slate-600 bg-slate-800/70
-                 text-lg font-bold leading-none text-amber-200 transition
-                 hover:border-amber-500/60 hover:bg-slate-700/70
-                 disabled:cursor-not-allowed disabled:opacity-30"
-    >
-      {children}
-    </button>
-  );
+/* ───────── small pieces ───────── */
+
+// "15 · 14 · 12" — numbers still to hand out.
+function Pool({ values }) {
+  if (!values.length) return <span className={`text-sm italic ${INK.rubric}`}>all assigned</span>;
+  return <span className="text-lg tabular-nums tracking-wide">{values.join(" · ")}</span>;
 }
 
-function PoolChip({ children }) {
+// One ability: label, the score large, its modifier, then its control.
+function Ability({ label, score, children }) {
   return (
-    <span className="rounded border border-slate-600/70 bg-slate-800/70 px-1.5 py-0.5 text-[11px] font-semibold tabular-nums text-amber-200">
-      {children}
-    </span>
-  );
-}
-
-function AbilityCard({ label, score, children }) {
-  const m = modOf(score);
-  return (
-    <div className="relative flex flex-col items-center rounded-xl border border-slate-700/80
-                    bg-gradient-to-b from-slate-800/50 to-slate-900/70 px-2 py-3 shadow-inner">
-      <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-amber-400/90">
-        {label}
-      </span>
-      <span
-        className={`mt-1 text-3xl font-bold leading-none tabular-nums ${
-          score == null ? "text-slate-600" : "text-amber-50"
-        }`}
-      >
-        {score == null ? "—" : score}
-      </span>
-      <span className="mt-1 rounded-full border border-slate-600/70 bg-slate-900/70 px-2 py-0.5 text-[10px] font-semibold tabular-nums text-slate-300">
-        {fmtMod(m)}
-      </span>
-      {children && <div className="mt-2.5 w-full">{children}</div>}
+    <div className="flex flex-col items-center">
+      <span className={`text-[11px] font-semibold uppercase tracking-[0.2em] ${INK.faded}`}>{label}</span>
+      <span className={`mt-1 text-4xl leading-none tabular-nums ${score == null ? INK.faint : ""}`}>{score == null ? "—" : score}</span>
+      <span className={`mt-1 text-sm italic tabular-nums ${INK.faded}`}>{fmtMod(modOf(score))}</span>
+      {children && <div className="mt-2 flex h-8 w-full items-center justify-center">{children}</div>}
     </div>
   );
 }
 
+const stepBtn = `w-7 text-xl leading-none transition ${INK.faded} hover:text-[#3a2716] disabled:opacity-30`;
+
 /* ───────── main (controlled) component ───────── */
-export default function AbilityScoreBoxes({
-  method,
-  scores,
-  pool,
-  onMethodChange,
-  onScoresChange,
-  onRoll,
-}) {
+export default function AbilityScoreBoxes({ method, scores, pool, onMethodChange, onScoresChange, onRoll }) {
   const setScore = (key, value) => onScoresChange({ ...scores, [key]: value });
 
   const pointsSpent = useMemo(
@@ -124,128 +96,59 @@ export default function AbilityScoreBoxes({
     setScore(key, cur - 1);
   };
 
-  const activePool =
-    method === "standard" ? STANDARD_ARRAY : method === "random" ? pool : [];
+  const activePool = method === "standard" ? STANDARD_ARRAY : method === "random" ? pool : [];
   const poolReady = method === "standard" || (method === "random" && pool.length > 0);
   const unassigned = poolReady ? poolRemaining(activePool, scores, null) : [];
 
   return (
-    <div className="space-y-4 text-amber-100">
-      {/* method tabs */}
-      <div className="inline-flex flex-wrap gap-1 rounded-lg border border-slate-700 bg-slate-900/50 p-1">
-        {SCORE_RULES.map((r) => (
-          <button
-            key={r.id}
-            type="button"
-            onClick={() => onMethodChange(r.id)}
-            className={`rounded-md px-3 py-1.5 text-xs font-semibold transition ${
-              method === r.id
-                ? "bg-amber-500/20 text-amber-200 shadow-[inset_0_0_0_1px_rgba(245,158,11,0.4)]"
-                : "text-slate-400 hover:text-amber-300"
-            }`}
-          >
-            {r.label}
-          </button>
-        ))}
+    <div className="space-y-5">
+      <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+        <span className={`text-sm italic ${INK.faded}`}>Method</span>
+        <InkChoice label="Ability score method" value={method} onChange={onMethodChange} options={SCORE_RULES} />
       </div>
 
-      {/* context bar (adapts to method) */}
-      {method === "pointBuy" && (
-        <div className="flex items-center gap-3 rounded-lg border border-slate-700 bg-slate-900/40 px-3 py-2">
-          <span className="text-[11px] uppercase tracking-wider text-slate-400">Points</span>
-          <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-slate-700/60">
-            <div
-              className="h-full rounded-full bg-amber-500/70 transition-all"
-              style={{ width: `${Math.min(100, (pointsSpent / POINT_BUY_BUDGET) * 100)}%` }}
-            />
-          </div>
-          <span
-            className={`text-sm font-bold tabular-nums ${
-              pointsRemaining < 0 ? "text-red-400" : "text-amber-200"
-            }`}
-          >
-            {pointsRemaining}
-          </span>
-          <span className="text-[11px] text-slate-500">left</span>
-        </div>
-      )}
-
-      {method === "random" && (
-        <div className="flex flex-wrap items-center gap-2 rounded-lg border border-slate-700 bg-slate-900/40 px-3 py-2">
-          <button
-            type="button"
-            onClick={onRoll}
-            className="inline-flex items-center gap-1.5 rounded-md border border-amber-900 bg-gradient-to-r from-amber-900 to-amber-700
-                       px-3 py-1.5 text-xs font-semibold text-amber-100 shadow-[0_0_8px_rgba(245,158,11,0.25)]
-                       transition hover:from-amber-800 hover:to-amber-600"
-          >
-            <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-              <rect x="3" y="3" width="18" height="18" rx="3" />
-              <circle cx="8" cy="8" r="1.2" /><circle cx="16" cy="8" r="1.2" />
-              <circle cx="12" cy="12" r="1.2" />
-              <circle cx="8" cy="16" r="1.2" /><circle cx="16" cy="16" r="1.2" />
-            </svg>
-            {pool.length ? "Reroll" : "Roll 3d6 ×6"}
-          </button>
-
-          {pool.length === 0 ? (
-            <span className="text-[11px] italic text-slate-500">
-              Roll to generate six scores, then assign them below.
-            </span>
+      {/* what's left to hand out — adapts to the method */}
+      <div className="max-w-md">
+        {method === "pointBuy" && (
+          <Line label="Points left">
+            <span className={`text-xl tabular-nums ${pointsRemaining < 0 ? INK.rubric : ""}`}>{pointsRemaining}</span>
+            <span className={`text-sm ${INK.faint}`}>of {POINT_BUY_BUDGET}</span>
+          </Line>
+        )}
+        {method === "standard" && (
+          <Line label="Still to assign">
+            <Pool values={unassigned} />
+          </Line>
+        )}
+        {method === "random" &&
+          (pool.length === 0 ? (
+            <p className={`text-sm italic ${INK.faded}`}>
+              <InkButton active onClick={onRoll} className="text-sm">
+                roll 3d6 six times
+              </InkButton>{" "}
+              — then hand the numbers out below.
+            </p>
           ) : (
-            <>
-              <span className="ml-1 text-[11px] uppercase tracking-wider text-slate-400">Unassigned</span>
-              <div className="flex flex-wrap gap-1">
-                {unassigned.length ? (
-                  unassigned.map((v, i) => <PoolChip key={i}>{v}</PoolChip>)
-                ) : (
-                  <span className="text-[11px] font-semibold text-amber-300">all assigned ✓</span>
-                )}
-              </div>
-            </>
-          )}
-        </div>
-      )}
+            <Line label={<InkButton onClick={onRoll}>roll again</InkButton>}>
+              <Pool values={unassigned} />
+            </Line>
+          ))}
+        {method === "custom" && <p className={`text-sm italic ${INK.faint}`}>Write any score from 1 to 30.</p>}
+      </div>
 
-      {method === "standard" && (
-        <div className="flex flex-wrap items-center gap-2 rounded-lg border border-slate-700 bg-slate-900/40 px-3 py-2">
-          <span className="text-[11px] uppercase tracking-wider text-slate-400">Remaining</span>
-          <div className="flex flex-wrap gap-1">
-            {unassigned.length ? (
-              unassigned.map((v, i) => <PoolChip key={i}>{v}</PoolChip>)
-            ) : (
-              <span className="text-[11px] font-semibold text-amber-300">all assigned ✓</span>
-            )}
-          </div>
-        </div>
-      )}
-
-      {method === "custom" && (
-        <div className="rounded-lg border border-slate-700 bg-slate-900/40 px-3 py-2">
-          <span className="text-[11px] italic text-slate-500">
-            Enter any value from 1–30 for each ability.
-          </span>
-        </div>
-      )}
-
-      {/* ability grid */}
-      <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3">
+      <div className="grid grid-cols-3 gap-x-4 gap-y-6 @2xl:grid-cols-6">
         {ABILITIES_ORDER.map(({ key, label }) => {
-          /* assignment methods: standard + random */
+          /* standard + random: hand out numbers from the pool */
           if (method === "standard" || method === "random") {
-            const opts = [
-              ...(scores[key] != null ? [scores[key]] : []),
-              ...poolRemaining(activePool, scores, key),
-            ].sort((a, b) => b - a);
-
+            const opts = [...(scores[key] != null ? [scores[key]] : []), ...poolRemaining(activePool, scores, key)].sort((a, b) => b - a);
             return (
-              <AbilityCard key={key} label={label} score={scores[key]}>
-                <select
+              <Ability key={key} label={label} score={scores[key]}>
+                <InkSelect
                   value={scores[key] ?? ""}
                   disabled={!poolReady}
                   onChange={(e) => setScore(key, e.target.value === "" ? null : Number(e.target.value))}
-                  className="w-full rounded-md border border-slate-600 bg-slate-800/70 px-1 py-1 text-center text-sm
-                             text-amber-100 outline-none transition focus:border-amber-500/60 disabled:opacity-40"
+                  aria-label={`${label} score`}
+                  className="h-7 w-16 text-center text-sm disabled:opacity-40"
                 >
                   <option value="">—</option>
                   {opts.map((v, i) => (
@@ -253,42 +156,39 @@ export default function AbilityScoreBoxes({
                       {v}
                     </option>
                   ))}
-                </select>
-              </AbilityCard>
+                </InkSelect>
+              </Ability>
             );
           }
 
-          /* point buy: steppers */
+          /* point buy: − / + */
           if (method === "pointBuy") {
             const cur = scores[key] ?? 8;
             const nextCost = cur < 15 ? POINT_BUY_COST[cur + 1] - POINT_BUY_COST[cur] : Infinity;
             return (
-              <AbilityCard key={key} label={label} score={cur}>
-                <div className="flex items-center justify-center gap-3">
-                  <StepBtn onClick={() => dec(key)} disabled={cur <= 8}>−</StepBtn>
-                  <StepBtn onClick={() => inc(key)} disabled={cur >= 15 || pointsRemaining < nextCost}>+</StepBtn>
-                </div>
-              </AbilityCard>
+              <Ability key={key} label={label} score={cur}>
+                <button type="button" className={stepBtn} onClick={() => dec(key)} disabled={cur <= 8} aria-label={`Lower ${label}`}>
+                  −
+                </button>
+                <span className={`w-10 text-center text-[10px] italic ${INK.faint}`}>{cur < 15 ? `${nextCost} pt` : "max"}</span>
+                <button
+                  type="button"
+                  className={stepBtn}
+                  onClick={() => inc(key)}
+                  disabled={cur >= 15 || pointsRemaining < nextCost}
+                  aria-label={`Raise ${label}`}
+                >
+                  +
+                </button>
+              </Ability>
             );
           }
 
-          /* custom: free entry */
+          /* custom: write it in */
           return (
-            <AbilityCard key={key} label={label} score={scores[key]}>
-              <input
-                type="number"
-                min={1}
-                max={30}
-                value={scores[key] ?? ""}
-                onChange={(e) => {
-                  const v = e.target.value;
-                  setScore(key, v === "" ? null : Math.min(30, Number(v)));
-                }}
-                className="w-full rounded-md border border-slate-600 bg-slate-800/70 px-1 py-1 text-center text-sm
-                           text-amber-100 outline-none transition focus:border-amber-500/60
-                           [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none"
-              />
-            </AbilityCard>
+            <Ability key={key} label={label} score={scores[key]}>
+              <InkNumber value={scores[key]} onChange={(n) => setScore(key, n)} min={1} max={30} aria-label={`${label} score`} className="h-7 w-14 text-base" />
+            </Ability>
           );
         })}
       </div>

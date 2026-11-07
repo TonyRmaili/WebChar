@@ -3,7 +3,7 @@ import useMinionStore from "../../../../store/MinionStore";
 import { usePopupStore } from "../../../../store/PopupStore";
 import { INK, InkButton, InkRemove, ParchmentSheet, Title } from "../../../../styles/parchment";
 import { Field, Hint, NumberInput, addBtn, inputCls } from "../../../../styles/parchmentForm";
-import MonsterPicker from "./MonsterPicker";
+import CatalogueMonsterPicker from "../../../Catalogues/Monsters/CatalogueMonsterPicker";
 import { buildMinion, displayName, hpMaxOf, monsterAc, monsterSubtitle, resizeUnits, setHpMax } from "./minionHelpers";
 
 /* Define tab: which minions this character controls, on parchment.
@@ -116,7 +116,7 @@ export default function MinionsDefine() {
 
       {pickerOpen && (
         <div className="mb-8">
-          <MonsterPicker onAdd={onAdd} onClose={() => setPickerOpen(false)} />
+          <CatalogueMonsterPicker title="Add minions" addLabel="add them" onAdd={onAdd} onClose={() => setPickerOpen(false)} />
         </div>
       )}
 

@@ -70,8 +70,6 @@ Here lives all that is not spells such as ki, maneuvers, psy dice etc
 1. track conditions
 
 
-
-
 # Campaigns 
 1. Settings button for config of AI stuff
 2. RAG!!
@@ -128,20 +126,11 @@ Here lives all that is not spells such as ki, maneuvers, psy dice etc
 
 
 # Header and overall navigation
-1. "Characters" and "Combat" absorbed into "Player"
-    1. in "Player" we create characters in 3 differant ways
-       1. Custom; follows the regular char creation
-       2. Wizard; a click and choose type of guided creation data drawn from catalogues
-       3. QuickClass import- the randomizer with more starting options (maybe without AI too)
 
-2. DM-Tools gets removed and all its features will be accessed across the platform, mostly in Campaings
-
-3. Crossplatform features ; Embedder, DiceTower; Omega Search, Card Deck, 
-   
-4. User Profile change into Settings. Here we configure account (with openai settings too and user private api key for later)
-
-
-5. Header can be semi-visible and "follow" scrolling. 
+1. Crossplatform features ; Embedder, DiceTower; Omega Search, Card Deck, 
+2. 
+3. Settings. Here we configure account (with openai settings too and user private api key for later)
+4. Header can be semi-visible and "follow" scrolling. 
 
 
 
@@ -176,36 +165,17 @@ location.reload();
 
 
 
-
-
 # Character Builder (Wizard)
 
-# include
-Needs a reset all button
 
-# backend
-handle sorcpoints, invocations and more options?
-
-
-# Sheets 
-
-prepared spells per caster? only "one" edition
-Name and json savefile change to fit the data object naming.
-
-
-
-<final build comparison to live save profile>
+*Feats 
+More than one epic boon can get randomized
 
 
 
 
-spells need an overhaul anyway, for now they are placed correctly inside spellbook
 
-
-
-----------------
-
-
+-----------------------------
 keep or throw from final_build
 "unresolved"
 "spell_list_rules"
@@ -227,7 +197,5 @@ Needs logic or improved handling
 These replaced by _mod?
 "check": null,
 "save": null,
-
-
 
 characters land with 0 charges

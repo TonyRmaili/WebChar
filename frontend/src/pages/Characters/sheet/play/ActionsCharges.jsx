@@ -65,10 +65,15 @@ export default function ActionsCharges() {
   const postCharData = useCharStore((s) => s.postCharData);
 
   const effects = charData?.effects;
+  // Feats are stored like effect rows (Feats tab), so they show up in the
+  // same groups.
+  const feats = charData?.feats;
   const spellbook = charData?.spellbook;
   const inventory = charData?.inventory;
 
-  const groups = useMemo(() => groupEffects(effects), [effects]);
+  const featRows = useMemo(() => asList(feats), [feats]);
+  const featIds = useMemo(() => new Set(featRows.map((f) => f.id)), [featRows]);
+  const groups = useMemo(() => groupEffects([...asList(effects), ...featRows]), [effects, featRows]);
   const slots = useMemo(() => sortSlots(spellbook?.spellslots), [spellbook?.spellslots]);
   const pact = useMemo(() => sortSlots(spellbook?.pactslots), [spellbook?.pactslots]);
   const innate = useMemo(
@@ -90,8 +95,11 @@ export default function ActionsCharges() {
 
   /* ---- writers ---- */
 
+  // A row is saved back to whichever list it came from.
   const setEffectUses = (effect, value) =>
-    save("effects", replaceById(effects, effect.id, withChargesCurrent(effect, value)));
+    featIds.has(effect.id)
+      ? save("feats", replaceById(feats, effect.id, withChargesCurrent(effect, value)))
+      : save("effects", replaceById(effects, effect.id, withChargesCurrent(effect, value)));
 
   const setSlot = (listKey, row, value) =>
     save("spellbook", {
@@ -147,7 +155,7 @@ export default function ActionsCharges() {
   if (nothing) {
     return (
       <p className="rounded-xl border border-dashed border-slate-700 px-4 py-3 text-sm text-slate-500">
-        Nothing to track yet. Active effects, spell slots, limited spells and charged items from the Define tabs show up
+        Nothing to track yet. Active effects and feats, spell slots, limited spells and charged items from the Define tabs show up
         here.
       </p>
     );

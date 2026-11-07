@@ -1,5 +1,5 @@
 // Pure logic for minions. Shape: claude/minion-contract.md in the project.
-import { EFFECT_SECTIONS, formatCR, formatSource, titleCase } from "../../../Catalogues/Monsters/monsterHelpers";
+import { EFFECT_SECTIONS, titleCase } from "../../../Catalogues/Monsters/monsterHelpers";
 
 export const newId = () =>
   globalThis.crypto?.randomUUID
@@ -14,18 +14,8 @@ const toInt = (v, fallback = 0) => {
 export const clamp = (n, lo, hi) => Math.max(lo, Math.min(hi, n));
 
 /* ─── Catalogue side ─────────────────────────────────────────────── */
-
-// The catalogue keeps monsters grouped by source file; the picker wants
-// one flat list.
-export const flattenCatalogue = (monstersData) => {
-  const root = monstersData?.monsters;
-  if (!root || typeof root !== "object") return [];
-  const out = [];
-  for (const list of Object.values(root)) if (Array.isArray(list)) out.push(...list);
-  return out;
-};
-
-export const monsterKey = (m) => `${m?.name}|${m?.source}`;
+// Finding monsters in the catalogue lives with the catalogue:
+// pages/Catalogues/Monsters/catalogueMonsters.js (and its picker).
 
 export const monsterHpAverage = (m) => Math.max(1, toInt(m?.hp?.average, 1));
 
@@ -35,13 +25,8 @@ export const monsterAc = (m) => {
   return Number.isFinite(v) ? v : null;
 };
 
-export const monsterSubtitle = (m) => {
-  const size = (m?.size || []).join("/");
-  const type = typeof m?.type === "string" ? m.type : m?.type?.type || "";
-  return [formatCR(m?.cr), [size, type].filter(Boolean).join(" ")].filter(Boolean).join(" · ");
-};
-
-export { formatSource };
+// "CR 1/4 · M undead" under a minion's name.
+export { monsterSummary as monsterSubtitle } from "../../../Catalogues/Monsters/catalogueMonsters";
 
 /* ─── Effects with limited uses ──────────────────────────────────── */
 

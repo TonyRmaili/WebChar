@@ -5,7 +5,6 @@ from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 from fastapi.middleware.cors import CORSMiddleware
 from typing import Annotated
-from fastapi import Query
 from app.database.models import User,Character
 from app.security import hash_password, verify_password, create_access_token, get_current_user
 from app.db_setup import init_db, get_db
@@ -23,9 +22,11 @@ from pathlib import Path
 from app.dice_handler import roll_dice
 from app.combat_functions import heal_health, damage_health,load_character,on_longrest,on_shortrest,grant_experience
 from app.minion_functions import handle_minionEffects
+
 from app.routers.minions import router as minions_router
+from app.routers.campaign import router as campaign_router
+
 from app.file_handler import FileHandler
-from app.open_ai_api import OpenAIApi
 from app.character_adjuster import CharacterAdjuster
 from app.database.schemas import (
     UserSchema,
@@ -36,19 +37,9 @@ from app.database.schemas import (
     TakeRestAllData,
     GrantExperienceAll,
     MinionEffects,
-    CreateFileRequest,
-    DeleteFileRequest,
-    UpdateFileRequest,
-    DMAssistantRequest,
-    RenameRequest,
-    MoveRequest,
-    CopyRequest,
-    SaveResponseRequest
 )
 # uvicorn app.main:app --reload
 
-
-DEFAULT_PROMPT_TEXT = FileHandler().load_md("app/default_campaign_instructions.md")
 
 
 #------------------------Setup-----------------------------
@@ -83,6 +74,7 @@ app.add_middleware(
 )
 
 app.include_router(minions_router)
+app.include_router(campaign_router)
 
 
 @app.middleware("http")
@@ -1398,346 +1390,3 @@ def _load_or_empty(path: str) -> list:
     except FileNotFoundError:
         return []
 
-
-# ------------------------Campaigns-----------------------------
-
-@app.get("/campaign", tags=["campaign"])
-def get_campaigns(
-    current_user: Annotated[User, Depends(get_current_user)],
-):
-    try:
-        campaigns_path = os.path.join(savefiles_path,current_user.name,"campaigns")
-        campaigns = os.listdir(campaigns_path)
-        return campaigns
-
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-
-@app.post("/campaign", tags=["campaign"])
-def create_campaign(
-    current_user: Annotated[User, Depends(get_current_user)],
-    campaign_name: str
-):
-    campaign_path = os.path.join(
-        savefiles_path, current_user.name, "campaigns", campaign_name
-    )
-    os.makedirs(campaign_path, exist_ok=True)
-
-    prompts_path = os.path.join(campaign_path, "prompts")
-    os.makedirs(prompts_path, exist_ok=True)
-
-    default_prompt_file = os.path.join(prompts_path, "default.md")
-    if not os.path.exists(default_prompt_file):
-        with open(default_prompt_file, "w", encoding="utf-8") as f:
-            f.write(DEFAULT_PROMPT_TEXT)
-
-    return {"message": "Campaign created", "campaign_name": campaign_name}
-
-
-@app.put("/campaign", tags=["campaign"])
-def select_campaign(
-    current_user: Annotated[User, Depends(get_current_user)],
-    campaign_name: str,
-    db: Session = Depends(get_db),
-):
-    try:
-        # Optional: validate campaign exists
-        campaign_path = os.path.join(
-            savefiles_path,
-            current_user.name,
-            "campaigns",
-            campaign_name
-        )
-
-        if not os.path.isdir(campaign_path):
-            raise HTTPException(status_code=404, detail="Campaign not found")
-
-        # Update user
-        current_user.selected_campaign = campaign_name
-
-        db.add(current_user)
-        db.commit()
-        db.refresh(current_user)
-
-        return {
-            "message": "Selected campaign updated",
-            "selected_campaign": current_user.selected_campaign
-        }
-
-    except HTTPException:
-        raise
-    except Exception as e:
-        db.rollback()
-        raise HTTPException(status_code=500, detail=str(e))
-    
-
-@app.delete("/campaign", tags=["campaign"])
-def delete_campaign(
-    current_user: Annotated[User, Depends(get_current_user)],
-    campaign_name: str,
-):
-    campaign_path = os.path.join(
-        savefiles_path,
-        current_user.name,
-        "campaigns",
-        campaign_name
-    )
-
-    if not os.path.isdir(campaign_path):
-        raise HTTPException(status_code=404, detail="Campaign not found")
-
-    shutil.rmtree(campaign_path)
-
-    return {"message": "Campaign deleted"}
-
-
-@app.get("/campaign/data", tags=["campaign"])
-def get_campaign_data(
-    current_user: Annotated[User, Depends(get_current_user)],
-    campaign_name: str
-):
-    try:
-        campaign_path = Path(savefiles_path) / current_user.name / "campaigns" / campaign_name
-        if not campaign_path.exists():
-            raise HTTPException(status_code=404, detail="Campaign not found")
-
-        data = FileHandler().build_dir_tree(campaign_path)
-        children = data.get("children", [])
-        # Exclude the prompts folder from the main file tree
-        children = [c for c in children if c.get("name") != "prompts"]
-        return children
-    except HTTPException:
-        raise
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-@app.get("/campaign/prompts", tags=["campaign"])
-def get_campaign_prompts(
-    current_user: Annotated[User, Depends(get_current_user)],
-    campaign_name: str
-):
-    try:
-        prompts_path = (
-            Path(savefiles_path)
-            / current_user.name
-            / "campaigns"
-            / campaign_name
-            / "prompts"
-        )
-        prompts_path.mkdir(parents=True, exist_ok=True)
-
-        data = FileHandler().build_dir_tree(prompts_path)
-        return data.get("children", [])
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-
-
-
-@app.post("/campaign/create_file", tags=["campaign"])
-def create_file(
-    payload: CreateFileRequest,
-    current_user: Annotated[User, Depends(get_current_user)]
-):
-    
-    if not payload.path:
-        base_path = Path(savefiles_path) / current_user.name / "campaigns" / payload.campaign_name
-
-    else:
-        base_path = Path(payload.path)
-
-    file_name = payload.file_name + ".md"
-    target_path = base_path  / file_name
-
-    if target_path.exists():
-        raise HTTPException(status_code=400, detail="File already exists")
-
-    target_path.parent.mkdir(parents=True, exist_ok=True)
-    target_path.touch()
-
-    return {"message": "File created", "path": str(target_path)}
-
-    
-
-@app.post("/campaign/create_folder", tags=["campaign"])
-def create_folder(
-    payload: CreateFileRequest,
-    current_user: Annotated[User, Depends(get_current_user)]
-):
-   
-    if not payload.path:
-        folder_path = os.path.join(savefiles_path,current_user.name,"campaigns" , payload.campaign_name, payload.file_name)   
-    else:
-        folder_path = os.path.join(payload.path,payload.file_name)
-
-    os.makedirs(folder_path,exist_ok=True)
-
-    return {"message": "folder", "path": str(folder_path)}
-   
-
-@app.delete("/campaign/delete_file", tags=["campaign"])
-def delete_file(
-    payload: DeleteFileRequest,
-    current_user: Annotated[User, Depends(get_current_user)]
-):
-    print(payload.path)
-    print(payload.file_name)
-
-
-    if os.path.isfile(payload.path):
-        os.remove(payload.path)
-
-    elif os.path.isdir(payload.path):
-        shutil.rmtree(payload.path)
-        
-
-@app.put("/campaign/update_file", tags=["campaign"])
-def update_file(
-    payload: UpdateFileRequest,
-    current_user: Annotated[User, Depends(get_current_user)]
-):
-    file_path = Path(payload.path)
-
-    # safety: make sure the path is inside this user's campaigns dir
-    user_campaigns = (Path(savefiles_path) / current_user.name / "campaigns").resolve()
-    try:
-        file_path.resolve().relative_to(user_campaigns)
-    except ValueError:
-        raise HTTPException(status_code=400, detail="Invalid file path")
-
-    if not file_path.is_file():
-        raise HTTPException(status_code=404, detail="File not found")
-
-    file_path.write_text(payload.content, encoding="utf-8")
-    return {"message": "File saved", "path": str(file_path)}
-
-
-@app.post("/campaign/dm_assistant", tags=["campaign"])
-def handle_dm_assistant(
-    payload: DMAssistantRequest,
-    current_user: Annotated[User, Depends(get_current_user)]
-):
-   
-
-    messages = [m.model_dump() for m in payload.messages]
-    chat_manager = OpenAIApi()
-   
-    response = chat_manager.chat_log(
-        instructions= payload.instructions,
-        files= payload.active_files,
-        messages= messages
-        )
-    
-    return response
-
-
-
-
-@app.put("/campaign/rename", tags=["campaign"])
-def rename_node(
-    payload: RenameRequest,
-    current_user: Annotated[User, Depends(get_current_user)],
-):
-    file_handler = FileHandler()
-    src = file_handler.validate_campaign_path(savefiles_path, current_user.name, Path(payload.path))
-    if not src.exists():
-        raise HTTPException(status_code=404, detail="Path not found")
-
-    new_name = payload.new_name.strip()
-    if not new_name:
-        raise HTTPException(status_code=400, detail="New name cannot be empty")
-    if any(c in new_name for c in r'\/:*?"<>|'):
-        raise HTTPException(status_code=400, detail="Invalid characters in name")
-
-    if src.is_file():
-        dest = src.parent / f"{new_name}{src.suffix}"
-    else:
-        dest = src.parent / new_name
-
-    dest = file_handler.validate_campaign_path(savefiles_path, current_user.name, dest)
-
-    if dest.exists():
-        raise HTTPException(status_code=400, detail="A file with that name already exists")
-
-    src.rename(dest)
-    return {"message": "Renamed", "path": str(dest), "name": dest.name}
-
-
-@app.put("/campaign/move", tags=["campaign"])
-def move_node(
-    payload: MoveRequest,
-    current_user: Annotated[User, Depends(get_current_user)],
-):
-    file_handler = FileHandler()
-    src = file_handler.validate_campaign_path(savefiles_path, current_user.name, Path(payload.source_path))
-    target_folder = file_handler.validate_campaign_path(savefiles_path, current_user.name, Path(payload.target_folder))
-
-    if not src.exists():
-        raise HTTPException(status_code=404, detail="Source not found")
-    if not target_folder.is_dir():
-        raise HTTPException(status_code=400, detail="Target is not a folder")
-
-    if not file_handler.same_subtree(savefiles_path,current_user.name, src, target_folder):
-        raise HTTPException(
-            status_code=400,
-            detail="Cannot move between prompts and campaign files",
-        )
-
-    # Prevent moving a folder into itself or a descendant
-    if src.is_dir():
-        try:
-            target_folder.relative_to(src)
-            raise HTTPException(status_code=400, detail="Cannot move a folder into itself")
-        except ValueError:
-            pass  # good — target is not inside src
-
-    if src.parent.resolve() == target_folder.resolve():
-        return {"message": "Already in target folder", "path": str(src)}
-
-    dest = file_handler.unique_destination(target_folder / src.name)
-    shutil.move(str(src), str(dest))
-    return {"message": "Moved", "path": str(dest), "name": dest.name}
-
-
-@app.post("/campaign/copy", tags=["campaign"])
-def copy_node(
-    payload: CopyRequest,
-    current_user: Annotated[User, Depends(get_current_user)],
-):
-    file_handler = FileHandler()
-    src = file_handler.validate_campaign_path(savefiles_path, current_user.name, Path(payload.path))
-    if not src.is_file():
-        raise HTTPException(status_code=400, detail="Only files can be copied")
-
-    dest = file_handler.unique_destination(src.parent / src.name)
-    shutil.copy2(src, dest)
-    return {"message": "Copied", "path": str(dest), "name": dest.name}
-
-
-@app.post("/campaign/save_response", tags=["campaign"])
-def save_response(
-    payload: SaveResponseRequest,
-    current_user: Annotated[User, Depends(get_current_user)],
-):
-    file_handler = FileHandler()
-    campaign_root = (
-        Path(savefiles_path) / current_user.name / "campaigns" / payload.campaign_name
-    )
-    if not campaign_root.is_dir():
-        raise HTTPException(status_code=404, detail="Campaign not found")
-
-    if payload.folder_path:
-        target_folder = file_handler.validate_campaign_path(savefiles_path, current_user.name, Path(payload.folder_path))
-        if not target_folder.is_dir():
-            raise HTTPException(status_code=400, detail="Target folder not found")
-    else:
-        target_folder = campaign_root.resolve()
-
-    name = payload.file_name.strip() or file_handler.slugify_response(payload.content)
-    if any(c in name for c in r'\/:*?"<>|'):
-        raise HTTPException(status_code=400, detail="Invalid characters in name")
-
-    dest = file_handler.unique_destination(target_folder / f"{name}.md")
-    dest.write_text(payload.content, encoding="utf-8")
-    return {"message": "Saved", "path": str(dest), "name": dest.name}
