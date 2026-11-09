@@ -1,6 +1,10 @@
 import React, { useMemo, useState } from "react";
 import { ordinal, humanizeKey, formatExtra } from "./classHelpers";
+import { Chevron } from "../../../styles/parchmentForm";
 
+/* The level-by-level table: level, proficiency bonus, features, the class's
+   own columns (extras) and spell slots. Written on hairlines with a faint
+   wash on every other row; the heading folds it away. */
 export default function ClassProgressionTable({ selectedClassData }) {
   const [open, setOpen] = useState(true);
 
@@ -34,56 +38,51 @@ export default function ClassProgressionTable({ selectedClassData }) {
 
   if (!progression) return null;
 
+  const th = "px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-ink-faded";
+
   return (
-    <div>
+    <section>
       <button
+        type="button"
         onClick={() => setOpen((prev) => !prev)}
-        className="w-full flex items-center gap-2 text-lg text-lime-400 mb-2 hover:text-lime-300 transition-colors"
+        aria-expanded={open}
+        className="group mb-3 flex w-full items-baseline gap-2 text-left"
       >
-        <span className={`inline-block transition-transform ${open ? "rotate-90" : ""}`}>▶</span>
-        Class Progression
-        <span className="text-xs text-slate-500 font-normal">
-          ({open ? "hide" : "show"})
+        <span className="self-center">
+          <Chevron open={open} />
         </span>
+        <h4 className="shrink-0 text-[11px] font-semibold uppercase tracking-[0.25em] text-ink-faded transition group-hover:text-rubric">Class Progression</h4>
+        <span className="h-px flex-1 translate-y-[-3px] bg-rule/30" />
+        <span className="shrink-0 text-xs italic text-ink-faded">{open ? "hide" : "show"}</span>
       </button>
 
       {open && (
         <div className="overflow-x-auto">
-          <table className="w-full text-sm border-collapse">
+          <table className="w-full border-collapse text-sm">
             <thead>
-              <tr className="text-amber-400 border-b border-slate-700">
-                <th className="px-2 py-1 text-left font-semibold">Level</th>
-                <th className="px-2 py-1 text-center font-semibold whitespace-nowrap">
-                  Prof. Bonus
-                </th>
-                <th className="px-2 py-1 text-left font-semibold">Features</th>
+              <tr className="border-b border-rule/40">
+                <th className={`${th} text-left`}>Level</th>
+                <th className={`${th} whitespace-nowrap text-center`}>Prof. Bonus</th>
+                <th className={`${th} text-left`}>Features</th>
 
                 {progression.extraKeys.map((key) => (
-                  <th key={key} className="px-2 py-1 text-center font-semibold whitespace-nowrap">
+                  <th key={key} className={`${th} whitespace-nowrap text-center`}>
                     {humanizeKey(key)}
                   </th>
                 ))}
 
                 {progression.slotCount > 0 && (
-                  <th
-                    className="px-2 py-1 text-center font-semibold border-l border-slate-700"
-                    colSpan={progression.slotCount}
-                  >
+                  <th className={`${th} border-l border-rule/40 text-center`} colSpan={progression.slotCount}>
                     Spell Slots per Spell Level
                   </th>
                 )}
               </tr>
 
               {progression.slotCount > 0 && (
-                <tr className="text-amber-400 border-b border-slate-700">
+                <tr className="border-b border-rule/40">
                   <th colSpan={3 + progression.extraKeys.length} />
                   {Array.from({ length: progression.slotCount }).map((_, i) => (
-                    <th
-                      key={i}
-                      className={`px-2 py-0.5 text-center text-xs font-semibold ${
-                        i === 0 ? "border-l border-slate-700" : ""
-                      }`}
-                    >
+                    <th key={i} className={`px-2 py-0.5 text-center text-xs font-semibold text-ink-faded ${i === 0 ? "border-l border-rule/40" : ""}`}>
                       {ordinal(i + 1)}
                     </th>
                   ))}
@@ -92,17 +91,12 @@ export default function ClassProgressionTable({ selectedClassData }) {
             </thead>
 
             <tbody>
-              {progression.levels.map((lvl, rowIdx) => (
-                <tr
-                  key={lvl.level}
-                  className={rowIdx % 2 === 0 ? "bg-slate-900" : "bg-slate-800"}
-                >
-                  <td className="px-2 py-1 font-semibold text-slate-100">
-                    {ordinal(lvl.level)}
-                  </td>
+              {progression.levels.map((lvl) => (
+                <tr key={lvl.level} className="border-b border-dotted border-rule/25 even:bg-ink/[0.03]">
+                  <td className="px-2 py-1 font-semibold text-ink">{ordinal(lvl.level)}</td>
                   <td className="px-2 py-1 text-center">+{lvl.proficiency_bonus}</td>
-                  <td className="px-2 py-1 text-cyan-300">
-                    {lvl.feature_names?.length ? lvl.feature_names.join(", ") : "—"}
+                  <td className="px-2 py-1 text-ink">
+                    {lvl.feature_names?.length ? lvl.feature_names.join(", ") : <span className="text-ink-faint">—</span>}
                   </td>
 
                   {progression.extraKeys.map((key) => (
@@ -113,12 +107,7 @@ export default function ClassProgressionTable({ selectedClassData }) {
 
                   {progression.slotCount > 0 &&
                     Array.from({ length: progression.slotCount }).map((_, i) => (
-                      <td
-                        key={i}
-                        className={`px-2 py-1 text-center ${
-                          i === 0 ? "border-l border-slate-700" : ""
-                        }`}
-                      >
+                      <td key={i} className={`px-2 py-1 text-center ${i === 0 ? "border-l border-rule/40" : ""}`}>
                         {formatExtra(lvl.spell_slots?.[i])}
                       </td>
                     ))}
@@ -128,6 +117,6 @@ export default function ClassProgressionTable({ selectedClassData }) {
           </table>
         </div>
       )}
-    </div>
+    </section>
   );
 }

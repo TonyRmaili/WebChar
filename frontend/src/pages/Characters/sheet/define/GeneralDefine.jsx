@@ -429,8 +429,8 @@ export default function GeneralDefine() {
                 <InkButton onClick={() => write({ exp: xp + toInt(xpStep, 0) })}> +</InkButton>
               </span>
             </div>
-            <div className="mt-3 h-[3px] w-full bg-[#7b6346]/20">
-              <div className="h-full bg-[#9a3412]/75" style={{ width: `${Math.round(xpInfo.fraction * 100)}%` }} />
+            <div className="mt-3 h-[3px] w-full bg-rule/20">
+              <div className="h-full bg-rubric/75" style={{ width: `${Math.round(xpInfo.fraction * 100)}%` }} />
             </div>
             <p className={`mt-1.5 text-xs italic ${INK.faded}`}>
               {xpInfo.next ? (

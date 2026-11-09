@@ -71,7 +71,7 @@ const SECTIONS = [
 // how many choices that step still needs).
 function StepNav({ active, pending, onPick }) {
   return (
-    <nav aria-label="Builder steps" className="flex flex-wrap items-baseline gap-x-6 gap-y-2 border-y border-[#7b6346]/30 py-2">
+    <nav aria-label="Builder steps" className="flex flex-wrap items-baseline gap-x-6 gap-y-2 border-y border-rule/30 py-2">
       {SECTIONS.map((s) => {
         const on = active === s.id;
         const left = s.scope ? pending[s.scope] : 0;
@@ -428,7 +428,7 @@ export default function BuildWizard({ onCreated }) {
             type="button"
             disabled={creating}
             onClick={handleCreate}
-            className="ml-auto rounded-full border border-[#9a3412]/70 px-4 py-1 text-[15px] italic text-[#9a3412] transition hover:bg-[#9a3412] hover:text-[#f3e6c8] disabled:cursor-not-allowed disabled:opacity-40"
+            className="ml-auto rounded-full border border-rubric/70 px-4 py-1 text-[15px] italic text-rubric transition hover:bg-rubric hover:text-page-light disabled:cursor-not-allowed disabled:opacity-40"
           >
             {creating ? "creating…" : incomplete.length ? "create anyway" : "create character"}
           </button>
@@ -573,7 +573,7 @@ export default function BuildWizard({ onCreated }) {
           )}
         </div>
 
-        <div className="@5xl:w-[clamp(18rem,32%,36rem)] @5xl:shrink-0 @5xl:self-stretch @5xl:border-l @5xl:border-[#7b6346]/25 @5xl:pl-6">
+        <div className="@5xl:w-72 @5xl:shrink-0 @5xl:self-stretch @5xl:border-l @5xl:border-rule/25 @5xl:pl-6">
           <Summary
             editions={editions}
             selectedRace={selectedRace}

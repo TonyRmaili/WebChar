@@ -1,22 +1,16 @@
 import React from "react";
 import { usePersistedOpen, Chevron } from "../../../utils/SectionCard";
 
-/* One collapsible block in the Play panel (Health, Charges, Minions).
+/* One collapsible block in the Play panel (Health, Charges, Minions),
+   written on the Play sheet (parchment).
 
-   The header is a slim divider line: chevron + title + rule. Clicking it
-   folds the body away. The body is hidden rather than removed, so typed
-   amounts and open minion popups survive a collapse.
+   The header is a small-caps heading with a hairline: chevron + title +
+   rule. Clicking it folds the body away. The body is hidden rather than
+   removed, so typed amounts and open minion popups survive a collapse.
 
-   `boxed` wraps the body in a card. Health leaves it off because
-   HealthPlay already draws its own card. `empty` shows a short hint
-   instead of the body when there is nothing to play with. */
-export default function PlaySection({
-  title,
-  storageKey,
-  boxed = true,
-  empty = null,
-  children,
-}) {
+   No boxes on the parchment. `empty` shows a quiet hint instead of the
+   body when there is nothing to play with. */
+export default function PlaySection({ title, storageKey, empty = null, children }) {
   const [open, setOpen] = usePersistedOpen(storageKey, true);
 
   return (
@@ -27,25 +21,15 @@ export default function PlaySection({
         aria-expanded={open}
         className="group mb-2 flex w-full items-center gap-2 text-left"
       >
-        <Chevron open={open} className="group-hover:text-amber-300" />
-        <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-400/90 group-hover:text-amber-300">
+        <Chevron open={open} className="text-ink-faded group-hover:text-rubric" />
+        <h3 className="text-[11px] font-semibold uppercase tracking-[0.25em] text-ink-faded group-hover:text-rubric">
           {title}
         </h3>
-        <span className="h-px flex-1 bg-slate-700" />
+        <span className="h-px flex-1 bg-rule/30" />
       </button>
 
       <div className={open ? "" : "hidden"}>
-        {empty ? (
-          <p className="rounded-xl border border-dashed border-slate-700 px-4 py-3 text-sm text-slate-500">
-            {empty}
-          </p>
-        ) : boxed ? (
-          <div className="rounded-xl border border-slate-700/60 bg-slate-900/40 p-4">
-            {children}
-          </div>
-        ) : (
-          children
-        )}
+        {empty ? <p className="text-sm italic text-ink-faded">{empty}</p> : children}
       </div>
     </section>
   );

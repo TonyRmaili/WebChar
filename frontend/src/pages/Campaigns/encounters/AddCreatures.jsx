@@ -28,7 +28,7 @@ export function AddMembers({ party, npcs, members, elsewhere, onAdd }) {
         type="button"
         onClick={() => onAdd([{ kind, file: entry.file }])}
         title={where ? `In ${where} now — picking moves them here` : undefined}
-        className={`text-[15px] italic ${INK.faded} hover:text-[#3a2716]`}
+        className={`text-[15px] italic ${INK.faded} hover:text-ink`}
       >
         {entry.data?.name || entry.file}
         {where && <span className={`ml-1 text-xs ${INK.faint}`}>(in {where})</span>}

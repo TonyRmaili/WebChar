@@ -33,7 +33,9 @@ export function closeAll(cards) {
   cards.forEach((c) => POPUP_REGISTRY[c.type]?.forget?.(c.id));
 }
 
-const linkCls = "text-[11px] italic text-slate-400 underline decoration-dotted underline-offset-4 transition-colors hover:text-amber-400";
+// The panel is a parchment card; the stacks are little parchment cards on the footer's leather.
+const linkCls = "text-[11px] italic text-ink-faded underline decoration-dotted underline-offset-4 transition-colors hover:text-rubric";
+const PANEL_EDGE = "0 0 0 1px rgb(var(--c-desk) / 0.55), 0 12px 32px rgba(0,0,0,0.55)";
 
 /* ─── the stacks in the footer ───────────────────────────────────── */
 
@@ -43,7 +45,7 @@ export function DeckStacks({ panel, setPanel }) {
   if (!decks.length) return null;
 
   return (
-    <div className="mt-1 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-slate-700/50 px-1 pb-1 pt-3">
+    <div className="mt-1 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-stitch/25 px-1 pb-1 pt-3">
       {decks.map(({ deck, cards }) => {
         const one = cards.length === 1;
         const active = panel === deck.id;
@@ -57,15 +59,15 @@ export function DeckStacks({ panel, setPanel }) {
             className="group relative isolate"
           >
             {/* the cards underneath, peeking out */}
-            {cards.length > 1 && <span aria-hidden="true" className="absolute inset-0 -z-10 translate-x-[3px] -translate-y-[3px] rounded border border-stone-500 bg-stone-300" />}
-            {cards.length > 2 && <span aria-hidden="true" className="absolute inset-0 -z-20 translate-x-[6px] -translate-y-[6px] rounded border border-stone-500 bg-stone-400" />}
+            {cards.length > 1 && <span aria-hidden="true" className="absolute inset-0 -z-10 translate-x-[3px] -translate-y-[3px] rounded-[2px] border border-rule/50 bg-page brightness-[0.88]" />}
+            {cards.length > 2 && <span aria-hidden="true" className="absolute inset-0 -z-20 translate-x-[6px] -translate-y-[6px] rounded-[2px] border border-rule/50 bg-page brightness-75" />}
             <span
-              className={`flex max-w-[220px] items-baseline gap-2 rounded border px-3 py-1 text-sm transition-colors ${
-                active ? "border-amber-500 bg-amber-100 text-stone-900" : "border-stone-400 bg-stone-200 text-stone-900 group-hover:bg-stone-300"
+              className={`flex max-w-[220px] items-baseline gap-2 rounded-[2px] border bg-page px-3 py-1 text-sm text-ink transition-colors ${
+                active ? "border-desk-accent ring-1 ring-desk-accent" : "border-rule/50 group-hover:bg-page-light"
               }`}
             >
               <span className="truncate">{one ? cards[0].data?.name : deck.label}</span>
-              <span className="shrink-0 text-xs text-stone-500">{one ? deck.label : cards.length}</span>
+              <span className="shrink-0 text-xs italic text-ink-faded">{one ? deck.label : cards.length}</span>
             </span>
           </button>
         );
@@ -85,8 +87,8 @@ function DeckColumn({ deck, cards, words, onPicked, alone }) {
         {/* the panel's title already names a deck shown on its own */}
         {!alone && (
           <>
-            <h4 className="text-[11px] font-semibold uppercase tracking-[0.2em] text-amber-400/90">{deck.label}</h4>
-            <span className="text-xs text-slate-500">{cards.length}</span>
+            <h4 className="text-[11px] font-semibold uppercase tracking-[0.2em] text-rubric">{deck.label}</h4>
+            <span className="text-xs tabular-nums text-ink-faded">{cards.length}</span>
           </>
         )}
         <span className="ml-auto flex gap-3">
@@ -109,7 +111,7 @@ function DeckColumn({ deck, cards, words, onPicked, alone }) {
       </div>
       <ul>
         {shown.map((card) => (
-          <li key={card.id} className="group flex items-baseline gap-2 rounded px-1.5 py-1 hover:bg-slate-800">
+          <li key={card.id} className="group flex items-baseline gap-2 px-1.5 py-1 hover:bg-ink/[0.05]">
             <button
               type="button"
               onClick={() => {
@@ -119,15 +121,15 @@ function DeckColumn({ deck, cards, words, onPicked, alone }) {
               className="min-w-0 flex-1 text-left"
               title="Bring it back"
             >
-              <span className="block truncate text-[15px] text-slate-200 group-hover:text-amber-300">{card.data?.name || "Unnamed"}</span>
-              {cardLine(card) && <span className="block truncate text-xs italic text-slate-500">{cardLine(card)}</span>}
+              <span className="block truncate text-[15px] text-ink group-hover:text-rubric">{card.data?.name || "Unnamed"}</span>
+              {cardLine(card) && <span className="block truncate text-xs italic text-ink-faded">{cardLine(card)}</span>}
             </button>
             <button
               type="button"
               onClick={() => closeAll([card])}
               aria-label={`Close ${card.data?.name}`}
               title="Close it"
-              className="shrink-0 px-1 text-slate-500 opacity-0 transition hover:text-red-300 focus:opacity-100 group-hover:opacity-100"
+              className="shrink-0 px-1 text-ink-faded opacity-0 transition hover:text-rubric focus:opacity-100 group-hover:opacity-100"
             >
               ✕
             </button>
@@ -172,10 +174,16 @@ export function DeckPanel({ panel, setPanel }) {
 
   return (
     <div className="pointer-events-none absolute inset-x-0 bottom-full mb-2 flex justify-center px-3">
-      <div ref={ref} role="dialog" aria-label="Card deck" className="pointer-events-auto max-h-[60vh] w-full max-w-5xl overflow-y-auto rounded-lg border border-slate-700 bg-slate-900/[0.98] p-4 font-serif text-slate-300 shadow-2xl">
+      <div
+        ref={ref}
+        role="dialog"
+        aria-label="Card deck"
+        className="wc-page pointer-events-auto max-h-[60vh] w-full max-w-5xl overflow-y-auto p-4"
+        style={{ boxShadow: PANEL_EDGE }}
+      >
         <div className="mb-3 flex flex-wrap items-baseline gap-x-4 gap-y-2">
-          <h3 className="text-lg text-amber-400">{focused ? focused.deck.label : "Card deck"}</h3>
-          <span className="text-sm text-slate-500">{focused ? focused.cards.length : total} minimized</span>
+          <h3 className="text-lg tracking-wide">{focused ? focused.deck.label : "Card deck"}</h3>
+          <span className="text-sm italic text-ink-faded">{focused ? focused.cards.length : total} minimized</span>
           {focused && (
             <button type="button" onClick={() => setPanel("all")} className={linkCls}>
               all decks
@@ -187,23 +195,23 @@ export function DeckPanel({ panel, setPanel }) {
               onChange={(e) => setQuery(e.target.value)}
               placeholder="find a card…"
               aria-label="Find a card"
-              className="h-7 w-48 rounded border border-slate-700 bg-slate-800 px-2 text-sm text-slate-200 placeholder:text-slate-500 focus:border-amber-500/60 focus:outline-none"
+              className="h-7 w-48 rounded-none border-0 border-b border-dotted border-rule/70 bg-transparent px-0 font-body text-sm text-ink placeholder:text-ink-faint focus:border-solid focus:border-ink focus:outline-none focus:ring-0"
             />
           )}
           <span className="ml-auto flex items-baseline gap-4">
             {total > 0 && !focused && (
-              <button type="button" onClick={() => closeAll(minimized)} className={`${linkCls} hover:!text-red-300`}>
+              <button type="button" onClick={() => closeAll(minimized)} className={`${linkCls} !text-rubric hover:!text-rubric-deep`}>
                 close every card
               </button>
             )}
-            <button type="button" onClick={close} aria-label="Close the deck" className="text-slate-500 hover:text-amber-400">
+            <button type="button" onClick={close} aria-label="Close the deck" className="text-ink-faded hover:text-rubric">
               ✕
             </button>
           </span>
         </div>
 
         {shown.length === 0 ? (
-          <p className="py-4 text-sm italic text-slate-500">
+          <p className="py-4 text-sm italic text-ink-faded">
             {total ? "Nothing in this deck any more." : "No minimized cards. Minimize a card (−) and it lands in its deck here."}
           </p>
         ) : (
@@ -212,7 +220,12 @@ export function DeckPanel({ panel, setPanel }) {
             if (!inPart.length) return null;
             return (
               <section key={part.id} className="mb-4 last:mb-0">
-                {!focused && <p className="mb-2 text-[10px] uppercase tracking-[0.25em] text-slate-500">{part.label}</p>}
+                {!focused && (
+                  <div className="mb-2 flex items-baseline gap-3">
+                    <p className="shrink-0 text-[10px] font-semibold uppercase tracking-[0.25em] text-ink-faded">{part.label}</p>
+                    <span className="h-px flex-1 translate-y-[-3px] bg-rule/30" />
+                  </div>
+                )}
                 <div className="grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-2 lg:grid-cols-3">
                   {inPart.map(({ deck, cards }) => (
                     <DeckColumn key={deck.id} deck={deck} cards={cards} words={words} onPicked={close} alone={Boolean(focused)} />

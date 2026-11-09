@@ -137,7 +137,7 @@ function LoadoutPackage({ loadout, onChange }) {
   const group = "inline-flex items-baseline gap-x-2 whitespace-nowrap";
   const head = `text-[10px] font-semibold uppercase tracking-[0.18em] ${INK.faded}`;
   return (
-    <div className="mt-3 space-y-2 border-t border-[#7b6346]/20 pt-2">
+    <div className="mt-3 space-y-2 border-t border-rule/20 pt-2">
       <p className={`text-xs italic ${INK.faint}`}>For the save and attack forms (tracker, minions). Fill in only what you want — whatever is missing is typed there.</p>
       <div>
         <p className={head}>As an attack</p>
@@ -369,7 +369,7 @@ export default function DiceTowerWindow() {
 
   return (
     <div
-      className="@container h-full overflow-y-auto bg-[#1c120b]"
+      className="@container h-full overflow-y-auto bg-desk-deep"
       onContextMenu={(e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -388,7 +388,7 @@ export default function DiceTowerWindow() {
                     { value: "roll", label: "Roll" },
                     { value: "minions", label: "Minions" },
                   ].map((t) => (
-                    <button key={t.value} type="button" onClick={() => setTab(t.value)} className={`text-lg ${tab === t.value ? `${INK.rubric} underline decoration-dotted underline-offset-4` : `${INK.faded} hover:text-[#3a2716]`}`}>
+                    <button key={t.value} type="button" onClick={() => setTab(t.value)} className={`text-lg ${tab === t.value ? `${INK.rubric} underline decoration-dotted underline-offset-4` : `${INK.faded} hover:text-ink`}`}>
                       {t.label}
                     </button>
                   ))}
@@ -407,7 +407,7 @@ export default function DiceTowerWindow() {
                   key={sides}
                   type="button"
                   onClick={() => setExpression((x) => addDie(x, sides))}
-                  className="h-9 min-w-[2.75rem] rounded-[3px] border border-[#7b6346]/50 px-2 text-[15px] transition hover:border-[#9a3412] hover:text-[#9a3412]"
+                  className="h-9 min-w-[2.75rem] rounded-[3px] border border-rule/50 px-2 text-[15px] transition hover:border-rubric hover:text-rubric"
                   title={`Add a d${sides}`}
                 >
                   d{sides}

@@ -52,14 +52,14 @@ import {
 
 const MAX_PICKER_ROWS = 80;
 
-// Rarity colours that read on parchment (the catalogue's are for dark screens).
+// Rarity inks (theme slots; the catalogue's colours are for dark screens).
 const RARITY_INK = {
-  common: "text-[#6b5a44]",
-  uncommon: "text-[#3f6212]",
-  rare: "text-[#1e40af]",
-  "very rare": "text-[#6b21a8]",
-  legendary: "text-[#9a3412]",
-  artifact: "text-[#991b1b]",
+  common: "text-ink-faded",
+  uncommon: "text-good",
+  rare: "text-info",
+  "very rare": "text-magic",
+  legendary: "text-rubric",
+  artifact: "text-bad",
 };
 const rarityInk = (r) => RARITY_INK[String(r || "").toLowerCase()] || INK.faded;
 const showRarity = (r) => r && !["none", "unknown"].includes(String(r).toLowerCase());
@@ -157,14 +157,14 @@ function ItemPicker({ entries, loading, inv, onOpen, onAdd, onClose }) {
       <InkHeading right={<InkButton onClick={onClose}>close</InkButton>}>From the catalogue</InkHeading>
       <InkText value={query} onChange={(e) => setQuery(e.target.value)} placeholder="search by name or source…" autoFocus className="mb-2 h-8 w-full max-w-sm text-[15px]" />
 
-      <div className="max-h-72 overflow-y-auto border-y border-[#7b6346]/25 py-1">
+      <div className="max-h-72 overflow-y-auto border-y border-rule/25 py-1">
         {loading && all.length === 0 && <p className={`py-2 text-sm italic ${INK.faint}`}>Fetching the catalogue…</p>}
         {!loading && rows.length === 0 && <p className={`py-2 text-sm italic ${INK.faint}`}>Nothing matches.</p>}
         {rows.slice(0, MAX_PICKER_ROWS).map((entry) => {
           const owned = ownedCount(inv, entry);
           const type = asList(entry.types)[0];
           return (
-            <div key={catalogueKey(entry)} className="flex items-baseline gap-2 py-1 hover:bg-[#3a2716]/[0.04]">
+            <div key={catalogueKey(entry)} className="flex items-baseline gap-2 py-1 hover:bg-ink/[0.04]">
               <button type="button" onClick={() => onOpen(entry)} className="truncate text-left text-[15px] hover:underline hover:decoration-dotted" title="Open its card">
                 {entry.name}
               </button>
@@ -194,7 +194,7 @@ function ItemPicker({ entries, loading, inv, onOpen, onAdd, onClose }) {
 // An item saved without an amount counts as one.
 function Count({ value, onChange }) {
   const n = num(value, 1);
-  const btn = `w-5 text-center text-base leading-none ${INK.faded} hover:text-[#3a2716] disabled:opacity-30`;
+  const btn = `w-5 text-center text-base leading-none ${INK.faded} hover:text-ink disabled:opacity-30`;
   return (
     <span className="inline-flex shrink-0 items-baseline">
       <button type="button" className={btn} onClick={() => onChange(Math.max(0, n - 1))} disabled={n <= 0} aria-label="One less">
@@ -335,7 +335,7 @@ function ItemRow({ row, kind, open, attuneFull, onToggle, onPatch, onRemove, onD
 
       {/* Editor — your own items only */}
       {!fromCatalogue && open && (
-        <div className="mb-3 ml-[26px] mt-1 space-y-2 border-l-2 border-[#9a3412]/40 pl-3">
+        <div className="mb-3 ml-[26px] mt-1 space-y-2 border-l-2 border-rubric/40 pl-3">
           <InkText value={row.name ?? ""} autoFocus={!row.name} onChange={(e) => onPatch({ name: e.target.value }, true)} placeholder="what is it?" className="h-8 w-full max-w-sm text-[15px]" aria-label="Item name" />
           {isMagic && (
             <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">

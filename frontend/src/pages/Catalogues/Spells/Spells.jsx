@@ -2,6 +2,7 @@ import React, { useEffect, useState, useMemo } from "react";
 import { useCatalogueStore } from "../../../store/CatalogueStore";
 import FilterSection from "../FilterSection";
 import FilterPopup, { FilterButton } from "../FilterPopup";
+import { ErrorLine, LoadingLine, SortControl, Toolbar, chip, searchCls } from "../catalogueStyle";
 import {
   formatSource,
   collectUnique,
@@ -20,6 +21,9 @@ import { usePopupStore } from "../../../store/PopupStore";
 
 const cap = (s) => (s ? s[0].toUpperCase() + s.slice(1) : s);
 const tidy = (s) => String(s).replace(/_/g, " ");
+
+// A line of filter words in the filter popup.
+const Words = ({ children }) => <div className="flex flex-wrap gap-x-4 gap-y-1.5">{children}</div>;
 
 export default function Spells() {
   const spellsData = useCatalogueStore((s) => s.spellsData);
@@ -48,7 +52,9 @@ export default function Spells() {
 
   const openPopup = usePopupStore((s) => s.open);
 
-  useEffect(() => { loadSpells(); }, [loadSpells]);
+  useEffect(() => {
+    loadSpells();
+  }, [loadSpells]);
 
   const sources = useMemo(() => collectUnique(spells, "source"), [spells]);
   const schools = useMemo(() => collectUnique(spells, "school"), [spells]);
@@ -71,10 +77,7 @@ export default function Spells() {
     return [...set].sort((a, b) => a.localeCompare(b));
   }, [classList]);
 
-  const toggle = (setter) => (val) =>
-    setter((prev) =>
-      prev.includes(val) ? prev.filter((x) => x !== val) : [...prev, val]
-    );
+  const toggle = (setter) => (val) => setter((prev) => (prev.includes(val) ? prev.filter((x) => x !== val) : [...prev, val]));
 
   const toggleSource = toggle(setSelectedSources);
   const toggleSchool = toggle(setSelectedSchools);
@@ -123,11 +126,20 @@ export default function Spells() {
       return true;
     });
   }, [
-    spells, classList, componentPredicates, query,
-    selectedSources, selectedSchools, selectedLevels,
-    selectedClasses, selectedAreaTags, selectedDamage,
-    selectedComponents, selectedActionTypes,
-    ritualOnly, concentrationOnly,
+    spells,
+    classList,
+    componentPredicates,
+    query,
+    selectedSources,
+    selectedSchools,
+    selectedLevels,
+    selectedClasses,
+    selectedAreaTags,
+    selectedDamage,
+    selectedComponents,
+    selectedActionTypes,
+    ritualOnly,
+    concentrationOnly,
   ]);
 
   // Sort by level (cantrips = 0). Null/undefined levels sink to end.
@@ -170,81 +182,30 @@ export default function Spells() {
     (ritualOnly ? 1 : 0) +
     (concentrationOnly ? 1 : 0);
 
-  const chip = (active) =>
-    `text-[11px] px-2 py-1 rounded border transition
-     ${active
-       ? "bg-amber-500/20 border-amber-500/50 text-amber-300"
-       : "bg-slate-800/60 border-slate-700 text-slate-300 hover:border-amber-500/40 hover:text-amber-300"}`;
-
-  const sortBtn = (active) =>
-    `px-2 py-1 rounded border transition text-xs leading-none
-     ${active
-       ? "bg-amber-500/20 border-amber-500/50 text-amber-300"
-       : "bg-slate-800/60 border-slate-700 text-slate-400 hover:border-amber-500/40 hover:text-amber-300"}`;
-
   return (
-    <div className="w-full bg-slate-900/40 p-4 min-h-[640px]">
-      {error && (
-        <div className="mb-3 p-2 rounded border border-red-700 bg-red-900/30 text-red-300 text-sm">
-          {error}
-        </div>
-      )}
+    <div className="min-h-[640px] w-full">
+      {error && <ErrorLine>{error}</ErrorLine>}
 
-      {!loading && (
+      {loading ? (
+        <LoadingLine>Fetching spells…</LoadingLine>
+      ) : (
         <>
-          <div className="flex items-center gap-3 mb-4">
-            <FilterButton activeCount={activeCount} onClick={() => setFiltersOpen(true)} />
-
-            <div className="flex-1 max-w-sm">
-              <input
-                type="text"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search spells…"
-                className="w-full bg-slate-900 border border-slate-600 rounded-lg px-3 py-2 text-slate-100 text-sm
-                           focus:outline-none focus:border-amber-500/60 focus:ring-1 focus:ring-amber-500/30 transition"
-              />
-            </div>
-
-            {/* Sort by Level */}
-            <div className="ml-auto flex items-center gap-1">
-              <span className="text-[10px] uppercase tracking-wider text-slate-400 mr-1">
-                Sort by Level
+          <Toolbar
+            filters={<FilterButton activeCount={activeCount} onClick={() => setFiltersOpen(true)} />}
+            search={<input type="text" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="search spells…" className={searchCls} />}
+            sort={<SortControl label="sort by level" value={sortDir} onChange={setSortDir} />}
+            right={
+              <span className="text-xs italic text-ink-faded">
+                {sorted.length} of {spells.length}
               </span>
-              <button
-                onClick={() => setSortDir(sortDir === "asc" ? null : "asc")}
-                title="Sort ascending"
-                aria-label="Sort ascending"
-                className={sortBtn(sortDir === "asc")}
-              >
-                ↑
-              </button>
-              <button
-                onClick={() => setSortDir(sortDir === "desc" ? null : "desc")}
-                title="Sort descending"
-                aria-label="Sort descending"
-                className={sortBtn(sortDir === "desc")}
-              >
-                ↓
-              </button>
-            </div>
-          </div>
+            }
+          />
 
-          <FilterPopup
-            open={filtersOpen}
-            onClose={() => setFiltersOpen(false)}
-            activeCount={activeCount}
-            onClear={clearAll}
-          >
+          <FilterPopup open={filtersOpen} onClose={() => setFiltersOpen(false)} activeCount={activeCount} onClear={clearAll}>
             <FilterSection title="Sources">
-              <div className="grid grid-cols-9 gap-2">
+              <div className="grid grid-cols-2 gap-x-6 gap-y-1.5 sm:grid-cols-3 lg:grid-cols-4">
                 {sources.map((source) => (
-                  <button
-                    key={source}
-                    onClick={() => toggleSource(source)}
-                    title={formatSource(source)}
-                    className={`${chip(selectedSources.includes(source))} text-center truncate`}
-                  >
+                  <button key={source} onClick={() => toggleSource(source)} title={formatSource(source)} className={`${chip(selectedSources.includes(source))} truncate`}>
                     {formatSource(source)}
                   </button>
                 ))}
@@ -252,106 +213,95 @@ export default function Spells() {
             </FilterSection>
 
             <FilterSection title="School">
-              <div className="flex flex-wrap gap-2">
+              <Words>
                 {schools.map((s) => (
                   <button key={s} onClick={() => toggleSchool(s)} className={chip(selectedSchools.includes(s))}>
                     {cap(s)}
                   </button>
                 ))}
-              </div>
+              </Words>
             </FilterSection>
 
             <FilterSection title="Level">
-              <div className="flex flex-wrap gap-2">
+              <Words>
                 {LEVEL_OPTIONS.map((lvl) => (
                   <button key={lvl} onClick={() => toggleLevel(lvl)} className={chip(selectedLevels.includes(lvl))}>
                     {formatLevelChip(lvl)}
                   </button>
                 ))}
-              </div>
+              </Words>
             </FilterSection>
 
             <FilterSection title="Class">
-              <div className="flex flex-wrap gap-2">
+              <Words>
                 {classes.map((c) => (
                   <button key={c} onClick={() => toggleClass(c)} className={chip(selectedClasses.includes(c))}>
                     {c}
                   </button>
                 ))}
-              </div>
+              </Words>
             </FilterSection>
 
             {damageTypes.length > 0 && (
               <FilterSection title="Damage Types">
-                <div className="flex flex-wrap gap-2">
+                <Words>
                   {damageTypes.map((d) => (
                     <button key={d} onClick={() => toggleDamage(d)} className={chip(selectedDamage.includes(d))}>
                       {cap(d)}
                     </button>
                   ))}
-                </div>
+                </Words>
               </FilterSection>
             )}
 
             <FilterSection title="Components">
-              <div className="flex flex-wrap gap-2">
+              <Words>
                 {COMPONENT_OPTIONS.map((o) => (
-                  <button
-                    key={o.value}
-                    onClick={() => toggleComponent(o.value)}
-                    className={chip(selectedComponents.includes(o.value))}
-                  >
+                  <button key={o.value} onClick={() => toggleComponent(o.value)} className={chip(selectedComponents.includes(o.value))}>
                     {o.label}
                   </button>
                 ))}
-              </div>
+              </Words>
             </FilterSection>
 
             <FilterSection title="Action Type">
-              <div className="flex flex-wrap gap-2">
+              <Words>
                 {ACTION_TYPES.map((o) => (
-                  <button
-                    key={o.value}
-                    onClick={() => toggleActionType(o.value)}
-                    className={chip(selectedActionTypes.includes(o.value))}
-                  >
+                  <button key={o.value} onClick={() => toggleActionType(o.value)} className={chip(selectedActionTypes.includes(o.value))}>
                     {o.label}
                   </button>
                 ))}
-              </div>
+              </Words>
             </FilterSection>
 
             <FilterSection title="Casting">
-              <div className="flex flex-wrap gap-2">
+              <Words>
                 <button onClick={() => setRitualOnly((v) => !v)} className={chip(ritualOnly)}>
                   Ritual only
                 </button>
                 <button onClick={() => setConcentrationOnly((v) => !v)} className={chip(concentrationOnly)}>
                   Concentration only
                 </button>
-              </div>
+              </Words>
             </FilterSection>
 
             <FilterSection title="Area">
-              <div className="flex flex-wrap gap-2">
+              <Words>
                 {areaTags.map((t) => (
                   <button key={t} onClick={() => toggleAreaTag(t)} className={chip(selectedAreaTags.includes(t))}>
                     {cap(tidy(t))}
                   </button>
                 ))}
-              </div>
+              </Words>
             </FilterSection>
           </FilterPopup>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-x-2 gap-y-1">
+          <div className="grid grid-cols-1 gap-x-8 md:grid-cols-2 xl:grid-cols-3">
             {sorted.map((sp, idx) => (
-              <SpellRow
-                key={`${sp.name}-${sp.source}-${idx}`}
-                spell={sp}
-                onOpen={(spell) => openPopup("spell", spell)}
-              />
+              <SpellRow key={`${sp.name}-${sp.source}-${idx}`} spell={sp} onOpen={(spell) => openPopup("spell", spell)} />
             ))}
           </div>
+          {sorted.length === 0 && <LoadingLine>No spells match.</LoadingLine>}
         </>
       )}
     </div>

@@ -1,5 +1,17 @@
 import React, { useState } from "react";
 import FilterSection from "../FilterSection";
+import {
+  ChipsHeading,
+  addRowCls,
+  boxCls,
+  checkCls,
+  checkLabelCls,
+  chip,
+  fieldCls,
+  labelCls,
+  removeRowCls,
+  textareaCls,
+} from "../catalogueStyle";
 import { EFFECT_SECTIONS, ABILITY, ABILITY_ORDER, titleCase } from "./monsterHelpers";
 import { DAMAGE_TYPES, CONDITION_OPTIONS } from "../../../utils/Constants";
 
@@ -168,14 +180,6 @@ export const formToEffects = (formEffects) => {
 
 /* ─── component ─────────────────────────────────────────────────────── */
 
-const fieldCls =
-  "bg-slate-900 border border-slate-600 rounded px-2 py-1 text-slate-100 text-sm w-full " +
-  "focus:outline-none focus:border-amber-500/60 focus:ring-1 focus:ring-amber-500/30";
-const chip = (active) =>
-  `text-[11px] px-2 py-1 rounded border transition
-   ${active
-     ? "bg-amber-500/20 border-amber-500/50 text-amber-300"
-     : "bg-slate-800/60 border-slate-700 text-slate-300 hover:border-amber-500/40 hover:text-amber-300"}`;
 
 export default function MonsterEffectsBuilder({ value, onChange }) {
   const v = value || emptyEffects();
@@ -220,7 +224,7 @@ export default function MonsterEffectsBuilder({ value, onChange }) {
                 />
               ))}
               <button onClick={() => addItem(key)}
-                      className="text-[11px] px-3 py-1.5 rounded border border-slate-600 text-slate-300 hover:border-amber-500/40 hover:text-amber-300">
+                      className={addRowCls}>
                 + Add Entry
               </button>
             </div>
@@ -233,18 +237,18 @@ export default function MonsterEffectsBuilder({ value, onChange }) {
 
 function ItemEditor({ item, index, onPatch, onRemove, damageHandlers, onToggleCond }) {
   return (
-    <div className="border border-slate-700 rounded p-2 space-y-2">
+    <div className={boxCls}>
       <div className="flex justify-between items-center">
-        <span className="text-[10px] uppercase tracking-wider text-amber-400">
+        <span className={labelCls}>
           {item.name ? item.name : `Entry ${index + 1}`}
         </span>
-        <button onClick={onRemove} className="text-[11px] px-2 py-1 rounded border border-red-700/50 text-red-300 hover:bg-red-900/40">✕</button>
+        <button onClick={onRemove} aria-label="Remove" className={removeRowCls}>✕</button>
       </div>
 
       <input type="text" value={item.name} onChange={(e) => onPatch({ name: e.target.value })}
              placeholder="Name (e.g. Acid Breath)" className={fieldCls} />
 
-      <div className="flex gap-2">
+      <div className="flex gap-x-4">
         {["utility", "attack", "save"].map((t) => (
           <button key={t} type="button" onClick={() => onPatch({ effect_type: t })} className={chip(item.effect_type === t)}>
             {cap(t)}
@@ -254,22 +258,22 @@ function ItemEditor({ item, index, onPatch, onRemove, damageHandlers, onToggleCo
 
       {(item.effect_type === "attack" || item.effect_type === "save") && (
         <div className="max-w-[140px]">
-          <div className="text-[10px] text-slate-400 mb-0.5 uppercase">Range / Reach (ft.)</div>
+          <div className={labelCls}>Range / Reach (ft.)</div>
           <input type="number" value={item.range} onChange={(e) => onPatch({ range: e.target.value })} className={fieldCls} placeholder="—" />
         </div>
       )}
 
       {item.effect_type === "attack" && (
-        <div className="space-y-2 border-l-2 border-slate-700 pl-2">
-          <div className="grid grid-cols-2 gap-2">
+        <div className="space-y-2 border-l border-rule/30 pl-3">
+          <div className="grid grid-cols-2 gap-x-4">
             <div>
-              <div className="text-[10px] text-slate-400 mb-0.5 uppercase">Attack Type</div>
+              <div className={labelCls}>Attack Type</div>
               <select value={item.attack_type} onChange={(e) => onPatch({ attack_type: e.target.value })} className={fieldCls}>
                 {ATTACK_TYPES.map(([val, label]) => <option key={val} value={val}>{label}</option>)}
               </select>
             </div>
             <div>
-              <div className="text-[10px] text-slate-400 mb-0.5 uppercase">Hit Bonus</div>
+              <div className={labelCls}>Hit Bonus</div>
               <input type="number" value={item.hit_bonus} onChange={(e) => onPatch({ hit_bonus: e.target.value })} className={fieldCls} placeholder="±" />
             </div>
           </div>
@@ -278,20 +282,20 @@ function ItemEditor({ item, index, onPatch, onRemove, damageHandlers, onToggleCo
       )}
 
       {item.effect_type === "save" && (
-        <div className="space-y-2 border-l-2 border-slate-700 pl-2">
-          <div className="grid grid-cols-3 gap-2 items-end">
+        <div className="space-y-2 border-l border-rule/30 pl-3">
+          <div className="grid grid-cols-3 gap-x-4 items-end">
             <div>
-              <div className="text-[10px] text-slate-400 mb-0.5 uppercase">Save</div>
+              <div className={labelCls}>Save</div>
               <select value={item.save_target} onChange={(e) => onPatch({ save_target: e.target.value })} className={fieldCls}>
                 {ABILITY_ORDER.map((a) => <option key={a} value={a}>{ABILITY[a]}</option>)}
               </select>
             </div>
             <div>
-              <div className="text-[10px] text-slate-400 mb-0.5 uppercase">DC</div>
+              <div className={labelCls}>DC</div>
               <input type="number" value={item.save_dc_bonus} onChange={(e) => onPatch({ save_dc_bonus: e.target.value })} className={fieldCls} placeholder="—" />
             </div>
-            <label className="flex items-center gap-1 text-[11px] text-slate-300 pb-1">
-              <input type="checkbox" checked={item.save_half} onChange={(e) => onPatch({ save_half: e.target.checked })} />
+            <label className={`${checkLabelCls} self-end pb-1`}>
+              <input type="checkbox" className={checkCls} checked={item.save_half} onChange={(e) => onPatch({ save_half: e.target.checked })} />
               half on save
             </label>
           </div>
@@ -301,32 +305,32 @@ function ItemEditor({ item, index, onPatch, onRemove, damageHandlers, onToggleCo
       )}
 
       <div>
-        <div className="text-[10px] text-slate-400 mb-0.5 uppercase">Notes (shown in the statblock)</div>
-        <textarea value={item.notes} onChange={(e) => onPatch({ notes: e.target.value })} rows={3} className={fieldCls}
+        <div className={labelCls}>Notes (shown in the statblock)</div>
+        <textarea value={item.notes} onChange={(e) => onPatch({ notes: e.target.value })} rows={3} className={textareaCls}
           placeholder="e.g. Melee Attack Roll: +15, reach 15 ft. Hit: 17 (2d8 + 8) Slashing damage." />
       </div>
 
-      <div className="border-t border-slate-700 pt-2">
-        <label className="flex items-center gap-1.5 text-[11px] text-slate-300 mb-1">
-          <input type="checkbox" checked={item.has_charges} onChange={(e) => onPatch({ has_charges: e.target.checked })} />
+      <div className="border-t border-dotted border-rule/40 pt-2">
+        <label className={`${checkLabelCls} mb-1`}>
+          <input type="checkbox" className={checkCls} checked={item.has_charges} onChange={(e) => onPatch({ has_charges: e.target.checked })} />
           Limited uses / recharge
         </label>
         {item.has_charges && (
           <div className="space-y-2 pl-1">
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-3 gap-x-4">
               <div>
-                <div className="text-[10px] text-slate-400 mb-0.5 uppercase">Reset</div>
+                <div className={labelCls}>Reset</div>
                 <select value={item.charge_reset} onChange={(e) => onPatch({ charge_reset: e.target.value })} className={fieldCls}>
                   {RESET_TYPES.map(([val, label]) => <option key={val} value={val}>{label}</option>)}
                 </select>
               </div>
               <div>
-                <div className="text-[10px] text-slate-400 mb-0.5 uppercase">Max</div>
+                <div className={labelCls}>Max</div>
                 <input type="number" value={item.charge_max} onChange={(e) => onPatch({ charge_max: e.target.value })} className={fieldCls} placeholder="—" />
               </div>
               {item.charge_reset === "recharge_dice" ? (
                 <div>
-                  <div className="text-[10px] text-slate-400 mb-0.5 uppercase">Recharge</div>
+                  <div className={labelCls}>Recharge</div>
                   <select value={item.charge_recharge_dice} onChange={(e) => onPatch({ charge_recharge_dice: e.target.value })} className={fieldCls}>
                     <option value="">—</option>
                     {RECHARGE_DICE.map((d) => <option key={d} value={d}>{d}–6</option>)}
@@ -334,7 +338,7 @@ function ItemEditor({ item, index, onPatch, onRemove, damageHandlers, onToggleCo
                 </div>
               ) : (item.charge_reset === "long_rest" || item.charge_reset === "short_rest") ? (
                 <div>
-                  <div className="text-[10px] text-slate-400 mb-0.5 uppercase">Per Rest</div>
+                  <div className={labelCls}>Per Rest</div>
                   <input type="number" value={item.charge_per_rest} onChange={(e) => onPatch({ charge_per_rest: e.target.value })} className={fieldCls} placeholder="—" />
                 </div>
               ) : <div />}
@@ -349,16 +353,16 @@ function ItemEditor({ item, index, onPatch, onRemove, damageHandlers, onToggleCo
 function DamageRows({ damages, field, handlers }) {
   return (
     <div className="space-y-1.5">
-      <div className="text-[10px] text-slate-400 uppercase">Damage</div>
+      <div className={labelCls}>Damage</div>
       {(damages || []).map((d, dIdx) => (
-        <div key={dIdx} className="flex items-center gap-1.5">
+        <div key={dIdx} className="flex items-baseline gap-2">
           <input type="number" value={d.dice_count} onChange={(e) => handlers.patch(field, dIdx, { dice_count: e.target.value })}
                  className={`${fieldCls} max-w-[56px]`} placeholder="#" />
           <select value={d.dice_size} onChange={(e) => handlers.patch(field, dIdx, { dice_size: e.target.value })}
                   className={`${fieldCls} max-w-[80px]`}>
             {DICE_SIZES.map((s) => <option key={s} value={s}>{s}</option>)}
           </select>
-          <span className="text-slate-500 text-xs">+</span>
+          <span className="text-sm text-ink-faded">+</span>
           <input type="number" value={d.mod} onChange={(e) => handlers.patch(field, dIdx, { mod: e.target.value })}
                  className={`${fieldCls} max-w-[60px]`} placeholder="0" />
           <select value={d.damage_type} onChange={(e) => handlers.patch(field, dIdx, { damage_type: e.target.value })}
@@ -367,11 +371,11 @@ function DamageRows({ damages, field, handlers }) {
             {(DAMAGE_TYPES || []).map((t) => <option key={t} value={t}>{cap(t)}</option>)}
           </select>
           <button onClick={() => handlers.remove(field, dIdx)}
-                  className="text-[11px] px-2 py-1 rounded border border-red-700/50 text-red-300 hover:bg-red-900/40">✕</button>
+                  aria-label="Remove" className={removeRowCls}>✕</button>
         </div>
       ))}
       <button onClick={() => handlers.add(field)}
-              className="text-[11px] px-2 py-1 rounded border border-slate-600 text-slate-300 hover:border-amber-500/40 hover:text-amber-300">
+              className={addRowCls}>
         + Damage
       </button>
     </div>
@@ -382,12 +386,7 @@ function CondChips({ selected, onToggle }) {
   const [open, setOpen] = useState(false);
   return (
     <div>
-      <button type="button" onClick={() => setOpen((o) => !o)}
-              className="flex items-center gap-1.5 uppercase tracking-wider text-amber-400 text-[10px] mb-1 hover:text-amber-300 transition select-none">
-        <span className={`text-[10px] inline-block transition-transform duration-150 ${open ? "rotate-90" : ""}`}>▶</span>
-        <span>Conditions on fail</span>
-        {selected.length > 0 && <span className="ml-1 text-amber-300 normal-case">({selected.length})</span>}
-      </button>
+      <ChipsHeading open={open} onToggle={() => setOpen((o) => !o)} label="Conditions on fail" count={selected.length} />
       {open && (
         <div className="flex flex-wrap gap-2 pl-3 mb-1 max-h-32 overflow-y-auto pr-1">
           {SAVE_CONDITION_OPTIONS.map((c) => (

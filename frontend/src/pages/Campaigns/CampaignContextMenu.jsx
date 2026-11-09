@@ -1,4 +1,11 @@
 import React, { useEffect } from "react";
+import { createPortal } from "react-dom";
+
+/* Right-click menu for a file or folder in the campaign tree: a small
+   parchment card with a thin leather edge (like the catalogue's row menu),
+   headed by the node's name. Delete is written in rubric. */
+
+const MENU_EDGE = "0 0 0 1px rgb(var(--c-desk) / 0.55), 0 12px 32px rgba(0,0,0,0.55)";
 
 function CampaignContextMenu({ x, y, node, onAction, onClose }) {
   useEffect(() => {
@@ -21,15 +28,13 @@ function CampaignContextMenu({ x, y, node, onAction, onClose }) {
     { label: "Delete", action: "delete", danger: true },
   ];
 
-  return (
+  return createPortal(
     <div
       onMouseDown={(e) => e.stopPropagation()}
-      className="fixed z-50 bg-slate-800 border border-slate-700 rounded-md shadow-lg py-1 min-w-[150px]"
-      style={{ left: x, top: y }}
+      className="fixed z-[3000] min-w-[160px] rounded-[3px] bg-page py-1.5 font-body text-ink"
+      style={{ left: x, top: y, boxShadow: MENU_EDGE }}
     >
-      <div className="px-3 py-1 text-xs text-slate-500 truncate border-b border-slate-700 mb-1">
-        {node.name}
-      </div>
+      <div className="mx-3 mb-1 truncate border-b border-rule/30 pb-1 text-xs italic text-ink-faded">{node.name}</div>
       {items.map((item) => (
         <button
           key={item.action}
@@ -37,14 +42,13 @@ function CampaignContextMenu({ x, y, node, onAction, onClose }) {
             onAction(item.action, node);
             onClose();
           }}
-          className={`w-full text-left px-3 py-1.5 text-sm hover:bg-slate-700 transition-colors ${
-            item.danger ? "text-red-400" : "text-slate-200"
-          }`}
+          className={`block w-full px-3 py-1 text-left text-sm transition hover:bg-ink/[0.07] ${item.danger ? "text-rubric" : ""}`}
         >
           {item.label}
         </button>
       ))}
-    </div>
+    </div>,
+    document.body
   );
 }
 

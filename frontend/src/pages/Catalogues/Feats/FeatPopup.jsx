@@ -34,22 +34,20 @@ export default function FeatPopup({ feat }) {
   const spells = additional_spells;
 
   return (
-    <div className="bg-[#fdf6e3] text-stone-900 font-serif rounded-sm shadow-lg
-                    border border-stone-400 overflow-y-auto h-full">
+    <div className="wc-page h-full overflow-y-auto !rounded-none">
       <div className="px-5 py-4">
         {/* Title */}
-        <div className="flex justify-between items-baseline border-b border-stone-300 pb-1 mb-2">
-          <h2 className="text-xl font-bold tracking-wide uppercase text-stone-900">{name}</h2>
-          <span className="text-xs text-stone-500" title={formatSource(source)}>{source}</span>
+        <div className="mb-2 flex items-baseline justify-between border-b border-rule/40 pb-1">
+          <h2 className="text-xl font-bold uppercase tracking-wide text-ink">{name}</h2>
+          <span className="text-xs text-ink-faded" title={formatSource(source)}>{source}</span>
         </div>
 
         {/* Subheader: category + repeatable */}
         {(category || repeatable) && (
-          <p className="italic text-sm text-stone-700 mb-3 flex items-center gap-2">
+          <p className="mb-3 flex items-baseline gap-3 text-sm italic text-ink-faded">
             {category && <span>{formatCategory(category)} Feat</span>}
             {repeatable && (
-              <span className="not-italic text-[10px] uppercase tracking-wider
-                               bg-stone-200 border border-stone-400 rounded px-1.5 py-0.5">
+              <span className="text-[10px] font-semibold uppercase not-italic tracking-wider text-rubric">
                 Repeatable
               </span>
             )}
@@ -59,7 +57,7 @@ export default function FeatPopup({ feat }) {
         {/* Prerequisite */}
         {prereqs.length > 0 && (
           <SectionStrip title="Prerequisite">
-            <span className="text-xs text-stone-800">{prereqs.join(" or ")}</span>
+            <span className="text-sm text-ink">{prereqs.join(" or ")}</span>
           </SectionStrip>
         )}
 
@@ -122,7 +120,7 @@ function MechanicsBlock({ feat }) {
   if (!hasAny) return null;
 
   return (
-    <div className="mt-4 pt-3 border-t border-stone-300 space-y-2">
+    <div className="mt-4 space-y-2 border-t border-rule/40 pt-3">
       {rows.map(([title, items]) =>
         items.length ? (
           <SectionStrip key={title} title={title}>
@@ -135,7 +133,7 @@ function MechanicsBlock({ feat }) {
           {features.map((f, i) => (
             <Chip key={i}>
               {f.name}
-              {f.type && <span className="text-stone-500"> · {titleCase(f.type)}</span>}
+              {f.type && <span className="text-ink-faded"> · {titleCase(f.type)}</span>}
             </Chip>
           ))}
         </SectionStrip>
@@ -148,28 +146,28 @@ function MechanicsBlock({ feat }) {
 
 function Block({ block }) {
   if (block.type === "heading")
-    return <h3 className="font-bold text-base mt-3 mb-1 text-stone-900">{block.text}</h3>;
+    return <h3 className="mb-1 mt-3 text-base font-bold text-ink">{block.text}</h3>;
   if (block.type === "table") return <EntryTable block={block} />;
   return <p>{block.text}</p>;
 }
 
 function EntryTable({ block }) {
   return (
-    <div className="my-2 border border-stone-400 rounded overflow-hidden">
+    <div className="my-2 overflow-hidden border-y border-rule/40">
       {block.caption && (
-        <div className="bg-stone-200 px-2 py-1 text-xs font-semibold">{block.caption}</div>
+        <div className="bg-rule/10 px-2 py-1 text-xs font-semibold">{block.caption}</div>
       )}
       <table className="w-full text-xs">
-        <thead className="bg-stone-100 border-b border-stone-300">
+        <thead className="border-b border-rule/40">
           <tr>
             {block.header.map((c, i) => (
-              <th key={i} className="text-left px-2 py-1 font-semibold">{c}</th>
+              <th key={i} className="px-2 py-1 text-left font-semibold text-ink-faded">{c}</th>
             ))}
           </tr>
         </thead>
         <tbody>
           {block.rows.map((row, i) => (
-            <tr key={i} className="border-t border-stone-200">
+            <tr key={i} className="border-t border-rule/20 even:bg-ink/[0.03]">
               {row.map((cell, j) => <td key={j} className="px-2 py-1 align-top">{cell}</td>)}
             </tr>
           ))}
@@ -182,16 +180,16 @@ function EntryTable({ block }) {
 function SectionStrip({ title, children }) {
   return (
     <div className="mb-2">
-      <div className="text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">{title}</div>
-      <div className="flex flex-wrap gap-1 items-center">{children}</div>
+      <div className="mb-1 text-[11px] font-bold uppercase tracking-wider text-ink-faded">{title}</div>
+      <div className="flex flex-wrap items-baseline gap-x-4 gap-y-0.5">{children}</div>
     </div>
   );
 }
 
 function Chip({ label, children }) {
   return (
-    <span className="text-xs bg-stone-200 border border-stone-400 rounded px-1.5 py-0.5">
-      {label && <span className="font-semibold">{label}: </span>}
+    <span className="text-sm">
+      {label && <span className="font-semibold text-ink-faded">{label}: </span>}
       {children}
     </span>
   );
@@ -210,20 +208,20 @@ function SpellSection({ spells }) {
   }
 
   return (
-    <div className="mt-4 pt-3 border-t border-stone-300">
-      <div className="text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">
+    <div className="mt-4 border-t border-rule/40 pt-3">
+      <div className="mb-1 text-[11px] font-bold uppercase tracking-wider text-ink-faded">
         Granted Spells
-        {ability && <span className="text-stone-500 normal-case"> · {ability}</span>}
+        {ability && <span className="normal-case tracking-normal"> · {ability}</span>}
       </div>
 
       {list.length > 0 && (
-        <div className="space-y-0.5 text-xs text-stone-800 mb-2">
+        <div className="mb-2 space-y-0.5 text-sm text-ink">
           {list.map((s, i) => {
             const { label, meta } = formatSpellEntry(s);
             return (
               <div key={i} className="flex flex-wrap gap-2">
                 <span className="font-semibold">{label}</span>
-                {meta && <span className="text-stone-500">{meta}</span>}
+                {meta && <span className="italic text-ink-faded">{meta}</span>}
               </div>
             );
           })}
@@ -231,11 +229,11 @@ function SpellSection({ spells }) {
       )}
 
       {extended.length > 0 && (
-        <div className="text-xs text-stone-800">
+        <div className="text-sm text-ink">
           <span className="font-semibold">Expanded list:</span>
           {Object.keys(byLevel).sort((a, b) => a - b).map((lvl) => (
             <div key={lvl}>
-              <span className="text-stone-500">Lvl {lvl}: </span>
+              <span className="text-ink-faded">Lvl {lvl}: </span>
               {byLevel[lvl].join(", ")}
             </div>
           ))}

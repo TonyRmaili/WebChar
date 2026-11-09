@@ -21,6 +21,11 @@ import MonsterCreatePopup from "./MonsterCreatePopup";
 import RowContextMenu from "../RowContextMenu";
 import { usePopupStore } from "../../../store/PopupStore";
 import useAuthStore from "../../../store/AuthStore";
+import { ErrorLine, LoadingLine, SortControl, Toolbar, chip, fieldCls, searchCls } from "../catalogueStyle";
+import { addBtn } from "../../../styles/parchmentForm";
+
+// The CR min / max pickers in the filter popup: short dotted blanks.
+const challengeCls = `${fieldCls} !w-20 disabled:cursor-not-allowed disabled:opacity-40`;
 
 export default function Monsters() {
   const monstersData = useCatalogueStore((s) => s.monstersData);
@@ -261,78 +266,29 @@ export default function Monsters() {
     (crMax ? 1 : 0) +
     (levelOnly ? 1 : 0);
 
-  const chip = (active) =>
-    `text-[11px] px-2 py-1 rounded border transition
-     ${active
-       ? "bg-amber-500/20 border-amber-500/50 text-amber-300"
-       : "bg-slate-800/60 border-slate-700 text-slate-300 hover:border-amber-500/40 hover:text-amber-300"}`;
-
-  const sortBtn = (active) =>
-    `px-2 py-1 rounded border transition text-xs leading-none
-     ${active
-       ? "bg-amber-500/20 border-amber-500/50 text-amber-300"
-       : "bg-slate-800/60 border-slate-700 text-slate-400 hover:border-amber-500/40 hover:text-amber-300"}`;
-
-  const selectCls =
-    "bg-slate-900 border border-slate-600 rounded px-2 py-1 text-slate-100 text-xs " +
-    "focus:outline-none focus:border-amber-500/60 focus:ring-1 focus:ring-amber-500/30 " +
-    "disabled:opacity-40 disabled:cursor-not-allowed";
-
   return (
-    <div className="w-full bg-slate-900/40 p-4 min-h-[640px]">
-      {error && (
-        <div className="mb-3 p-2 rounded border border-red-700 bg-red-900/30 text-red-300 text-sm">
-          {error}
-        </div>
-      )}
+    <div className="min-h-[640px] w-full">
+      {error && <ErrorLine>{error}</ErrorLine>}
 
-      {!loading && (
+      {loading ? (
+        <LoadingLine>Fetching monsters…</LoadingLine>
+      ) : (
         <>
-          <div className="flex items-center gap-3 mb-4">
-            <FilterButton activeCount={activeCount} onClick={() => setFiltersOpen(true)} />
-
-            <div className="flex-1 max-w-sm">
-              <input
-                type="text"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search monsters…"
-                className="w-full bg-slate-900 border border-slate-600 rounded-lg px-3 py-2 text-slate-100 text-sm
-                           focus:outline-none focus:border-amber-500/60 focus:ring-1 focus:ring-amber-500/30 transition"
-              />
-            </div>
-
-            <button
-              onClick={() => setCreateOpen(true)}
-              className="flex items-center gap-2 px-3 py-2 rounded-lg border transition
-                        bg-slate-800/60 border-slate-700 text-slate-200
-                        hover:border-amber-500/40 hover:text-amber-300"
-            >
-              <span className="text-[11px] uppercase tracking-wider">+ Create</span>
-            </button>
-
-            <div className="ml-auto flex items-center gap-1">
-              <span className="text-[10px] uppercase tracking-wider text-slate-400 mr-1">
-                Sort by CR
-              </span>
-              <button
-                onClick={() => setSortDir(sortDir === "asc" ? null : "asc")}
-                title="Sort ascending"
-                aria-label="Sort ascending"
-                className={sortBtn(sortDir === "asc")}
-              >
-                ↑
-              </button>
-              <button
-                onClick={() => setSortDir(sortDir === "desc" ? null : "desc")}
-                title="Sort descending"
-                aria-label="Sort descending"
-                className={sortBtn(sortDir === "desc")}
-              >
-                ↓
-              </button>
-            </div>
-          </div>
+          <Toolbar
+            filters={<FilterButton activeCount={activeCount} onClick={() => setFiltersOpen(true)} />}
+            search={<input type="text" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="search monsters…" className={searchCls} />}
+            sort={<SortControl label="sort by CR" value={sortDir} onChange={setSortDir} />}
+            right={
+              <>
+                <span className="text-xs italic text-ink-faded">
+                  {sorted.length} of {monsters.length}
+                </span>
+                <button onClick={() => setCreateOpen(true)} className={`${addBtn} !text-sm`}>
+                  + create
+                </button>
+              </>
+            }
+          />
 
           <FilterPopup
             open={filtersOpen}
@@ -341,13 +297,13 @@ export default function Monsters() {
             onClear={clearAll}
           >
             <FilterSection title="Sources">
-              <div className="grid grid-cols-9 gap-2">
+              <div className="grid grid-cols-2 gap-x-6 gap-y-1.5 sm:grid-cols-3 lg:grid-cols-4">
                 {sources.map((src) => (
                   <button
                     key={src}
                     onClick={() => toggleSource(src)}
                     title={formatSource(src)}
-                    className={`${chip(selectedSources.includes(src))} text-center truncate`}
+                    className={`${chip(selectedSources.includes(src))} truncate`}
                   >
                     {formatSource(src)}
                   </button>
@@ -356,7 +312,7 @@ export default function Monsters() {
             </FilterSection>
 
             <FilterSection title="Size">
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-x-4 gap-y-1.5">
                 {sizes.map((s) => (
                   <button key={s} onClick={() => toggleSize(s)} className={chip(selectedSizes.includes(s))}>
                     {s}
@@ -366,7 +322,7 @@ export default function Monsters() {
             </FilterSection>
 
             <FilterSection title="Movement">
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-x-4 gap-y-1.5">
                 {movements.map((mv) => (
                   <button key={mv} onClick={() => toggleMovement(mv)} className={chip(selectedMovements.includes(mv))}>
                     {titleCase(mv)}
@@ -376,7 +332,7 @@ export default function Monsters() {
             </FilterSection>
 
             <FilterSection title="Senses">
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-x-4 gap-y-1.5">
                 {senses.map((s) => (
                   <button key={s} onClick={() => toggleSense(s)} className={chip(selectedSenses.includes(s))}>
                     {titleCase(s)}
@@ -387,7 +343,7 @@ export default function Monsters() {
 
             {conditionInflictOptions.length > 0 && (
               <FilterSection title="Conditions Inflicted">
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-x-4 gap-y-1.5">
                   {conditionInflictOptions.map((c) => (
                     <button key={c} onClick={() => toggleCondition(c)} className={chip(selectedConditions.includes(c))}>
                       {titleCase(c)}
@@ -399,7 +355,7 @@ export default function Monsters() {
 
             {forcedSaveOptions.length > 0 && (
               <FilterSection title="Forced Saves">
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-x-4 gap-y-1.5">
                   {forcedSaveOptions.map((s) => (
                     <button key={s} onClick={() => toggleForcedSave(s)} className={chip(selectedForcedSaves.includes(s))}>
                       {formatSaveLabel(s)}
@@ -410,7 +366,7 @@ export default function Monsters() {
             )}
 
             <FilterSection title="Type">
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-x-4 gap-y-1.5">
                 {typePrefixes.map((t) => (
                   <button key={t} onClick={() => toggleType(t)} className={chip(selectedTypes.includes(t))}>
                     {titleCase(t)}
@@ -420,7 +376,7 @@ export default function Monsters() {
             </FilterSection>
 
             <FilterSection title="Environment">
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-x-4 gap-y-1.5">
                 {envs.map((e) => (
                   <button key={e} onClick={() => toggleEnv(e)} className={chip(selectedEnvs.includes(e))}>
                     {titleCase(e)}
@@ -430,7 +386,7 @@ export default function Monsters() {
             </FilterSection>
 
             <FilterSection title="Traits">
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-x-4 gap-y-1.5">
                 {traits.map((t) => (
                   <button key={t} onClick={() => toggleTrait(t)} className={chip(selectedTraits.includes(t))}>
                     {t}
@@ -440,20 +396,20 @@ export default function Monsters() {
             </FilterSection>
 
             <FilterSection title="Challenge">
-              <div className="flex items-center gap-1">
-                <select value={crMin} onChange={(e) => setCrMin(e.target.value)} className={selectCls} disabled={levelOnly}>
+              <div className="flex items-baseline gap-3">
+                <select value={crMin} onChange={(e) => setCrMin(e.target.value)} className={challengeCls} disabled={levelOnly}>
                   <option value="">min</option>
                   {CR_OPTIONS.map((c) => <option key={c} value={c}>{c}</option>)}
                 </select>
-                <span className="text-slate-500 text-xs">–</span>
-                <select value={crMax} onChange={(e) => setCrMax(e.target.value)} className={selectCls} disabled={levelOnly}>
+                <span className="text-sm text-ink-faded">–</span>
+                <select value={crMax} onChange={(e) => setCrMax(e.target.value)} className={challengeCls} disabled={levelOnly}>
                   <option value="">max</option>
                   {CR_OPTIONS.map((c) => <option key={c} value={c}>{c}</option>)}
                 </select>
                 <button
                   onClick={() => setLevelOnly((v) => !v)}
                   title="Show only monsters that use the level system instead of CR"
-                  className={`${chip(levelOnly)} ml-1`}
+                  className={`${chip(levelOnly)} ml-2`}
                 >
                   Level
                 </button>
@@ -461,7 +417,8 @@ export default function Monsters() {
             </FilterSection>
           </FilterPopup>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-x-2 gap-y-1">
+          {sorted.length === 0 && <LoadingLine>No monsters match your filters.</LoadingLine>}
+          <div className="grid grid-cols-1 gap-x-8 md:grid-cols-2 xl:grid-cols-3">
             {sorted.map((m, idx) => (
               <MonsterRow
                 key={`${m.id || m.name}-${m.source}-${idx}`}

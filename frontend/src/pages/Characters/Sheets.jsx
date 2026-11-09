@@ -8,19 +8,19 @@ import HealthPlay from "./sheet/play/HealthPlay";
 import ActionsCharges from "./sheet/play/ActionsCharges";
 import MinionsPlay from "./sheet/minions/MinionsPlay";
 
-import SplitPanels from "./sheet/SplitPanels";
+import SplitPanels, { RAIL_BTN, RAIL_DIVIDER } from "./sheet/SplitPanels";
 import PlaySection from "./sheet/PlaySection";
 import PartyBar from "./sheet/PartyBar";
 import { DEFINE_TABS, DEFAULT_DEFINE_TAB, findDefineTab } from "./sheet/defineTabs";
 import { ViewSwitch, WithViewRail } from "./ViewSwitch";
+import { ParchmentSheet } from "../../styles/parchment";
 
 const API = "http://localhost:8000";
 const TAB_KEY = "sheet.defineTab";
 
 const charId = (c) => c.id || c._id || c.name;
 
-const isActiveChar = (c) =>
-  c?.active === true || c?.is_active === true || c?.status === "active";
+const isActiveChar = (c) => c?.active === true || c?.is_active === true || c?.status === "active";
 
 const readTab = () => {
   try {
@@ -34,7 +34,7 @@ const readTab = () => {
 
 function DefineTabStrip({ activeTab, onSelect }) {
   return (
-    <div className="mb-4 flex flex-wrap gap-1 rounded-xl border border-slate-700 bg-slate-800/60 p-1.5">
+    <div className="wc-desk mb-4 flex flex-wrap gap-1 rounded-xl border border-stitch/25 p-1.5 font-body">
       {DEFINE_TABS.map((t) => {
         const active = t.id === activeTab;
         return (
@@ -42,10 +42,8 @@ function DefineTabStrip({ activeTab, onSelect }) {
             key={t.id}
             type="button"
             onClick={() => onSelect(t.id)}
-            className={`h-8 rounded-lg px-3 text-sm transition ${
-              active
-                ? "bg-slate-100 font-medium text-slate-900"
-                : "text-slate-300 hover:bg-slate-900 hover:text-amber-300"
+            className={`h-8 rounded-md px-3 text-[15px] transition ${
+              active ? "bg-page font-semibold text-ink shadow" : "text-desk-ink-faded hover:bg-desk-deep/50 hover:text-desk-accent"
             }`}
           >
             {t.label}
@@ -60,7 +58,7 @@ function DefineTabStrip({ activeTab, onSelect }) {
 // tab and opens the panel if it was collapsed.
 function DefineRailTabs({ activeTab, panelOpen, onPick }) {
   return (
-    <div className="mt-1 flex flex-col items-center gap-1 border-t border-slate-700 pt-2">
+    <div className={`flex flex-col items-center gap-1 ${RAIL_DIVIDER}`}>
       {DEFINE_TABS.map((t) => {
         const active = panelOpen && t.id === activeTab;
         return (
@@ -70,11 +68,7 @@ function DefineRailTabs({ activeTab, panelOpen, onPick }) {
             onClick={() => onPick(t.id)}
             title={t.label}
             aria-label={t.label}
-            className={`flex h-8 w-8 items-center justify-center rounded-lg transition ${
-              active
-                ? "bg-amber-500/15 text-amber-300"
-                : "text-slate-400 hover:bg-slate-900 hover:text-amber-300"
-            }`}
+            className={`flex h-8 w-8 items-center justify-center rounded-lg ${RAIL_BTN(active)}`}
           >
             {t.icon}
           </button>
@@ -110,15 +104,9 @@ export default function Sheets({ onView }) {
     }
   }, []);
 
-  const activeChars = useMemo(
-    () => (userData?.characters ?? []).filter(isActiveChar),
-    [userData]
-  );
+  const activeChars = useMemo(() => (userData?.characters ?? []).filter(isActiveChar), [userData]);
 
-  const selectedChar = useMemo(
-    () => activeChars.find((c) => charId(c) === activeCharId),
-    [activeChars, activeCharId]
-  );
+  const selectedChar = useMemo(() => activeChars.find((c) => charId(c) === activeCharId), [activeChars, activeCharId]);
 
   /* ---- guards & loading ---- */
 
@@ -208,17 +196,19 @@ export default function Sheets({ onView }) {
   );
 
   if (!userData) {
-    return alone(<p className="mt-10 text-center text-sm text-slate-400">Loading characters…</p>);
+    return alone(<p className="mt-10 text-center text-sm italic text-desk-ink-faded">Loading characters…</p>);
   }
 
   if (activeChars.length === 0) {
     return alone(
-      <div className="mx-auto mt-10 max-w-md rounded-2xl border border-dashed border-slate-700 bg-slate-800/40 p-8 text-center">
-        <h2 className="text-lg font-semibold text-amber-300">No active characters</h2>
-        <p className="mt-2 text-sm text-slate-400">
-          Create a character, or mark one as active, and its sheet will show up here.
-        </p>
-      </div>
+      <div className="mx-auto mt-10 max-w-md">
+        <ParchmentSheet>
+          <div className="text-center">
+            <h2 className="text-xl tracking-wide">No active characters</h2>
+            <p className="mt-2 text-sm italic text-ink-faded">Create a character, or mark one as active, and its sheet will show up here.</p>
+          </div>
+        </ParchmentSheet>
+      </div>,
     );
   }
 
@@ -226,55 +216,43 @@ export default function Sheets({ onView }) {
 
   const activeDefineTab = findDefineTab(defineTab);
   const ActiveDefine = activeDefineTab.Component;
-  const waiting = (
-    <p className="rounded-xl border border-slate-700/60 bg-slate-900/40 p-4 text-sm text-slate-400">
-      Loading character…
-    </p>
-  );
+  const waiting = <p className="text-sm italic text-ink-faded">Loading character…</p>;
   const hasMinions = minionCount > 0;
 
-  const playContent = !selectedChar ? (
-    waiting
-  ) : (
-    <div className="space-y-5">
-      <PlaySection title="Health" storageKey="sheet.play.health" boxed={false}>
-        <HealthPlay id={activeCharId} />
-      </PlaySection>
+  // The Play panel is one parchment sheet; its sections are headings on it.
+  const playContent = (
+    <ParchmentSheet>
+      {!selectedChar ? (
+        waiting
+      ) : (
+        <div className="space-y-6">
+          <PlaySection title="Health" storageKey="sheet.play.health">
+            <HealthPlay id={activeCharId} />
+          </PlaySection>
 
-      <PlaySection title="Actions & Charges" storageKey="sheet.play.charges" boxed={false}>
-        <ActionsCharges />
-      </PlaySection>
+          <PlaySection title="Actions & Charges" storageKey="sheet.play.charges">
+            <ActionsCharges />
+          </PlaySection>
 
-      <PlaySection
-        title="Minions"
-        storageKey="sheet.play.minions"
-        empty={hasMinions ? null : "No minions yet. Add them in the Minions tab."}
-      >
-        <MinionsPlay />
-      </PlaySection>
-    </div>
+          <PlaySection title="Minions" storageKey="sheet.play.minions" empty={hasMinions ? null : "No minions yet. Add them in the Minions tab."}>
+            <MinionsPlay />
+          </PlaySection>
+        </div>
+      )}
+    </ParchmentSheet>
   );
 
   const defineContent = (
     <div>
       <DefineTabStrip activeTab={defineTab} onSelect={setDefineTab} />
-      {/* Tabs with their own surface (bare: true) skip the panel box. */}
-      <div className={activeDefineTab.bare && selectedChar ? "" : "rounded-2xl border border-slate-700 bg-slate-800/40 p-6"}>
-        {selectedChar ? <ActiveDefine /> : waiting}
-      </div>
+      {/* Tabs draw their own parchment sheet (bare: true); anything else gets one. */}
+      {selectedChar && activeDefineTab.bare ? <ActiveDefine /> : <ParchmentSheet>{selectedChar ? <ActiveDefine /> : waiting}</ParchmentSheet>}
     </div>
   );
 
   return (
-    <div className="mx-auto w-full max-w-[1800px] space-y-4 py-4 text-slate-100">
-      <PartyBar
-        characters={activeChars}
-        activeId={activeCharId}
-        onSelect={setActiveCharId}
-        onRest={onRestAll}
-        onExperience={onAdjustExperience}
-        busy={busy}
-      />
+    <div className="mx-auto w-full max-w-[1800px] space-y-4 py-4">
+      <PartyBar characters={activeChars} activeId={activeCharId} onSelect={setActiveCharId} onRest={onRestAll} onExperience={onAdjustExperience} busy={busy} />
 
       <SplitPanels
         storageKey="sheet.split"

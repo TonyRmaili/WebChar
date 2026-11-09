@@ -1,66 +1,87 @@
 import React from "react";
 import { usePersistedOpen, Chevron } from "../../../../utils/SectionCard";
 
-/* Shared building blocks for the Play sections. */
+/* Shared building blocks for the Play sections, written on the Play
+   sheet (parchment): no boxes — headings with hairlines, cards marked by
+   a coloured rule down their left edge, ink dots for uses.
+
+   Tones: spell (rubric), pact (magic), item (warn), passive (faded). */
+
+/* ─── Buttons ─────────────────────────────────────────────────────── */
+
+// Inked outline buttons for things you press often at the table:
+// damage (bad-red), healing (good-green), plain. They fill on hover.
+// `soft`: a quieter outline (the quick ±1/5/10 buttons).
+const STAMP = {
+  bad: "border-bad/60 text-bad hover:bg-bad hover:text-page-light",
+  good: "border-good/60 text-good hover:bg-good hover:text-page-light",
+  plain: "border-rule/60 text-ink hover:border-rubric hover:text-rubric",
+};
+const STAMP_SOFT = {
+  bad: "border-bad/30 text-bad hover:bg-bad hover:text-page-light",
+  good: "border-good/30 text-good hover:bg-good hover:text-page-light",
+  plain: "border-rule/30 text-ink hover:border-rubric hover:text-rubric",
+};
+export const stamp = (tone, soft = false) =>
+  `rounded-md border font-body transition disabled:cursor-not-allowed disabled:opacity-40 ${(soft ? STAMP_SOFT : STAMP)[tone]}`;
+
+// A margin note: small italic text with a dotted underline (add a colour).
+export const note = "text-xs italic underline decoration-dotted underline-offset-4 transition disabled:no-underline disabled:opacity-40";
+
+// A number blank: a dotted line to write on.
+export const blankNumber =
+  "rounded-none border-0 border-b border-dotted border-rule/70 bg-transparent text-center font-body text-[15px] text-ink placeholder:text-ink-faint focus:border-solid focus:border-ink focus:outline-none focus:ring-0 [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none";
 
 /* ─── Collapsible sub-section ─────────────────────────────────────── */
 
 const TONE_TITLE = {
-  default: "text-slate-200",
-  spell: "text-amber-300",
-  item: "text-teal-300",
-  passive: "text-slate-400",
+  default: "text-ink",
+  spell: "text-rubric",
+  item: "text-warn",
+  passive: "text-ink-faded",
 };
 
 export function SubSection({ title, count, tone = "default", storageKey, children, className = "" }) {
   const [open, setOpen] = usePersistedOpen(storageKey, true);
   return (
-    <section className={`rounded-xl border border-slate-700/70 bg-slate-900/50 ${className}`}>
-      <button
-        type="button"
-        onClick={() => setOpen((o) => !o)}
-        aria-expanded={open}
-        className="group flex w-full items-center gap-2 px-3 py-2 text-left"
-      >
-        <Chevron open={open} className="group-hover:text-amber-300" />
-        <h4 className={`text-sm font-semibold ${TONE_TITLE[tone]}`}>{title}</h4>
-        {count != null && (
-          <span className="rounded-full bg-slate-800 px-1.5 text-[11px] tabular-nums text-slate-400">{count}</span>
-        )}
+    <section className={className}>
+      <button type="button" onClick={() => setOpen((o) => !o)} aria-expanded={open} className="group flex w-full items-center gap-2 py-1 text-left">
+        <Chevron open={open} className="h-3.5 w-3.5 text-ink-faded group-hover:text-rubric" />
+        <h4 className={`text-[15px] font-semibold group-hover:underline group-hover:decoration-dotted group-hover:underline-offset-4 ${TONE_TITLE[tone] || TONE_TITLE.default}`}>{title}</h4>
+        {count != null && <span className="text-xs tabular-nums text-ink-faded">{count}</span>}
+        <span className="h-px flex-1 bg-rule/20" />
       </button>
-      {open && <div className="px-3 pb-3">{children}</div>}
+      {open && <div className="pb-1 pt-1.5">{children}</div>}
     </section>
   );
 }
 
 // Cards inside a sub-section: as many ~13rem columns as fit.
 export function CardGrid({ children }) {
-  return <div className="grid grid-cols-[repeat(auto-fill,minmax(13rem,1fr))] gap-2">{children}</div>;
+  return <div className="grid grid-cols-[repeat(auto-fill,minmax(13rem,1fr))] gap-x-4 gap-y-2">{children}</div>;
 }
 
 /* ─── Small pieces ───────────────────────────────────────────────── */
 
+// A small inked tag: "+7 to hit", "DEX DC 14", "V S M", "Attuned".
 const CHIP_TONE = {
-  plain: "border-slate-600 text-slate-300",
-  hit: "border-sky-700/70 text-sky-200",
-  save: "border-violet-700/70 text-violet-200",
-  comp: "border-amber-600/50 text-amber-200",
-  good: "border-emerald-700/70 text-emerald-200",
+  plain: "text-ink-faded",
+  hit: "text-info",
+  save: "text-magic",
+  comp: "text-warn",
+  good: "text-good",
 };
 
 export function Chip({ tone = "plain", children }) {
-  return (
-    <span className={`rounded-full border px-1.5 py-px text-[10px] leading-4 ${CHIP_TONE[tone] || CHIP_TONE.plain}`}>
-      {children}
-    </span>
-  );
+  return <span className={`text-[10px] font-semibold uppercase leading-4 tracking-wider ${CHIP_TONE[tone] || CHIP_TONE.plain}`}>{children}</span>;
 }
 
+// Inked dots: filled = a use left, an empty ring = a use spent.
 const PIP_TONE = {
-  default: { on: "bg-slate-200 border-slate-200", off: "border-slate-600" },
-  spell: { on: "bg-amber-400 border-amber-400 shadow-[0_0_6px] shadow-amber-500/50", off: "border-amber-800" },
-  pact: { on: "bg-violet-400 border-violet-400 shadow-[0_0_6px] shadow-violet-500/50", off: "border-violet-800" },
-  item: { on: "bg-teal-400 border-teal-400", off: "border-teal-800" },
+  default: { on: "bg-ink border-ink", off: "border-rule/60" },
+  spell: { on: "bg-rubric border-rubric", off: "border-rubric/40" },
+  pact: { on: "bg-magic border-magic", off: "border-magic/40" },
+  item: { on: "bg-warn border-warn", off: "border-warn/40" },
 };
 
 // A row of dots, filled for each use left. With onSpend/onRestore the
@@ -74,7 +95,7 @@ export function Pips({ cur, max, tone = "default", size = "sm", onSpend, onResto
     <span className="flex flex-wrap items-center gap-1">
       {Array.from({ length: max }, (_, i) => {
         const filled = i < cur;
-        const cls = `${dim} rounded-full border transition ${filled ? t.on : `${t.off} bg-transparent`}`;
+        const cls = `${dim} rounded-full border-[1.5px] transition ${filled ? t.on : `${t.off} bg-transparent`}`;
         if (!interactive) return <span key={i} className={cls} />;
         return (
           <button
@@ -98,25 +119,26 @@ export function Pips({ cur, max, tone = "default", size = "sm", onSpend, onResto
 function UsesBadge({ uses, tone }) {
   if (!uses) return null;
   if (uses.max == null) {
-    return <span className="text-sm font-semibold tabular-nums text-slate-100">×{uses.cur}</span>;
+    return <span className="text-sm font-semibold tabular-nums text-ink">×{uses.cur}</span>;
   }
   if (uses.max <= 8) return <Pips cur={uses.cur} max={uses.max} tone={tone} />;
   return (
-    <span className="text-sm font-semibold tabular-nums text-slate-100">
+    <span className="text-sm font-semibold tabular-nums text-ink">
       {uses.cur}
-      <span className="text-slate-500"> / {uses.max}</span>
+      <span className="font-normal text-ink-faded"> / {uses.max}</span>
     </span>
   );
 }
 
 /* ─── The card used for every trackable thing ─────────────────────
+   No box: a coloured rule down the left edge, and a faint wash on hover.
    With uses: click the card to spend one, right-click to regain one.
-   Without uses it is an information card. */
+   Without uses it is an information card (a quieter rule, no hover). */
 
 const CARD_TONE = {
-  default: "hover:border-slate-500",
-  spell: "hover:border-amber-500/60",
-  item: "hover:border-teal-500/60",
+  default: "border-rule/45 hover:border-ink",
+  spell: "border-rubric/45 hover:border-rubric",
+  item: "border-warn/45 hover:border-warn",
 };
 
 export function UseCard({ title, meta, chips = [], detail, uses, note, tone = "default", onSpend, onRestore }) {
@@ -135,8 +157,8 @@ export function UseCard({ title, meta, chips = [], detail, uses, note, tone = "d
     <>
       <div className="flex items-start gap-2">
         <div className="min-w-0 flex-1">
-          <div className={`truncate text-sm font-semibold ${empty ? "text-slate-500" : "text-slate-100"}`}>{title}</div>
-          {meta && <div className="truncate text-[11px] text-slate-400">{meta}</div>}
+          <div className={`truncate text-[15px] font-semibold ${empty ? "text-ink-faded" : "text-ink"}`}>{title}</div>
+          {meta && <div className="truncate text-xs italic text-ink-faded">{meta}</div>}
         </div>
         {trackable && badgeInline && (
           <div className={`shrink-0 pt-0.5 ${empty ? "opacity-60" : ""}`}>
@@ -150,7 +172,7 @@ export function UseCard({ title, meta, chips = [], detail, uses, note, tone = "d
         </div>
       )}
       {chips.length > 0 && (
-        <div className="mt-1.5 flex flex-wrap gap-1">
+        <div className="mt-1 flex flex-wrap gap-x-2.5 gap-y-0.5">
           {chips.map((c, i) => (
             <Chip key={i} tone={c.tone}>
               {c.text}
@@ -158,15 +180,15 @@ export function UseCard({ title, meta, chips = [], detail, uses, note, tone = "d
           ))}
         </div>
       )}
-      {detail && <div className="mt-1 text-[11px] text-rose-200/90">{detail}</div>}
+      {detail && <div className="mt-1 text-xs italic text-bad">{detail}</div>}
     </>
   );
 
-  const base = "block w-full rounded-lg border px-2.5 py-2 text-left transition";
+  const base = "block w-full rounded-r-sm border-l-2 py-1.5 pl-2.5 pr-1.5 text-left transition";
 
   if (!trackable) {
     return (
-      <div className={`${base} border-slate-800 bg-slate-950/40`} title={tooltip}>
+      <div className={`${base} border-rule/25`} title={tooltip}>
         {body}
       </div>
     );
@@ -182,9 +204,7 @@ export function UseCard({ title, meta, chips = [], detail, uses, note, tone = "d
         if (canRestore) onRestore?.();
       }}
       className={`${base} ${
-        empty
-          ? "cursor-default border-slate-800 bg-slate-950/30"
-          : `border-slate-700 bg-slate-950/70 ${CARD_TONE[tone] || CARD_TONE.default}`
+        empty ? "cursor-default border-rule/20 opacity-60" : `hover:bg-ink/[0.05] ${CARD_TONE[tone] || CARD_TONE.default}`
       }`}
     >
       {body}

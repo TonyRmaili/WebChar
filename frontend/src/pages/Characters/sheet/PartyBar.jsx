@@ -3,10 +3,19 @@ import React, { useState } from "react";
 /* The bar above both panels: which character is shown, plus the
    controls that act on the whole party rather than one sheet.
 
-   Every control is the same height (h-9) so they line up in one row,
-   and the row wraps cleanly on narrow screens. */
+   A leather strip on the desk (wc-desk): the chosen character is a
+   parchment tab, everything else is desk ink that turns gold
+   (desk-accent) on hover. Every control is the same height (h-9) so
+   they line up in one row, and the row wraps cleanly on narrow screens. */
 
 const CTRL_H = "h-9";
+
+// Rests: outlined in stitch on the leather, gold on hover.
+const restBtn = `${CTRL_H} inline-flex items-center gap-1.5 rounded-md border border-stitch/40 px-3 text-sm text-desk-ink transition hover:border-desk-accent hover:text-desk-accent`;
+
+// The XP stepper's − and +.
+const stepBtn =
+  "w-9 text-lg leading-none text-desk-ink transition hover:bg-desk-deep/60 hover:text-desk-accent disabled:cursor-not-allowed disabled:text-desk-ink-faded/40 disabled:hover:bg-transparent";
 
 const charId = (c) => c.id || c._id || c.name;
 
@@ -27,7 +36,7 @@ function HourglassIcon() {
 }
 
 function Divider() {
-  return <span className="hidden h-7 w-px bg-slate-700 sm:block" aria-hidden="true" />;
+  return <span className="hidden h-7 w-px bg-stitch/30 sm:block" aria-hidden="true" />;
 }
 
 export default function PartyBar({
@@ -50,7 +59,7 @@ export default function PartyBar({
   };
 
   return (
-    <div className="flex flex-wrap items-center gap-3 rounded-2xl border border-slate-700 bg-slate-800/60 p-2 shadow-md">
+    <div className="wc-desk flex flex-wrap items-center gap-3 rounded-2xl border border-stitch/25 p-2 font-body">
       {/* Character switcher */}
       <div className="flex flex-wrap gap-1" role="tablist" aria-label="Active characters">
         {characters.map((c) => {
@@ -63,10 +72,10 @@ export default function PartyBar({
               role="tab"
               aria-selected={active}
               onClick={() => onSelect(id)}
-              className={`${CTRL_H} rounded-lg border px-4 text-sm font-medium transition ${
+              className={`${CTRL_H} rounded-md border px-4 text-[15px] transition ${
                 active
-                  ? "border-amber-500/70 bg-amber-500/15 text-amber-200"
-                  : "border-transparent text-slate-300 hover:border-slate-600 hover:bg-slate-900"
+                  ? "border-transparent bg-page font-semibold text-ink shadow"
+                  : "border-transparent text-desk-ink-faded hover:border-stitch/40 hover:text-desk-accent"
               }`}
             >
               {c.name}
@@ -80,7 +89,7 @@ export default function PartyBar({
             Single-character rests live on each sheet's Health card. */}
         <div className="flex items-center gap-2">
           <span
-            className="text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500"
+            className="text-[10px] font-semibold uppercase tracking-[0.2em] text-desk-ink-faded"
             title="Rests apply to every active character"
           >
             Party
@@ -90,7 +99,7 @@ export default function PartyBar({
             onClick={() => onRest("short")}
             disabled={disabled}
             title="Short rest for every active character"
-            className={`${CTRL_H} inline-flex items-center gap-1.5 rounded-lg border border-amber-600/70 bg-amber-900/30 px-3 text-sm text-amber-100 transition hover:bg-amber-800/50 disabled:cursor-not-allowed disabled:opacity-40`}
+            className={`${restBtn} disabled:cursor-not-allowed disabled:opacity-40`}
           >
             <HourglassIcon />
             Short Rest
@@ -100,7 +109,7 @@ export default function PartyBar({
             onClick={() => onRest("long")}
             disabled={disabled}
             title="Long rest for every active character"
-            className={`${CTRL_H} inline-flex items-center gap-1.5 rounded-lg border border-teal-600/70 bg-teal-900/30 px-3 text-sm text-teal-100 transition hover:bg-teal-800/50 disabled:cursor-not-allowed disabled:opacity-40`}
+            className={`${restBtn} disabled:cursor-not-allowed disabled:opacity-40`}
           >
             <MoonIcon />
             Long Rest
@@ -111,9 +120,9 @@ export default function PartyBar({
 
         {/* Experience stepper: one joined control, everything on one line */}
         <div
-          className={`${CTRL_H} flex items-stretch overflow-hidden rounded-lg border border-slate-600 bg-slate-950 focus-within:border-amber-500/70`}
+          className={`${CTRL_H} flex items-stretch overflow-hidden rounded-md border border-stitch/40 bg-desk-deep/60 focus-within:border-desk-accent`}
         >
-          <span className="flex items-center border-r border-slate-700 bg-slate-900 px-2.5 text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+          <span className="flex items-center border-r border-stitch/30 px-2.5 text-[11px] font-semibold uppercase tracking-wider text-desk-ink-faded">
             XP
           </span>
           <button
@@ -121,7 +130,7 @@ export default function PartyBar({
             onClick={() => applyXp("-")}
             disabled={disabled || !xpValid}
             aria-label="Remove experience"
-            className="w-9 text-lg leading-none text-slate-200 transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:text-slate-600 disabled:hover:bg-transparent"
+            className={stepBtn}
           >
             −
           </button>
@@ -136,14 +145,14 @@ export default function PartyBar({
               if (e.key === "Enter") applyXp("+");
             }}
             aria-label="Experience amount"
-            className="w-20 border-x border-slate-700 bg-transparent text-center text-sm text-amber-200 placeholder:text-slate-600 focus:outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+            className="w-20 border-x border-stitch/30 bg-transparent text-center text-sm text-desk-ink placeholder:text-desk-ink-faded/70 focus:outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
           />
           <button
             type="button"
             onClick={() => applyXp("+")}
             disabled={disabled || !xpValid}
             aria-label="Add experience"
-            className="w-9 text-lg leading-none text-slate-200 transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:text-slate-600 disabled:hover:bg-transparent"
+            className={stepBtn}
           >
             +
           </button>

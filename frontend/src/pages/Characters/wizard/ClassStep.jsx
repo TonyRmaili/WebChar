@@ -206,7 +206,7 @@ export default function ClassStep({
         return (
           <section key={entry.key} className="space-y-4">
             {/* class line */}
-            <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1 border-b border-[#7b6346]/30 pb-1.5">
+            <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1 border-b border-rule/30 pb-1.5">
               <h4 className="text-xl">{classDisplayName(classes, entry.key, entry.edition)}</h4>
               <span className={`text-xs italic ${isPrimary ? INK.rubric : INK.faint}`}>
                 {isPrimary ? "primary" : requirementText(variant)}

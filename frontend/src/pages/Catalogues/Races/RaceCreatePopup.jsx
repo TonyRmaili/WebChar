@@ -1,7 +1,20 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { createPortal } from "react-dom";
 import { useCatalogueStore } from "../../../store/CatalogueStore";
 import FilterSection from "../FilterSection";
+import {
+  ChipsHeading,
+  CreateModal,
+  addRowCls,
+  boxCls,
+  checkCls,
+  checkLabelCls,
+  chip,
+  fieldCls,
+  hintCls,
+  labelCls,
+  removeRowCls,
+  textareaCls,
+} from "../catalogueStyle";
 import { SIZE_LABELS, SIZE_ORDER, cap } from "./raceHelpers";
 import {
   DAMAGE_TYPES,
@@ -144,12 +157,6 @@ export default function RaceCreatePopup({ open, onClose, editingRace, copyFromRa
     });
   }, [open, editingRace, copyFromRace]);
 
-  useEffect(() => {
-    if (!open) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => { document.body.style.overflow = prev; };
-  }, [open]);
 
   // XPHB spell names, sorted, used by the picker.
   const xphbSpellNames = useMemo(() => {
@@ -286,55 +293,39 @@ export default function RaceCreatePopup({ open, onClose, editingRace, copyFromRa
      }
    };
 
-  const chip = (active) =>
-    `text-[11px] px-2 py-1 rounded border transition
-     ${active
-       ? "bg-amber-500/20 border-amber-500/50 text-amber-300"
-       : "bg-slate-800/60 border-slate-700 text-slate-300 hover:border-amber-500/40 hover:text-amber-300"}`;
 
-  const fieldCls =
-    "bg-slate-900 border border-slate-600 rounded px-2 py-1 text-slate-100 text-sm w-full " +
-    "focus:outline-none focus:border-amber-500/60 focus:ring-1 focus:ring-amber-500/30";
 
-  return createPortal(
-    <div
-      className="fixed inset-0 z-[2000] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
-      onMouseDown={onClose}
+  return (
+    <CreateModal
+      open={open}
+      title={titleText}
+      onClose={onClose}
+      onSave={handleSubmit}
+      saving={creating}
+      saveLabel={isEditing ? "Save Changes" : "Save"}
+      error={createError}
     >
-      <div
-        className="w-full max-w-3xl max-h-[90vh] flex flex-col
-                   bg-slate-900 border border-slate-700 rounded-lg shadow-2xl overflow-hidden"
-        onMouseDown={(e) => e.stopPropagation()}
-      >
-        <div className="flex items-center justify-between px-5 py-3 border-b border-slate-700">
-          <h2 className="text-amber-400 font-semibold uppercase tracking-wider text-sm">
-            {titleText}
-          </h2>
-          <button onClick={onClose} className="px-2 text-slate-400 hover:text-slate-100 text-lg">×</button>
-        </div>
-
-        <div className="flex-1 overflow-y-auto px-5 py-4 space-y-1">
           <FilterSection title="Basics" defaultOpen>
             <div className="space-y-3">
               <div>
-                <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">
-                  Name <span className="text-red-400">*</span>
+                <label className={labelCls}>
+                  Name <span className="text-rubric">*</span>
                 </label>
                 <input
                   type="text"
                   value={form.name}
                   onChange={(e) => update("name", e.target.value)}
                   placeholder="e.g. Stormtouched"
-                  className={`${fieldCls} ${nameError ? "border-red-500 ring-1 ring-red-500/40" : ""}`}
+                  className={`${fieldCls} ${nameError ? "!border-solid !border-bad" : ""}`}
                 />
-                {nameError && <p className="text-xs text-red-400 mt-1">Name is required.</p>}
+                {nameError && <p className="mt-1 text-xs italic text-bad">Name is required.</p>}
               </div>
 
               <div>
-                <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">
+                <label className={labelCls}>
                   Creature Type
                 </label>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-x-4 gap-y-1.5">
                   {CREATURE_TYPES.map((t) => (
                     <button key={t} type="button" onClick={() => update("creature_type", t)}
                             className={chip(form.creature_type === t)}>
@@ -345,10 +336,10 @@ export default function RaceCreatePopup({ open, onClose, editingRace, copyFromRa
               </div>
 
               <div>
-                <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">
+                <label className={labelCls}>
                   Size (one or more)
                 </label>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-x-4 gap-y-1.5">
                   {SIZE_ORDER.map((s) => (
                     <button key={s} type="button" onClick={() => toggleSize(s)}
                             className={chip(form.sizes.includes(s))}>
@@ -359,10 +350,10 @@ export default function RaceCreatePopup({ open, onClose, editingRace, copyFromRa
               </div>
 
               <div>
-                <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">
+                <label className={labelCls}>
                   Visibility
                 </label>
-                <div className="flex gap-2">
+                <div className="flex gap-x-4">
                   {["private", "public"].map((v) => (
                     <button key={v} type="button" onClick={() => update("visibility", v)}
                             className={chip(form.visibility === v)}>
@@ -375,7 +366,7 @@ export default function RaceCreatePopup({ open, onClose, editingRace, copyFromRa
           </FilterSection>
 
           <FilterSection title="Speed">
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-3">
               {[
                 ["walk", "Walk (default 30)"],
                 ["fly", "Fly"],
@@ -384,7 +375,7 @@ export default function RaceCreatePopup({ open, onClose, editingRace, copyFromRa
                 ["burrow", "Burrow"],
               ].map(([k, label]) => (
                 <div key={k}>
-                  <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">
+                  <label className={labelCls}>
                     {label}
                   </label>
                   <input
@@ -396,20 +387,20 @@ export default function RaceCreatePopup({ open, onClose, editingRace, copyFromRa
                   />
                 </div>
               ))}
-              <label className="flex items-end gap-2 text-sm text-slate-300 cursor-pointer">
+              <label className={`${checkLabelCls} self-end`}>
                 <input type="checkbox" checked={form.hover}
                        onChange={(e) => update("hover", e.target.checked)}
-                       className="accent-amber-500" />
+                       className={checkCls} />
                 Hover
               </label>
             </div>
           </FilterSection>
 
           <FilterSection title="Senses">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-3">
               {["darkvision", "tremorsense", "blindsight", "truesight"].map((s) => (
                 <div key={s}>
-                  <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">
+                  <label className={labelCls}>
                     {cap(s)}
                   </label>
                   <input
@@ -425,13 +416,13 @@ export default function RaceCreatePopup({ open, onClose, editingRace, copyFromRa
           </FilterSection>
 
           <FilterSection title="Ability Score Increase">
-            <p className="text-xs text-slate-500 mb-2">
+            <p className={`${hintCls} mb-2`}>
               Default is 10. Anything above 10 is a bonus, below is a penalty.
             </p>
-            <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
+            <div className="grid grid-cols-3 gap-x-6 gap-y-3 md:grid-cols-6">
               {ABILITIES.map((a) => (
                 <div key={a}>
-                  <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1 text-center">
+                  <label className={`${labelCls} text-center`}>
                     {a.toUpperCase()}
                   </label>
                   <input
@@ -490,23 +481,23 @@ export default function RaceCreatePopup({ open, onClose, editingRace, copyFromRa
           <FilterSection title="Traits">
             <div className="space-y-2">
               {form.traits.map((t, idx) => (
-                <div key={idx} className="border border-slate-700 rounded p-2 space-y-2">
-                  <div className="flex gap-2 items-start">
+                <div key={idx} className={boxCls}>
+                  <div className="flex items-baseline gap-3">
                     <input type="text" placeholder="Trait name" value={t.name}
                            onChange={(e) => updateTrait(idx, "name", e.target.value)}
                            className={fieldCls} />
-                    <button onClick={() => removeTrait(idx)}
-                            className="text-[11px] px-2 py-1 rounded border border-red-700/50 text-red-300 hover:bg-red-900/40">
-                      Remove
+                    <button type="button" onClick={() => removeTrait(idx)}
+                            aria-label="Remove trait" className={removeRowCls}>
+                      ✕
                     </button>
                   </div>
                   <textarea placeholder="Description" value={t.notes}
                             onChange={(e) => updateTrait(idx, "notes", e.target.value)}
-                            rows={3} className={fieldCls} />
+                            rows={3} className={textareaCls} />
                 </div>
               ))}
               <button onClick={addTrait}
-                      className="text-[11px] px-3 py-1.5 rounded border border-slate-600 text-slate-300 hover:border-amber-500/40 hover:text-amber-300">
+                      className={addRowCls}>
                 + Add Trait
               </button>
             </div>
@@ -515,13 +506,13 @@ export default function RaceCreatePopup({ open, onClose, editingRace, copyFromRa
           <FilterSection title="Spells">
             <div className="space-y-2">
               {form.spells.map((sp, idx) => (
-                <div key={idx} className="border border-slate-700 rounded p-2 space-y-2">
+                <div key={idx} className={boxCls}>
                   <div className="flex justify-between items-center">
-                    <span className="text-[10px] uppercase tracking-wider text-amber-400">
+                    <span className={labelCls}>
                       Spell {idx + 1}
                     </span>
                     <button onClick={() => removeSpell(idx)}
-                            className="text-[11px] px-2 py-1 rounded border border-red-700/50 text-red-300 hover:bg-red-900/40">
+                            aria-label="Remove" className={removeRowCls}>
                       ✕
                     </button>
                   </div>
@@ -532,15 +523,15 @@ export default function RaceCreatePopup({ open, onClose, editingRace, copyFromRa
                     onSelect={(name) => updateSpell(idx, "name", name)}
                   />
 
-                  <div className="grid grid-cols-3 gap-2">
+                  <div className="grid grid-cols-3 gap-x-4">
                     <div>
-                      <div className="text-[10px] text-slate-400 mb-0.5 uppercase">Level Avail.</div>
+                      <div className={labelCls}>Level Avail.</div>
                       <input type="number" min={1} value={sp.level_available}
                              onChange={(e) => updateSpell(idx, "level_available", e.target.value)}
                              className={fieldCls} />
                     </div>
                     <div>
-                      <div className="text-[10px] text-slate-400 mb-0.5 uppercase">Uses</div>
+                      <div className={labelCls}>Uses</div>
                       <select value={sp.uses_type}
                               onChange={(e) => updateSpell(idx, "uses_type", e.target.value)}
                               className={fieldCls}>
@@ -551,7 +542,7 @@ export default function RaceCreatePopup({ open, onClose, editingRace, copyFromRa
                     </div>
                     {sp.uses_type !== "at_will" && (
                       <div>
-                        <div className="text-[10px] text-slate-400 mb-0.5 uppercase">Count</div>
+                        <div className={labelCls}>Count</div>
                         <input type="number" min={1} value={sp.uses_count}
                                onChange={(e) => updateSpell(idx, "uses_count", e.target.value)}
                                className={fieldCls} />
@@ -562,12 +553,12 @@ export default function RaceCreatePopup({ open, onClose, editingRace, copyFromRa
               ))}
               <div className="flex flex-wrap items-end gap-3 mt-2">
                 <button onClick={addSpell}
-                        className="text-[11px] px-3 py-1.5 rounded border border-slate-600 text-slate-300 hover:border-amber-500/40 hover:text-amber-300">
+                        className={addRowCls}>
                   + Add Spell
                 </button>
                 {form.spells.length > 0 && (
                   <div>
-                    <div className="text-[10px] text-slate-400 mb-0.5 uppercase">Spellcasting Ability</div>
+                    <div className={labelCls}>Spellcasting Ability</div>
                     <select value={form.spell_ability}
                             onChange={(e) => update("spell_ability", e.target.value)}
                             className={fieldCls}>
@@ -579,57 +570,20 @@ export default function RaceCreatePopup({ open, onClose, editingRace, copyFromRa
               </div>
             </div>
           </FilterSection>
-        </div>
-
-        <div className="flex items-center justify-between gap-3 px-5 py-3 border-t border-slate-700">
-          {createError ? (
-            <span className="text-xs text-red-400 truncate flex-1">{createError}</span>
-          ) : <span className="flex-1" />}
-          <button onClick={onClose}
-                  className="text-[11px] px-3 py-1.5 rounded border border-slate-600 text-slate-400 hover:border-red-500/40 hover:text-red-300">
-            Cancel
-          </button>
-          <button onClick={handleSubmit} disabled={creating}
-                  className="text-[11px] px-3 py-1.5 rounded border border-amber-500/50 bg-amber-500/20 text-amber-300
-                             hover:bg-amber-500/30 disabled:opacity-50 disabled:cursor-not-allowed">
-            {creating ? "Saving…" : isEditing ? "Save Changes" : "Save"}
-          </button>
-        </div>
-      </div>
-    </div>,
-    document.body
+    </CreateModal>
   );
 }
 
 // ─── Collapsible chip multi-select (closed by default) ────────────
 function CollapsibleChips({ label, options, selected, onToggle, renderOption }) {
   const [open, setOpen] = useState(false);
-  const chip = (active) =>
-    `text-[11px] px-2 py-1 rounded border transition
-     ${active
-       ? "bg-amber-500/20 border-amber-500/50 text-amber-300"
-       : "bg-slate-800/60 border-slate-700 text-slate-300 hover:border-amber-500/40 hover:text-amber-300"}`;
   const display = renderOption || ((x) => cap(String(x)));
 
   return (
     <div>
-      <button
-        type="button"
-        onClick={() => setOpen((o) => !o)}
-        className="flex items-center gap-1.5 uppercase tracking-wider text-amber-400
-                   text-[10px] mb-1 hover:text-amber-300 transition select-none"
-      >
-        <span className={`text-[10px] inline-block transition-transform duration-150
-                          ${open ? "rotate-90" : ""}`}>
-          ▶
-        </span>
-        <span>{label}</span>
-        {selected.length > 0 && (
-          <span className="ml-1 text-amber-300 normal-case">({selected.length})</span>
-        )}
-      </button>
+      <ChipsHeading open={open} onToggle={() => setOpen((o) => !o)} label={label} count={selected.length} />
       {open && (
-        <div className="flex flex-wrap gap-2 pl-3 mb-2">
+        <div className="mb-2 flex flex-wrap gap-x-4 gap-y-1.5 border-l border-rule/30 pl-3">
           {options.map((opt) => (
             <button key={opt} type="button" onClick={() => onToggle(opt)}
                     className={chip(selected.includes(opt))}>
@@ -652,28 +606,21 @@ function SpellPicker({ options, value, onSelect }) {
     return options.filter((n) => n.toLowerCase().includes(q));
   }, [query, options]);
 
-  const chip = (active) =>
-    `text-[11px] px-2 py-1 rounded border transition
-     ${active
-       ? "bg-amber-500/20 border-amber-500/50 text-amber-300"
-       : "bg-slate-800/60 border-slate-700 text-slate-300 hover:border-amber-500/40 hover:text-amber-300"}`;
 
   return (
     <div>
-      <div className="flex items-center gap-2 mb-1">
-        <label className="text-[10px] uppercase tracking-wider text-amber-400">
-          Spell {value ? `· selected: ${value}` : ""}
-        </label>
+      <div className="mb-1 flex items-baseline gap-3">
+        <label className={`${labelCls} !mb-0`}>Spell</label>
+        {value && <span className="text-sm italic text-rubric">{value}</span>}
       </div>
       <input
         type="text"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder={options.length ? "Search spells…" : "Loading spells…"}
-        className="bg-slate-900 border border-slate-600 rounded px-2 py-1 text-slate-100 text-sm w-full mb-2
-                   focus:outline-none focus:border-amber-500/60 focus:ring-1 focus:ring-amber-500/30"
+        className={`${fieldCls} mb-2`}
       />
-      <div className="flex flex-wrap gap-1.5 max-h-32 overflow-y-auto pr-1">
+      <div className="flex max-h-32 flex-wrap gap-x-4 gap-y-1 overflow-y-auto pr-1">
         {filtered.map((name) => (
           <button
             key={name}
@@ -685,7 +632,7 @@ function SpellPicker({ options, value, onSelect }) {
           </button>
         ))}
         {filtered.length === 0 && (
-          <span className="text-[11px] text-slate-500">No matches.</span>
+          <span className={hintCls}>No matches.</span>
         )}
       </div>
     </div>

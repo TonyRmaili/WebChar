@@ -30,19 +30,21 @@ export default function CharacterToken({ character, active, onClick, onContextMe
         title={active ? "In Sheets — click to take them out" : "Click to use in Sheets"}
         aria-pressed={!!active}
         aria-label={`${character.name}${active ? ", in Sheets" : ""}`}
-        className="relative rounded-full outline-none transition-transform duration-150 hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-[#9a3412]/60"
+        className="relative rounded-full outline-none transition-transform duration-150 hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-rubric/60"
       >
         {/* Rust ring when the character is in Sheets */}
         <span
           aria-hidden="true"
-          className={`absolute -inset-[5px] rounded-full border-2 transition ${active ? "border-[#9a3412]" : "border-transparent group-hover:border-[#7b6346]/40"}`}
+          className={`absolute -inset-[5px] rounded-full border-2 transition ${active ? "border-rubric" : "border-transparent group-hover:border-rule/40"}`}
         />
         {/* Leather rim + portrait */}
         <span
           className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-full"
           style={{
-            background: "radial-gradient(circle at 35% 30%, #efe3c6, #d6c39b 70%, #c4ad80)",
-            boxShadow: "0 0 0 3px #3a2618, 0 0 0 4px rgba(200,162,107,0.35), 0 3px 8px rgba(0,0,0,0.35), inset 0 2px 6px rgba(80,50,20,0.35)",
+            // a parchment disc in a leather rim — theme slots, so it follows the theme
+            background: "radial-gradient(circle at 35% 30%, rgb(var(--c-page-light)), rgb(var(--c-page)) 70%)",
+            boxShadow:
+              "0 0 0 3px rgb(var(--c-desk)), 0 0 0 4px rgb(var(--c-stitch) / 0.35), 0 3px 8px rgba(0,0,0,0.35), inset 0 2px 6px rgb(var(--c-desk) / 0.35), inset 0 0 12px rgb(var(--c-rule) / 0.45)",
           }}
         >
           {image ? (
@@ -59,7 +61,7 @@ export default function CharacterToken({ character, active, onClick, onContextMe
         onClick={onMenuButton}
         aria-label={`More for ${character.name}`}
         title="More…"
-        className={`absolute right-0 top-0 h-6 w-6 rounded-full text-base leading-none opacity-0 transition group-hover:opacity-100 focus:opacity-100 ${INK.faded} hover:text-[#3a2716]`}
+        className={`absolute right-0 top-0 h-6 w-6 rounded-full text-base leading-none opacity-0 transition group-hover:opacity-100 focus:opacity-100 ${INK.faded} hover:text-ink`}
       >
         ⋯
       </button>

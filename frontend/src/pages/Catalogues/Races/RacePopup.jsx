@@ -18,19 +18,16 @@ export default function RacePopup({ race }) {
   } = race;
 
   return (
-    <div className="bg-[#fdf6e3] text-stone-900 font-serif rounded-sm shadow-lg
-                    border border-stone-400 overflow-y-auto h-full">
+    <div className="wc-page h-full overflow-y-auto !rounded-none">
       <div className="px-5 py-4">
         {/* Title */}
-        <div className="flex justify-between items-baseline border-b border-stone-300 pb-1 mb-2">
-          <h2 className="text-xl font-bold tracking-wide uppercase text-stone-900">
-            {name}
-          </h2>
-          <span className="text-xs text-stone-500">{source}</span>
+        <div className="mb-2 flex items-baseline justify-between border-b border-rule/40 pb-1">
+          <h2 className="text-xl font-bold uppercase tracking-wide text-ink">{name}</h2>
+          <span className="text-xs text-ink-faded">{source}</span>
         </div>
 
         {/* Subheader */}
-        <p className="italic text-sm text-stone-700 mb-3">
+        <p className="mb-3 text-sm italic text-ink-faded">
           {formatTypeAndSize(race)}
         </p>
 
@@ -54,7 +51,7 @@ export default function RacePopup({ race }) {
         {/* Traits */}
         {traits.length > 0 && (
           <div className="mt-3 space-y-2 text-sm leading-relaxed">
-            <div className="text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">
+            <div className="text-[11px] font-bold uppercase tracking-wider text-ink-faded mb-1">
               Traits
             </div>
             {traits.map((t, i) => (
@@ -68,11 +65,11 @@ export default function RacePopup({ race }) {
 
         {/* Sub-races */}
         {sub_races.length > 0 && (
-          <div className="mt-4 pt-3 border-t border-stone-300">
-            <div className="text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-2">
+          <div className="mt-4 border-t border-rule/40 pt-3">
+            <div className="text-[11px] font-bold uppercase tracking-wider text-ink-faded mb-2">
               Sub-races ({sub_races.length})
             </div>
-            <div className="space-y-2">
+            <div>
               {sub_races.map((sr, i) => <SubRaceBlock key={i} sub={sr} />)}
             </div>
           </div>
@@ -93,10 +90,10 @@ function QuickStats({ speed, senses }) {
   if (!rows.length) return null;
 
   return (
-    <div className="grid grid-cols-1 gap-x-4 gap-y-0.5 text-xs text-stone-700 mb-3">
+    <div className="mb-3 grid grid-cols-1 gap-y-0.5 border-y border-rule/40 py-2 text-xs text-ink-faded">
       {rows.map(([k, v]) => (
         <div key={k} className="flex gap-1">
-          <span className="font-semibold">{k}:</span>
+          <span className="font-semibold text-ink">{k}:</span>
           <span>{v}</span>
         </div>
       ))}
@@ -107,18 +104,18 @@ function QuickStats({ speed, senses }) {
 function SectionStrip({ title, children }) {
   return (
     <div className="mb-2">
-      <div className="text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">
+      <div className="text-[11px] font-bold uppercase tracking-wider text-ink-faded mb-1">
         {title}
       </div>
-      <div className="flex flex-wrap gap-1">{children}</div>
+      <div className="flex flex-wrap items-baseline gap-x-4 gap-y-0.5">{children}</div>
     </div>
   );
 }
 
 function Chip({ label, children }) {
   return (
-    <span className="text-xs bg-stone-200 border border-stone-400 rounded px-1.5 py-0.5">
-      {label && <span className="font-semibold">{label}: </span>}
+    <span className="text-sm">
+      {label && <span className="font-semibold text-ink-faded">{label}: </span>}
       {children}
     </span>
   );
@@ -193,13 +190,13 @@ function ProfBlock({ proficiencies }) {
 
   return (
     <div className="mb-2">
-      <div className="text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">
+      <div className="text-[11px] font-bold uppercase tracking-wider text-ink-faded mb-1">
         Proficiencies
       </div>
       <div className="space-y-1">
         {rows.map(([label, chips]) => (
-          <div key={label} className="flex flex-wrap gap-1 items-center">
-            <span className="text-[11px] font-semibold text-stone-700 mr-1">{label}:</span>
+          <div key={label} className="flex flex-wrap items-baseline gap-x-4 gap-y-0.5">
+            <span className="text-xs font-semibold text-ink-faded">{label}:</span>
             {chips.map((c, i) => <Chip key={i}>{c}</Chip>)}
           </div>
         ))}
@@ -217,14 +214,14 @@ function SpellBlock({ spells, spellAbility }) {
 
   return (
     <div className="mb-2">
-      <div className="text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">
-        Spells {abilityLabel && <span className="text-stone-500 normal-case">· {abilityLabel}</span>}
+      <div className="text-[11px] font-bold uppercase tracking-wider text-ink-faded mb-1">
+        Spells {abilityLabel && <span className="normal-case tracking-normal">· {abilityLabel}</span>}
       </div>
-      <div className="space-y-0.5 text-xs text-stone-800">
+      <div className="space-y-0.5 text-sm text-ink">
         {spells.map((s, i) => (
-          <div key={i} className="flex flex-wrap gap-2">
+          <div key={i} className="flex flex-wrap items-baseline gap-x-3">
             <span className="font-semibold">{s.name}</span>
-            <span className="text-stone-500">
+            <span className="text-xs italic text-ink-faded">
               lvl {s.level_available} · {formatUses(s.uses)} · {s.category}
             </span>
           </div>
@@ -253,21 +250,22 @@ function SubRaceBlock({ sub }) {
     sub?.proficiencies || (sub?.spells?.length) || (sub?.traits?.length);
 
   return (
-    <div className="border border-stone-300 rounded bg-stone-50">
+    <div className="border-b border-dotted border-rule/40">
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="w-full flex items-center justify-between px-2 py-1 hover:bg-stone-100"
+        aria-expanded={open}
+        className="group flex w-full items-baseline justify-between px-1 py-1 text-left transition-colors hover:bg-ink/[0.04]"
       >
-        <span className="text-sm font-semibold">
+        <span className="text-sm font-semibold text-ink group-hover:text-rubric">
           {sub.display_name || sub.name}
-          {sub.source && <span className="text-stone-500 font-normal"> · {sub.source}</span>}
+          {sub.source && <span className="font-normal text-ink-faded"> · {sub.source}</span>}
         </span>
-        <span className="text-stone-500 text-xs">{open ? "▲" : "▼"}</span>
+        <span className={`text-[9px] text-ink-faded transition-transform duration-150 ${open ? "rotate-90" : ""}`}>▶</span>
       </button>
 
       {open && hasBody && (
-        <div className="px-3 py-2 border-t border-stone-300">
+        <div className="ml-1 border-l border-rule/30 py-2 pl-3">
           <QuickStats speed={sub.speed} senses={sub.senses} />
           {sub.abilities && <AbilityBlock abilities={sub.abilities} />}
           {sub.defenses && <DefenseBlock defenses={sub.defenses} />}

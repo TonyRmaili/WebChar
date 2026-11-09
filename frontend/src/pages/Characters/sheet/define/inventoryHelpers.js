@@ -27,11 +27,11 @@ export const newId = () =>
 
 // Highest to lowest, the order players read them on a sheet.
 export const COINS = [
-  { key: "pp", label: "Platinum", gp: 10, dot: "bg-slate-200" },
-  { key: "gp", label: "Gold", gp: 1, dot: "bg-amber-400" },
-  { key: "ep", label: "Electrum", gp: 0.5, dot: "bg-teal-300" },
-  { key: "sp", label: "Silver", gp: 0.1, dot: "bg-slate-400" },
-  { key: "cp", label: "Copper", gp: 0.01, dot: "bg-orange-600" },
+  { key: "pp", label: "Platinum", gp: 10 },
+  { key: "gp", label: "Gold", gp: 1 },
+  { key: "ep", label: "Electrum", gp: 0.5 },
+  { key: "sp", label: "Silver", gp: 0.1 },
+  { key: "cp", label: "Copper", gp: 0.01 },
 ];
 
 export const coinLabel = (key) => COINS.find((c) => c.key === key)?.label ?? key;

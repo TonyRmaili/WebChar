@@ -39,17 +39,18 @@ export const RARITY_ORDER = [
   'unknown', 'unknown (magic)'
 ];
 
+// Rarity inks (theme slots): the higher the rarity, the stronger the ink.
 export const RARITY_COLORS = {
-  common: "text-slate-300 border-slate-500/40",
-  uncommon: "text-green-400 border-green-500/40",
-  rare: "text-blue-400 border-blue-500/40",
-  "very rare": "text-purple-400 border-purple-500/40",
-  legendary: "text-amber-400 border-amber-500/40",
-  artifact: "text-red-400 border-red-500/40",
-  none: "text-slate-400 border-slate-600/40",
-  unknown: "text-slate-400 border-slate-600/40",
-  'unknown (magic)': "text-slate-400 border-slate-600/40",
-  varies: "text-slate-400 border-slate-600/40",
+  common: "text-ink-faded",
+  uncommon: "text-good",
+  rare: "text-info",
+  "very rare": "text-magic",
+  legendary: "text-rubric",
+  artifact: "text-bad",
+  none: "text-ink-faded",
+  unknown: "text-ink-faded",
+  'unknown (magic)': "text-ink-faded",
+  varies: "text-ink-faded",
 };
 
 export const rarityClass = (rarity) =>

@@ -149,7 +149,7 @@ export function FeatureListCard({ title, label, storageKey, catalogue, list, onA
                   {row.name}
                 </button>
                 <span className={`shrink-0 text-[10px] uppercase tracking-wider ${INK.faint}`}>{row.source}</span>
-                <span aria-hidden="true" className="mx-1 min-w-[0.75rem] flex-1 translate-y-[-4px] border-b-2 border-dotted border-[#7b6346]/35" />
+                <span aria-hidden="true" className="mx-1 min-w-[0.75rem] flex-1 translate-y-[-4px] border-b-2 border-dotted border-rule/35" />
                 <Meta entry={entry} />
                 <span className="opacity-0 transition group-hover:opacity-100 focus-within:opacity-100">
                   <InkRemove onClick={() => onRemove(row.id)} label={`Remove ${row.name}`} />

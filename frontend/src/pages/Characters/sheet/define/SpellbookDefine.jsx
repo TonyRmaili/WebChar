@@ -342,7 +342,7 @@ export default function SpellbookDefine() {
         )}
 
         {filtersOpen && book.spells.length > 0 && (
-          <div className="space-y-1 border-l border-[#7b6346]/30 pl-3">
+          <div className="space-y-1 border-l border-rule/30 pl-3">
             {filterGroups.map((g) => (
               <div key={g.group} className="flex flex-wrap items-baseline gap-x-3 gap-y-0.5">
                 <span className={`w-24 shrink-0 text-[10px] font-semibold uppercase tracking-[0.16em] ${INK.faded}`}>{g.label}</span>

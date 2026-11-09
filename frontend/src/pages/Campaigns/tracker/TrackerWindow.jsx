@@ -29,7 +29,7 @@ import {
 } from "../encounters/encounterActions";
 import { addTemplate, templateMenuGroups } from "../templates/templateLogic";
 import CombatantRow from "./CombatantRow";
-import CompGroupRoll from "../../../components/dice/GroupRoll"
+import GroupRoll from "../../../components/dice/GroupRoll";
 import { toTargets } from "./trackerDice";
 import { combatantsOf, damage, giveTemp, heal, ordered, tiedKeys } from "./trackerLogic";
 
@@ -135,7 +135,7 @@ export default function TrackerWindow({ tracker }) {
 
   if (!encounter) {
     return (
-      <div className="h-full overflow-y-auto bg-[#1c120b] p-2">
+      <div className="h-full overflow-y-auto bg-desk-deep p-2">
         <ParchmentSheet>
           <p className={`py-6 text-center italic ${INK.faint}`}>{loaded || encounters ? `${tracker.name} isn't in ${campaignName} any more.` : "Fetching…"}</p>
         </ParchmentSheet>
@@ -324,7 +324,7 @@ export default function TrackerWindow({ tracker }) {
       ];
 
   return (
-    <div className="@container h-full overflow-y-auto bg-[#1c120b]">
+    <div className="@container h-full overflow-y-auto bg-desk-deep">
       <div className="flex flex-col gap-2 p-2 @4xl:h-full @4xl:flex-row">
         {/* ── the order ── */}
         <div
@@ -367,7 +367,7 @@ export default function TrackerWindow({ tracker }) {
                 )}
 
                 {picked.length > 0 && (
-                  <p className="mb-1 flex flex-wrap items-baseline gap-x-4 gap-y-1 border-y border-[#9a3412]/30 py-1.5 text-sm">
+                  <p className="mb-1 flex flex-wrap items-baseline gap-x-4 gap-y-1 border-y border-rubric/30 py-1.5 text-sm">
                     <span className={INK.rubric}>{picked.length} selected</span>
                     <InkButton active={groupRoll === "save"} onClick={() => setGroupRoll("save")}>
                       make them save…
@@ -441,7 +441,7 @@ export default function TrackerWindow({ tracker }) {
         {/* ── whoever's turn it is ── */}
         <div className="min-h-[24rem] min-w-0 flex-1 @4xl:min-h-0">
           {groupRoll && picked.length > 0 ? (
-            <CompGroupRoll
+            <GroupRoll
               key={`${groupRoll}:${picked.map((c) => c.key).join(",")}`}
               kind={groupRoll}
               targets={toTargets(picked)}

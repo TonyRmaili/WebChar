@@ -35,21 +35,23 @@ const Icon = ({ name, className = "h-5 w-5" }) => {
 };
 
 /* ---------------- Reusable items ---------------- */
+// On the leather: desk-ink writing, gold (desk-accent) when hovered or on.
 const itemCls =
-  "group relative flex flex-col items-center gap-0.5 rounded-lg px-2.5 py-1.5 transition-colors hover:bg-slate-800 hover:text-amber-400";
+  "group relative flex flex-col items-center gap-0.5 rounded-lg px-2.5 py-1.5 transition-colors hover:bg-desk-deep/60 hover:text-desk-accent";
 
 const ToolButton = ({ icon, label, onClick, active = false, badge, ...rest }) => (
-  <button type="button" onClick={onClick} className={`${itemCls} ${active ? "bg-slate-800 text-amber-400" : ""}`} {...rest}>
+  <button type="button" onClick={onClick} className={`${itemCls} ${active ? "bg-desk-deep/70 text-desk-accent" : ""}`} {...rest}>
     <Icon name={icon} className="h-[22px] w-[22px]" />
     <span className="text-[11px] font-medium tracking-wide">{label}</span>
     {badge ? (
-      <span className="absolute right-1 top-0.5 min-w-[1.1rem] rounded-full bg-amber-500 px-1 text-center text-[10px] font-semibold leading-4 text-slate-900">{badge}</span>
+      <span className="absolute right-1 top-0.5 min-w-[1.1rem] rounded-full bg-desk-accent px-1 text-center text-[10px] font-semibold leading-4 text-desk-deep">{badge}</span>
     ) : null}
   </button>
 );
 
 /* ---------------- Footer ----------------
-   Slides up when the mouse reaches the bottom edge. The DiceTower button
+   A leather bar (wc-desk). Slides up when the mouse reaches the bottom
+   edge. The DiceTower button
    opens the tower or puts it away — minimized, it waits behind the button
    rather than in a deck. Minimized cards sit in decks (CardDeck.jsx); the CardDeck button, or a deck, opens the
    deck panel above the footer, and the footer stays up while it's open.
@@ -77,7 +79,7 @@ function Footer() {
         onMouseEnter={() => setOpen(true)}
         className="fixed inset-x-0 bottom-0 z-[89999] h-2.5"
       >
-        <div className="mx-auto h-1 w-24 rounded-t-full bg-amber-400/40" />
+        <div className="mx-auto h-1 w-24 rounded-t-full bg-desk-accent/40" />
       </div>
 
       <footer
@@ -91,7 +93,7 @@ function Footer() {
       >
         <DeckPanel panel={deckPanel} setPanel={showPanel} />
 
-        <div className="border-t border-slate-700/80 bg-slate-900/95 px-3 py-2 font-serif text-slate-300 backdrop-blur-md">
+        <div className="wc-desk border-t border-stitch/30 px-3 py-2 font-body text-desk-ink-faded">
           {/* ---- controls row ---- */}
           <div className="flex h-14 items-center gap-3 justify-between">
 
@@ -118,12 +120,12 @@ function Footer() {
             {/* close every minimized card — only when there's something minimized */}
             {hasMinimized && (
               <>
-                <div className="h-8 w-px bg-slate-700/80" />
+                <div className="h-8 w-px bg-stitch/30" />
                 <button
                   type="button"
                   onClick={() => closeAll(minimized)}
                   title="Close every minimized card"
-                  className="flex flex-col items-center gap-0.5 rounded-lg px-2.5 py-1.5 text-red-300/90 transition-colors hover:bg-red-900/40 hover:text-red-200"
+                  className="flex flex-col items-center gap-0.5 rounded-lg px-2.5 py-1.5 transition-colors hover:bg-bad/60 hover:text-desk-ink"
                 >
                   <Icon name="trash" className="h-[22px] w-[22px]" />
                   <span className="text-[11px] font-medium tracking-wide">Clear all</span>

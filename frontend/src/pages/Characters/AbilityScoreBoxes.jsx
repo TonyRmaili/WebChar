@@ -71,7 +71,7 @@ function Ability({ label, score, children }) {
   );
 }
 
-const stepBtn = `w-7 text-xl leading-none transition ${INK.faded} hover:text-[#3a2716] disabled:opacity-30`;
+const stepBtn = `w-7 text-xl leading-none transition ${INK.faded} hover:text-ink disabled:opacity-30`;
 
 /* ───────── main (controlled) component ───────── */
 export default function AbilityScoreBoxes({ method, scores, pool, onMethodChange, onScoresChange, onRoll }) {

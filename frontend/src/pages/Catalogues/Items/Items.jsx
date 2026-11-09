@@ -7,6 +7,8 @@ import FilterSection from "../FilterSection";
 import FilterPopup, { FilterButton } from "../FilterPopup";
 import ItemCreatePopup from "./ItemCreatePopup";
 import RowContextMenu from "../RowContextMenu";
+import { ErrorLine, LoadingLine, Toolbar, chip, searchCls } from "../catalogueStyle";
+import { addBtn } from "../../../styles/parchmentForm";
 import {
   collectUnique,
   formatSource,
@@ -174,51 +176,36 @@ export default function Items() {
     selectedProperties.length + selectedMasteries.length +
     (attune !== "any" ? 1 : 0);
 
-  const chip = (active) =>
-    `text-[11px] px-2 py-1 rounded border transition
-     ${active
-       ? "bg-amber-500/20 border-amber-500/50 text-amber-300"
-       : "bg-slate-800/60 border-slate-700 text-slate-300 hover:border-amber-500/40 hover:text-amber-300"}`;
-
   return (
-    <div className="w-full bg-slate-900/40 p-4 min-h-[640px]">
-      {error && (
-        <div className="mb-3 p-2 rounded border border-red-700 bg-red-900/30 text-red-300 text-sm">
-          {error}
-        </div>
-      )}
+    <div className="min-h-[640px] w-full">
+      {error && <ErrorLine>{error}</ErrorLine>}
 
-      {!loading && (
+      {loading ? (
+        <LoadingLine>Fetching items…</LoadingLine>
+      ) : (
         <>
-          <div className="flex items-center gap-3 mb-4">
-            <FilterButton activeCount={activeCount} onClick={() => setFiltersOpen(true)} />
-            <div className="flex-1 max-w-sm">
-              <input
-                type="text"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search items…"
-                className="w-full bg-slate-900 border border-slate-600 rounded-lg px-3 py-2 text-slate-100 text-sm
-                           focus:outline-none focus:border-amber-500/60 focus:ring-1 focus:ring-amber-500/30 transition"
-              />
-            </div>
-            <button
-              onClick={() => setCreateOpen(true)}
-              className="flex items-center gap-2 px-3 py-2 rounded-lg border transition
-                         bg-slate-800/60 border-slate-700 text-slate-200
-                         hover:border-amber-500/40 hover:text-amber-300"
-            >
-              <span className="text-[11px] uppercase tracking-wider">+ Create</span>
-            </button>
-          </div>
+          <Toolbar
+            filters={<FilterButton activeCount={activeCount} onClick={() => setFiltersOpen(true)} />}
+            search={<input type="text" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="search items…" className={searchCls} />}
+            right={
+              <>
+                <span className="text-xs italic text-ink-faded">
+                  {filtered.length} of {(items || []).length}
+                </span>
+                <button onClick={() => setCreateOpen(true)} className={`${addBtn} !text-sm`}>
+                  + create
+                </button>
+              </>
+            }
+          />
 
           <FilterPopup open={filtersOpen} onClose={() => setFiltersOpen(false)}
                        activeCount={activeCount} onClear={clearAll}>
             <FilterSection title="Sources">
-              <div className="grid grid-cols-9 gap-2">
+              <div className="grid grid-cols-2 gap-x-6 gap-y-1.5 sm:grid-cols-3 lg:grid-cols-4">
                 {sources.map((src) => (
                   <button key={src} onClick={() => toggleSource(src)} title={formatSource(src)}
-                          className={`${chip(selectedSources.includes(src))} text-center truncate`}>
+                          className={`${chip(selectedSources.includes(src))} truncate`}>
                     {formatSource(src)}
                   </button>
                 ))}
@@ -226,7 +213,7 @@ export default function Items() {
             </FilterSection>
 
             <FilterSection title="Rarity">
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-x-4 gap-y-1.5">
                 {rarities.map((r) => (
                   <button key={r} onClick={() => toggleRarity(r)} className={chip(selectedRarities.includes(r))}>
                     {formatRarity(r)}
@@ -236,7 +223,7 @@ export default function Items() {
             </FilterSection>
 
             <FilterSection title="Attunement">
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-x-4 gap-y-1.5">
                 {ATTUNE_OPTIONS.map((o) => (
                   <button key={o.value} onClick={() => setAttune(o.value)} className={chip(attune === o.value)}>
                     {o.label}
@@ -247,7 +234,7 @@ export default function Items() {
 
             {types.length > 0 && (
               <FilterSection title="Type">
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-x-4 gap-y-1.5">
                   {types.map((t) => (
                     <button key={t} onClick={() => toggleType(t)} className={chip(selectedTypes.includes(t))}>{t}</button>
                   ))}
@@ -257,7 +244,7 @@ export default function Items() {
 
             {baseItems.length > 0 && (
               <FilterSection title="Base Item">
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-x-4 gap-y-1.5">
                   {baseItems.map((b) => (
                     <button key={b} onClick={() => toggleBaseItem(b)} className={chip(selectedBaseItems.includes(b))}>
                       {b}
@@ -269,7 +256,7 @@ export default function Items() {
 
             {propertiesPresent.length > 0 && (
               <FilterSection title="Weapon Properties">
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-x-4 gap-y-1.5">
                   {propertiesPresent.map((p) => (
                     <button key={p} onClick={() => toggleProperty(p)} className={chip(selectedProperties.includes(p))}>
                       {p}
@@ -281,7 +268,7 @@ export default function Items() {
 
             {masteriesPresent.length > 0 && (
               <FilterSection title="Mastery">
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-x-4 gap-y-1.5">
                   {masteriesPresent.map((m) => (
                     <button key={m} onClick={() => toggleMastery(m)} className={chip(selectedMasteries.includes(m))}>
                       {m}
@@ -293,11 +280,9 @@ export default function Items() {
           </FilterPopup>
 
           {filtered.length === 0 ? (
-            <div className="px-3 py-8 text-center text-sm text-slate-500">
-              No items match your filters.
-            </div>
+            <LoadingLine>No items match your filters.</LoadingLine>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-x-2 gap-y-1">
+            <div className="grid grid-cols-1 gap-x-8 md:grid-cols-2 xl:grid-cols-3">
               {filtered.map((it, idx) => (
                 <ItemRow
                   key={`${it?.id || it?.name}-${it?.source}-${idx}`}

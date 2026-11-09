@@ -14,7 +14,7 @@ import { buildMinion, displayName, hpMaxOf, monsterAc, monsterSubtitle, resizeUn
 // on Enter or when leaving the field, so typing "12" doesn't first shrink
 // the group to 1.
 function Count({ value, onChange, label }) {
-  const btn = `w-6 text-center text-lg leading-none ${INK.faded} hover:text-[#3a2716] disabled:opacity-30`;
+  const btn = `w-6 text-center text-lg leading-none ${INK.faded} hover:text-ink disabled:opacity-30`;
   return (
     <span className="inline-flex items-baseline">
       <button type="button" className={btn} onClick={() => onChange(value - 1)} disabled={value <= 1} aria-label={`Fewer ${label}`}>

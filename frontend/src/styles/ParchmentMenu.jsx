@@ -16,7 +16,8 @@ import { INK } from "./parchment";
    Rendered into <body> (a "portal") so no parent's overflow can clip it,
    and layered above card windows (their z-index counts up from 100). */
 
-const LEATHER_EDGE = "0 0 0 1px rgba(58,38,24,0.55), 0 12px 32px rgba(0,0,0,0.55)";
+// A thin leather-coloured edge and a drop shadow (the desk slot, so it follows the theme).
+const LEATHER_EDGE = "0 0 0 1px rgb(var(--c-desk) / 0.55), 0 12px 32px rgba(0,0,0,0.55)";
 
 export default function ParchmentMenu({ x, y, title, subtitle, groups, onClose }) {
   const ref = useRef(null);
@@ -70,7 +71,7 @@ export default function ParchmentMenu({ x, y, title, subtitle, groups, onClose }
       role="menu"
       onKeyDown={onKeyDown}
       onContextMenu={(e) => e.preventDefault()}
-      className={`fixed z-[100000] max-h-[70vh] min-w-[13rem] max-w-[18rem] overflow-y-auto rounded-[3px] bg-[#e6d7b4] py-2 font-serif ${INK.ink}`}
+      className={`fixed z-[100000] max-h-[70vh] min-w-[13rem] max-w-[18rem] overflow-y-auto rounded-[3px] bg-page py-2 font-body ${INK.ink}`}
       style={{ left: pos.left, top: pos.top, boxShadow: LEATHER_EDGE }}
     >
       {title && (
@@ -80,7 +81,7 @@ export default function ParchmentMenu({ x, y, title, subtitle, groups, onClose }
         </div>
       )}
       {groups.map((g, gi) => (
-        <div key={gi} className={gi > 0 || title ? "mt-1 border-t border-[#7b6346]/25 pt-1" : ""}>
+        <div key={gi} className={gi > 0 || title ? "mt-1 border-t border-rule/25 pt-1" : ""}>
           {g.heading && <div className={`px-3 pb-0.5 pt-1 text-[10px] font-semibold uppercase tracking-[0.16em] ${INK.faded}`}>{g.heading}</div>}
           {g.items.length === 0 && g.empty && <div className={`px-3 py-1 text-xs italic ${INK.faint}`}>{g.empty}</div>}
           {g.items.map((item, ii) => (
@@ -94,7 +95,7 @@ export default function ParchmentMenu({ x, y, title, subtitle, groups, onClose }
                 onClose();
                 item.onSelect();
               }}
-              className={`flex w-full items-baseline gap-2 px-3 py-1 text-left text-sm outline-none transition hover:bg-[#3a2716]/[0.07] focus:bg-[#3a2716]/[0.09] disabled:cursor-default disabled:opacity-40 ${
+              className={`flex w-full items-baseline gap-2 px-3 py-1 text-left text-sm outline-none transition hover:bg-ink/[0.07] focus:bg-ink/[0.09] disabled:cursor-default disabled:opacity-40 ${
                 item.danger ? INK.rubric : ""
               }`}
             >

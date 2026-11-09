@@ -23,12 +23,11 @@ export default function BackgroundPopup({ background }) {
   const blocks = parseBackgroundEntries(entryText);
 
   return (
-    <div className="bg-[#fdf6e3] text-stone-900 font-serif rounded-sm shadow-lg
-                    border border-stone-400 overflow-y-auto h-full">
+    <div className="wc-page h-full overflow-y-auto !rounded-none">
       <div className="px-5 py-4">
-        <div className="flex justify-between items-baseline border-b border-stone-300 pb-1 mb-2">
-          <h2 className="text-xl font-bold tracking-wide uppercase text-stone-900">{name}</h2>
-          <span className="text-xs text-stone-500" title={formatSource(source)}>
+        <div className="mb-2 flex items-baseline justify-between border-b border-rule/40 pb-1">
+          <h2 className="text-xl font-bold uppercase tracking-wide text-ink">{name}</h2>
+          <span className="text-xs text-ink-faded" title={formatSource(source)}>
             {source}{edition ? ` · ${edition}` : ""}
           </span>
         </div>
@@ -100,21 +99,21 @@ function Mechanics({ bg }) {
   if (!hasAny) return null;
 
   return (
-    <div className="mb-3 pb-2 border-b border-stone-300 space-y-1.5">
+    <div className="mb-3 space-y-1.5 border-b border-rule/40 pb-2">
       {rows.map(([title, items]) =>
         items.length ? (
           <div key={title}>
-            <span className="text-[11px] font-bold uppercase tracking-wider text-stone-600">{title}: </span>
-            <span className="text-xs text-stone-800">{items.join(" · ")}</span>
+            <span className="text-[11px] font-bold uppercase tracking-wider text-ink-faded">{title}: </span>
+            <span className="text-sm text-ink">{items.join(" · ")}</span>
           </div>
         ) : null
       )}
       {spells.length > 0 && (
         <div>
-          <span className="text-[11px] font-bold uppercase tracking-wider text-stone-600">Expanded Spells</span>
+          <span className="text-[11px] font-bold uppercase tracking-wider text-ink-faded">Expanded Spells</span>
           {spells.map((r) => (
-            <div key={r.label} className="text-xs text-stone-800">
-              <span className="text-stone-500">{r.label}: </span>{r.names.join(", ")}
+            <div key={r.label} className="text-sm text-ink">
+              <span className="text-ink-faded">{r.label}: </span>{r.names.join(", ")}
             </div>
           ))}
         </div>
@@ -127,7 +126,7 @@ function Mechanics({ bg }) {
 
 function Block({ block }) {
   if (block.type === "heading")
-    return <h3 className="font-bold text-base mt-3 mb-1 text-stone-900">{block.text}</h3>;
+    return <h3 className="mb-1 mt-3 text-base font-bold text-ink">{block.text}</h3>;
   if (block.type === "table") return <EntryTable block={block} />;
   if (block.type === "list") return <EntryList items={block.items} />;
   return <p>{block.text}</p>;
@@ -138,7 +137,7 @@ function EntryList({ items }) {
     <ul className="space-y-1">
       {items.map((it, i) => (
         <li key={i} className="flex gap-1">
-          <span className="text-stone-400">•</span>
+          <span className="text-ink-faint">•</span>
           <span>{it.label && <span className="font-semibold">{it.label} </span>}{it.text}</span>
         </li>
       ))}
@@ -148,15 +147,15 @@ function EntryList({ items }) {
 
 function EntryTable({ block }) {
   return (
-    <div className="my-2 border border-stone-400 rounded overflow-hidden">
-      {block.caption && <div className="bg-stone-200 px-2 py-1 text-xs font-semibold">{block.caption}</div>}
+    <div className="my-2 overflow-hidden border-y border-rule/40">
+      {block.caption && <div className="bg-rule/10 px-2 py-1 text-xs font-semibold">{block.caption}</div>}
       <table className="w-full text-xs">
-        <thead className="bg-stone-100 border-b border-stone-300">
-          <tr>{block.header.map((c, i) => <th key={i} className="text-left px-2 py-1 font-semibold">{c}</th>)}</tr>
+        <thead className="border-b border-rule/40">
+          <tr>{block.header.map((c, i) => <th key={i} className="px-2 py-1 text-left font-semibold text-ink-faded">{c}</th>)}</tr>
         </thead>
         <tbody>
           {block.rows.map((row, i) => (
-            <tr key={i} className="border-t border-stone-200">
+            <tr key={i} className="border-t border-rule/20 even:bg-ink/[0.03]">
               {row.map((cell, j) => <td key={j} className="px-2 py-1 align-top">{cell}</td>)}
             </tr>
           ))}

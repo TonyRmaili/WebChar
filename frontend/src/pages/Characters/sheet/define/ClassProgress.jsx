@@ -26,7 +26,7 @@ export default function ClassProgress({ entry, row }) {
       <div className="-mx-2 overflow-x-auto">
         <table className="w-full min-w-[28rem] border-collapse text-[13px]">
           <thead>
-            <tr className="border-b border-[#7b6346]/35">
+            <tr className="border-b border-rule/35">
               <th className={`${head} text-left`}>Lvl</th>
               <th className={`${head} text-center`}>PB</th>
               <th className={`${head} text-left`}>Features</th>
@@ -48,7 +48,7 @@ export default function ClassProgress({ entry, row }) {
               return (
                 <tr
                   key={r.level}
-                  className={`align-baseline ${r.reached ? "" : "italic opacity-55"} ${isCurrent ? "bg-[#9a3412]/[0.07]" : ""}`}
+                  className={`align-baseline ${r.reached ? "" : "italic opacity-55"} ${isCurrent ? "bg-rubric/[0.07]" : ""}`}
                 >
                   <td className={`whitespace-nowrap px-2 py-1 ${isCurrent ? `font-semibold ${INK.rubric}` : ""}`}>{ordinal(r.level)}</td>
                   <td className="px-2 py-1 text-center tabular-nums">+{r.pb}</td>
@@ -94,7 +94,7 @@ export default function ClassProgress({ entry, row }) {
       </div>
 
       {reading && (
-        <div className="border-l-2 border-[#9a3412]/60 pl-3">
+        <div className="border-l-2 border-rubric/60 pl-3">
           <div className="flex items-baseline gap-2">
             <span className="text-[15px] font-semibold">{reading.name}</span>
             <span className={`text-[11px] italic ${INK.faded}`}>level {reading.level}</span>

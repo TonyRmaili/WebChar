@@ -11,11 +11,11 @@ export const newId = () =>
 
 // Ink colours that read on parchment.
 export const KINDS = [
-  { value: "session", label: "Session", dot: "bg-[#9a3412]", text: "text-[#9a3412]" },
-  { value: "npc", label: "NPC", dot: "bg-[#1e3a8a]", text: "text-[#1e3a8a]" },
-  { value: "location", label: "Place", dot: "bg-[#3f6212]", text: "text-[#3f6212]" },
-  { value: "quest", label: "Quest", dot: "bg-[#7f1d1d]", text: "text-[#7f1d1d]" },
-  { value: "other", label: "Other", dot: "bg-[#7b6346]", text: "text-[#7b6346]" },
+  { value: "session", label: "Session", dot: "bg-rubric", text: "text-rubric" },
+  { value: "npc", label: "NPC", dot: "bg-info", text: "text-info" },
+  { value: "location", label: "Place", dot: "bg-good", text: "text-good" },
+  { value: "quest", label: "Quest", dot: "bg-bad", text: "text-bad" },
+  { value: "other", label: "Other", dot: "bg-rule", text: "text-ink-faded" },
 ];
 
 export const kindOf = (note) => KINDS.find((k) => k.value === note?.kind) ?? KINDS[0];

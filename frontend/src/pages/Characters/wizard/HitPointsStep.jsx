@@ -74,7 +74,7 @@ export default function HitPointsStep({
               <li key={i} className="flex items-baseline py-0.5 text-sm">
                 <span className={`w-6 shrink-0 tabular-nums ${INK.faint}`}>{i + 1}</span>
                 <span className={`truncate ${INK.faded}`}>{classDisplayName(classes, row.classKey, editionFor(entries, row.classKey))}</span>
-                <span aria-hidden="true" className="mx-1.5 min-w-[1rem] flex-1 translate-y-[-4px] border-b-2 border-dotted border-[#7b6346]/30" />
+                <span aria-hidden="true" className="mx-1.5 min-w-[1rem] flex-1 translate-y-[-4px] border-b-2 border-dotted border-rule/30" />
                 <span className="shrink-0 tabular-nums">
                   <span className={row.first ? `font-semibold ${INK.rubric}` : ""}>{row.base}</span>
                   <span className={INK.faint}>

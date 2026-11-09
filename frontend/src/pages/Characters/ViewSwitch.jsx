@@ -1,5 +1,5 @@
 import React from "react";
-import { RAIL_CLS } from "./sheet/SplitPanels";
+import { RAIL_BTN, RAIL_CLS, RAIL_DIVIDER } from "./sheet/SplitPanels";
 
 /* The Characters page's Sheets / Create switch. It used to be a tab strip
    across the top; now it lives in the left rail, under the Play panel's
@@ -33,7 +33,7 @@ export const VIEWS = [
 // them, when they sit under other rail controls.
 export function ViewSwitch({ view, onView, divider = true }) {
   return (
-    <div className={`flex flex-col items-center gap-1 ${divider ? "mt-1 border-t border-slate-700 pt-2" : ""}`}>
+    <div className={`flex flex-col items-center gap-1 ${divider ? RAIL_DIVIDER : ""}`}>
       {VIEWS.map((v) => {
         const active = v.id === view;
         return (
@@ -43,9 +43,7 @@ export function ViewSwitch({ view, onView, divider = true }) {
             onClick={() => onView(v.id)}
             aria-pressed={active}
             title={v.label}
-            className={`flex w-9 flex-col items-center gap-0.5 rounded-lg py-1 transition ${
-              active ? "bg-amber-500/15 text-amber-300" : "text-slate-400 hover:bg-slate-900 hover:text-amber-300"
-            }`}
+            className={`flex w-9 flex-col items-center gap-0.5 rounded-lg py-1 font-body ${RAIL_BTN(active)}`}
           >
             {v.icon}
             <span className="text-[9px] font-semibold uppercase tracking-wider">{v.label}</span>

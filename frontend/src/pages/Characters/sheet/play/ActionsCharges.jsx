@@ -43,16 +43,16 @@ const KEY = (k) => `sheet.play.charges.${k}`;
 // are, so two sections share the row instead of leaving an empty third.
 // (Tailwind needs the full class names written out, hence the map.)
 const WIDE_COLS = { 1: "", 2: "@5xl:grid-cols-2", 3: "@5xl:grid-cols-3" };
-const sectionGrid = (n) => `grid grid-cols-1 items-start gap-3 ${WIDE_COLS[Math.min(n, 3)] || ""}`;
+const sectionGrid = (n) => `grid grid-cols-1 items-start gap-x-8 gap-y-4 ${WIDE_COLS[Math.min(n, 3)] || ""}`;
 
 function SlotTrack({ label, uses, tone, onSpend, onRestore }) {
   return (
-    <div className="flex items-center gap-2.5 rounded-lg border border-slate-800 bg-slate-950/60 px-2.5 py-1.5">
-      <span className={`min-w-[2.5rem] shrink-0 whitespace-nowrap text-xs font-semibold ${tone === "pact" ? "text-violet-300" : "text-amber-300"}`}>
+    <div className="flex items-center gap-2.5 border-b border-dotted border-rule/35 py-1.5">
+      <span className={`min-w-[2.5rem] shrink-0 whitespace-nowrap text-sm font-semibold ${tone === "pact" ? "text-magic" : "text-rubric"}`}>
         {label}
       </span>
       <Pips cur={uses.cur} max={uses.max} tone={tone} size="lg" onSpend={onSpend} onRestore={onRestore} label="slot" />
-      <span className="ml-auto pl-2 text-[11px] tabular-nums text-slate-500">
+      <span className="ml-auto pl-2 text-xs tabular-nums text-ink-faded">
         {uses.cur}/{uses.max}
       </span>
     </div>
@@ -154,7 +154,7 @@ export default function ActionsCharges() {
 
   if (nothing) {
     return (
-      <p className="rounded-xl border border-dashed border-slate-700 px-4 py-3 text-sm text-slate-500">
+      <p className="text-sm italic text-ink-faded">
         Nothing to track yet. Active effects and feats, spell slots, limited spells and charged items from the Define tabs show up
         here.
       </p>
@@ -162,11 +162,11 @@ export default function ActionsCharges() {
   }
 
   return (
-    <div className="@container space-y-3">
+    <div className="@container space-y-4">
       {/* 1. Spellcasting resources */}
       {hasResources && (
         <SubSection title="Spellcasting" tone="spell" storageKey={KEY("resources")}>
-          <div className="grid grid-cols-1 gap-1.5 @xl:grid-cols-2 @5xl:grid-cols-3">
+          <div className="grid grid-cols-1 gap-x-6 @xl:grid-cols-2 @5xl:grid-cols-3">
             {slots.map((r) => {
               const u = slotUses(r);
               return (
@@ -196,9 +196,9 @@ export default function ActionsCharges() {
           </div>
 
           {sorcery && (
-            <div className="mt-2 rounded-lg border border-slate-800 bg-slate-950/60 px-2.5 py-2">
+            <div className="mt-1 border-b border-dotted border-rule/35 py-1.5">
               <div className="flex flex-wrap items-center gap-2.5">
-                <span className="text-xs font-semibold text-amber-300">Sorcery Points</span>
+                <span className="text-sm font-semibold text-rubric">Sorcery Points</span>
                 <Pips
                   cur={sorcery.cur}
                   max={sorcery.max}
@@ -207,12 +207,12 @@ export default function ActionsCharges() {
                   onRestore={() => setSorcery(sorcery.cur + 1)}
                   label="sorcery point"
                 />
-                <span className="ml-auto text-[11px] tabular-nums text-slate-500">
+                <span className="ml-auto text-xs tabular-nums text-ink-faded">
                   {sorcery.cur}/{sorcery.max}
                 </span>
               </div>
               {metamagic.length > 0 && (
-                <div className="mt-1.5 flex flex-wrap gap-1">
+                <div className="mt-1 flex flex-wrap gap-x-2.5">
                   {metamagic.map((n) => (
                     <Chip key={n} tone="comp">
                       {n}

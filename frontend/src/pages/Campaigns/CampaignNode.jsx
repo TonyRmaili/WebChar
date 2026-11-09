@@ -129,7 +129,7 @@ function CampaignNode({
       <div
         onClick={handleMainClick}
         onContextMenu={handleContextMenu}
-        className="group flex items-center h-7 pr-1 rounded-md hover:bg-slate-800/70 cursor-pointer transition-colors select-none"
+        className="group flex h-7 cursor-pointer select-none items-center rounded-sm pr-1 transition-colors hover:bg-ink/[0.06]"
         style={{ paddingLeft: `${8 + depth * 14}px` }}
       >
         {showCheckbox && (
@@ -142,11 +142,11 @@ function CampaignNode({
             onClick={(e) => e.stopPropagation()}
             onChange={handleToggleActive}
             disabled={filePaths.length === 0}
-            className="mr-2 accent-amber-500 cursor-pointer disabled:cursor-not-allowed disabled:opacity-40"
+            className="mr-2 h-3.5 w-3.5 cursor-pointer accent-rubric disabled:cursor-not-allowed disabled:opacity-40"
           />
         )}
 
-        <span className="w-4 flex items-center justify-center shrink-0 text-slate-500">
+        <span className="flex w-4 shrink-0 items-center justify-center text-ink-faded">
           {isFolder &&
             (collapsed ? (
               <ChevronRightIcon className="w-3.5 h-3.5" />
@@ -155,7 +155,7 @@ function CampaignNode({
             ))}
         </span>
 
-        <span className={`shrink-0 ml-1 mr-2 ${isFolder ? "text-amber-400" : "text-sky-400"}`}>
+        <span className={`ml-1 mr-2 shrink-0 ${isFolder ? "text-rubric" : "text-ink-faded"}`}>
           {isFolder ? (
             collapsed ? (
               <FolderIcon className="w-4 h-4" />
@@ -175,16 +175,16 @@ function CampaignNode({
             onKeyDown={handleRenameKeyDown}
             onBlur={commitRename}
             onClick={(e) => e.stopPropagation()}
-            className="flex-1 bg-slate-800 text-slate-100 text-sm px-1 py-0 rounded border border-amber-500/60 outline-none"
+            className="h-6 flex-1 rounded-none border-0 border-b border-solid border-ink bg-transparent px-0 font-body text-sm text-ink outline-none focus:ring-0"
           />
         ) : (
           <span
             className={`truncate text-sm ${
               isFolder
-                ? "text-amber-100 font-medium"
+                ? "font-semibold text-ink"
                 : isActive
-                ? "text-amber-200 font-medium"
-                : "text-slate-200"
+                ? "font-semibold text-rubric"
+                : "text-ink"
             }`}
           >
             {node.name}
@@ -196,14 +196,14 @@ function CampaignNode({
           <div className="ml-auto flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
             <button
               onClick={handleAddFile}
-              className="w-6 h-6 flex items-center justify-center rounded hover:bg-slate-700 text-sky-400"
+              className="flex h-6 w-6 items-center justify-center rounded text-ink-faded transition hover:text-rubric"
               title="New file"
             >
               <PlusIcon className="w-3.5 h-3.5" />
             </button>
             <button
               onClick={handleAddFolder}
-              className="w-6 h-6 flex items-center justify-center rounded hover:bg-slate-700 text-amber-400"
+              className="flex h-6 w-6 items-center justify-center rounded text-ink-faded transition hover:text-rubric"
               title="New folder"
             >
               <FolderPlusIcon className="w-3.5 h-3.5" />

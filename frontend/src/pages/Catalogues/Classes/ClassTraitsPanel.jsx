@@ -1,20 +1,14 @@
 import React from "react";
-import {
-  formatPrimaryAbility,
-  buildProfs,
-  hasAnyProfs,
-  normalizeMulticlassRequirements,
-} from "./classHelpers";
+import { formatPrimaryAbility, buildProfs, hasAnyProfs, normalizeMulticlassRequirements } from "./classHelpers";
+import { InkHeading } from "../../../styles/parchment";
 
+/* The class's traits, written down the left column: primary ability, hit
+   dice, saves, proficiencies and multiclassing, as labelled lines. Words
+   worth noticing (hit dice, spellcasting ability, requirements) are inked
+   in rubric; optional or "see note" ones are faded and italic. */
 export default function ClassTraitsPanel({ selectedClassData }) {
   if (!selectedClassData) {
-    return (
-      <aside className="bg-slate-900/40 border border-slate-700 rounded-lg p-4">
-        <p className="text-sm text-slate-400 italic">
-          Select a class to view its traits.
-        </p>
-      </aside>
-    );
+    return <p className="text-sm italic text-ink-faded">Select a class to view its traits.</p>;
   }
 
   const cls = selectedClassData.class || {};
@@ -28,141 +22,109 @@ export default function ClassTraitsPanel({ selectedClassData }) {
       }
     : null;
 
-  const showMulticlass =
-    multiclassing &&
-    (multiclassing.requirements || hasAnyProfs(multiclassing.proficiencies));
+  const showMulticlass = multiclassing && (multiclassing.requirements || hasAnyProfs(multiclassing.proficiencies));
 
   return (
-    <aside className="bg-slate-900/40 border border-slate-700 rounded-lg p-4">
-      <div className="space-y-5">
-        {/* Core Traits */}
-        <section className="space-y-3">
-          <PanelHeading>Core Traits</PanelHeading>
+    <aside className="space-y-6">
+      {/* Core Traits */}
+      <section className="space-y-3">
+        <InkHeading>Core Traits</InkHeading>
 
-          {primaryAbilityGroups.length > 0 && (
-            <TraitRow label="Primary Ability">
-              <span className="text-sm">
-                {primaryAbilityGroups.map((group, i) => (
-                  <React.Fragment key={i}>
-                    <span className="text-amber-300 font-semibold">
-                      {group.map((a) => a.toUpperCase()).join(" and ")}
-                    </span>
-                    {i < primaryAbilityGroups.length - 1 && (
-                      <span className="text-slate-400"> or </span>
-                    )}
+        {primaryAbilityGroups.length > 0 && (
+          <TraitRow label="Primary Ability">
+            {primaryAbilityGroups.map((group, i) => (
+              <React.Fragment key={i}>
+                <span className="font-semibold text-rubric">{group.map((a) => a.toUpperCase()).join(" and ")}</span>
+                {i < primaryAbilityGroups.length - 1 && <span className="italic text-ink-faded"> or </span>}
+              </React.Fragment>
+            ))}
+          </TraitRow>
+        )}
+
+        {cls.hit_dice && (
+          <TraitRow label="Hit Dice">
+            <Word tone="accent">{cls.hit_dice}</Word>
+          </TraitRow>
+        )}
+
+        {cls.saving_throw_proficiency?.length > 0 && (
+          <TraitRow label="Saving Throws">
+            <Words>
+              {cls.saving_throw_proficiency.map((a) => (
+                <Word key={a}>{a.toUpperCase()}</Word>
+              ))}
+            </Words>
+          </TraitRow>
+        )}
+
+        {cls.spellcastingAbility && (
+          <TraitRow label="Spellcasting">
+            <Word tone="accent">{cls.spellcastingAbility.toUpperCase()}</Word>
+          </TraitRow>
+        )}
+      </section>
+
+      {/* Starting Proficiencies */}
+      {hasAnyProfs(proficiencies) && (
+        <section className="space-y-3">
+          <InkHeading>Starting Proficiencies</InkHeading>
+          <ProficiencyBlocks profs={proficiencies} />
+        </section>
+      )}
+
+      {/* Multiclassing */}
+      {showMulticlass && (
+        <section className="space-y-3">
+          <InkHeading>Multiclassing</InkHeading>
+
+          <TraitRow label="Requirements">
+            {multiclassing.requirements ? (
+              <Words>
+                {multiclassing.requirements.pairs.map(([ability, score], i, arr) => (
+                  <React.Fragment key={`${ability}-${i}`}>
+                    <Word tone="accent">
+                      {ability.toUpperCase()} {score}
+                    </Word>
+                    {i < arr.length - 1 && <span className="text-xs italic text-ink-faded">{multiclassing.requirements.connector}</span>}
                   </React.Fragment>
                 ))}
-              </span>
-            </TraitRow>
-          )}
+              </Words>
+            ) : (
+              <span className="text-xs italic text-ink-faded">No ability score prerequisites.</span>
+            )}
+          </TraitRow>
 
-          {cls.hit_dice && (
-            <TraitRow label="Hit Dice">
-              <ProfPill tone="accent">{cls.hit_dice}</ProfPill>
-            </TraitRow>
-          )}
-
-          {cls.saving_throw_proficiency?.length > 0 && (
-            <TraitRow label="Saving Throws">
-              <div className="flex flex-wrap gap-1">
-                {cls.saving_throw_proficiency.map((a) => (
-                  <ProfPill key={a}>{a.toUpperCase()}</ProfPill>
-                ))}
-              </div>
-            </TraitRow>
-          )}
-
-          {cls.spellcastingAbility && (
-            <TraitRow label="Spellcasting">
-              <ProfPill tone="accent">{cls.spellcastingAbility.toUpperCase()}</ProfPill>
-            </TraitRow>
+          {hasAnyProfs(multiclassing.proficiencies) && (
+            <div>
+              <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-ink-faded">Proficiencies Gained</p>
+              <ProficiencyBlocks profs={multiclassing.proficiencies} />
+            </div>
           )}
         </section>
-
-        {/* Starting Proficiencies */}
-        {hasAnyProfs(proficiencies) && (
-          <section className="space-y-3 border-t border-slate-700 pt-4">
-            <PanelHeading>Starting Proficiencies</PanelHeading>
-            <ProficiencyBlocks profs={proficiencies} />
-          </section>
-        )}
-
-        {/* Multiclassing */}
-        {showMulticlass && (
-          <section className="space-y-3 border-t border-slate-700 pt-4">
-            <PanelHeading>Multiclassing</PanelHeading>
-
-            <TraitRow label="Requirements">
-              {multiclassing.requirements ? (
-                <div className="flex flex-wrap items-center gap-1">
-                  {multiclassing.requirements.pairs.map(([ability, score], i, arr) => (
-                    <React.Fragment key={`${ability}-${i}`}>
-                      <ProfPill tone="accent">
-                        {ability.toUpperCase()} {score}
-                      </ProfPill>
-                      {i < arr.length - 1 && (
-                        <span className="text-xs text-slate-400">
-                          {multiclassing.requirements.connector}
-                        </span>
-                      )}
-                    </React.Fragment>
-                  ))}
-                </div>
-              ) : (
-                <span className="text-xs text-slate-400 italic">
-                  No ability score prerequisites.
-                </span>
-              )}
-            </TraitRow>
-
-            {hasAnyProfs(multiclassing.proficiencies) && (
-              <div>
-                <p className="text-[10px] uppercase tracking-wider text-slate-400 mb-2">
-                  Proficiencies Gained
-                </p>
-                <ProficiencyBlocks profs={multiclassing.proficiencies} />
-              </div>
-            )}
-          </section>
-        )}
-      </div>
+      )}
     </aside>
   );
 }
 
 // ── internals ─────────────────────────────────────────────────────────────────
 
-function PanelHeading({ children }) {
-  return (
-    <h5 className="text-sm font-semibold tracking-wider uppercase text-lime-400">
-      {children}
-    </h5>
-  );
-}
-
 function TraitRow({ label, children }) {
   return (
     <div>
-      <p className="text-[10px] uppercase tracking-wider text-slate-400 mb-1">
-        {label}
-      </p>
-      <div className="text-sm text-slate-100">{children}</div>
+      <p className="mb-0.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-ink-faded">{label}</p>
+      <div className="text-sm text-ink">{children}</div>
     </div>
   );
 }
 
-function ProfPill({ children, muted, tone = "default" }) {
-  const tones = {
-    default: "bg-slate-800 text-slate-200 border-slate-600",
-    muted:   "bg-slate-800/60 text-slate-400 border-slate-700",
-    accent:  "bg-amber-500/10 text-amber-300 border-amber-500/40",
-  };
-  const cls = muted ? tones.muted : (tones[tone] || tones.default);
-  return (
-    <span className={`inline-block px-2 py-0.5 rounded text-xs font-medium border ${cls}`}>
-      {children}
-    </span>
-  );
+// A run of words, spaced like a written list.
+const Words = ({ children }) => <div className="flex flex-wrap items-baseline gap-x-3 gap-y-0.5">{children}</div>;
+
+// One proficiency. accent = worth noticing (rubric); muted = optional or with
+// a note (faded italic).
+function Word({ children, muted, tone = "default" }) {
+  const cls = muted ? "italic text-ink-faded" : tone === "accent" ? "font-semibold text-rubric" : "text-ink";
+  return <span className={`text-sm ${cls}`}>{children}</span>;
 }
 
 function ProficiencyBlocks({ profs }) {
@@ -174,25 +136,27 @@ function ProficiencyBlocks({ profs }) {
     <div className="space-y-3">
       {armor.length > 0 && (
         <TraitRow label="Armor">
-          <div className="flex flex-wrap gap-1">
+          <Words>
             {armor.map((a, i) => (
-              <span key={i} className="flex items-center gap-1">
-                <ProfPill muted={!!a.note}>{a.label}</ProfPill>
+              <span key={i} className="inline-flex items-baseline gap-0.5">
+                <Word muted={!!a.note}>{a.label}</Word>
                 {a.note && (
-                  <span className="text-xs text-slate-400 italic cursor-help" title={a.note}>
+                  <span className="cursor-help text-xs italic text-rubric" title={a.note}>
                     *
                   </span>
                 )}
               </span>
             ))}
-          </div>
+          </Words>
           {armor.some((a) => a.note) && (
             <div className="mt-1 space-y-0.5">
-              {armor.filter((a) => a.note).map((a, i) => (
-                <p key={i} className="text-xs text-slate-400 italic leading-tight">
-                  * {a.note}
-                </p>
-              ))}
+              {armor
+                .filter((a) => a.note)
+                .map((a, i) => (
+                  <p key={i} className="text-xs italic leading-tight text-ink-faded">
+                    * {a.note}
+                  </p>
+                ))}
             </div>
           )}
         </TraitRow>
@@ -200,28 +164,26 @@ function ProficiencyBlocks({ profs }) {
 
       {weapons.length > 0 && (
         <TraitRow label="Weapons">
-          <div className="flex flex-wrap gap-1">
+          <Words>
             {weapons.map((w, i) => (
-              <span key={i} className="flex items-center gap-1">
-                <ProfPill muted={w.optional}>{w.label}</ProfPill>
-                {w.optional && (
-                  <span className="text-xs text-amber-400 italic">opt.</span>
-                )}
+              <span key={i} className="inline-flex items-baseline gap-1">
+                <Word muted={w.optional}>{w.label}</Word>
+                {w.optional && <span className="text-xs italic text-rubric">opt.</span>}
               </span>
             ))}
-          </div>
+          </Words>
         </TraitRow>
       )}
 
       {tools.length > 0 && (
         <TraitRow label="Tools">
-          <div className="flex flex-wrap gap-1">
+          <Words>
             {tools.map((t, i) => (
-              <ProfPill key={i} muted={t.isChoice}>
+              <Word key={i} muted={t.isChoice}>
                 {t.isChoice ? `${t.count}× ${t.label}` : t.label}
-              </ProfPill>
+              </Word>
             ))}
-          </div>
+          </Words>
         </TraitRow>
       )}
 
@@ -229,10 +191,8 @@ function ProficiencyBlocks({ profs }) {
         <TraitRow label="Skills">
           <div className="space-y-0.5">
             {skills.map((s, i) => (
-              <div key={i} className="text-xs text-slate-300 leading-relaxed">
-                <span className="text-amber-400 font-semibold">
-                  Choose {s.count}:{" "}
-                </span>
+              <div key={i} className="text-sm leading-relaxed text-ink">
+                <span className="font-semibold text-rubric">Choose {s.count}: </span>
                 {s.from.join(", ")}
               </div>
             ))}

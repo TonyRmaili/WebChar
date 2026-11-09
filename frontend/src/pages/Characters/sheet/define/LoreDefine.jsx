@@ -47,7 +47,7 @@ function NoteEntry({ note, open, onToggle, onPatch, onRemove }) {
             title={note.pinned ? "Unpin" : "Pin to the top"}
             aria-label={note.pinned ? "Unpin" : "Pin to the top"}
             aria-pressed={!!note.pinned}
-            className={`text-sm leading-none transition ${note.pinned ? INK.rubric : `${INK.faint} opacity-0 group-hover:opacity-100 focus:opacity-100 hover:text-[#3a2716]`}`}
+            className={`text-sm leading-none transition ${note.pinned ? INK.rubric : `${INK.faint} opacity-0 group-hover:opacity-100 focus:opacity-100 hover:text-ink`}`}
           >
             {note.pinned ? "✦" : "✧"}
           </button>
@@ -56,7 +56,7 @@ function NoteEntry({ note, open, onToggle, onPatch, onRemove }) {
 
       {/* Editor */}
       {open && (
-        <div className="@container mt-3 space-y-3 border-l-2 border-[#9a3412]/40 pl-4">
+        <div className="@container mt-3 space-y-3 border-l-2 border-rubric/40 pl-4">
           <div className="grid grid-cols-2 gap-x-5 gap-y-3 @xl:grid-cols-[minmax(0,1fr)_5rem_9.5rem]">
             <Field label="Title" className="col-span-2 @xl:col-span-1">
               <input
@@ -202,7 +202,7 @@ export default function LoreDefine() {
 
       {/* Filters */}
       {notes.length > 0 && (
-        <div className="mb-6 flex flex-wrap items-baseline gap-x-4 gap-y-1 border-b border-[#7b6346]/25 pb-2">
+        <div className="mb-6 flex flex-wrap items-baseline gap-x-4 gap-y-1 border-b border-rule/25 pb-2">
           <button type="button" className={chipBtn(kindFilter === "")} onClick={() => setKindFilter("")}>
             all {notes.length}
           </button>

@@ -15,10 +15,19 @@ import { usePersistedOpen } from "../../../utils/SectionCard";
    (pickers, filters, amounts) survives a collapse. Open/closed state is
    remembered in the browser between visits. */
 
-// The rail's look, shared with pages that show a rail without panels
-// (Characters › Create keeps its Sheets / Create switch in one).
+// The rail: a slim leather strip on the desk. Shared with pages that show
+// a rail without panels (Characters › Create keeps its Sheets / Create
+// switch in one). Things on it use the desk inks: desk-ink-faded, gold
+// (desk-accent) when hovered or chosen — see RAIL_BTN.
 export const RAIL_CLS =
-  "sticky top-3 flex max-h-[calc(100vh-1.5rem)] w-11 shrink-0 flex-col items-center gap-2 self-start overflow-y-auto rounded-xl border border-slate-700 bg-slate-800/60 py-2 shadow-md";
+  "wc-desk sticky top-3 flex max-h-[calc(100vh-1.5rem)] w-11 shrink-0 flex-col items-center gap-2 self-start overflow-y-auto rounded-xl border border-stitch/25 py-2";
+
+// A button on the rail (an icon tab): `on` when it's the chosen one.
+export const RAIL_BTN = (on) =>
+  `transition ${on ? "bg-desk-deep/70 text-desk-accent" : "text-desk-ink-faded hover:bg-desk-deep/50 hover:text-desk-accent"}`;
+
+// The line between groups on a rail.
+export const RAIL_DIVIDER = "mt-1 border-t border-stitch/25 pt-2";
 
 function Arrow({ pointsLeft }) {
   return (
@@ -50,7 +59,7 @@ function Rail({ side, label, open, onToggle, extra }) {
         onClick={onToggle}
         aria-expanded={open}
         title={`${action} ${label}`}
-        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-600 bg-slate-900 text-slate-300 transition hover:border-amber-500/60 hover:text-amber-300"
+        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-stitch/40 bg-desk-deep/60 text-desk-ink-faded transition hover:border-desk-accent hover:text-desk-accent"
       >
         <Arrow pointsLeft={pointsLeft} />
       </button>
@@ -59,7 +68,7 @@ function Rail({ side, label, open, onToggle, extra }) {
         type="button"
         onClick={onToggle}
         title={`${action} ${label}`}
-        className="select-none py-1 text-[11px] font-semibold uppercase tracking-[0.25em] text-amber-400/90 transition [writing-mode:vertical-rl] hover:text-amber-300"
+        className="select-none py-1 font-body text-[11px] font-semibold uppercase tracking-[0.25em] text-desk-accent transition [writing-mode:vertical-rl] hover:text-desk-ink"
       >
         {label}
       </button>

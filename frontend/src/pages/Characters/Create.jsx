@@ -109,7 +109,7 @@ export default function CreateCharacters() {
   /* ── page ── */
 
   return (
-    <div className="mx-auto w-full max-w-screen-2xl">
+    <div className="mx-auto w-full max-w-6xl">
       <ParchmentSheet>
         <Title
           after={
@@ -163,7 +163,7 @@ export default function CreateCharacters() {
             <span className="pt-1.5">
               <span
                 className={`block h-2.5 w-2.5 rotate-45 border-[1.5px] transition ${
-                  building ? "border-[#9a3412] bg-[#9a3412]" : "border-[#7b6346]/70 group-hover:border-[#3a2716]"
+                  building ? "border-rubric bg-rubric" : "border-rule/70 group-hover:border-ink"
                 }`}
               />
             </span>

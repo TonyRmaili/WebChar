@@ -77,7 +77,7 @@ function GroupEditor({ group, shelf, npcs, templates, change }) {
             (shelf.length ? (
               <p className="mt-1 flex flex-wrap gap-x-4 gap-y-1">
                 {shelf.map((e) => (
-                  <button key={e.file} type="button" onClick={() => addMonster(e.file)} className={`text-[15px] italic ${INK.faded} hover:text-[#3a2716]`}>
+                  <button key={e.file} type="button" onClick={() => addMonster(e.file)} className={`text-[15px] italic ${INK.faded} hover:text-ink`}>
                     {e.data?.name || e.file}
                   </button>
                 ))}
@@ -100,7 +100,7 @@ function GroupEditor({ group, shelf, npcs, templates, change }) {
           {adding === "npcs" && (
             <p className="mt-1 flex flex-wrap gap-x-4 gap-y-1">
               {npcs.filter((n) => !people.some((p) => p.file === n.file)).map((n) => (
-                <button key={n.file} type="button" onClick={() => change((g) => ({ ...g, npcs: [...asList(g.npcs), { file: n.file }] }))} className={`text-[15px] italic ${INK.faded} hover:text-[#3a2716]`}>
+                <button key={n.file} type="button" onClick={() => change((g) => ({ ...g, npcs: [...asList(g.npcs), { file: n.file }] }))} className={`text-[15px] italic ${INK.faded} hover:text-ink`}>
                   {n.data?.name || n.file}
                 </button>
               ))}
@@ -190,7 +190,7 @@ export default function Groups({ campaignName, shelf, npcs }) {
         groups.map((g) => {
           const open = g.id === openId;
           return (
-            <div key={g.id} className="border-b border-[#7b6346]/20 last:border-b-0">
+            <div key={g.id} className="border-b border-rule/20 last:border-b-0">
               <button
                 type="button"
                 onClick={() => setOpenId(open ? null : g.id)}
@@ -202,7 +202,7 @@ export default function Groups({ campaignName, shelf, npcs }) {
                 className="group flex w-full items-baseline gap-3 py-2 text-left"
               >
                 <span className="self-center">
-                  <span className={`block h-2.5 w-2.5 rotate-45 border-[1.5px] transition ${open ? "border-[#9a3412] bg-[#9a3412]" : "border-[#7b6346]/70 group-hover:border-[#3a2716]"}`} />
+                  <span className={`block h-2.5 w-2.5 rotate-45 border-[1.5px] transition ${open ? "border-rubric bg-rubric" : "border-rule/70 group-hover:border-ink"}`} />
                 </span>
                 <span className={`shrink-0 text-lg ${open ? INK.rubric : ""} group-hover:underline group-hover:decoration-dotted group-hover:underline-offset-4`}>{g.name || "Unnamed"}</span>
                 <span className={`min-w-0 truncate text-sm italic ${INK.faded}`}>{groupSummary(g, shelf, npcs, templates)}</span>

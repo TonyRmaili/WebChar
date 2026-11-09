@@ -10,42 +10,24 @@ import NumberBlank from "./NumberBlank";
    - Inputs are blanks to fill in: a dotted underline, no box.
    - Ink colours only; one rust-red "rubric" colour for emphasis.
    - Serif text, no novelty fonts.
-   Everything the style needs is in this file (plus NumberBlank). */
+   - Contrast: ink-faint is only for placeholders, separators and
+     decoration; anything to be read is ink or ink-faded.
+   Everything the style needs is in this file (plus NumberBlank), and
+   every colour is a theme slot (themes.css), so Settings can recolour it. */
 
 /* ─── Palette ────────────────────────────────────────────────────── */
 
+/* Colours are theme slots (src/styles/themes.css, tailwind.config.js):
+   never write a hex colour in a component. */
 export const INK = {
-  ink: "text-[#3a2716]", // main writing
-  faded: "text-[#7b6346]", // labels, hints
-  faint: "text-[#a08a68]", // placeholders, quiet marks
-  rubric: "text-[#9a3412]", // emphasis (proficiency, totals worth noticing)
+  ink: "text-ink", // main writing
+  faded: "text-ink-faded", // labels, hints, small text
+  faint: "text-ink-faint", // placeholders, separators, decoration only — not for anything you need to read
+  rubric: "text-rubric", // emphasis (proficiency, totals worth noticing)
 };
 
-// Small SVG noise used as paper / leather grain.
-const grain = (alpha, freq) =>
-  `url("data:image/svg+xml,${encodeURIComponent(
-    `<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='${freq}' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 ${alpha} 0'/></filter><rect width='100%' height='100%' filter='url(#n)'/></svg>`
-  )}")`;
-
-const LEATHER_STYLE = {
-  backgroundColor: "#3a2618",
-  backgroundImage: [
-    grain(0.45, 0.65),
-    "radial-gradient(ellipse at 25% 0%, rgba(150,100,55,0.35), transparent 55%)",
-    "radial-gradient(ellipse at 100% 100%, rgba(0,0,0,0.5), transparent 60%)",
-  ].join(","),
-  boxShadow: "inset 0 0 0 1px rgba(0,0,0,0.6), inset 0 0 40px rgba(0,0,0,0.55)",
-};
-
-const PARCHMENT_STYLE = {
-  backgroundColor: "#e6d7b4",
-  backgroundImage: [
-    grain(0.12, 0.9),
-    "radial-gradient(ellipse at 50% 40%, rgba(255,250,235,0.55), transparent 70%)",
-    "radial-gradient(ellipse at 50% 50%, transparent 60%, rgba(120,80,30,0.28) 100%)",
-  ].join(","),
-  boxShadow: "0 2px 0 rgba(0,0,0,0.25), 0 10px 30px rgba(0,0,0,0.55), inset 0 0 50px rgba(110,70,25,0.25)",
-};
+// The leather and the parchment are the surface classes wc-desk and
+// wc-page (themes.css), so a theme can change their texture too.
 
 /* ─── Surfaces ───────────────────────────────────────────────────── */
 
@@ -53,10 +35,10 @@ const PARCHMENT_STYLE = {
 // container-query root, so @md/@xl/@4xl inside react to its width.
 export function ParchmentSheet({ children }) {
   return (
-    <div className="relative rounded-2xl p-5" style={LEATHER_STYLE}>
+    <div className="wc-desk relative rounded-2xl p-5">
       {/* Stitched edge, like a leather cover */}
-      <span aria-hidden="true" className="pointer-events-none absolute inset-2 rounded-xl border border-dashed border-[#c8a26b]/30" />
-      <div className={`@container relative rounded-[3px] px-4 py-5 font-serif @md:px-7 @md:py-6 ${INK.ink}`} style={PARCHMENT_STYLE}>
+      <span aria-hidden="true" className="pointer-events-none absolute inset-2 rounded-xl border border-dashed border-stitch/30" />
+      <div className="wc-page @container relative px-4 py-5 @md:px-7 @md:py-6">
         {children}
       </div>
     </div>
@@ -81,7 +63,7 @@ export function InkHeading({ children, right }) {
   return (
     <div className="mb-3 flex items-baseline gap-3">
       <h4 className={`shrink-0 text-[11px] font-semibold uppercase tracking-[0.25em] ${INK.faded}`}>{children}</h4>
-      <span className="h-px flex-1 translate-y-[-3px] bg-[#7b6346]/30" />
+      <span className="h-px flex-1 translate-y-[-3px] bg-rule/30" />
       {right && <div className="shrink-0">{right}</div>}
     </div>
   );
@@ -97,7 +79,7 @@ export const SubHeading = ({ children, count }) => (
 
 // The dotted line between a name and its value.
 export const Leader = () => (
-  <span aria-hidden="true" className="mx-1.5 min-w-[1rem] flex-1 translate-y-[-4px] border-b-2 border-dotted border-[#7b6346]/35" />
+  <span aria-hidden="true" className="mx-1.5 min-w-[1rem] flex-1 translate-y-[-4px] border-b-2 border-dotted border-rule/35" />
 );
 
 // A labelled line: Label ........ value
@@ -119,7 +101,7 @@ export function InkButton({ children, onClick, active = false, title, className 
       onClick={onClick}
       title={title}
       disabled={disabled}
-      className={`text-xs italic underline decoration-dotted underline-offset-4 transition hover:text-[#3a2716] disabled:no-underline disabled:opacity-40 ${
+      className={`text-xs italic underline decoration-dotted underline-offset-4 transition hover:text-ink disabled:no-underline disabled:opacity-40 ${
         active ? INK.rubric : INK.faded
       } ${className}`}
     >
@@ -140,7 +122,7 @@ export function InkChoice({ options, value, onChange, label }) {
             role="radio"
             aria-checked={o.value === value}
             onClick={() => onChange(o.value)}
-            className={o.value === value ? `font-semibold ${INK.rubric}` : `${INK.faded} hover:text-[#3a2716]`}
+            className={o.value === value ? `font-semibold ${INK.rubric}` : `${INK.faded} hover:text-ink`}
           >
             {o.label}
           </button>
@@ -152,7 +134,7 @@ export function InkChoice({ options, value, onChange, label }) {
 
 // ✕ written small in the margin.
 export const InkRemove = ({ onClick, label }) => (
-  <button type="button" onClick={onClick} aria-label={label} title={label} className={`px-1 text-xs ${INK.faint} hover:text-[#9a3412]`}>
+  <button type="button" onClick={onClick} aria-label={label} title={label} className={`px-1 text-xs ${INK.faint} hover:text-rubric`}>
     ✕
   </button>
 );
@@ -160,9 +142,9 @@ export const InkRemove = ({ onClick, label }) => (
 /* ─── Blanks to fill in ──────────────────────────────────────────── */
 
 const blank =
-  "bg-transparent border-0 border-b border-dotted border-[#7b6346]/70 rounded-none px-0 " +
-  "focus:border-solid focus:border-[#3a2716] focus:outline-none focus:ring-0 " +
-  "placeholder:text-[#a08a68] text-[#3a2716] font-serif";
+  "bg-transparent border-0 border-b border-dotted border-rule/70 rounded-none px-0 " +
+  "focus:border-solid focus:border-ink focus:outline-none focus:ring-0 " +
+  "placeholder:text-ink-faint text-ink font-body";
 
 export function InkNumber({ className = "", ...props }) {
   return <NumberBlank {...props} className={`${blank} ${className}`} />;
@@ -178,11 +160,7 @@ export function InkTextArea({ className = "", rows = 2, ...props }) {
     <textarea
       rows={rows}
       {...props}
-      className={`w-full resize-y border-0 bg-transparent px-0 font-serif text-[15px] leading-7 text-[#3a2716] placeholder:text-[#a08a68] focus:outline-none focus:ring-0 ${className}`}
-      style={{
-        backgroundImage: "repeating-linear-gradient(to bottom, transparent 0, transparent 27px, rgba(123,99,70,0.45) 27px, rgba(123,99,70,0.45) 28px)",
-        backgroundAttachment: "local",
-      }}
+      className={`wc-lined w-full resize-y border-0 bg-transparent px-0 font-body text-[15px] leading-7 text-ink placeholder:text-ink-faint focus:outline-none focus:ring-0 ${className}`}
     />
   );
 }
@@ -217,10 +195,10 @@ export function Bubble({ level = "none", onClick, label }) {
       aria-label={`${label}: ${level}`}
       className="group relative inline-flex h-5 w-5 shrink-0 items-center justify-center"
     >
-      {level === "expertise" && <span className="absolute inset-0 rounded-full border border-[#9a3412]/80" />}
+      {level === "expertise" && <span className="absolute inset-0 rounded-full border border-rubric/80" />}
       <span
         className={`h-2.5 w-2.5 rounded-full border-[1.5px] transition ${
-          filled ? "border-[#9a3412] bg-[#9a3412]" : "border-[#7b6346]/70 group-hover:border-[#3a2716]"
+          filled ? "border-rubric bg-rubric" : "border-rule/70 group-hover:border-ink"
         }`}
       />
     </button>
@@ -242,7 +220,7 @@ export function Mark({ on, onClick, label, title, disabled = false }) {
     >
       <span
         className={`h-2.5 w-2.5 rotate-45 border-[1.5px] transition ${
-          on ? "border-[#9a3412] bg-[#9a3412]" : "border-[#7b6346]/70 group-hover:border-[#3a2716]"
+          on ? "border-rubric bg-rubric" : "border-rule/70 group-hover:border-ink"
         }`}
       />
     </button>

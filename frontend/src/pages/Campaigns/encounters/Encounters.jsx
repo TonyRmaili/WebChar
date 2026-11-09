@@ -127,7 +127,7 @@ export default function Encounters({ campaignName, party, npcs, shelf }) {
           {encounters.map((enc) => {
             const open = enc.id === openId;
             return (
-              <div key={enc.id} className="border-b border-[#7b6346]/20 last:border-b-0">
+              <div key={enc.id} className="border-b border-rule/20 last:border-b-0">
                 <button
                   type="button"
                   onClick={() => setOpenId(open ? null : enc.id)}
@@ -139,7 +139,7 @@ export default function Encounters({ campaignName, party, npcs, shelf }) {
                   className="group flex w-full items-baseline gap-3 py-2 text-left"
                 >
                   <span className="self-center">
-                    <span className={`block h-2.5 w-2.5 rotate-45 border-[1.5px] transition ${open ? "border-[#9a3412] bg-[#9a3412]" : "border-[#7b6346]/70 group-hover:border-[#3a2716]"}`} />
+                    <span className={`block h-2.5 w-2.5 rotate-45 border-[1.5px] transition ${open ? "border-rubric bg-rubric" : "border-rule/70 group-hover:border-ink"}`} />
                   </span>
                   <span className={`text-lg ${open ? INK.rubric : ""} group-hover:underline group-hover:decoration-dotted group-hover:underline-offset-4`}>{enc.name || "Unnamed"}</span>
                   <span className={`shrink-0 text-sm italic ${INK.faded}`}>{summary(enc)}</span>

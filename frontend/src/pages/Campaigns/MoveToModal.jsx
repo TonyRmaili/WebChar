@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { FolderIcon } from "./CampaignWidgets";
+import { CreateModal } from "../Catalogues/catalogueStyle";
 
 // Flatten a tree into a list of { node, depth } entries — folders only
 function flattenFolders(nodes, depth = 0) {
@@ -21,6 +22,14 @@ function isDescendantOrSelf(candidatePath, sourcePath) {
   return normCand === normSource || normCand.startsWith(normSource + "/");
 }
 
+// One folder in the destination list: rubric and washed when picked,
+// faint when it can't be picked (the thing being moved, or inside it).
+export const folderRowCls = (selected, disabled = false) =>
+  `flex w-full items-center gap-2 rounded-sm py-1 pr-2 text-left text-sm transition-colors ${
+    disabled ? "cursor-not-allowed text-ink-faint" : selected ? "bg-rubric/10 font-semibold text-rubric" : "text-ink hover:bg-ink/[0.06]"
+  }`;
+
+/* "Move <name>" — pick a destination folder in the same tree. */
 function MoveToModal({ sourceNode, tree, rootPath, onConfirm, onClose }) {
   const [selected, setSelected] = useState(null);
 
@@ -32,80 +41,46 @@ function MoveToModal({ sourceNode, tree, rootPath, onConfirm, onClose }) {
   };
 
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60"
-      onMouseDown={onClose}
+    <CreateModal
+      open
+      title={`Move "${sourceNode.name}"`}
+      onClose={onClose}
+      onSave={handleConfirm}
+      saveDisabled={!selected}
+      saveLabel="Move here"
+      width="max-w-md"
     >
-      <div
-        onMouseDown={(e) => e.stopPropagation()}
-        className="bg-slate-900 border border-slate-700 rounded-lg shadow-xl w-[440px] max-h-[70vh] flex flex-col"
-      >
-        <div className="px-4 py-3 border-b border-slate-700">
-          <h3 className="text-amber-400 font-semibold">Move "{sourceNode.name}"</h3>
-          <p className="text-xs text-slate-400 mt-1">Choose a destination folder</p>
-        </div>
+      <p className="mb-2 text-xs italic text-ink-faded">Choose a destination folder</p>
 
-        <div className="flex-1 overflow-y-auto p-2">
-          {/* Root entry */}
-          {rootPath && (
+      {/* Root entry */}
+      {rootPath && (
+        <button onClick={() => setSelected(rootPath)} className={`${folderRowCls(selected === rootPath)} px-2`}>
+          <FolderIcon className="h-4 w-4 shrink-0 text-rubric" />
+          <span className="italic">(root)</span>
+        </button>
+      )}
+
+      {folders.length === 0 && !rootPath ? (
+        <div className="px-2 py-4 text-sm italic text-ink-faded">No folders available</div>
+      ) : (
+        folders.map(({ node, depth }) => {
+          const disabled = isDescendantOrSelf(node.path, sourceNode.path);
+          const isSelected = selected === node.path;
+          return (
             <button
-              onClick={() => setSelected(rootPath)}
-              className={`w-full flex items-center gap-2 px-2 py-1.5 rounded text-sm text-left transition-colors ${
-                selected === rootPath
-                  ? "bg-amber-600/30 text-amber-200"
-                  : "text-slate-200 hover:bg-slate-800"
-              }`}
+              key={node.path}
+              disabled={disabled}
+              onClick={() => setSelected(node.path)}
+              style={{ paddingLeft: `${8 + depth * 16}px` }}
+              className={folderRowCls(isSelected, disabled)}
             >
-              <FolderIcon className="w-4 h-4 text-amber-400" />
-              <span className="italic text-slate-400">(root)</span>
+              <FolderIcon className={`h-4 w-4 shrink-0 ${disabled ? "" : "text-rubric"}`} />
+              <span className="truncate">{node.name}</span>
             </button>
-          )}
-
-          {folders.length === 0 && !rootPath ? (
-            <div className="text-slate-500 text-sm italic px-2 py-4">No folders available</div>
-          ) : (
-            folders.map(({ node, depth }) => {
-              const disabled = isDescendantOrSelf(node.path, sourceNode.path);
-              const isSelected = selected === node.path;
-              return (
-                <button
-                  key={node.path}
-                  disabled={disabled}
-                  onClick={() => setSelected(node.path)}
-                  style={{ paddingLeft: `${8 + depth * 16}px` }}
-                  className={`w-full flex items-center gap-2 py-1.5 pr-2 rounded text-sm text-left transition-colors ${
-                    disabled
-                      ? "text-slate-600 cursor-not-allowed"
-                      : isSelected
-                      ? "bg-amber-600/30 text-amber-200"
-                      : "text-slate-200 hover:bg-slate-800"
-                  }`}
-                >
-                  <FolderIcon className="w-4 h-4 text-amber-400 shrink-0" />
-                  <span className="truncate">{node.name}</span>
-                </button>
-              );
-            })
-          )}
-        </div>
-
-        <div className="flex justify-end gap-2 px-4 py-3 border-t border-slate-700">
-          <button
-            onClick={onClose}
-            className="px-3 h-8 rounded-md bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 text-sm transition-colors"
-          >
-            Cancel
-          </button>
-          <button
-            onClick={handleConfirm}
-            disabled={!selected}
-            className="px-4 h-8 rounded-md bg-amber-600 hover:bg-amber-500 disabled:bg-slate-700 disabled:text-slate-500 disabled:cursor-not-allowed text-slate-900 font-semibold text-sm transition-colors"
-          >
-            Move here
-          </button>
-        </div>
-      </div>
-    </div>
+          );
+        })
+      )}
+    </CreateModal>
   );
 }
 

@@ -22,12 +22,12 @@ import CataloguePicker from "./CataloguePicker";
 
 /* The red rule under a statblock header, fading out to the right. */
 export const RubricRule = ({ className = "" }) => (
-  <div aria-hidden="true" className={`my-4 h-[2px] bg-gradient-to-r from-[#9a3412] via-[#9a3412]/50 to-transparent ${className}`} />
+  <div aria-hidden="true" className={`my-4 h-[2px] bg-gradient-to-r from-rubric via-rubric/50 to-transparent ${className}`} />
 );
 
 function Heading({ children, right }) {
   return (
-    <div className="mb-2 flex items-baseline gap-3 border-b border-[#9a3412]/40 pb-0.5">
+    <div className="mb-2 flex items-baseline gap-3 border-b border-rubric/40 pb-0.5">
       <h4 className={`text-lg ${INK.rubric}`}>{children}</h4>
       {right && <div className="ml-auto flex flex-wrap items-baseline gap-x-4">{right}</div>}
     </div>
@@ -51,7 +51,7 @@ function Labelled({ label, children }) {
 export function Pips({ cur, max, onSet, label, title }) {
   if (!max) return null;
   if (max > 10) {
-    const btn = `w-4 leading-none ${INK.faded} hover:text-[#3a2716] disabled:opacity-30`;
+    const btn = `w-4 leading-none ${INK.faded} hover:text-ink disabled:opacity-30`;
     return (
       <span className="inline-flex items-baseline gap-1 text-sm tabular-nums" title={title}>
         <button type="button" className={btn} onClick={() => onSet(cur - 1)} disabled={cur <= 0} aria-label={`Spend one ${label}`}>
@@ -75,7 +75,7 @@ export function Pips({ cur, max, onSet, label, title }) {
             type="button"
             onClick={() => onSet(full ? cur - 1 : cur + 1)}
             aria-label={full ? `Spend one ${label}` : `Regain one ${label}`}
-            className={`h-[11px] w-[11px] rounded-full border-[1.5px] border-[#9a3412] transition hover:scale-125 ${full ? "bg-[#9a3412]" : "bg-transparent"}`}
+            className={`h-[11px] w-[11px] rounded-full border-[1.5px] border-rubric transition hover:scale-125 ${full ? "bg-rubric" : "bg-transparent"}`}
           />
         );
       })}
@@ -133,9 +133,9 @@ function Fold({ id, title, summary, children }) {
     <div>
       <button type="button" onClick={toggle} aria-expanded={open} className="group mb-2 flex w-full items-center gap-2 text-left">
         <Chevron open={open} />
-        <span className={`shrink-0 text-[10px] font-semibold uppercase tracking-[0.25em] ${INK.faded} group-hover:text-[#3a2716]`}>{title}</span>
+        <span className={`shrink-0 text-[10px] font-semibold uppercase tracking-[0.25em] ${INK.faded} group-hover:text-ink`}>{title}</span>
         {!open && summary && <span className={`truncate text-sm italic ${INK.faded}`}>{summary}</span>}
-        <span className="h-px min-w-[1rem] flex-1 bg-[#7b6346]/25" />
+        <span className="h-px min-w-[1rem] flex-1 bg-rule/25" />
       </button>
       {open && children}
     </div>
@@ -321,7 +321,7 @@ function ChipEditor({ editor, raw, edits, set }) {
       {adding && (
         <span className="flex w-full flex-wrap gap-x-3 gap-y-0.5 pt-0.5">
           {rest.map((o) => (
-            <button key={o} type="button" onClick={() => save([...chosen, o])} className={`text-sm italic ${INK.faded} hover:text-[#3a2716]`}>
+            <button key={o} type="button" onClick={() => save([...chosen, o])} className={`text-sm italic ${INK.faded} hover:text-ink`}>
               {shown(o)}
             </button>
           ))}
@@ -417,7 +417,7 @@ function EntryLine({ entry, textOpen, onToggleText, onUses, onHide, onView }) {
             aria-expanded={textOpen}
             aria-label={`${textOpen ? "Hide" : "Show"} the text of ${entry.name}`}
             title={textOpen ? "Hide its text" : "Show its text"}
-            className={`shrink-0 self-start pt-[3px] transition ${textOpen ? INK.rubric : INK.faint} hover:text-[#3a2716]`}
+            className={`shrink-0 self-start pt-[3px] transition ${textOpen ? INK.rubric : INK.faint} hover:text-ink`}
           >
             <Chevron open={textOpen} />
           </button>
@@ -447,7 +447,7 @@ function EntryEditable({ entry, row, open, onToggle, onUses, onReplace, onRemove
           {entry.name}
         </button>
         {entry.tag && <span className={`shrink-0 text-[10px] uppercase tracking-wider ${INK.faint}`}>{entry.tag}</span>}
-        <span aria-hidden="true" className="mx-1 min-w-[0.75rem] flex-1 translate-y-[-4px] border-b-2 border-dotted border-[#7b6346]/35" />
+        <span aria-hidden="true" className="mx-1 min-w-[0.75rem] flex-1 translate-y-[-4px] border-b-2 border-dotted border-rule/35" />
         {entry.roll && <span className={`shrink-0 text-xs italic ${INK.faded}`}>{entry.roll}</span>}
         {entry.uses && <Pips cur={entry.uses.cur} max={entry.uses.max} onSet={onUses} label={`use of ${entry.name}`} title={entry.regain} />}
         <InkRemove onClick={onRemove} label={`Remove ${entry.name}`} />
@@ -768,7 +768,7 @@ function Equipment({ eq, raw, editing, edits, actions, set, use, onView }) {
             eq.gear.map((g) => (
               <div key={g.ref.id} className="flex items-baseline gap-2">
                 <CatalogueName entry={g} onView={onView} />
-                <span aria-hidden="true" className="mx-1 min-w-[0.75rem] flex-1 translate-y-[-4px] border-b-2 border-dotted border-[#7b6346]/35" />
+                <span aria-hidden="true" className="mx-1 min-w-[0.75rem] flex-1 translate-y-[-4px] border-b-2 border-dotted border-rule/35" />
                 <span className={`text-xs italic ${INK.faded}`}>×</span>
                 <InkNumber value={g.amount} onChange={(v) => set(actions.setAmount(raw, g.ref, v))} min={0} fallback={0} aria-label={`${g.name} amount`} className="h-6 w-12 text-sm" />
                 <InkRemove onClick={() => set(actions.remove(raw, g.ref))} label={`Remove ${g.name}`} />

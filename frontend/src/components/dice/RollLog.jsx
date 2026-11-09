@@ -13,7 +13,7 @@ const smallCaps = `text-[10px] font-semibold uppercase tracking-[0.18em] ${INK.f
 /* ─── one die, kept or dropped ───────────────────────────────────── */
 
 function Die({ value, sides, kept = true }) {
-  const edge = value === sides ? "border-[#9a3412] text-[#9a3412]" : value === 1 ? "border-[#7b6346]/60 text-[#7b6346]" : "border-[#7b6346]/50";
+  const edge = value === sides ? "border-rubric text-rubric" : value === 1 ? "border-rule/60 text-ink-faded" : "border-rule/50";
   return (
     <span
       className={`inline-flex h-6 min-w-[1.5rem] items-center justify-center rounded-[3px] border px-1 text-sm tabular-nums ${edge} ${kept ? "" : "line-through opacity-40"}`}
@@ -54,7 +54,7 @@ function Totals({ line }) {
       {asList(line.results).map((r, i) => {
         const nat = naturalD20(r);
         const reached = line.against != null && (nat === 20 || (nat !== 1 && r.total >= line.against));
-        const tone = nat === 20 ? "border-[#9a3412] text-[#9a3412]" : nat === 1 ? "border-[#7b6346]/40 text-[#a08a68]" : line.against != null && !reached ? "border-[#7b6346]/30 text-[#a08a68]" : "border-[#7b6346]/50";
+        const tone = nat === 20 ? "border-rubric text-rubric" : nat === 1 ? "border-rule/40 text-ink-faint" : line.against != null && !reached ? "border-rule/30 text-ink-faint" : "border-rule/50";
         return (
           <span key={i} className={`inline-flex h-6 min-w-[1.75rem] items-center justify-center rounded-[3px] border px-1 text-sm tabular-nums ${tone}`} title={nat ? `rolled ${nat}` : undefined}>
             {r.total}
@@ -145,7 +145,7 @@ function SavesEntry({ entry }) {
           {asList(r.targets).map((t) => {
             const took = t.passed ? t.if_passed : t.if_failed;
             return (
-              <p key={t.key} className="flex flex-wrap items-baseline gap-x-3 border-b border-[#7b6346]/10 py-0.5 last:border-b-0">
+              <p key={t.key} className="flex flex-wrap items-baseline gap-x-3 border-b border-rule/10 py-0.5 last:border-b-0">
                 <span className="w-40 truncate">{t.name}</span>
                 <span className={`tabular-nums ${INK.faded}`}>
                   {d20Words(t.d20)} {signed(t.bonus)} = {t.total}
@@ -220,7 +220,7 @@ export default function RollLog({ log, onAgain }) {
   return (
     <div>
       {log.map((entry) => (
-        <div key={entry.id} className="border-b border-[#7b6346]/20 py-2 last:border-b-0">
+        <div key={entry.id} className="border-b border-rule/20 py-2 last:border-b-0">
           <p className={`flex items-baseline gap-2 ${smallCaps}`}>
             <span>{entry.source}</span>
             <span className={`font-normal normal-case tracking-normal ${INK.faint}`}>{time(entry.at)}</span>

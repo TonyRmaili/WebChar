@@ -8,6 +8,13 @@ import MoveToModal from "./MoveToModal";
 import DMAssistant from "./DMAssistant";
 import CampaignNpcs from "./npcs/CampaignNpcs";
 import Tables from "./tables/Tables";
+import { INK, InkHeading, ParchmentSheet } from "../../styles/parchment";
+import { addBtn } from "../../styles/parchmentForm";
+
+// Buttons on a file window's leather title bar (as on the card windows).
+const barBtn = "rounded px-2 leading-6 text-desk-ink-faded transition-colors hover:bg-desk-deep/60 hover:text-desk-accent";
+// "+ file", "+ folder", "+ prompt" next to a heading.
+const addNote = `${addBtn} inline-flex items-center gap-1`;
 
 
 
@@ -266,41 +273,64 @@ function SelectedCampaign({ campaignName }) {
   };
 
   if (!hasLoadedOnce && loading) {
-    return <div className="ml-2 text-white">Loading...</div>;
+    return <div className="ml-2 font-body text-sm italic text-desk-ink-faded">Loading…</div>;
   }
 
   if (error) {
-    return <div className="ml-2 text-red-500">{error}</div>;
+    return <div className="ml-2 font-body text-sm italic text-bad">{error}</div>;
   }
 
   return (
-    <div className="ml-2 relative min-h-[700px]">
-      <h2 className="text-2xl font-bold mb-4">{campaignName}</h2>
+    <div className="relative min-h-[700px]">
+      <div className="flex flex-wrap items-end gap-x-6 gap-y-3 pb-4">
+        {/* On the leather, so it's written in the desk inks. */}
+        <h2 className="w-[380px] shrink-0 font-body text-2xl tracking-wide text-desk-ink">{campaignName}</h2>
 
-      <div className="flex gap-6 items-start">
+        {/* Tool tab strip — the same leather bar as the catalogue tabs */}
+        <div className="wc-desk flex flex-wrap gap-1 rounded-xl border border-stitch/25 p-1.5 font-body" role="tablist" aria-label="Campaign tools">
+          {TOOLS.map((t) => {
+            const isActive = activeTool === t.id;
+            return (
+              <button
+                key={t.id}
+                type="button"
+                role="tab"
+                aria-selected={isActive}
+                onClick={() => setActiveTool(t.id)}
+                className={`h-8 rounded-md px-4 text-[15px] transition ${
+                  isActive ? "bg-page font-semibold text-ink shadow" : "text-desk-ink-faded hover:bg-desk-deep/50 hover:text-desk-accent"
+                }`}
+              >
+                {t.label}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="flex items-start gap-6">
         {/* LEFT COLUMN — file handlers */}
-        <div className="shrink-0">
-          <div className="flex gap-2 mb-4">
-            <button
-              className="px-3 h-8 rounded-md bg-slate-800 hover:bg-slate-700 border border-slate-700 text-amber-400 text-sm font-medium flex items-center gap-2 transition-colors"
-              onClick={handleAddFileRoot}
+        <div className="w-[380px] shrink-0">
+          <ParchmentSheet>
+            <InkHeading
+              right={
+                <span className="flex items-baseline gap-3">
+                  <button className={addNote} onClick={handleAddFileRoot} title="New file">
+                    <PlusIcon className="h-3 w-3" />
+                    file
+                  </button>
+                  <button className={addNote} onClick={handleAddFolderRoot} title="New folder">
+                    <FolderPlusIcon className="h-3.5 w-3.5" />
+                    folder
+                  </button>
+                </span>
+              }
             >
-              <PlusIcon className="w-4 h-4" />
-              New File
-            </button>
+              Files
+            </InkHeading>
 
-            <button
-              className="px-3 h-8 rounded-md bg-slate-800 hover:bg-slate-700 border border-slate-700 text-amber-400 text-sm font-medium flex items-center gap-2 transition-colors"
-              onClick={handleAddFolderRoot}
-            >
-              <FolderPlusIcon className="w-4 h-4" />
-              New Folder
-            </button>
-          </div>
-
-          <div className="bg-slate-900/40 border border-slate-700 rounded-lg p-2 w-[380px] mb-4">
             {campaignData?.length ? (
-              <div className="flex flex-col">
+              <div className="-mx-1 flex flex-col">
                 {campaignData.map((node) => (
                   <CampaignNode
                     key={node.path}
@@ -317,36 +347,25 @@ function SelectedCampaign({ campaignName }) {
                 ))}
               </div>
             ) : (
-              <div className="px-3 py-6 text-center text-sm text-slate-500">
-                No files yet. Create one above to get started.
-              </div>
+              <p className={`py-4 text-sm italic ${INK.faded}`}>No files yet. Create one above to get started.</p>
             )}
-          </div>
 
-          {/* System Prompts */}
-          <div className="mt-6">
-            <div className="mb-3">
-              <h3 className="text-lg font-semibold text-amber-400">
-                System Prompts
-              </h3>
-              <p className="text-xs text-slate-400">
-                {activePrompts.length} active · sent to the AI assistant
-              </p>
-            </div>
-
-            <div className="flex gap-2 mb-3">
-              <button
-                className="px-3 h-8 rounded-md bg-slate-800 hover:bg-slate-700 border border-slate-700 text-amber-400 text-sm font-medium flex items-center gap-2 transition-colors"
-                onClick={handleAddPromptRoot}
+            {/* System Prompts */}
+            <div className="mt-8">
+              <InkHeading
+                right={
+                  <button className={addNote} onClick={handleAddPromptRoot} title="New prompt">
+                    <PlusIcon className="h-3 w-3" />
+                    prompt
+                  </button>
+                }
               >
-                <PlusIcon className="w-4 h-4" />
-                New Prompt
-              </button>
-            </div>
+                System Prompts
+              </InkHeading>
+              <p className={`-mt-2 mb-2 text-xs italic ${INK.faded}`}>{activePrompts.length} active · sent to the AI assistant</p>
 
-            <div className="bg-slate-900/40 border border-slate-700 rounded-lg p-2 w-[380px]">
               {promptsData?.length ? (
-                <div className="flex flex-col">
+                <div className="-mx-1 flex flex-col">
                   {promptsData.map((node) => (
                     <CampaignNode
                       key={node.path}
@@ -363,56 +382,28 @@ function SelectedCampaign({ campaignName }) {
                   ))}
                 </div>
               ) : (
-                <div className="px-3 py-6 text-center text-sm text-slate-500">
-                  No prompts yet.
-                </div>
+                <p className={`py-4 text-sm italic ${INK.faded}`}>No prompts yet.</p>
               )}
             </div>
-          </div>
+          </ParchmentSheet>
         </div>
 
         {/* RIGHT COLUMN — tools */}
-        <div className="flex-1 min-w-0 max-w-6xl ml-24 -mt-20">
-          {/* Tool tab strip */}
-          <div className="mb-3 flex items-end gap-1 border-b border-slate-700">
-            {TOOLS.map((t) => {
-              const isActive = activeTool === t.id;
-              return (
-                <button
-                  key={t.id}
-                  onClick={() => setActiveTool(t.id)}
-                  className={`px-4 h-9 text-sm font-medium rounded-t-md -mb-px border-b-2 transition-colors ${
-                    isActive
-                      ? "text-amber-400 border-amber-500 bg-slate-900/40"
-                      : "text-slate-400 hover:text-amber-400 border-transparent"
-                  }`}
-                >
-                  {t.label}
-                </button>
-              );
-            })}
-          </div>
-
-         {activeTool === "assistant" && (
-            <DMAssistant campaignName={campaignName} />
-          )}
+        <div className="min-w-0 max-w-6xl flex-1">
+          {activeTool === "assistant" && <DMAssistant campaignName={campaignName} />}
 
           {activeTool === "combat" && <CampaignNpcs campaignName={campaignName} />}
 
           {activeTool === "tables" && <Tables campaignName={campaignName} />}
-
-
-
-          
         </div>
       </div>
 
-      {/* File popup windows (unchanged) */}
+      {/* File windows: a leather title bar over lined parchment, like the card windows */}
       {openWindows.map((win) => (
         <div
           key={win.id}
           onMouseDown={() => focusWindow(win.id)}
-          className="absolute border border-slate-700 bg-slate-900 text-white rounded shadow-lg flex flex-col overflow-hidden"
+          className="absolute flex flex-col overflow-hidden rounded-md bg-desk-deep shadow-2xl ring-1 ring-desk"
           style={{
             left: win.x,
             top: win.y,
@@ -423,57 +414,53 @@ function SelectedCampaign({ campaignName }) {
         >
           <div
             onMouseDown={(e) => handleDragStart(e, win)}
-            className="flex items-center justify-between px-2 py-1 border-b border-slate-700 bg-slate-800 cursor-move select-none"
+            className="wc-desk flex cursor-move select-none items-center justify-between border-b border-stitch/30 px-2 py-1 font-body"
           >
-            <span className="truncate text-amber-400">{win.title}</span>
+            <span className="truncate text-sm font-semibold tracking-wide text-desk-ink">{win.title}</span>
 
             <div className="flex items-center gap-2">
-              <span className="text-xs text-slate-400">
+              <span className="text-xs italic text-desk-ink-faded">
                 {saveStatus[win.id] === "saving" && "Saving…"}
                 {saveStatus[win.id] === "saved" && "Saved"}
                 {saveStatus[win.id] === "unsaved" && "Unsaved"}
               </span>
 
               <div className="flex gap-1">
-                <button
-                  className="px-2 hover:bg-slate-700 rounded"
-                  onClick={() => minimizeWindow(win.id)}
-                >
+                <button className={barBtn} onClick={() => minimizeWindow(win.id)} title="Minimize">
                   −
                 </button>
-                <button
-                  className="px-2 hover:bg-red-700 rounded"
-                  onClick={() => handleCloseWindow(win)}
-                >
+                <button className={`${barBtn} hover:!bg-bad/70 hover:!text-desk-ink`} onClick={() => handleCloseWindow(win)} title="Close">
                   ×
                 </button>
               </div>
             </div>
           </div>
 
-          <textarea
-            className="flex-1 w-full bg-slate-800 text-white p-2 resize-none outline-none"
-            value={win.content}
-            onChange={(e) => updateWindowContent(win.id, e.target.value)}
-          />
+          <div className="wc-page flex min-h-0 flex-1 !rounded-none">
+            <textarea
+              className="wc-lined h-full w-full resize-none border-0 bg-transparent px-4 py-1 font-body text-[15px] leading-7 text-ink outline-none focus:ring-0"
+              value={win.content}
+              onChange={(e) => updateWindowContent(win.id, e.target.value)}
+            />
+          </div>
 
           <div
             onMouseDown={(e) => handleResizeStart(e, win)}
-            className="absolute bottom-0 right-0 w-4 h-4 cursor-nwse-resize"
+            className="absolute bottom-0 right-0 h-4 w-4 cursor-nwse-resize"
             style={{
-              background:
-                "linear-gradient(135deg, transparent 50%, rgb(245 158 11) 50%, rgb(245 158 11) 70%, transparent 70%)",
+              background: "linear-gradient(135deg, transparent 50%, rgb(var(--c-desk-accent)) 50%, rgb(var(--c-desk-accent)) 70%, transparent 70%)",
             }}
           />
         </div>
       ))}
 
+      {/* Minimized file windows: small leather tabs in the bottom-left corner */}
       <div className="fixed bottom-2 left-2 flex gap-2">
         {minimizedWindows.map((win) => (
           <button
             key={win.id}
             onClick={() => restoreWindow(win.id)}
-            className="px-2 py-1 bg-slate-800 text-white border rounded"
+            className="wc-desk rounded-md border border-stitch/30 px-2.5 py-1 font-body text-sm text-desk-ink shadow-lg transition-colors hover:text-desk-accent"
           >
             {win.title}
           </button>
@@ -498,7 +485,6 @@ function SelectedCampaign({ campaignName }) {
           onClose={() => setMoveTarget(null)}
         />
       )}
-      
     </div>
   );
 }

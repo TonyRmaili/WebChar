@@ -10,7 +10,7 @@ function Bullet({ on, round }) {
     <span
       aria-hidden="true"
       className={`inline-block h-2 w-2 shrink-0 border-[1.5px] transition ${round ? "rounded-full" : "rotate-45"} ${
-        on ? "border-[#9a3412] bg-[#9a3412]" : "border-[#7b6346]/70 group-hover:border-[#3a2716]"
+        on ? "border-rubric bg-rubric" : "border-rule/70 group-hover:border-ink"
       }`}
     />
   );
@@ -32,7 +32,7 @@ export function Pick({ on, onClick, children, warn = false, round = false, disab
       }`}
     >
       <Bullet on={on} round={round} />
-      <span className={warn ? "underline decoration-[#9a3412]/60 decoration-wavy underline-offset-4" : ""}>{children}</span>
+      <span className={warn ? "underline decoration-rubric/60 decoration-wavy underline-offset-4" : ""}>{children}</span>
       {warn && <span className={`text-[11px] ${INK.rubric}`}>⚠</span>}
     </button>
   );
@@ -58,7 +58,7 @@ export function ChoiceHead({ title, need, done = false, owner, children }) {
 /* − 4 +  written inline. */
 export function Stepper({ value, min = 1, max, onChange, label }) {
   const set = (v) => onChange(Math.max(min, Math.min(max, v)));
-  const btn = `w-6 text-lg leading-none transition ${INK.faded} hover:text-[#3a2716] disabled:opacity-30`;
+  const btn = `w-6 text-lg leading-none transition ${INK.faded} hover:text-ink disabled:opacity-30`;
   return (
     <span className="inline-flex items-baseline" role="group" aria-label={label}>
       <button type="button" className={btn} onClick={() => set(value - 1)} disabled={value <= min} aria-label={`Lower ${label}`}>
@@ -78,4 +78,4 @@ export const Note = ({ children, tone = "faint", className = "" }) => (
 );
 
 // The hairline that separates a picker from the choices it creates.
-export const Rule = () => <div className="my-5 h-px bg-[#7b6346]/25" />;
+export const Rule = () => <div className="my-5 h-px bg-rule/25" />;

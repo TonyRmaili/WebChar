@@ -114,7 +114,7 @@ function SkillRow({ skillKey, row, total, showAdj, onPatch, onRemove }) {
             onClick={onRemove}
             title="Remove this skill"
             aria-label={`Remove ${row.label}`}
-            className={`ml-1 hidden shrink-0 text-xs group-hover:inline focus:inline ${INK.faded} hover:text-[#9a3412]`}
+            className={`ml-1 hidden shrink-0 text-xs group-hover:inline focus:inline ${INK.faded} hover:text-rubric`}
           >
             ✕
           </button>

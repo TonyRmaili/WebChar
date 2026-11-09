@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════════
-   wizardHelpers.js — token normalization, labels and shared UI atoms.
+   wizardHelpers.js — token normalization and labels.
 
    WHY THIS EXISTS
    Race data and background data spell the same concepts differently:
@@ -17,6 +17,9 @@
    so overlap detection compares apples to apples. Without this,
    "sleight of hand" and "sleightOfHand" look like different skills and
    collisions silently go undetected.
+
+   (The wizard's look lives in wizardInk.jsx and the parchment kit; the
+   old slate chip / field styles that used to be here are gone.)
    ═══════════════════════════════════════════════════════════════════ */
 
 import {
@@ -210,22 +213,3 @@ export const formatGp = (cp) => {
   const gp = gpFromCp(cp);
   return gp == null ? "" : `${gp} GP`;
 };
-
-/* ───────── shared UI atoms ───────── */
-
-export const chip = (active) =>
-  `text-[11px] px-2.5 py-1 rounded border transition
-   ${active
-     ? "bg-amber-500/20 border-amber-500/50 text-amber-300"
-     : "bg-slate-800/60 border-slate-700 text-slate-300 hover:border-amber-500/40 hover:text-amber-300"}`;
-
-/** Chip variant for an option that something else already grants. */
-export const overlapChip = (active) =>
-  `text-[11px] px-2.5 py-1 rounded border transition
-   ${active
-     ? "bg-rose-500/20 border-rose-500/60 text-rose-200"
-     : "bg-slate-800/60 border-rose-500/40 text-rose-300/80 hover:border-rose-400/70"}`;
-
-export const FIELD_CLS =
-  "bg-slate-900 border border-slate-600 rounded px-2 py-1 text-slate-100 text-sm w-full " +
-  "focus:outline-none focus:border-amber-500/60 focus:ring-1 focus:ring-amber-500/30";

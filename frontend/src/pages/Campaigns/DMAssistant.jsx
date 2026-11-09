@@ -1,6 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import useCampaignStore from "../../store/CampaignStore";
 import SaveToModal from "./SaveToModal";
+import { ParchmentSheet } from "../../styles/parchment";
+import { ghostBtn } from "../../styles/parchmentForm";
+import { textareaCls } from "../Catalogues/catalogueStyle";
+
+// The rubric-edged button (Send), like Save in the create windows.
+const sendBtn =
+  "rounded-md border border-rubric/60 px-4 py-1 text-sm text-rubric transition hover:bg-rubric hover:text-page-light disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-rubric";
+// The small notes under an answer (edit · quick save · save).
+const noteBtn = `${ghostBtn} disabled:cursor-default`;
 
 function slugifyResponse(content, maxLen = 50) {
   const firstLine = content.trim().split("\n", 1)[0] || "";
@@ -119,184 +128,136 @@ function DMAssistant({ campaignName }) {
 
   return (
     <>
-      <div className="bg-slate-900/40 border border-slate-700 rounded-lg flex flex-col h-[640px]">
-        {/* Message log */}
-        <div ref={chatLogRef} className="flex-1 overflow-y-auto p-4 space-y-3">
-          {messages.length === 0 && !isSending ? (
-            <div className="text-slate-500 italic text-sm">
-              Ask the DM assistant anything about your campaign.
-            </div>
-          ) : (
-            <>
-              {messages.map((msg, i) => {
-                const isUser = msg.role === "user";
-                const isEditing = editingIndex === i;
-                const saveState = savedMessages[i];
-                const saveDisabled =
-                  saveState === "saving" || saveState === "saved";
+      <ParchmentSheet>
+        <div className="flex h-[600px] flex-col">
+          {/* Message log */}
+          <div ref={chatLogRef} className="flex-1 space-y-4 overflow-y-auto pr-1">
+            {messages.length === 0 && !isSending ? (
+              <p className="text-sm italic text-ink-faded">Ask the DM assistant anything about your campaign.</p>
+            ) : (
+              <>
+                {messages.map((msg, i) => {
+                  const isUser = msg.role === "user";
+                  const isEditing = editingIndex === i;
+                  const saveState = savedMessages[i];
+                  const saveDisabled = saveState === "saving" || saveState === "saved";
 
-                return (
-                  <div
-                    key={i}
-                    className={`flex ${isUser ? "justify-end" : "justify-start"}`}
-                  >
-                    <div
-                      className={`max-w-[85%] rounded-lg px-3 py-2 text-sm whitespace-pre-wrap ${
-                        isUser
-                          ? "bg-amber-600/90 text-slate-900 font-medium"
-                          : "bg-slate-800 text-slate-200 border border-slate-700"
-                      }`}
-                    >
+                  return (
+                    <div key={i} className={`flex ${isUser ? "justify-end" : "justify-start"}`}>
                       <div
-                        contentEditable={isEditing}
-                        suppressContentEditableWarning
-                        ref={(el) => {
-                          if (
-                            isEditing &&
-                            el &&
-                            document.activeElement !== el
-                          ) {
-                            el.focus();
-                            const range = document.createRange();
-                            range.selectNodeContents(el);
-                            range.collapse(false);
-                            const sel = window.getSelection();
-                            sel.removeAllRanges();
-                            sel.addRange(range);
-                          }
-                        }}
-                        onBlur={(e) => {
-                          if (isEditing) {
-                            setEditDraft(e.currentTarget.innerText);
-                          }
-                        }}
-                        onInput={(e) => setEditDraft(e.currentTarget.innerText)}
-                        onKeyDown={(e) => {
-                          if (e.key === "Escape") {
-                            e.preventDefault();
-                            handleCancelEdit();
-                          }
-                        }}
-                        className={`outline-none ${
-                          isEditing
-                            ? "ring-1 ring-amber-500/40 rounded px-1 -mx-1"
-                            : ""
+                        className={`max-w-[85%] whitespace-pre-wrap text-[15px] leading-relaxed ${
+                          isUser
+                            ? "rounded-sm border-r-2 border-rubric/50 bg-ink/[0.05] px-3 py-2 italic text-ink"
+                            : "border-l border-rule/40 pl-3 text-ink"
                         }`}
                       >
-                        {msg.content}
-                      </div>
-
-                      {!isUser && (
-                        <div className="flex items-center justify-end gap-2 mt-2 pt-1 border-t border-slate-700/60">
-                          {msg.edited && (
-                            <span className="text-[10px] text-slate-500 italic mr-auto">
-                              edited
-                            </span>
-                          )}
-
-                          {isEditing ? (
-                            <>
-                              <button
-                                onClick={handleCancelEdit}
-                                className="text-xs text-slate-500 hover:text-slate-300 transition-colors"
-                              >
-                                Cancel
-                              </button>
-                              <button
-                                onClick={() => handleCommitEdit(i)}
-                                className="text-xs text-amber-400 hover:text-amber-300 font-semibold transition-colors"
-                              >
-                                Done
-                              </button>
-                            </>
-                          ) : (
-                            <>
-                              <button
-                                onClick={() => handleStartEdit(i, msg.content)}
-                                disabled={isSending}
-                                className="text-xs text-slate-500 hover:text-amber-400 disabled:text-slate-600 disabled:cursor-not-allowed transition-colors"
-                                title="Edit response"
-                              >
-                                ✏️
-                              </button>
-                              <button
-                                onClick={() => handleQuickSave(i, msg.content)}
-                                disabled={saveDisabled}
-                                className="text-xs text-slate-500 hover:text-amber-400 disabled:text-slate-600 disabled:cursor-default transition-colors"
-                                title="Quick save to root"
-                              >
-                                ⚡
-                              </button>
-                              <button
-                                onClick={() =>
-                                  handleOpenSaveModal(i, msg.content)
-                                }
-                                disabled={saveDisabled}
-                                className="text-xs text-slate-500 hover:text-amber-400 disabled:text-slate-600 disabled:cursor-default transition-colors"
-                                title="Save to folder…"
-                              >
-                                {saveState === "saving"
-                                  ? "Saving…"
-                                  : saveState === "saved"
-                                    ? "✓ Saved"
-                                    : saveState === "error"
-                                      ? "Failed"
-                                      : "Save"}
-                              </button>
-                            </>
-                          )}
+                        <div
+                          contentEditable={isEditing}
+                          suppressContentEditableWarning
+                          ref={(el) => {
+                            if (isEditing && el && document.activeElement !== el) {
+                              el.focus();
+                              const range = document.createRange();
+                              range.selectNodeContents(el);
+                              range.collapse(false);
+                              const sel = window.getSelection();
+                              sel.removeAllRanges();
+                              sel.addRange(range);
+                            }
+                          }}
+                          onBlur={(e) => {
+                            if (isEditing) {
+                              setEditDraft(e.currentTarget.innerText);
+                            }
+                          }}
+                          onInput={(e) => setEditDraft(e.currentTarget.innerText)}
+                          onKeyDown={(e) => {
+                            if (e.key === "Escape") {
+                              e.preventDefault();
+                              handleCancelEdit();
+                            }
+                          }}
+                          className={`outline-none ${isEditing ? "-mx-1 rounded-sm bg-page-light/60 px-1 ring-1 ring-rubric/40" : ""}`}
+                        >
+                          {msg.content}
                         </div>
-                      )}
+
+                        {!isUser && (
+                          <div className="mt-1.5 flex items-baseline justify-end gap-4 border-t border-dotted border-rule/30 pt-1">
+                            {msg.edited && <span className="mr-auto text-[11px] italic text-ink-faded">edited</span>}
+
+                            {isEditing ? (
+                              <>
+                                <button onClick={handleCancelEdit} className={noteBtn}>
+                                  cancel
+                                </button>
+                                <button onClick={() => handleCommitEdit(i)} className={`${noteBtn} !text-rubric`}>
+                                  done
+                                </button>
+                              </>
+                            ) : (
+                              <>
+                                <button onClick={() => handleStartEdit(i, msg.content)} disabled={isSending} className={noteBtn} title="Edit response">
+                                  edit
+                                </button>
+                                <button onClick={() => handleQuickSave(i, msg.content)} disabled={saveDisabled} className={noteBtn} title="Quick save to root">
+                                  quick save
+                                </button>
+                                <button
+                                  onClick={() => handleOpenSaveModal(i, msg.content)}
+                                  disabled={saveDisabled}
+                                  className={`${noteBtn} ${saveState === "saved" ? "!text-good !no-underline" : saveState === "error" ? "!text-bad" : ""}`}
+                                  title="Save to folder…"
+                                >
+                                  {saveState === "saving" ? "saving…" : saveState === "saved" ? "✓ saved" : saveState === "error" ? "failed" : "save to…"}
+                                </button>
+                              </>
+                            )}
+                          </div>
+                        )}
+                      </div>
                     </div>
+                  );
+                })}
+
+                {isSending && (
+                  <div className="flex justify-start">
+                    <div className="border-l border-rule/40 pl-3 text-sm italic text-ink-faded">Thinking…</div>
                   </div>
-                );
-              })}
-
-              {isSending && (
-                <div className="flex justify-start">
-                  <div className="max-w-[85%] rounded-lg px-3 py-2 text-sm bg-slate-800 border border-slate-700 text-slate-500 italic">
-                    Thinking…
-                  </div>
-                </div>
-              )}
-            </>
-          )}
-        </div>
-
-        {/* Input area */}
-        <div className="border-t border-slate-700 p-3">
-          <textarea
-            value={chatInput}
-            onChange={(e) => setChatInput(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
-                e.preventDefault();
-                handleSendChat();
-              }
-            }}
-            placeholder="Ask your DM assistant... (Ctrl+Enter to send)"
-            className="w-full h-32 bg-slate-800 text-white rounded-md p-3 resize-none outline-none border border-slate-700 focus:border-amber-500/60 transition-colors text-sm"
-          />
-
-          <div className="flex items-center mt-2">
-            {messages.length > 0 && (
-              <button
-                onClick={() => setMessages([])}
-                className="px-4 h-8 rounded-md bg-amber-600 hover:bg-amber-500 disabled:bg-slate-700 disabled:text-slate-500 disabled:cursor-not-allowed text-slate-900 font-semibold text-sm transition-colors"
-              >
-                Clear chat
-              </button>
+                )}
+              </>
             )}
-            <button
-              onClick={handleSendChat}
-              disabled={!chatInput.trim() || isSending}
-              className="ml-auto px-4 h-8 rounded-md bg-amber-600 hover:bg-amber-500 disabled:bg-slate-700 disabled:text-slate-500 disabled:cursor-not-allowed text-slate-900 font-semibold text-sm transition-colors"
-            >
-              {isSending ? "Sending…" : "Send"}
-            </button>
+          </div>
+
+          {/* Input area */}
+          <div className="mt-3 border-t border-rule/40 pt-3">
+            <textarea
+              value={chatInput}
+              onChange={(e) => setChatInput(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
+                  e.preventDefault();
+                  handleSendChat();
+                }
+              }}
+              rows={4}
+              placeholder="Ask your DM assistant... (Ctrl+Enter to send)"
+              className={`${textareaCls} resize-none`}
+            />
+
+            <div className="mt-2 flex items-baseline">
+              {messages.length > 0 && (
+                <button onClick={() => setMessages([])} className={ghostBtn}>
+                  clear chat
+                </button>
+              )}
+              <button onClick={handleSendChat} disabled={!chatInput.trim() || isSending} className={`ml-auto ${sendBtn}`}>
+                {isSending ? "Sending…" : "Send"}
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      </ParchmentSheet>
 
       {saveModal && (
         <SaveToModal

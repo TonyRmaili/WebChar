@@ -1,0 +1,141 @@
+/* ═══════════════════════════════════════════════════════════════════
+   themes.css — every colour in WebChar, as named slots ("tokens").
+
+   Components never write a colour. They use the token classes Tailwind
+   builds from these (tailwind.config.js):
+     text-ink · text-ink-faded · text-ink-faint · text-rubric · bg-page …
+   and the surface classes below (wc-desk, wc-page).
+
+   A theme fills every slot. :root holds the default (parchment);
+   [data-theme="classic"] on <html> switches to the original dark look.
+   Settings can later switch themes (theme.js → applyTheme) and change a
+   single slot (setToken), e.g. a different rubric red.
+
+   Colours are written as "R G B" so Tailwind can add opacity:
+   border-rule/30 → rgb(var(--c-rule) / 0.3).
+
+   Contrast rule (checked against the parchment, see the style guide):
+     ink ≥ 7:1 · ink-faded ≥ 5.5:1 (labels, small text) ·
+     ink-faint ≥ 3.5:1, only for placeholders, separators and decoration.
+   ═══════════════════════════════════════════════════════════════════ */
+
+:root,
+[data-theme="parchment"] {
+  /* writing on the page */
+  --c-ink: 58 39 22;            /* #3a2716 main writing        10:1  */
+  --c-ink-faded: 95 77 54;      /* #5f4d36 labels, hints       5.6:1 (was #7b6346, 4:1) */
+  --c-ink-faint: 124 106 78;    /* #7c6a4e quiet marks         3.6:1 (was #a08a68, 2.3:1) */
+  --c-rubric: 154 52 18;        /* #9a3412 emphasis            5:1   */
+  --c-rubric-deep: 124 45 18;   /* #7c2d12 rubric, hovered          */
+
+  /* lines: rules, leaders, blank underlines (used with opacity) */
+  --c-rule: 123 99 70;          /* #7b6346 */
+
+  /* the page and the desk it lies on */
+  --c-page: 230 215 180;        /* #e6d7b4 parchment */
+  --c-page-light: 243 230 200;  /* #f3e6c8 */
+  --c-desk: 58 38 24;           /* #3a2618 leather */
+  --c-desk-deep: 28 18 11;      /* #1c120b behind everything */
+  --c-stitch: 200 162 107;      /* #c8a26b stitched edge */
+  --c-desk-ink: 239 227 198;    /* #efe3c6 writing on the leather */
+  --c-desk-ink-faded: 199 176 134; /* #c7b086 */
+  --c-desk-accent: 226 179 96;  /* #e2b360 gold: active, badges, focus on the leather */
+
+  /* meanings (inked, not neon) */
+  --c-good: 63 98 18;           /* #3f6212 healing, success */
+  --c-bad: 122 23 18;           /* #7a1712 damage, failure */
+  --c-warn: 146 64 14;          /* #92400e caution */
+  --c-magic: 107 33 168;        /* #6b21a8 magic, temp HP */
+  --c-info: 30 58 138;          /* #1e3a8a notes, links */
+
+  --font-body: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+
+  /* surfaces: leather with grain, parchment with grain and a darker edge */
+  --desk-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27180%27%20height%3D%27180%27%3E%3Cfilter%20id%3D%27n%27%3E%3CfeTurbulence%20type%3D%27fractalNoise%27%20baseFrequency%3D%270.65%27%20numOctaves%3D%273%27%20stitchTiles%3D%27stitch%27%2F%3E%3CfeColorMatrix%20values%3D%270%200%200%200%200%20%200%200%200%200%200%20%200%200%200%200%200%20%200%200%200%200.45%200%27%2F%3E%3C%2Ffilter%3E%3Crect%20width%3D%27100%25%27%20height%3D%27100%25%27%20filter%3D%27url%28%23n%29%27%2F%3E%3C%2Fsvg%3E"),
+    radial-gradient(ellipse at 25% 0%, rgba(150, 100, 55, 0.35), transparent 55%),
+    radial-gradient(ellipse at 100% 100%, rgba(0, 0, 0, 0.5), transparent 60%);
+  --desk-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.6), inset 0 0 40px rgba(0, 0, 0, 0.55);
+  --page-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27180%27%20height%3D%27180%27%3E%3Cfilter%20id%3D%27n%27%3E%3CfeTurbulence%20type%3D%27fractalNoise%27%20baseFrequency%3D%270.9%27%20numOctaves%3D%273%27%20stitchTiles%3D%27stitch%27%2F%3E%3CfeColorMatrix%20values%3D%270%200%200%200%200%20%200%200%200%200%200%20%200%200%200%200%200%20%200%200%200%200.12%200%27%2F%3E%3C%2Ffilter%3E%3Crect%20width%3D%27100%25%27%20height%3D%27100%25%27%20filter%3D%27url%28%23n%29%27%2F%3E%3C%2Fsvg%3E"),
+    radial-gradient(ellipse at 50% 40%, rgba(255, 250, 235, 0.55), transparent 70%),
+    radial-gradient(ellipse at 50% 50%, transparent 60%, rgba(120, 80, 30, 0.28) 100%);
+  --page-shadow: 0 2px 0 rgba(0, 0, 0, 0.25), 0 10px 30px rgba(0, 0, 0, 0.55), inset 0 0 50px rgba(110, 70, 25, 0.25);
+  --page-radius: 3px;
+
+  /* the header: the angel-and-demon banner in three pieces (left, right,
+     and parchment repeating between) — see Header.jsx */
+  --banner-image: url("../assets/bannerLeft.webp"), url("../assets/bannerRight.webp"), url("../assets/bannerMiddle.webp");
+}
+
+/* The original look (before parchment): slate panels, amber accents,
+   sans-serif. Kept so the style is never lost — see claude/style-guide.md. */
+[data-theme="classic"] {
+  --c-ink: 241 245 249;         /* slate-100 */
+  --c-ink-faded: 148 163 184;   /* slate-400 */
+  --c-ink-faint: 100 116 139;   /* slate-500 */
+  --c-rubric: 251 191 36;       /* amber-400 */
+  --c-rubric-deep: 252 211 77;  /* amber-300 (hover goes lighter on dark) */
+  --c-rule: 100 116 139;        /* slate-500 */
+  --c-page: 30 41 59;           /* slate-800 */
+  --c-page-light: 51 65 85;     /* slate-700 */
+  --c-desk: 15 23 42;           /* slate-900 */
+  --c-desk-deep: 15 23 42;      /* slate-900, the original app background */
+  --c-stitch: 51 65 85;         /* slate-700 */
+  --c-desk-ink: 226 232 240;    /* slate-200 */
+  --c-desk-ink-faded: 148 163 184; /* slate-400 */
+  --c-desk-accent: 251 191 36;  /* amber-400 */
+  --c-good: 52 211 153;         /* emerald-400 */
+  --c-bad: 251 113 133;         /* rose-400 */
+  --c-warn: 252 211 77;         /* amber-300 */
+  --c-magic: 167 139 250;       /* violet-400 */
+  --c-info: 56 189 248;         /* sky-400 */
+
+  --font-body: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  --desk-image: none;
+  --desk-shadow: inset 0 0 0 1px rgba(51, 65, 85, 0.9);
+  --page-image: none;
+  --page-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --page-radius: 12px;
+
+  --banner-image: none;
+}
+
+/* ─── surfaces ──────────────────────────────────────────────────── */
+
+.wc-desk {
+  background-color: rgb(var(--c-desk));
+  background-image: var(--desk-image);
+  box-shadow: var(--desk-shadow);
+}
+
+.wc-page {
+  background-color: rgb(var(--c-page));
+  background-image: var(--page-image);
+  box-shadow: var(--page-shadow);
+  border-radius: var(--page-radius);
+  color: rgb(var(--c-ink));
+  font-family: var(--font-body);
+}
+
+/* The header bar: the theme's banner over the page colour. */
+.wc-banner {
+  background-color: rgb(var(--c-page));
+  background-image: var(--banner-image);
+  background-position: left center, right center, left center;
+  background-size: auto 100%, auto 100%, auto 100%;
+  background-repeat: no-repeat, no-repeat, repeat-x;
+  color: rgb(var(--c-ink));
+  font-family: var(--font-body);
+}
+
+/* Lined paper for text areas: a rule under every 28px line. */
+.wc-lined {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 27px,
+    rgb(var(--c-rule) / 0.45) 27px,
+    rgb(var(--c-rule) / 0.45) 28px
+  );
+  background-attachment: local;
+}

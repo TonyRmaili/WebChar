@@ -7,6 +7,8 @@ import FilterPopup, { FilterButton } from "../FilterPopup";
 import RowContextMenu from "../RowContextMenu";
 import BackgroundRow from "./BackgroundRow";
 import BackgroundCreatePopup from "./BackgroundCreatePopup";
+import { ErrorLine, LoadingLine, Toolbar, chip, searchCls } from "../catalogueStyle";
+import { addBtn } from "../../../styles/parchmentForm";
 import {
   formatSource, formatFeatTag, ABILITY, ABILITY_ORDER,
   collectUnique, getBackgroundAbilities,
@@ -103,46 +105,35 @@ export default function Backgrounds() {
   };
   const activeCount = selectedSources.length + selectedFeats.length + selectedAbilities.length;
 
-  const chip = (active) =>
-    `text-[11px] px-2 py-1 rounded border transition
-     ${active
-       ? "bg-amber-500/20 border-amber-500/50 text-amber-300"
-       : "bg-slate-800/60 border-slate-700 text-slate-300 hover:border-amber-500/40 hover:text-amber-300"}`;
-
   return (
-    <div className="w-full bg-slate-900/40 p-4 min-h-[640px]">
-      {error && (
-        <div className="mb-3 p-2 rounded border border-red-700 bg-red-900/30 text-red-300 text-sm">{error}</div>
-      )}
+    <div className="min-h-[640px] w-full">
+      {error && <ErrorLine>{error}</ErrorLine>}
 
-      {!loading && (
+      {loading ? (
+        <LoadingLine>Fetching backgrounds…</LoadingLine>
+      ) : (
         <>
-          <div className="flex items-center gap-3 mb-4">
-            <FilterButton activeCount={activeCount} onClick={() => setFiltersOpen(true)} />
-            <div className="flex-1 max-w-sm">
-              <input
-                type="text" value={query} onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search backgrounds…"
-                className="w-full bg-slate-900 border border-slate-600 rounded-lg px-3 py-2 text-slate-100 text-sm
-                           focus:outline-none focus:border-amber-500/60 focus:ring-1 focus:ring-amber-500/30 transition"
-              />
-            </div>
-            <button
-              onClick={() => setCreateOpen(true)}
-              className="flex items-center gap-2 px-3 py-2 rounded-lg border transition
-                        bg-slate-800/60 border-slate-700 text-slate-200
-                        hover:border-amber-500/40 hover:text-amber-300"
-            >
-              <span className="text-[11px] uppercase tracking-wider">+ Create</span>
-            </button>
-          </div>
+          <Toolbar
+            filters={<FilterButton activeCount={activeCount} onClick={() => setFiltersOpen(true)} />}
+            search={<input type="text" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="search backgrounds…" className={searchCls} />}
+            right={
+              <>
+                <span className="text-xs italic text-ink-faded">
+                  {filtered.length} of {backgrounds.length}
+                </span>
+                <button onClick={() => setCreateOpen(true)} className={`${addBtn} !text-sm`}>
+                  + create
+                </button>
+              </>
+            }
+          />
 
           <FilterPopup open={filtersOpen} onClose={() => setFiltersOpen(false)} activeCount={activeCount} onClear={clearAll}>
             <FilterSection title="Sources">
-              <div className="grid grid-cols-9 gap-2">
+              <div className="grid grid-cols-2 gap-x-6 gap-y-1.5 sm:grid-cols-3 lg:grid-cols-4">
                 {sources.map((source) => (
                   <button key={source} onClick={() => toggleSource(source)} title={formatSource(source)}
-                          className={`${chip(selectedSources.includes(source))} text-center truncate`}>
+                          className={`${chip(selectedSources.includes(source))} truncate`}>
                     {formatSource(source)}
                   </button>
                 ))}
@@ -150,7 +141,7 @@ export default function Backgrounds() {
             </FilterSection>
 
             <FilterSection title="Feats">
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-x-4 gap-y-1.5">
                 {featTags.map((f) => (
                   <button key={f} onClick={() => toggleFeat(f)} className={chip(selectedFeats.includes(f))}>
                     {formatFeatTag(f)}
@@ -160,7 +151,7 @@ export default function Backgrounds() {
             </FilterSection>
 
             <FilterSection title="Ability">
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-x-4 gap-y-1.5">
                 {ABILITY_ORDER.map((a) => (
                   <button key={a} onClick={() => toggleAbility(a)} className={chip(selectedAbilities.includes(a))}>
                     {ABILITY[a]}
@@ -171,9 +162,9 @@ export default function Backgrounds() {
           </FilterPopup>
 
           {filtered.length === 0 ? (
-            <div className="px-3 py-8 text-center text-sm text-slate-500">No backgrounds match your filters.</div>
+            <LoadingLine>No backgrounds match your filters.</LoadingLine>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-x-2 gap-y-1">
+            <div className="grid grid-cols-1 gap-x-8 md:grid-cols-2 xl:grid-cols-3">
               {filtered.map((bg, idx) => (
                 <BackgroundRow
                   key={`${bg.id || bg.name}-${bg.source}-${idx}`}

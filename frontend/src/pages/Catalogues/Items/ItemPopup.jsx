@@ -116,30 +116,27 @@ export default function ItemPopup({ item }) {
   const speedMods = formatModifySpeed(modifySpeed);
 
   return (
-    <div
-      className="bg-[#fdf6e3] text-stone-900 font-serif rounded-sm shadow-lg
-                    border border-stone-400 overflow-y-auto h-full"
-    >
+    <div className="wc-page h-full overflow-y-auto !rounded-none">
       <div className="px-5 py-4">
         {/* Title row */}
-        <div className="flex justify-between items-baseline border-b border-stone-300 pb-1 mb-2">
-          <h2 className="text-xl font-bold tracking-wide uppercase text-stone-900">
+        <div className="mb-2 flex items-baseline justify-between border-b border-rule/40 pb-1">
+          <h2 className="text-xl font-bold uppercase tracking-wide text-ink">
             {name}
           </h2>
-          <span className="text-xs text-stone-500">
+          <span className="text-xs text-ink-faded">
             {source}
             {page ? ` p${page}` : ""}
           </span>
         </div>
 
         {/* Subheader */}
-        <p className="italic text-sm text-stone-700 mb-1">
+        <p className="mb-1 text-sm italic text-ink-faded">
           {buildSubheader(item)}
         </p>
 
         {/* Cursed • Sentient • Era */}
         {tags.length > 0 && (
-          <p className="italic text-xs text-stone-600 mb-3">
+          <p className="mb-3 text-xs italic text-rubric">
             {tags.join(" • ")}
           </p>
         )}
@@ -212,7 +209,7 @@ export default function ItemPopup({ item }) {
         {/* Properties */}
         {item.properties?.length > 0 && (
           <div className="mt-3">
-            <div className="text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">
+            <div className="mb-1 text-[11px] font-bold uppercase tracking-wider text-ink-faded">
               Properties
             </div>
             <div className="space-y-1 text-sm leading-relaxed">
@@ -232,7 +229,7 @@ export default function ItemPopup({ item }) {
         {/* Mastery */}
         {item.mastery && (
           <div className="mt-3">
-            <div className="text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">
+            <div className="mb-1 text-[11px] font-bold uppercase tracking-wider text-ink-faded">
               Mastery
             </div>
             <p className="text-sm leading-relaxed">
@@ -246,9 +243,9 @@ export default function ItemPopup({ item }) {
 
         {/* Attached spells */}
         {attachedSpells?.length > 0 && (
-          <div className="mt-4 pt-2 border-t border-stone-300 text-sm">
+          <div className="mt-4 border-t border-rule/40 pt-2 text-sm">
             <span className="font-bold">Spells: </span>
-            <span className="italic text-stone-700">
+            <span className="italic text-ink-faded">
               {attachedSpells.join(", ")}
             </span>
           </div>
@@ -256,7 +253,7 @@ export default function ItemPopup({ item }) {
 
         {/* Loot tables */}
         {lootTables?.length > 0 && (
-          <div className="mt-2 text-xs text-stone-600">
+          <div className="mt-2 text-xs text-ink-faded">
             <span className="font-semibold">Found On: </span>
             {lootTables.join(", ")}
           </div>
@@ -289,10 +286,10 @@ function QuickStats({ weight, value, damage, range, light, baseItem, weaponCateg
   if (rows.length === 0) return null;
 
   return (
-    <div className="grid grid-cols-2 gap-x-4 gap-y-0.5 text-xs text-stone-700 mb-3">
+    <div className="mb-3 grid grid-cols-2 gap-x-4 gap-y-0.5 border-y border-rule/40 py-2 text-xs text-ink-faded">
       {rows.map(([k, v]) => (
         <div key={k} className="flex gap-1">
-          <span className="font-semibold">{k}:</span>
+          <span className="font-semibold text-ink">{k}:</span>
           <span>{v}</span>
         </div>
       ))}
@@ -303,18 +300,18 @@ function QuickStats({ weight, value, damage, range, light, baseItem, weaponCateg
 function SectionStrip({ title, children }) {
   return (
     <div className="mb-2">
-      <div className="text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">
+      <div className="mb-1 text-[11px] font-bold uppercase tracking-wider text-ink-faded">
         {title}
       </div>
-      <div className="flex flex-wrap gap-1">{children}</div>
+      <div className="flex flex-wrap gap-x-4 gap-y-0.5">{children}</div>
     </div>
   );
 }
 
 function Chip({ label, children }) {
   return (
-    <span className="text-xs bg-stone-200 border border-stone-400 rounded px-1.5 py-0.5">
-      {label && <span className="font-semibold">{label}: </span>}
+    <span className="text-sm">
+      {label && <span className="font-semibold text-ink-faded">{label}: </span>}
       {children}
     </span>
   );
@@ -359,17 +356,17 @@ function EntryBlock({ entry }) {
 
 function EntryTable({ table }) {
   return (
-    <div className="my-2 border border-stone-400 rounded overflow-hidden">
+    <div className="my-2 overflow-hidden border-y border-rule/40">
       {table.caption && (
-        <div className="bg-stone-200 px-2 py-1 text-xs font-semibold">
+        <div className="bg-rule/10 px-2 py-1 text-xs font-semibold">
           {table.caption}
         </div>
       )}
       <table className="w-full text-xs">
-        <thead className="bg-stone-100 border-b border-stone-300">
+        <thead className="border-b border-rule/40">
           <tr>
             {table.columns.map((c, i) => (
-              <th key={i} className="text-left px-2 py-1 font-semibold">
+              <th key={i} className="px-2 py-1 text-left font-semibold text-ink-faded">
                 {c}
               </th>
             ))}
@@ -377,7 +374,7 @@ function EntryTable({ table }) {
         </thead>
         <tbody>
           {table.rows.map((row, i) => (
-            <tr key={i} className="border-t border-stone-200">
+            <tr key={i} className="border-t border-rule/20 even:bg-ink/[0.03]">
               {row.map((cell, j) => (
                 <td key={j} className="px-2 py-1 align-top">
                   {cell}

@@ -1,7 +1,16 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { createPortal } from "react-dom";
 import { useCatalogueStore } from "../../../store/CatalogueStore";
 import FilterSection from "../FilterSection";
+import {
+  ChipsHeading,
+  CreateModal,
+  boxCls,
+  chip,
+  fieldCls,
+  hintCls,
+  labelCls,
+  textareaCls,
+} from "../catalogueStyle";
 import { SKILL_OPTIONS, TOOL_OPTIONS, LANGUAGE_OPTIONS } from "../../../utils/Constants";
 
 const ABILITIES = ["str", "dex", "con", "int", "wis", "cha"];
@@ -51,12 +60,6 @@ export default function BackgroundCreatePopup({ open, onClose, editingBackground
     if (!Array.isArray(spellsData?.spells) || spellsData.spells.length === 0) loadSpells();
   }, [open]); // eslint-disable-line
 
-  useEffect(() => {
-    if (!open) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => { document.body.style.overflow = prev; };
-  }, [open]);
 
   useEffect(() => {
     if (!open) return;
@@ -182,40 +185,32 @@ export default function BackgroundCreatePopup({ open, onClose, editingBackground
     } catch { /* createError set */ }
   };
 
-  const chip = (active) =>
-    `text-[11px] px-2 py-1 rounded border transition
-     ${active
-       ? "bg-amber-500/20 border-amber-500/50 text-amber-300"
-       : "bg-slate-800/60 border-slate-700 text-slate-300 hover:border-amber-500/40 hover:text-amber-300"}`;
-  const fieldCls =
-    "bg-slate-900 border border-slate-600 rounded px-2 py-1 text-slate-100 text-sm w-full " +
-    "focus:outline-none focus:border-amber-500/60 focus:ring-1 focus:ring-amber-500/30";
 
-  return createPortal(
-    <div className="fixed inset-0 z-[2000] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onMouseDown={onClose}>
-      <div className="w-full max-w-3xl max-h-[90vh] flex flex-col bg-slate-900 border border-slate-700 rounded-lg shadow-2xl overflow-hidden"
-           onMouseDown={(e) => e.stopPropagation()}>
-        <div className="flex items-center justify-between px-5 py-3 border-b border-slate-700">
-          <h2 className="text-amber-400 font-semibold uppercase tracking-wider text-sm">{titleText}</h2>
-          <button onClick={onClose} className="px-2 text-slate-400 hover:text-slate-100 text-lg">×</button>
-        </div>
-
-        <div className="flex-1 overflow-y-auto px-5 py-4 space-y-1">
+  return (
+    <CreateModal
+      open={open}
+      title={titleText}
+      onClose={onClose}
+      onSave={handleSubmit}
+      saving={creating}
+      saveLabel={isEditing ? "Save Changes" : "Save"}
+      error={createError}
+    >
           {/* Basics */}
           <FilterSection title="Basics" defaultOpen>
             <div className="space-y-3">
               <div>
-                <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">
-                  Name <span className="text-red-400">*</span>
+                <label className={labelCls}>
+                  Name <span className="text-rubric">*</span>
                 </label>
                 <input type="text" value={form.name} onChange={(e) => update("name", e.target.value)}
                        placeholder="e.g. Far Traveler"
-                       className={`${fieldCls} ${nameError ? "border-red-500 ring-1 ring-red-500/40" : ""}`} />
-                {nameError && <p className="text-xs text-red-400 mt-1">Name is required.</p>}
+                       className={`${fieldCls} ${nameError ? "!border-solid !border-bad" : ""}`} />
+                {nameError && <p className="mt-1 text-xs italic text-bad">Name is required.</p>}
               </div>
               <div>
-                <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">Visibility</label>
-                <div className="flex gap-2">
+                <label className={labelCls}>Visibility</label>
+                <div className="flex gap-x-4">
                   {["private", "public"].map((v) => (
                     <button key={v} type="button" onClick={() => update("visibility", v)} className={chip(form.visibility === v)}>
                       {cap(v)}
@@ -224,8 +219,8 @@ export default function BackgroundCreatePopup({ open, onClose, editingBackground
                 </div>
               </div>
               <div>
-                <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">Ability Scores</label>
-                <div className="flex flex-wrap gap-2">
+                <label className={labelCls}>Ability Scores</label>
+                <div className="flex flex-wrap gap-x-4 gap-y-1.5">
                   {ABILITIES.map((a) => (
                     <button key={a} type="button" onClick={() => toggleListItem("asi", a)} className={chip(form.asi.includes(a))}>
                       {a.toUpperCase()}
@@ -234,7 +229,7 @@ export default function BackgroundCreatePopup({ open, onClose, editingBackground
                 </div>
               </div>
               <div>
-                <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">Origin Feat(s)</label>
+                <label className={labelCls}>Origin Feat(s)</label>
                 <MultiNamePicker options={featNames} selected={form.feats}
                                  onToggle={(n) => toggleListItem("feats", n)} placeholder="Search feats…" />
               </div>
@@ -244,8 +239,8 @@ export default function BackgroundCreatePopup({ open, onClose, editingBackground
           {/* Description */}
           <FilterSection title="Description" defaultOpen>
             <textarea value={form.entries} onChange={(e) => update("entries", e.target.value)} rows={8}
-                      className={fieldCls} placeholder={"Use ## for headings.\n\n## Feature: Wanderer\nYou have an excellent memory..."} />
-            <p className="text-[10px] text-slate-500 mt-1">
+                      className={textareaCls} placeholder={"Use ## for headings.\n\n## Feature: Wanderer\nYou have an excellent memory..."} />
+            <p className={`${hintCls} mt-1`}>
               Markdown-lite: <code>## Heading</code>, <code>- **Label** value</code> lists, blank line between paragraphs, pipe tables.
             </p>
           </FilterSection>
@@ -277,7 +272,7 @@ export default function BackgroundCreatePopup({ open, onClose, editingBackground
               <MultiNamePicker options={itemNames} selected={form.equipment_items}
                                onToggle={(n) => toggleListItem("equipment_items", n)} placeholder="Search items…" />
               <div className="max-w-[140px]">
-                <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">Gold (gp)</label>
+                <label className={labelCls}>Gold (gp)</label>
                 <input type="number" min={0} value={form.equipment_gold}
                        onChange={(e) => update("equipment_gold", e.target.value)} className={fieldCls} placeholder="—" />
               </div>
@@ -293,23 +288,7 @@ export default function BackgroundCreatePopup({ open, onClose, editingBackground
               ))}
             </div>
           </FilterSection>
-        </div>
-
-        <div className="flex items-center justify-between gap-3 px-5 py-3 border-t border-slate-700">
-          {createError ? <span className="text-xs text-red-400 truncate flex-1">{createError}</span> : <span className="flex-1" />}
-          <button onClick={onClose}
-                  className="text-[11px] px-3 py-1.5 rounded border border-slate-600 text-slate-400 hover:border-red-500/40 hover:text-red-300">
-            Cancel
-          </button>
-          <button onClick={handleSubmit} disabled={creating}
-                  className="text-[11px] px-3 py-1.5 rounded border border-amber-500/50 bg-amber-500/20 text-amber-300
-                             hover:bg-amber-500/30 disabled:opacity-50 disabled:cursor-not-allowed">
-            {creating ? "Saving…" : isEditing ? "Save Changes" : "Save"}
-          </button>
-        </div>
-      </div>
-    </div>,
-    document.body
+    </CreateModal>
   );
 }
 
@@ -317,13 +296,13 @@ export default function BackgroundCreatePopup({ open, onClose, editingBackground
 function ProfBuilder({ label, options, renderOption, fixed, from, count, onToggleFixed, onToggleFrom, onCount, chip, fieldCls }) {
   const display = renderOption || ((x) => cap(String(x)));
   return (
-    <div className="border border-slate-700 rounded p-2 space-y-2">
-      <div className="text-[10px] uppercase tracking-wider text-amber-400">{label}</div>
+    <div className={boxCls}>
+      <div className={labelCls}>{label}</div>
       <CollapsibleChips label="Always Granted" options={options} selected={fixed} onToggle={onToggleFixed} renderOption={display} chip={chip} />
       <CollapsibleChips label="Choose From" options={options} selected={from} onToggle={onToggleFrom} renderOption={display} chip={chip} />
       {from.length > 0 && (
-        <div className="flex items-center gap-2">
-          <span className="text-[10px] uppercase text-slate-400">Choose count</span>
+        <div className="flex items-baseline gap-3">
+          <span className={`${labelCls} !mb-0`}>Choose count</span>
           <input type="number" min={1} value={count} onChange={(e) => onCount(e.target.value)} className={`${fieldCls} max-w-[80px]`} />
         </div>
       )}
@@ -337,14 +316,9 @@ function CollapsibleChips({ label, options, selected, onToggle, renderOption, ch
   const display = renderOption || ((x) => cap(String(x)));
   return (
     <div>
-      <button type="button" onClick={() => setOpen((o) => !o)}
-              className="flex items-center gap-1.5 uppercase tracking-wider text-slate-400 text-[10px] mb-1 hover:text-amber-300 transition select-none">
-        <span className={`text-[10px] inline-block transition-transform duration-150 ${open ? "rotate-90" : ""}`}>▶</span>
-        <span>{label}</span>
-        {selected.length > 0 && <span className="ml-1 text-amber-300 normal-case">({selected.length})</span>}
-      </button>
+      <ChipsHeading open={open} onToggle={() => setOpen((o) => !o)} label={label} count={selected.length} />
       {open && (
-        <div className="flex flex-wrap gap-2 pl-3 mb-1">
+        <div className="mb-2 flex flex-wrap gap-x-4 gap-y-1.5 border-l border-rule/30 pl-3">
           {options.map((opt) => (
             <button key={opt} type="button" onClick={() => onToggle(opt)} className={chip(selected.includes(opt))}>
               {display(opt)}
@@ -364,29 +338,23 @@ function MultiNamePicker({ options, selected, onToggle, placeholder }) {
     if (!q) return [];
     return options.filter((n) => n.toLowerCase().includes(q)).slice(0, 40);
   }, [query, options]);
-  const chip = (active) =>
-    `text-[11px] px-2 py-1 rounded border transition
-     ${active
-       ? "bg-amber-500/20 border-amber-500/50 text-amber-300"
-       : "bg-slate-800/60 border-slate-700 text-slate-300 hover:border-amber-500/40 hover:text-amber-300"}`;
   return (
     <div>
       {selected.length > 0 && (
-        <div className="flex flex-wrap gap-1.5 mb-2">
+        <div className="mb-2 flex flex-wrap gap-x-4 gap-y-1">
           {selected.map((n) => (
-            <button key={n} type="button" onClick={() => onToggle(n)} className={chip(true)}>{cap(n)} ✕</button>
+            <button key={n} type="button" onClick={() => onToggle(n)} className={chip(true)}>{cap(n)} <span aria-hidden className="text-ink-faded">✕</span></button>
           ))}
         </div>
       )}
       <input type="text" value={query} onChange={(e) => setQuery(e.target.value)}
              placeholder={options.length ? placeholder : "Loading…"}
-             className="bg-slate-900 border border-slate-600 rounded px-2 py-1 text-slate-100 text-sm w-full mb-2
-                        focus:outline-none focus:border-amber-500/60 focus:ring-1 focus:ring-amber-500/30" />
-      <div className="flex flex-wrap gap-1.5 max-h-32 overflow-y-auto pr-1">
+             className={`${fieldCls} mb-2`} />
+      <div className="flex max-h-32 flex-wrap gap-x-4 gap-y-1 overflow-y-auto pr-1">
         {filtered.map((n) => (
           <button key={n} type="button" onClick={() => onToggle(n)} className={chip(selected.includes(n))}>{cap(n)}</button>
         ))}
-        {query && filtered.length === 0 && <span className="text-[11px] text-slate-500">No matches.</span>}
+        {query && filtered.length === 0 && <span className={hintCls}>No matches.</span>}
       </div>
     </div>
   );
@@ -395,8 +363,8 @@ function MultiNamePicker({ options, selected, onToggle, placeholder }) {
 /* ─── one spell-level row ─── */
 function SpellLevelPickerRow({ label, options, selected, onToggle }) {
   return (
-    <div className="border border-slate-700 rounded p-2">
-      <div className="text-[10px] uppercase tracking-wider text-amber-400 mb-1">{label}</div>
+    <div className={boxCls}>
+      <div className={labelCls}>{label}</div>
       <MultiNamePicker options={options} selected={selected} onToggle={onToggle} placeholder="Search XPHB spells…" />
     </div>
   );

@@ -67,29 +67,25 @@ export default function MonsterPopup({ monster }) {
   ].filter(([, v]) => v);
 
   return (
-    <div className="bg-[#fdf6e3] text-stone-900 font-serif rounded-sm shadow-lg
-                    border border-stone-400 overflow-y-auto h-full">
+    <div className="wc-page h-full overflow-y-auto !rounded-none">
       <div className="px-5 py-4">
         {/* Title */}
-        <div className="flex justify-between items-baseline border-b border-stone-300 pb-1 mb-2">
-          <h2 className="text-xl font-bold tracking-wide uppercase text-stone-900">
-            {name}
-          </h2>
-          <span className="text-xs text-stone-500" title={formatSource(source)}>
+        <div className="mb-2 flex items-baseline justify-between border-b border-rule/40 pb-1">
+          <h2 className="text-xl font-bold uppercase tracking-wide text-ink">{name}</h2>
+          <span className="text-xs text-ink-faded" title={formatSource(source)}>
             {source}
           </span>
         </div>
 
-        <p className="italic text-sm text-stone-700 mb-3">
+        <p className="mb-3 text-sm italic text-ink-faded">
           {formatTypeLine(monster)}
         </p>
 
         {vitals.length > 0 && (
-          <div className="grid grid-cols-1 gap-y-0.5 text-xs text-stone-700 mb-3
-                          border-y border-stone-300 py-2">
+          <div className="mb-3 grid grid-cols-1 gap-y-0.5 border-y border-rule/40 py-2 text-xs text-ink-faded">
             {vitals.map(([k, v]) => (
               <div key={k} className="flex gap-1">
-                <span className="font-semibold">{k}:</span>
+                <span className="font-semibold text-ink">{k}:</span>
                 <span>{v}</span>
               </div>
             ))}
@@ -99,11 +95,10 @@ export default function MonsterPopup({ monster }) {
         {ability_scores && <AbilityTable scores={ability_scores} />}
 
         {meta.length > 0 && (
-          <div className="mt-3 text-xs text-stone-800 space-y-0.5
-                          border-b border-stone-300 pb-2">
+          <div className="mt-3 space-y-0.5 border-b border-rule/40 pb-2 text-xs text-ink">
             {meta.map(([k, v]) => (
               <div key={k}>
-                <span className="font-semibold">{k}: </span>
+                <span className="font-semibold text-ink-faded">{k}: </span>
                 <span>{v}</span>
               </div>
             ))}
@@ -111,7 +106,7 @@ export default function MonsterPopup({ monster }) {
         )}
 
         {(traitTags?.length || actionTags?.length) ? (
-          <div className="mt-2 flex flex-wrap gap-1">
+          <div className="mt-2 flex flex-wrap gap-x-3 gap-y-0.5">
             {(traitTags || []).map((t) => <Chip key={`t-${t}`}>{t}</Chip>)}
             {(actionTags || []).map((t) => <Chip key={`a-${t}`}>{t}</Chip>)}
           </div>
@@ -141,7 +136,7 @@ export default function MonsterPopup({ monster }) {
         })}
 
         {Array.isArray(spellcasting) && spellcasting.length > 0 && (
-          <div className="mt-4 pt-3 border-t border-stone-300 space-y-3">
+          <div className="mt-4 space-y-3 border-t border-rule/40 pt-3">
             {spellcasting.map((b, i) => <SpellcastingBlock key={i} block={b} />)}
           </div>
         )}
@@ -154,10 +149,10 @@ export default function MonsterPopup({ monster }) {
 
 function AbilityTable({ scores }) {
   return (
-    <div className="my-3 border-y border-stone-300 py-2">
+    <div className="my-3 border-y border-rule/40 py-2">
       <table className="w-full text-xs text-center">
         <thead>
-          <tr className="text-stone-600">
+          <tr className="text-ink-faded">
             {ABILITY_ORDER.map((a) => (
               <th key={a} className="font-bold uppercase tracking-wider py-0.5">
                 {ABILITY[a]}
@@ -173,9 +168,9 @@ function AbilityTable({ scores }) {
               const showSave = s.proficient || s.expertise || s.save !== s.mod;
               return (
                 <td key={a} className="py-0.5">
-                  <div>{s.score} <span className="text-stone-500">({sign}{s.mod})</span></div>
+                  <div>{s.score} <span className="text-ink-faded">({sign}{s.mod})</span></div>
                   {showSave && (
-                    <div className="text-[10px] text-stone-500">
+                    <div className="text-[10px] italic text-ink-faded">
                       save {s.save >= 0 ? "+" : ""}{s.save}
                     </div>
                   )}
@@ -192,12 +187,11 @@ function AbilityTable({ scores }) {
 function EffectSection({ title, header, items }) {
   return (
     <div className="mt-3">
-      <h3 className="text-sm font-bold uppercase tracking-wider text-stone-800
-                     border-b border-stone-400 pb-0.5 mb-1.5">
+      <h3 className="mb-1.5 border-b border-rubric/40 pb-0.5 text-sm font-bold uppercase tracking-wider text-rubric">
         {title}
       </h3>
       {header && (
-        <p className="text-xs italic text-stone-600 mb-1.5 whitespace-pre-line">
+        <p className="mb-1.5 whitespace-pre-line text-xs italic text-ink-faded">
           {header}
         </p>
       )}
@@ -214,7 +208,7 @@ function EffectItem({ item }) {
     <p>
       <span className="font-bold italic">{item.name}.</span>
       {chargeLabel && (
-        <span className="text-xs text-stone-600 ml-1">{chargeLabel}</span>
+        <span className="ml-1 text-xs text-ink-faded">{chargeLabel}</span>
       )}{" "}
       <span>{item.notes}</span>
     </p>
@@ -225,23 +219,22 @@ function SpellcastingBlock({ block }) {
   const meta = formatSpellMeta(block);
   return (
     <div>
-      <h3 className="text-sm font-bold uppercase tracking-wider text-stone-800
-                     border-b border-stone-400 pb-0.5 mb-1.5">
+      <h3 className="mb-1.5 border-b border-rubric/40 pb-0.5 text-sm font-bold uppercase tracking-wider text-rubric">
         {block.name}
         {meta && (
-          <span className="text-xs font-normal normal-case text-stone-500 ml-2">
+          <span className="ml-2 text-xs font-normal normal-case tracking-normal text-ink-faded">
             · {meta}
           </span>
         )}
       </h3>
       {block.notes && (
-        <p className="text-sm text-stone-800 mb-1.5">{block.notes}</p>
+        <p className="mb-1.5 text-sm text-ink">{block.notes}</p>
       )}
       {(block.groups || []).length > 0 && (
-        <div className="space-y-0.5 text-sm text-stone-800">
+        <div className="space-y-0.5 text-sm text-ink">
           {block.groups.map((g, i) => (
             <div key={i}>
-              <span className="font-semibold">{g.label}: </span>
+              <span className="italic text-ink-faded">{g.label}: </span>
               <span>
                 {(g.spells || []).map(formatSpellEntry).join(", ")}
               </span>
@@ -255,8 +248,7 @@ function SpellcastingBlock({ block }) {
 
 function Chip({ children }) {
   return (
-    <span className="text-[10px] uppercase tracking-wider
-                     bg-stone-200 border border-stone-400 rounded px-1.5 py-0.5">
+    <span className="text-[10px] font-semibold uppercase tracking-wider text-ink-faded">
       {children}
     </span>
   );

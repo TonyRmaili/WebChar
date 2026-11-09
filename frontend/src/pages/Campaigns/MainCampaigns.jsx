@@ -3,6 +3,9 @@ import useAuthStore from "../../store/AuthStore";
 import useCampaignStore from "../../store/CampaignStore";
 import SelectedCampaign from "./SelectedCampaign";
 import { PlusIcon, FolderIcon, ChevronRightIcon } from "./CampaignWidgets";
+import { ParchmentSheet, Title } from "../../styles/parchment";
+import { addBtn } from "../../styles/parchmentForm";
+import { CreateModal, fieldCls } from "../Catalogues/catalogueStyle";
 
 /* ---------- Local icons (kept here so CampaignWidgets stays untouched) ---------- */
 
@@ -29,25 +32,6 @@ const ChevronLeftIcon = ({ className = "w-4 h-4", ...props }) => (
     />
   </svg>
 );
-
-/* ---------- Small inline modal for create / confirm-delete ---------- */
-
-function Modal({ title, children, onClose }) {
-  return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60"
-      onMouseDown={onClose}
-    >
-      <div
-        onMouseDown={(e) => e.stopPropagation()}
-        className="bg-slate-900 border border-slate-700 rounded-lg shadow-xl w-[90%] max-w-md p-5"
-      >
-        <h3 className="text-lg font-semibold text-amber-400 mb-3">{title}</h3>
-        {children}
-      </div>
-    </div>
-  );
-}
 
 /* ---------- Main component ---------- */
 
@@ -118,12 +102,13 @@ function MainCampaigns() {
 
   if (activeCampaign) {
     return (
-      <div className="text-amber-500">
+      <div>
+        {/* On the leather, so it's written in the desk inks. */}
         <button
           onClick={handleBackToList}
-          className="mb-4 inline-flex items-center gap-2 px-3 h-9 rounded-md bg-slate-800 hover:bg-slate-700 border border-slate-700 text-amber-400 text-sm font-medium transition-colors"
+          className="mb-4 inline-flex items-center gap-1.5 font-body text-sm text-desk-ink-faded transition-colors hover:text-desk-accent"
         >
-          <ChevronLeftIcon className="w-4 h-4" />
+          <ChevronLeftIcon className="h-4 w-4" />
           All campaigns
         </button>
 
@@ -135,47 +120,34 @@ function MainCampaigns() {
   /* ---------- render: campaign list view ---------- */
 
   return (
-    <div className="text-amber-500">
-      <div className="flex items-center justify-between mb-6">
-        <div>
-          <h2 className="text-2xl font-bold text-amber-400">Campaigns</h2>
-          <p className="text-sm text-slate-400">
+    <ParchmentSheet>
+      <Title
+        after={
+          <span className="text-sm italic text-ink-faded">
             {campaigns.length === 0
               ? "No campaigns yet — create your first one."
               : `${campaigns.length} campaign${campaigns.length === 1 ? "" : "s"}`}
-          </p>
-        </div>
+          </span>
+        }
+        right={
+          <button onClick={() => setCreateOpen(true)} className={`${addBtn} !text-sm`}>
+            + new campaign
+          </button>
+        }
+      >
+        Campaigns
+      </Title>
 
-        <button
-          onClick={() => setCreateOpen(true)}
-          className="inline-flex items-center gap-2 px-3 h-9 rounded-md bg-amber-600 hover:bg-amber-500 text-slate-900 text-sm font-semibold transition-colors"
-        >
-          <PlusIcon className="w-4 h-4" />
-          New Campaign
-        </button>
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 gap-x-8 gap-y-1 sm:grid-cols-2 lg:grid-cols-3">
         {campaigns.map((name) => (
           <div
             key={name}
-            className="group relative bg-slate-900/40 hover:bg-slate-800/60 border border-slate-700 hover:border-amber-500/50 rounded-lg p-4 transition-colors cursor-pointer"
+            className="group relative flex cursor-pointer items-center gap-3 border-b border-dotted border-rule/40 px-1.5 py-2.5 transition-colors hover:bg-ink/[0.05]"
             onClick={() => handleSelect(name)}
           >
-            <div className="flex items-start gap-3">
-              <div className="shrink-0 w-10 h-10 rounded-md bg-slate-800 border border-slate-700 flex items-center justify-center text-amber-400">
-                <FolderIcon className="w-5 h-5" />
-              </div>
+            <FolderIcon className="h-5 w-5 shrink-0 text-rubric" />
 
-              <div className="flex-1 min-w-0">
-                <div className="text-amber-400 font-semibold truncate">
-                  {name}
-                </div>
-                <div className="text-xs text-slate-500 mt-0.5">Campaign</div>
-              </div>
-
-              <ChevronRightIcon className="w-4 h-4 text-slate-600 group-hover:text-amber-400 transition-colors mt-1" />
-            </div>
+            <span className="min-w-0 flex-1 truncate text-[17px] text-ink group-hover:text-rubric">{name}</span>
 
             <button
               onClick={(e) => {
@@ -183,81 +155,64 @@ function MainCampaigns() {
                 setDeleteTarget(name);
               }}
               title="Delete campaign"
-              className="absolute top-2 right-2 p-1.5 rounded-md text-slate-600 hover:text-red-400 hover:bg-red-500/10 opacity-0 group-hover:opacity-100 transition-opacity"
+              aria-label={`Delete ${name}`}
+              className="rounded p-1 text-ink-faded opacity-0 transition hover:text-rubric focus-visible:opacity-100 group-hover:opacity-100"
             >
-              <TrashIcon className="w-4 h-4" />
+              <TrashIcon className="h-4 w-4" />
             </button>
+
+            <ChevronRightIcon className="h-4 w-4 shrink-0 text-ink-faint transition-colors group-hover:text-rubric" />
           </div>
         ))}
 
-        {/* "Add" tile at the end of the grid */}
+        {/* "Add" entry at the end of the list */}
         <button
           onClick={() => setCreateOpen(true)}
-          className="flex items-center justify-center gap-2 min-h-[88px] rounded-lg border-2 border-dashed border-slate-700 hover:border-amber-500/60 text-slate-500 hover:text-amber-400 text-sm font-medium transition-colors"
+          className="mt-1 flex min-h-[44px] items-center justify-center gap-2 rounded-sm border border-dashed border-rule/50 text-sm italic text-ink-faded transition-colors hover:border-rubric/60 hover:text-rubric"
         >
-          <PlusIcon className="w-4 h-4" />
-          New Campaign
+          <PlusIcon className="h-4 w-4" />
+          New campaign
         </button>
       </div>
 
       {/* ---------- Create modal ---------- */}
-      {createOpen && (
-        <Modal title="New campaign" onClose={() => setCreateOpen(false)}>
-          <input
-            autoFocus
-            type="text"
-            value={createName}
-            onChange={(e) => setCreateName(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") handleCreate();
-              if (e.key === "Escape") setCreateOpen(false);
-            }}
-            placeholder="Campaign name"
-            className="w-full bg-slate-800 text-white rounded-md p-2 outline-none border border-slate-700 focus:border-amber-500/60 transition-colors text-sm"
-          />
-          <div className="flex justify-end gap-2 mt-4">
-            <button
-              onClick={() => setCreateOpen(false)}
-              className="px-3 h-8 rounded-md bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 text-sm transition-colors"
-            >
-              Cancel
-            </button>
-            <button
-              onClick={handleCreate}
-              disabled={!createName.trim() || createBusy}
-              className="px-3 h-8 rounded-md bg-amber-600 hover:bg-amber-500 disabled:bg-slate-700 disabled:text-slate-500 disabled:cursor-not-allowed text-slate-900 text-sm font-semibold transition-colors"
-            >
-              {createBusy ? "Creating…" : "Create"}
-            </button>
-          </div>
-        </Modal>
-      )}
+      <CreateModal
+        open={createOpen}
+        title="New campaign"
+        onClose={() => setCreateOpen(false)}
+        onSave={handleCreate}
+        saving={createBusy}
+        saveDisabled={!createName.trim()}
+        saveLabel="Create"
+        width="max-w-md"
+      >
+        <input
+          autoFocus
+          type="text"
+          value={createName}
+          onChange={(e) => setCreateName(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") handleCreate();
+          }}
+          placeholder="Campaign name"
+          className={fieldCls}
+        />
+      </CreateModal>
 
       {/* ---------- Delete confirm modal ---------- */}
-      {deleteTarget && (
-        <Modal title="Delete campaign?" onClose={() => setDeleteTarget(null)}>
-          <p className="text-sm text-slate-300">
-            This permanently deletes{" "}
-            <span className="text-amber-400 font-semibold">{deleteTarget}</span>{" "}
-            and everything inside. This cannot be undone.
-          </p>
-          <div className="flex justify-end gap-2 mt-4">
-            <button
-              onClick={() => setDeleteTarget(null)}
-              className="px-3 h-8 rounded-md bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 text-sm transition-colors"
-            >
-              Cancel
-            </button>
-            <button
-              onClick={handleDelete}
-              className="px-3 h-8 rounded-md bg-red-600 hover:bg-red-500 text-white text-sm font-semibold transition-colors"
-            >
-              Delete
-            </button>
-          </div>
-        </Modal>
-      )}
-    </div>
+      <CreateModal
+        open={!!deleteTarget}
+        title="Delete campaign?"
+        onClose={() => setDeleteTarget(null)}
+        onSave={handleDelete}
+        saveLabel="Delete"
+        width="max-w-md"
+      >
+        <p className="text-[15px] text-ink">
+          This permanently deletes <span className="font-semibold text-rubric">{deleteTarget}</span> and everything inside. This cannot be undone.
+        </p>
+      </CreateModal>
+    </ParchmentSheet>
   );
 }
 

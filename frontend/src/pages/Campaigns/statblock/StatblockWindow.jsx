@@ -162,7 +162,7 @@ export default function StatblockWindow({ statblock, embedded = false }) {
 
   if (!raw) {
     return (
-      <div className="h-full overflow-y-auto bg-[#1c120b] p-3">
+      <div className="h-full overflow-y-auto bg-desk-deep p-3">
         <ParchmentSheet>
           <p className={`py-6 text-center italic ${INK.faint}`}>
             {loadProblem ? `Couldn't find ${statblock.name} in ${campaignName} — ${loadProblem}.` : "Fetching…"}
@@ -268,7 +268,7 @@ export default function StatblockWindow({ statblock, embedded = false }) {
   ];
 
   return (
-    <div className={`h-full overflow-y-auto ${embedded ? "" : "bg-[#1c120b] p-2"}`} onContextMenu={onContextMenu}>
+    <div className={`h-full overflow-y-auto ${embedded ? "" : "bg-desk-deep p-2"}`} onContextMenu={onContextMenu}>
       <ParchmentSheet>
         {/* header — scrolls with the card; edit / save / discard live in the right-click menu */}
         <div className="mb-3">

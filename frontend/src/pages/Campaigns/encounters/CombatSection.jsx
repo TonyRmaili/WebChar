@@ -34,10 +34,10 @@ export default function CombatSection({ id, title, summary, right, children }) {
       <div className="mb-3 flex items-baseline gap-3">
         <button type="button" onClick={toggle} aria-expanded={open} className="group flex shrink-0 items-center gap-2 self-center">
           <Chevron open={open} />
-          <h4 className={`text-[11px] font-semibold uppercase tracking-[0.25em] ${INK.faded} group-hover:text-[#3a2716]`}>{title}</h4>
+          <h4 className={`text-[11px] font-semibold uppercase tracking-[0.25em] ${INK.faded} group-hover:text-ink`}>{title}</h4>
         </button>
         {!open && summary && <span className={`shrink-0 text-xs italic ${INK.faint}`}>{summary}</span>}
-        <span className="h-px flex-1 translate-y-[-3px] bg-[#7b6346]/30" />
+        <span className="h-px flex-1 translate-y-[-3px] bg-rule/30" />
         {open && right && <div className="shrink-0">{right}</div>}
       </div>
       {open && children}

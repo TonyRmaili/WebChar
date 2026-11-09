@@ -1,7 +1,20 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { createPortal } from "react-dom";
 import { useCatalogueStore } from "../../../store/CatalogueStore";
 import FilterSection from "../FilterSection";
+import {
+  ChipsHeading,
+  CreateModal,
+  addRowCls,
+  boxCls,
+  checkCls,
+  checkLabelCls,
+  chip,
+  fieldCls,
+  hintCls,
+  labelCls,
+  removeRowCls,
+  textareaCls,
+} from "../catalogueStyle";
 import {
   ITEM_TYPES, ITEM_RARITIES, ITEM_TIERS,
   WEAPON_BASE_ITEMS, WEAPON_CATEGORIES, WEAPON_PROPERTIES, WEAPON_MASTERIES,
@@ -279,13 +292,6 @@ export default function ItemCreatePopup({ open, onClose, editingItem, copyFromIt
     });
   }, [open, editingItem, copyFromItem]);
 
-  useEffect(() => {
-    if (!open) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => { document.body.style.overflow = prev; };
-  }, [open]);
-
   const xphbSpellNames = useMemo(() => {
     const list = spellsData?.spells;
     if (!Array.isArray(list)) return [];
@@ -482,53 +488,35 @@ export default function ItemCreatePopup({ open, onClose, editingItem, copyFromIt
     }
   };
 
-  const chip = (active) =>
-    `text-[11px] px-2 py-1 rounded border transition
-     ${active
-       ? "bg-amber-500/20 border-amber-500/50 text-amber-300"
-       : "bg-slate-800/60 border-slate-700 text-slate-300 hover:border-amber-500/40 hover:text-amber-300"}`;
-
-  const fieldCls =
-    "bg-slate-900 border border-slate-600 rounded px-2 py-1 text-slate-100 text-sm w-full " +
-    "focus:outline-none focus:border-amber-500/60 focus:ring-1 focus:ring-amber-500/30";
-
-  return createPortal(
-    <div
-      className="fixed inset-0 z-[2000] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
-      onMouseDown={onClose}
+  return (
+    <CreateModal
+      open={open}
+      title={titleText}
+      onClose={onClose}
+      onSave={handleSubmit}
+      saving={creating}
+      saveLabel={isEditing ? "Save Changes" : "Save"}
+      error={createError}
     >
-      <div
-        className="w-full max-w-3xl max-h-[90vh] flex flex-col
-                   bg-slate-900 border border-slate-700 rounded-lg shadow-2xl overflow-hidden"
-        onMouseDown={(e) => e.stopPropagation()}
-      >
-        <div className="flex items-center justify-between px-5 py-3 border-b border-slate-700">
-          <h2 className="text-amber-400 font-semibold uppercase tracking-wider text-sm">
-            {titleText}
-          </h2>
-          <button onClick={onClose} className="px-2 text-slate-400 hover:text-slate-100 text-lg">×</button>
-        </div>
-
-        <div className="flex-1 overflow-y-auto px-5 py-4 space-y-1">
           {/* Basics */}
           <FilterSection title="Basics" defaultOpen>
             <div className="space-y-3">
               <div>
-                <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">
-                  Name <span className="text-red-400">*</span>
+                <label className={labelCls}>
+                  Name <span className="text-rubric">*</span>
                 </label>
                 <input type="text" value={form.name}
                        onChange={(e) => update("name", e.target.value)}
                        placeholder="e.g. Cloak of Restless Shadows"
-                       className={`${fieldCls} ${nameError ? "border-red-500 ring-1 ring-red-500/40" : ""}`} />
-                {nameError && <p className="text-xs text-red-400 mt-1">Name is required.</p>}
+                       className={`${fieldCls} ${nameError ? "!border-solid !border-bad" : ""}`} />
+                {nameError && <p className="mt-1 text-xs italic text-bad">Name is required.</p>}
               </div>
 
               <div>
-                <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">
+                <label className={labelCls}>
                   Types (one or more)
                 </label>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-x-4 gap-y-1.5">
                   {ITEM_TYPES.map((t) => (
                     <button
                       key={t}
@@ -545,47 +533,47 @@ export default function ItemCreatePopup({ open, onClose, editingItem, copyFromIt
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-x-6 gap-y-3">
                 <div>
-                  <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">Rarity</label>
+                  <label className={labelCls}>Rarity</label>
                   <select value={form.rarity} onChange={(e) => update("rarity", e.target.value)} className={fieldCls}>
                     {ITEM_RARITIES.map((r) => <option key={r} value={r}>{r}</option>)}
                   </select>
                 </div>
                 <div>
-                  <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">Tier</label>
+                  <label className={labelCls}>Tier</label>
                   <select value={form.tier} onChange={(e) => update("tier", e.target.value)} className={fieldCls}>
                     {ITEM_TIERS.map((t) => <option key={t} value={t}>{t}</option>)}
                   </select>
                 </div>
                 <div>
-                  <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">Weight (lb)</label>
+                  <label className={labelCls}>Weight (lb)</label>
                   <input type="number" min={0} value={form.weight}
                          onChange={(e) => update("weight", e.target.value)} className={fieldCls} />
                 </div>
                 <div>
-                  <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">Value (cp)</label>
+                  <label className={labelCls}>Value (cp)</label>
                   <input type="number" min={0} value={form.value}
                          onChange={(e) => update("value", e.target.value)} className={fieldCls} />
                 </div>
               </div>
 
               <div className="flex gap-4">
-                <label className="flex items-center gap-2 text-sm text-slate-300 cursor-pointer">
+                <label className={checkLabelCls}>
                   <input type="checkbox" checked={form.curse}
-                         onChange={(e) => update("curse", e.target.checked)} className="accent-amber-500" />
+                         onChange={(e) => update("curse", e.target.checked)} className={checkCls} />
                   Cursed
                 </label>
-                <label className="flex items-center gap-2 text-sm text-slate-300 cursor-pointer">
+                <label className={checkLabelCls}>
                   <input type="checkbox" checked={form.sentient}
-                         onChange={(e) => update("sentient", e.target.checked)} className="accent-amber-500" />
+                         onChange={(e) => update("sentient", e.target.checked)} className={checkCls} />
                   Sentient
                 </label>
               </div>
 
               <div>
-                <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">Visibility</label>
-                <div className="flex gap-2">
+                <label className={labelCls}>Visibility</label>
+                <div className="flex gap-x-4">
                   {["private", "public"].map((v) => (
                     <button key={v} type="button" onClick={() => update("visibility", v)}
                             className={chip(form.visibility === v)}>
@@ -596,9 +584,9 @@ export default function ItemCreatePopup({ open, onClose, editingItem, copyFromIt
               </div>
 
               <div>
-                <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">Description</label>
+                <label className={labelCls}>Description</label>
                 <textarea value={form.entries} onChange={(e) => update("entries", e.target.value)}
-                          rows={5} placeholder="Free-form description…" className={fieldCls} />
+                          rows={5} placeholder="Free-form description…" className={textareaCls} />
               </div>
             </div>
           </FilterSection>
@@ -606,7 +594,7 @@ export default function ItemCreatePopup({ open, onClose, editingItem, copyFromIt
           {/* Attunement */}
           <FilterSection title="Attunement">
             <div className="space-y-2">
-              <div className="flex gap-2">
+              <div className="flex gap-x-4">
                 {[["none", "None"], ["any", "Any"], ["restricted", "Restricted"]].map(([v, label]) => (
                   <button key={v} type="button" onClick={() => update("attuneMode", v)}
                           className={chip(form.attuneMode === v)}>{label}</button>
@@ -624,7 +612,7 @@ export default function ItemCreatePopup({ open, onClose, editingItem, copyFromIt
           {/* Bonuses */}
           <FilterSection title="Bonuses">
             <div className="space-y-4">
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-3">
                 {[
                   ["bonusAc", "AC"],
                   ["bonusWeapon", "Weapon (atk+dmg)"],
@@ -638,7 +626,7 @@ export default function ItemCreatePopup({ open, onClose, editingItem, copyFromIt
                   ["bonusAbilityCheck", "Ability Check"],
                 ].map(([k, label]) => (
                   <div key={k}>
-                    <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">{label}</label>
+                    <label className={labelCls}>{label}</label>
                     <input type="number" value={form[k]} onChange={(e) => update(k, e.target.value)}
                            placeholder="0" className={fieldCls} />
                   </div>
@@ -651,10 +639,10 @@ export default function ItemCreatePopup({ open, onClose, editingItem, copyFromIt
           <FilterSection title="Speed Modifications">
             <div className="space-y-2">
               {form.speedMods.length === 0 && (
-                <p className="text-xs text-slate-500">No speed modifications. Add one below.</p>
+                <p className={hintCls}>No speed modifications. Add one below.</p>
               )}
               {form.speedMods.map((m, idx) => (
-                <div key={idx} className="grid grid-cols-[1fr_1.2fr_1fr_auto] gap-2 items-center">
+                <div key={idx} className="grid grid-cols-[1fr_1.2fr_1fr_auto] gap-x-4 items-baseline">
                   <select value={m.speed}
                           onChange={(e) => updateSpeedMod(idx, "speed", e.target.value)}
                           className={fieldCls}>
@@ -675,14 +663,14 @@ export default function ItemCreatePopup({ open, onClose, editingItem, copyFromIt
                          onChange={(e) => updateSpeedMod(idx, "value", e.target.value)}
                          placeholder="value" className={fieldCls} />
                   <button type="button" onClick={() => removeSpeedMod(idx)}
-                          className="text-[11px] px-2 py-1 rounded border border-red-700/50 text-red-300 hover:bg-red-900/40">
+                          aria-label="Remove" className={removeRowCls}>
                     ✕
                   </button>
                 </div>
               ))}
               <button type="button" onClick={addSpeedMod}
-                      className="text-[11px] px-3 py-1.5 rounded border border-slate-600 text-slate-300 hover:border-amber-500/40 hover:text-amber-300">
-                + Add Speed Modifier
+                      className={addRowCls}>
+                + add speed modifier
               </button>
             </div>
           </FilterSection>
@@ -691,10 +679,10 @@ export default function ItemCreatePopup({ open, onClose, editingItem, copyFromIt
           <FilterSection title="Ability Scores">
             <div className="space-y-2">
               {form.abilities.length === 0 && (
-                <p className="text-xs text-slate-500">No ability modifications. Add one below.</p>
+                <p className={hintCls}>No ability modifications. Add one below.</p>
               )}
               {form.abilities.map((a, idx) => (
-                <div key={idx} className="grid grid-cols-[1fr_1fr_1fr_auto] gap-2 items-center">
+                <div key={idx} className="grid grid-cols-[1fr_1fr_1fr_auto] gap-x-4 items-baseline">
                   <select value={a.ability}
                           onChange={(e) => updateAbility(idx, "ability", e.target.value)}
                           className={fieldCls}>
@@ -712,14 +700,14 @@ export default function ItemCreatePopup({ open, onClose, editingItem, copyFromIt
                          onChange={(e) => updateAbility(idx, "value", e.target.value)}
                          placeholder="value" className={fieldCls} />
                   <button type="button" onClick={() => removeAbility(idx)}
-                          className="text-[11px] px-2 py-1 rounded border border-red-700/50 text-red-300 hover:bg-red-900/40">
+                          aria-label="Remove" className={removeRowCls}>
                     ✕
                   </button>
                 </div>
               ))}
               <button type="button" onClick={addAbility}
-                      className="text-[11px] px-3 py-1.5 rounded border border-slate-600 text-slate-300 hover:border-amber-500/40 hover:text-amber-300">
-                + Add Ability
+                      className={addRowCls}>
+                + add ability
               </button>
             </div>
           </FilterSection>
@@ -742,16 +730,16 @@ export default function ItemCreatePopup({ open, onClose, editingItem, copyFromIt
           {kind === "weapon" && (
             <FilterSection title="Weapon">
               <div className="space-y-3">
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-2 gap-x-6 gap-y-3">
                   <div>
-                    <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">Base Item</label>
+                    <label className={labelCls}>Base Item</label>
                     <select value={form.baseItem} onChange={(e) => update("baseItem", e.target.value)} className={fieldCls}>
                       <option value="">—</option>
                       {WEAPON_BASE_ITEMS.map((b) => <option key={b} value={b}>{b}</option>)}
                     </select>
                   </div>
                   <div>
-                    <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">Category</label>
+                    <label className={labelCls}>Category</label>
                     <select value={form.weaponCategory}
                             onChange={(e) => update("weaponCategory", e.target.value)} className={fieldCls}>
                       <option value="">—</option>
@@ -759,40 +747,40 @@ export default function ItemCreatePopup({ open, onClose, editingItem, copyFromIt
                     </select>
                   </div>
                   <div>
-                    <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">Damage Amount</label>
+                    <label className={labelCls}>Damage Amount</label>
                     <input type="number" min={0} value={form.damageAmount}
                            onChange={(e) => update("damageAmount", e.target.value)}
                            placeholder="e.g. 1" className={fieldCls} />
                   </div>
                   <div>
-                    <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">Damage Dice</label>
+                    <label className={labelCls}>Damage Dice</label>
                     <select value={form.damageDice} onChange={(e) => update("damageDice", e.target.value)} className={fieldCls}>
                       <option value="">—</option>
                       {DICE_OPTIONS.map((d) => <option key={d} value={d}>{d}</option>)}
                     </select>
                   </div>
                   <div>
-                    <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">Flat Modifier</label>
+                    <label className={labelCls}>Flat Modifier</label>
                     <input type="number" value={form.damageMod}
                            onChange={(e) => update("damageMod", e.target.value)}
                            placeholder="e.g. 1" className={fieldCls} />
                   </div>
                   <div>
-                    <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">Damage Type</label>
+                    <label className={labelCls}>Damage Type</label>
                     <select value={form.damageType} onChange={(e) => update("damageType", e.target.value)} className={fieldCls}>
                       <option value="">—</option>
                       {DAMAGE_TYPES.map((d) => <option key={d} value={d}>{d}</option>)}
                     </select>
                   </div>
                   <div>
-                    <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">Mastery</label>
+                    <label className={labelCls}>Mastery</label>
                     <select value={form.mastery} onChange={(e) => update("mastery", e.target.value)} className={fieldCls}>
                       <option value="">—</option>
                       {WEAPON_MASTERIES.map((m) => <option key={m} value={m}>{m}</option>)}
                     </select>
                   </div>
                   <div>
-                    <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">Crit at</label>
+                    <label className={labelCls}>Crit at</label>
                     <input type="number" min={2} max={20} value={form.crit_at}
                            onChange={(e) => update("crit_at", e.target.value)}
                            placeholder="20" className={fieldCls} />
@@ -805,14 +793,14 @@ export default function ItemCreatePopup({ open, onClose, editingItem, copyFromIt
                   onToggle={(v) => toggleListItem("properties", v)}
                   getTooltip={propertyDescription}
                 />
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-2 gap-x-6 gap-y-3">
                   <div>
-                    <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">Range Min (ft)</label>
+                    <label className={labelCls}>Range Min (ft)</label>
                     <input type="number" min={0} step={5} value={form.rangeMin}
                            onChange={(e) => update("rangeMin", e.target.value)} className={fieldCls} />
                   </div>
                   <div>
-                    <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">Range Max (ft)</label>
+                    <label className={labelCls}>Range Max (ft)</label>
                     <input type="number" min={0} step={5} value={form.rangeMax}
                            onChange={(e) => update("rangeMax", e.target.value)} className={fieldCls} />
                   </div>
@@ -823,32 +811,32 @@ export default function ItemCreatePopup({ open, onClose, editingItem, copyFromIt
 
           {kind === "armor" && (
             <FilterSection title={form.types.includes("Shield") ? "Shield" : "Armor"}>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-x-6 gap-y-3">
                 {form.types.includes("Shield") ? (
                   <div>
-                    <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">AC Bonus</label>
+                    <label className={labelCls}>AC Bonus</label>
                     <input type="number" min={0} value={form.shieldAcBonus}
                            onChange={(e) => update("shieldAcBonus", e.target.value)} className={fieldCls} />
                   </div>
                 ) : (
                   <>
                     <div>
-                      <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">Base AC</label>
+                      <label className={labelCls}>Base AC</label>
                       <input type="number" min={0} value={form.armorBaseAc}
                              onChange={(e) => update("armorBaseAc", e.target.value)} className={fieldCls} />
                     </div>
                     <div>
-                      <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">
+                      <label className={labelCls}>
                         Strength Requirement
                       </label>
                       <input type="text" value={form.armorStrengthReq}
                              onChange={(e) => update("armorStrengthReq", e.target.value)}
                              placeholder="e.g. 15" className={fieldCls} />
                     </div>
-                    <label className="flex items-center gap-2 text-sm text-slate-300 cursor-pointer col-span-2">
+                    <label className={`${checkLabelCls} col-span-2`}>
                       <input type="checkbox" checked={form.armorStealthDisadvantage}
                              onChange={(e) => update("armorStealthDisadvantage", e.target.checked)}
-                             className="accent-amber-500" />
+                             className={checkCls} />
                       Stealth Disadvantage
                     </label>
                   </>
@@ -859,7 +847,7 @@ export default function ItemCreatePopup({ open, onClose, editingItem, copyFromIt
 
           {kind === "vehicle" && (
             <FilterSection title="Vehicle">
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-3">
                 {[
                   ["vehCrew", "Crew"],
                   ["vehAc", "AC"],
@@ -869,7 +857,7 @@ export default function ItemCreatePopup({ open, onClose, editingItem, copyFromIt
                   ["capCargo", "Cargo"],
                 ].map(([k, label]) => (
                   <div key={k}>
-                    <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">{label}</label>
+                    <label className={labelCls}>{label}</label>
                     <input type="number" min={0} value={form[k]}
                            onChange={(e) => update(k, e.target.value)} className={fieldCls} />
                   </div>
@@ -880,14 +868,14 @@ export default function ItemCreatePopup({ open, onClose, editingItem, copyFromIt
 
           {kind === "mount" && (
             <FilterSection title="Mount">
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-x-6 gap-y-3">
                 <div>
-                  <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">Carrying Capacity</label>
+                  <label className={labelCls}>Carrying Capacity</label>
                   <input type="number" min={0} value={form.mountCarryingCapacity}
                          onChange={(e) => update("mountCarryingCapacity", e.target.value)} className={fieldCls} />
                 </div>
                 <div>
-                  <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">Speed</label>
+                  <label className={labelCls}>Speed</label>
                   <input type="number" min={0} step={5} value={form.mountSpeed}
                          onChange={(e) => update("mountSpeed", e.target.value)} className={fieldCls} />
                 </div>
@@ -901,7 +889,7 @@ export default function ItemCreatePopup({ open, onClose, editingItem, copyFromIt
               <CollapsibleChips label="Spellcasting Focus (classes)" options={STANDARD_CLASSES}
                                 selected={form.focus} onToggle={(v) => toggleListItem("focus", v)} />
               <div>
-                <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">Attached Spells</label>
+                <label className={labelCls}>Attached Spells</label>
                 <SpellPicker options={xphbSpellNames}
                              selected={form.attachedSpells}
                              onToggle={(name) => toggleListItem("attachedSpells", name)} />
@@ -911,19 +899,19 @@ export default function ItemCreatePopup({ open, onClose, editingItem, copyFromIt
 
           {/* Other Properties */}
           <FilterSection title="Other Properties">
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-3">
               <div>
-                <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">Light Bright (ft)</label>
+                <label className={labelCls}>Light Bright (ft)</label>
                 <input type="number" min={0} step={5} value={form.lightBright}
                        onChange={(e) => update("lightBright", e.target.value)} className={fieldCls} />
               </div>
               <div>
-                <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">Light Dim (ft)</label>
+                <label className={labelCls}>Light Dim (ft)</label>
                 <input type="number" min={0} step={5} value={form.lightDim}
                        onChange={(e) => update("lightDim", e.target.value)} className={fieldCls} />
               </div>
               <div>
-                <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">Age</label>
+                <label className={labelCls}>Age</label>
                 <select value={form.age} onChange={(e) => update("age", e.target.value)} className={fieldCls}>
                   <option value="">—</option>
                   {ITEM_AGES.map((a) => <option key={a} value={a}>{a}</option>)}
@@ -936,7 +924,7 @@ export default function ItemCreatePopup({ open, onClose, editingItem, copyFromIt
           <FilterSection title="Charges">
             <div className="space-y-3">
               <div>
-                <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">Recharges at</label>
+                <label className={labelCls}>Recharges at</label>
                 <select value={form.rechargesAt}
                         onChange={(e) => update("rechargesAt", e.target.value)} className={fieldCls}>
                   <option value="">—</option>
@@ -963,35 +951,17 @@ export default function ItemCreatePopup({ open, onClose, editingItem, copyFromIt
               )}
             </div>
           </FilterSection>
-        </div>
-
-        <div className="flex items-center justify-between gap-3 px-5 py-3 border-t border-slate-700">
-          {createError ? (
-            <span className="text-xs text-red-400 truncate flex-1">{createError}</span>
-          ) : <span className="flex-1" />}
-          <button onClick={onClose}
-                  className="text-[11px] px-3 py-1.5 rounded border border-slate-600 text-slate-400 hover:border-red-500/40 hover:text-red-300">
-            Cancel
-          </button>
-          <button onClick={handleSubmit} disabled={creating}
-                  className="text-[11px] px-3 py-1.5 rounded border border-amber-500/50 bg-amber-500/20 text-amber-300
-                             hover:bg-amber-500/30 disabled:opacity-50 disabled:cursor-not-allowed">
-            {creating ? "Saving…" : isEditing ? "Save Changes" : "Save"}
-          </button>
-        </div>
-      </div>
-    </div>,
-    document.body
+    </CreateModal>
   );
 }
 
 // ─── Charge value sub-component (fixed | roll toggle) ──────────────
 function ChargeValueInput({ title, charge, onChange, fieldCls, chip }) {
   return (
-    <div className="border border-slate-700 rounded p-3 space-y-2">
-      <div className="flex items-center justify-between">
-        <div className="text-[10px] uppercase tracking-wider text-amber-400">{title}</div>
-        <div className="flex gap-1">
+    <div className={boxCls}>
+      <div className="flex items-baseline justify-between">
+        <div className={labelCls}>{title}</div>
+        <div className="flex gap-x-3">
           {[
             ["fixed", "Fixed"],
             ["roll", "Roll"],
@@ -1010,21 +980,21 @@ function ChargeValueInput({ title, charge, onChange, fieldCls, chip }) {
                onChange={(e) => onChange("fixed", e.target.value)}
                placeholder="e.g. 3" className={fieldCls} />
       ) : (
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid grid-cols-3 gap-x-4">
           <div>
-            <label className="block text-[10px] uppercase tracking-wider text-slate-400 mb-1">Dice Amount</label>
+            <label className={labelCls}>Dice Amount</label>
             <input type="number" min={1} value={charge.diceAmount}
                    onChange={(e) => onChange("diceAmount", e.target.value)} className={fieldCls} />
           </div>
           <div>
-            <label className="block text-[10px] uppercase tracking-wider text-slate-400 mb-1">Die Type</label>
+            <label className={labelCls}>Die Type</label>
             <select value={charge.dieType}
                     onChange={(e) => onChange("dieType", e.target.value)} className={fieldCls}>
               {DICE_OPTIONS.map((d) => <option key={d} value={d}>{d}</option>)}
             </select>
           </div>
           <div>
-            <label className="block text-[10px] uppercase tracking-wider text-slate-400 mb-1">Modifier</label>
+            <label className={labelCls}>Modifier</label>
             <input type="number" value={charge.mod}
                    onChange={(e) => onChange("mod", e.target.value)} className={fieldCls} />
           </div>
@@ -1037,23 +1007,12 @@ function ChargeValueInput({ title, charge, onChange, fieldCls, chip }) {
 // ─── Helpers (local) ──────────────────────────────────────────────
 function CollapsibleChips({ label, options, selected, onToggle, renderOption, getTooltip }) {
   const [open, setOpen] = useState(false);
-  const chip = (active) =>
-    `text-[11px] px-2 py-1 rounded border transition
-     ${active
-       ? "bg-amber-500/20 border-amber-500/50 text-amber-300"
-       : "bg-slate-800/60 border-slate-700 text-slate-300 hover:border-amber-500/40 hover:text-amber-300"}`;
   const display = renderOption || ((x) => String(x));
   return (
     <div>
-      <button type="button" onClick={() => setOpen((o) => !o)}
-              className="flex items-center gap-1.5 uppercase tracking-wider text-amber-400
-                         text-[10px] mb-1 hover:text-amber-300 transition select-none">
-        <span className={`text-[10px] inline-block transition-transform duration-150 ${open ? "rotate-90" : ""}`}>▶</span>
-        <span>{label}</span>
-        {selected.length > 0 && <span className="ml-1 text-amber-300 normal-case">({selected.length})</span>}
-      </button>
+      <ChipsHeading open={open} onToggle={() => setOpen((o) => !o)} label={label} count={selected.length} />
       {open && (
-        <div className="flex flex-wrap gap-2 pl-3 mb-2">
+        <div className="mb-2 flex flex-wrap gap-x-4 gap-y-1.5 border-l border-rule/30 pl-3">
           {options.map((opt) => (
             <button
               key={opt}
@@ -1078,25 +1037,19 @@ function SpellPicker({ options, selected, onToggle }) {
     if (!q) return [];
     return options.filter((n) => n.toLowerCase().includes(q));
   }, [query, options]);
-  const chip = (active) =>
-    `text-[11px] px-2 py-1 rounded border transition
-     ${active
-       ? "bg-amber-500/20 border-amber-500/50 text-amber-300"
-       : "bg-slate-800/60 border-slate-700 text-slate-300 hover:border-amber-500/40 hover:text-amber-300"}`;
   return (
     <div>
       <input type="text" value={query} onChange={(e) => setQuery(e.target.value)}
              placeholder={options.length ? "Search spells…" : "Loading spells…"}
-             className="bg-slate-900 border border-slate-600 rounded px-2 py-1 text-slate-100 text-sm w-full mb-2
-                        focus:outline-none focus:border-amber-500/60 focus:ring-1 focus:ring-amber-500/30" />
+             className={`${fieldCls} mb-2`} />
       {selected.length > 0 && (
-        <div className="flex flex-wrap gap-1.5 mb-2">
+        <div className="mb-2 flex flex-wrap gap-x-4 gap-y-1">
           {selected.map((name) => (
             <button key={name} type="button" onClick={() => onToggle(name)} className={chip(true)}>{name} ✕</button>
           ))}
         </div>
       )}
-      <div className="flex flex-wrap gap-1.5 max-h-32 overflow-y-auto pr-1">
+      <div className="flex max-h-32 flex-wrap gap-x-4 gap-y-1 overflow-y-auto pr-1">
         {filtered.map((name) => (
           <button key={name} type="button" onClick={() => onToggle(name)}
                   className={chip(selected.includes(name))}>{name}</button>

@@ -27,7 +27,7 @@ function Controls({ c, onHp, onFight, onRemove }) {
     setAmount(null);
   };
   return (
-    <div className="mb-2 ml-[22px] mt-1 space-y-2 border-l-2 border-[#9a3412]/40 pl-3 text-sm">
+    <div className="mb-2 ml-[22px] mt-1 space-y-2 border-l-2 border-rubric/40 pl-3 text-sm">
       <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
         <span className={`text-[10px] font-semibold uppercase tracking-[0.18em] ${INK.faded}`}>HP</span>
         <NumberInput
@@ -105,7 +105,7 @@ export default function CombatantRow({ c, isTurn, tied, open, alert, onToggle, o
 
   return (
     <div
-      className={`border-b border-[#7b6346]/15 last:border-b-0 ${out ? "opacity-50" : ""} ${selected ? "bg-[#9a3412]/[0.07]" : ""}`}
+      className={`border-b border-rule/15 last:border-b-0 ${out ? "opacity-50" : ""} ${selected ? "bg-rubric/[0.07]" : ""}`}
       onContextMenu={(e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -132,14 +132,14 @@ export default function CombatantRow({ c, isTurn, tied, open, alert, onToggle, o
             title={selected ? "Selected — click to unselect" : "Select (Shift-click: everyone in between)"}
             onClick={(e) => onSelect(e)}
             className={`flex h-3.5 w-3.5 shrink-0 items-center justify-center self-center rounded-[2px] border text-[10px] leading-none transition ${
-              selected ? "border-[#9a3412] bg-[#9a3412] text-[#efe4c8]" : "border-[#7b6346]/60 opacity-40 group-hover/row:opacity-100"
+              selected ? "border-rubric bg-rubric text-page-light" : "border-rule/60 opacity-40 group-hover/row:opacity-100"
             }`}
           >
             {selected ? "✓" : ""}
           </button>
         )}
         <span className="self-center" title={isTurn ? "Their turn" : undefined}>
-          <span className={`block h-2.5 w-2.5 rotate-45 border-[1.5px] ${isTurn ? "border-[#9a3412] bg-[#9a3412]" : "border-[#7b6346]/50"}`} />
+          <span className={`block h-2.5 w-2.5 rotate-45 border-[1.5px] ${isTurn ? "border-rubric bg-rubric" : "border-rule/50"}`} />
         </span>
         <InkNumber value={f.initiative} onChange={onInitiative} placeholder="—" aria-label={`Initiative of ${c.name}`} className="h-7 w-10 text-lg" />
         <span className="flex min-w-0 items-baseline gap-1.5">
@@ -162,7 +162,7 @@ export default function CombatantRow({ c, isTurn, tied, open, alert, onToggle, o
         <Leader />
         <span className={`shrink-0 text-sm tabular-nums ${INK.faded}`}>
           {word && <span className={`mr-2 italic ${word === "bloodied" ? "" : INK.rubric}`}>{word}</span>}
-          <span className={hp.cur <= 0 ? INK.rubric : "text-[#3a2716]"}>{hp.cur}</span>/{hp.max}
+          <span className={hp.cur <= 0 ? INK.rubric : "text-ink"}>{hp.cur}</span>/{hp.max}
           {hp.temp > 0 && <span className="ml-1">+{hp.temp}</span>}
           {ac != null && <span className="ml-3">AC {ac}</span>}
         </span>

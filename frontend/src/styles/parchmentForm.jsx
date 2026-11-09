@@ -27,10 +27,10 @@ export function DefineSection({ title, count, actions, storageKey, defaultOpen =
       <div className="mb-2 flex flex-wrap items-center gap-x-3 gap-y-1">
         <button type="button" onClick={() => setOpen((o) => !o)} aria-expanded={open} className="group flex shrink-0 items-center gap-1.5 text-left">
           <Chevron open={open} />
-          <h4 className={`text-[11px] font-semibold uppercase tracking-[0.25em] ${INK.faded} group-hover:text-[#3a2716]`}>{title}</h4>
+          <h4 className={`text-[11px] font-semibold uppercase tracking-[0.25em] ${INK.faded} group-hover:text-ink`}>{title}</h4>
           {count != null && <span className={`text-[11px] tabular-nums ${INK.faint}`}>{count}</span>}
         </button>
-        <span className="h-px min-w-[2rem] flex-1 bg-[#7b6346]/30" />
+        <span className="h-px min-w-[2rem] flex-1 bg-rule/30" />
         {rendered && <div className="flex flex-wrap items-center gap-x-4 gap-y-1">{rendered}</div>}
       </div>
       {open && <div className="space-y-3">{children}</div>}
@@ -53,20 +53,20 @@ export function Chevron({ open }) {
 /* ─── Buttons (class strings, like DefineParts) ──────────────────── */
 
 const note = "text-xs italic underline decoration-dotted underline-offset-4 transition disabled:no-underline disabled:opacity-40";
-export const ghostBtn = `${note} ${INK.faded} hover:text-[#3a2716]`;
-export const dangerBtn = `${note} ${INK.rubric} hover:text-[#7c2d12]`;
-export const addBtn = `${note} ${INK.rubric} hover:text-[#3a2716]`;
+export const ghostBtn = `${note} ${INK.faded} hover:text-ink`;
+export const dangerBtn = `${note} ${INK.rubric} hover:text-rubric-deep`;
+export const addBtn = `${note} ${INK.rubric} hover:text-ink`;
 
 // A filter word: selected ones are inked in rubric and underlined.
 export const chipBtn = (active) =>
-  `text-xs italic transition ${active ? `${INK.rubric} underline decoration-dotted underline-offset-4` : `${INK.faded} hover:text-[#3a2716]`}`;
+  `text-xs italic transition ${active ? `${INK.rubric} underline decoration-dotted underline-offset-4` : `${INK.faded} hover:text-ink`}`;
 
 /* ─── Blanks ─────────────────────────────────────────────────────── */
 
 const inputSkin =
-  "bg-transparent border-0 border-b border-dotted border-[#7b6346]/70 rounded-none px-0 " +
-  `focus:border-solid focus:border-[#3a2716] focus:outline-none focus:ring-0 ` +
-  `placeholder:text-[#a08a68] text-[#3a2716] font-serif`;
+  "bg-transparent border-0 border-b border-dotted border-rule/70 rounded-none px-0 " +
+  `focus:border-solid focus:border-ink focus:outline-none focus:ring-0 ` +
+  `placeholder:text-ink-faint text-ink font-body`;
 export const inputBase = `h-8 text-[15px] ${inputSkin}`;
 export const inputSm = `h-6 text-sm ${inputSkin}`;
 export const inputCls = `${inputBase} w-full`;
@@ -87,11 +87,7 @@ export function TextBlock({ value, onChange, placeholder, minRows = 3, maxRows =
       onChange={onChange}
       placeholder={placeholder}
       rows={Math.min(maxRows, Math.max(minRows, lines + 1))}
-      className={`w-full resize-y border-0 bg-transparent px-0 font-serif text-[15px] leading-7 text-[#3a2716] placeholder:text-[#a08a68] focus:outline-none focus:ring-0 ${className}`}
-      style={{
-        backgroundImage: "repeating-linear-gradient(to bottom, transparent 0, transparent 27px, rgba(123,99,70,0.4) 27px, rgba(123,99,70,0.4) 28px)",
-        backgroundAttachment: "local",
-      }}
+      className={`wc-lined w-full resize-y border-0 bg-transparent px-0 font-body text-[15px] leading-7 text-ink placeholder:text-ink-faint focus:outline-none focus:ring-0 ${className}`}
       {...rest}
     />
   );
@@ -121,7 +117,7 @@ export function Field({ label, hint, children, className = "" }) {
 // the left, no box.
 export function Fieldset({ title, children, right, className = "" }) {
   return (
-    <fieldset className={`min-w-0 border-l border-[#7b6346]/30 pl-3 ${className}`}>
+    <fieldset className={`min-w-0 border-l border-rule/30 pl-3 ${className}`}>
       <legend className={`mb-1 flex w-full items-baseline gap-2 text-xs italic ${INK.faded}`}>
         {title}
         {right && <span className="ml-auto not-italic">{right}</span>}
@@ -150,7 +146,7 @@ export function Segmented({ options, value, onChange, size = "md" }) {
               aria-pressed={on}
               title={o.hint}
               onClick={() => onChange(o.value)}
-              className={`whitespace-nowrap transition ${on ? `font-semibold ${INK.rubric} underline decoration-dotted underline-offset-4` : `${INK.faded} hover:text-[#3a2716]`}`}
+              className={`whitespace-nowrap transition ${on ? `font-semibold ${INK.rubric} underline decoration-dotted underline-offset-4` : `${INK.faded} hover:text-ink`}`}
             >
               {o.label}
             </button>
@@ -179,7 +175,7 @@ export function Switch({ checked, onChange, label, stop = false, disabled = fals
     >
       <span
         className={`h-2.5 w-2.5 rotate-45 border-[1.5px] transition ${
-          checked ? `border-[#9a3412] bg-[#9a3412]` : "border-[#7b6346]/70 group-hover:border-[#3a2716]"
+          checked ? `border-rubric bg-rubric` : "border-rule/70 group-hover:border-ink"
         }`}
       />
     </button>
@@ -267,7 +263,7 @@ export function PickerShell({ title = "From the catalogue", query, onQuery, plac
           </button>
         )}
       </div>
-      <div className="max-h-72 overflow-y-auto border-y border-[#7b6346]/25 py-1">{children}</div>
+      <div className="max-h-72 overflow-y-auto border-y border-rule/25 py-1">{children}</div>
       {footer && <p className={`text-[11px] italic ${INK.faint}`}>{footer}</p>}
     </div>
   );
@@ -275,12 +271,12 @@ export function PickerShell({ title = "From the catalogue", query, onQuery, plac
 
 export function PickerRow({ name, onOpen, meta, source, extra, action, highlight = false }) {
   return (
-    <div className={`flex items-baseline gap-2 px-1 py-1 hover:bg-[#3a2716]/[0.04] ${highlight ? "bg-[#9a3412]/[0.06]" : ""}`}>
+    <div className={`flex items-baseline gap-2 px-1 py-1 hover:bg-ink/[0.04] ${highlight ? "bg-rubric/[0.06]" : ""}`}>
       <button type="button" onClick={onOpen} className="truncate text-left text-[15px] hover:underline hover:decoration-dotted" title="Open its card">
         {name}
       </button>
       {meta}
-      <span aria-hidden="true" className="mx-1 min-w-[1rem] flex-1 translate-y-[-4px] border-b-2 border-dotted border-[#7b6346]/35" />
+      <span aria-hidden="true" className="mx-1 min-w-[1rem] flex-1 translate-y-[-4px] border-b-2 border-dotted border-rule/35" />
       {source && <span className={`shrink-0 text-[10px] uppercase tracking-wider ${INK.faint}`}>{source}</span>}
       {extra}
       {action && (

@@ -151,7 +151,7 @@ function Preview({ kind, plan, setPlan, result, onOverturn }) {
         return (
         <React.Fragment key={l.key}>
         {heading && <p className={`mt-2 ${smallCaps}`}>{heading}</p>}
-        <div className={`flex flex-wrap items-baseline gap-x-3 border-b border-[#7b6346]/15 py-1.5 text-sm last:border-b-0 ${l.apply ? "" : "opacity-50"}`}>
+        <div className={`flex flex-wrap items-baseline gap-x-3 border-b border-rule/15 py-1.5 text-sm last:border-b-0 ${l.apply ? "" : "opacity-50"}`}>
           <span className="self-center">
             <Mark on={l.apply} onClick={() => toggle(l.key)} label={`Apply to ${l.t.name}`} />
           </span>
@@ -395,7 +395,7 @@ export default function GroupRoll({ kind, targets, source, onApply, onClose, bar
               return (
                 <React.Fragment key={t.key}>
                   {heading && <p className={`mt-2 ${smallCaps}`}>{heading}</p>}
-                  <div className="flex flex-wrap items-baseline gap-x-3 border-b border-[#7b6346]/10 py-1 text-sm last:border-b-0">
+                  <div className="flex flex-wrap items-baseline gap-x-3 border-b border-rule/10 py-1 text-sm last:border-b-0">
                     <span className="w-40 truncate text-[15px]">{t.name}</span>
                     <span className={`w-20 tabular-nums ${INK.faded}`}>{isSave ? `${abilityName} ${signed(t.saves?.[ability] ?? 0)}` : `AC ${t.ac ?? "—"}`}</span>
                     <ModePick value={modes[t.key] || "normal"} onChange={(m) => setModes({ ...modes, [t.key]: m })} label={`Advantage for ${t.name}`} />

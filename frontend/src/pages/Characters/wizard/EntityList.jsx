@@ -64,7 +64,7 @@ export default function EntityList({
             const subtitle = renderSubtitle?.(item);
 
             return (
-              <li key={entityKey(item)} className="flex items-start gap-2 border-b border-dotted border-[#7b6346]/25 py-1.5">
+              <li key={entityKey(item)} className="flex items-start gap-2 border-b border-dotted border-rule/25 py-1.5">
                 <button
                   type="button"
                   onClick={() => !disabled && onSelect(item)}
@@ -75,7 +75,7 @@ export default function EntityList({
                   <span
                     aria-hidden="true"
                     className={`mt-[7px] inline-block h-2 w-2 shrink-0 rotate-45 border-[1.5px] transition ${
-                      on ? "border-[#9a3412] bg-[#9a3412]" : "border-[#7b6346]/70 group-hover:border-[#3a2716]"
+                      on ? "border-rubric bg-rubric" : "border-rule/70 group-hover:border-ink"
                     }`}
                   />
                   <span className="min-w-0 flex-1">

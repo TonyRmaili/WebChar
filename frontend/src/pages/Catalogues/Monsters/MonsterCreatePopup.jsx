@@ -1,7 +1,20 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { createPortal } from "react-dom";
 import { useCatalogueStore } from "../../../store/CatalogueStore";
 import FilterSection from "../FilterSection";
+import {
+  ChipsHeading,
+  CreateModal,
+  addRowCls,
+  boxCls,
+  checkCls,
+  checkLabelCls,
+  chip,
+  fieldCls,
+  hintCls,
+  labelCls,
+  removeRowCls,
+  textareaCls,
+} from "../catalogueStyle";
 import MonsterEffectsBuilder, { effectsToForm, formToEffects, emptyEffects } from "./MonsterEffectsBuilder";
 import {
   ABILITY_ORDER, ABILITY,
@@ -97,12 +110,6 @@ export default function MonsterCreatePopup({ open, onClose, editingMonster, copy
     if (!Array.isArray(sl) || sl.length === 0) loadSpells();
   }, [open]); // eslint-disable-line
 
-  useEffect(() => {
-    if (!open) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => { document.body.style.overflow = prev; };
-  }, [open]);
 
   // Repopulate from edit / copy.
   useEffect(() => {
@@ -379,50 +386,36 @@ export default function MonsterCreatePopup({ open, onClose, editingMonster, copy
     }
   };
 
-  const chip = (active) =>
-    `text-[11px] px-2 py-1 rounded border transition
-     ${active
-       ? "bg-amber-500/20 border-amber-500/50 text-amber-300"
-       : "bg-slate-800/60 border-slate-700 text-slate-300 hover:border-amber-500/40 hover:text-amber-300"}`;
-  const fieldCls =
-    "bg-slate-900 border border-slate-600 rounded px-2 py-1 text-slate-100 text-sm w-full " +
-    "focus:outline-none focus:border-amber-500/60 focus:ring-1 focus:ring-amber-500/30";
 
-  return createPortal(
-    <div
-      className="fixed inset-0 z-[2000] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
-      onMouseDown={onClose}
+  return (
+    <CreateModal
+      open={open}
+      title={titleText}
+      onClose={onClose}
+      onSave={handleSubmit}
+      saving={creating}
+      saveLabel={isEditing ? "Save Changes" : "Save"}
+      error={createError}
     >
-      <div
-        className="w-full max-w-3xl max-h-[90vh] flex flex-col
-                   bg-slate-900 border border-slate-700 rounded-lg shadow-2xl overflow-hidden"
-        onMouseDown={(e) => e.stopPropagation()}
-      >
-        <div className="flex items-center justify-between px-5 py-3 border-b border-slate-700">
-          <h2 className="text-amber-400 font-semibold uppercase tracking-wider text-sm">{titleText}</h2>
-          <button onClick={onClose} className="px-2 text-slate-400 hover:text-slate-100 text-lg">×</button>
-        </div>
-
-        <div className="flex-1 overflow-y-auto px-5 py-4 space-y-1">
           {/* ── Basics ── */}
           <FilterSection title="Basics" defaultOpen>
             <div className="space-y-3">
               <div>
-                <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">
-                  Name <span className="text-red-400">*</span>
+                <label className={labelCls}>
+                  Name <span className="text-rubric">*</span>
                 </label>
                 <input
                   type="text" value={form.name}
                   onChange={(e) => update("name", e.target.value)}
                   placeholder="e.g. Boneweald Hierophant"
-                  className={`${fieldCls} ${nameError ? "border-red-500 ring-1 ring-red-500/40" : ""}`}
+                  className={`${fieldCls} ${nameError ? "!border-solid !border-bad" : ""}`}
                 />
-                {nameError && <p className="text-xs text-red-400 mt-1">Name is required.</p>}
+                {nameError && <p className="mt-1 text-xs italic text-bad">Name is required.</p>}
               </div>
 
               <div>
-                <div className="text-[10px] uppercase tracking-wider text-amber-400 mb-1">Visibility</div>
-                <div className="flex gap-2">
+                <div className={labelCls}>Visibility</div>
+                <div className="flex gap-x-4">
                   {["private", "public"].map((v) => (
                     <button key={v} type="button" onClick={() => update("visibility", v)} className={chip(form.visibility === v)}>
                       {cap(v)}
@@ -433,21 +426,21 @@ export default function MonsterCreatePopup({ open, onClose, editingMonster, copy
 
               <div className="grid grid-cols-3 gap-3">
                 <div>
-                  <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">Size</label>
+                  <label className={labelCls}>Size</label>
                   <select value={form.size} onChange={(e) => update("size", e.target.value)} className={fieldCls}>
                     <option value="">—</option>
                     {sizes.map((s) => <option key={s} value={s}>{s}</option>)}
                   </select>
                 </div>
                 <div>
-                  <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">Type</label>
+                  <label className={labelCls}>Type</label>
                   <select value={form.type} onChange={(e) => update("type", e.target.value)} className={fieldCls}>
                     <option value="">—</option>
                     {typePrefixes.map((t) => <option key={t} value={t}>{titleCase(t)}</option>)}
                   </select>
                 </div>
                 <div>
-                  <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">Alignment</label>
+                  <label className={labelCls}>Alignment</label>
                   <select value={form.alignment} onChange={(e) => update("alignment", e.target.value)} className={fieldCls}>
                     <option value="">—</option>
                     {ALIGNMENTS.map((a) => <option key={a} value={a}>{a}</option>)}
@@ -457,16 +450,16 @@ export default function MonsterCreatePopup({ open, onClose, editingMonster, copy
 
               <div className="grid grid-cols-3 gap-3 items-end">
                 <div>
-                  <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">Challenge</label>
+                  <label className={labelCls}>Challenge</label>
                   <select value={form.crBase} onChange={(e) => update("crBase", e.target.value)} className={fieldCls}>
                     <option value="">—</option>
                     {CR_OPTIONS.map((c) => <option key={c} value={c}>{c}</option>)}
                   </select>
                 </div>
-                <div className="text-[11px] text-slate-400 col-span-2">
+                <div className={`${hintCls} col-span-2 pb-1`}>
                   {form.crBase
-                    ? <>Auto: <span className="text-amber-300">{liveXp?.toLocaleString()} XP</span>, <span className="text-amber-300">PB +{livePb}</span></>
-                    : <span className="text-slate-500">XP & PB auto-fill from CR.</span>}
+                    ? <>Auto: <span className="not-italic text-rubric">{liveXp?.toLocaleString()} XP</span>, <span className="not-italic text-rubric">PB +{livePb}</span></>
+                    : <>XP & PB auto-fill from CR.</>}
                 </div>
               </div>
             </div>
@@ -477,19 +470,19 @@ export default function MonsterCreatePopup({ open, onClose, editingMonster, copy
             <div className="space-y-3">
               <div className="grid grid-cols-3 gap-3">
                 <div>
-                  <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">AC</label>
+                  <label className={labelCls}>AC</label>
                   <input type="number" value={form.ac} onChange={(e) => update("ac", e.target.value)} className={fieldCls} placeholder="—" />
                 </div>
                 <div>
-                  <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">HP (avg)</label>
+                  <label className={labelCls}>HP (avg)</label>
                   <input type="number" value={form.hp} onChange={(e) => update("hp", e.target.value)} className={fieldCls} placeholder="—" />
                 </div>
                 <div>
-                  <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">Initiative</label>
-                  <div className="flex items-center gap-2">
+                  <label className={labelCls}>Initiative</label>
+                  <div className="flex items-baseline gap-3">
                     <input type="number" value={form.initiativeTotal} onChange={(e) => update("initiativeTotal", e.target.value)} className={fieldCls} placeholder="±" />
-                    <label className="flex items-center gap-1 text-[11px] text-slate-300 whitespace-nowrap">
-                      <input type="checkbox" checked={form.initiativeAdv} onChange={(e) => update("initiativeAdv", e.target.checked)} />
+                    <label className={`${checkLabelCls} whitespace-nowrap`}>
+                      <input type="checkbox" className={checkCls} checked={form.initiativeAdv} onChange={(e) => update("initiativeAdv", e.target.checked)} />
                       adv
                     </label>
                   </div>
@@ -497,11 +490,11 @@ export default function MonsterCreatePopup({ open, onClose, editingMonster, copy
               </div>
 
               <div>
-                <div className="text-[10px] uppercase tracking-wider text-amber-400 mb-1">Speeds (ft.)</div>
+                <div className={labelCls}>Speeds (ft.)</div>
                 <div className="grid grid-cols-5 gap-2">
                   {SPEED_MODES.map((m) => (
                     <div key={m}>
-                      <div className="text-[10px] text-slate-400 mb-0.5 capitalize">{m}</div>
+                      <div className={labelCls}>{m}</div>
                       <input type="number" value={form.speeds[m]} onChange={(e) => updateNested("speeds", m, e.target.value)} className={fieldCls} placeholder="—" />
                     </div>
                   ))}
@@ -509,16 +502,16 @@ export default function MonsterCreatePopup({ open, onClose, editingMonster, copy
               </div>
 
               <div>
-                <div className="text-[10px] uppercase tracking-wider text-amber-400 mb-1">Senses (ft.)</div>
+                <div className={labelCls}>Senses (ft.)</div>
                 <div className="grid grid-cols-4 gap-2">
                   {SENSE_MODES.map((s) => (
                     <div key={s}>
-                      <div className="text-[10px] text-slate-400 mb-0.5 capitalize">{s}</div>
+                      <div className={labelCls}>{s}</div>
                       <input type="number" value={form.senses[s]} onChange={(e) => updateNested("senses", s, e.target.value)} className={fieldCls} placeholder="—" />
                     </div>
                   ))}
                 </div>
-                <p className="text-[10px] text-slate-500 mt-1">Passive Perception is auto-calculated.</p>
+                <p className={`${hintCls} mt-1`}>Passive Perception is auto-calculated.</p>
               </div>
             </div>
           </FilterSection>
@@ -531,20 +524,20 @@ export default function MonsterCreatePopup({ open, onClose, editingMonster, copy
                 const mod = abilityMod(row.score);
                 const save = mod + (row.proficient ? livePb : 0);
                 return (
-                  <div key={a} className="border border-slate-700 rounded p-2">
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="text-[11px] font-semibold text-amber-400">{ABILITY[a]}</span>
-                      <span className="text-[10px] text-slate-400">mod {signed(mod)} · save {signed(save)}</span>
+                  <div key={a} className="border-l border-rule/30 pl-3">
+                    <div className="mb-1 flex items-baseline justify-between">
+                      <span className="text-[11px] font-semibold tracking-[0.16em] text-rubric">{ABILITY[a]}</span>
+                      <span className="text-xs italic text-ink-faded">mod {signed(mod)} · save {signed(save)}</span>
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-baseline gap-3">
                       <input
                         type="number" value={row.score}
                         onChange={(e) => setForm((f) => ({ ...f, abilities: { ...f.abilities, [a]: { ...f.abilities[a], score: e.target.value } } }))}
                         className={fieldCls}
                       />
-                      <label className="flex items-center gap-1 text-[11px] text-slate-300 whitespace-nowrap">
+                      <label className={`${checkLabelCls} whitespace-nowrap`}>
                         <input
-                          type="checkbox" checked={row.proficient}
+                          type="checkbox" className={checkCls} checked={row.proficient}
                           onChange={(e) => setForm((f) => ({ ...f, abilities: { ...f.abilities, [a]: { ...f.abilities[a], proficient: e.target.checked } } }))}
                         />
                         prof
@@ -562,18 +555,18 @@ export default function MonsterCreatePopup({ open, onClose, editingMonster, copy
               {form.skills.map((row, idx) => {
                 const used = new Set(form.skills.filter((_, i) => i !== idx).map((r) => r.skill));
                 return (
-                  <div key={idx} className="flex items-center gap-2">
+                  <div key={idx} className="flex items-baseline gap-3">
                     <select value={row.skill} onChange={(e) => updateSkill(idx, "skill", e.target.value)} className={`${fieldCls} flex-1`}>
                       {skillKeys.map((k) => (
                         <option key={k} value={k} disabled={used.has(k)}>{titleCase(k)}</option>
                       ))}
                     </select>
                     <input type="number" value={row.bonus} onChange={(e) => updateSkill(idx, "bonus", e.target.value)} className={`${fieldCls} max-w-[80px]`} placeholder="±" />
-                    <button onClick={() => removeSkill(idx)} className="text-[11px] px-2 py-1 rounded border border-red-700/50 text-red-300 hover:bg-red-900/40">✕</button>
+                    <button onClick={() => removeSkill(idx)} aria-label="Remove" className={removeRowCls}>✕</button>
                   </div>
                 );
               })}
-              <button onClick={addSkill} className="text-[11px] px-3 py-1.5 rounded border border-slate-600 text-slate-300 hover:border-amber-500/40 hover:text-amber-300">
+              <button onClick={addSkill} className={addRowCls}>
                 + Add Skill
               </button>
             </div>
@@ -593,29 +586,29 @@ export default function MonsterCreatePopup({ open, onClose, editingMonster, copy
           <FilterSection title="Tags">
             <div className="space-y-3">
               <div>
-                <div className="text-[10px] uppercase tracking-wider text-amber-400 mb-1">
+                <div className={labelCls}>
                   Trait & Action Tags {form.traitTags.length > 0 && <span className="normal-case">({form.traitTags.length})</span>}
                 </div>
                 {form.traitTags.length > 0 && (
-                  <div className="flex flex-wrap gap-1.5 mb-2">
+                  <div className="mb-2 flex flex-wrap gap-x-4 gap-y-1">
                     {form.traitTags.map((t) => (
-                      <button key={t} type="button" onClick={() => toggleListItem("traitTags", t)} className={chip(true)}>{t} ✕</button>
+                      <button key={t} type="button" onClick={() => toggleListItem("traitTags", t)} className={chip(true)}>{t} <span aria-hidden className="text-ink-faded">✕</span></button>
                     ))}
                   </div>
                 )}
-                <div className="flex items-center gap-2 mb-2">
+                <div className="mb-2 flex items-baseline gap-3">
                   <input
                     type="text" value={tagDraft}
                     onChange={(e) => setTagDraft(e.target.value)}
                     onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); addTag(); } }}
                     placeholder="Add custom tag…" className={fieldCls}
                   />
-                  <button onClick={addTag} className="text-[11px] px-3 py-1.5 rounded border border-slate-600 text-slate-300 hover:border-amber-500/40 hover:text-amber-300 whitespace-nowrap">
+                  <button onClick={addTag} className={`${addRowCls} whitespace-nowrap`}>
                     + Add
                   </button>
                 </div>
                 {traitsList.length > 0 && (
-                  <div className="flex flex-wrap gap-1.5 max-h-28 overflow-y-auto pr-1">
+                  <div className="flex max-h-28 flex-wrap gap-x-4 gap-y-1 overflow-y-auto pr-1">
                     {traitsList.map((t) => (
                       <button key={t} type="button" onClick={() => toggleListItem("traitTags", t)} className={chip(form.traitTags.includes(t))}>{t}</button>
                     ))}
@@ -640,21 +633,21 @@ export default function MonsterCreatePopup({ open, onClose, editingMonster, copy
           <FilterSection title="Gear">
             <div className="space-y-2">
               {form.gear.map((g, idx) => (
-                <div key={idx} className="border border-slate-700 rounded p-2 space-y-2">
+                <div key={idx} className={boxCls}>
                   <div className="flex justify-between items-center">
-                    <span className="text-[10px] uppercase tracking-wider text-amber-400">
+                    <span className={labelCls}>
                       {g.name ? `${g.name} (${g.source})` : `Item ${idx + 1}`}
                     </span>
-                    <button onClick={() => removeGear(idx)} className="text-[11px] px-2 py-1 rounded border border-red-700/50 text-red-300 hover:bg-red-900/40">✕</button>
+                    <button onClick={() => removeGear(idx)} aria-label="Remove" className={removeRowCls}>✕</button>
                   </div>
                   <NamePicker options={itemNames} value={g.name} placeholder="Search items…" onSelect={(n) => updateGear(idx, n)} />
                   <div className="max-w-[120px]">
-                    <div className="text-[10px] text-slate-400 mb-0.5 uppercase">Quantity</div>
+                    <div className={labelCls}>Quantity</div>
                     <input type="number" min={1} value={g.quantity} onChange={(e) => updateGearQty(idx, e.target.value)} className={fieldCls} />
                   </div>
                 </div>
               ))}
-              <button onClick={addGear} className="text-[11px] px-3 py-1.5 rounded border border-slate-600 text-slate-300 hover:border-amber-500/40 hover:text-amber-300">
+              <button onClick={addGear} className={addRowCls}>
                 + Add Gear
               </button>
             </div>
@@ -663,9 +656,9 @@ export default function MonsterCreatePopup({ open, onClose, editingMonster, copy
           {/* ── Legendary ── */}
           <FilterSection title="Legendary Actions">
             <div className="max-w-[160px]">
-              <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">Action Points</label>
+              <label className={labelCls}>Action Points</label>
               <input type="number" min={0} value={form.legendaryActions} onChange={(e) => update("legendaryActions", e.target.value)} className={fieldCls} placeholder="—" />
-              <p className="text-[10px] text-slate-500 mt-1">Leave blank if not legendary.</p>
+              <p className={`${hintCls} mt-1`}>Leave blank if not legendary.</p>
             </div>
           </FilterSection>
 
@@ -674,59 +667,59 @@ export default function MonsterCreatePopup({ open, onClose, editingMonster, copy
             <div className="space-y-3">
               <div className="grid grid-cols-3 gap-3">
                 <div>
-                  <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">Ability</label>
+                  <label className={labelCls}>Ability</label>
                   <select value={form.spellAbility} onChange={(e) => update("spellAbility", e.target.value)} className={fieldCls}>
                     <option value="">—</option>
                     {SPELL_ABILITIES.map((a) => <option key={a} value={a}>{ABILITY[a]}</option>)}
                   </select>
                 </div>
                 <div>
-                  <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">Save DC</label>
+                  <label className={labelCls}>Save DC</label>
                   <input type="number" value={form.spellSaveDc} onChange={(e) => update("spellSaveDc", e.target.value)} className={fieldCls} placeholder="—" />
                 </div>
                 <div>
-                  <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">Atk Bonus</label>
+                  <label className={labelCls}>Atk Bonus</label>
                   <input type="number" value={form.spellAttackBonus} onChange={(e) => update("spellAttackBonus", e.target.value)} className={fieldCls} placeholder="±" />
                 </div>
               </div>
               <div>
-                <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">Notes</label>
-                <textarea value={form.spellNotes} onChange={(e) => update("spellNotes", e.target.value)} rows={2} className={fieldCls}
+                <label className={labelCls}>Notes</label>
+                <textarea value={form.spellNotes} onChange={(e) => update("spellNotes", e.target.value)} rows={2} className={textareaCls}
                   placeholder="The creature casts one of the following spells…" />
               </div>
 
               <div className="space-y-2">
                 {form.spellGroups.map((g, idx) => (
-                  <div key={idx} className="border border-slate-700 rounded p-2 space-y-2">
+                  <div key={idx} className={boxCls}>
                     <div className="flex justify-between items-center">
-                      <span className="text-[10px] uppercase tracking-wider text-amber-400">Group {idx + 1}</span>
-                      <button onClick={() => removeGroup(idx)} className="text-[11px] px-2 py-1 rounded border border-red-700/50 text-red-300 hover:bg-red-900/40">✕</button>
+                      <span className={labelCls}>Group {idx + 1}</span>
+                      <button onClick={() => removeGroup(idx)} aria-label="Remove" className={removeRowCls}>✕</button>
                     </div>
-                    <div className="grid grid-cols-3 gap-2 items-end">
+                    <div className="grid grid-cols-3 gap-x-4 items-end">
                       <div className="col-span-1">
-                        <div className="text-[10px] text-slate-400 mb-0.5 uppercase">Label</div>
+                        <div className={labelCls}>Label</div>
                         <input type="text" value={g.label} onChange={(e) => updateGroup(idx, "label", e.target.value)} className={fieldCls} placeholder="At will" />
                       </div>
                       <div>
-                        <div className="text-[10px] text-slate-400 mb-0.5 uppercase">Uses</div>
+                        <div className={labelCls}>Uses</div>
                         <input type="number" value={g.uses} onChange={(e) => updateGroup(idx, "uses", e.target.value)} className={fieldCls} placeholder="∞" />
                       </div>
-                      <label className="flex items-center gap-1 text-[11px] text-slate-300 pb-1">
-                        <input type="checkbox" checked={g.each} onChange={(e) => updateGroup(idx, "each", e.target.checked)} />
+                      <label className={`${checkLabelCls} pb-1`}>
+                        <input type="checkbox" className={checkCls} checked={g.each} onChange={(e) => updateGroup(idx, "each", e.target.checked)} />
                         each
                       </label>
                     </div>
                     {g.spells.length > 0 && (
-                      <div className="flex flex-wrap gap-1.5">
+                      <div className="flex flex-wrap gap-x-4 gap-y-1">
                         {g.spells.map((n) => (
-                          <button key={n} type="button" onClick={() => toggleGroupSpell(idx, n)} className={chip(true)}>{titleCase(n)} ✕</button>
+                          <button key={n} type="button" onClick={() => toggleGroupSpell(idx, n)} className={chip(true)}>{titleCase(n)} <span aria-hidden className="text-ink-faded">✕</span></button>
                         ))}
                       </div>
                     )}
                     <NamePicker options={xphbSpellNames} value="" placeholder="Add spell…" onSelect={(n) => toggleGroupSpell(idx, n)} />
                   </div>
                 ))}
-                <button onClick={addGroup} className="text-[11px] px-3 py-1.5 rounded border border-slate-600 text-slate-300 hover:border-amber-500/40 hover:text-amber-300">
+                <button onClick={addGroup} className={addRowCls}>
                   + Add Spell Group
                 </button>
               </div>
@@ -738,22 +731,7 @@ export default function MonsterCreatePopup({ open, onClose, editingMonster, copy
             value={form.effects}
             onChange={(next) => update("effects", next)}
           />
-        </div>
-
-        <div className="flex items-center justify-between gap-3 px-5 py-3 border-t border-slate-700">
-          {createError ? <span className="text-xs text-red-400 truncate flex-1">{createError}</span> : <span className="flex-1" />}
-          <button onClick={onClose} className="text-[11px] px-3 py-1.5 rounded border border-slate-600 text-slate-400 hover:border-red-500/40 hover:text-red-300">
-            Cancel
-          </button>
-          <button onClick={handleSubmit} disabled={creating}
-                  className="text-[11px] px-3 py-1.5 rounded border border-amber-500/50 bg-amber-500/20 text-amber-300
-                             hover:bg-amber-500/30 disabled:opacity-50 disabled:cursor-not-allowed">
-            {creating ? "Saving…" : isEditing ? "Save Changes" : "Save"}
-          </button>
-        </div>
-      </div>
-    </div>,
-    document.body
+    </CreateModal>
   );
 }
 
@@ -761,19 +739,9 @@ export default function MonsterCreatePopup({ open, onClose, editingMonster, copy
 function CollapsibleChips({ label, options, selected, onToggle, keepCase }) {
   const [open, setOpen] = useState(false);
   const display = keepCase ? ((x) => x) : ((x) => (typeof x === "string" ? x[0].toUpperCase() + x.slice(1) : x));
-  const chip = (active) =>
-    `text-[11px] px-2 py-1 rounded border transition
-     ${active
-       ? "bg-amber-500/20 border-amber-500/50 text-amber-300"
-       : "bg-slate-800/60 border-slate-700 text-slate-300 hover:border-amber-500/40 hover:text-amber-300"}`;
   return (
     <div>
-      <button type="button" onClick={() => setOpen((o) => !o)}
-              className="flex items-center gap-1.5 uppercase tracking-wider text-amber-400 text-[10px] mb-1 hover:text-amber-300 transition select-none">
-        <span className={`text-[10px] inline-block transition-transform duration-150 ${open ? "rotate-90" : ""}`}>▶</span>
-        <span>{label}</span>
-        {selected.length > 0 && <span className="ml-1 text-amber-300 normal-case">({selected.length})</span>}
-      </button>
+      <ChipsHeading open={open} onToggle={() => setOpen((o) => !o)} label={label} count={selected.length} />
       {open && (
         <div className="flex flex-wrap gap-2 pl-3 mb-2 max-h-40 overflow-y-auto pr-1">
           {(options || []).map((opt) => (
@@ -795,24 +763,18 @@ function NamePicker({ options, value, onSelect, placeholder }) {
     if (!q) return [];
     return (options || []).filter((n) => n.toLowerCase().includes(q)).slice(0, 60);
   }, [query, options]);
-  const chip = (active) =>
-    `text-[11px] px-2 py-1 rounded border transition
-     ${active
-       ? "bg-amber-500/20 border-amber-500/50 text-amber-300"
-       : "bg-slate-800/60 border-slate-700 text-slate-300 hover:border-amber-500/40 hover:text-amber-300"}`;
   return (
     <div>
       <input type="text" value={query} onChange={(e) => setQuery(e.target.value)}
              placeholder={(options || []).length ? placeholder : "Loading…"}
-             className="bg-slate-900 border border-slate-600 rounded px-2 py-1 text-slate-100 text-sm w-full mb-2
-                        focus:outline-none focus:border-amber-500/60 focus:ring-1 focus:ring-amber-500/30" />
-      <div className="flex flex-wrap gap-1.5 max-h-32 overflow-y-auto pr-1">
+             className={`${fieldCls} mb-2`} />
+      <div className="flex max-h-32 flex-wrap gap-x-4 gap-y-1 overflow-y-auto pr-1">
         {filtered.map((name) => (
           <button key={name} type="button" onClick={() => { onSelect(name); setQuery(""); }} className={chip(value === name)}>
             {name}
           </button>
         ))}
-        {query && filtered.length === 0 && <span className="text-[11px] text-slate-500">No matches.</span>}
+        {query && filtered.length === 0 && <span className={hintCls}>No matches.</span>}
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import React, { useMemo, useRef, useState } from "react";
-import CompGroupRoll from "../../../../components/dice/GroupRoll";
+import GroupRoll from "../../../../components/dice/GroupRoll";
 import { MODES, damageWords } from "../../../../components/dice/diceWords";
 import useDiceStore from "../../../../store/DiceStore";
 import useMinionStore, { selKey } from "../../../../store/MinionStore";
@@ -89,7 +89,7 @@ function UnitPicker({ minions, selected, setSelected }) {
                     aria-pressed={on}
                     title={`${displayName(m)} ${i + 1}: ${u.hp}/${max} HP${down ? " — down" : ""} · Shift-click: everyone in between`}
                     className={`flex h-8 min-w-[2.6rem] flex-col items-center justify-center rounded-[3px] border px-1 leading-none transition ${
-                      on ? "border-[#9a3412] bg-[#9a3412]/10" : "border-[#7b6346]/40 hover:border-[#3a2716]"
+                      on ? "border-rubric bg-rubric/10" : "border-rule/40 hover:border-ink"
                     } ${down ? "opacity-45" : ""}`}
                   >
                     <span className={`text-[9px] ${INK.faint}`}>{i + 1}</span>
@@ -120,7 +120,7 @@ function DefensePicker({ value, onChange }) {
         <span key={key} className={`flex flex-wrap items-baseline gap-x-1.5 text-sm italic ${INK.faded}`}>
           {label}
           {value[key].map((t) => (
-            <span key={t} className="inline-flex items-baseline not-italic text-[#3a2716]">
+            <span key={t} className="inline-flex items-baseline not-italic text-ink">
               {t}
               <InkRemove onClick={() => onChange({ ...value, [key]: value[key].filter((x) => x !== t) })} label={`Not ${label} ${t}`} />
             </span>
@@ -150,7 +150,7 @@ function GroupAttack({ group, config, setConfig }) {
   const down = units.length - standing.length;
 
   return (
-    <div className="border-b border-[#7b6346]/15 py-2 last:border-b-0">
+    <div className="border-b border-rule/15 py-2 last:border-b-0">
       <p className="flex flex-wrap items-baseline gap-x-3">
         <span className="text-[15px]">{displayName(minion)}</span>
         <span className={`text-sm italic ${INK.faded}`}>
@@ -165,7 +165,7 @@ function GroupAttack({ group, config, setConfig }) {
         <>
           <div className="mt-1 flex flex-wrap gap-x-4 gap-y-1">
             {effects.map((e) => (
-              <button key={e.id} type="button" onClick={() => setConfig({ ...config, effectId: e.id })} className={`text-left text-sm ${e.id === effect.id ? INK.rubric : INK.faded} hover:text-[#3a2716]`}>
+              <button key={e.id} type="button" onClick={() => setConfig({ ...config, effectId: e.id })} className={`text-left text-sm ${e.id === effect.id ? INK.rubric : INK.faded} hover:text-ink`}>
                 <span className={e.id === effect.id ? "underline decoration-dotted underline-offset-4" : ""}>{e.name}</span>
                 <span className={`ml-1.5 text-xs italic ${INK.faint}`}>{effectLine(e)}</span>
                 {e.maxUses != null && <span className={`ml-1 text-xs italic ${INK.faint}`}>({e.maxUses} use{e.maxUses === 1 ? "" : "s"})</span>}
@@ -355,7 +355,7 @@ function TheyAttack({ minions, selected, source }) {
       </p>
 
       {results && (
-        <div className="border-t border-[#7b6346]/30 pt-2">
+        <div className="border-t border-rule/30 pt-2">
           {results.map((r, i) => (
             <p key={i} className="flex flex-wrap items-baseline gap-x-3 py-0.5 text-sm">
               <span className="text-[15px]">{r.name}</span>
@@ -400,9 +400,9 @@ export default function MinionDicePanel() {
       <p className={`text-sm italic ${INK.faded}`}>{charName}'s minions · {selected.length} selected</p>
       <UnitPicker minions={minions} selected={selected} setSelected={setSelected} />
 
-      <p className="flex flex-wrap items-baseline gap-x-3 border-t border-[#7b6346]/30 pt-3">
+      <p className="flex flex-wrap items-baseline gap-x-3 border-t border-rule/30 pt-3">
         {MODES_OF_PANEL.map((m) => (
-          <button key={m.value} type="button" onClick={() => setMode(m.value)} className={`text-lg ${mode === m.value ? `${INK.rubric} underline decoration-dotted underline-offset-4` : `${INK.faded} hover:text-[#3a2716]`}`}>
+          <button key={m.value} type="button" onClick={() => setMode(m.value)} className={`text-lg ${mode === m.value ? `${INK.rubric} underline decoration-dotted underline-offset-4` : `${INK.faded} hover:text-ink`}`}>
             {m.label}
           </button>
         ))}
@@ -413,7 +413,7 @@ export default function MinionDicePanel() {
       ) : targets.length === 0 ? (
         <p className={`py-2 text-sm italic ${INK.faint}`}>Select the units that are hit — above, or on the sheet.</p>
       ) : (
-        <CompGroupRoll key={`${mode}:${targets.map((t) => t.key).join(",")}`} kind={mode === "save" ? "save" : "attack"} targets={targets} source={source} onApply={apply} bare />
+        <GroupRoll key={`${mode}:${targets.map((t) => t.key).join(",")}`} kind={mode === "save" ? "save" : "attack"} targets={targets} source={source} onApply={apply} bare />
       )}
     </div>
   );

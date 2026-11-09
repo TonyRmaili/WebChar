@@ -102,7 +102,7 @@ function RowLine({ row, die, hit, names, onPick, onFollow, onMenu }) {
         e.stopPropagation();
         onMenu(e, row);
       }}
-      className={`flex cursor-pointer items-baseline gap-4 border-b border-[#7b6346]/15 px-1 py-1.5 text-[15px] last:border-b-0 ${hit ? "bg-[#9a3412]/10" : "hover:bg-[#7b6346]/5"}`}
+      className={`flex cursor-pointer items-baseline gap-4 border-b border-rule/15 px-1 py-1.5 text-[15px] last:border-b-0 ${hit ? "bg-rubric/10" : "hover:bg-rule/5"}`}
     >
       <span className={`w-16 shrink-0 text-right font-semibold tabular-nums ${hit ? INK.rubric : ""}`}>
         {hit && <span className="mr-1.5 text-[10px]">◆</span>}
@@ -119,7 +119,7 @@ function RowLine({ row, die, hit, names, onPick, onFollow, onMenu }) {
                 e.stopPropagation();
                 onFollow(row.link);
               }}
-              className={`${INK.rubric} underline decoration-dotted underline-offset-4 hover:text-[#3a2716]`}
+              className={`${INK.rubric} underline decoration-dotted underline-offset-4 hover:text-ink`}
               title={row.link.kind === "item" ? "Open the item" : row.link.kind === "encounter" ? "Open the encounter's tracker" : "Open the table"}
             >
               {row.link.kind === "table" ? `roll on ${linkName(row.link, names)}` : linkName(row.link, names)}
@@ -164,7 +164,7 @@ function RowEditor({ table, row, names, linkTables, picking, onPicking, change }
   };
 
   return (
-    <div className="border-b border-[#7b6346]/15 py-1.5 last:border-b-0">
+    <div className="border-b border-rule/15 py-1.5 last:border-b-0">
       <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
         <span className="flex w-24 shrink-0 items-baseline gap-1">
           <InkNumber value={row.from} min={1} onChange={(v) => v != null && change(setRange(table, row.id, v, Math.max(v, row.to)))} aria-label="From" className="h-7 w-10 text-center tabular-nums" />
@@ -334,7 +334,7 @@ export default function TableWindow({ table: ref }) {
 
   if (!table) {
     return (
-      <div className="h-full overflow-y-auto bg-[#1c120b] p-2">
+      <div className="h-full overflow-y-auto bg-desk-deep p-2">
         <ParchmentSheet>
           <p className={`italic ${INK.faint}`}>{tables ? "This table is gone." : "Fetching…"}</p>
         </ParchmentSheet>
@@ -424,7 +424,7 @@ export default function TableWindow({ table: ref }) {
 
   return (
     <div
-      className="h-full overflow-y-auto bg-[#1c120b] p-2"
+      className="h-full overflow-y-auto bg-desk-deep p-2"
       onContextMenu={(e) => {
         e.preventDefault();
         e.stopPropagation();

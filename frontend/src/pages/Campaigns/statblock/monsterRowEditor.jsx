@@ -114,7 +114,7 @@ export default function MonsterRowEditor({ entry, row, onPatch, onRemove, onDone
   };
 
   return (
-    <div className="@container mb-4 ml-[26px] mt-2 space-y-4 border-l-2 border-[#9a3412]/40 pl-4">
+    <div className="@container mb-4 ml-[26px] mt-2 space-y-4 border-l-2 border-rubric/40 pl-4">
       <div className="grid grid-cols-1 gap-x-6 gap-y-3 @2xl:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
         <Field label="Name">
           <input
@@ -199,7 +199,7 @@ export default function MonsterRowEditor({ entry, row, onPatch, onRemove, onDone
                       type="button"
                       aria-pressed={on}
                       onClick={() => toggleCondition(c)}
-                      className={`text-sm capitalize transition ${on ? `${INK.rubric} underline decoration-dotted underline-offset-4` : `${INK.faded} hover:text-[#3a2716]`}`}
+                      className={`text-sm capitalize transition ${on ? `${INK.rubric} underline decoration-dotted underline-offset-4` : `${INK.faded} hover:text-ink`}`}
                     >
                       {c}
                     </button>

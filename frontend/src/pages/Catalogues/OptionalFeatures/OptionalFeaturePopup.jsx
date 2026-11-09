@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  formatSource, formatFeatureType, formatPrerequisite, formatConsumes,
+  formatSource, formatFeatureType, formatPrerequisite,
   parseEntries, formatSpellAbility, formatSpellChoice, formatSpellName,
 } from "./optionalFeatureHelpers";
 import { SKILL_OPTIONS } from "../../../utils/Constants";
@@ -23,6 +23,15 @@ const titleCase = (s) =>
 const signed = (n) => (n > 0 ? `+${n}` : String(n));
 const skillLabel = (k) => SKILL_OPTIONS[k]?.label || titleCase(k);
 
+// `consumes` is a name ("Sorcery Point") or { name, amount } — both read
+// as "Sorcery Point" / "2 Sorcery Points".
+const consumesText = (c) => {
+  if (!c) return "";
+  if (typeof c === "string") return c;
+  if (!c.name) return "";
+  return c.amount > 1 ? `${c.amount} ${c.name}s` : c.name;
+};
+
 export default function OptionalFeaturePopup({ feature }) {
   if (!feature) return null;
   const {
@@ -33,25 +42,21 @@ export default function OptionalFeaturePopup({ feature }) {
 
   const blocks = parseEntries(entries);
   const prereqs = formatPrerequisite(prerequisite);
-  // `consumes` may be an object ({ name, amount }) or a plain string.
-  const cost = formatConsumes(consumes);
 
   return (
-    <div className="bg-[#fdf6e3] text-stone-900 font-serif rounded-sm shadow-lg
-                    border border-stone-400 overflow-y-auto h-full">
+    <div className="wc-page h-full overflow-y-auto !rounded-none">
       <div className="px-5 py-4">
-        <div className="flex justify-between items-baseline border-b border-stone-300 pb-1 mb-2">
-          <h2 className="text-xl font-bold tracking-wide uppercase text-stone-900">{name}</h2>
-          <span className="text-xs text-stone-500" title={formatSource(source)}>{source}</span>
+        <div className="mb-2 flex items-baseline justify-between border-b border-rule/40 pb-1">
+          <h2 className="text-xl font-bold uppercase tracking-wide text-ink">{name}</h2>
+          <span className="text-xs text-ink-faded" title={formatSource(source)}>{source}</span>
         </div>
 
-        {(feature_type || cost) && (
-          <p className="italic text-sm text-stone-700 mb-3 flex items-center gap-2 flex-wrap">
+        {(feature_type || consumesText(consumes)) && (
+          <p className="mb-3 flex flex-wrap items-baseline gap-3 text-sm italic text-ink-faded">
             {feature_type && <span>{formatFeatureType(feature_type)}</span>}
-            {cost && (
-              <span className="not-italic text-[10px] uppercase tracking-wider
-                               bg-stone-200 border border-stone-400 rounded px-1.5 py-0.5">
-                Consumes {cost}
+            {consumesText(consumes) && (
+              <span className="text-[10px] font-semibold uppercase not-italic tracking-wider text-rubric">
+                Consumes {consumesText(consumes)}
               </span>
             )}
           </p>
@@ -59,7 +64,7 @@ export default function OptionalFeaturePopup({ feature }) {
 
         {prereqs.length > 0 && (
           <SectionStrip title="Prerequisite">
-            <span className="text-xs text-stone-800">{prereqs.join(" · ")}</span>
+            <span className="text-sm text-ink">{prereqs.join(" · ")}</span>
           </SectionStrip>
         )}
 
@@ -121,7 +126,7 @@ function MechanicsBlock({ feature }) {
   if (!rows.some(([, v]) => v.length)) return null;
 
   return (
-    <div className="mt-1 mb-3 pb-2 border-b border-stone-300 space-y-1.5">
+    <div className="mb-3 mt-1 space-y-1.5 border-b border-rule/40 pb-2">
       {rows.map(([title, items]) =>
         items.length ? (
           <SectionStrip key={title} title={title}>
@@ -135,16 +140,16 @@ function MechanicsBlock({ feature }) {
 
 function ProgressionSection({ title, progression, subKey }) {
   return (
-    <div className="mt-4 pt-3 border-t border-stone-300">
-      <div className="text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">{title}</div>
-      <div className="space-y-1 text-xs text-stone-800">
+    <div className="mt-4 border-t border-rule/40 pt-3">
+      <div className="text-[11px] font-bold uppercase tracking-wider text-ink-faded mb-1">{title}</div>
+      <div className="space-y-1 text-sm text-ink">
         {progression.map((p, i) => {
           const sub = p[subKey];
           return (
             <div key={i}>
               <span className="font-semibold">{p.name}</span>
               {Array.isArray(sub) && sub.length > 0 && (
-                <span className="text-stone-500"> · {sub.map(titleCase).join(", ")}</span>
+                <span className="italic text-ink-faded"> · {sub.map(titleCase).join(", ")}</span>
               )}
             </div>
           );
@@ -158,7 +163,7 @@ function ProgressionSection({ title, progression, subKey }) {
 
 function Block({ block }) {
   if (block.type === "heading")
-    return <h3 className="font-bold text-base mt-3 mb-1 text-stone-900">{block.text}</h3>;
+    return <h3 className="mb-1 mt-3 text-base font-bold text-ink">{block.text}</h3>;
   if (block.type === "table") return <EntryTable block={block} />;
   if (block.type === "list") return <EntryList items={block.items} />;
   if (block.type === "paragraph")
@@ -171,7 +176,7 @@ function EntryList({ items }) {
     <ul className="space-y-1">
       {items.map((it, i) => (
         <li key={i} className="flex gap-1">
-          <span className="text-stone-400">•</span>
+          <span className="text-ink-faint">•</span>
           <span>{it.label && <span className="font-semibold">{it.label} </span>}{it.text}</span>
         </li>
       ))}
@@ -181,15 +186,15 @@ function EntryList({ items }) {
 
 function EntryTable({ block }) {
   return (
-    <div className="my-2 border border-stone-400 rounded overflow-hidden">
-      {block.caption && <div className="bg-stone-200 px-2 py-1 text-xs font-semibold">{block.caption}</div>}
+    <div className="my-2 overflow-hidden border-y border-rule/40">
+      {block.caption && <div className="bg-rule/10 px-2 py-1 text-xs font-semibold">{block.caption}</div>}
       <table className="w-full text-xs">
-        <thead className="bg-stone-100 border-b border-stone-300">
-          <tr>{block.header.map((c, i) => <th key={i} className="text-left px-2 py-1 font-semibold">{c}</th>)}</tr>
+        <thead className="border-b border-rule/40">
+          <tr>{block.header.map((c, i) => <th key={i} className="px-2 py-1 text-left font-semibold text-ink-faded">{c}</th>)}</tr>
         </thead>
         <tbody>
           {block.rows.map((row, i) => (
-            <tr key={i} className="border-t border-stone-200">
+            <tr key={i} className="border-t border-rule/20 even:bg-ink/[0.03]">
               {row.map((cell, j) => <td key={j} className="px-2 py-1 align-top">{cell}</td>)}
             </tr>
           ))}
@@ -202,15 +207,15 @@ function EntryTable({ block }) {
 function SectionStrip({ title, children }) {
   return (
     <div className="mb-1">
-      <span className="text-[11px] font-bold uppercase tracking-wider text-stone-600">{title}: </span>
-      <span className="inline-flex flex-wrap gap-1 align-middle">{children}</span>
+      <span className="text-[11px] font-bold uppercase tracking-wider text-ink-faded">{title}: </span>
+      <span className="inline-flex flex-wrap items-baseline gap-x-4 gap-y-0.5">{children}</span>
     </div>
   );
 }
 
 function Chip({ children }) {
   return (
-    <span className="text-xs bg-stone-200 border border-stone-400 rounded px-1.5 py-0.5">
+    <span className="text-sm text-ink">
       {children}
     </span>
   );
@@ -231,12 +236,12 @@ function SpellSection({ spells }) {
   if (!hasAny) return null;
 
   return (
-    <div className="mt-4 pt-3 border-t border-stone-300">
-      <div className="text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">
+    <div className="mt-4 border-t border-rule/40 pt-3">
+      <div className="text-[11px] font-bold uppercase tracking-wider text-ink-faded mb-1">
         Granted Spells
-        {ability && <span className="text-stone-500 normal-case"> · {ability}</span>}
+        {ability && <span className="normal-case tracking-normal"> · {ability}</span>}
       </div>
-      <div className="space-y-1.5 text-xs text-stone-800">
+      <div className="space-y-1 text-sm text-ink">
         {atWill.length > 0 && <SpellLine label="At Will">{atWill.map(formatSpellName).join(", ")}</SpellLine>}
         {daily.map((g, i) => (
           <SpellLine key={`d${i}`} label={`${g.uses}/long rest`}>{(g.spells || []).map(formatSpellName).join(", ")}</SpellLine>
@@ -258,9 +263,9 @@ function SpellSection({ spells }) {
 
 function SpellLine({ label, children }) {
   return (
-    <div className="flex flex-wrap gap-1.5">
-      <span className="font-semibold">{label}:</span>
-      <span className="text-stone-700">{children}</span>
+    <div className="flex flex-wrap items-baseline gap-1.5">
+      <span className="text-ink-faded">{label}:</span>
+      <span>{children}</span>
     </div>
   );
 }

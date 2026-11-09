@@ -2,6 +2,7 @@ import React, { useMemo, useRef, useState } from "react";
 import { openDiceTower } from "../../../../components/dice/DiceTowerWindow";
 import useMinionStore, { selKey } from "../../../../store/MinionStore";
 import MinionPlayCard from "./MinionPlayCard";
+import { blankNumber, note, stamp } from "../play/PlayParts";
 import { changeHp, setUnitHp } from "./minionHelpers";
 
 /* Play section for minions.
@@ -9,7 +10,9 @@ import { changeHp, setUnitHp } from "./minionHelpers";
    minion store so the dice tower's Minions tab sees the same selection.
    The bar on top applies damage, healing or an exact HP value to every
    selected unit, across all groups, in one save per group; "Dice tower"
-   opens the tower on its Minions tab for attacks and saves. */
+   opens the tower on its Minions tab for attacks and saves.
+   Written on the Play sheet: the bar is a line with a hairline under it,
+   the groups are headings, no boxes. */
 
 export default function MinionsPlay() {
   const minions = useMinionStore((s) => s.minions);
@@ -88,16 +91,15 @@ export default function MinionsPlay() {
 
   if (minions.length === 0) return null;
 
-  const barBtn =
-    "h-9 rounded-lg border px-3 text-sm transition disabled:cursor-not-allowed disabled:opacity-40";
+  const barBtn = "h-8 px-3 text-sm";
+  const quietNote = `${note} text-ink-faded hover:text-rubric`;
 
   return (
-    <div className="@container space-y-3">
+    <div className="@container space-y-4">
       {/* Action bar */}
-      <div className="flex flex-wrap items-center gap-2 rounded-xl border border-slate-700 bg-slate-950/60 p-2">
-        <span className="px-1 text-sm text-slate-300">
-          <span className={`font-semibold tabular-nums ${count ? "text-amber-300" : "text-slate-500"}`}>{count}</span>{" "}
-          selected
+      <div className="flex flex-wrap items-center gap-x-2.5 gap-y-2 border-b border-rule/25 pb-3">
+        <span className="pr-1 text-sm text-ink-faded">
+          <span className={`font-semibold tabular-nums ${count ? "text-rubric" : "text-ink-faded"}`}>{count}</span> selected
         </span>
 
         <input
@@ -108,15 +110,14 @@ export default function MinionsPlay() {
           placeholder="HP"
           onChange={(e) => setAmount(e.target.value)}
           aria-label="Amount"
-          className="h-9 w-20 rounded-lg border border-slate-600 bg-slate-950 text-center text-sm text-amber-200
-                     placeholder:text-slate-600 focus:border-amber-500/70 focus:outline-none"
+          className={`h-8 w-16 ${blankNumber}`}
         />
 
         <button
           type="button"
           onClick={() => apply("damage")}
           disabled={!amountOk || !count}
-          className={`${barBtn} border-red-700 bg-red-900/40 text-red-100 hover:bg-red-900/60`}
+          className={`${barBtn} ${stamp("bad")}`}
         >
           Damage
         </button>
@@ -124,7 +125,7 @@ export default function MinionsPlay() {
           type="button"
           onClick={() => apply("heal")}
           disabled={!amountOk || !count}
-          className={`${barBtn} border-emerald-700 bg-emerald-900/40 text-emerald-100 hover:bg-emerald-900/60`}
+          className={`${barBtn} ${stamp("good")}`}
         >
           Heal
         </button>
@@ -133,40 +134,26 @@ export default function MinionsPlay() {
           onClick={() => apply("set")}
           disabled={!amountOk || !count}
           title="Set selected units to exactly this HP"
-          className={`${barBtn} border-slate-600 bg-slate-900 text-slate-200 hover:bg-slate-800`}
+          className={`${barBtn} ${stamp("plain")}`}
         >
           Set
         </button>
 
-        <div className="ml-auto flex gap-1">
-          <button
-            type="button"
-            onClick={() => openDiceTower("minions")}
-            title="Attacks and saves for the selected units"
-            className="h-9 rounded-lg border border-amber-700/60 px-2.5 text-xs text-amber-300 hover:bg-amber-900/30"
-          >
-            Dice tower
+        <div className="ml-auto flex items-baseline gap-4">
+          <button type="button" onClick={() => openDiceTower("minions")} title="Attacks and saves for the selected units" className={`${note} text-rubric hover:text-rubric-deep`}>
+            dice tower
           </button>
-          <button
-            type="button"
-            onClick={selectStanding}
-            className="h-9 rounded-lg px-2.5 text-xs text-slate-400 hover:bg-slate-800 hover:text-amber-300"
-          >
-            Select standing
+          <button type="button" onClick={selectStanding} className={quietNote}>
+            select standing
           </button>
-          <button
-            type="button"
-            onClick={() => setSelected(new Set())}
-            disabled={!count}
-            className="h-9 rounded-lg px-2.5 text-xs text-slate-400 hover:bg-slate-800 hover:text-amber-300 disabled:opacity-40"
-          >
-            Clear
+          <button type="button" onClick={() => setSelected(new Set())} disabled={!count} className={quietNote}>
+            clear
           </button>
         </div>
       </div>
 
       {/* Groups: one column at half width on most screens, more when wide */}
-      <div className="grid grid-cols-1 items-start gap-3 @3xl:grid-cols-2 @6xl:grid-cols-3">
+      <div className="grid grid-cols-1 items-start gap-x-8 gap-y-6 @3xl:grid-cols-2 @6xl:grid-cols-3">
         {minions.map((m) => (
           <MinionPlayCard
             key={m.id}

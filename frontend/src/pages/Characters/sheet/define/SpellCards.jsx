@@ -201,7 +201,7 @@ export function SpellCard({ spell, onOpen, onSetMode, onTogglePrepared, onChange
           {spell.name}
         </button>
         {spell.school && <span className={`shrink-0 text-xs italic ${INK.faint}`}>{cap(spell.school)}</span>}
-        <span aria-hidden="true" className="mx-1 min-w-[0.75rem] flex-1 translate-y-[-4px] border-b-2 border-dotted border-[#7b6346]/35" />
+        <span aria-hidden="true" className="mx-1 min-w-[0.75rem] flex-1 translate-y-[-4px] border-b-2 border-dotted border-rule/35" />
         <span className={`hidden shrink-0 text-xs italic @lg:inline ${INK.faded}`}>{meta.join(" · ")}</span>
         <span className={`shrink-0 text-[10px] font-semibold tracking-wider ${INK.rubric}`}>
           {[...comps, spell.concentration ? "C" : null, spell.ritual ? "R" : null].filter(Boolean).join(" ")}

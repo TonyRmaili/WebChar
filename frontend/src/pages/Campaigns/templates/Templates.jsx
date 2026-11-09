@@ -111,7 +111,7 @@ export default function Templates({ campaignName }) {
           <div className="mb-2 flex flex-wrap items-baseline gap-x-4 text-xs italic">
             <span className={INK.faded}>show</span>
             {SHOW.map((o) => (
-              <button key={o.value} type="button" onClick={() => choose(o.value)} className={show === o.value ? `${INK.rubric} underline decoration-dotted underline-offset-4` : `${INK.faded} hover:text-[#3a2716]`}>
+              <button key={o.value} type="button" onClick={() => choose(o.value)} className={show === o.value ? `${INK.rubric} underline decoration-dotted underline-offset-4` : `${INK.faded} hover:text-ink`}>
                 {o.label}
               </button>
             ))}

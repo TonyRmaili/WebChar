@@ -113,11 +113,11 @@ function FeatRow({ row, charData, open, onToggle, onPatch, onReplace, onRemove, 
           {row.name || "unnamed feat"}
         </button>
         {fromCatalogue && <span className={`shrink-0 text-[10px] uppercase tracking-wider ${INK.faint}`}>{row.source}</span>}
-        <span aria-hidden="true" className="mx-1 min-w-[0.75rem] flex-1 translate-y-[-4px] border-b-2 border-dotted border-[#7b6346]/35" />
+        <span aria-hidden="true" className="mx-1 min-w-[0.75rem] flex-1 translate-y-[-4px] border-b-2 border-dotted border-rule/35" />
         <span className="flex shrink-0 flex-wrap items-baseline justify-end gap-x-2 text-xs">
           {when && <span className={`italic ${INK.faded}`}>{when.toLowerCase()}</span>}
           {chips.map((c, i) => (
-            <span key={i} className={c.tone === "hit" ? "text-[#1e3a8a]" : c.tone === "save" ? "text-[#6b21a8]" : INK.faded}>
+            <span key={i} className={c.tone === "hit" ? "text-info" : c.tone === "save" ? "text-magic" : INK.faded}>
               {c.text}
             </span>
           ))}

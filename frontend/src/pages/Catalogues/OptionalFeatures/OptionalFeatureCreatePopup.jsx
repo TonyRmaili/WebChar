@@ -1,7 +1,20 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { createPortal } from "react-dom";
 import { useCatalogueStore } from "../../../store/CatalogueStore";
 import FilterSection from "../FilterSection";
+import {
+  ChipsHeading,
+  CreateModal,
+  addRowCls,
+  boxCls,
+  checkCls,
+  checkLabelCls,
+  chip,
+  fieldCls,
+  hintCls,
+  labelCls,
+  removeRowCls,
+  textareaCls,
+} from "../catalogueStyle";
 import {
   formatFeatureType, FEATURE_TYPES, RESOURCE_OPTIONS,
 } from "./optionalFeatureHelpers";
@@ -77,12 +90,6 @@ export default function OptionalFeatureCreatePopup({ open, onClose, editingFeatu
     if (!Array.isArray(spellsData?.spells) || spellsData.spells.length === 0) loadSpells();
   }, [open]); // eslint-disable-line
 
-  useEffect(() => {
-    if (!open) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => { document.body.style.overflow = prev; };
-  }, [open]);
 
   useEffect(() => {
     if (!open) return;
@@ -268,48 +275,40 @@ export default function OptionalFeatureCreatePopup({ open, onClose, editingFeatu
     } catch { /* createError set */ }
   };
 
-  const chip = (active) =>
-    `text-[11px] px-2 py-1 rounded border transition
-     ${active
-       ? "bg-amber-500/20 border-amber-500/50 text-amber-300"
-       : "bg-slate-800/60 border-slate-700 text-slate-300 hover:border-amber-500/40 hover:text-amber-300"}`;
-  const fieldCls =
-    "bg-slate-900 border border-slate-600 rounded px-2 py-1 text-slate-100 text-sm w-full " +
-    "focus:outline-none focus:border-amber-500/60 focus:ring-1 focus:ring-amber-500/30";
 
-  return createPortal(
-    <div className="fixed inset-0 z-[2000] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onMouseDown={onClose}>
-      <div className="w-full max-w-3xl max-h-[90vh] flex flex-col bg-slate-900 border border-slate-700 rounded-lg shadow-2xl overflow-hidden"
-           onMouseDown={(e) => e.stopPropagation()}>
-        <div className="flex items-center justify-between px-5 py-3 border-b border-slate-700">
-          <h2 className="text-amber-400 font-semibold uppercase tracking-wider text-sm">{titleText}</h2>
-          <button onClick={onClose} className="px-2 text-slate-400 hover:text-slate-100 text-lg">×</button>
-        </div>
-
-        <div className="flex-1 overflow-y-auto px-5 py-4 space-y-1">
+  return (
+    <CreateModal
+      open={open}
+      title={titleText}
+      onClose={onClose}
+      onSave={handleSubmit}
+      saving={creating}
+      saveLabel={isEditing ? "Save Changes" : "Save"}
+      error={createError}
+    >
           {/* Basics */}
           <FilterSection title="Basics" defaultOpen>
             <div className="space-y-3">
               <div>
-                <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">
-                  Name <span className="text-red-400">*</span>
+                <label className={labelCls}>
+                  Name <span className="text-rubric">*</span>
                 </label>
                 <input type="text" value={form.name} onChange={(e) => update("name", e.target.value)}
                        placeholder="e.g. Devil's Sight"
-                       className={`${fieldCls} ${nameError ? "border-red-500 ring-1 ring-red-500/40" : ""}`} />
-                {nameError && <p className="text-xs text-red-400 mt-1">Name is required.</p>}
+                       className={`${fieldCls} ${nameError ? "!border-solid !border-bad" : ""}`} />
+                {nameError && <p className="mt-1 text-xs italic text-bad">Name is required.</p>}
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-x-6 gap-y-3">
                 <div>
-                  <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">Feature Type</label>
+                  <label className={labelCls}>Feature Type</label>
                   <select value={form.feature_type} onChange={(e) => update("feature_type", e.target.value)} className={fieldCls}>
                     {FEATURE_TYPES.map((t) => <option key={t} value={t}>{formatFeatureType(t)}</option>)}
                   </select>
                 </div>
                 <div>
-                  <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">Visibility</label>
-                  <div className="flex gap-2">
+                  <label className={labelCls}>Visibility</label>
+                  <div className="flex gap-x-4">
                     {["private", "public"].map((v) => (
                       <button key={v} type="button" onClick={() => update("visibility", v)} className={chip(form.visibility === v)}>
                         {cap(v)}
@@ -320,7 +319,7 @@ export default function OptionalFeatureCreatePopup({ open, onClose, editingFeatu
               </div>
 
               <div className="max-w-[220px]">
-                <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">Consumes</label>
+                <label className={labelCls}>Consumes</label>
                 <select value={form.consumes} onChange={(e) => update("consumes", e.target.value)} className={fieldCls}>
                   <option value="">—</option>
                   {RESOURCE_OPTIONS.map((r) => <option key={r} value={r}>{r}</option>)}
@@ -332,7 +331,7 @@ export default function OptionalFeatureCreatePopup({ open, onClose, editingFeatu
           {/* Description */}
           <FilterSection title="Description" defaultOpen>
             <textarea value={form.entries} onChange={(e) => update("entries", e.target.value)} rows={8}
-                      className={fieldCls} placeholder={"Use ## for headings.\n\n## Effect\nYou gain..."} />
+                      className={textareaCls} placeholder={"Use ## for headings.\n\n## Effect\nYou gain..."} />
           </FilterSection>
 
           {/* Skill Proficiencies */}
@@ -344,10 +343,10 @@ export default function OptionalFeatureCreatePopup({ open, onClose, editingFeatu
 
           {/* Senses */}
           <FilterSection title="Senses">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-3">
               {SENSES.map((s) => (
                 <div key={s}>
-                  <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">{cap(s)}</label>
+                  <label className={labelCls}>{cap(s)}</label>
                   <input type="number" min={0} step={5} value={form.senses[s]}
                          onChange={(e) => updateMap("senses", s, e.target.value)}
                          onBlur={(e) => updateMap("senses", s, clampStep5(e.target.value))}
@@ -359,10 +358,10 @@ export default function OptionalFeatureCreatePopup({ open, onClose, editingFeatu
 
           {/* Ability Score Increase */}
           <FilterSection title="Ability Score Increase">
-            <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
+            <div className="grid grid-cols-3 gap-x-6 gap-y-3 md:grid-cols-6">
               {ABILITIES.map((a) => (
                 <div key={a}>
-                  <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1 text-center">{a.toUpperCase()}</label>
+                  <label className={`${labelCls} text-center`}>{a.toUpperCase()}</label>
                   <input type="number" value={form.asi[a]} onChange={(e) => updateMap("asi", a, e.target.value)}
                          className={`${fieldCls} text-center`} placeholder="—" />
                 </div>
@@ -372,20 +371,20 @@ export default function OptionalFeatureCreatePopup({ open, onClose, editingFeatu
 
           {/* Speeds */}
           <FilterSection title="Speeds">
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-3">
               {SPEED_KEYS.map((k) => (
                 <div key={k}>
-                  <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">{cap(k)}</label>
+                  <label className={labelCls}>{cap(k)}</label>
                   <input type="number" min={0} step={5} value={form.speeds[k]}
                          onChange={(e) => updateMap("speeds", k, e.target.value)}
                          onBlur={(e) => updateMap("speeds", k, clampStep5(e.target.value))}
                          className={fieldCls} />
                 </div>
               ))}
-              <label className="flex items-end gap-2 text-sm text-slate-300 cursor-pointer">
+              <label className={`${checkLabelCls} self-end`}>
                 <input type="checkbox" checked={form.hover}
                        onChange={(e) => update("hover", e.target.checked)}
-                       className="accent-amber-500" />
+                       className={checkCls} />
                 Hover
               </label>
             </div>
@@ -407,10 +406,10 @@ export default function OptionalFeatureCreatePopup({ open, onClose, editingFeatu
 
           {/* Bonuses */}
           <FilterSection title="Bonuses">
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-3">
               {BONUS_KEYS.map(([k, label]) => (
                 <div key={k}>
-                  <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">{label}</label>
+                  <label className={labelCls}>{label}</label>
                   <input type="number" value={form.bonuses[k]} onChange={(e) => updateMap("bonuses", k, e.target.value)}
                          className={fieldCls} placeholder="—" />
                 </div>
@@ -433,16 +432,16 @@ export default function OptionalFeatureCreatePopup({ open, onClose, editingFeatu
           {/* Additional Spells */}
           <FilterSection title="Additional Spells">
             <div className="space-y-3">
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-x-6 gap-y-3">
                 <div>
-                  <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">Spellcasting Ability</label>
+                  <label className={labelCls}>Spellcasting Ability</label>
                   <select value={form.spell_ability_fixed} onChange={(e) => update("spell_ability_fixed", e.target.value)} className={fieldCls}>
                     <option value="">—</option>
                     {ABILITIES.map((a) => <option key={a} value={a}>{a.toUpperCase()}</option>)}
                   </select>
                 </div>
                 <div>
-                  <label className="block text-[10px] uppercase tracking-wider text-amber-400 mb-1">Resource Used</label>
+                  <label className={labelCls}>Resource Used</label>
                   <select value={form.resource_name} onChange={(e) => update("resource_name", e.target.value)} className={fieldCls}>
                     <option value="">—</option>
                     {RESOURCE_OPTIONS.map((r) => <option key={r} value={r}>{r}</option>)}
@@ -452,34 +451,34 @@ export default function OptionalFeatureCreatePopup({ open, onClose, editingFeatu
 
               {/* At Will */}
               <div>
-                <div className="text-[10px] uppercase tracking-wider text-amber-400 mb-1">At Will</div>
+                <div className={labelCls}>At Will</div>
                 <MultiNamePicker options={xphbSpellNames} selected={form.at_will}
                   onToggle={(n) => toggleListItem("at_will", n)} placeholder="Search spells…" />
               </div>
 
               {/* Daily */}
               <div>
-                <div className="text-[10px] uppercase tracking-wider text-amber-400 mb-1">Daily (Long Rest)</div>
+                <div className={labelCls}>Daily (Long Rest)</div>
                 <div className="space-y-2">
                   {form.daily.map((r, idx) => (
-                    <div key={idx} className="border border-slate-700 rounded p-2 space-y-2">
-                      <div className="flex justify-between items-center gap-2">
-                        <div className="flex items-center gap-2">
-                          <span className="text-[10px] uppercase text-slate-400">Uses</span>
+                    <div key={idx} className={boxCls}>
+                      <div className="flex items-baseline justify-between gap-2">
+                        <div className="flex items-baseline gap-2">
+                          <span className="text-sm italic text-ink-faded">Uses</span>
                           <input type="number" min={1} value={r.uses}
                                  onChange={(e) => updateDaily(idx, "uses", e.target.value)}
                                  className={`${fieldCls} max-w-[70px]`} />
-                          <span className="text-[10px] uppercase text-slate-400">per long rest</span>
+                          <span className="text-sm italic text-ink-faded">per long rest</span>
                         </div>
                         <button onClick={() => removeDaily(idx)}
-                                className="text-[11px] px-2 py-1 rounded border border-red-700/50 text-red-300 hover:bg-red-900/40">✕</button>
+                                aria-label="Remove" className={removeRowCls}>✕</button>
                       </div>
                       <MultiNamePicker options={xphbSpellNames} selected={r.spells}
                         onToggle={(n) => toggleDailySpell(idx, n)} placeholder="Search spells…" />
                     </div>
                   ))}
                   <button onClick={addDaily}
-                          className="text-[11px] px-3 py-1.5 rounded border border-slate-600 text-slate-300 hover:border-amber-500/40 hover:text-amber-300">
+                          className={addRowCls}>
                     + Add Daily Group
                   </button>
                 </div>
@@ -487,50 +486,34 @@ export default function OptionalFeatureCreatePopup({ open, onClose, editingFeatu
 
               {/* Granted */}
               <div>
-                <div className="text-[10px] uppercase tracking-wider text-amber-400 mb-1">Granted (Known Spells)</div>
+                <div className={labelCls}>Granted (Known Spells)</div>
                 <div className="space-y-2">
                   {form.granted.map((r, idx) => (
-                    <div key={idx} className="border border-slate-700 rounded p-2 space-y-2">
-                      <div className="flex justify-between items-center gap-2">
-                        <div className="flex items-center gap-2">
-                          <span className="text-[10px] uppercase text-slate-400">Choose</span>
+                    <div key={idx} className={boxCls}>
+                      <div className="flex items-baseline justify-between gap-2">
+                        <div className="flex items-baseline gap-2">
+                          <span className="text-sm italic text-ink-faded">Choose</span>
                           <input type="number" min={1} value={r.count}
                                  onChange={(e) => updateGranted(idx, "count", e.target.value)}
                                  className={`${fieldCls} max-w-[70px]`} />
-                          <span className="text-[10px] uppercase text-slate-400">from</span>
+                          <span className="text-sm italic text-ink-faded">from</span>
                         </div>
                         <button onClick={() => removeGranted(idx)}
-                                className="text-[11px] px-2 py-1 rounded border border-red-700/50 text-red-300 hover:bg-red-900/40">✕</button>
+                                aria-label="Remove" className={removeRowCls}>✕</button>
                       </div>
                       <MultiNamePicker options={xphbSpellNames} selected={r.from}
                         onToggle={(n) => toggleGrantedSpell(idx, n)} placeholder="Search spells…" />
                     </div>
                   ))}
                   <button onClick={addGranted}
-                          className="text-[11px] px-3 py-1.5 rounded border border-slate-600 text-slate-300 hover:border-amber-500/40 hover:text-amber-300">
+                          className={addRowCls}>
                     + Add Granted Group
                   </button>
                 </div>
               </div>
             </div>
           </FilterSection>
-        </div>
-
-        <div className="flex items-center justify-between gap-3 px-5 py-3 border-t border-slate-700">
-          {createError ? <span className="text-xs text-red-400 truncate flex-1">{createError}</span> : <span className="flex-1" />}
-          <button onClick={onClose}
-                  className="text-[11px] px-3 py-1.5 rounded border border-slate-600 text-slate-400 hover:border-red-500/40 hover:text-red-300">
-            Cancel
-          </button>
-          <button onClick={handleSubmit} disabled={creating}
-                  className="text-[11px] px-3 py-1.5 rounded border border-amber-500/50 bg-amber-500/20 text-amber-300
-                             hover:bg-amber-500/30 disabled:opacity-50 disabled:cursor-not-allowed">
-            {creating ? "Saving…" : isEditing ? "Save Changes" : "Save"}
-          </button>
-        </div>
-      </div>
-    </div>,
-    document.body
+    </CreateModal>
   );
 }
 
@@ -540,14 +523,9 @@ function CollapsibleChips({ label, options, selected, onToggle, renderOption, ch
   const display = renderOption || ((x) => cap(String(x)));
   return (
     <div>
-      <button type="button" onClick={() => setOpen((o) => !o)}
-              className="flex items-center gap-1.5 uppercase tracking-wider text-amber-400 text-[10px] mb-1 hover:text-amber-300 transition select-none">
-        <span className={`text-[10px] inline-block transition-transform duration-150 ${open ? "rotate-90" : ""}`}>▶</span>
-        <span>{label}</span>
-        {selected.length > 0 && <span className="ml-1 text-amber-300 normal-case">({selected.length})</span>}
-      </button>
+      <ChipsHeading open={open} onToggle={() => setOpen((o) => !o)} label={label} count={selected.length} />
       {open && (
-        <div className="flex flex-wrap gap-2 pl-3 mb-2">
+        <div className="mb-2 flex flex-wrap gap-x-4 gap-y-1.5 border-l border-rule/30 pl-3">
           {options.map((opt) => (
             <button key={opt} type="button" onClick={() => onToggle(opt)} className={chip(selected.includes(opt))}>
               {display(opt)}
@@ -567,29 +545,23 @@ function MultiNamePicker({ options, selected, onToggle, placeholder }) {
     if (!q) return [];
     return options.filter((n) => n.toLowerCase().includes(q)).slice(0, 40);
   }, [query, options]);
-  const chip = (active) =>
-    `text-[11px] px-2 py-1 rounded border transition
-     ${active
-       ? "bg-amber-500/20 border-amber-500/50 text-amber-300"
-       : "bg-slate-800/60 border-slate-700 text-slate-300 hover:border-amber-500/40 hover:text-amber-300"}`;
   return (
     <div>
       {selected.length > 0 && (
-        <div className="flex flex-wrap gap-1.5 mb-2">
+        <div className="mb-2 flex flex-wrap gap-x-4 gap-y-1">
           {selected.map((n) => (
-            <button key={n} type="button" onClick={() => onToggle(n)} className={chip(true)}>{cap(n)} ✕</button>
+            <button key={n} type="button" onClick={() => onToggle(n)} className={chip(true)}>{cap(n)} <span aria-hidden className="text-ink-faded">✕</span></button>
           ))}
         </div>
       )}
       <input type="text" value={query} onChange={(e) => setQuery(e.target.value)}
              placeholder={options.length ? placeholder : "Loading…"}
-             className="bg-slate-900 border border-slate-600 rounded px-2 py-1 text-slate-100 text-sm w-full mb-2
-                        focus:outline-none focus:border-amber-500/60 focus:ring-1 focus:ring-amber-500/30" />
-      <div className="flex flex-wrap gap-1.5 max-h-32 overflow-y-auto pr-1">
+             className={`${fieldCls} mb-2`} />
+      <div className="flex max-h-32 flex-wrap gap-x-4 gap-y-1 overflow-y-auto pr-1">
         {filtered.map((n) => (
           <button key={n} type="button" onClick={() => onToggle(n)} className={chip(selected.includes(n))}>{cap(n)}</button>
         ))}
-        {query && filtered.length === 0 && <span className="text-[11px] text-slate-500">No matches.</span>}
+        {query && filtered.length === 0 && <span className={hintCls}>No matches.</span>}
       </div>
     </div>
   );
