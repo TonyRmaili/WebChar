@@ -1,21 +1,25 @@
 import React, { useMemo, useRef, useState } from "react";
-import useMinionStore from "../../../../store/MinionStore";
+import { openDiceTower } from "../../../../components/dice/DiceTowerWindow";
+import useMinionStore, { selKey } from "../../../../store/MinionStore";
 import MinionPlayCard from "./MinionPlayCard";
 import { changeHp, setUnitHp } from "./minionHelpers";
 
 /* Play section for minions.
-   Selection lives here, on screen only (it is never saved). The bar on
-   top applies damage, healing or an exact HP value to every selected
-   unit, across all groups, in one save per group. */
-
-const selKey = (minionId, unitId) => `${minionId}:${unitId}`;
+   Which units are selected is screen state (never saved), kept in the
+   minion store so the dice tower's Minions tab sees the same selection.
+   The bar on top applies damage, healing or an exact HP value to every
+   selected unit, across all groups, in one save per group; "Dice tower"
+   opens the tower on its Minions tab for attacks and saves. */
 
 export default function MinionsPlay() {
   const minions = useMinionStore((s) => s.minions);
   const saveMinion = useMinionStore((s) => s.saveMinion);
   const saveMany = useMinionStore((s) => s.saveMany);
+  const selectedKeys = useMinionStore((s) => s.selected);
+  const setSelectedKeys = useMinionStore((s) => s.setSelected);
 
-  const [selected, setSelected] = useState(() => new Set());
+  const selected = useMemo(() => new Set(selectedKeys), [selectedKeys]);
+  const setSelected = (next) => setSelectedKeys([...next]);
   const [amount, setAmount] = useState("");
   const lastClick = useRef(null); // { minionId, index } for shift-click ranges
 
@@ -135,6 +139,14 @@ export default function MinionsPlay() {
         </button>
 
         <div className="ml-auto flex gap-1">
+          <button
+            type="button"
+            onClick={() => openDiceTower("minions")}
+            title="Attacks and saves for the selected units"
+            className="h-9 rounded-lg border border-amber-700/60 px-2.5 text-xs text-amber-300 hover:bg-amber-900/30"
+          >
+            Dice tower
+          </button>
           <button
             type="button"
             onClick={selectStanding}

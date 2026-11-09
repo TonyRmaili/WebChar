@@ -199,3 +199,20 @@ These replaced by _mod?
 "save": null,
 
 characters land with 0 charges
+
+
+
+
+
+
+Card Deck: as the project has grown so has the popup cards too. Perhaps its time to have them organized and once a card is minized it lands into the corresponding deck instead of having them sit at the bottom like they are now
+Dice Tower: here the user can setup a bunch of premade dice to make large amounts of rolls directly. This helps out DM that controls lots of groups or players that have many minions. There needs to be clever tools that one can use to make these dice loadouts and how it can connect to differant parts of the page
+Remove the dependancy of local storage of things: like mentioned before perhaps now forgotten by you? when i first made this project i used to store the character sheet and other states in local storage for some reason. Now there can be 2 sources of truth in the project and we need to remove and adjust the logic so we read from backend only. 
+Removal of redundant files and better folder structure: i have removed many but some lingers on. 
+Settings: not much expect for allowing the user to set api keys, removal of profiles and select styling for the page. Currently this page sits on 2 very differant styles: the standard one (dark blue with orange text; robotic line boxes all that) and parchemnt. Parchement is slowly taking over but i want both to exist and later maybe a third style. So a dedicated 
+Security: page needs to be made much more secure if i plan to make it into a webpage. Which leads to what i want to discus now
+
+Initially this project was thought to be hosted online as a website. Either i use my pc as the server backend if its among friends and later to a dedicated webhotell. If this is the route i am doing the security needs to be modern and up to standards
+However recently i've been thinking to make it into a desktop app were users can just download it and go. I believe this react project is suitable to be converted like that (because its react html and so). 
+There are some features and more will come were i use AI chat to help the DM. These api keys are mine but a user needs to config their own otherwise the AI features will be locked. Is it easily done for this project to connect online once its made into an app? 
+There is also a donation section i want to have because i plan to launch it for free: maybe i should take a charge or subscription instead. either way paypal or other pay methods needs to get involved.

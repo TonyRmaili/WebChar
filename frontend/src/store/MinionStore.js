@@ -40,11 +40,19 @@ async function request(method, path, body) {
 // damage several times) collapse into a single request.
 const pending = new Map(); // id -> { timer, run }
 
+// A selected unit: "<minion id>:<unit id>".
+export const selKey = (minionId, unitId) => `${minionId}:${unitId}`;
+
 const useMinionStore = create((set, get) => ({
   charName: null,
   minions: [],
   loading: false,
   error: null,
+
+  // Which units are selected — screen state only, never saved. Shared by
+  // the sheet's Play section and the dice tower's Minions tab.
+  selected: [],
+  setSelected: (keys) => set({ selected: [...new Set(keys)] }),
 
   clearError: () => set({ error: null }),
 
@@ -55,7 +63,7 @@ const useMinionStore = create((set, get) => ({
     // Waiting saves go out first, so the reload can't overwrite them.
     await get().flushSaves();
 
-    if (get().charName !== charName) set({ charName, minions: [] });
+    if (get().charName !== charName) set({ charName, minions: [], selected: [] });
     set({ loading: true, error: null });
 
     try {

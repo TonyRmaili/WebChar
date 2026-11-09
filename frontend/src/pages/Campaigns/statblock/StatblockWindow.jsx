@@ -1,26 +1,33 @@
 import React, { useEffect, useMemo, useState } from "react";
-import useCampaignStore, { copiesKey } from "../../../store/CampaignStore";
 import { useCatalogueStore } from "../../../store/CatalogueStore";
 import { usePopupStore } from "../../../store/PopupStore";
+import useEncounterStore from "../../../store/EncounterStore";
+import useGroupStore from "../../../store/GroupStore";
+import useTemplateStore from "../../../store/TemplateStore";
 import { INK, InkText, ParchmentSheet } from "../../../styles/parchment";
 import ParchmentMenu from "../../../styles/ParchmentMenu";
 import Statblock from "./Statblock";
 import useStatblockDrafts from "./statblockDrafts";
+import { useStatblockSource } from "./statblockSource";
 import CharacterRowEditor from "./characterRowEditor";
 import MonsterRowEditor from "./monsterRowEditor";
 import { CHARACTER_ACTIONS, CHARACTER_ADD_KINDS, CHARACTER_EDITS, characterView } from "./characterStatblock";
 import { MONSTER_ACTIONS, MONSTER_ADD_KINDS, MONSTER_EDITS, monsterView } from "./monsterStatblock";
+import { TEMPLATE_EDITS, templateView } from "../templates/templateStatblock";
+import { applyTemplates, attachedTemplates, givenTemplates, memberIn, resolveTemplates, templateMenuGroups, withTemplateSections } from "../templates/templateLogic";
 
 /* ═══════════════════════════════════════════════════════════════════
    StatblockWindow — a campaign copy's statblock as one of the app's card
    windows (registered as popup type "statblock"), so it can be moved,
    resized, minimized to the footer, and kept open while you use the page.
 
-   Window data is only a reference: { name, campaignName, kind, file }.
-   The creature itself is read from the campaign store (fetched if it
-   isn't loaded), so a minimized card in the footer never goes stale.
-   `kind` picks the adapter: party / npc → a character, monster → a
-   catalogue monster. Both draw with the same Statblock.
+   Window data is only a reference: { name, campaignName, kind, file } for
+   a campaign copy, or { name, campaignName, kind: "encounter", encounterId,
+   monsterId } for a monster inside an encounter (statblockSource.js reads
+   and saves either). The creature itself is read from its store (fetched
+   if it isn't loaded), so a minimized card in the footer never goes stale.
+   `kind` picks the adapter: party / npc → a character, monster or
+   encounter → a catalogue monster. All draw with the same Statblock.
 
    Reading by default; using a dot (charges, slots) saves at once.
    Editing is only through the right-click menu (anywhere on the card):
@@ -29,11 +36,22 @@ import { MONSTER_ACTIONS, MONSTER_ADD_KINDS, MONSTER_EDITS, monsterView } from "
    ═══════════════════════════════════════════════════════════════════ */
 
 const asList = (v) => (Array.isArray(v) ? v : []);
-const CHARACTER = { view: characterView, edits: CHARACTER_EDITS, actions: CHARACTER_ACTIONS, RowEditor: CharacterRowEditor, addKinds: CHARACTER_ADD_KINDS };
-const MONSTER = { view: monsterView, edits: MONSTER_EDITS, actions: MONSTER_ACTIONS, RowEditor: MonsterRowEditor, addKinds: MONSTER_ADD_KINDS };
-const ADAPTERS = { party: CHARACTER, npc: CHARACTER, monster: MONSTER };
+// A character's template traits/actions sit next to its own; a monster
+// gets them inside its worked-out data already.
+const characterWithTemplates = (raw, { editing, templates = [] }) =>
+  editing ? characterView(raw, { editing }) : withTemplateSections(characterView(raw, { editing }), templates, raw?.template_uses);
 
-export const statblockWindowId = (d) => `statblock__${d.campaignName}__${d.kind}__${d.file}`;
+const CHARACTER = { view: characterWithTemplates, edits: CHARACTER_EDITS, actions: CHARACTER_ACTIONS, RowEditor: CharacterRowEditor, addKinds: CHARACTER_ADD_KINDS };
+const MONSTER = { view: monsterView, edits: MONSTER_EDITS, actions: MONSTER_ACTIONS, RowEditor: MonsterRowEditor, addKinds: MONSTER_ADD_KINDS };
+const TEMPLATE = { view: templateView, edits: TEMPLATE_EDITS, actions: MONSTER_ACTIONS, RowEditor: MonsterRowEditor, addKinds: MONSTER_ADD_KINDS };
+const ADAPTERS = { party: CHARACTER, npc: CHARACTER, monster: MONSTER, encounter: MONSTER, template: TEMPLATE };
+
+export const statblockWindowId = (d) =>
+  d.kind === "encounter"
+    ? `statblock__${d.campaignName}__encounter__${d.encounterId}__${d.monsterId}`
+    : d.kind === "template"
+      ? `statblock__${d.campaignName}__template__${d.templateId}`
+      : `statblock__${d.campaignName}__${d.kind}__${d.file}`;
 
 // The size the card is designed for: wide enough for two columns, nearly full height.
 export const standardFrame = () => {
@@ -43,9 +61,12 @@ export const standardFrame = () => {
 };
 
 // Open (or bring forward) a card, placed at the standard size the first time.
-export function openStatblock(data) {
+// `editFrom`: open it already editing, starting from this (e.g. a template
+// that was just made — empty, so you want to fill it in straight away).
+export function openStatblock(data, { editFrom } = {}) {
   const store = usePopupStore.getState();
   const id = statblockWindowId(data);
+  if (editFrom) useStatblockDrafts.getState().setDraft(id, structuredClone(editFrom));
   const known = store.openPopups.some((p) => p.id === id) || store.minimized.some((p) => p.id === id);
   store.open("statblock", data);
   if (!known) {
@@ -71,14 +92,19 @@ const CATALOGUE = {
   optionalFeature: { list: (s) => s.optionalFeaturesData?.features, load: "loadOptionalFeatures" },
 };
 
-export default function StatblockWindow({ statblock }) {
-  const { campaignName, kind, file } = statblock;
+// `embedded`: drawn inside another window (the initiative tracker's turn
+// card) instead of as its own window — the right-click menu then offers
+// "open as its own card" instead of minimize / standard size / close.
+export default function StatblockWindow({ statblock, embedded = false }) {
+  const { campaignName, kind } = statblock;
   const id = statblockWindowId(statblock);
   const adapter = ADAPTERS[kind] || CHARACTER;
-
-  const entry = useCampaignStore((s) => asList(s.campaignCharacters[copiesKey(campaignName, kind)]).find((c) => c.file === file));
-  const fetchCampaignCharacters = useCampaignStore((s) => s.fetchCampaignCharacters);
-  const saveCampaignCharacter = useCampaignStore((s) => s.saveCampaignCharacter);
+  const source = useStatblockSource(statblock);
+  const canTemplate = kind !== "template";
+  const allTemplates = useTemplateStore((s) => s.records[campaignName]);
+  const groups = useGroupStore((s) => s.records[campaignName]);
+  // A party member or NPC gets its groups' templates from its place in an encounter.
+  const member = useEncounterStore((s) => (kind === "party" || kind === "npc" ? memberIn(s.encounters[campaignName], kind, statblock.file) : null));
 
   const draft = useStatblockDrafts((s) => s.drafts[id]) ?? null;
   const setDraftFor = useStatblockDrafts((s) => s.setDraft);
@@ -96,19 +122,42 @@ export default function StatblockWindow({ statblock }) {
 
   // Restored from the footer after a reload, or opened before the list was loaded.
   useEffect(() => {
-    if (entry) return;
-    fetchCampaignCharacters(campaignName, kind).then((res) => {
-      if (!res.ok) return setLoadProblem(res.message);
-      const found = asList(useCampaignStore.getState().campaignCharacters[copiesKey(campaignName, kind)]).some((c) => c.file === file);
-      setLoadProblem(found ? null : "it isn't in this campaign any more");
-    });
+    if (source.raw) return;
+    source.load().then((res) => setLoadProblem(res.ok ? null : res.message));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [campaignName, kind, file]);
+  }, [id]);
 
-  const raw = entry?.data;
+  // Templates are needed to show the creature as it is with them on.
+  useEffect(() => {
+    if (canTemplate && !allTemplates) useTemplateStore.getState().fetch(campaignName);
+    if (canTemplate && !groups) useGroupStore.getState().fetch(campaignName);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [campaignName]);
+
+  const raw = source.raw;
   const editing = draft !== null;
   const current = draft ?? raw;
-  const view = useMemo(() => (current ? adapter.view(current, { editing }) : null), [adapter, current, editing]);
+  const given = useMemo(() => (canTemplate && current ? givenTemplates(current, member, groups) : []), [canTemplate, current, member, groups]);
+  // Reading shows the creature with its templates on; editing shows its own
+  // statblock (what you change), with the templates named above it.
+  const view = useMemo(() => {
+    if (!current) return null;
+    if (!canTemplate || editing) return adapter.view(current, { editing });
+    const templates = resolveTemplates(current, allTemplates, given);
+    return adapter.view(applyTemplates(kind, current, templates), { editing, templates });
+  }, [adapter, current, editing, allTemplates, canTemplate, kind, given]);
+  const attached = canTemplate && current ? attachedTemplates(current, allTemplates, given) : [];
+
+  // Keep the window's title (and its footer button) on the name shown, e.g.
+  // after renaming a template or when a template adds "Ghostly".
+  useEffect(() => {
+    if (!view?.name || view.name === statblock.name) return;
+    usePopupStore.setState((s) => ({
+      openPopups: s.openPopups.map((p) => (p.id === id ? { ...p, data: { ...p.data, name: view.name } } : p)),
+      minimized: s.minimized.map((p) => (p.id === id ? { ...p, data: { ...p.data, name: view.name } } : p)),
+    }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [view?.name]);
   const dirty = editing && JSON.stringify(draft) !== JSON.stringify(raw);
 
   if (!raw) {
@@ -128,7 +177,7 @@ export default function StatblockWindow({ statblock }) {
   const save = async () => {
     if (!dirty) return clearDraft(id);
     setSaving(true);
-    const res = await saveCampaignCharacter(campaignName, kind, file, draft);
+    const res = await source.save(draft);
     setSaving(false);
     if (res?.ok) {
       clearDraft(id);
@@ -151,7 +200,7 @@ export default function StatblockWindow({ statblock }) {
   // A spent or regained use (or a hidden row): into the draft while editing, saved at once while reading.
   const use = async (next) => {
     if (editing) return setDraft(next);
-    const res = await saveCampaignCharacter(campaignName, kind, file, next);
+    const res = await source.save(next, { now: false });
     setProblem(res?.ok ? null : res?.message || "couldn't save");
   };
 
@@ -193,7 +242,12 @@ export default function StatblockWindow({ statblock }) {
     setMenu({ x: e.clientX, y: e.clientY });
   };
 
+  // Templates are changed on the creature itself and saved at once.
+  const changeTemplates = (fn) => (editing ? setDraft(fn(current)) : use(fn(raw)));
+  const templateGroups = canTemplate ? templateMenuGroups(current, allTemplates, changeTemplates, given) : [];
+
   const menuGroups = [
+    ...templateGroups,
     {
       items: editing
         ? [
@@ -203,16 +257,18 @@ export default function StatblockWindow({ statblock }) {
         : [{ label: "Edit", onSelect: startEdit }],
     },
     {
-      items: [
-        { label: "Minimize", onSelect: () => minimize(id), note: editing ? "keeps your edits" : undefined },
-        { label: "Standard size", onSelect: toStandardSize },
-        { label: "Close", onSelect: close, danger: dirty },
-      ],
+      items: embedded
+        ? [{ label: "Open as its own card", onSelect: () => openStatblock(statblock) }]
+        : [
+            { label: "Minimize", onSelect: () => minimize(id), note: editing ? "keeps your edits" : undefined },
+            { label: "Standard size", onSelect: toStandardSize },
+            { label: "Close", onSelect: close, danger: dirty },
+          ],
     },
   ];
 
   return (
-    <div className="h-full overflow-y-auto bg-[#1c120b] p-2" onContextMenu={onContextMenu}>
+    <div className={`h-full overflow-y-auto ${embedded ? "" : "bg-[#1c120b] p-2"}`} onContextMenu={onContextMenu}>
       <ParchmentSheet>
         {/* header — scrolls with the card; edit / save / discard live in the right-click menu */}
         <div className="mb-3">
@@ -225,9 +281,21 @@ export default function StatblockWindow({ statblock }) {
             {view.subtitle}
             <span className={`ml-2 ${INK.faint}`}>· right-click to {editing ? "save or discard" : "edit"}</span>
           </p>
+          {attached.length > 0 && (
+            <p className={`text-[13px] italic ${INK.rubric}`}>
+              with{" "}
+              {attached.map((a, i) => (
+                <span key={a.id} className={a.on ? "" : `line-through ${INK.faint}`} title={`${a.on ? "On" : "Switched off"}${a.group ? ` · from ${a.group}` : ""}`}>
+                  {a.template?.name || "a deleted template"}
+                  {i < attached.length - 1 ? " · " : ""}
+                </span>
+              ))}
+              {editing && <span className={INK.faint}> — shown here without them while you edit</span>}
+            </p>
+          )}
           {editing && (
             <p className={`text-[13px] italic ${INK.rubric}`}>
-              {view.editingNote}
+              {kind === "encounter" ? "Editing this encounter's copy only — the shelf and the catalogue are not touched." : view.editingNote}
               {dirty ? " Unsaved changes." : ""}
             </p>
           )}

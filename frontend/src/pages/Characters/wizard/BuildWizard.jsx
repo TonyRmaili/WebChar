@@ -573,7 +573,7 @@ export default function BuildWizard({ onCreated }) {
           )}
         </div>
 
-        <div className="@5xl:w-72 @5xl:shrink-0 @5xl:self-stretch @5xl:border-l @5xl:border-[#7b6346]/25 @5xl:pl-6">
+        <div className="@5xl:w-[clamp(18rem,32%,36rem)] @5xl:shrink-0 @5xl:self-stretch @5xl:border-l @5xl:border-[#7b6346]/25 @5xl:pl-6">
           <Summary
             editions={editions}
             selectedRace={selectedRace}

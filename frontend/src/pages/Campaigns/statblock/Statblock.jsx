@@ -172,7 +172,7 @@ function Blanks({ parts, raw, edits, set }) {
     }
     if (p.select) {
       return (
-        <InkSelect key={i} value={edits[p.select].get(raw)} onChange={(e) => set(edits[p.select].set(raw, e.target.value))} aria-label={p.label} className="h-8 text-2xl">
+        <InkSelect key={i} value={edits[p.select].get(raw, p.arg)} onChange={(e) => set(edits[p.select].set(raw, ...(p.arg != null ? [p.arg] : []), e.target.value))} aria-label={p.label} className="h-8 text-2xl">
           {p.options.map((o) => (
             <option key={o.value} value={o.value}>
               {o.label}
@@ -182,7 +182,7 @@ function Blanks({ parts, raw, edits, set }) {
       );
     }
     if (p.mark) {
-      const on = edits[p.mark].get(raw);
+      const on = edits[p.mark].get(raw, p.arg);
       return (
         <span key={i} className={`flex items-center gap-1 text-xs italic ${on ? INK.rubric : INK.faded}`}>
           <Mark on={on} onClick={() => set(edits[p.mark].set(raw, !on))} label={p.label} />
@@ -190,15 +190,18 @@ function Blanks({ parts, raw, edits, set }) {
         </span>
       );
     }
+    // `arg` picks which number of an edit that has several (a template's "abilities.str").
+    const e = edits[p.edit];
     return (
       <InkNumber
         key={i}
-        value={edits[p.edit].get(raw)}
-        onChange={(v) => set(edits[p.edit].set(raw, v))}
+        value={p.arg != null ? e.get(raw, p.arg) : e.get(raw)}
+        onChange={(v) => set(p.arg != null ? e.set(raw, p.arg, v) : e.set(raw, v))}
         min={p.min}
         max={p.max}
         step={p.step}
-        fallback={p.fallback ?? 0}
+        fallback={"fallback" in p ? p.fallback : 0}
+        placeholder={"fallback" in p && p.fallback == null ? "—" : undefined}
         aria-label={p.label}
         className={SIZE[p.size || "lg"]}
       />
@@ -268,7 +271,7 @@ function SkillGrid({ view, raw, edits, set }) {
   return (
     <div>
       <div className={`mb-1 text-[10px] font-semibold uppercase tracking-[0.2em] ${INK.faded}`}>
-        {byBonus ? "Skills — write a bonus to show it, leave blank to hide it" : "Skills — click the dot: none, proficient, expertise"}
+        {view.skillsHint || (byBonus ? "Skills — write a bonus to show it, leave blank to hide it" : "Skills — click the dot: none, proficient, expertise")}
       </div>
       <div className="grid grid-cols-1 gap-x-8 @xl:grid-cols-2 @4xl:grid-cols-3">
         {view.skills.map((s) => (
@@ -348,7 +351,7 @@ function FieldsEditor({ editor, raw, edits, set }) {
           <span key={key} className="inline-flex items-baseline gap-1.5">
             <span className={`text-sm italic ${INK.faded}`}>{f.label}</span>
             {f.kind === "number" ? (
-              <InkNumber value={get()} onChange={put} min={0} step={f.step} placeholder="—" aria-label={f.label} className="h-6 w-12 text-sm" />
+              <InkNumber value={get()} onChange={put} min={f.min ?? 0} max={f.max} step={f.step} placeholder="—" aria-label={f.label} className="h-6 w-12 text-sm" />
             ) : f.kind === "select" ? (
               <InkSelect value={get()} onChange={(ev) => put(ev.target.value)} aria-label={f.label} className="h-6 text-sm">
                 {f.options.map((o) => (
@@ -383,16 +386,23 @@ function LineEditor({ line, raw, edits, set }) {
 // Reading: "◆ Longsword. Melee · +7 to hit · 1d8+3 slashing.  ●●○   ▸"
 // The diamond hides the row from the statblock (it comes back in edit);
 // the arrow on the right opens or closes this entry's text.
+// A row a template gives has no hide diamond (switch the template off
+// instead) and says which template it came from.
 function EntryLine({ entry, textOpen, onToggleText, onUses, onHide, onView }) {
   return (
     <div className="mb-1.5 break-inside-avoid text-[15px] leading-relaxed">
       <div className="flex items-baseline gap-2">
         <span className="shrink-0 self-start pt-[5px]">
-          <Switch checked onChange={onHide} label={`Hide ${entry.name} from the statblock (bring it back in edit)`} />
+          {entry.fromTemplate ? (
+            <span className="block h-[14px] w-[18px]" title={`From the ${entry.fromTemplate} template`} />
+          ) : (
+            <Switch checked onChange={onHide} label={`Hide ${entry.name} from the statblock (bring it back in edit)`} />
+          )}
         </span>
         <p className="min-w-0 flex-1">
           <CatalogueName entry={entry} onView={onView} className="font-semibold italic" />
           <span className="font-semibold italic">.</span>{" "}
+          {entry.fromTemplate && <span className={`mr-1 text-[10px] uppercase tracking-wider ${INK.faint}`}>{entry.fromTemplate}</span>}
           {entry.roll && <span className="italic">{entry.roll}.</span>}{" "}
           {entry.uses && (
             <span className="whitespace-nowrap">
@@ -850,16 +860,20 @@ export default function Statblock({ view, raw, editing = false, edits, actions, 
 
   return (
     <div>
-      <Fold id="base" title="Vitals & ability scores" summary={foldSummary(view)}>
+      <Fold id="base" title={view.foldTitles?.base || "Vitals & ability scores"} summary={foldSummary(view)}>
         <Vitals {...shared} />
-        <RubricRule />
-        <Abilities {...shared} />
+        {view.abilities.length > 0 && (
+          <>
+            <RubricRule />
+            <Abilities {...shared} />
+          </>
+        )}
       </Fold>
       <RubricRule />
 
-      <Fold id="lines" title="Saves, skills & senses">
+      <Fold id="lines" title={view.foldTitles?.lines || "Saves, skills & senses"}>
         <div className="space-y-0.5">
-          {editing && (
+          {editing && view.skills.length > 0 && (
             <div className="mb-3">
               <SkillGrid {...shared} />
             </div>

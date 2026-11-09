@@ -12,6 +12,7 @@ import SplitPanels from "./sheet/SplitPanels";
 import PlaySection from "./sheet/PlaySection";
 import PartyBar from "./sheet/PartyBar";
 import { DEFINE_TABS, DEFAULT_DEFINE_TAB, findDefineTab } from "./sheet/defineTabs";
+import { ViewSwitch, WithViewRail } from "./ViewSwitch";
 
 const API = "http://localhost:8000";
 const TAB_KEY = "sheet.defineTab";
@@ -85,7 +86,9 @@ function DefineRailTabs({ activeTab, panelOpen, onPick }) {
 
 /* ---------- Page ---------- */
 
-export default function Sheets() {
+/* `onView(id)`: switch the Characters page to "create" — the switch sits in
+   the Play panel's rail (or a rail of its own while there's no sheet). */
+export default function Sheets({ onView }) {
   const token = useAuthStore((s) => s.token);
   const userData = useAuthStore((s) => s.userData);
   const fetchChar = useCharStore((s) => s.fetchChar);
@@ -195,12 +198,21 @@ export default function Sheets() {
 
   /* ---- empty states ---- */
 
+  // No sheet to show yet: the switch gets a rail of its own, so Create is still a click away.
+  const alone = (body) => (
+    <div className="py-4">
+      <WithViewRail view="sheets" onView={onView}>
+        {body}
+      </WithViewRail>
+    </div>
+  );
+
   if (!userData) {
-    return <p className="mt-10 text-center text-sm text-slate-400">Loading characters…</p>;
+    return alone(<p className="mt-10 text-center text-sm text-slate-400">Loading characters…</p>);
   }
 
   if (activeChars.length === 0) {
-    return (
+    return alone(
       <div className="mx-auto mt-10 max-w-md rounded-2xl border border-dashed border-slate-700 bg-slate-800/40 p-8 text-center">
         <h2 className="text-lg font-semibold text-amber-300">No active characters</h2>
         <p className="mt-2 text-sm text-slate-400">
@@ -266,7 +278,7 @@ export default function Sheets() {
 
       <SplitPanels
         storageKey="sheet.split"
-        left={{ label: "Play", content: playContent }}
+        left={{ label: "Play", content: playContent, rail: () => <ViewSwitch view="sheets" onView={onView} /> }}
         right={{
           label: "Define",
           content: defineContent,

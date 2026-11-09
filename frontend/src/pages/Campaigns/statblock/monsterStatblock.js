@@ -74,28 +74,28 @@ const DEFENSES = [
 
 /* ─── small readers ──────────────────────────────────────────────── */
 
-const pbOf = (m) => {
+export const pbOf = (m) => {
   const pb = toInt(m?.cr?.pb, NaN);
   return Number.isFinite(pb) ? pb : crStats(m?.cr?.base)?.pb ?? 2;
 };
-const hpMaxOf = (m) => Math.max(0, toInt(m?.hp?.average, 0));
-const hpCurOf = (m) => clamp(toInt(m?.hp_current, hpMaxOf(m)), 0, Math.max(hpMaxOf(m), 0) || Infinity);
+export const hpMaxOf = (m) => Math.max(0, toInt(m?.hp?.average, 0));
+export const hpCurOf = (m) => clamp(toInt(m?.hp_current, hpMaxOf(m)), 0, Math.max(hpMaxOf(m), 0) || Infinity);
 const acOf = (m) => toInt(asList(m?.ac)[0]?.value, null);
-const speedNum = (v) => (typeof v === "number" ? v : typeof v?.number === "number" ? v.number : null);
+export const speedNum = (v) => (typeof v === "number" ? v : typeof v?.number === "number" ? v.number : null);
 const scoresOf = (m) => m?.ability_scores || {};
 const scoreOf = (m, a) => toInt(scoresOf(m)[a]?.score, 10);
-const saveOf = (m, a) => {
+export const saveOf = (m, a) => {
   const row = scoresOf(m)[a] || {};
   const mod = abilityMod(scoreOf(m, a));
   return Number.isFinite(Number(row.save)) ? Number(row.save) : mod + (row.proficient ? pbOf(m) : 0);
 };
-const initiativeOf = (m) => toInt(m?.initiative?.total, abilityMod(scoreOf(m, "dex")));
+export const initiativeOf = (m) => toInt(m?.initiative?.total, abilityMod(scoreOf(m, "dex")));
 
 // The catalogue writes skill keys either like the constants ("animalHandling")
 // or in plain words ("animal handling"); both are matched.
-const squash = (k) => String(k || "").replace(/[\s_]+/g, "").toLowerCase();
-const SKILL_KEY = Object.fromEntries(Object.keys(SKILL_OPTIONS).map((k) => [squash(k), k]));
-const skillBonus = (m, key) => {
+export const squash = (k) => String(k || "").replace(/[\s_]+/g, "").toLowerCase();
+export const SKILL_KEY = Object.fromEntries(Object.keys(SKILL_OPTIONS).map((k) => [squash(k), k]));
+export const skillBonus = (m, key) => {
   const hit = Object.entries(m?.skill || {}).find(([k]) => squash(k) === squash(key));
   return hit ? toInt(String(hit[1]).replace("+", ""), null) : null;
 };
@@ -194,15 +194,17 @@ const crLine = (m) => {
 
 /* ─── traits, actions… ───────────────────────────────────────────── */
 
-function entryFrom(list, it) {
+export function entryFrom(list, it) {
   const uses = usesOf(it.charges);
   const recharge = rechargeLabel(it.charges);
   const parts = effectChips(it).map((c) => c.text);
   if (it.charges?.reset_type === "recharge_dice") parts.push(recharge);
   return {
-    ref: { list, id: it.id },
+    // Rows a template gives (see templateLogic) keep their uses on the creature's template_uses.
+    ref: it.from_template ? { list, id: it.id, template: true } : { list, id: it.id },
     name: it.name || "Unnamed",
     tag: null,
+    fromTemplate: it.from_template || null,
     catalogue: null,
     roll: parts.join(" · "),
     uses,
@@ -212,7 +214,7 @@ function entryFrom(list, it) {
   };
 }
 
-function sectionsOf(m, editing) {
+export function sectionsOf(m, editing) {
   const legendaryMax = toInt(m?.legendary_action_points?.legendary_actions, 0);
   return EFFECT_SECTIONS.map(({ key, title }) => {
     const entries = itemsOf(m, key)
@@ -236,7 +238,7 @@ function sectionsOf(m, editing) {
 
 const ABILITY_OPTIONS = ABILITY_ORDER.map((a) => ({ value: a, label: ABILITY[a] }));
 
-function spellcastingOf(m) {
+export function spellcastingOf(m) {
   const blocks = blocksOf(m).map((b) => {
     const line = [
       b.ability ? ABILITY[b.ability] || String(b.ability).toUpperCase() : "",
@@ -257,7 +259,7 @@ function spellcastingOf(m) {
         const max = toInt(g.uses, 0);
         const label = g.label || (max ? `${max}/day${g.each ? " each" : ""}` : "At will");
         return {
-          ref: { list: "spellgroup", id: g.id },
+          ref: g.from_template ? { list: "spellgroup", id: g.id, template: true } : { list: "spellgroup", id: g.id },
           label,
           rawLabel: g.label || "",
           max: g.uses == null || g.uses === "" ? null : max,
@@ -267,7 +269,7 @@ function spellcastingOf(m) {
           spells: asList(g.spells)
             .filter((s) => s?.name)
             .map((s) => ({
-              ref: { list: "spell", id: s.id },
+              ref: s.from_template ? { list: "spell", id: s.id, template: true } : { list: "spell", id: s.id },
               name: titleCase(s.name) + (s.note ? ` (${s.note})` : ""),
               catalogue: { type: "spell", name: s.name, source: s.source || null },
               // …"each" uses sit on every spell.
@@ -282,7 +284,7 @@ function spellcastingOf(m) {
 
 /* ─── gear ───────────────────────────────────────────────────────── */
 
-function equipmentOf(m) {
+export function equipmentOf(m) {
   const gear = asList(m?.gear)
     .filter((g) => g?.name)
     .map((g) => ({
@@ -411,7 +413,7 @@ export function monsterView(m, { editing = false } = {}) {
 /* ─── single values ──────────────────────────────────────────────── */
 
 // Ability rows keep the catalogue's derived numbers (mod, save) up to date.
-const withScores = (m, pb = pbOf(m)) => {
+export const withScores = (m, pb = pbOf(m)) => {
   const out = {};
   for (const a of ABILITY_ORDER) {
     const row = scoresOf(m)[a] || {};
@@ -421,7 +423,7 @@ const withScores = (m, pb = pbOf(m)) => {
   }
   return { ...m, ability_scores: out };
 };
-const withPassive = (m) => ({ ...m, passive_perception: passiveOf(m) });
+export const withPassive = (m) => ({ ...m, passive_perception: passiveOf(m) });
 
 const withHp = (m, max) => {
   const { formula, ...hp } = m?.hp || {}; // a hand-set maximum no longer matches the dice
@@ -572,6 +574,7 @@ export const MONSTER_ACTIONS = {
 
   // Spend or regain: `cur` is the new number left.
   setUses: (m, ref, cur) => {
+    if (ref.template) return { ...m, template_uses: { ...(m?.template_uses || {}), [ref.id]: cur } };
     if (ref.list === "legendary") {
       return { ...m, legendary_action_points: { ...(m?.legendary_action_points || {}), current: cur } };
     }

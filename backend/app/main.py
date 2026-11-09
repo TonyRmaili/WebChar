@@ -17,26 +17,29 @@ import shutil
 import uuid
 from fictional_names import name_generator
 from fastapi.responses import JSONResponse
-from embedder.xembedder import Embedder
+
 from pathlib import Path
-from app.dice_handler import roll_dice
+
 from app.combat_functions import heal_health, damage_health,load_character,on_longrest,on_shortrest,grant_experience
-from app.minion_functions import handle_minionEffects
+
 
 from app.routers.minions import router as minions_router
-from app.routers.campaign import router as campaign_router
+from app.routers.campaigns import router as campaign_router
+from app.routers.encounters import router as encounter_router
+from app.routers.groups import router as group_router
+from app.routers.templates import router as template_router
+from app.routers.tables import router as table_router
+from app.routers.dice import router as dice_router
 
 from app.file_handler import FileHandler
 from app.character_adjuster import CharacterAdjuster
 from app.database.schemas import (
     UserSchema,
     CharacterSchema,
-    QueryRequest,
     HealthData,
     TakeRestData,
     TakeRestAllData,
     GrantExperienceAll,
-    MinionEffects,
 )
 # uvicorn app.main:app --reload
 
@@ -75,6 +78,11 @@ app.add_middleware(
 
 app.include_router(minions_router)
 app.include_router(campaign_router)
+app.include_router(encounter_router)
+app.include_router(template_router)
+app.include_router(group_router)
+app.include_router(table_router)
+app.include_router(dice_router)
 
 
 @app.middleware("http")
@@ -426,56 +434,17 @@ def grant_all_exp(
 
 
 
-# ------------------------Dice-----------------------------
-@app.post("/dice", tags=["dice"])
-def handle_dice_payload(
-    current_user: Annotated[User, Depends(get_current_user)],
-    dice: list[dict]
-):
-    
-    print(dice)
 
-    return {"dice handled":dice}
-
-@app.post("/dice/minion_effects", tags=["dice"])
-def catch_minion_effects(
-    current_user: Annotated[User, Depends(get_current_user)],
-    payload: MinionEffects
-):
-    
-    messages = handle_minionEffects(payload)
-
-    return messages
-
-
-
-@app.post("/dice_roll/{diceSize}", tags=["dice"])
-def roll_initiative(
-    diceSize: int,
-    current_user: Annotated[User, Depends(get_current_user)],
-    form_data: list  = Body(...), 
-):
-    try:
-        for monster in form_data:
-            modifier = monster["initiativeBonus"]
-            roll_type = monster["roll_type"]
-            roll = roll_dice(size=diceSize,modifier=modifier,roll_type=roll_type)
-            monster["initiative"] = roll 
-
-        return form_data 
-    except Exception as e:
-        return {"error": str(e)}
-    
 
 # ------------------------Embeddings-----------------------------
 
-@app.post("/query", tags=["embeddings"])
-def post_query(query: QueryRequest, pdf_name="players_handbook_5e"):
-    emb = Embedder(pdf_name=pdf_name,model="text-embedding-3-small")
-    emb.query(prompt=query.question)
-    summary = emb.get_summary()
+# @app.post("/query", tags=["embeddings"])
+# def post_query(query: QueryRequest, pdf_name="players_handbook_5e"):
+#     emb = Embedder(pdf_name=pdf_name,model="text-embedding-3-small")
+#     emb.query(prompt=query.question)
+#     summary = emb.get_summary()
     
-    return {"answer": summary}
+#     return {"answer": summary}
 
 # ------------------------Catalogue Data-----------------------------
 

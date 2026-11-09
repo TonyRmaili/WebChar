@@ -1,62 +1,38 @@
-import React, { useEffect, useState } from 'react'
-import useAuthStore from '../../store/AuthStore';
-import { useNavigate } from 'react-router-dom';
-import CreateCharacters from './Create';
-import Sheets from './Sheets';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import useAuthStore from "../../store/AuthStore";
+import CreateCharacters from "./Create";
+import Sheets from "./Sheets";
+import { WithViewRail } from "./ViewSwitch";
 
+/* Characters: Create (your roster and the builder) or Sheets (play).
 
-
-const TOOLS = [
-  { id: "create", label: "Create" },
-  { id: "sheets", label: "Sheets" },
-];
-
+   The Sheets / Create switch is in the left rail, not in a strip across
+   the top: under the Play panel's open/close button on Sheets, and in a
+   rail of its own beside the roster on Create (ViewSwitch.jsx). */
 
 function CharactersMain() {
-  const { token, userData, fetchUser } = useAuthStore()
-  const navigate = useNavigate()
-
-  const [activeTool, setActiveTool] = useState("create");
-
+  const token = useAuthStore((s) => s.token);
+  const navigate = useNavigate();
+  const [view, setView] = useState("create");
 
   useEffect(() => {
-    if (!token) {
-      navigate('/login')
-    }
-  }, [token, navigate])
-
- 
+    if (!token) navigate("/login");
+  }, [token, navigate]);
 
   return (
-  <div className="flex flex-col items-center">
-    {/* Tab Strip */}
-      <div className="mb-4 flex justify-center gap-1 border-b border-slate-700">
-        {TOOLS.map((tool) => {
-          const isActive = activeTool === tool.id;
-          return (
-            <button
-              key={tool.id}
-              onClick={() => setActiveTool(tool.id)}
-              className={`px-4 h-9 text-sm font-medium rounded-t-md -mb-px border-b-2 transition-colors ${
-                isActive
-                  ? "text-amber-400 border-amber-500 bg-slate-900/40"
-                  : "text-slate-400 hover:text-amber-400 border-transparent"
-              }`}
-            >
-              {tool.label}
-            </button>
-          );
-        })}
-      </div>
-
-      <div className="w-full px-4 lg:px-8">
-        {activeTool === "create" && <CreateCharacters />}
-        {activeTool === "sheets" && <Sheets />}   
-      </div>
-
-  </div>
-);
-
+    <div className="w-full px-4 lg:px-8">
+      {view === "sheets" ? (
+        <Sheets onView={setView} />
+      ) : (
+        <div className="py-4">
+          <WithViewRail view={view} onView={setView}>
+            <CreateCharacters />
+          </WithViewRail>
+        </div>
+      )}
+    </div>
+  );
 }
 
 export default CharactersMain;

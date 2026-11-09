@@ -1,5 +1,8 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { usePopupStore } from "../store/PopupStore";
+import { DeckPanel, DeckStacks, closeAll } from "./CardDeck";
+import { DICE_WINDOW, toggleDiceTower } from "./dice/DiceTowerWindow";
+import { deckCards } from "./popups/decks";
 import OmniSearch from "./OmniSearch";
 
 /* ---------------- Inline icon set ---------------- */
@@ -33,65 +36,93 @@ const Icon = ({ name, className = "h-5 w-5" }) => {
 
 /* ---------------- Reusable items ---------------- */
 const itemCls =
-  "group flex flex-col items-center gap-0.5 rounded-lg px-2.5 py-1.5 transition-colors hover:bg-slate-800 hover:text-amber-400";
+  "group relative flex flex-col items-center gap-0.5 rounded-lg px-2.5 py-1.5 transition-colors hover:bg-slate-800 hover:text-amber-400";
 
-const ToolButton = ({ icon, label, onClick }) => (
-  <button type="button" onClick={onClick} className={itemCls}>
+const ToolButton = ({ icon, label, onClick, active = false, badge, ...rest }) => (
+  <button type="button" onClick={onClick} className={`${itemCls} ${active ? "bg-slate-800 text-amber-400" : ""}`} {...rest}>
     <Icon name={icon} className="h-[22px] w-[22px]" />
     <span className="text-[11px] font-medium tracking-wide">{label}</span>
+    {badge ? (
+      <span className="absolute right-1 top-0.5 min-w-[1.1rem] rounded-full bg-amber-500 px-1 text-center text-[10px] font-semibold leading-4 text-slate-900">{badge}</span>
+    ) : null}
   </button>
 );
 
-/* ---------------- Footer ---------------- */
+/* ---------------- Footer ----------------
+   Slides up when the mouse reaches the bottom edge. The DiceTower button
+   opens the tower or puts it away — minimized, it waits behind the button
+   rather than in a deck. Minimized cards sit in decks (CardDeck.jsx); the CardDeck button, or a deck, opens the
+   deck panel above the footer, and the footer stays up while it's open.
+   It sits above every card window (their z-index counts up from 100) and
+   below right-click menus (100000). */
 function Footer() {
   const [open, setOpen] = useState(false);
-  
-  const minimized = usePopupStore((s) => s.minimized);
-  const restore = usePopupStore((s) => s.restore);
-  const clearMinimized = usePopupStore((s) => s.clearMinimized);
+  const [deckPanel, setDeckPanel] = useState(null); // null | "all" | a deck id
 
+  // The dice tower minimizes behind its own button, not into the deck.
+  const allMinimized = usePopupStore((s) => s.minimized);
+  const minimized = useMemo(() => deckCards(allMinimized), [allMinimized]);
   const hasMinimized = minimized.length > 0;
+  const towerOpen = usePopupStore((s) => s.openPopups.some((p) => p.id === DICE_WINDOW));
+
+  const showPanel = (panel) => {
+    setDeckPanel(panel);
+    if (panel) setOpen(true);
+  };
 
   return (
     <>
       {/* hover trigger strip (always present so the footer is reachable) */}
       <div
         onMouseEnter={() => setOpen(true)}
-        className="fixed inset-x-0 bottom-0 z-40 h-2.5"
+        className="fixed inset-x-0 bottom-0 z-[89999] h-2.5"
       >
         <div className="mx-auto h-1 w-24 rounded-t-full bg-amber-400/40" />
       </div>
 
       <footer
         onMouseEnter={() => setOpen(true)}
-        onMouseLeave={() => setOpen(false)}
+        onMouseLeave={() => !deckPanel && setOpen(false)}
         onFocusCapture={() => setOpen(true)}
-        onBlurCapture={() => setOpen(false)}
-        className={`fixed inset-x-0 bottom-0 z-50 transition-transform duration-300 ease-out ${
-          open ? "translate-y-0" : "translate-y-full"
+        onBlurCapture={() => !deckPanel && setOpen(false)}
+        className={`fixed inset-x-0 bottom-0 z-[90000] transition-transform duration-300 ease-out ${
+          open || deckPanel ? "translate-y-0" : "translate-y-full"
         }`}
       >
+        <DeckPanel panel={deckPanel} setPanel={showPanel} />
+
         <div className="border-t border-slate-700/80 bg-slate-900/95 px-3 py-2 font-serif text-slate-300 backdrop-blur-md">
           {/* ---- controls row ---- */}
           <div className="flex h-14 items-center gap-3 justify-between">
-            
 
             {/* tools (popups / features — wired later via PopupStore) */}
             <div className="flex items-center gap-1">
               <ToolButton icon="embedder" label="Embedder" onClick={() => {/* TODO: embedder prompt */}} />
-              <ToolButton icon="dice" label="DiceTower" onClick={() => {/* TODO: open dice tower popup */}} />
-              <ToolButton icon="cards" label="CardDeck" onClick={() => {/* TODO: open card deck */}} />
+              <ToolButton
+                icon="dice"
+                label="DiceTower"
+                active={towerOpen}
+                onClick={toggleDiceTower}
+                title={towerOpen ? "Put the dice tower away (it keeps everything)" : "Open the dice tower"}
+              />
+              <ToolButton
+                icon="cards"
+                label="CardDeck"
+                data-deck-toggle
+                active={deckPanel === "all"}
+                badge={minimized.length || null}
+                onClick={() => showPanel(deckPanel === "all" ? null : "all")}
+              />
             </div>
 
-            
-            {/* clear all — only when there's something minimized */}
+            {/* close every minimized card — only when there's something minimized */}
             {hasMinimized && (
               <>
                 <div className="h-8 w-px bg-slate-700/80" />
                 <button
                   type="button"
-                  onClick={clearMinimized}
-                  title="Clear all minimized"
+                  onClick={() => closeAll(minimized)}
+                  title="Close every minimized card"
                   className="flex flex-col items-center gap-0.5 rounded-lg px-2.5 py-1.5 text-red-300/90 transition-colors hover:bg-red-900/40 hover:text-red-200"
                 >
                   <Icon name="trash" className="h-[22px] w-[22px]" />
@@ -102,21 +133,8 @@ function Footer() {
            <OmniSearch />
           </div>
 
-          {/* ---- minimized popups row (wraps onto new lines below the buttons) ---- */}
-          {hasMinimized && (
-            <div className="mt-1 flex flex-wrap gap-2 border-t border-slate-700/50 pt-2">
-              {minimized.map((win) => (
-                <button
-                  key={win.id}
-                  onClick={() => restore(win.id)}
-                  title={win.data.name}
-                  className="max-w-[200px] truncate rounded border border-stone-400 bg-stone-200 px-3 py-1 text-sm text-stone-900 transition-colors hover:bg-stone-300"
-                >
-                  {win.data.name}
-                </button>
-              ))}
-            </div>
-          )}
+          {/* ---- minimized cards, one stack per deck ---- */}
+          <DeckStacks panel={deckPanel} setPanel={showPanel} />
         </div>
       </footer>
     </>

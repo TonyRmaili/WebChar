@@ -7,17 +7,15 @@ import CampaignContextMenu from "./CampaignContextMenu";
 import MoveToModal from "./MoveToModal";
 import DMAssistant from "./DMAssistant";
 import CampaignNpcs from "./npcs/CampaignNpcs";
+import Tables from "./tables/Tables";
 
-import Items from "../Catalogues/Items/Items";
-import Races from "../Catalogues/Races/Races"
+
+
 
 const TOOLS = [
   { id: "assistant", label: "Assistant" },
   { id: "combat", label: "Combat" },
-  { id: "party", label: "Party" }, 
-  { id: "npcs", label: "NPC's" },
   { id: "tables", label: "Tables" }, 
-  { id: "templates", label: "Templates" }, 
 ];
 
 
@@ -399,13 +397,13 @@ function SelectedCampaign({ campaignName }) {
             <DMAssistant campaignName={campaignName} />
           )}
 
-          {activeTool === "npcs" && <CampaignNpcs campaignName={campaignName} />}
+          {activeTool === "combat" && <CampaignNpcs campaignName={campaignName} />}
 
-          {activeTool === "initiative" && (
-            <div className="bg-slate-900/40 border border-slate-700 rounded-lg flex items-center justify-center h-[640px] text-slate-500 italic text-sm">
-              Initiative Tracker — coming next step
-            </div>
-          )}
+          {activeTool === "tables" && <Tables campaignName={campaignName} />}
+
+
+
+          
         </div>
       </div>
 

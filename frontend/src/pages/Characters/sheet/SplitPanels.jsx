@@ -15,6 +15,11 @@ import { usePersistedOpen } from "../../../utils/SectionCard";
    (pickers, filters, amounts) survives a collapse. Open/closed state is
    remembered in the browser between visits. */
 
+// The rail's look, shared with pages that show a rail without panels
+// (Characters › Create keeps its Sheets / Create switch in one).
+export const RAIL_CLS =
+  "sticky top-3 flex max-h-[calc(100vh-1.5rem)] w-11 shrink-0 flex-col items-center gap-2 self-start overflow-y-auto rounded-xl border border-slate-700 bg-slate-800/60 py-2 shadow-md";
+
 function Arrow({ pointsLeft }) {
   return (
     <svg
@@ -39,7 +44,7 @@ function Rail({ side, label, open, onToggle, extra }) {
   const action = open ? "Collapse" : "Expand";
 
   return (
-    <aside className="sticky top-3 flex max-h-[calc(100vh-1.5rem)] w-11 shrink-0 flex-col items-center gap-2 self-start overflow-y-auto rounded-xl border border-slate-700 bg-slate-800/60 py-2 shadow-md">
+    <aside className={RAIL_CLS}>
       <button
         type="button"
         onClick={onToggle}

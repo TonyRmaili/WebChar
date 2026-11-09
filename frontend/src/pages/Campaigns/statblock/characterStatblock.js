@@ -248,6 +248,7 @@ export function characterView(c, { editing = false } = {}) {
     { label: "Resistances", text: words(defenses.resistances).join(", ") },
     { label: "Immunities", text: words(defenses.immunities).join(", ") },
     { label: "Vulnerabilities", text: words(defenses.vulnerabilities).join(", ") },
+    { label: "Condition Immunities", text: words(defenses.condition_immunities).join(", ") },
     { label: "Senses", text: senses.join(", ") },
     { label: "Languages", text: words(c?.language_proficiencies).join(", ") },
     { label: "Armor", text: words(c?.armor_proficiencies).join(", ") },
@@ -395,6 +396,8 @@ export const CHARACTER_ACTIONS = {
 
   // Spend or regain: `cur` is the new number left.
   setUses: (c, ref, cur) => {
+    // Rows a template gives keep their uses on the character's template_uses.
+    if (ref.template) return { ...c, template_uses: { ...(c?.template_uses || {}), [ref.id]: cur } };
     if (ref.list === "sorcery") {
       const sp = c?.spellbook?.sorcery_points || {};
       return { ...c, spellbook: { ...(c?.spellbook || {}), sorcery_points: { ...sp, current_charges: cur } } };
