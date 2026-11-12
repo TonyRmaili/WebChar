@@ -178,9 +178,16 @@ def select_campaign(
 
 
 @router.delete("")
-def delete_campaign(current_user: CurrentUser, campaign_name: str):
+def delete_campaign(current_user: CurrentUser, campaign_name: str, db: Session = Depends(get_db)):
     campaign_path = _campaign_dir(current_user, campaign_name)
     shutil.rmtree(campaign_path)
+
+    # Forget it as the last opened campaign, so the page never asks for it again.
+    user = db.get(User, current_user.id)
+    if user is not None and user.selected_campaign == campaign_path.name:
+        user.selected_campaign = None
+        db.commit()
+
     return {"message": "Campaign deleted"}
 
 

@@ -1,11 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import useAuthStore from "../../store/AuthStore";
 import useCampaignStore from "../../store/CampaignStore";
 import SelectedCampaign from "./SelectedCampaign";
 import { PlusIcon, FolderIcon, ChevronRightIcon } from "./CampaignWidgets";
-import { ParchmentSheet, Title } from "../../styles/parchment";
+import { InkButton, ParchmentSheet, Title } from "../../styles/parchment";
 import { addBtn } from "../../styles/parchmentForm";
 import { CreateModal, fieldCls } from "../Catalogues/catalogueStyle";
+
+/* Campaigns: the list of your campaigns, or the one you opened.
+
+   The server remembers the last campaign you opened (`selected_campaign`
+   on /me). When the page loads it reopens that one, but only if it is
+   still in your list, so a campaign deleted elsewhere is never asked for. */
 
 /* ---------- Local icons (kept here so CampaignWidgets stays untouched) ---------- */
 
@@ -36,18 +43,23 @@ const ChevronLeftIcon = ({ className = "w-4 h-4", ...props }) => (
 /* ---------- Main component ---------- */
 
 function MainCampaigns() {
+  const navigate = useNavigate();
+  const token = useAuthStore((s) => s.token);
   const userData = useAuthStore((s) => s.userData);
-  const setUserData = useAuthStore((s) => s.setUserData);
+  const setSelectedCampaign = useAuthStore((s) => s.setSelectedCampaign);
 
   const fetchCampaigns = useCampaignStore((s) => s.fetchCampaigns);
   const createCampaign = useCampaignStore((s) => s.createCampaign);
   const selectCampaign = useCampaignStore((s) => s.selectCampaign);
   const deleteCampaign = useCampaignStore((s) => s.deleteCampaign);
+  const storeError = useCampaignStore((s) => s.error);
+  const clearError = useCampaignStore((s) => s.clearError);
 
-  const [campaigns, setCampaigns] = useState([]);
-  const [activeCampaign, setActiveCampaign] = useState(
-    userData?.selected_campaign || null,
-  );
+  const [campaigns, setCampaigns] = useState(null); // null until the list has arrived
+  const [activeCampaign, setActiveCampaign] = useState(null);
+  // The remembered campaign is reopened once per visit, not again after
+  // you go back to the list.
+  const reopened = useRef(false);
 
   // modal state
   const [createOpen, setCreateOpen] = useState(false);
@@ -57,12 +69,25 @@ function MainCampaigns() {
 
   const reload = async () => {
     const data = await fetchCampaigns();
-    setCampaigns(data || []);
+    setCampaigns(Array.isArray(data) ? data : []);
   };
 
   useEffect(() => {
+    if (!token) {
+      navigate("/login");
+      return;
+    }
     reload();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token]);
+
+  // Reopen the remembered campaign once both the list and the user are here.
+  useEffect(() => {
+    if (reopened.current || !campaigns || !userData) return;
+    reopened.current = true;
+    const remembered = userData.selected_campaign;
+    if (remembered && campaigns.includes(remembered)) setActiveCampaign(remembered);
+  }, [campaigns, userData]);
 
   /* ---------- handlers ---------- */
 
@@ -77,12 +102,13 @@ function MainCampaigns() {
     setCreateOpen(false);
   };
 
+  // Open a campaign and tell the server it's the one to remember.
   const handleSelect = async (name) => {
+    clearError();
     const res = await selectCampaign(name);
-    if (res?.selected_campaign !== undefined) {
-      setUserData({ ...userData, selected_campaign: res.selected_campaign });
-      setActiveCampaign(res.selected_campaign);
-    }
+    if (!res) return; // the store's error says why
+    setSelectedCampaign(res.selected_campaign);
+    setActiveCampaign(name);
   };
 
   const handleDelete = async () => {
@@ -91,10 +117,13 @@ function MainCampaigns() {
     setDeleteTarget(null);
     await deleteCampaign(name);
     if (activeCampaign === name) setActiveCampaign(null);
+    // The server forgets a deleted campaign; do the same here.
+    if (userData?.selected_campaign === name) setSelectedCampaign(null);
     await reload();
   };
 
   const handleBackToList = () => {
+    clearError();
     setActiveCampaign(null);
   };
 
@@ -119,14 +148,18 @@ function MainCampaigns() {
 
   /* ---------- render: campaign list view ---------- */
 
+  const list = campaigns || [];
+
   return (
     <ParchmentSheet>
       <Title
         after={
           <span className="text-sm italic text-ink-faded">
-            {campaigns.length === 0
+            {campaigns === null
+              ? "Fetching your campaigns…"
+              : list.length === 0
               ? "No campaigns yet — create your first one."
-              : `${campaigns.length} campaign${campaigns.length === 1 ? "" : "s"}`}
+              : `${list.length} campaign${list.length === 1 ? "" : "s"}`}
           </span>
         }
         right={
@@ -138,8 +171,15 @@ function MainCampaigns() {
         Campaigns
       </Title>
 
+      {storeError && (
+        <p className="mb-4 flex flex-wrap items-baseline gap-x-3 text-sm italic text-bad" role="alert">
+          {storeError}
+          <InkButton onClick={clearError}>dismiss</InkButton>
+        </p>
+      )}
+
       <div className="grid grid-cols-1 gap-x-8 gap-y-1 sm:grid-cols-2 lg:grid-cols-3">
-        {campaigns.map((name) => (
+        {list.map((name) => (
           <div
             key={name}
             className="group relative flex cursor-pointer items-center gap-3 border-b border-dotted border-rule/40 px-1.5 py-2.5 transition-colors hover:bg-ink/[0.05]"

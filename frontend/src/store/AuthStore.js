@@ -43,6 +43,11 @@ const useAuthStore = create((set, get) => ({
     }
   },
 
+  // The campaign the server remembers as last opened (Campaigns page).
+  // Only updates the copy in memory; the server is told by CampaignStore.
+  setSelectedCampaign: (name) =>
+    set((s) => (s.userData ? { userData: { ...s.userData, selected_campaign: name || null } } : {})),
+
   /* ── log in / out ── */
 
   logIn: async (name, password) => {

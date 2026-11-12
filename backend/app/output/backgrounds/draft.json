@@ -1,0 +1,72 @@
+[
+    {
+        "name": "Acolyte",
+        "source": "XPHB",
+        "edition": "one",
+        "text": "- **Ability Scores.** Intelligence, Wisdom, Charisma\n- **Feat.** Magic Initiate (Cleric)\n…",
+        "grants": {
+            "skills": ["insight", "religion"],
+            "tools": ["calligraphers_supplies"],
+            "feats": [{ "name": "Magic Initiate", "source": "XPHB", "option": "Cleric" }]
+        },
+        "choices": [
+            {
+            "id": "ability", "label": "Ability scores", "type": "ability_increase",
+            "from": ["int", "wis", "cha"], "patterns": [[2, 1], [1, 1, 1]]
+            },
+            {
+            "id": "equipment", "label": "Equipment", "type": "option",
+            "options": [
+                { "id": "A", "grants": {
+                    "items": [
+                    { "name": "Calligrapher's Supplies", "source": "XPHB" },
+                    { "name": "Book", "source": "XPHB", "label": "Book (Prayers)" },
+                    { "name": "Holy Symbol", "source": "XPHB" },
+                    { "name": "Parchment", "source": "XPHB", "quantity": 10 },
+                    { "name": "Robe", "source": "XPHB" }
+                    ],
+                    "currency": { "gp": 8 } } },
+                { "id": "B", "grants": { "currency": { "gp": 50 } } }
+            ]
+            }
+        ],
+        "features": []
+    },
+
+    {
+        "name": "Acolyte",
+        "source": "PHB",
+        "edition": "classic",
+        "text": "- **Skill Proficiencies.** Insight, Religion\n…",
+        "grants": {
+            "skills": ["insight", "religion"],
+            "items": [
+            { "name": "Holy Symbol", "source": "PHB", "label": "holy symbol (a gift to you when you entered the priesthood)" },
+            { "name": "sticks of incense", "quantity": 5 },
+            { "name": "vestments" },
+            { "name": "Common Clothes", "source": "PHB" },
+            { "name": "Pouch", "source": "PHB" }
+            ],
+            "currency": { "gp": 15 }
+        },
+        "choices": [
+            { "id": "languages", "label": "Languages", "type": "pick", "key": "languages", "count": 2, "from": "standard" },
+            { "id": "equipment", "label": "Equipment", "type": "option", "options": [
+                { "id": "a", "grants": { "items": [{ "name": "Book", "source": "PHB", "label": "prayer book" }] } },
+                { "id": "b", "grants": { "items": [{ "name": "prayer wheel" }] } }
+            ] }
+        ],
+        "features": [
+            { "id": "shelter-of-the-faithful", "name": "Shelter of the Faithful", "text": "As an acolyte, you command the respect…" }
+        ],
+        "characteristics": {
+            "personality_traits": { "die": "d8", "rows": ["I idolize a particular hero of my faith…", "…"] },
+            "ideals": { "die": "d6", "rows": ["Tradition. … (Lawful)", "…"] },
+            "bonds": { "die": "d6", "rows": ["…"] },
+            "flaws": { "die": "d6", "rows": ["…"] }
+        }
+        }
+
+]
+
+
