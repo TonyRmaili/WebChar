@@ -1,0 +1,466 @@
+[
+     {
+        "name": "Alert",
+        "source": "XPHB",
+        "category": "origin",
+        "entries": "You gain the following benefits.\n\n## Initiative Proficiency\nWhen you roll Initiative, you can add your Proficiency Bonus to the roll.\n\n## Initiative Swap\nImmediately after you roll Initiative, you can swap your Initiative with the Initiative of one willing ally in the same combat. You can't make this swap if you or the ally has the incapacitated condition."
+    },
+    {
+        "name": "Magic Initiate",
+        "source": "XPHB",
+        "category": "origin",
+        "repeatable": true,
+        "entries": "You gain the following benefits.\n\n## Two Cantrips\nYou learn two cantrips of your choice from the Cleric, Druid, or Wizard spell list. Intelligence, Wisdom, or Charisma is your spellcasting ability for this feat's spells (choose when you select this feat).\n\n## Level 1 Spell\nChoose a level 1 spell from the same list you selected for this feat's cantrips. You always have that spell prepared. You can cast it once without a spell slot, and you regain the ability to cast it in that way when you finish a Long Rest. You can also cast the spell using any spell slots you have.\n\n## Spell Change\nWhenever you gain a new level, you can replace one of the spells you chose for this feat with a different spell of the same level from the chosen spell list.\n\n## Repeatable\nYou can take this feat more than once, but you must choose a different spell list each time.",
+        "additional_spells": {
+            "spellcasting_ability": {
+                "fixed": null,
+                "choose_from": [
+                    "int",
+                    "wis",
+                    "cha"
+                ]
+            },
+            "spells": [
+                {
+                    "name": null,
+                    "choice": {
+                        "count": 2,
+                        "from": [],
+                        "filter": {
+                            "spell_level": 0,
+                            "class_list": [
+                                "cleric"
+                            ],
+                            "school": [],
+                            "ritual": false
+                        }
+                    },
+                    "level_requirement": null,
+                    "free_cast": null
+                },
+                {
+                    "name": null,
+                    "choice": {
+                        "count": 1,
+                        "from": [],
+                        "filter": {
+                            "spell_level": 1,
+                            "class_list": [
+                                "cleric"
+                            ],
+                            "school": [],
+                            "ritual": false
+                        }
+                    },
+                    "level_requirement": null,
+                    "free_cast": {
+                        "amount": 1,
+                        "recharge": "long_rest"
+                    }
+                },
+                {
+                    "name": null,
+                    "choice": {
+                        "count": 2,
+                        "from": [],
+                        "filter": {
+                            "spell_level": 0,
+                            "class_list": [
+                                "druid"
+                            ],
+                            "school": [],
+                            "ritual": false
+                        }
+                    },
+                    "level_requirement": null,
+                    "free_cast": null
+                },
+                {
+                    "name": null,
+                    "choice": {
+                        "count": 1,
+                        "from": [],
+                        "filter": {
+                            "spell_level": 1,
+                            "class_list": [
+                                "druid"
+                            ],
+                            "school": [],
+                            "ritual": false
+                        }
+                    },
+                    "level_requirement": null,
+                    "free_cast": {
+                        "amount": 1,
+                        "recharge": "long_rest"
+                    }
+                },
+                {
+                    "name": null,
+                    "choice": {
+                        "count": 2,
+                        "from": [],
+                        "filter": {
+                            "spell_level": 0,
+                            "class_list": [
+                                "wizard"
+                            ],
+                            "school": [],
+                            "ritual": false
+                        }
+                    },
+                    "level_requirement": null,
+                    "free_cast": null
+                },
+                {
+                    "name": null,
+                    "choice": {
+                        "count": 1,
+                        "from": [],
+                        "filter": {
+                            "spell_level": 1,
+                            "class_list": [
+                                "wizard"
+                            ],
+                            "school": [],
+                            "ritual": false
+                        }
+                    },
+                    "level_requirement": null,
+                    "free_cast": {
+                        "amount": 1,
+                        "recharge": "long_rest"
+                    }
+                }
+            ],
+            "extended_spell_list": []
+        },
+        "versions": [
+            "Cleric",
+            "Druid",
+            "Wizard"
+        ]
+    },
+    {
+        "name": "Savage Attacker",
+        "source": "XPHB",
+        "category": "origin",
+        "entries": "You've trained to deal particularly damaging strikes. Once per turn when you hit a target with a weapon, you can roll the weapon's damage dice twice and use either roll against the target."
+    },
+    {
+        "name": "Skilled",
+        "source": "XPHB",
+        "category": "origin",
+        "repeatable": true,
+        "entries": "You gain proficiency in any combination of three skills or tools (artisan's tools, instruments, or gaming sets) of your choice.\n\n## Repeatable\n\nYou can take this feat more than once."
+    },
+    {
+        "name": "Ability Score Improvement",
+        "source": "XPHB",
+        "category": "general",
+        "prerequisite": [
+            {
+                "level": 4
+            }
+        ],
+        "repeatable": true,
+        "entries": "Increase one ability score of your choice by 2, or increase two ability scores of your choice by 1. This feat can't increase an ability score above 20.\n\n## Repeatable\n\nYou can take this feat more than once.",
+        "ability_score_increase": [
+            {
+                "choose": {
+                    "from": [
+                        "str",
+                        "dex",
+                        "con",
+                        "int",
+                        "wis",
+                        "cha"
+                    ],
+                    "amount": 2
+                },
+                "hidden": true
+            },
+            {
+                "choose": {
+                    "from": [
+                        "str",
+                        "dex",
+                        "con",
+                        "int",
+                        "wis",
+                        "cha"
+                    ],
+                    "count": 2
+                },
+                "hidden": true
+            }
+        ]
+    },
+    {
+        "name": "Grappler",
+        "source": "XPHB",
+        "category": "general",
+        "prerequisite": [
+            {
+                "level": 4,
+                "ability": [
+                    {
+                        "str": 13
+                    }
+                ]
+            },
+            {
+                "level": 4,
+                "ability": [
+                    {
+                        "dex": 13
+                    }
+                ]
+            }
+        ],
+        "entries": "You gain the following benefits.\n\n## Punch and Grab\nWhen you hit a creature with an Unarmed Strike as part of the Attack action on your turn, you can use both the Damage and the Grapple option. You can use this benefit only once per turn.\n\n## Attack Advantage\nYou have Advantage on attack rolls against a creature Grappled by you.\n\n## Fast Wrestler\nYou don't have to spend extra movement to move a creature Grappled by you if the creature is your size or smaller.",
+        "ability_score_increase": [
+            {
+                "choose": {
+                    "from": [
+                        "str",
+                        "dex"
+                    ]
+                }
+            }
+        ]
+    },
+    {
+        "name": "Archery",
+        "source": "XPHB",
+        "category": "fighting_style",
+        "prerequisite": [
+            {
+                "feature": [
+                    "Fighting Style"
+                ]
+            }
+        ],
+        "entries": "You gain a +2 bonus to attack rolls you make with Ranged weapons."
+    },
+    {
+        "name": "Defense",
+        "source": "XPHB",
+        "category": "fighting_style",
+        "prerequisite": [
+            {
+                "feature": [
+                    "Fighting Style"
+                ]
+            }
+        ],
+        "entries": "While you're wearing Light, Medium, or Heavy armor, you gain a +1 bonus to Armor Class."
+    },
+    {
+        "name": "Great Weapon Fighting",
+        "source": "XPHB",
+        "category": "fighting_style",
+        "prerequisite": [
+            {
+                "feature": [
+                    "Fighting Style"
+                ]
+            }
+        ],
+        "entries": "When you roll damage for an attack you make with a melee weapon that you are holding with two hands, you can treat any 1 or 2 on a damage die as a 3. The weapon must have the Two-Handed or Versatile property to gain this benefit."
+    },
+    {
+        "name": "Two-Weapon Fighting",
+        "source": "XPHB",
+        "category": "fighting_style",
+        "prerequisite": [
+            {
+                "feature": [
+                    "Fighting Style"
+                ]
+            }
+        ],
+        "entries": "When you make an extra attack as a result of using a weapon that has the Light property, you can add your ability modifier to the damage of that attack if you aren't already adding it to the damage."
+    },
+    {
+        "name": "Boon of Combat Prowess",
+        "source": "XPHB",
+        "category": "epic_boon",
+        "prerequisite": [
+            {
+                "level": 19
+            }
+        ],
+        "entries": "You gain the following benefits.\n\n## Peerless Aim\n\nWhen you miss with an attack roll, you can hit instead. Once you use this benefit, you can't use it again until the start of your next turn.",
+        "ability_score_increase": [
+            {
+                "choose": {
+                    "from": [
+                        "str",
+                        "dex",
+                        "con",
+                        "int",
+                        "wis",
+                        "cha"
+                    ]
+                },
+                "max": 30
+            }
+        ]
+    },
+    {
+        "name": "Boon of Dimensional Travel",
+        "source": "XPHB",
+        "category": "epic_boon",
+        "prerequisite": [
+            {
+                "level": 19
+            }
+        ],
+        "entries": "You gain the following benefits.\n\n## Blink Steps\nImmediately after you take the Attack action or the Magic action, you can teleport up to 30 feet to an unoccupied space you can see.",
+        "ability_score_increase": [
+            {
+                "choose": {
+                    "from": [
+                        "str",
+                        "dex",
+                        "con",
+                        "int",
+                        "wis",
+                        "cha"
+                    ]
+                },
+                "max": 30
+            }
+        ]
+    },
+     {
+        "name": "Boon of Fate",
+        "source": "XPHB",
+        "category": "epic_boon",
+        "prerequisite": [
+            {
+                "level": 19
+            }
+        ],
+        "entries": "You gain the following benefits.\n\n## Improve Fate\n\nWhen you or another creature within 60 feet of you succeeds on or fails a D20 Test, you can roll 2d4 and apply the total rolled as a bonus or penalty to the d20 roll. Once you use this benefit, you can't use it again until you roll Initiative or finish a Short Rest or Long Rest.",
+        "ability_score_increase": [
+            {
+                "choose": {
+                    "from": [
+                        "str",
+                        "dex",
+                        "con",
+                        "int",
+                        "wis",
+                        "cha"
+                    ]
+                },
+                "max": 30
+            }
+        ]
+    },
+    {
+        "name": "Boon of Irresistible Offense",
+        "source": "XPHB",
+        "category": "epic_boon",
+        "prerequisite": [
+            {
+                "level": 19
+            }
+        ],
+        "entries": "You gain the following benefits.\n\n## Overcome Defenses\nThe Bludgeoning, Piercing, and Slashing damage you deal always ignores Resistance.\n\n## Overwhelming Strike\nWhen you roll a 20 on the d20 for an attack roll, you can deal extra damage to the target equal to the ability score increased by this feat. The extra damage's type is the same as the attack's type.",
+        "ability_score_increase": [
+            {
+                "choose": {
+                    "from": [
+                        "str",
+                        "dex"
+                    ]
+                },
+                "max": 30
+            }
+        ]
+    },
+    {
+        "name": "Boon of Spell Recall",
+        "source": "XPHB",
+        "category": "epic_boon",
+        "prerequisite": [
+            {
+                "level": 19,
+                "spellcasting": true
+            }
+        ],
+        "entries": "You gain the following benefits.\n\n## Free Casting\nWhenever you cast a spell with a level 1-4 spell slot, roll 1d4. If the number you roll is the same as the slot's level, the slot isn't expended.",
+        "ability_score_increase": [
+            {
+                "choose": {
+                    "from": [
+                        "int",
+                        "wis",
+                        "cha"
+                    ]
+                },
+                "max": 30
+            }
+        ]
+    },
+    {
+        "name": "Boon of the Night Spirit",
+        "source": "XPHB",
+        "category": "epic_boon",
+        "prerequisite": [
+            {
+                "level": 19
+            }
+        ],
+        "entries": "You gain the following benefits.\n\n## Merge with Shadows\nWhile within Dim Light or Darkness, you can give yourself the Invisible condition as a Bonus Action. The condition ends on you immediately after you take an action, a Bonus Action, or a Reaction.\n\n## Shadowy Form\nWhile within Dim Light or Darkness, you have Resistance to all damage except Psychic and Radiant.",
+        "ability_score_increase": [
+            {
+                "choose": {
+                    "from": [
+                        "str",
+                        "dex",
+                        "con",
+                        "int",
+                        "wis",
+                        "cha"
+                    ]
+                },
+                "max": 30
+            }
+        ]
+    },
+    {
+        "name": "Boon of Truesight",
+        "source": "XPHB",
+        "category": "epic_boon",
+        "prerequisite": [
+            {
+                "level": 19
+            }
+        ],
+        "senses": [
+            {
+                "truesight": 60
+            }
+        ],
+        "entries": "You gain the following benefits.\n\n## Truesight\nYou have Truesight with a range of 60 feet.",
+        "ability_score_increase": [
+            {
+                "choose": {
+                    "from": [
+                        "str",
+                        "dex",
+                        "con",
+                        "int",
+                        "wis",
+                        "cha"
+                    ]
+                },
+                "max": 30
+            }
+        ]
+    }
+]

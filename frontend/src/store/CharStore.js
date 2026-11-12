@@ -1,217 +1,200 @@
 import { create } from "zustand";
+import { api } from "../utils/api";
 
-const initialChar = {
-  ac: 0,
-  max_hp: 0,
-  speed: 0,
-  pb: 2,
+/* The character open on the sheet. Lives in memory only: the server's
+   file is the truth, and this store is the copy on screen.
+
+     charId, charData        the open character (by its database id)
+     loadChar(id)            open a character (or reload the open one)
+     patchChar(patch, opts)  change top-level fields: shown at once, saved
+                             a moment later; { now: true } saves right away
+     flushSaves()            send waiting changes now
+
+   Saving: only the changed top-level keys go to the server
+   (PATCH /character/{id} { changes }), 400 ms after the last change, so
+   typing doesn't send a request per key. Waiting changes are sent before
+   another character opens and before every combat call, so they can't be
+   lost or overwrite each other. Saves go out one after another, in order.
+   If a save fails, `saveError` says why and the saved version is loaded
+   back.
+
+   Combat goes through the server's rules (barrier and temp HP, rests…):
+   changeHp, rest, restAll, grantExperience.
+
+   Characters list, create, delete and "show in Sheets": createChar,
+   deleteChar, toggleActive. They don't refresh the user's character list
+   themselves; call AuthStore's fetchUser() after them. */
+
+const SAVE_DELAY_MS = 400;
+
+// Waiting changes: the keys that changed (their values are read from
+// charData when they are sent, so the latest typing goes out), and the
+// character they belong to.
+let pendingKeys = new Set();
+let pendingFor = null;
+let timer = null;
+// The last save sent; the next one waits for it, so they arrive in order.
+let inFlight = Promise.resolve();
+
+const pick = (obj, keys) => {
+  const out = {};
+  for (const k of keys) out[k] = obj?.[k];
+  return out;
 };
 
-const savedCharData = JSON.parse(localStorage.getItem("charData") || "null");
+const useCharStore = create((set, get) => {
+  // A fresh copy from the server, with any changes still waiting to be
+  // sent laid on top, so a reload never wipes out what was just typed.
+  const withPending = (fresh) => (pendingKeys.size ? { ...fresh, ...pick(get().charData, pendingKeys) } : fresh);
 
-const loadInitialState = () => {
-  const charData = JSON.parse(localStorage.getItem("charData")) || null;
+  return {
+    charId: null,
+    charData: null,
+    loading: false,
+    error: null, // couldn't load the character
+    saveError: null, // the last save failed
 
-  const userData = JSON.parse(localStorage.getItem("userData")) || null;
-  if (userData && userData.id && charData) {
-    charData.user_id = userData.id; 
-  }
+    clearSaveError: () => set({ saveError: null }),
 
-  return { charData };
-};
+    /* ── open a character ── */
 
-const useCharStore = create((set, get) => ({
-  ...loadInitialState(),
-  charData: savedCharData || initialChar,
-  setCharData: (data) => {
-    const newData = data ?? initialChar;
-    localStorage.setItem("charData", JSON.stringify(newData));
-    set({ charData: newData });
-  },
+    // Answers for a character that is no longer open are ignored, so fast
+    // switching between characters can't mix them up.
+    loadChar: async (id) => {
+      if (!id) return;
+      // flushSaves takes the waiting changes right away, before the switch
+      // below, so they can only ever go to the character they were made on.
+      const saving = get().flushSaves();
 
-  updateCharField: (key, value) =>
-    set((state) => {
-      const updated = {
-        ...(state.charData ?? initialChar),
-        [key]: value,
+      if (get().charId !== id) set({ charId: id, charData: null, saveError: null });
+      set({ loading: true, error: null });
+      await saving;
+
+      try {
+        const data = await api.get(`/character/${id}`);
+        if (get().charId === id) set({ charData: withPending(data) });
+      } catch (e) {
+        if (get().charId === id) set({ error: e.message });
+      } finally {
+        if (get().charId === id) set({ loading: false });
+      }
+    },
+
+    reloadChar: () => get().loadChar(get().charId),
+
+    /* ── change and save ── */
+
+    patchChar: (patch, { now = false } = {}) => {
+      const { charId, charData } = get();
+      if (!charId || !charData || !patch) return Promise.resolve();
+
+      set({ charData: { ...charData, ...patch } });
+      for (const key of Object.keys(patch)) pendingKeys.add(key);
+      pendingFor = charId;
+
+      clearTimeout(timer);
+      if (now) return get().flushSaves();
+      timer = setTimeout(() => get().flushSaves(), SAVE_DELAY_MS);
+      return Promise.resolve();
+    },
+
+    // `keepalive` lets the last save finish even while the page is closing.
+    flushSaves: ({ keepalive = false } = {}) => {
+      clearTimeout(timer);
+      timer = null;
+      if (!pendingKeys.size || !pendingFor) return inFlight;
+
+      const id = pendingFor;
+      const changes = pick(get().charData, pendingKeys);
+      pendingKeys = new Set();
+
+      const send = async () => {
+        try {
+          await api.patch(`/character/${id}`, { changes }, { keepalive });
+          if (get().charId === id) set({ saveError: null });
+        } catch (e) {
+          if (get().charId !== id) return;
+          set({ saveError: e.message });
+          // Show what is really saved instead of the change that failed.
+          try {
+            const fresh = await api.get(`/character/${id}`);
+            if (get().charId === id) set({ charData: withPending(fresh) });
+          } catch {
+            /* the error above is already shown */
+          }
+        }
       };
-      localStorage.setItem("charData", JSON.stringify(updated));
-      return { charData: updated };
-    }),
-  
 
-    
-  postCharData: async () => {
-  try {
-    const token = localStorage.getItem("token");
-    if (!token) throw new Error("Token not found in localStorage");
+      inFlight = inFlight.then(send);
+      return inFlight;
+    },
 
-    const raw = localStorage.getItem("charData");
-    if (!raw) throw new Error("No charData in localStorage");
+    /* ── combat (the server applies the rules and saves) ── */
 
-    const charData = JSON.parse(raw); // make it an object
+    // delta < 0 is damage, > 0 is healing. Returns the new health block.
+    changeHp: async (delta) => {
+      const id = get().charId;
+      if (!id || !delta) return null;
+      await get().flushSaves();
+      const { health } = await api.post("/combat/health", { char_id: id, value: delta });
+      if (get().charId === id) set((s) => ({ charData: { ...s.charData, health } }));
+      return health;
+    },
 
-    const response = await fetch("http://localhost:8000/update_character", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      // match the DictData(form_data: dict) shape:
-      body: JSON.stringify(charData),
-    });
+    // This character only (the Health section's rest buttons).
+    rest: async (restType) => {
+      const id = get().charId;
+      if (!id) return;
+      await get().flushSaves();
+      const data = await api.post("/combat/rest", { char_id: id, rest_type: restType });
+      if (get().charId === id) set({ charData: withPending(data) });
+    },
 
-    // Read the body ONCE:
-    const payload = await response.json().catch(() => null);
+    // Every character in `ids` (the party bar's rest buttons).
+    restAll: async (restType, ids) => {
+      if (!ids?.length) return;
+      await get().flushSaves();
+      await api.post("/combat/rest_all", { char_ids: ids, rest_type: restType });
+      if (ids.includes(get().charId)) await get().reloadChar();
+    },
 
-    if (!response.ok) {
-      // surface FastAPI error details if present
-      throw new Error(
-        `Failed: ${response.status} ${payload ? JSON.stringify(payload) : ""}`
-      );
-    }
+    // Known bug (backend): this gives the XP to every character of the user.
+    grantExperience: async (delta) => {
+      if (!delta) return;
+      await get().flushSaves();
+      await api.post("/combat/experience", { delta });
+      if (get().charId) await get().reloadChar();
+    },
 
-    console.log("CharData posted successfully:", payload);
-  } catch (error) {
-    console.error("Error updating charData:", error.message);
-  }
-},
+    /* ── the character list ── */
 
+    // The Builder Wizard's payload. Returns { id, name }.
+    createChar: (payload) => api.post("/character", payload),
 
-  toggleActiveChar: async (char_id) => {
-    try {
-      const token = localStorage.getItem("token");
-      const res = await fetch(`http://localhost:8000/character/${char_id}`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      })
-      if (!res.ok) throw new Error(`Toggle failed: ${res.status}`)
-      // Pull fresh user data
-      
-    } catch (e) {
-      console.error(e)
-      alert('Could not toggle active state.')
-    }
-  },
+    deleteChar: async (id) => {
+      if (get().charId === id) get().reset();
+      await api.del(`/character/${id}`);
+    },
 
-  createChar: async (payload) => {
-    try {
-      const token = localStorage.getItem("token");
-      
+    // Shows or hides the character in Sheets. Returns { id, active }.
+    toggleActive: (id) => api.post(`/character/${id}/active`),
 
-      if (!token) {
-        throw new Error("Token not found in localStorage");
-      }
-      
-      const response = await fetch("http://localhost:8000/character", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-        },
-        body: JSON.stringify( payload ),  
+    /* ── logout / deleted character ── */
 
-      });
+    // Forget the open character, and any changes still waiting with it.
+    reset: () => {
+      clearTimeout(timer);
+      timer = null;
+      pendingKeys = new Set();
+      pendingFor = null;
+      set({ charId: null, charData: null, loading: false, error: null, saveError: null });
+    },
+  };
+});
 
-      if (!response.ok) {
-        throw new Error("Failed to post charData to the endpoint");
-      }
-
-      // Optionally, handle the response if needed
-      const responseData = await response.json();
-      console.log("CharData posted successfully:", responseData);
-    } catch (error) {
-      console.error("Error posting charData:", error.message);
-    }
-  },
-
-
-  deleteChar: async (char_name) => {
-    try {
-      const token = localStorage.getItem("token");
-
-      if (!token) {
-        throw new Error("Token not found in localStorage");
-      }
-
-      const response = await fetch(`http://localhost:8000/character/${char_name}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/string",
-          "Authorization": `Bearer ${token}`
-        },
-        body: char_name
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to delete character");
-      }
-
-
-      console.log(`Deleting ${char_name}`)
-    }
-    catch (error) {
-      console.error("Error deleting character:", error.message);
-    }
-  },
-
-  fetchChar: async (char_id) => {
-    const { setCharData } = get();
-    const token = localStorage.getItem("token");
-    
-    try {
-      const response = await fetch(`http://localhost:8000/character/file/${char_id}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-        },
-        
-      });
-      if (response.status === 200) {
-        const charData = await response.json();
-        setCharData(charData);
-        
-      } else if (response.status === 401) {
-       
-      } else {
-        console.error("Failed to fetch user data");
-      }
-    } catch (error) {
-      console.error("There was an error fetching user data:", error);
-      // Handle error as needed
-    }
-  },
-
-  fetchAllChars: async () => {
-    const { setCharData } = get();
-    const token = localStorage.getItem("token");
-    
-    try {
-      const response = await fetch("http://localhost:8000/character", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-        },
-        
-      });
-      if (response.status === 200) {
-        const charData = await response.json();
-        
-      } else if (response.status === 401) {
-       
-      } else {
-        console.error("Failed to fetch all characters data");
-      }
-    } catch (error) {
-      console.error("There was an error fetching user data:", error);
-      // Handle error as needed
-    }
-  },
-
-}));
+// Closing or reloading the tab: send what is still waiting.
+if (typeof window !== "undefined") {
+  window.addEventListener("pagehide", () => useCharStore.getState().flushSaves({ keepalive: true }));
+}
 
 export default useCharStore;

@@ -1,158 +1,110 @@
 import { create } from "zustand";
+import { api, clearToken, getToken, setToken, setUnauthorizedHandler } from "../utils/api";
+import useCharStore from "./CharStore";
+import useMinionStore from "./MinionStore";
 
-const API_BASE = "http://localhost:8000"
+/* Who is logged in.
 
-const loadInitialState = () => {
-  
-  const token = localStorage.getItem("token") || null;
-  const userData = JSON.parse(localStorage.getItem("userData")) || null;
-  const charData = JSON.parse(localStorage.getItem("charData")) || null;
-  const partyData = JSON.parse(localStorage.getItem("partyData")) || null;
-
-  const busy = false;
-  const error = "";
-
-  // Attempt to parse the user data from localStorage or set to null if not found
-  return { token, userData, charData, partyData, busy, error };
-};
+     token        the login token (kept in localStorage by utils/api.js,
+                  so a reload keeps you logged in)
+     userData     /me: { id, name, email, selected_campaign,
+                  characters: [{ id, name, active }] }. Memory only:
+                  fetched at start-up (Layout) and after anything that
+                  changes the character list.
+     userStatus   "idle" | "loading" | "ready" | "error", so a page can
+                  tell "still loading" from "the server is down"
+     busy, error  for the log-in and create-account forms */
 
 const useAuthStore = create((set, get) => ({
-  ...loadInitialState(),
-  setToken: (token) => {
-    localStorage.setItem("token", token); // Save the token to localStorage
-    set(() => ({ token }));
-  },
+  token: getToken(),
+  userData: null,
+  userStatus: "idle",
+  busy: false,
+  error: "",
 
-  logout: () => {
-    // Ensure to clear all localStorage on logout
-    localStorage.removeItem("token"); 
-    localStorage.removeItem("userData"); 
-    localStorage.removeItem("charData"); 
-    localStorage.removeItem("partyData"); 
-    localStorage.removeItem("minionsData"); 
-    
-    set(() => ({ token: null, userData: null, charData: null, partyData: null}));
-  },
-
-  setUserData: (userData) => {
-    localStorage.setItem("userData", JSON.stringify(userData)); // Save the user data to localStorage
-    set(() => ({ userData }));
-  },
-
-  setBusy: (busy) => set({ busy }),
   setError: (error) => set({ error }),
 
+  /* ── the logged-in user ── */
+
   fetchUser: async () => {
-    const { token, logout, setUserData } = get(); // Accessing current state and actions
+    if (!get().token) return null;
+    set({ userStatus: "loading" });
     try {
-      const response = await fetch(`${API_BASE}/me`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
-      if (response.status === 200) {
-        const userData = await response.json();
-        setUserData(userData);
-       
-      } else if (response.status === 401) {
-        logout();
-      } else {
-        console.error("Failed to fetch user data");
+      const userData = await api.get("/me");
+      set({ userData, userStatus: "ready" });
+      return userData;
+    } catch (e) {
+      // A 401 has already logged out (see the handler at the bottom).
+      if (e.status !== 401) {
+        console.error("Couldn't load the user:", e.message);
+        set({ userStatus: "error" });
       }
-    } catch (error) {
-      console.error("There was an error fetching user data:", error);
-      // Handle error as needed
+      return null;
     }
   },
+
+  /* ── log in / out ── */
+
+  logIn: async (name, password) => {
+    set({ error: "", busy: true });
+
+    const form = new FormData();
+    form.append("username", name);
+    form.append("password", password);
+
+    try {
+      const data = await api.post("/login", form, { auth: false });
+      setToken(data.access_token);
+      set({ token: data.access_token });
+      await get().fetchUser();
+      return true;
+    } catch (e) {
+      if (e.status === 400 || e.status === 401) set({ error: "That name and secret phrase don't match." });
+      else if (e.status === 0) set({ error: "Can't reach the server." });
+      else set({ error: "Log in failed — try again." });
+      return false;
+    } finally {
+      set({ busy: false });
+    }
+  },
+
+  // `save: false` when the token is already dead (nothing could be saved).
+  logout: async ({ save = true } = {}) => {
+    if (save) await useCharStore.getState().flushSaves();
+    clearToken();
+    useCharStore.getState().reset();
+    useMinionStore.getState().reset();
+    set({ token: null, userData: null, userStatus: "idle" });
+  },
+
+  /* ── account ── */
 
   createAccount: async (formData) => {
-    const { setError, setBusy } = get();
-
-    setError("");
-    setBusy(true);
-
+    set({ error: "", busy: true });
     try {
-      const response = await fetch(`${API_BASE}/create_account`, { 
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-      if (response.ok) {
-
-        console.log('Account created successfully');
-        return true
-
-      } else {
-        console.error('Error creating account');
-        setError("Couldn't create the account — that name may be taken.");
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      setError("Can't reach the server.");
+      await api.post("/create_account", formData, { auth: false });
+      return true;
+    } catch (e) {
+      set({ error: e.status === 0 ? "Can't reach the server." : "Couldn't create the account — that name may be taken." });
+      return false;
     } finally {
-      setBusy(false);
+      set({ busy: false });
     }
   },
 
-  deleteAccount: async() => {
-    const { token, logout } = get();
-
-    await fetch(`${API_BASE}/delete_account`, {
-      method: "DELETE",
-      headers: { ...(token ? { Authorization: `Bearer ${token}` } : {}) },
-      credentials: "include",
-    });
-    logout();
-
-  },
-
-  logIn: async(name,password) => {
-
-    const { setError, setBusy, setToken, fetchUser } = get();
-
-    setError("");
-    setBusy(true);
-
-    const formData = new FormData();
-    formData.append("username", name) 
-    formData.append("password", password)
-    
+  deleteAccount: async () => {
     try {
-      const response = await fetch(`${API_BASE}/login`, {
-        method: "POST",
-        body: formData
-      });
-       
-      if (response.status === 200) {
-        console.log("login success!")
-        const data = await response.json();
-        setToken(data.access_token)
-        await fetchUser()
-
-        return true
-       
-    
-      } else if (response.status === 400 || response.status === 401) {
-        const data = await response.json();
-        console.log(data)
-        setError("That name and secret phrase don't match.");
-      } else {
-        console.log("Login Failed");
-        setError("Log in failed — try again.");
-      }
-    } catch (error) {
-      setError("Can't reach the server.");
+      await api.del("/delete_account");
     } finally {
-      setBusy(false);
+      await get().logout({ save: false });
     }
-  }
-
-
-  
+  },
 }));
+
+// Any logged-in request answered with 401: the token has expired or is
+// wrong, so log out (without trying to save — it would fail the same way).
+setUnauthorizedHandler(() => {
+  if (useAuthStore.getState().token) useAuthStore.getState().logout({ save: false });
+});
 
 export default useAuthStore;

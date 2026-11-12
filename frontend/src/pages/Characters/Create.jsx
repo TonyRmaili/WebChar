@@ -11,21 +11,23 @@ import CharacterToken from "./create/CharacterToken";
 
    Click a token to use that character in Sheets; right-click for more
    (send a copy to a campaign, delete). New characters are made with the
-   Builder Wizard, which sends them to the server itself. */
+   Builder Wizard, which sends them to the server itself.
+
+   Characters are found by their database id. After anything that changes
+   the list (show in Sheets, delete), the list is fetched again (/me). */
 
 const EXPORT_KINDS = {
   party: { heading: "Add to the party of…", done: (c, n) => `${n} joined the party in ${c}.`, where: (c) => `the party in ${c}` },
   npc: { heading: "Add as an NPC to…", done: (c, n) => `${n} was added to the NPCs of ${c}.`, where: (c) => `the NPCs of ${c}` },
 };
 
-const sortCharacters = (list) =>
-  [...(list ?? [])].sort((a, b) => (a.id != null && b.id != null ? a.id - b.id : String(a.name).localeCompare(String(b.name))));
+const sortCharacters = (list) => [...(list ?? [])].sort((a, b) => a.id - b.id);
 
 export default function CreateCharacters() {
   const userData = useAuthStore((s) => s.userData);
   const fetchUser = useAuthStore((s) => s.fetchUser);
   const deleteChar = useCharStore((s) => s.deleteChar);
-  const toggleActiveChar = useCharStore((s) => s.toggleActiveChar);
+  const toggleActive = useCharStore((s) => s.toggleActive);
   const campaignNames = useCampaignStore((s) => s.campaignNames);
   const loadingCampaigns = useCampaignStore((s) => s.loadingCampaignNames);
   const listCampaigns = useCampaignStore((s) => s.listCampaigns);
@@ -46,20 +48,22 @@ export default function CreateCharacters() {
   /* ── actions ── */
 
   const toggleSheets = async (character) => {
-    await toggleActiveChar(character.id);
-    await fetchUser();
+    try {
+      await toggleActive(character.id);
+      await fetchUser();
+    } catch (e) {
+      setNotice({ tone: "error", text: `Couldn't change ${character.name} — ${e.message}.` });
+    }
   };
 
   const remove = async (character) => {
     if (!window.confirm(`Delete ${character.name}? This cannot be undone.`)) return;
     try {
-      await deleteChar(character.name);
+      await deleteChar(character.id);
       await fetchUser();
-      const current = JSON.parse(localStorage.getItem("charData") || "null");
-      if (current?.name === character.name) localStorage.removeItem("charData");
     } catch (e) {
       console.error("Delete failed:", e);
-      setNotice({ tone: "error", text: `Couldn't delete ${character.name}. Please try again.` });
+      setNotice({ tone: "error", text: `Couldn't delete ${character.name} — ${e.message}.` });
     }
   };
 
@@ -132,7 +136,7 @@ export default function CreateCharacters() {
             <div className="flex flex-wrap gap-x-6 gap-y-4 pt-2">
               {characters.map((character) => (
                 <CharacterToken
-                  key={character.id ?? character.name}
+                  key={character.id}
                   character={character}
                   active={!!character.active}
                   onClick={() => toggleSheets(character)}

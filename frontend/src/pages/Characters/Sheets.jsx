@@ -13,14 +13,15 @@ import PlaySection from "./sheet/PlaySection";
 import PartyBar from "./sheet/PartyBar";
 import { DEFINE_TABS, DEFAULT_DEFINE_TAB, findDefineTab } from "./sheet/defineTabs";
 import { ViewSwitch, WithViewRail } from "./ViewSwitch";
-import { ParchmentSheet } from "../../styles/parchment";
+import { INK, InkButton, ParchmentSheet } from "../../styles/parchment";
 
-const API = "http://localhost:8000";
+/* Characters › Sheets: the active characters, one open at a time.
+
+   Characters are found by their database id. The open one lives in
+   CharStore (memory only): it is fetched from the server when you pick
+   it, and every change is saved back from there. */
+
 const TAB_KEY = "sheet.defineTab";
-
-const charId = (c) => c.id || c._id || c.name;
-
-const isActiveChar = (c) => c?.active === true || c?.is_active === true || c?.status === "active";
 
 const readTab = () => {
   try {
@@ -85,7 +86,18 @@ function DefineRailTabs({ activeTab, panelOpen, onPick }) {
 export default function Sheets({ onView }) {
   const token = useAuthStore((s) => s.token);
   const userData = useAuthStore((s) => s.userData);
-  const fetchChar = useCharStore((s) => s.fetchChar);
+  const userStatus = useAuthStore((s) => s.userStatus);
+  const fetchUser = useAuthStore((s) => s.fetchUser);
+
+  const charId = useCharStore((s) => s.charId);
+  const charData = useCharStore((s) => s.charData);
+  const loadError = useCharStore((s) => s.error);
+  const saveError = useCharStore((s) => s.saveError);
+  const clearSaveError = useCharStore((s) => s.clearSaveError);
+  const loadChar = useCharStore((s) => s.loadChar);
+  const restAll = useCharStore((s) => s.restAll);
+  const grantExperience = useCharStore((s) => s.grantExperience);
+
   const loadMinions = useMinionStore((s) => s.loadMinions);
   const minionCount = useMinionStore((s) => s.minions.length);
 
@@ -94,6 +106,7 @@ export default function Sheets({ onView }) {
   const [activeCharId, setActiveCharId] = useState(null);
   const [defineTab, setDefineTabState] = useState(readTab);
   const [busy, setBusy] = useState(false);
+  const [partyError, setPartyError] = useState(null);
 
   const setDefineTab = useCallback((id) => {
     setDefineTabState(id);
@@ -104,9 +117,9 @@ export default function Sheets({ onView }) {
     }
   }, []);
 
-  const activeChars = useMemo(() => (userData?.characters ?? []).filter(isActiveChar), [userData]);
-
-  const selectedChar = useMemo(() => activeChars.find((c) => charId(c) === activeCharId), [activeChars, activeCharId]);
+  const activeChars = useMemo(() => (userData?.characters ?? []).filter((c) => c.active), [userData]);
+  const selectedChar = useMemo(() => activeChars.find((c) => c.id === activeCharId), [activeChars, activeCharId]);
+  const selectedName = selectedChar?.name ?? "";
 
   /* ---- guards & loading ---- */
 
@@ -118,50 +131,32 @@ export default function Sheets({ onView }) {
   // chosen one is no longer active.
   useEffect(() => {
     if (activeChars.length === 0) return;
-    if (!activeCharId || !selectedChar) setActiveCharId(charId(activeChars[0]));
+    if (!activeCharId || !selectedChar) setActiveCharId(activeChars[0].id);
   }, [activeChars, activeCharId, selectedChar]);
 
+  // Open the chosen character (CharStore saves anything still waiting
+  // for the previous one first).
   useEffect(() => {
-    if (!token || !activeCharId) return;
-    (async () => {
-      await fetchChar(activeCharId);
-      const charData = useCharStore.getState().charData;
-      if (charData?.name) await loadMinions(charData.name);
-    })();
-  }, [token, activeCharId, fetchChar, loadMinions]);
+    if (token && activeCharId) loadChar(activeCharId);
+  }, [token, activeCharId, loadChar]);
+
+  // Its minions. The name is only for the dice tower's Minions tab, so a
+  // renamed character shows its new name there too.
+  useEffect(() => {
+    if (token && activeCharId) loadMinions(activeCharId, selectedName);
+  }, [token, activeCharId, selectedName, loadMinions]);
 
   /* ---- party actions ---- */
-  // TODO (store pass): move these two calls into a store like the newer
-  // catalogue actions, instead of calling fetch from the page.
-
-  const post = async (path, body) => {
-    const authToken = token || localStorage.getItem("token");
-    if (!authToken) throw new Error("Token not found");
-
-    const res = await fetch(`${API}${path}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${authToken}`,
-      },
-      body: JSON.stringify(body),
-    });
-    const payload = await res.json().catch(() => null);
-    if (!res.ok) {
-      throw new Error(`Failed: ${res.status} ${payload ? JSON.stringify(payload) : ""}`);
-    }
-    return payload;
-  };
 
   // Rests every active character at once.
-  async function onRestAll(rest_type) {
+  async function onRestAll(restType) {
     if (busy || activeChars.length === 0) return;
     setBusy(true);
+    setPartyError(null);
     try {
-      await post("/combat/rest_all", { rest_type, characters: activeChars });
-      if (activeCharId) await fetchChar(activeCharId);
+      await restAll(restType, activeChars.map((c) => c.id));
     } catch (e) {
-      console.error("rest error:", e.message);
+      setPartyError(`Couldn't rest — ${e.message}`);
     } finally {
       setBusy(false);
     }
@@ -172,12 +167,12 @@ export default function Sheets({ onView }) {
   async function onAdjustExperience(delta) {
     if (busy || !selectedChar || !delta) return false;
     setBusy(true);
+    setPartyError(null);
     try {
-      await post("/combat/experience", { delta });
-      if (activeCharId) await fetchChar(activeCharId);
+      await grantExperience(delta);
       return true;
     } catch (e) {
-      console.error("experience error:", e.message);
+      setPartyError(`Couldn't change experience — ${e.message}`);
       return false;
     } finally {
       setBusy(false);
@@ -196,6 +191,16 @@ export default function Sheets({ onView }) {
   );
 
   if (!userData) {
+    if (userStatus === "error") {
+      return alone(
+        <div className="mt-10 text-center text-sm italic text-desk-ink-faded">
+          <p>Couldn't reach the server to load your characters.</p>
+          <button type="button" onClick={fetchUser} className="mt-2 underline decoration-dotted underline-offset-4 hover:text-desk-accent">
+            try again
+          </button>
+        </div>
+      );
+    }
     return alone(<p className="mt-10 text-center text-sm italic text-desk-ink-faded">Loading characters…</p>);
   }
 
@@ -214,20 +219,34 @@ export default function Sheets({ onView }) {
 
   /* ---- panels ---- */
 
+  // The sheet is shown once the chosen character has arrived from the server.
+  const ready = !!charData && charId === activeCharId;
+
   const activeDefineTab = findDefineTab(defineTab);
   const ActiveDefine = activeDefineTab.Component;
-  const waiting = <p className="text-sm italic text-ink-faded">Loading character…</p>;
+  const waiting = (
+    <p className="text-sm italic text-ink-faded">
+      {loadError && charId === activeCharId ? (
+        <>
+          Couldn't load the character — {loadError}.{" "}
+          <InkButton onClick={() => loadChar(activeCharId)}>try again</InkButton>
+        </>
+      ) : (
+        "Loading character…"
+      )}
+    </p>
+  );
   const hasMinions = minionCount > 0;
 
   // The Play panel is one parchment sheet; its sections are headings on it.
   const playContent = (
     <ParchmentSheet>
-      {!selectedChar ? (
+      {!ready ? (
         waiting
       ) : (
         <div className="space-y-6">
           <PlaySection title="Health" storageKey="sheet.play.health">
-            <HealthPlay id={activeCharId} />
+            <HealthPlay />
           </PlaySection>
 
           <PlaySection title="Actions & Charges" storageKey="sheet.play.charges">
@@ -246,13 +265,32 @@ export default function Sheets({ onView }) {
     <div>
       <DefineTabStrip activeTab={defineTab} onSelect={setDefineTab} />
       {/* Tabs draw their own parchment sheet (bare: true); anything else gets one. */}
-      {selectedChar && activeDefineTab.bare ? <ActiveDefine /> : <ParchmentSheet>{selectedChar ? <ActiveDefine /> : waiting}</ParchmentSheet>}
+      {ready && activeDefineTab.bare ? <ActiveDefine /> : <ParchmentSheet>{ready ? <ActiveDefine /> : waiting}</ParchmentSheet>}
     </div>
   );
+
+  // Problems worth showing above the sheet: a save that failed, or a party action.
+  const problem = (saveError && `Couldn't save ${selectedName || "the character"} — ${saveError}. The saved version is shown again.`) || partyError;
 
   return (
     <div className="mx-auto w-full max-w-[1800px] space-y-4 py-4">
       <PartyBar characters={activeChars} activeId={activeCharId} onSelect={setActiveCharId} onRest={onRestAll} onExperience={onAdjustExperience} busy={busy} />
+
+      {problem && (
+        <ParchmentSheet>
+          <p className={`flex flex-wrap items-baseline gap-x-3 text-sm italic ${INK.rubric}`} role="alert">
+            {problem}
+            <InkButton
+              onClick={() => {
+                clearSaveError();
+                setPartyError(null);
+              }}
+            >
+              dismiss
+            </InkButton>
+          </p>
+        </ParchmentSheet>
+      )}
 
       <SplitPanels
         storageKey="sheet.split"

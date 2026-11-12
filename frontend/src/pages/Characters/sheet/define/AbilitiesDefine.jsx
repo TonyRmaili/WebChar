@@ -176,8 +176,7 @@ function AddSkill({ onAdd }) {
 
 export default function AbilitiesDefine() {
   const charData = useCharStore((s) => s.charData);
-  const updateCharField = useCharStore((s) => s.updateCharField);
-  const postCharData = useCharStore((s) => s.postCharData);
+  const patchChar = useCharStore((s) => s.patchChar);
 
   const abilities = abilitiesOf(charData);
   const skills = skillsOf(charData);
@@ -188,10 +187,7 @@ export default function AbilitiesDefine() {
   const pb = pbOf(charData);
 
   // Every change here is a single click or a finished number, so save right away.
-  const write = (key, value) => {
-    updateCharField(key, value);
-    postCharData();
-  };
+  const write = (key, value) => patchChar({ [key]: value }, { now: true });
 
   const patchAbilityRow = (key, patch) => write("ability_scores", patchAbility(abilities, key, patch));
   const patchSkill = (key, patch) => write("skills", { ...skills, [key]: { ...skills[key], ...patch } });

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import useCharStore from "../../../../store/CharStore";
 import { useCatalogueStore } from "../../../../store/CatalogueStore";
 import { usePopupStore } from "../../../../store/PopupStore";
@@ -367,8 +367,7 @@ function ItemRow({ row, kind, open, attuneFull, onToggle, onPatch, onRemove, onD
 
 export default function InventoryDefine() {
   const charData = useCharStore((s) => s.charData);
-  const updateCharField = useCharStore((s) => s.updateCharField);
-  const postCharData = useCharStore((s) => s.postCharData);
+  const patchChar = useCharStore((s) => s.patchChar);
 
   const catalogue = useCatalogueStore((s) => s.items);
   const loadingItems = useCatalogueStore((s) => s.loadingItems);
@@ -378,7 +377,6 @@ export default function InventoryDefine() {
   const [openId, setOpenId] = useState(null);
   const [query, setQuery] = useState("");
   const [pickerOpen, setPickerOpen] = useState(false);
-  const timer = useRef(null);
 
   const inv = useMemo(() => normalizeInventory(charData?.inventory), [charData?.inventory]);
 
@@ -390,15 +388,7 @@ export default function InventoryDefine() {
   }, [needsCatalogue]);
 
   // Clicks save right away; typing saves a moment later.
-  const persist = useCallback(
-    (next, typing = false) => {
-      updateCharField("inventory", next);
-      clearTimeout(timer.current);
-      if (typing) timer.current = setTimeout(() => postCharData(), 400);
-      else postCharData();
-    },
-    [updateCharField, postCharData]
-  );
+  const persist = (next, typing = false) => patchChar({ inventory: next }, { now: !typing });
 
   const entryFor = useCallback(
     (row) => (row.source ? asList(catalogue).find((c) => c.name === row.name && c.source === row.source) : null),

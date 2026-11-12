@@ -81,8 +81,7 @@ function SubHeading({ children, hint }) {
 
 export default function SpellbookDefine() {
   const charData = useCharStore((s) => s.charData);
-  const updateCharField = useCharStore((s) => s.updateCharField);
-  const postCharData = useCharStore((s) => s.postCharData);
+  const patchChar = useCharStore((s) => s.patchChar);
 
   const spellsData = useCatalogueStore((s) => s.spellsData);
   const loadSpells = useCatalogueStore((s) => s.loadSpells);
@@ -127,10 +126,7 @@ export default function SpellbookDefine() {
   };
 
   /* ----- writers: every change saves straight away ----- */
-  const saveBook = (next) => {
-    updateCharField("spellbook", next);
-    postCharData();
-  };
+  const saveBook = (next) => patchChar({ spellbook: next }, { now: true });
 
   const flash = (message) => {
     setNotice(message);

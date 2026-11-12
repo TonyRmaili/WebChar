@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import useCharStore from "../../../../store/CharStore";
 import { useCatalogueStore } from "../../../../store/CatalogueStore";
 import { usePopupStore } from "../../../../store/PopupStore";
@@ -179,28 +179,18 @@ function FeatRow({ row, charData, open, onToggle, onPatch, onReplace, onRemove, 
 
 export default function FeatsDefine() {
   const charData = useCharStore((s) => s.charData);
-  const updateCharField = useCharStore((s) => s.updateCharField);
-  const postCharData = useCharStore((s) => s.postCharData);
+  const patchChar = useCharStore((s) => s.patchChar);
   const featsData = useCatalogueStore((s) => s.featsData);
   const openPopup = usePopupStore((s) => s.open);
 
   const [openId, setOpenId] = useState(null);
   const [query, setQuery] = useState("");
   const [picking, setPicking] = useState(false);
-  const timer = useRef(null);
 
   const feats = useMemo(() => asList(charData?.feats), [charData?.feats]);
 
   // Typing saves a moment later; adding/removing saves right away.
-  const persist = useCallback(
-    (next, immediate = false) => {
-      updateCharField("feats", next);
-      clearTimeout(timer.current);
-      if (immediate) postCharData();
-      else timer.current = setTimeout(() => postCharData(), 400);
-    },
-    [updateCharField, postCharData]
-  );
+  const persist = (next, now = false) => patchChar({ feats: next }, { now });
 
   const q = query.trim().toLowerCase();
   const visible = useMemo(() => feats.filter((f) => !q || String(f.name || "").toLowerCase().includes(q)), [feats, q]);

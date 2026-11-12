@@ -1,4 +1,6 @@
-from pydantic import BaseModel
+from typing import Literal
+
+from pydantic import BaseModel, ConfigDict
 
 
 class SaveResponseRequest(BaseModel):
@@ -47,38 +49,64 @@ class TokenPayload(BaseModel):
     exp: int = None
 
 class UserSchema(BaseModel):
-    name: str 
+    name: str
     email: str
-    password: str 
+    password: str
+
+
+# ---------- what the server sends back about a user ----------
+# /me and /create_account answer with these, so the password hash (and
+# anything else on the database row) never leaves the server.
+# from_attributes=True lets Pydantic read them straight off the
+# SQLAlchemy objects.
+
+class CharacterOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    id: int
+    name: str
+    active: bool
+
+class UserOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    id: int
+    name: str
+    email: str
+    selected_campaign: str | None = None
+    characters: list[CharacterOut] = []
+
 
 class CharacterSchema(BaseModel):
-    file_path: str 
+    file_path: str
     user_id: int
     name : str
 
 class CharacterIn(BaseModel):
     name : str
-  
+
 class QueryRequest(BaseModel):
     question: str
 
 class DictData(BaseModel):
     form_data : dict
 
+
+# ---------- combat (characters are found by their database id) ----------
+
 class HealthData(BaseModel):
-    value : int
-    name : str
+    value: int
+    char_id: int
 
 class TakeRestData(BaseModel):
-    rest_type: str
-    name : str
+    rest_type: Literal["short", "long"]
+    char_id: int
 
 class TakeRestAllData(BaseModel):
-    rest_type: str
-    characters : list
+    rest_type: Literal["short", "long"]
+    char_ids: list[int]
 
 class GrantExperienceAll(BaseModel):
-    delta : int
+    delta: int
+
 
 class MinionEffects(BaseModel):
     minion_effects: list
@@ -89,4 +117,3 @@ class MinionEffects(BaseModel):
 
 class ImportMinion(BaseModel):
     data: dict
-

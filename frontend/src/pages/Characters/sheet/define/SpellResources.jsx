@@ -82,7 +82,7 @@ export function PactSlots({ rows, onChange }) {
           <Field label="Slot level">
             <Segmented
               size="sm"
-              options={[1, 2, 3, 4, 5].map((l) => ({ value: l, label: ORD[l] }))}
+              options={[1, 2, 3, 4, 5, 6, 7, 8, 9].map((l) => ({ value: l, label: ORD[l] }))}
               value={num(r.level)}
               onChange={(level) => patch(r.id, { level })}
             />

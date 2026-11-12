@@ -16,8 +16,9 @@ const linkCls = "flex flex-col items-center leading-tight transition-colors hove
 
 function Header() {
   const logout = useAuthStore((s) => s.logout);
-  // Logged in = a token is stored (AuthStore keeps it in localStorage, so
-  // this survives a page reload). Only one of Log in / Logout is shown.
+  // Logged in = there is a login token (kept in localStorage by
+  // utils/api.js, so this survives a page reload). Only one of Log in /
+  // Logout is shown.
   const loggedIn = useAuthStore((s) => !!s.token);
 
   return (
@@ -46,7 +47,8 @@ function Header() {
           <p>Settings</p>
         </Link>
         {loggedIn ? (
-          <Link to="/logIn" onClick={logout} className={linkCls}>
+          // logout() saves any waiting change first, then logs out.
+          <Link to="/logIn" onClick={() => logout()} className={linkCls}>
             <img src={LogOutLogo} className="h-8" alt="" />
             <p>Logout</p>
           </Link>

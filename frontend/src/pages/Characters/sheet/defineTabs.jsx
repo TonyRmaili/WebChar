@@ -40,6 +40,7 @@ export const DEFINE_TABS = [
       </Icon>
     ),
   },
+  
   {
     id: "feats",
     label: "Feats",

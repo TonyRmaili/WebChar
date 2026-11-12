@@ -1,40 +1,14 @@
 // Minions of the character open on the sheet. Shape: claude/minion-contract.md
 import { create } from "zustand";
+import { api } from "../utils/api";
 
-const API = "http://localhost:8000/minions";
+/* Minions belong to a character, found by its database id
+   (/minions?char_id=<id>). Memory only: they are fetched when a sheet
+   opens, and every change is sent to the server a moment later. */
+
 const SAVE_DELAY_MS = 400;
 
-// The old store cached minions in the browser, which showed the previous
-// character's minions on load. Remove that leftover once.
-try {
-  localStorage.removeItem("minionsData");
-} catch {
-  /* storage blocked: nothing to clean */
-}
-
-const authHeaders = (json = false) => {
-  const token = localStorage.getItem("token");
-  return {
-    ...(json ? { "Content-Type": "application/json" } : {}),
-    ...(token ? { Authorization: `Bearer ${token}` } : {}),
-  };
-};
-
-const url = (charName, id = "") =>
-  `${API}${id ? `/${id}` : ""}?char_name=${encodeURIComponent(charName)}`;
-
-async function request(method, path, body) {
-  const res = await fetch(path, {
-    method,
-    headers: authHeaders(body !== undefined),
-    body: body !== undefined ? JSON.stringify(body) : undefined,
-  });
-  if (!res.ok) {
-    const text = await res.text().catch(() => "");
-    throw new Error(`HTTP ${res.status}${text ? `: ${text}` : ""}`);
-  }
-  return res.status === 204 ? null : res.json();
-}
+const path = (minionId) => (minionId ? `/minions/${minionId}` : "/minions");
 
 // Pending saves, one per minion id. Rapid changes (typing, clicking
 // damage several times) collapse into a single request.
@@ -44,7 +18,10 @@ const pending = new Map(); // id -> { timer, run }
 export const selKey = (minionId, unitId) => `${minionId}:${unitId}`;
 
 const useMinionStore = create((set, get) => ({
-  charName: null,
+  charId: null,
+  // The character's name, for display only (the dice tower's Minions tab).
+  // Minions are always found by charId.
+  charName: "",
   minions: [],
   loading: false,
   error: null,
@@ -58,32 +35,32 @@ const useMinionStore = create((set, get) => ({
 
   // Load a character's minions. Answers for a character that is no longer
   // open are ignored, so fast tab switching can't mix characters.
-  loadMinions: async (charName) => {
-    if (!charName) return;
+  loadMinions: async (charId, charName = "") => {
+    if (!charId) return;
     // Waiting saves go out first, so the reload can't overwrite them.
     await get().flushSaves();
 
-    if (get().charName !== charName) set({ charName, minions: [], selected: [] });
-    set({ loading: true, error: null });
+    if (get().charId !== charId) set({ charId, minions: [], selected: [] });
+    set({ charName, loading: true, error: null });
 
     try {
-      const data = await request("GET", url(charName));
-      if (get().charName !== charName) return;
+      const data = await api.get(path(), { query: { char_id: charId } });
+      if (get().charId !== charId) return;
       set({ minions: Array.isArray(data) ? data : [] });
     } catch (e) {
-      if (get().charName === charName) set({ error: e.message });
+      if (get().charId === charId) set({ error: e.message });
     } finally {
-      if (get().charName === charName) set({ loading: false });
+      if (get().charId === charId) set({ loading: false });
     }
   },
 
   addMinion: async (draft) => {
-    const charName = get().charName;
-    if (!charName) return null;
+    const charId = get().charId;
+    if (!charId) return null;
     set({ error: null });
     try {
-      const created = await request("POST", url(charName), draft);
-      if (get().charName === charName) {
+      const created = await api.post(path(), draft, { query: { char_id: charId } });
+      if (get().charId === charId) {
         set((s) => ({ minions: [...s.minions, created] }));
       }
       return created;
@@ -95,8 +72,8 @@ const useMinionStore = create((set, get) => ({
 
   // Show the change right away, send it a moment later.
   saveMinion: (minion) => {
-    const charName = get().charName;
-    if (!charName || !minion?.id) return;
+    const charId = get().charId;
+    if (!charId || !minion?.id) return;
 
     set((s) => ({ minions: s.minions.map((m) => (m.id === minion.id ? minion : m)) }));
 
@@ -106,11 +83,11 @@ const useMinionStore = create((set, get) => ({
     const run = async () => {
       pending.delete(minion.id);
       try {
-        await request("PUT", url(charName, minion.id), minion);
+        await api.put(path(minion.id), minion, { query: { char_id: charId } });
       } catch (e) {
         set({ error: e.message });
         // Show what is really saved instead of the change that failed.
-        if (get().charName === charName) get().loadMinions(charName);
+        if (get().charId === charId) get().loadMinions(charId);
       }
     };
     pending.set(minion.id, { timer: setTimeout(run, SAVE_DELAY_MS), run });
@@ -128,8 +105,8 @@ const useMinionStore = create((set, get) => ({
   },
 
   removeMinion: async (id) => {
-    const charName = get().charName;
-    if (!charName) return;
+    const charId = get().charId;
+    if (!charId) return;
 
     const prev = pending.get(id);
     if (prev) {
@@ -139,11 +116,18 @@ const useMinionStore = create((set, get) => ({
 
     set((s) => ({ minions: s.minions.filter((m) => m.id !== id), error: null }));
     try {
-      await request("DELETE", url(charName, id));
+      await api.del(path(id), { query: { char_id: charId } });
     } catch (e) {
       set({ error: e.message });
-      if (get().charName === charName) get().loadMinions(charName);
+      if (get().charId === charId) get().loadMinions(charId);
     }
+  },
+
+  // Logout or a deleted character: forget everything, unsaved changes too.
+  reset: () => {
+    for (const { timer } of pending.values()) clearTimeout(timer);
+    pending.clear();
+    set({ charId: null, charName: "", minions: [], loading: false, error: null, selected: [] });
   },
 }));
 

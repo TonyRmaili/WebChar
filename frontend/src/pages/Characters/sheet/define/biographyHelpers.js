@@ -114,8 +114,9 @@ export const backgroundFromEntry = (entry) => ({
 /* ─── Header line ────────────────────────────────────────────────── */
 
 // "Hill Dwarf · Soldier · Lawful Good · 142 years"
-export const identityLine = (race, background, profile) =>
+export const identityLine = (race, background, profile, charName) =>
   [
+    charName,
     race.subrace ? race.subrace : race.name,
     background.name,
     alignmentLabel(profile.alignment),

@@ -1,8 +1,9 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import useCharStore from "../../../../store/CharStore";
+import useAuthStore from "../../../../store/AuthStore";
 import { useCatalogueStore } from "../../../../store/CatalogueStore";
 import { usePopupStore } from "../../../../store/PopupStore";
-import { INK, InkButton, ParchmentSheet, Title } from "../../../../styles/parchment";
+import { INK, InkButton, ParchmentSheet, Title, InkText } from "../../../../styles/parchment";
 import { DefineSection, Field, Hint, NumberInput, PickerRow, PickerShell, Segmented, Tag, TextBlock, chipBtn, inputBase } from "../../../../styles/parchmentForm";
 import {
   ABILITIES,
@@ -33,7 +34,11 @@ import {
 
    At half width everything stacks. At full width Ancestry and Background
    sit side by side, and the four personality boxes form a 2×2 grid.
-   Picks save right away; typing saves a moment after you stop. */
+   Picks save right away; typing saves a moment after you stop.
+
+   Renaming: characters are found by their database id, so the name is
+   just data. Saving a new name also updates the character list (/me), so
+   the party bar and the roster show it. */
 
 const MAX_PICKER_ROWS = 80;
 
@@ -191,15 +196,16 @@ const PERSONALITY = [
 
 export default function BiographyDefine() {
   const charData = useCharStore((s) => s.charData);
-  const updateCharField = useCharStore((s) => s.updateCharField);
-  const postCharData = useCharStore((s) => s.postCharData);
+  const patchChar = useCharStore((s) => s.patchChar);
+  const fetchUser = useAuthStore((s) => s.fetchUser);
 
   const races = useCatalogueStore((s) => s.races);
   const loadRaces = useCatalogueStore((s) => s.loadRaces);
   const backgroundsData = useCatalogueStore((s) => s.backgroundsData);
   const loadBackgrounds = useCatalogueStore((s) => s.loadBackgrounds);
 
-  const timer = useRef(null);
+  const [renaming, setRenaming] = useState(false); // is the rename area open?
+  const [newName, setNewName] = useState(""); // what's typed in the blank
 
   useEffect(() => {
     if (!asList(races).length) loadRaces();
@@ -208,15 +214,7 @@ export default function BiographyDefine() {
   }, []);
 
   // Picks save right away; typing saves a moment later.
-  const write = useCallback(
-    (key, value, immediate = true) => {
-      updateCharField(key, value);
-      clearTimeout(timer.current);
-      if (immediate) postCharData();
-      else timer.current = setTimeout(() => postCharData(), 400);
-    },
-    [updateCharField, postCharData]
-  );
+  const write = (key, value, immediate = true) => patchChar({ [key]: value }, { now: immediate });
 
   if (!charData) return null;
 
@@ -234,11 +232,56 @@ export default function BiographyDefine() {
   const writeProfile = (patch, immediate = true) => write("character_profile", { ...profile, ...patch }, immediate);
   const typeProfile = (patch) => writeProfile(patch, false);
 
-  const identity = identityLine(race, background, profile);
+  const identity = identityLine(race, background, profile, charData.name);
+
+  // Open the area with the current name already filled in.
+  const openRename = () => {
+    setNewName(charData.name || "");
+    setRenaming(true);
+  };
+
+  const cancelRename = () => setRenaming(false);
+
+  // Save only if the name is non-empty and actually different, then
+  // refresh the character list so the party bar shows the new name.
+  const confirmRename = async () => {
+    const next = newName.trim();
+    if (!next || next === charData.name) return cancelRename();
+    setRenaming(false);
+    await patchChar({ name: next }, { now: true });
+    await fetchUser();
+  };
 
   return (
     <ParchmentSheet>
-      <Title after={<span className={`text-sm italic ${INK.faded}`}>{identity || "choose a race and background to start"}</span>}>Biography</Title>
+      <Title
+        after={<span className={`text-sm italic ${INK.faded}`}>{identity || "choose a race and background to start"}</span>}
+        right={!renaming && <InkButton onClick={openRename}>change name</InkButton>}
+      >
+        Biography
+      </Title>
+
+      {renaming && (
+        <div className="-mt-3 mb-6 flex flex-wrap items-baseline gap-3">
+          <InkText
+            autoFocus
+            value={newName}
+            onChange={(e) => setNewName(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") confirmRename();
+              if (e.key === "Escape") cancelRename();
+            }}
+            placeholder="new name"
+            aria-label="New character name"
+            className="w-64 text-lg"
+          />
+          <InkButton active onClick={confirmRename} disabled={!newName.trim() || newName.trim() === charData.name}>
+            save
+          </InkButton>
+          <InkButton onClick={cancelRename}>cancel</InkButton>
+        </div>
+      )}
+
       <div className="space-y-9">
 
       {/* Ancestry + Background */}

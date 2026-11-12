@@ -12,6 +12,7 @@ import os
 import shutil
 from pathlib import Path
 from app.open_ai_api import OpenAIApi
+from app.character_files import character_path, get_owned_character, read_character
 from app.database.schemas import (
     CreateFileRequest,
     DeleteFileRequest,
@@ -97,14 +98,6 @@ def _campaigns_root(user: User) -> Path:
     root = _user_dir(user) / "campaigns"
     root.mkdir(parents=True, exist_ok=True)
     return root
-
-
-def _character_file(user: User, char_name: str) -> Path:
-    """save_files/<user>/characters/<name>.json — the player's real sheet."""
-    path = _user_dir(user) / "characters" / f"{_clean_name(char_name, 'character name')}.json"
-    if not path.is_file():
-        raise HTTPException(status_code=404, detail="Character not found")
-    return path
 
 
 def _clean_name(name: str, what: str = "name") -> str:
@@ -352,12 +345,15 @@ def save_response(payload: SaveResponseRequest, current_user: CurrentUser):
 
 # ---------- party and NPCs ----------
 # Contract: claude/campaign-export-contract.md. The browser only says WHICH
-# character; the server copies the real file from disk.
+# character (by its database id); the server copies the real file from
+# disk. Inside the campaign the copy is named after the character
+# ("Thorin.json"), since the DM works with names there.
 
 class ExportCharacterRequest(BaseModel):
     campaign_name: str
-    character_id: int | None = None
-    character_name: str
+    character_id: int
+    # Still sent by the browser, but the name is read from the file.
+    character_name: str | None = None
     # "as" is a reserved word in Python, so the field is called kind and
     # reads the "as" key from the JSON. Anything but party/npc → 422.
     kind: Literal["party", "npc"] = Field(alias="as")
@@ -368,38 +364,32 @@ EXPORT_FOLDERS = {"party": "party", "npc": "npcs"}
 
 
 @router.post("/export_character")
-def export_character(payload: ExportCharacterRequest, current_user: CurrentUser):
+def export_character(payload: ExportCharacterRequest, current_user: CurrentUser, db: Session = Depends(get_db)):
     campaign_path = _campaign_dir(current_user, payload.campaign_name)
-    source = _character_file(current_user, payload.character_name)
+    char = get_owned_character(db, current_user, payload.character_id)
+    data = read_character(character_path(current_user.name, char.id))
 
-    try:
-        data = json.loads(source.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError):
-        raise HTTPException(status_code=500, detail="The character file could not be read")
-    if not isinstance(data, dict):
-        raise HTTPException(status_code=500, detail="The character file is not a character")
-
-    dest = campaign_path / EXPORT_FOLDERS[payload.kind] / source.name
+    name = _clean_name(str(data.get("name") or char.name), "character name")
+    dest = campaign_path / EXPORT_FOLDERS[payload.kind] / f"{name}.json"
     if dest.exists() and not payload.overwrite:
         raise HTTPException(status_code=409, detail="A copy of this character is already there")
 
+    # The copy is its own thing now: it keeps where it came from in
+    # _export, not the player's id at the top (which belongs to the sheet).
+    data.pop("id", None)
     data["_export"] = {
-        "source_character_id": payload.character_id,
-        "source_character_name": payload.character_name,
+        "source_character_id": char.id,
+        "source_character_name": name,
         "kind": payload.kind,
         "exported_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
     }
 
-    # Write to a temp file first, then swap it in, so a crash never leaves
-    # a half-written copy behind (same trick as the minions router).
     dest.parent.mkdir(exist_ok=True)
-    tmp = dest.with_suffix(".tmp")
-    tmp.write_text(json.dumps(data, indent=4, ensure_ascii=False), encoding="utf-8")
-    os.replace(tmp, dest)
+    _write_json(dest, data)
 
     return {
         "path": str(dest.relative_to(campaign_path)),
-        "name": payload.character_name,
+        "name": name,
         "as": payload.kind,
     }
 

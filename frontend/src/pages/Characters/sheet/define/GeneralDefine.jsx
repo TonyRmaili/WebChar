@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import useCharStore from "../../../../store/CharStore";
 import { useCatalogueStore } from "../../../../store/CatalogueStore";
 import { usePersistedOpen } from "../../../../utils/SectionCard";
@@ -186,15 +186,13 @@ function ClassBlock({ row, catalogue, onChange, onType, onRemove }) {
 
 export default function GeneralDefine() {
   const charData = useCharStore((s) => s.charData);
-  const updateCharField = useCharStore((s) => s.updateCharField);
-  const postCharData = useCharStore((s) => s.postCharData);
+  const patchChar = useCharStore((s) => s.patchChar);
 
   const catalogue = useCatalogueStore((s) => s.classes);
   const loadClasses = useCatalogueStore((s) => s.loadClasses);
   const loadingClasses = useCatalogueStore((s) => s.loadingClasses);
 
   const [xpStep, setXpStep] = useState(100);
-  const timer = useRef(null);
 
   const catalogueReady = catalogue && typeof catalogue === "object" && !Array.isArray(catalogue) && Object.keys(catalogue).length > 0;
   useEffect(() => {
@@ -203,15 +201,7 @@ export default function GeneralDefine() {
   }, []);
 
   // Clicks and finished numbers save right away; typing saves a moment later.
-  const write = useCallback(
-    (patch, immediate = true) => {
-      for (const [k, v] of Object.entries(patch)) updateCharField(k, v);
-      clearTimeout(timer.current);
-      if (immediate) postCharData();
-      else timer.current = setTimeout(() => postCharData(), 400);
-    },
-    [updateCharField, postCharData]
-  );
+  const write = (patch, immediate = true) => patchChar(patch, { now: immediate });
 
   if (!charData) return null;
 

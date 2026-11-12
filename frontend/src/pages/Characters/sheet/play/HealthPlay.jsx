@@ -32,45 +32,44 @@ import {
    Status (toggles, concentration checks, conditions, exhaustion,
    hit dice, this character's rests).
 
-   New character fields used here: death_saves {success, fail},
+   Works on the character open in CharStore. Damage, healing and rests go
+   through the server's rules; everything else is a change to the
+   character, saved by the store (patchChar).
+
+   Character fields used here: death_saves {success, fail},
    conditions [names], exhaustion 0-6. */
-
-const API = "http://localhost:8000";
-
-// TODO (store pass): move these two calls into CharStore.
-async function postCombat(path, body) {
-  const token = localStorage.getItem("token");
-  if (!token) throw new Error("Token not found");
-  const res = await fetch(`${API}${path}`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-    body: JSON.stringify(body),
-  });
-  const payload = await res.json().catch(() => null);
-  if (!res.ok) throw new Error(`Failed: ${res.status} ${payload ? JSON.stringify(payload) : ""}`);
-  return payload;
-}
 
 /* ─── Small parts ────────────────────────────────────────────────── */
 
 // A number field you can clear and retype: the value is applied on
 // Enter or when leaving the field, not on every keystroke.
-function NumberField({ value, onCommit, min, className = "", ariaLabel }) {
+function NumberField({ value, onCommit, min, max, className = "", ariaLabel }) {
   const [draft, setDraft] = useState(null);
+
   const commit = () => {
     if (draft == null) return;
+
     const n = Math.trunc(Number(draft));
+
     if (String(draft).trim() !== "" && Number.isFinite(n)) {
-      const v = min != null ? Math.max(min, n) : n;
+      let v = n;
+
+      if (min != null) v = Math.max(min, v);
+      if (max != null) v = Math.min(max, v);
+
       if (v !== value) onCommit(v);
     }
+
     setDraft(null);
   };
+
   return (
     <input
       type="number"
       inputMode="numeric"
       value={draft ?? value}
+      min={min}
+      max={max}
       onChange={(e) => setDraft(e.target.value)}
       onBlur={commit}
       onKeyDown={(e) => {
@@ -268,14 +267,15 @@ function Exhaustion({ level, onSet }) {
 
 /* ─── Section ────────────────────────────────────────────────────── */
 
-export default function HealthPlay({ id }) {
+export default function HealthPlay() {
   const charData = useCharStore((s) => s.charData);
-  const updateCharField = useCharStore((s) => s.updateCharField);
-  const postCharData = useCharStore((s) => s.postCharData);
-  const fetchChar = useCharStore((s) => s.fetchChar);
+  const patchChar = useCharStore((s) => s.patchChar);
+  const applyHp = useCharStore((s) => s.changeHp);
+  const restChar = useCharStore((s) => s.rest);
 
   const [amount, setAmount] = useState("");
   const [busy, setBusy] = useState(false);
+  const [problem, setProblem] = useState(null);
   // Concentration save DCs still to roll. Screen-only, never saved.
   const [concChecks, setConcChecks] = useState([]);
 
@@ -303,49 +303,48 @@ export default function HealthPlay({ id }) {
 
   /* ---- writers ---- */
 
-  const save = (field, value) => {
-    updateCharField(field, value);
-    postCharData();
-  };
+  // Every change here is a click or a finished number: save right away.
+  const save = (patch) => patchChar(patch, { now: true });
 
   const patchHealth = (patch) => {
+    const updatedHealth = { ...health, ...patch };
+
+    // Keep current HP within the effective maximum.
+    updatedHealth.current_hp = Math.min(Number(updatedHealth.current_hp) || 0, effectiveMaxHp(updatedHealth));
+
     // Coming back above 0 HP clears the death saves.
-    if (patch.current_hp > 0 && hasDeathSaves) updateCharField("death_saves", NO_DEATH_SAVES);
-    save("health", { ...health, ...patch });
+    const clearSaves = patch.current_hp > 0 && hasDeathSaves;
+    save(clearSaves ? { health: updatedHealth, death_saves: NO_DEATH_SAVES } : { health: updatedHealth });
   };
 
-  // Damage/heal goes through the server, which applies temp HP and
-  // barrier rules and saves the file. Only the local copy is updated
-  // here, unless death saves change too.
+  // Damage and healing go through the server, which applies the temp HP
+  // and barrier rules and saves the file; the store shows the new health.
   const changeHp = async (delta) => {
-    if (!delta || busy || !charData.name) return;
+    if (!delta || busy) return;
     const wasDown = cur <= 0;
     setBusy(true);
+    setProblem(null);
     try {
-      const payload = await postCombat("/combat/health", { value: delta, name: charData.name });
-      if (payload?.health && typeof payload.health === "object") {
-        updateCharField("health", { ...health, ...payload.health });
-      }
+      const newHealth = await applyHp(delta);
 
       if (delta < 0) {
         if (charData.concentration) setConcChecks((list) => [...list, concentrationDc(delta)]);
-        if (wasDown) save("death_saves", { ...deathSaves, fail: Math.min(3, deathSaves.fail + 1) });
-      } else if (Number(payload?.health?.current_hp) > 0 && hasDeathSaves) {
-        save("death_saves", NO_DEATH_SAVES);
+        if (wasDown) save({ death_saves: { ...deathSaves, fail: Math.min(3, deathSaves.fail + 1) } });
+      } else if (Number(newHealth?.current_hp) > 0 && hasDeathSaves) {
+        save({ death_saves: NO_DEATH_SAVES });
       }
     } catch (e) {
-      console.error("health error:", e.message);
+      setProblem(`Couldn't change HP — ${e.message}`);
     } finally {
       setBusy(false);
     }
   };
 
-  const toggleCondition = (name) =>
-    save("conditions", conditions.includes(name) ? conditions.filter((c) => c !== name) : [...conditions, name]);
+  const toggleCondition = (name) => save({ conditions: conditions.includes(name) ? conditions.filter((c) => c !== name) : [...conditions, name] });
 
   const resolveConcentration = (kept) => {
     setConcChecks((list) => (kept ? list.slice(1) : []));
-    if (!kept) save("concentration", false);
+    if (!kept) save({ concentration: false });
   };
 
   const applyAmount = (sign) => {
@@ -355,14 +354,14 @@ export default function HealthPlay({ id }) {
     setAmount("");
   };
 
-  const rest = async (rest_type) => {
-    if (busy || !charData.name) return;
+  const rest = async (restType) => {
+    if (busy) return;
     setBusy(true);
+    setProblem(null);
     try {
-      await postCombat("/combat/rest", { rest_type, name: charData.name });
-      await fetchChar(id);
+      await restChar(restType);
     } catch (e) {
-      console.error("rest error:", e.message);
+      setProblem(`Couldn't rest — ${e.message}`);
     } finally {
       setBusy(false);
     }
@@ -370,7 +369,7 @@ export default function HealthPlay({ id }) {
 
   const setHitDie = (die, value) => {
     const row = charData.hit_dice?.[die] || {};
-    save("hit_dice", { ...charData.hit_dice, [die]: { ...row, current: value } });
+    save({ hit_dice: { ...charData.hit_dice, [die]: { ...row, current: value } } });
   };
 
   /* ---- render ---- */
@@ -379,6 +378,7 @@ export default function HealthPlay({ id }) {
 
   return (
     <div className="@container">
+      {problem && <p className="mb-3 text-sm italic text-bad">{problem}</p>}
       <div className="grid grid-cols-1 gap-x-8 gap-y-5 @xl:grid-cols-2 @5xl:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)_minmax(0,1fr)]">
         {/* ── Vitals ── */}
         <Block title="Hit Points" className="@xl:col-span-2 @5xl:col-span-1">
@@ -387,6 +387,7 @@ export default function HealthPlay({ id }) {
               <NumberField
                 value={cur}
                 min={0}
+                max={maxHp}
                 onCommit={(v) => patchHealth({ current_hp: v })}
                 ariaLabel="Current HP"
                 className={`w-[4.5rem] rounded-sm text-[2.6rem] font-semibold leading-none hover:bg-ink/[0.05] focus:bg-ink/[0.07] ${NUM[tone]}`}
@@ -461,7 +462,7 @@ export default function HealthPlay({ id }) {
           </div>
 
           {maxHp > 0 && (cur <= 0 || hasDeathSaves) && (
-            <DeathSaves saves={deathSaves} onChange={(v) => save("death_saves", v)} />
+            <DeathSaves saves={deathSaves} onChange={(v) => save({ death_saves: v })} />
           )}
         </Block>
 
@@ -516,7 +517,7 @@ export default function HealthPlay({ id }) {
                   type="button"
                   aria-pressed={on}
                   onClick={() => {
-                    save(t.field, !on);
+                    save({ [t.field]: !on });
                     if (t.field === "concentration" && on) setConcChecks([]);
                   }}
                   className={`group inline-flex items-center gap-1.5 text-sm transition ${on ? "font-semibold text-rubric" : "text-ink-faded hover:text-ink"}`}
@@ -541,7 +542,7 @@ export default function HealthPlay({ id }) {
           <div className="mt-4 space-y-2">
             <Label className="!mb-1">Conditions</Label>
             <Conditions active={conditions} onToggle={toggleCondition} />
-            <Exhaustion level={exhaustion} onSet={(n) => save("exhaustion", n)} />
+            <Exhaustion level={exhaustion} onSet={(n) => save({ exhaustion: n })} />
           </div>
 
           <div className="mt-4">

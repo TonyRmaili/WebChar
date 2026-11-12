@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import useCharStore from "../../../../store/CharStore";
 import { INK, InkButton, InkSelect, InkText, ParchmentSheet, Title } from "../../../../styles/parchment";
 import { Field, Segmented, TextBlock, chipBtn, inputCls } from "../../../../styles/parchmentForm";
@@ -105,14 +105,12 @@ function NoteEntry({ note, open, onToggle, onPatch, onRemove }) {
 
 export default function LoreDefine() {
   const charData = useCharStore((s) => s.charData);
-  const updateCharField = useCharStore((s) => s.updateCharField);
-  const postCharData = useCharStore((s) => s.postCharData);
+  const patchChar = useCharStore((s) => s.patchChar);
 
   const [openId, setOpenId] = useState(null);
   const [query, setQuery] = useState("");
   const [kindFilter, setKindFilter] = useState("");
   const [newestFirst, setNewestFirst] = useState(true);
-  const timer = useRef(null);
   // Session/date of the open note when it was opened, so the entry doesn't
   // jump around the list while you type them.
   const frozen = useRef(null);
@@ -120,15 +118,8 @@ export default function LoreDefine() {
   const notes = useMemo(() => notesOf(charData), [charData?.lore]);
 
   // Typing saves a moment later; adding/removing saves right away.
-  const persist = useCallback(
-    (nextNotes, immediate = false) => {
-      updateCharField("lore", { ...(charData?.lore || {}), notes: nextNotes });
-      clearTimeout(timer.current);
-      if (immediate) postCharData();
-      else timer.current = setTimeout(() => postCharData(), 400);
-    },
-    [charData?.lore, updateCharField, postCharData]
-  );
+  const persist = (nextNotes, immediate = false) =>
+    patchChar({ lore: { ...(charData?.lore || {}), notes: nextNotes } }, { now: immediate });
 
   if (!charData) return null;
 

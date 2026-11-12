@@ -34,7 +34,10 @@ import {
 
    Every block collapses and remembers it. Click a card to use it,
    right-click to regain one; on dot tracks, click a filled dot to spend
-   and an empty one to regain. */
+   and an empty one to regain.
+
+   Spending and regaining is shown at once and saved by CharStore a moment
+   later, so clicking several dots quickly sends one save. */
 
 const KEY = (k) => `sheet.play.charges.${k}`;
 
@@ -61,8 +64,7 @@ function SlotTrack({ label, uses, tone, onSpend, onRestore }) {
 
 export default function ActionsCharges() {
   const charData = useCharStore((s) => s.charData);
-  const updateCharField = useCharStore((s) => s.updateCharField);
-  const postCharData = useCharStore((s) => s.postCharData);
+  const patchChar = useCharStore((s) => s.patchChar);
 
   const effects = charData?.effects;
   // Feats are stored like effect rows (Feats tab), so they show up in the
@@ -88,10 +90,7 @@ export default function ActionsCharges() {
 
   if (!charData) return null;
 
-  const save = (field, value) => {
-    updateCharField(field, value);
-    postCharData();
-  };
+  const save = (field, value) => patchChar({ [field]: value });
 
   /* ---- writers ---- */
 

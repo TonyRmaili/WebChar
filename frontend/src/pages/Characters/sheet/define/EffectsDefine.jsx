@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef, useState } from "react";
+import React, { useMemo, useState } from "react";
 import useCharStore from "../../../../store/CharStore";
 import { effectChips, effectDamage, usesFromCharges } from "../play/playHelpers";
 import { INK, InkSelect, InkText, ParchmentSheet, Title } from "../../../../styles/parchment";
@@ -112,26 +112,16 @@ function EffectGroup({ group, rows, filtered, onAdd, children }) {
 
 export default function EffectsDefine() {
   const charData = useCharStore((s) => s.charData);
-  const updateCharField = useCharStore((s) => s.updateCharField);
-  const postCharData = useCharStore((s) => s.postCharData);
+  const patchChar = useCharStore((s) => s.patchChar);
 
   const [openId, setOpenId] = useState(null);
   const [query, setQuery] = useState("");
   const [source, setSource] = useState("");
-  const timer = useRef(null);
 
   const effects = useMemo(() => (Array.isArray(charData?.effects) ? charData.effects : []), [charData?.effects]);
 
   // Typing saves a moment later; adding/removing saves right away.
-  const persist = useCallback(
-    (next, immediate = false) => {
-      updateCharField("effects", next);
-      clearTimeout(timer.current);
-      if (immediate) postCharData();
-      else timer.current = setTimeout(() => postCharData(), 400);
-    },
-    [updateCharField, postCharData]
-  );
+  const persist = (next, now = false) => patchChar({ effects: next }, { now });
 
   const q = query.trim().toLowerCase();
   const filtered = q !== "" || source !== "";

@@ -1,0 +1,766 @@
+[
+    {
+        "name": "Dragonborn",
+        "source": "XPHB",
+        "edition": "one",
+        "creature_type": "humanoid",
+        "sizes": [
+            "medium"
+        ],
+        "speed": {
+            "walk": 30
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "traits": [
+            {
+                "name": "Draconic Ancestry",
+                "notes": "Choose the kind of dragon from the Draconic Ancestors table. Your choice affects your Breath Weapon and Damage Resistance traits as well as your appearance.\n\nChoose one ancestry: Black (acid), Blue (lightning), Brass (fire), Bronze (lightning), Copper (acid), Gold (fire), Green (poison), Red (fire), Silver (cold), White (cold)."
+            },
+            {
+                "name": "Breath Weapon",
+                "notes": "When you take the Attack action on your turn, you can replace one of your attacks with an exhalation of magical energy in either a 15-foot cone or a 30-foot line that is 5 feet wide (choose the shape each time). Each creature in that area must make a Dexterity saving throw (DC 8 plus your Constitution modifier and Proficiency Bonus). On a failed save, a creature takes 1d10 damage of the type determined by your Draconic Ancestry trait. On a successful save, a creature takes half as much damage. This damage increases to 2d10 at character level 5, 3d10 at level 11, and 4d10 at level 17.\n\nYou can use this Breath Weapon a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest."
+            },
+            {
+                "name": "Damage Resistance",
+                "notes": "You have Resistance to the damage type determined by your Draconic Ancestry trait. When you choose your Draconic Ancestry, choose one of the following damage types for your resistance: acid, lightning, fire, poison, or cold."
+            },
+            {
+                "name": "Draconic Flight",
+                "notes": "When you reach character level 5, you can channel draconic magic to give yourself temporary flight. As a Bonus Action, you sprout spectral wings on your back that last for 10 minutes or until you retract the wings (no action required) or have the Incapacitated condition. During that time, you have a fly speed equal to your Speed. Once you use this trait, you can't use it again until you finish a Long Rest."
+            }
+        ]
+    },
+    {
+        "name": "Dwarf",
+        "source": "XPHB",
+        "edition": "one",
+        "creature_type": "humanoid",
+        "sizes": [
+            "medium"
+        ],
+        "speed": {
+            "walk": 30
+        },
+        "senses": {
+            "darkvision": 120
+        },
+        "defenses": {
+            "resistances": [
+                "poison"
+            ],
+            "condition_advantages": [
+                "poisoned"
+            ]
+        },
+        "traits": [
+            {
+                "name": "Dwarven Resilience",
+                "notes": "You have Resistance to Poison damage. You also have Advantage on saving throws you make to avoid or end the Poisoned condition."
+            },
+            {
+                "name": "Dwarven Toughness",
+                "notes": "Your Hit Point maximum increases by 1, and it increases by 1 again whenever you gain a level."
+            },
+            {
+                "name": "Stonecunning",
+                "notes": "As a Bonus Action, you gain Tremorsense with a range of 60 feet for 10 minutes. You must be on a stone surface or touching a stone surface to use this Tremorsense. The stone can be natural or worked.\n\nYou can use this Bonus Action a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest."
+            }
+        ]
+    },
+    {
+        "name": "Elf",
+        "source": "XPHB",
+        "edition": "one",
+        "creature_type": "humanoid",
+        "sizes": [
+            "medium"
+        ],
+        "speed": {
+            "walk": 30
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "defenses": {
+            "condition_advantages": [
+                "charmed"
+            ]
+        },
+        "proficiencies": {
+            "skills": {
+                "choose": {
+                    "options": [
+                        "insight",
+                        "perception",
+                        "survival"
+                    ],
+                    "count": 1
+                }
+            }
+        },
+        "traits": [
+            {
+                "name": "Elven Lineage",
+                "notes": "Choose a lineage from the Elven Lineages table. You gain the level 1 benefit of that lineage. When you reach character levels 3 and 5, you learn a higher-level spell, as shown on the table. You always have that spell prepared. You can cast it once without a spell slot, and you regain the ability to cast it in that way when you finish a Long Rest. You can also cast the spell using any spell slots you have of the appropriate level. Intelligence, Wisdom, or Charisma is your spellcasting ability for the spells you cast with this trait (choose the ability when you select the lineage).\n\nChoose one lineage: Drow (the range of your Darkvision increases to 120 feet; you also know the Dancing Lights cantrip; level 3: Faerie Fire; level 5: Darkness), High Elf (you know the Prestidigitation cantrip; whenever you finish a Long Rest, you can replace that cantrip with a different cantrip from the Wizard spell list; level 3: Detect Magic; level 5: Misty Step), Wood Elf (your Speed increases to 35 feet; you also know the Druidcraft cantrip; level 3: Longstrider; level 5: Pass without Trace)."
+            },
+            {
+                "name": "Fey Ancestry",
+                "notes": "You have Advantage on saving throws you make to avoid or end the Charmed condition."
+            },
+            {
+                "name": "Trance",
+                "notes": "You don't need to sleep, and magic can't put you to sleep. You can finish a Long Rest in 4 hours if you spend those hours in a trancelike meditation, during which you retain consciousness."
+            }
+        ],
+        "sub_races": [
+            {
+                "name": "Drow",
+                "display_name": "Drow Elf",
+                "source": "XPHB",
+                "senses": {
+                    "darkvision": 120
+                },
+                "spells": [
+                    {
+                        "name": "dancing lights",
+                        "level_available": 1,
+                        "uses": {
+                            "type": "at_will"
+                        },
+                        "category": "innate"
+                    },
+                    {
+                        "name": "faerie fire",
+                        "level_available": 3,
+                        "uses": {
+                            "type": "per_long_rest",
+                            "count": 1
+                        },
+                        "category": "innate"
+                    },
+                    {
+                        "name": "darkness",
+                        "level_available": 5,
+                        "uses": {
+                            "type": "per_long_rest",
+                            "count": 1
+                        },
+                        "category": "innate"
+                    }
+                ],
+                "spell_ability": {
+                    "options": [
+                        "int",
+                        "wis",
+                        "cha"
+                    ],
+                    "count": 1
+                },
+                "traits": [
+                    {
+                        "name": "Elven Lineage (Drow)",
+                        "notes": "You are part of a lineage that grants you supernatural abilities. The range of your Darkvision increases to 120 feet. You also know the Dancing Lights cantrip. When you reach character level 3, you learn the Faerie Fire spell. When you reach character level 5, you also learn the Darkness spell. You always have these spells prepared, and you can cast each spell once without a spell slot; once you cast either of these spells with this trait, you can't cast that spell with it again until you finish a Long Rest. You can also cast the spells using any spell slots you have of the appropriate level. Intelligence, Wisdom, or Charisma is your spellcasting ability for the spells you cast with this trait (choose the ability when you select the lineage)."
+                    }
+                ]
+            },
+            {
+                "name": "High Elf",
+                "display_name": "High Elf",
+                "source": "XPHB",
+                "spells": [
+                    {
+                        "name": "prestidigitation",
+                        "level_available": 1,
+                        "uses": {
+                            "type": "at_will"
+                        },
+                        "category": "innate"
+                    },
+                    {
+                        "name": "detect magic",
+                        "level_available": 3,
+                        "uses": {
+                            "type": "per_long_rest",
+                            "count": 1
+                        },
+                        "category": "innate"
+                    },
+                    {
+                        "name": "misty step",
+                        "level_available": 5,
+                        "uses": {
+                            "type": "per_long_rest",
+                            "count": 1
+                        },
+                        "category": "innate"
+                    }
+                ],
+                "spell_ability": {
+                    "options": [
+                        "int",
+                        "wis",
+                        "cha"
+                    ],
+                    "count": 1
+                },
+                "traits": [
+                    {
+                        "name": "Elven Lineage (High Elf)",
+                        "notes": "You are part of a lineage that grants you supernatural abilities. You know the Prestidigitation cantrip. Whenever you finish a Long Rest, you can replace that cantrip with a different cantrip from the Wizard spell list. When you reach character level 3, you learn the Detect Magic spell. When you reach character level 5, you also learn the Misty Step spell. You always have these spells prepared, and you can cast each spell once without a spell slot; once you cast either of these spells with this trait, you can't cast that spell with it again until you finish a Long Rest. You can also cast the spells using any spell slots you have of the appropriate level. Intelligence, Wisdom, or Charisma is your spellcasting ability for the spells you cast with this trait (choose the ability when you select the lineage)."
+                    }
+                ]
+            },
+            {
+                "name": "Wood Elf",
+                "display_name": "Wood Elf",
+                "source": "XPHB",
+                "speed": {
+                    "walk": 35
+                },
+                "spells": [
+                    {
+                        "name": "druidcraft",
+                        "level_available": 1,
+                        "uses": {
+                            "type": "at_will"
+                        },
+                        "category": "innate"
+                    },
+                    {
+                        "name": "longstrider",
+                        "level_available": 3,
+                        "uses": {
+                            "type": "per_long_rest",
+                            "count": 1
+                        },
+                        "category": "innate"
+                    },
+                    {
+                        "name": "pass without trace",
+                        "level_available": 5,
+                        "uses": {
+                            "type": "per_long_rest",
+                            "count": 1
+                        },
+                        "category": "innate"
+                    }
+                ],
+                "spell_ability": {
+                    "options": [
+                        "int",
+                        "wis",
+                        "cha"
+                    ],
+                    "count": 1
+                },
+                "traits": [
+                    {
+                        "name": "Elven Lineage (Wood Elf)",
+                        "notes": "You are part of a lineage that grants you supernatural abilities. Your Speed increases to 35 feet. You also know the Druidcraft cantrip. When you reach character level 3, you learn the Longstrider spell. When you reach character level 5, you also learn the Pass without Trace spell. You always have these spells prepared, and you can cast each spell once without a spell slot; once you cast either of these spells with this trait, you can't cast that spell with it again until you finish a Long Rest. You can also cast the spells using any spell slots you have of the appropriate level. Intelligence, Wisdom, or Charisma is your spellcasting ability for the spells you cast with this trait (choose the ability when you select the lineage)."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Gnome",
+        "source": "XPHB",
+        "edition": "one",
+        "creature_type": "humanoid",
+        "sizes": [
+            "small"
+        ],
+        "speed": {
+            "walk": 30
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "traits": [
+            {
+                "name": "Gnomish Cunning",
+                "notes": "You have Advantage on Intelligence, Wisdom, and Charisma saving throws."
+            },
+            {
+                "name": "Gnomish Lineage",
+                "notes": "You are part of a lineage that grants you supernatural abilities. Choose one of the following options: Forest Gnome or Rock Gnome. Whichever one you choose, Intelligence, Wisdom, or Charisma is your spellcasting ability for the spells you cast with this trait (choose the ability when you select the lineage)."
+            }
+        ],
+        "sub_races": [
+            {
+                "name": "Forest",
+                "display_name": "Forest Gnome",
+                "source": "XPHB",
+                "spells": [
+                    {
+                        "name": "minor illusion",
+                        "level_available": 1,
+                        "uses": {
+                            "type": "at_will"
+                        },
+                        "category": "innate"
+                    },
+                    {
+                        "name": "speak with animals",
+                        "level_available": 3,
+                        "uses": {
+                            "type": "per_long_rest",
+                            "count": "proficiency_bonus"
+                        },
+                        "category": "innate"
+                    }
+                ],
+                "spell_ability": {
+                    "options": [
+                        "int",
+                        "wis",
+                        "cha"
+                    ],
+                    "count": 1
+                },
+                "traits": [
+                    {
+                        "name": "Gnomish Lineage (Forest Gnome)",
+                        "notes": "You know the Minor Illusion cantrip. You also always have the Speak with Animals spell prepared. You can cast it without a spell slot a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest. You can also use any spell slots you have to cast the spell."
+                    }
+                ]
+            },
+            {
+                "name": "Rock",
+                "display_name": "Rock Gnome",
+                "source": "XPHB",
+                "spells": [
+                    {
+                        "name": "mending",
+                        "level_available": 1,
+                        "uses": {
+                            "type": "at_will"
+                        },
+                        "category": "innate"
+                    },
+                    {
+                        "name": "prestidigitation",
+                        "level_available": 1,
+                        "uses": {
+                            "type": "at_will"
+                        },
+                        "category": "innate"
+                    }
+                ],
+                "spell_ability": {
+                    "options": [
+                        "int",
+                        "wis",
+                        "cha"
+                    ],
+                    "count": 1
+                },
+                "traits": [
+                    {
+                        "name": "Gnomish Lineage (Rock Gnome)",
+                        "notes": "You know the Mending and Prestidigitation cantrips.\n\nIn addition, you can spend 10 minutes casting Prestidigitation to create a Tiny clockwork device (AC 5, 1 HP), such as a toy, fire starter, or music box. When you create the device, you determine its function by choosing one effect from Prestidigitation; the device produces that effect whenever you or another creature takes a Bonus Action to activate it with a touch. If the chosen effect has options within it, you choose one of those options for the device when you create it. For example, if you choose the spell's ignite-extinguish effect, you determine whether the device ignites or extinguishes fire; the device doesn't do both. You can have three such devices in existence at a time, and each falls apart 8 hours after its creation or when you dismantle it with a touch as a Utilize action."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Goliath",
+        "source": "XPHB",
+        "edition": "one",
+        "creature_type": "humanoid",
+        "sizes": [
+            "medium"
+        ],
+        "speed": {
+            "walk": 35
+        },
+        "traits": [
+            {
+                "name": "Giant Ancestry",
+                "notes": "You are descended from Giants. Choose one of the following benefits — a supernatural boon from your ancestry; you can use the chosen benefit a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest.\n\nCloud's Jaunt (Cloud Giant): As a Bonus Action, you magically teleport up to 30 feet to an unoccupied space you can see.\n\nFire's Burn (Fire Giant): When you hit a target with an attack roll and deal damage to it, you can also deal 1d10 fire damage to that target.\n\nFrost's Chill (Frost Giant): When you hit a target with an attack roll and deal damage to it, you can also deal 1d6 cold damage to that target and reduce its Speed by 10 feet until the start of your next turn.\n\nHill's Tumble (Hill Giant): When you hit a Large or smaller creature with an attack roll and deal damage to it, you can give that target the Prone condition.\n\nStone's Endurance (Stone Giant): When you take damage, you can take a Reaction to roll 1d12. Add your Constitution modifier to the number rolled and reduce the damage by that total.\n\nStorm's Thunder (Storm Giant): When you take damage from a creature within 60 feet of you, you can take a Reaction to deal 1d8 thunder damage to that creature."
+            },
+            {
+                "name": "Large Form",
+                "notes": "Starting at character level 5, you can change your size to Large as a Bonus Action if you're in a big enough space. This transformation lasts for 10 minutes or until you end it (no action required). For that duration, you have Advantage on Strength checks, and your Speed increases by 10 feet. Once you use this trait, you can't use it again until you finish a Long Rest."
+            },
+            {
+                "name": "Powerful Build",
+                "notes": "You have Advantage on any ability check you make to end the Grappled condition. You also count as one size larger when determining your carrying capacity."
+            }
+        ],
+        "sub_races": [
+            {
+                "name": "Cloud",
+                "display_name": "Cloud Goliath",
+                "source": "XPHB",
+                "traits": [
+                    {
+                        "name": "Cloud's Jaunt",
+                        "notes": "You are descended from Giants, granting you a supernatural boon; you can use this boon a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest.\n\nAs a Bonus Action, you magically teleport up to 30 feet to an unoccupied space you can see."
+                    }
+                ]
+            },
+            {
+                "name": "Fire",
+                "display_name": "Fire Goliath",
+                "source": "XPHB",
+                "traits": [
+                    {
+                        "name": "Fire's Burn",
+                        "notes": "You are descended from Giants, granting you a supernatural boon; you can use this boon a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest.\n\nWhen you hit a target with an attack roll and deal damage to it, you can also deal 1d10 fire damage to that target."
+                    }
+                ]
+            },
+            {
+                "name": "Frost",
+                "display_name": "Frost Goliath",
+                "source": "XPHB",
+                "traits": [
+                    {
+                        "name": "Frost's Chill",
+                        "notes": "You are descended from Giants, granting you a supernatural boon; you can use this boon a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest.\n\nWhen you hit a target with an attack roll and deal damage to it, you can also deal 1d6 cold damage to that target and reduce its Speed by 10 feet until the start of your next turn."
+                    }
+                ]
+            },
+            {
+                "name": "Hill",
+                "display_name": "Hill Goliath",
+                "source": "XPHB",
+                "traits": [
+                    {
+                        "name": "Hill's Tumble",
+                        "notes": "You are descended from Giants, granting you a supernatural boon; you can use this boon a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest.\n\nWhen you hit a Large or smaller creature with an attack roll and deal damage to it, you can give that target the Prone condition."
+                    }
+                ]
+            },
+            {
+                "name": "Stone",
+                "display_name": "Stone Goliath",
+                "source": "XPHB",
+                "traits": [
+                    {
+                        "name": "Stone's Endurance",
+                        "notes": "You are descended from Giants, granting you a supernatural boon; you can use this boon a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest.\n\nWhen you take damage, you can take a Reaction to roll 1d12. Add your Constitution modifier to the number rolled and reduce the damage by that total."
+                    }
+                ]
+            },
+            {
+                "name": "Storm",
+                "display_name": "Storm Goliath",
+                "source": "XPHB",
+                "traits": [
+                    {
+                        "name": "Storm's Thunder",
+                        "notes": "You are descended from Giants, granting you a supernatural boon; you can use this boon a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest.\n\nWhen you take damage from a creature within 60 feet of you, you can take a Reaction to deal 1d8 thunder damage to that creature."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Halfling",
+        "source": "XPHB",
+        "edition": "one",
+        "creature_type": "humanoid",
+        "sizes": [
+            "small"
+        ],
+        "speed": {
+            "walk": 30
+        },
+        "defenses": {
+            "condition_advantages": [
+                "frightened"
+            ]
+        },
+        "traits": [
+            {
+                "name": "Brave",
+                "notes": "You have Advantage on saving throws you make to avoid or end the Frightened condition."
+            },
+            {
+                "name": "Halfling Nimbleness",
+                "notes": "You can move through the space of any creature that is a size larger than you, but you can't stop in the same space."
+            },
+            {
+                "name": "Luck",
+                "notes": "When you roll a 1 on the d20 of a D20 Test, you can reroll the die, and you must use the new roll."
+            },
+            {
+                "name": "Naturally Stealthy",
+                "notes": "You can take the Hide action even when you are obscured only by a creature that is at least one size larger than you."
+            }
+        ]
+    },
+     {
+        "name": "Human",
+        "source": "XPHB",
+        "edition": "one",
+        "creature_type": "humanoid",
+        "sizes": [
+            "small",
+            "medium"
+        ],
+        "speed": {
+            "walk": 30
+        },
+        "proficiencies": {
+            "skills": {
+                "choose": {
+                    "options": "any",
+                    "count": 1
+                }
+            }
+        },
+        "traits": [
+            {
+                "name": "Resourceful",
+                "notes": "You gain Heroic Inspiration whenever you finish a Long Rest."
+            },
+            {
+                "name": "Versatile",
+                "notes": "You gain an Origin feat of your choice."
+            }
+        ]
+    },
+    {
+        "name": "Orc",
+        "source": "XPHB",
+        "edition": "one",
+        "creature_type": "humanoid",
+        "sizes": [
+            "medium"
+        ],
+        "speed": {
+            "walk": 30
+        },
+        "senses": {
+            "darkvision": 120
+        },
+        "traits": [
+            {
+                "name": "Adrenaline Rush",
+                "notes": "You can take the Dash action as a Bonus Action. When you do so, you gain a number of Temporary Hit Points equal to your Proficiency Bonus.\n\nYou can use this trait a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Short Rest or Long Rest."
+            },
+            {
+                "name": "Relentless Endurance",
+                "notes": "When you are reduced to 0 Hit Points but not killed outright, you can drop to 1 Hit Point instead. Once you use this trait, you can't do so again until you finish a Long Rest."
+            }
+        ]
+    },
+    {
+        "name": "Tiefling",
+        "source": "XPHB",
+        "edition": "one",
+        "creature_type": "humanoid",
+        "sizes": [
+            "small",
+            "medium"
+        ],
+        "speed": {
+            "walk": 30
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "traits": [
+            {
+                "name": "Fiendish Legacy",
+                "notes": "Choose a legacy from the Fiendish Legacies table. Choose one legacy: Abyssal (resistance to Poison; also know the Poison Spray cantrip), Chthonic (resistance to Necrotic; also know the Chill Touch cantrip), Infernal (resistance to Fire; also know the Fire Bolt cantrip).\n\nYou gain the level 1 benefit of the chosen legacy. When you reach character levels 3 and 5, you learn a higher-level spell as shown on the table. You always have that spell prepared. You can cast it once without a spell slot, and you regain the ability to cast it in that way when you finish a Long Rest. You can also cast the spell using any spell slots you have of the appropriate level. Intelligence, Wisdom, or Charisma is your spellcasting ability for the spells you cast with this trait (choose the ability when you select the legacy)."
+            },
+            {
+                "name": "Otherworldly Presence",
+                "notes": "You know the Thaumaturgy cantrip. When you cast it with this trait, the spell uses the same spellcasting ability you use for your Fiendish Legacy trait."
+            }
+        ],
+        "sub_races": [
+            {
+                "name": "Abyssal",
+                "display_name": "Abyssal Tiefling",
+                "source": "XPHB",
+                "senses": {
+                    "darkvision": 120
+                },
+                "defenses": {
+                    "resistances": [
+                        "poison"
+                    ]
+                },
+                "spells": [
+                    {
+                        "name": "thaumaturgy",
+                        "level_available": 1,
+                        "uses": {
+                            "type": "at_will"
+                        },
+                        "category": "innate"
+                    },
+                    {
+                        "name": "poison spray",
+                        "level_available": 1,
+                        "uses": {
+                            "type": "at_will"
+                        },
+                        "category": "innate"
+                    },
+                    {
+                        "name": "ray of sickness",
+                        "level_available": 3,
+                        "uses": {
+                            "type": "per_long_rest",
+                            "count": 1
+                        },
+                        "category": "innate"
+                    },
+                    {
+                        "name": "hold person",
+                        "level_available": 5,
+                        "uses": {
+                            "type": "per_long_rest",
+                            "count": 1
+                        },
+                        "category": "innate"
+                    }
+                ],
+                "spell_ability": {
+                    "options": [
+                        "int",
+                        "wis",
+                        "cha"
+                    ],
+                    "count": 1
+                },
+                "traits": [
+                    {
+                        "name": "Fiendish Legacy (Abyssal)",
+                        "notes": "You are the recipient of a legacy that grants you supernatural abilities. You have Resistance to Poison damage. You also know the Poison Spray cantrip.\n\nWhen you reach character level 3, you learn the Ray of Sickness spell. When you reach character level 5, you also learn the Hold Person spell. You always have these spells prepared, and you can cast each spell once without a spell slot. Once you cast either of these spells with this trait, you can't cast that spell with it again until you finish a Long Rest. You can also cast the spell using any spell slots you have of the appropriate level.\n\nIntelligence, Wisdom, or Charisma is your spellcasting ability for the spells you cast with this trait (choose the ability when you select the legacy)."
+                    }
+                ]
+            },
+            {
+                "name": "Chthonic",
+                "display_name": "Chthonic Tiefling",
+                "source": "XPHB",
+                "defenses": {
+                    "resistances": [
+                        "necrotic"
+                    ]
+                },
+                "spells": [
+                    {
+                        "name": "thaumaturgy",
+                        "level_available": 1,
+                        "uses": {
+                            "type": "at_will"
+                        },
+                        "category": "innate"
+                    },
+                    {
+                        "name": "chill touch",
+                        "level_available": 1,
+                        "uses": {
+                            "type": "at_will"
+                        },
+                        "category": "innate"
+                    },
+                    {
+                        "name": "false life",
+                        "level_available": 3,
+                        "uses": {
+                            "type": "per_long_rest",
+                            "count": 1
+                        },
+                        "category": "innate"
+                    },
+                    {
+                        "name": "ray of enfeeblement",
+                        "level_available": 5,
+                        "uses": {
+                            "type": "per_long_rest",
+                            "count": 1
+                        },
+                        "category": "innate"
+                    }
+                ],
+                "spell_ability": {
+                    "options": [
+                        "int",
+                        "wis",
+                        "cha"
+                    ],
+                    "count": 1
+                },
+                "traits": [
+                    {
+                        "name": "Fiendish Legacy (Chthonic)",
+                        "notes": "You are the recipient of a legacy that grants you supernatural abilities. You have Resistance to Necrotic damage. You also know the Chill Touch cantrip.\n\nWhen you reach character level 3, you learn the False Life spell. When you reach character level 5, you also learn the Ray of Enfeeblement spell. You always have these spells prepared, and you can cast each spell once without a spell slot. Once you cast either of these spells with this trait, you can't cast that spell with it again until you finish a Long Rest. You can also cast the spell using any spell slots you have of the appropriate level.\n\nIntelligence, Wisdom, or Charisma is your spellcasting ability for the spells you cast with this trait (choose the ability when you select the legacy)."
+                    }
+                ]
+            },
+            {
+                "name": "Infernal",
+                "display_name": "Infernal Tiefling",
+                "source": "XPHB",
+                "defenses": {
+                    "resistances": [
+                        "fire"
+                    ]
+                },
+                "spells": [
+                    {
+                        "name": "thaumaturgy",
+                        "level_available": 1,
+                        "uses": {
+                            "type": "at_will"
+                        },
+                        "category": "innate"
+                    },
+                    {
+                        "name": "fire bolt",
+                        "level_available": 1,
+                        "uses": {
+                            "type": "at_will"
+                        },
+                        "category": "innate"
+                    },
+                    {
+                        "name": "hellish rebuke",
+                        "level_available": 3,
+                        "uses": {
+                            "type": "per_long_rest",
+                            "count": 1
+                        },
+                        "category": "innate"
+                    },
+                    {
+                        "name": "darkness",
+                        "level_available": 5,
+                        "uses": {
+                            "type": "per_long_rest",
+                            "count": 1
+                        },
+                        "category": "innate"
+                    }
+                ],
+                "spell_ability": {
+                    "options": [
+                        "int",
+                        "wis",
+                        "cha"
+                    ],
+                    "count": 1
+                },
+                "traits": [
+                    {
+                        "name": "Fiendish Legacy (Infernal)",
+                        "notes": "You are the recipient of a legacy that grants you supernatural abilities. You have Resistance to Fire damage. You also know the Fire Bolt cantrip.\n\nWhen you reach character level 3, you learn the Hellish Rebuke spell. When you reach character level 5, you also learn the Darkness spell. You always have these spells prepared, and you can cast each spell once without a spell slot. Once you cast either of these spells with this trait, you can't cast that spell with it again until you finish a Long Rest. You can also cast the spell using any spell slots you have of the appropriate level.\n\nIntelligence, Wisdom, or Charisma is your spellcasting ability for the spells you cast with this trait (choose the ability when you select the legacy)."
+                    }
+                ]
+            }
+        ]
+    }
+
+]
