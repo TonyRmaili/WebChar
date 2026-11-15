@@ -1,0 +1,2426 @@
+[
+    {
+        "id": "dream-eater-mcv2dc",
+        "kind": "monster",
+        "name": "Dream Eater",
+        "source": "MCV2DC",
+        "edition": "classic",
+        "tags": [
+            "Incorporeal Movement",
+            "Magic Resistance"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "aberration"
+        },
+        "alignment": [
+            "chaotic evil"
+        ],
+        "alignment_prefix": "typically",
+        "ac": [
+            {
+                "value": 15
+            }
+        ],
+        "hp": {
+            "average": 77,
+            "formula": "14d8 + 14"
+        },
+        "speed": {
+            "walk": 0,
+            "fly": 50,
+            "hover": true
+        },
+        "abilities": {
+            "str": 15,
+            "dex": 20,
+            "con": 13,
+            "int": 12,
+            "wis": 16,
+            "cha": 21
+        },
+        "senses": {
+            "blindsight": 120,
+            "notes": "blindsight (blind beyond this radius)"
+        },
+        "passive_perception": 13,
+        "defenses": {
+            "resist": {
+                "conditional": [
+                    {
+                        "types": [
+                            "bludgeoning",
+                            "piercing",
+                            "slashing"
+                        ],
+                        "note": "from nonmagical attacks"
+                    }
+                ]
+            },
+            "immune": {
+                "types": [
+                    "psychic"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "blinded",
+                    "charmed",
+                    "frightened",
+                    "grappled",
+                    "paralyzed",
+                    "petrified",
+                    "restrained"
+                ]
+            }
+        },
+        "languages": [
+            "Deep Speech",
+            "telepathy 120 ft."
+        ],
+        "cr": {
+            "cr": "7",
+            "xp": 2900,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 5
+        },
+        "features": [
+            {
+                "id": "ghastly-visions",
+                "name": "Ghastly Visions",
+                "category": "traits",
+                "text": "Each creature that starts its turn within 30 feet of the dream eater must make a DC 16 Wisdom saving throw. On a failed save, the creature is frightened of the dream eater until the start of the creature's next turn. If a creature's saving throw is successful, the creature is immune to this dream eater's Ghastly Visions trait for the next 24 hours.",
+                "action": {
+                    "save": {
+                        "ability": "wis",
+                        "dc": 16,
+                        "on_success": "none",
+                        "conditions": [
+                            "frightened"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "incorporeal-movement",
+                "name": "Incorporeal Movement",
+                "category": "traits",
+                "text": "The dream eater can move through other creatures and objects as if they were difficult terrain. It takes 5 (1d10) force damage if it ends its turn inside an object.",
+                "action": {
+                    "damage": [
+                        {
+                            "dice": "1d10",
+                            "type": "force",
+                            "condition": "if it ends its turn inside an object"
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The dream eater has advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The dream eater makes two Ensnaring Shriek attacks."
+            },
+            {
+                "id": "ensnaring-shriek",
+                "name": "Ensnaring Shriek",
+                "category": "actions",
+                "text": "Melee or Ranged Spell Attack: +8 to hit, reach 15 ft. or range 60 ft., one target. Hit: 12 (2d6 + 5) psychic damage, and if the target is a Medium or smaller creature, the target must succeed on a DC 16 Charisma saving throw or be pulled up to 15 feet toward the dream eater.",
+                "action": {
+                    "range": "reach 15 ft. or range 60 ft.",
+                    "attack": {
+                        "kind": "spell",
+                        "bonus": 8,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 5,
+                                "type": "psychic"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "cha",
+                        "dc": 16,
+                        "on_success": "none"
+                    }
+                }
+            },
+            {
+                "id": "engulfing-nightmare",
+                "name": "Engulfing Nightmare",
+                "category": "bonus_actions",
+                "text": "The dream eater targets one creature within 5 feet of itself. The target must succeed on a DC 16 Wisdom saving throw or be engulfed by the dream eater, as the dream eater envelops the creature in a miasma of its worst fears.\n\nWhen the dream eater engulfs a target, the dream eater enters its space, and the target immediately takes 10 (3d6) psychic damage. An engulfed target is restrained and blinded, and it takes an additional 10 (3d6) psychic damage at the start of each of the dream eater's turns. When the dream eater moves, the engulfed target moves with it.\n\nThe dream eater can have only one target engulfed at a time. An engulfed target escapes at the start of its turn by making a DC 16 Wisdom saving throw. On a successful save, the target escapes; the target is no longer engulfed, and it enters a space of its choice within 5 feet of the dream eater. A creature within 15 feet of the dream eater also can use its action to attempt to free an engulfed target. Doing so requires the creature to use its action to make a DC 16 Charisma (Persuasion) check to convince the engulfed target the nightmare isn't real, with the target escaping on a success. The creature making the check takes 10 (3d6) psychic damage, regardless of the check's success or failure, as its mind brushes against the nightmare.",
+                "action": {
+                    "save": {
+                        "ability": "wis",
+                        "dc": 16,
+                        "on_success": "none",
+                        "damage": [
+                            {
+                                "dice": "3d6",
+                                "type": "psychic"
+                            },
+                            {
+                                "dice": "3d6",
+                                "type": "psychic"
+                            },
+                            {
+                                "dice": "3d6",
+                                "type": "psychic"
+                            }
+                        ],
+                        "conditions": [
+                            "blinded",
+                            "restrained"
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "force",
+                "psychic"
+            ],
+            "conditions_inflicted": [
+                "blinded",
+                "frightened",
+                "restrained"
+            ],
+            "saves_forced": [
+                "cha",
+                "wis"
+            ],
+            "senses": [
+                "blindsight"
+            ],
+            "movement": [
+                "fly",
+                "hover"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "incorporeal_movement",
+                "magic_resistance"
+            ],
+            "misc": [
+                "reach"
+            ],
+            "languages": [
+                "deep_speech",
+                "telepathy"
+            ]
+        }
+    },
+    {
+        "id": "ember-mcv2dc",
+        "kind": "monster",
+        "name": "Ember",
+        "source": "MCV2DC",
+        "edition": "classic",
+        "tags": [
+            "Legendary Resistances"
+        ],
+        "size": [
+            "huge"
+        ],
+        "creature_type": {
+            "type": "dragon",
+            "tags": [
+                "adult chromatic"
+            ]
+        },
+        "alignment": [
+            "chaotic evil"
+        ],
+        "ac": [
+            {
+                "value": 20,
+                "from": [
+                    "special equipment"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 270,
+            "formula": "20d12 + 140"
+        },
+        "speed": {
+            "walk": 40,
+            "fly": 80,
+            "climb": 40
+        },
+        "abilities": {
+            "str": 28,
+            "dex": 10,
+            "con": 25,
+            "int": 17,
+            "wis": 14,
+            "cha": 22
+        },
+        "saves": {
+            "dex": 7,
+            "con": 14,
+            "wis": 9,
+            "cha": 13
+        },
+        "skills": {
+            "perception": 16,
+            "religion": 10,
+            "stealth": 14
+        },
+        "senses": {
+            "darkvision": 120,
+            "blindsight": 60
+        },
+        "passive_perception": 26,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "fire"
+                ]
+            }
+        },
+        "languages": [
+            "Abyssal",
+            "Common",
+            "Draconic"
+        ],
+        "cr": {
+            "cr": "22",
+            "xp": 41000,
+            "pb": 7
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "calescent-aura",
+                "name": "Calescent Aura",
+                "category": "traits",
+                "text": "At the start of Ember's turn, Ember can force any number of creatures of his choice within 10 feet of himself to make a DC 22 Constitution saving throw. On a failed save, a creature takes 7 (2d6) fire damage and is frightened of Ember until the start of its next turn.",
+                "action": {
+                    "save": {
+                        "ability": "con",
+                        "dc": 22,
+                        "on_success": "none",
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "type": "fire"
+                            }
+                        ],
+                        "conditions": [
+                            "frightened"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "legendary-resistance",
+                "name": "Legendary Resistance",
+                "category": "traits",
+                "text": "If Ember fails a saving throw, he can choose to succeed instead.",
+                "uses": {
+                    "max": 5,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "special-equipment",
+                "name": "Special Equipment",
+                "category": "traits",
+                "text": "In battle, Ember dons magical plate armor custom-forged for his use. While wearing the armor, Ember adds his Charisma modifier to his weapon damage rolls (included in the attack descriptions), and his AC can't be lower than 20."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Ember makes one Bite attack and two Claw attacks."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +16 to hit, reach 10 ft., one target. Hit: 26 (2d10 + 15) piercing damage plus 13 (2d6 + 6) fire damage.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 16,
+                        "damage": [
+                            {
+                                "dice": "2d10",
+                                "bonus": 15,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "2d6",
+                                "bonus": 6,
+                                "type": "fire"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "claw",
+                "name": "Claw",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +16 to hit, reach 5 ft., one target. Hit: 22 (2d6 + 15) slashing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 16,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 15,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "firestorm-breath",
+                "name": "Firestorm Breath",
+                "category": "actions",
+                "text": "Ember exhales roiling flames and ash in a 90-foot cone. Each creature in that area must make a DC 22 Dexterity saving throw. On a failed save, a creature takes 56 (16d6) fire damage and is pushed up to 30 feet away from Ember and knocked prone. On a successful save, a creature takes half as much damage with no other effects. If a creature is reduced to 0 hit points by this effect, the creature immediately dies, and its body is reduced to ash.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "area": "90-foot cone",
+                    "save": {
+                        "ability": "dex",
+                        "dc": 22,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "16d6",
+                                "type": "fire"
+                            }
+                        ],
+                        "conditions": [
+                            "prone"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "alter-shape",
+                "name": "Alter Shape",
+                "category": "bonus_actions",
+                "text": "Ember magically transforms into a vulture or a mage and retains his alignment, damage immunities, hit points, and Hit Dice, as well as his Intelligence, Wisdom, and Charisma scores. This transformation ends if Ember is reduced to 0 hit points or if he uses another bonus action to end it."
+            },
+            {
+                "id": "pursuit",
+                "name": "Pursuit",
+                "category": "legendary_actions",
+                "text": "Ember moves up to 40 feet in a straight line toward one creature he can see. This movement ignores opportunity attacks."
+            },
+            {
+                "id": "searing-bite",
+                "name": "Searing Bite",
+                "category": "legendary_actions",
+                "text": "Ember makes one Bite attack. If the attack hits, it deals an additional 7 (2d6) fire damage.",
+                "cost": 2,
+                "action": {
+                    "damage": [
+                        {
+                            "dice": "2d6",
+                            "type": "fire"
+                        }
+                    ]
+                }
+            }
+        ],
+        "legendary_actions": {
+            "uses": 3
+        },
+        "flags": {
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "fire",
+                "piercing",
+                "slashing"
+            ],
+            "conditions_inflicted": [
+                "frightened",
+                "prone"
+            ],
+            "saves_forced": [
+                "con",
+                "dex"
+            ],
+            "senses": [
+                "blindsight",
+                "superior_darkvision"
+            ],
+            "movement": [
+                "fly",
+                "climb"
+            ],
+            "actions": [
+                "breath_weapon",
+                "multiattack"
+            ],
+            "traits": [
+                "legendary_resistances"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_weapon_attack",
+                "reach"
+            ],
+            "languages": [
+                "abyssal",
+                "common",
+                "draconic"
+            ]
+        }
+    },
+    {
+        "id": "forest-master-mcv2dc",
+        "kind": "monster",
+        "name": "Forest Master",
+        "source": "MCV2DC",
+        "edition": "classic",
+        "tags": [
+            "Legendary Resistances",
+            "Magic Resistance"
+        ],
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "celestial",
+            "tags": [
+                "unicorn"
+            ]
+        },
+        "alignment": [
+            "neutral good"
+        ],
+        "ac": [
+            {
+                "value": 16,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 105,
+            "formula": "14d10 + 28"
+        },
+        "speed": {
+            "walk": 50
+        },
+        "abilities": {
+            "str": 18,
+            "dex": 14,
+            "con": 15,
+            "int": 13,
+            "wis": 19,
+            "cha": 17
+        },
+        "saves": {
+            "int": 4,
+            "wis": 7
+        },
+        "skills": {
+            "insight": 7,
+            "nature": 4,
+            "perception": 7
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 17,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "paralyzed",
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "Celestial",
+            "Elvish",
+            "Sylvan",
+            "telepathy 60 ft."
+        ],
+        "cr": {
+            "cr": "8",
+            "xp": 3900,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "legendary-resistance",
+                "name": "Legendary Resistance",
+                "category": "traits",
+                "text": "If the Forest Master fails a saving throw, he can choose to succeed instead.",
+                "uses": {
+                    "max": 2,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The Forest Master has advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "master-of-beasts",
+                "name": "Master of Beasts",
+                "category": "traits",
+                "text": "The Forest Master can comprehend and communicate with any Beast, even if the Beast knows no languages."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The Forest Master makes either two Hooves attacks, two Moon Bolt attacks, or one of each."
+            },
+            {
+                "id": "hooves",
+                "name": "Hooves",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 11 (2d6 + 4) bludgeoning damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 4,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "moon-bolt",
+                "name": "Moon Bolt",
+                "category": "actions",
+                "text": "Ranged Spell Attack: +7 to hit, range 60 ft., one target. Hit: 11 (2d6 + 4) radiant damage.",
+                "action": {
+                    "range": "range 60 ft.",
+                    "attack": {
+                        "kind": "spell",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 4,
+                                "type": "radiant"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "erupting-briars",
+                "name": "Erupting Briars",
+                "category": "bonus_actions",
+                "text": "The Forest Master touches his horn to the earth and causes a 5-foot-tall wall of briars to erupt in a 90-foot line that is 10 feet wide. When the wall appears, each creature in its area is pushed into the nearest unoccupied space adjacent to the wall and must make a DC 15 Dexterity saving throw, taking 27 (6d8) piercing damage on a failed save or half as much damage on a successful one.\n\nThe wall of briars lasts until the start of the Forest Master's next turn. The wall blocks line of sight and counts as difficult terrain for all creatures except the Forest Master. The first time a creature enters the wall's area on a turn, that creature must succeed on a DC 15 Dexterity saving throw or take 13 (3d8) piercing damage.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 4
+                },
+                "action": {
+                    "area": "90-foot line",
+                    "save": {
+                        "ability": "dex",
+                        "dc": 15,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "6d8",
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "3d8",
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "misty-escape",
+                "name": "Misty Escape",
+                "category": "reactions",
+                "text": "If the Forest Master takes damage from a melee attack, he, along with any equipment he is wearing or carrying, teleports to an unoccupied space within 30 feet that he can see."
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "wis",
+                "dc": 15,
+                "text": "The Forest Master casts one of the following spells, requiring no material components and using Wisdom as the spellcasting ability (spell save DC 15):",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "druidcraft-phb"
+                            },
+                            {
+                                "spell": "fog-cloud-phb"
+                            },
+                            {
+                                "spell": "guidance-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 2,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "goodberry-phb"
+                            },
+                            {
+                                "spell": "greater-restoration-phb"
+                            },
+                            {
+                                "spell": "pass-without-trace-phb"
+                            },
+                            {
+                                "spell": "speak-with-plants-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "piercing",
+                "radiant"
+            ],
+            "saves_forced": [
+                "dex"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "legendary_resistances",
+                "magic_resistance"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "celestial",
+                "elvish",
+                "sylvan",
+                "telepathy"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "foresworn-mcv2dc",
+        "kind": "monster",
+        "name": "Foresworn",
+        "source": "MCV2DC",
+        "edition": "classic",
+        "tags": [
+            "Incorporeal Movement",
+            "Unusual Nature"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "undead"
+        },
+        "alignment": [
+            "lawful good"
+        ],
+        "alignment_prefix": "typically",
+        "ac": [
+            {
+                "value": 18,
+                "from": [
+                    "plate armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 82,
+            "formula": "11d8 + 33"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 20,
+            "dex": 14,
+            "con": 17,
+            "int": 12,
+            "wis": 18,
+            "cha": 10
+        },
+        "saves": {
+            "str": 8,
+            "wis": 7
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 14,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "necrotic"
+                ],
+                "conditional": [
+                    {
+                        "types": [
+                            "bludgeoning",
+                            "piercing",
+                            "slashing"
+                        ],
+                        "note": "from nonmagical attacks"
+                    }
+                ]
+            },
+            "immune": {
+                "types": [
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "exhaustion",
+                    "frightened",
+                    "grappled",
+                    "paralyzed",
+                    "petrified",
+                    "poisoned",
+                    "prone",
+                    "restrained",
+                    "unconscious"
+                ]
+            }
+        },
+        "languages": [
+            "the languages it knew in life"
+        ],
+        "cr": {
+            "cr": "6",
+            "xp": 2300,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "duty-bound",
+                "name": "Duty-Bound",
+                "category": "traits",
+                "text": "The foresworn is bound to enacting a singular duty it pledged itself to in life. While this duty is incomplete, whenever the foresworn is destroyed, it re-forms at its previous location after 3 (1d6) days, with all its hit points restored."
+            },
+            {
+                "id": "incorporeal-movement",
+                "name": "Incorporeal Movement",
+                "category": "traits",
+                "text": "The foresworn can move through other creatures and objects as if they were difficult terrain. It takes 5 (1d10) force damage if it ends its turn inside an object.",
+                "action": {
+                    "damage": [
+                        {
+                            "dice": "1d10",
+                            "type": "force",
+                            "condition": "if it ends its turn inside an object"
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "unusual-nature",
+                "name": "Unusual Nature",
+                "category": "traits",
+                "text": "The foresworn doesn't require air, food, drink, or sleep."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The foresworn makes three Spectral Polearm attacks."
+            },
+            {
+                "id": "spectral-polearm",
+                "name": "Spectral Polearm",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +8 to hit, reach 5 ft., one target. Hit: 12 (2d6 + 5) force damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 8,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 5,
+                                "type": "force"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "phantasmic-battalion",
+                "name": "Phantasmic Battalion",
+                "category": "bonus_actions",
+                "text": "The foresworn summons a battalion of ghostly soldiers to its aid. The ghostly soldiers fill a 10-foot-cube centered on the foresworn, move with the foresworn when the foresworn moves, and last until the start of the foresworn's next turn. While the ghostly soldiers are present, the area they occupy is considered difficult terrain for all creatures except the foresworn, and the foresworn's reach for melee weapon attacks increases by 10 feet.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "wis",
+                "dc": 15,
+                "text": "The foresworn casts one of the following spells, requiring no material components and using Wisdom as the spellcasting ability (spell save DC 15):",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "spells": [
+                            {
+                                "spell": "wall-of-force-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 2,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "command-phb"
+                            },
+                            {
+                                "spell": "detect-evil-and-good-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "force"
+            ],
+            "conditions_inflicted": [
+                "prone"
+            ],
+            "saves_forced": [
+                "wis"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "incorporeal_movement",
+                "unusual_nature"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "known_in_life"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "irda-seeker-mcv2dc",
+        "kind": "monster",
+        "name": "Irda Seeker",
+        "source": "MCV2DC",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "giant"
+        },
+        "alignment": [
+            "any alignment"
+        ],
+        "ac": [
+            {
+                "value": 12
+            }
+        ],
+        "hp": {
+            "average": 27,
+            "formula": "5d8 + 5"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 10,
+            "dex": 15,
+            "con": 12,
+            "int": 11,
+            "wis": 14,
+            "cha": 16
+        },
+        "saves": {
+            "dex": 4,
+            "cha": 5
+        },
+        "skills": {
+            "insight": 6,
+            "perception": 6,
+            "stealth": 4
+        },
+        "senses": {
+            "darkvision": 60,
+            "truesight": 5
+        },
+        "passive_perception": 16,
+        "languages": [
+            "Common",
+            "Giant",
+            "Sylvan"
+        ],
+        "cr": {
+            "cr": "1",
+            "xp": 200,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The seeker uses Augment Physicality, if available, and makes two Crystal Blade attacks."
+            },
+            {
+                "id": "crystal-blade",
+                "name": "Crystal Blade",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 5 (1d6 + 2) force damage, plus 7 (2d6) force damage if the seeker is Large.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 2,
+                                "type": "force"
+                            },
+                            {
+                                "dice": "2d6",
+                                "type": "force",
+                                "condition": "if the seeker is Large"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "augment-physicality",
+                "name": "Augment Physicality",
+                "category": "actions",
+                "text": "For 1 minute, the seeker magically heightens its physical ability and increases in size, along with anything it is wearing or carrying. While augmented, the seeker is Large, and makes Strength and Dexterity saving throws with advantage. If the seeker lacks the room to become Large, it attains the maximum size possible in the space available.",
+                "uses": {
+                    "max": 1,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "change-shape",
+                "name": "Change Shape",
+                "category": "actions",
+                "text": "The seeker magically transforms to look and feel like a Medium Humanoid it has seen. Any equipment the seeker is wearing or carrying isn't transformed, and the seeker's statistics don't change. The seeker reverts to its true form if the seeker is reduced to 0 hit points or if the seeker uses an action to end the transformation.",
+                "uses": {
+                    "max": 1,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "veil-walk",
+                "name": "Veil Walk",
+                "category": "bonus_actions",
+                "text": "The seeker, along with any equipment it is wearing or carrying, turns invisible and teleports to an unoccupied space it can see within 30 feet of itself. The seeker remains invisible until the start of its next turn or until immediately after the seeker makes an attack roll, whichever comes first.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 4
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "force"
+            ],
+            "senses": [
+                "darkvision",
+                "truesight"
+            ],
+            "actions": [
+                "multiattack",
+                "shapechanger"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "giant",
+                "sylvan"
+            ]
+        }
+    },
+    {
+        "id": "irda-veil-keeper-mcv2dc",
+        "kind": "monster",
+        "name": "Irda Veil Keeper",
+        "source": "MCV2DC",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "giant",
+            "tags": [
+                "sorcerer"
+            ]
+        },
+        "alignment": [
+            "any alignment"
+        ],
+        "ac": [
+            {
+                "value": 13
+            }
+        ],
+        "hp": {
+            "average": 49,
+            "formula": "9d8 + 9"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 9,
+            "dex": 16,
+            "con": 13,
+            "int": 14,
+            "wis": 17,
+            "cha": 19
+        },
+        "saves": {
+            "int": 4,
+            "wis": 5,
+            "cha": 6
+        },
+        "skills": {
+            "arcana": 4,
+            "insight": 7,
+            "perception": 7
+        },
+        "senses": {
+            "darkvision": 60,
+            "truesight": 5
+        },
+        "passive_perception": 17,
+        "defenses": {
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "frightened"
+                ]
+            }
+        },
+        "languages": [
+            "Common",
+            "Giant",
+            "Sylvan"
+        ],
+        "cr": {
+            "cr": "4",
+            "xp": 1100,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The veil keeper uses Augment Physicality, if available, and makes two Mirage Flare attacks."
+            },
+            {
+                "id": "mirage-flare",
+                "name": "Mirage Flare",
+                "category": "actions",
+                "text": "Melee or Ranged Spell Attack: +6 to hit, reach 5 ft. or range 60 ft., one target. Hit: 11 (2d6 + 4) radiant damage, and the target must succeed on a DC 14 Wisdom saving throw or be charmed by the veil keeper until the start of the veil keeper's next turn. While charmed in this way, a creature is incapacitated as it is beset by hypnotic, illusory visions.",
+                "action": {
+                    "range": "reach 5 ft. or range 60 ft.",
+                    "attack": {
+                        "kind": "spell",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 4,
+                                "type": "radiant"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "wis",
+                        "dc": 14,
+                        "on_success": "none",
+                        "conditions": [
+                            "charmed",
+                            "incapacitated"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "augment-physicality",
+                "name": "Augment Physicality",
+                "category": "actions",
+                "text": "For 1 minute, the veil keeper magically obscures it location, heightens its physical ability, and increases in size, along with anything it is wearing or carrying. While the veil keeper is augmented, attack rolls against it have disadvantage, it is Large, and it makes Strength and Dexterity saving throws with advantage. If the veil keeper lacks the room to become Large, it attains the maximum size possible in the space available. These augmentations end if the veil keeper is incapacitated.",
+                "uses": {
+                    "max": 1,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "change-shape",
+                "name": "Change Shape",
+                "category": "actions",
+                "text": "The veil keeper magically transforms to look and feel like a Medium Humanoid it has seen. Any equipment the veil keeper is wearing or carrying isn't transformed, and the veil keeper's statistics don't change. The veil keeper reverts to its true form if the veil keeper is reduced to 0 hit points or if the veil keeper uses an action to end the transformation.",
+                "uses": {
+                    "max": 3,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "obscuring-mist",
+                "name": "Obscuring Mist",
+                "category": "reactions",
+                "text": "If a creature that the veil keeper can see within 30 feet of itself is targeted by an attack, the veil keeper surrounds the creature with illusory mist, granting the creature half cover until the start of the veil keeper's next turn."
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "cha",
+                "dc": 14,
+                "text": "The veil keeper casts one of the following spells, requiring no material components and using Charisma as the spellcasting ability (spell save DC 14):",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "dancing-lights-phb"
+                            },
+                            {
+                                "spell": "minor-illusion-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "spells": [
+                            {
+                                "spell": "hallucinatory-terrain-phb",
+                                "note": "(as an action)"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 2,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "invisibility-phb"
+                            },
+                            {
+                                "spell": "major-image-phb"
+                            },
+                            {
+                                "spell": "phantasmal-force-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "radiant",
+                "psychic"
+            ],
+            "conditions_inflicted": [
+                "charmed",
+                "incapacitated",
+                "invisible"
+            ],
+            "saves_forced": [
+                "wis",
+                "int"
+            ],
+            "senses": [
+                "darkvision",
+                "truesight"
+            ],
+            "actions": [
+                "multiattack",
+                "shapechanger"
+            ],
+            "languages": [
+                "common",
+                "giant",
+                "sylvan"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "nevermind-gnome-inventor-mcv2dc",
+        "kind": "monster",
+        "name": "Nevermind Gnome Inventor",
+        "source": "MCV2DC",
+        "edition": "classic",
+        "size": [
+            "small"
+        ],
+        "creature_type": {
+            "type": "humanoid"
+        },
+        "alignment": [
+            "any alignment"
+        ],
+        "ac": [
+            {
+                "value": 14,
+                "from": [
+                    "leather armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 36,
+            "formula": "8d6 + 8"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 8,
+            "dex": 17,
+            "con": 13,
+            "int": 18,
+            "wis": 11,
+            "cha": 14
+        },
+        "saves": {
+            "dex": 5,
+            "int": 6
+        },
+        "skills": {
+            "arcana": 6,
+            "investigation": 6,
+            "perception": 2
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 12,
+        "languages": [
+            "Common",
+            "Gnomish"
+        ],
+        "cr": {
+            "cr": "2",
+            "xp": 450,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 3,
+            "advantage": true
+        },
+        "features": [
+            {
+                "id": "always-thinking-ahead",
+                "name": "Always Thinking Ahead",
+                "category": "traits",
+                "text": "The inventor has advantage on initiative rolls."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The inventor makes two Flying Fangtrap attacks. It can replace one of these attacks with Thunderscream Gadget if it's available."
+            },
+            {
+                "id": "flying-fangtrap",
+                "name": "Flying Fangtrap",
+                "category": "actions",
+                "text": "Melee or Ranged Weapon Attack: +5 to hit, reach 5 ft. or range 60 ft., one target. Hit: 8 (1d10 + 3) piercing damage, and the creature must succeed on a DC 14 Dexterity saving throw or have its speed reduced to 0 until the start of the inventor's next turn.",
+                "action": {
+                    "range": "reach 5 ft. or range 60 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d10",
+                                "bonus": 3,
+                                "type": "piercing"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "dex",
+                        "dc": 14,
+                        "on_success": "none"
+                    }
+                }
+            },
+            {
+                "id": "thunderscream-gadget",
+                "name": "Thunderscream Gadget",
+                "category": "actions",
+                "text": "The inventor produces a gadget that emits a screeching wave of sound in a 30-foot cone originating from the inventor. Each creature in that area must make a DC 14 Constitution saving throw, taking 10 (3d6) thunder damage on a failed save or half as much damage on a successful one.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "area": "30-foot cone",
+                    "save": {
+                        "ability": "con",
+                        "dc": 14,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "3d6",
+                                "type": "thunder"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "flash-powder",
+                "name": "Flash Powder",
+                "category": "reactions",
+                "text": "If the inventor is damaged by a creature it can see within 15 feet of itself, the inventor retaliates by flinging brilliantly explosive powder at the creature. The creature must succeed on a DC 14 Dexterity saving throw or be blinded until the end of its next turn.",
+                "action": {
+                    "save": {
+                        "ability": "dex",
+                        "dc": 14,
+                        "on_success": "none",
+                        "conditions": [
+                            "blinded"
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing",
+                "thunder"
+            ],
+            "conditions_inflicted": [
+                "blinded"
+            ],
+            "saves_forced": [
+                "con",
+                "dex"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_weapon_attack",
+                "ranged_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "gnomish"
+            ]
+        }
+    },
+    {
+        "id": "nevermind-gnome-mastermind-mcv2dc",
+        "kind": "monster",
+        "name": "Nevermind Gnome Mastermind",
+        "source": "MCV2DC",
+        "edition": "classic",
+        "tags": [
+            "Spider Climb"
+        ],
+        "size": [
+            "small"
+        ],
+        "creature_type": {
+            "type": "humanoid"
+        },
+        "alignment": [
+            "any alignment"
+        ],
+        "ac": [
+            {
+                "value": 15,
+                "from": [
+                    "leather armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 82,
+            "formula": "15d6 + 30"
+        },
+        "speed": {
+            "walk": 30,
+            "climb": 30
+        },
+        "abilities": {
+            "str": 9,
+            "dex": 18,
+            "con": 14,
+            "int": 20,
+            "wis": 11,
+            "cha": 15
+        },
+        "saves": {
+            "dex": 7,
+            "con": 5,
+            "int": 8
+        },
+        "skills": {
+            "arcana": 8,
+            "investigation": 8,
+            "perception": 3
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 13,
+        "languages": [
+            "Common",
+            "Gnomish"
+        ],
+        "cr": {
+            "cr": "5",
+            "xp": 1800,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 4,
+            "advantage": true
+        },
+        "features": [
+            {
+                "id": "always-thinking-ahead",
+                "name": "Always Thinking Ahead",
+                "category": "traits",
+                "text": "The mastermind has advantage on initiative rolls."
+            },
+            {
+                "id": "spider-climb",
+                "name": "Spider Climb",
+                "category": "traits",
+                "text": "The mastermind can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check. This trait doesn't function if the mastermind is grappling creatures in both of its clockwork claws."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The mastermind makes two Clockwork Claw attacks. The mastermind can replace one of these attacks with Generate Gadget if it's available."
+            },
+            {
+                "id": "clockwork-claw",
+                "name": "Clockwork Claw",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +7 to hit, reach 20 ft., one target. Hit: 11 (2d6 + 4) piercing damage, and if the target is a Medium or smaller creature, the target is grappled (escape DC 15). Until this grapple ends, the target takes 10 (3d6) piercing damage at the start of each of the mastermind's turns. The mastermind has two claws, each of which can grapple only one target.",
+                "action": {
+                    "range": "reach 20 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 4,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "3d6",
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "generate-gadget",
+                "name": "Generate Gadget",
+                "category": "actions",
+                "text": "The mastermind quickly assembles a clockwork gadget, producing one of the following effects (the mastermind's choice):",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                }
+            },
+            {
+                "id": "chattergrab",
+                "name": "Chattergrab",
+                "category": "actions",
+                "text": "Parts of this gadget look like gnashing metal teeth. This gadget hurtles toward a creature the mastermind can see within 60 feet of itself. The creature must succeed on a DC 16 Dexterity saving throw or take 31 (7d8) piercing damage and be incapacitated until the start of the mastermind's next turn.",
+                "action": {
+                    "save": {
+                        "ability": "dex",
+                        "dc": 16,
+                        "on_success": "none",
+                        "damage": [
+                            {
+                                "dice": "7d8",
+                                "type": "piercing"
+                            }
+                        ],
+                        "conditions": [
+                            "incapacitated"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "phasmoball",
+                "name": "Phasmoball",
+                "category": "actions",
+                "text": "The mastermind launches this gadget to a point the mastermind can see within 30 feet of itself, where the gadget unleashes a cloud of mind-warping gases in a 10-foot-radius sphere. Each creature within the sphere must succeed on a DC 16 Wisdom saving throw or take 11 (2d10) psychic damage and be frightened of the mastermind until the start of the mastermind's next turn.",
+                "action": {
+                    "area": "10-foot sphere",
+                    "save": {
+                        "ability": "wis",
+                        "dc": 16,
+                        "on_success": "none",
+                        "damage": [
+                            {
+                                "dice": "2d10",
+                                "type": "psychic"
+                            }
+                        ],
+                        "conditions": [
+                            "frightened"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "thunderscream",
+                "name": "Thunderscream",
+                "category": "actions",
+                "text": "This gadget emits a screeching wave of sound in a 30-foot cone originating from the mastermind. Each creature in that area must make a DC 16 Constitution saving throw, taking 21 (6d6) thunder damage on a failed save or half as much damage on a successful one.",
+                "action": {
+                    "area": "30-foot cone",
+                    "save": {
+                        "ability": "con",
+                        "dc": 16,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "6d6",
+                                "type": "thunder"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing",
+                "thunder",
+                "psychic"
+            ],
+            "conditions_inflicted": [
+                "frightened",
+                "grappled",
+                "incapacitated"
+            ],
+            "saves_forced": [
+                "con",
+                "dex",
+                "wis"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "movement": [
+                "climb"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "spider_climb"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_weapon_attack",
+                "reach"
+            ],
+            "languages": [
+                "common",
+                "gnomish"
+            ]
+        }
+    },
+    {
+        "id": "thanoi-hunter-mcv2dc",
+        "kind": "monster",
+        "name": "Thanoi Hunter",
+        "source": "MCV2DC",
+        "edition": "classic",
+        "tags": [
+            "Hold Breath",
+            "Pack Tactics"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "monstrosity"
+        },
+        "alignment": [
+            "any alignment"
+        ],
+        "ac": [
+            {
+                "value": 14,
+                "from": [
+                    "hide armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 32,
+            "formula": "5d8 + 10"
+        },
+        "speed": {
+            "walk": 30,
+            "swim": 30
+        },
+        "abilities": {
+            "str": 18,
+            "dex": 14,
+            "con": 15,
+            "int": 12,
+            "wis": 16,
+            "cha": 11
+        },
+        "saves": {
+            "str": 6,
+            "con": 4
+        },
+        "skills": {
+            "athletics": 6,
+            "perception": 5,
+            "survival": 5
+        },
+        "passive_perception": 15,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "cold"
+                ]
+            }
+        },
+        "languages": [
+            "Aquan",
+            "Common"
+        ],
+        "cr": {
+            "cr": "1",
+            "xp": 200,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "hold-breath",
+                "name": "Hold Breath",
+                "category": "traits",
+                "text": "The hunter can hold its breath for up to 10 minutes."
+            },
+            {
+                "id": "pack-tactics",
+                "name": "Pack Tactics",
+                "category": "traits",
+                "text": "The hunter has advantage on an attack roll against a creature if at least one of the hunter's allies is within 5 feet of the creature and the ally isn't incapacitated."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The hunter makes one Bone Harpoon attack and one Tusk attack."
+            },
+            {
+                "id": "bone-harpoon",
+                "name": "Bone Harpoon",
+                "category": "actions",
+                "text": "Melee or Ranged Weapon Attack: +6 to hit, reach 10 ft. or range 20/60 ft., one target. Hit: 8 (1d8 + 4) piercing damage. Hit or Miss: The harpoon returns to the hunter's hand.",
+                "action": {
+                    "range": "reach 10 ft. or range 20/60 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 4,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "tusk",
+                "name": "Tusk",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 6 (1d4 + 4) slashing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 4,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing",
+                "slashing"
+            ],
+            "movement": [
+                "swim"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "hold_breath",
+                "pack_tactics"
+            ],
+            "misc": [
+                "melee_weapon_attack",
+                "reach",
+                "ranged_weapon_attack"
+            ],
+            "languages": [
+                "aquan",
+                "common"
+            ]
+        }
+    },
+    {
+        "id": "traag-draconian-mcv2dc",
+        "kind": "monster",
+        "name": "Traag Draconian",
+        "source": "MCV2DC",
+        "edition": "classic",
+        "tags": [
+            "Death Burst"
+        ],
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "monstrosity"
+        },
+        "alignment": [
+            "chaotic evil"
+        ],
+        "alignment_prefix": "typically",
+        "ac": [
+            {
+                "value": 14,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 68,
+            "formula": "8d10 + 24"
+        },
+        "speed": {
+            "walk": 40
+        },
+        "abilities": {
+            "str": 21,
+            "dex": 10,
+            "con": 17,
+            "int": 6,
+            "wis": 8,
+            "cha": 9
+        },
+        "saves": {
+            "str": 8,
+            "con": 6
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 9,
+        "defenses": {
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "frightened"
+                ]
+            }
+        },
+        "languages": [
+            "Common",
+            "Draconic"
+        ],
+        "cr": {
+            "cr": "5",
+            "xp": 1800,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "blood-frenzy",
+                "name": "Blood Frenzy",
+                "category": "traits",
+                "text": "The draconian has advantage on melee attack rolls against any creature that doesn't have all its hit points."
+            },
+            {
+                "id": "controlled-fall",
+                "name": "Controlled Fall",
+                "category": "traits",
+                "text": "If the draconian falls and isn't incapacitated, it subtracts up to 50 feet from the fall when calculating the fall's damage."
+            },
+            {
+                "id": "death-throes",
+                "name": "Death Throes",
+                "category": "traits",
+                "text": "If the draconian is reduced to 0 hit points, its body erupts into sludge that fills a 10-foot-radius sphere. Each creature within that area must succeed on a DC 14 Dexterity saving throw or be covered in the sludge for 1 minute. While covered in the sludge, a creature's speed is halved. A creature can use its action to scrape the sludge off itself or another creature within 5 feet of itself.",
+                "action": {
+                    "area": "10-foot sphere",
+                    "save": {
+                        "ability": "dex",
+                        "dc": 14,
+                        "on_success": "none"
+                    }
+                }
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The draconian makes two Claw attacks."
+            },
+            {
+                "id": "claw",
+                "name": "Claw",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +8 to hit, reach 10 ft., one target. Hit: 14 (2d8 + 5) slashing damage.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 8,
+                        "damage": [
+                            {
+                                "dice": "2d8",
+                                "bonus": 5,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "flaming-carnage",
+                "name": "Flaming Carnage",
+                "category": "actions",
+                "text": "The draconian indulges its rage, wreathing itself in fire and moving up to its speed. The draconian can enter creatures' spaces during this move. During this movement, when the draconian enters a creature's space, the creature must make a DC 14 Dexterity saving throw. On a failed save, the creature takes 22 (4d10) fire damage and is knocked prone. On a successful save, the creature takes half as much damage and is pushed to the nearest space out of the draconian's path. A creature can be affected by this draconian's Flaming Carnage only once during a turn.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "save": {
+                        "ability": "dex",
+                        "dc": 14,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "4d10",
+                                "type": "fire"
+                            }
+                        ],
+                        "conditions": [
+                            "prone"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "violent-retaliation",
+                "name": "Violent Retaliation",
+                "category": "reactions",
+                "text": "If a creature within 10 feet of the draconian hits it with an attack, the draconian can make one Claw attack against that creature. If the Claw attack hits, it deals an additional 4 (1d8) slashing damage.",
+                "action": {
+                    "damage": [
+                        {
+                            "dice": "1d8",
+                            "type": "slashing"
+                        }
+                    ]
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "fire",
+                "slashing"
+            ],
+            "conditions_inflicted": [
+                "prone"
+            ],
+            "saves_forced": [
+                "dex"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "death_burst"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_weapon_attack",
+                "reach"
+            ],
+            "languages": [
+                "common",
+                "draconic"
+            ]
+        }
+    },
+    {
+        "id": "verminaard-mcv2dc",
+        "kind": "monster",
+        "name": "Verminaard",
+        "source": "MCV2DC",
+        "edition": "classic",
+        "tags": [
+            "Legendary Resistances"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "cleric",
+                "human"
+            ]
+        },
+        "alignment": [
+            "lawful evil"
+        ],
+        "ac": [
+            {
+                "value": 20,
+                "from": [
+                    "+2 plate armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 143,
+            "formula": "22d8 + 44"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 22,
+            "dex": 13,
+            "con": 15,
+            "int": 16,
+            "wis": 18,
+            "cha": 17
+        },
+        "saves": {
+            "wis": 10,
+            "cha": 9
+        },
+        "skills": {
+            "perception": 16,
+            "religion": 9
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 26,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "fire"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "frightened"
+                ]
+            }
+        },
+        "languages": [
+            "Abyssal",
+            "Common",
+            "Draconic"
+        ],
+        "cr": {
+            "cr": "17",
+            "xp": 18000,
+            "pb": 6
+        },
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "draconic-command",
+                "name": "Draconic Command",
+                "category": "traits",
+                "text": "Whenever a Dragon or a creature with the Draconic Devotion trait within 30 feet of Verminaard makes an attack roll, the creature can roll a d4 and add the number rolled to the attack roll."
+            },
+            {
+                "id": "legendary-resistance",
+                "name": "Legendary Resistance",
+                "category": "traits",
+                "text": "If Verminaard fails a saving throw, he can choose to succeed instead.",
+                "uses": {
+                    "max": 3,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "special-equipment",
+                "name": "Special Equipment",
+                "category": "traits",
+                "text": "Verminaard wears +2 plate armor and wields the mace Nightbringer, which grants him darkvision as well as immunity to fire damage and to the charmed and frightened conditions (included above)."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Verminaard makes two Nightbringer attacks and uses Malediction."
+            },
+            {
+                "id": "nightbringer",
+                "name": "Nightbringer",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +15 to hit, reach 5 ft., one target. Hit: 12 (1d6 + 9) bludgeoning damage plus 10 (4d4) radiant damage. If the target is a creature, the target must succeed on a DC 20 Constitution saving throw or be blinded until the start of Verminaard's next turn.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 15,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 9,
+                                "type": "bludgeoning"
+                            },
+                            {
+                                "dice": "4d4",
+                                "type": "radiant"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "con",
+                        "dc": 20,
+                        "on_success": "none",
+                        "conditions": [
+                            "blinded"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "malediction",
+                "name": "Malediction",
+                "category": "actions",
+                "text": "Verminaard utters an unholy word, causing profane fire to descend on one creature Verminaard can see within 60 feet of himself. The creature must make a DC 18 Dexterity saving throw, taking 11 (2d10) necrotic damage plus 11 (2d10) radiant damage on a failed save or half as much damage on a successful one.",
+                "action": {
+                    "save": {
+                        "ability": "dex",
+                        "dc": 18,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "2d10",
+                                "type": "necrotic"
+                            },
+                            {
+                                "dice": "2d10",
+                                "type": "radiant"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "dragon-queens-favor",
+                "name": "Dragon Queen's Favor",
+                "category": "bonus_actions",
+                "text": "Verminaard or one creature he can see within 60 feet of himself magically regains 17 (2d12 + 4) hit points.",
+                "uses": {
+                    "max": 5,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "tactical-movement",
+                "name": "Tactical Movement",
+                "category": "legendary_actions",
+                "text": "Verminaard moves up to his speed or commands a mount he is riding to move up to its speed. This movement doesn't provoke opportunity attacks."
+            },
+            {
+                "id": "fervent-strike",
+                "name": "Fervent Strike",
+                "category": "legendary_actions",
+                "text": "Verminaard makes one Nightbringer attack. If this attack hits, it deals an additional 7 (2d6) bludgeoning damage.",
+                "cost": 2,
+                "action": {
+                    "damage": [
+                        {
+                            "dice": "2d6",
+                            "type": "bludgeoning"
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "cast-a-spell",
+                "name": "Cast a Spell",
+                "category": "legendary_actions",
+                "text": "Verminaard uses Spellcasting.",
+                "cost": 3
+            }
+        ],
+        "legendary_actions": {
+            "uses": 3
+        },
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "wis",
+                "dc": 18,
+                "text": "Verminaard casts one of the following spells, requiring no material components and using Wisdom as the spellcasting ability (spell save DC 18):",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "light-phb"
+                            },
+                            {
+                                "spell": "thaumaturgy-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 2,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "bane-phb"
+                            },
+                            {
+                                "spell": "fear-phb"
+                            },
+                            {
+                                "spell": "freedom-of-movement-phb"
+                            },
+                            {
+                                "spell": "greater-restoration-phb"
+                            },
+                            {
+                                "spell": "hold-monster-phb"
+                            },
+                            {
+                                "spell": "revivify-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "nightbringer-mcv2dc",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "flags": {
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "necrotic",
+                "radiant"
+            ],
+            "conditions_inflicted": [
+                "blinded",
+                "frightened",
+                "paralyzed"
+            ],
+            "saves_forced": [
+                "con",
+                "dex",
+                "cha",
+                "wis"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "legendary_resistances"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "abyssal",
+                "common",
+                "draconic"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    }
+]

@@ -1,0 +1,4610 @@
+[
+    {
+        "id": "boromar-smuggler-efa",
+        "kind": "monster",
+        "name": "Boromar Smuggler",
+        "source": "EFA",
+        "edition": "one",
+        "size": [
+            "small"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "halfling"
+            ]
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "ac": [
+            {
+                "value": 13
+            }
+        ],
+        "hp": {
+            "average": 27,
+            "formula": "6d6 + 6"
+        },
+        "speed": {
+            "walk": 40
+        },
+        "abilities": {
+            "str": 11,
+            "dex": 15,
+            "con": 12,
+            "int": 11,
+            "wis": 10,
+            "cha": 14
+        },
+        "saves": {
+            "dex": 4,
+            "wis": 2
+        },
+        "skills": {
+            "perception": 2,
+            "sleight_of_hand": 6,
+            "stealth": 6
+        },
+        "passive_perception": 12,
+        "languages": [
+            "Common",
+            "Halfling",
+            "Thieves' cant"
+        ],
+        "cr": {
+            "cr": "1/2",
+            "xp": 100,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 4
+        },
+        "features": [
+            {
+                "id": "hustle",
+                "name": "Hustle",
+                "category": "traits",
+                "text": "The smuggler can move through the space of any creature that is of a larger size, but it can't stop there."
+            },
+            {
+                "id": "shortsword",
+                "name": "Shortsword",
+                "category": "actions",
+                "text": "Melee Attack Roll: +4, reach 5 ft. Hit: 5 (1d6 + 2) Piercing damage plus 2 (1d4) Poison damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 2,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "1d4",
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "pistol",
+                "name": "Pistol",
+                "category": "actions",
+                "text": "Ranged Attack Roll: +4, range 30/90 ft. Hit: 7 (1d10 + 2) Piercing damage.",
+                "action": {
+                    "range": "range 30/90 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d10",
+                                "bonus": 2,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "items": [
+            {
+                "item": "leather-armor-xphb",
+                "qty": 1
+            },
+            {
+                "item": "pistol-xphb",
+                "qty": 1
+            },
+            {
+                "item": "shortsword-xphb",
+                "qty": 1
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "poison",
+                "piercing"
+            ],
+            "misc": [
+                "melee_attack",
+                "melee_weapon",
+                "ranged_attack",
+                "ranged_weapon"
+            ],
+            "languages": [
+                "common",
+                "halfling",
+                "thieves_cant"
+            ]
+        }
+    },
+    {
+        "id": "boromar-underboss-efa",
+        "kind": "monster",
+        "name": "Boromar Underboss",
+        "source": "EFA",
+        "edition": "one",
+        "size": [
+            "small"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "halfling"
+            ]
+        },
+        "alignment": [
+            "lawful evil"
+        ],
+        "ac": [
+            {
+                "value": 16
+            }
+        ],
+        "hp": {
+            "average": 104,
+            "formula": "19d6 + 38"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 10,
+            "dex": 18,
+            "con": 15,
+            "int": 12,
+            "wis": 14,
+            "cha": 17
+        },
+        "saves": {
+            "dex": 7,
+            "con": 5,
+            "wis": 5
+        },
+        "skills": {
+            "insight": 5,
+            "perception": 8,
+            "sleight_of_hand": 10
+        },
+        "passive_perception": 18,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "poison"
+                ]
+            }
+        },
+        "languages": [
+            "Common",
+            "Halfling",
+            "Thieves' cant"
+        ],
+        "cr": {
+            "cr": "8",
+            "xp": 3900,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 7
+        },
+        "features": [
+            {
+                "id": "hustle",
+                "name": "Hustle",
+                "category": "traits",
+                "text": "The underboss can move through the space of any creature that is of a larger size, but it can't stop there."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The underboss makes three attacks, using Poisoned Blade or Arcane Firearm in any combination."
+            },
+            {
+                "id": "poisoned-blade",
+                "name": "Poisoned Blade",
+                "category": "actions",
+                "text": "Melee Attack Roll: +7, reach 5 ft. Hit: 13 (2d8 + 4) Slashing damage plus 7 (2d6) Poison damage, and the target has the Poisoned condition until the start of the underboss's next turn. If the target is already Poisoned, it instead takes an extra 7 (2d6) Poison damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "2d8",
+                                "bonus": 4,
+                                "type": "slashing"
+                            },
+                            {
+                                "dice": "2d6",
+                                "type": "poison"
+                            },
+                            {
+                                "dice": "2d6",
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "arcane-firearm",
+                "name": "Arcane Firearm",
+                "category": "actions",
+                "text": "Ranged Attack Roll: +7, range 30/90 ft. Hit: 26 (4d10 + 4) Force damage.",
+                "action": {
+                    "range": "range 30/90 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "4d10",
+                                "bonus": 4,
+                                "type": "force"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "uncanny-dodge",
+                "name": "Uncanny Dodge",
+                "category": "reactions",
+                "text": "Trigger: The underboss is hit by an attack roll. Response: The underboss halves the damage (round down) it takes from that attack."
+            }
+        ],
+        "items": [
+            {
+                "item": "studded-leather-armor-xphb",
+                "qty": 1
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "poison",
+                "force",
+                "slashing"
+            ],
+            "conditions_inflicted": [
+                "poisoned"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "melee_attack",
+                "ranged_attack"
+            ],
+            "languages": [
+                "common",
+                "halfling",
+                "thieves_cant"
+            ]
+        }
+    },
+    {
+        "id": "cannith-artificer-efa",
+        "kind": "monster",
+        "name": "Cannith Artificer",
+        "source": "EFA",
+        "edition": "one",
+        "size": [
+            "small",
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "human"
+            ]
+        },
+        "alignment": [
+            "neutral"
+        ],
+        "ac": [
+            {
+                "value": 16
+            }
+        ],
+        "hp": {
+            "average": 71,
+            "formula": "11d8 + 22"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 13,
+            "dex": 13,
+            "con": 14,
+            "int": 18,
+            "wis": 14,
+            "cha": 11
+        },
+        "saves": {
+            "con": 4,
+            "int": 6
+        },
+        "skills": {
+            "arcana": 6,
+            "perception": 4,
+            "sleight_of_hand": 3
+        },
+        "passive_perception": 14,
+        "languages": [
+            "Common plus two other languages"
+        ],
+        "cr": {
+            "cr": "4",
+            "xp": 1100,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The artificer makes two attacks, using Battering Mace or Artillery Strike in any combination."
+            },
+            {
+                "id": "battering-mace",
+                "name": "Battering Mace",
+                "category": "actions",
+                "text": "Melee Attack Roll: +6, reach 5 ft. Hit: 14 (3d6 + 4) Bludgeoning damage, and if the target is a Large or smaller creature, it has the Prone condition.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "3d6",
+                                "bonus": 4,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "artillery-strike",
+                "name": "Artillery Strike",
+                "category": "actions",
+                "text": "Ranged Attack Roll: +6, range 120 ft. Hit: 22 (4d8 + 4) Force damage.",
+                "action": {
+                    "range": "range 120 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "4d8",
+                                "bonus": 4,
+                                "type": "force"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "int",
+                "dc": 14,
+                "text": "The artificer casts one of the following spells, using its Tinker's Tools as an Arcane Focus and using Intelligence as the spellcasting ability (spell save DC 14):",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "burning-hands-xphb",
+                                "note": "(level 3 version)"
+                            },
+                            {
+                                "spell": "mending-xphb"
+                            },
+                            {
+                                "spell": "thunderwave-xphb",
+                                "note": "(level 3 version)"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "cure-wounds-xphb"
+                            },
+                            {
+                                "spell": "invisibility-xphb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "chain-mail-xphb",
+                "qty": 1
+            },
+            {
+                "item": "mace-xphb",
+                "qty": 1
+            },
+            {
+                "item": "tinkers-tools-xphb",
+                "qty": 1
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "force",
+                "fire",
+                "thunder"
+            ],
+            "conditions_inflicted": [
+                "prone",
+                "invisible"
+            ],
+            "saves_forced": [
+                "con",
+                "dex"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "melee_attack",
+                "melee_weapon",
+                "ranged_attack"
+            ],
+            "languages": [
+                "common",
+                "any_choose"
+            ],
+            "spellcasting": [
+                "artificer"
+            ]
+        }
+    },
+    {
+        "id": "daask-bruiser-efa",
+        "kind": "monster",
+        "name": "Daask Bruiser",
+        "source": "EFA",
+        "edition": "one",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "gnoll"
+            ]
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "ac": [
+            {
+                "value": 17
+            }
+        ],
+        "hp": {
+            "average": 150,
+            "formula": "20d8 + 60"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 20,
+            "dex": 13,
+            "con": 16,
+            "int": 10,
+            "wis": 12,
+            "cha": 14
+        },
+        "saves": {
+            "str": 9,
+            "con": 7,
+            "wis": 5
+        },
+        "skills": {
+            "athletics": 9,
+            "intimidation": 6,
+            "perception": 5
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 15,
+        "languages": [
+            "Common",
+            "Gnoll"
+        ],
+        "cr": {
+            "cr": "9",
+            "xp": 5000,
+            "pb": 4
+        },
+        "initiative": {
+            "bonus": 5
+        },
+        "features": [
+            {
+                "id": "blood-frenzy",
+                "name": "Blood Frenzy",
+                "category": "traits",
+                "text": "The bruiser has Advantage on attack rolls against any creature that doesn't have all its Hit Points."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The bruiser makes three Pummel attacks and uses Glare."
+            },
+            {
+                "id": "pummel",
+                "name": "Pummel",
+                "category": "actions",
+                "text": "Melee Attack Roll: +9, reach 5 ft. Hit: 12 (2d6 + 5) Bludgeoning damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 9,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 5,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "glare",
+                "name": "Glare",
+                "category": "actions",
+                "text": "Wisdom Saving Throw: DC 14, one creature the bruiser can see within 30 feet. Failure: The target has the Frightened condition until the start of the bruiser's next turn.",
+                "action": {
+                    "save": {
+                        "ability": "wis",
+                        "dc": 14,
+                        "on_success": "none",
+                        "conditions": [
+                            "frightened"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "smackback",
+                "name": "Smackback",
+                "category": "reactions",
+                "text": "Trigger: The bruiser takes damage from a creature within 5 feet. Response: The bruiser makes one Pummel attack, targeting the triggering creature."
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning"
+            ],
+            "conditions_inflicted": [
+                "frightened"
+            ],
+            "saves_forced": [
+                "wis"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "melee_attack"
+            ],
+            "languages": [
+                "common",
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "daask-raider-efa",
+        "kind": "monster",
+        "name": "Daask Raider",
+        "source": "EFA",
+        "edition": "one",
+        "tags": [
+            "Pack Tactics"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "gnoll"
+            ]
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "ac": [
+            {
+                "value": 15
+            }
+        ],
+        "hp": {
+            "average": 33,
+            "formula": "6d8 + 6"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 16,
+            "dex": 12,
+            "con": 13,
+            "int": 10,
+            "wis": 11,
+            "cha": 8
+        },
+        "saves": {
+            "str": 5
+        },
+        "skills": {
+            "athletics": 5,
+            "perception": 2
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 12,
+        "languages": [
+            "Common",
+            "Gnoll"
+        ],
+        "cr": {
+            "cr": "1",
+            "xp": 200,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "pack-tactics",
+                "name": "Pack Tactics",
+                "category": "traits",
+                "text": "The raider has Advantage on an attack roll against a creature if at least one of the raider's allies is within 5 feet of the creature and the ally doesn't have the Incapacitated condition."
+            },
+            {
+                "id": "pummel",
+                "name": "Pummel",
+                "category": "actions",
+                "text": "Melee Attack Roll: +5, reach 5 ft. Hit: 5 (1d4 + 3) Bludgeoning damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 3,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "smackback",
+                "name": "Smackback",
+                "category": "reactions",
+                "text": "Trigger: The raider takes damage from a creature within 5 feet. Response: The raider makes one Pummel attack, targeting the triggering creature."
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "traits": [
+                "pack_tactics"
+            ],
+            "misc": [
+                "melee_attack"
+            ],
+            "languages": [
+                "common",
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "dreaming-dark-infiltrator-efa",
+        "kind": "monster",
+        "name": "Dreaming Dark Infiltrator",
+        "source": "EFA",
+        "edition": "one",
+        "size": [
+            "small",
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid"
+        },
+        "alignment": [
+            "lawful evil"
+        ],
+        "ac": [
+            {
+                "value": 15
+            }
+        ],
+        "hp": {
+            "average": 104,
+            "formula": "16d8 + 32"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 14,
+            "dex": 17,
+            "con": 15,
+            "int": 18,
+            "wis": 16,
+            "cha": 17
+        },
+        "saves": {
+            "int": 7,
+            "wis": 6,
+            "cha": 6
+        },
+        "skills": {
+            "deception": 6,
+            "insight": 6,
+            "stealth": 6
+        },
+        "senses": {
+            "truesight": 30
+        },
+        "passive_perception": 13,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "psychic"
+                ]
+            }
+        },
+        "languages": [
+            "Common",
+            "Quori; telepathy 120 ft."
+        ],
+        "cr": {
+            "cr": "7",
+            "xp": 2900,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The infiltrator makes three Mind Blade attacks."
+            },
+            {
+                "id": "mind-blade",
+                "name": "Mind Blade",
+                "category": "actions",
+                "text": "Melee or Ranged Attack Roll: +7, reach 5 ft. or range 30 ft. Hit: 14 (3d6 + 4) Psychic damage.",
+                "action": {
+                    "range": "reach 5 ft. or range 30 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "3d6",
+                                "bonus": 4,
+                                "type": "psychic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "mind-curse",
+                "name": "Mind Curse",
+                "category": "bonus_actions",
+                "text": "Wisdom Saving Throw: DC 15, one creature hit by the infiltrator's Mind Blade attack this turn. Failure: The target takes 14 (4d6) Psychic damage and is cursed. While cursed in this way, it has Disadvantage on attack rolls against the infiltrator, and the infiltrator always knows its location while it and the infiltrator are on the same plane of existence. A cursed creature repeats the save whenever it finishes a Short or Long Rest, ending the effect on itself on a success. Success: Half damage only.",
+                "action": {
+                    "save": {
+                        "ability": "wis",
+                        "dc": 15,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "4d6",
+                                "type": "psychic"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "int",
+                "dc": 15,
+                "text": "The infiltrator casts one of the following spells, requiring no Material components and using Intelligence as the spellcasting ability (spell save DC 15):",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "spells": [
+                            {
+                                "spell": "synaptic-static-xphb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 3,
+                        "per": "day",
+                        "spells": [
+                            {
+                                "spell": "detect-thoughts-xphb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "chain-shirt-xphb",
+                "qty": 1
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "psychic"
+            ],
+            "saves_forced": [
+                "wis",
+                "con",
+                "int"
+            ],
+            "senses": [
+                "truesight"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "curse",
+                "melee_attack",
+                "ranged_attack"
+            ],
+            "languages": [
+                "common",
+                "telepathy"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "dreaming-dark-mindkiller-efa",
+        "kind": "monster",
+        "name": "Dreaming Dark Mindkiller",
+        "source": "EFA",
+        "edition": "one",
+        "size": [
+            "small",
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid"
+        },
+        "alignment": [
+            "lawful evil"
+        ],
+        "ac": [
+            {
+                "value": 19
+            }
+        ],
+        "hp": {
+            "average": 180,
+            "formula": "24d8 + 72"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 15,
+            "dex": 19,
+            "con": 16,
+            "int": 21,
+            "wis": 18,
+            "cha": 17
+        },
+        "saves": {
+            "dex": 8,
+            "int": 9,
+            "wis": 8,
+            "cha": 7
+        },
+        "skills": {
+            "deception": 7,
+            "insight": 8,
+            "perception": 8,
+            "stealth": 8
+        },
+        "senses": {
+            "truesight": 30
+        },
+        "passive_perception": 18,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "psychic"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "frightened"
+                ]
+            }
+        },
+        "languages": [
+            "Common",
+            "Quori; telepathy 120 ft."
+        ],
+        "cr": {
+            "cr": "11",
+            "xp": 7200,
+            "pb": 4
+        },
+        "initiative": {
+            "bonus": 4
+        },
+        "features": [
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The mindkiller makes two Nightmare Whisper attacks."
+            },
+            {
+                "id": "nightmare-whisper",
+                "name": "Nightmare Whisper",
+                "category": "actions",
+                "text": "Melee or Ranged Attack Roll: +9, reach 5 ft. or range 30 ft. Hit: 27 (5d8 + 5) Psychic damage, and the target has the Frightened condition until the start of the mindkiller's next turn. If the target is already Frightened, it instead takes an extra 10 (3d6) Psychic damage.",
+                "action": {
+                    "range": "reach 5 ft. or range 30 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 9,
+                        "damage": [
+                            {
+                                "dice": "5d8",
+                                "bonus": 5,
+                                "type": "psychic"
+                            },
+                            {
+                                "dice": "3d6",
+                                "type": "psychic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "primal-fear",
+                "name": "Primal Fear",
+                "category": "actions",
+                "text": "Wisdom Saving Throw: DC 17, each creature in a 30-foot-radius Sphere centered on a point the mindkiller can see within 120 feet. Failure: 35 (10d6) Psychic damage, and the target has the Frightened condition until the start of the mindkiller's next turn. While Frightened in this way, the target can do only one of the following on each of its turns: move, take an action, or take a Bonus Action. Success: Half damage only.",
+                "uses": {
+                    "max": 1,
+                    "reset": "long"
+                },
+                "action": {
+                    "area": "30-foot sphere",
+                    "save": {
+                        "ability": "wis",
+                        "dc": 17,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "10d6",
+                                "type": "psychic"
+                            }
+                        ],
+                        "conditions": [
+                            "frightened"
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Slayer's Puppet (1/Day)",
+                "ability": "int",
+                "dc": 17,
+                "text": "The mindkiller casts Dominate Person, requiring no spell components and using Intelligence as the spellcasting ability (spell save DC 17).",
+                "display_as": "bonus_actions",
+                "hidden": [
+                    "daily"
+                ],
+                "groups": [
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "spells": [
+                            {
+                                "spell": "dominate-person-xphb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "psychic"
+            ],
+            "conditions_inflicted": [
+                "frightened",
+                "charmed"
+            ],
+            "saves_forced": [
+                "wis"
+            ],
+            "senses": [
+                "truesight"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_attack",
+                "ranged_attack"
+            ],
+            "languages": [
+                "common",
+                "telepathy"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "emerald-claw-commander-efa",
+        "kind": "monster",
+        "name": "Emerald Claw Commander",
+        "source": "EFA",
+        "edition": "one",
+        "size": [
+            "small",
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid"
+        },
+        "alignment": [
+            "lawful evil"
+        ],
+        "ac": [
+            {
+                "value": 20
+            }
+        ],
+        "hp": {
+            "average": 78,
+            "formula": "12d8 + 24"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 18,
+            "dex": 11,
+            "con": 15,
+            "int": 15,
+            "wis": 12,
+            "cha": 14
+        },
+        "saves": {
+            "con": 4,
+            "wis": 3
+        },
+        "skills": {
+            "athletics": 6,
+            "intimidation": 4,
+            "perception": 3
+        },
+        "passive_perception": 13,
+        "languages": [
+            "Common",
+            "Dwarvish"
+        ],
+        "cr": {
+            "cr": "4",
+            "xp": 1100,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "aura-of-authority",
+                "name": "Aura of Authority",
+                "category": "traits",
+                "text": "While in a 30-foot Emanation originating from the commander, the commander and its allies have Advantage on attack rolls and saving throws, provided the commander doesn't have the Incapacitated condition."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The commander makes two attacks, using Flail or Javelin in any combination."
+            },
+            {
+                "id": "flail",
+                "name": "Flail",
+                "category": "actions",
+                "text": "Melee Attack Roll: +6, reach 5 ft. Hit: 8 (1d8 + 4) Bludgeoning damage—plus 7 (2d6) Necrotic damage if the commander is Bloodied—and the target has Disadvantage on its next attack roll before the start of the commander's next turn.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 4,
+                                "type": "bludgeoning"
+                            },
+                            {
+                                "dice": "2d6",
+                                "type": "necrotic",
+                                "condition": "if the commander is Bloodied—and the target has Disadvantage on its next attack roll before the start of the commander's next turn"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "javelin",
+                "name": "Javelin",
+                "category": "actions",
+                "text": "Melee or Ranged Attack Roll: +6, reach 5 ft. or range 30/120 ft. Hit: 7 (1d6 + 4) Piercing damage—plus 7 (2d6) Necrotic damage if the commander is Bloodied.",
+                "action": {
+                    "range": "reach 5 ft. or range 30/120 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 4,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "2d6",
+                                "type": "necrotic",
+                                "condition": "if the commander is Bloodied"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "items": [
+            {
+                "item": "flail-xphb",
+                "qty": 1
+            },
+            {
+                "item": "javelin-xphb",
+                "qty": 5
+            },
+            {
+                "item": "plate-armor-xphb",
+                "qty": 1
+            },
+            {
+                "item": "shield-xphb",
+                "qty": 1
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "necrotic",
+                "piercing"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "melee_attack",
+                "melee_weapon",
+                "ranged_attack",
+                "thrown_weapon"
+            ],
+            "languages": [
+                "common",
+                "dwarvish"
+            ]
+        }
+    },
+    {
+        "id": "emerald-claw-knight-efa",
+        "kind": "monster",
+        "name": "Emerald Claw Knight",
+        "source": "EFA",
+        "edition": "one",
+        "size": [
+            "small",
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid"
+        },
+        "alignment": [
+            "lawful evil"
+        ],
+        "ac": [
+            {
+                "value": 18
+            }
+        ],
+        "hp": {
+            "average": 52,
+            "formula": "8d8 + 16"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 17,
+            "dex": 11,
+            "con": 14,
+            "int": 13,
+            "wis": 10,
+            "cha": 13
+        },
+        "saves": {
+            "wis": 2
+        },
+        "skills": {
+            "athletics": 5,
+            "perception": 2
+        },
+        "passive_perception": 12,
+        "languages": [
+            "Common",
+            "Dwarvish"
+        ],
+        "cr": {
+            "cr": "2",
+            "xp": 450,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The knight makes two attacks, using Flail or Javelin in any combination."
+            },
+            {
+                "id": "flail",
+                "name": "Flail",
+                "category": "actions",
+                "text": "Melee Attack Roll: +5, reach 5 ft. Hit: 7 (1d8 + 3) Bludgeoning damage—plus 4 (1d8) Necrotic damage if the knight is Bloodied—and the target has Disadvantage on its next attack roll before the start of the knight's next turn.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 3,
+                                "type": "bludgeoning"
+                            },
+                            {
+                                "dice": "1d8",
+                                "type": "necrotic",
+                                "condition": "if the knight is Bloodied—and the target has Disadvantage on its next attack roll before the start of the knight's next turn"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "javelin",
+                "name": "Javelin",
+                "category": "actions",
+                "text": "Melee or Ranged Attack Roll: +5, reach 5 ft. or range 30/120 ft. Hit: 6 (1d6 + 3) Piercing damage—plus 4 (1d8) Necrotic damage if the knight is Bloodied.",
+                "action": {
+                    "range": "reach 5 ft. or range 30/120 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 3,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "1d8",
+                                "type": "necrotic",
+                                "condition": "if the knight is Bloodied"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "items": [
+            {
+                "item": "chain-mail-xphb",
+                "qty": 1
+            },
+            {
+                "item": "flail-xphb",
+                "qty": 1
+            },
+            {
+                "item": "javelin-xphb",
+                "qty": 5
+            },
+            {
+                "item": "shield-xphb",
+                "qty": 1
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "necrotic",
+                "piercing"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "melee_attack",
+                "melee_weapon",
+                "ranged_attack",
+                "thrown_weapon"
+            ],
+            "languages": [
+                "common",
+                "dwarvish"
+            ]
+        }
+    },
+    {
+        "id": "ghallanda-troubleshooter-efa",
+        "kind": "monster",
+        "name": "Ghallanda Troubleshooter",
+        "source": "EFA",
+        "edition": "one",
+        "size": [
+            "small"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "halfling"
+            ]
+        },
+        "alignment": [
+            "neutral"
+        ],
+        "ac": [
+            {
+                "value": 14
+            }
+        ],
+        "hp": {
+            "average": 78,
+            "formula": "12d6 + 36"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 10,
+            "dex": 16,
+            "con": 17,
+            "int": 13,
+            "wis": 14,
+            "cha": 17
+        },
+        "saves": {
+            "dex": 5,
+            "con": 5,
+            "wis": 4,
+            "cha": 5
+        },
+        "skills": {
+            "insight": 4,
+            "perception": 4,
+            "stealth": 5
+        },
+        "passive_perception": 14,
+        "defenses": {
+            "condition_immune": {
+                "types": [
+                    "frightened"
+                ]
+            }
+        },
+        "languages": [
+            "Common",
+            "Halfling"
+        ],
+        "cr": {
+            "cr": "3",
+            "xp": 700,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "hustle",
+                "name": "Hustle",
+                "category": "traits",
+                "text": "The troubleshooter can move through the space of any creature that is of a larger size, but it can't stop there."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The troubleshooter makes two Poisoned Dagger attacks."
+            },
+            {
+                "id": "poisoned-dagger",
+                "name": "Poisoned Dagger",
+                "category": "actions",
+                "text": "Melee or Ranged Attack Roll: +5, reach 5 ft. or range 20/60 ft. Hit: 5 (1d4 + 3) Piercing damage, and the target has the Poisoned condition until the start of the troubleshooter's next turn.",
+                "action": {
+                    "range": "reach 5 ft. or range 20/60 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 3,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "nimble-escape",
+                "name": "Nimble Escape",
+                "category": "bonus_actions",
+                "text": "The troubleshooter takes the Disengage or Hide action."
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "cha",
+                "dc": 13,
+                "text": "The troubleshooter casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save DC 13):",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "sleep-xphb"
+                            },
+                            {
+                                "spell": "unseen-servant-xphb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "dagger-xphb",
+                "qty": 6
+            },
+            {
+                "item": "leather-armor-xphb",
+                "qty": 1
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing"
+            ],
+            "conditions_inflicted": [
+                "poisoned",
+                "incapacitated",
+                "unconscious"
+            ],
+            "saves_forced": [
+                "wis"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "melee_attack",
+                "melee_weapon",
+                "ranged_attack",
+                "thrown_weapon"
+            ],
+            "languages": [
+                "common",
+                "halfling"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "homunculus-servant-efa",
+        "kind": "monster",
+        "name": "Homunculus Servant",
+        "source": "EFA",
+        "edition": "one",
+        "size": [
+            "tiny"
+        ],
+        "creature_type": {
+            "type": "construct"
+        },
+        "alignment": [
+            "neutral"
+        ],
+        "ac": [
+            {
+                "value": 13
+            }
+        ],
+        "hp": {
+            "special": "5 + 5 per spell level (the homunculus has a number of Hit Dice [d4s] equal to the spell's level)"
+        },
+        "speed": {
+            "walk": 20,
+            "fly": 30
+        },
+        "abilities": {
+            "str": 4,
+            "dex": 15,
+            "con": 12,
+            "int": 10,
+            "wis": 10,
+            "cha": 7
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 10,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "exhaustion",
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "telepathy 1 mile (works only with you)"
+        ],
+        "pb_note": "equals your Proficiency Bonus",
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "evasion",
+                "name": "Evasion",
+                "category": "traits",
+                "text": "If the homunculus is subjected to an effect that allows it to make a Dexterity saving throw to take only half damage, the homunculus instead takes no damage if it succeeds on the save and only half damage if it fails. It can't use this trait if it has the Incapacitated condition."
+            },
+            {
+                "id": "magic-bond",
+                "name": "Magic Bond",
+                "category": "traits",
+                "text": "Add the spell's level to any ability check or saving throw the homunculus makes."
+            },
+            {
+                "id": "force-strike",
+                "name": "Force Strike",
+                "category": "actions",
+                "text": "Melee or Ranged Attack Roll: Bonus equals your spell attack modifier, reach 5 ft. or range 30 ft. Hit: 1d6 + summonSpellLevel Force damage.",
+                "action": {
+                    "range": "reach 5 ft. or range 30 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus_from": "spell_attack",
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": "spell_level",
+                                "type": "force"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "channel-magic",
+                "name": "Channel Magic",
+                "category": "reactions",
+                "text": "Trigger: You cast a spell that has a range of touch while the homunculus is within 120 feet of you. Response: The homunculus delivers the spell through its touch."
+            }
+        ],
+        "summoned_by": {
+            "spell": "homunculus-servant-efa",
+            "spell_level": 2
+        },
+        "filters": {
+            "senses": [
+                "darkvision"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "misc": [
+                "melee_attack",
+                "ranged_attack"
+            ],
+            "languages": [
+                "telepathy"
+            ]
+        }
+    },
+    {
+        "id": "jorasco-medic-efa",
+        "kind": "monster",
+        "name": "Jorasco Medic",
+        "source": "EFA",
+        "edition": "one",
+        "size": [
+            "small"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "halfling"
+            ]
+        },
+        "alignment": [
+            "neutral"
+        ],
+        "ac": [
+            {
+                "value": 16
+            }
+        ],
+        "hp": {
+            "average": 58,
+            "formula": "9d6 + 27"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 12,
+            "dex": 15,
+            "con": 16,
+            "int": 14,
+            "wis": 17,
+            "cha": 14
+        },
+        "saves": {
+            "con": 5,
+            "wis": 5
+        },
+        "skills": {
+            "insight": 5,
+            "medicine": 5,
+            "perception": 5,
+            "stealth": 4
+        },
+        "passive_perception": 15,
+        "languages": [
+            "Common",
+            "Halfling"
+        ],
+        "cr": {
+            "cr": "4",
+            "xp": 1100,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 4
+        },
+        "features": [
+            {
+                "id": "lucky",
+                "name": "Lucky",
+                "category": "traits",
+                "text": "When the medic rolls a 1 on the d20 of a D20 Test, it can reroll the die, and it must use the new roll."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The medic makes two Radiant Burst attacks."
+            },
+            {
+                "id": "radiant-burst",
+                "name": "Radiant Burst",
+                "category": "actions",
+                "text": "Melee or Ranged Attack Roll: +5, reach 5 ft. or range 30 ft. Hit: 7 (2d6) Radiant damage, and the creature has the Blinded condition until the start of the medic's next turn.",
+                "action": {
+                    "range": "reach 5 ft. or range 30 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "type": "radiant"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Mark of Healing (2/Day)",
+                "ability": "wis",
+                "text": "The medic casts Cure Wounds or Lesser Restoration, using Wisdom as the spellcasting ability.",
+                "display_as": "bonus_actions",
+                "hidden": [
+                    "daily"
+                ],
+                "groups": [
+                    {
+                        "uses": 2,
+                        "per": "day",
+                        "spells": [
+                            {
+                                "spell": "cure-wounds-xphb"
+                            },
+                            {
+                                "spell": "lesser-restoration-xphb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "breastplate-xphb",
+                "qty": 1
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "radiant"
+            ],
+            "conditions_inflicted": [
+                "blinded"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "melee_attack",
+                "ranged_attack"
+            ],
+            "languages": [
+                "common",
+                "halfling"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "kundarak-warden-efa",
+        "kind": "monster",
+        "name": "Kundarak Warden",
+        "source": "EFA",
+        "edition": "one",
+        "tags": [
+            "Magic Resistance"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "dwarf"
+            ]
+        },
+        "alignment": [
+            "neutral"
+        ],
+        "ac": [
+            {
+                "value": 14
+            }
+        ],
+        "hp": {
+            "average": 82,
+            "formula": "11d8 + 33"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 15,
+            "dex": 12,
+            "con": 16,
+            "int": 17,
+            "wis": 13,
+            "cha": 10
+        },
+        "saves": {
+            "str": 5,
+            "dex": 4,
+            "con": 6,
+            "int": 6,
+            "wis": 4
+        },
+        "senses": {
+            "darkvision": 120
+        },
+        "passive_perception": 11,
+        "languages": [
+            "Common",
+            "Dwarvish"
+        ],
+        "cr": {
+            "cr": "5",
+            "xp": 1800,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The warden has Advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The warden makes two Arcane Whip attacks. It can replace one attack with a use of Shackling Glyph if available."
+            },
+            {
+                "id": "arcane-whip",
+                "name": "Arcane Whip",
+                "category": "actions",
+                "text": "Melee Attack Roll: +6, reach 10 ft. Hit: 13 (3d6 + 3) Force damage, and if the target is a Medium or smaller creature, it has the Prone condition. If the target already has the Prone condition, the attack deals an extra 7 (2d6) Force damage.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "3d6",
+                                "bonus": 3,
+                                "type": "force"
+                            },
+                            {
+                                "dice": "2d6",
+                                "type": "force"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "shackling-glyph",
+                "name": "Shackling Glyph",
+                "category": "actions",
+                "text": "Strength Saving Throw: DC 14, one creature the warden can see within 60 feet. Failure: The creature has the Grappled condition (escape DC 14). While Grappled, the creature has the Restrained condition.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 6
+                },
+                "action": {
+                    "save": {
+                        "ability": "str",
+                        "dc": 14,
+                        "on_success": "none",
+                        "conditions": [
+                            "grappled",
+                            "restrained"
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "int",
+                "dc": 14,
+                "text": "The warden casts one of the following spells, requiring no Material components and using Intelligence as the spellcasting ability (spell save DC 14):",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "alarm-xphb"
+                            },
+                            {
+                                "spell": "arcane-lock-xphb"
+                            },
+                            {
+                                "spell": "mage-armor-xphb",
+                                "note": "(included in AC)"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "spells": [
+                            {
+                                "spell": "dispel-magic-xphb"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Protective Magic (3/Day)",
+                "ability": "int",
+                "text": "The warden casts Counterspell or Shield in response to the spell's trigger, using the same spellcasting ability as Spellcasting.",
+                "display_as": "reactions",
+                "hidden": [
+                    "daily"
+                ],
+                "groups": [
+                    {
+                        "uses": 3,
+                        "per": "day",
+                        "spells": [
+                            {
+                                "spell": "counterspell-xphb"
+                            },
+                            {
+                                "spell": "shield-xphb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "force"
+            ],
+            "conditions_inflicted": [
+                "grappled",
+                "prone",
+                "restrained"
+            ],
+            "saves_forced": [
+                "str",
+                "con"
+            ],
+            "senses": [
+                "superior_darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "magic_resistance"
+            ],
+            "misc": [
+                "melee_attack",
+                "melee_weapon",
+                "reach"
+            ],
+            "languages": [
+                "common",
+                "dwarvish"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "lyrandar-scion-efa",
+        "kind": "monster",
+        "name": "Lyrandar Scion",
+        "source": "EFA",
+        "edition": "one",
+        "size": [
+            "small",
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "khoravar"
+            ]
+        },
+        "alignment": [
+            "neutral"
+        ],
+        "ac": [
+            {
+                "value": 13
+            }
+        ],
+        "hp": {
+            "average": 60,
+            "formula": "11d8 + 11"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 12,
+            "dex": 16,
+            "con": 13,
+            "int": 12,
+            "wis": 15,
+            "cha": 18
+        },
+        "saves": {
+            "str": 3,
+            "dex": 5
+        },
+        "skills": {
+            "acrobatics": 5,
+            "perception": 4
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 14,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "lightning",
+                    "thunder"
+                ]
+            }
+        },
+        "languages": [
+            "Common",
+            "Elvish"
+        ],
+        "cr": {
+            "cr": "4",
+            "xp": 1100,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The scion makes two Thunderbolt attacks and uses Spellcasting."
+            },
+            {
+                "id": "thunderbolt",
+                "name": "Thunderbolt",
+                "category": "actions",
+                "text": "Melee or Ranged Attack Roll: +6, reach 5 ft. or range 30 ft. Hit: 11 (2d6 + 4) Lightning damage plus 9 (2d8) Thunder damage. Critical Hit: The creature also has the Deafened condition for 1 minute.",
+                "action": {
+                    "range": "reach 5 ft. or range 30 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 4,
+                                "type": "lightning"
+                            },
+                            {
+                                "dice": "2d8",
+                                "type": "thunder"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "cha",
+                "dc": 14,
+                "text": "The scion casts one of the following spells, using Charisma as the spellcasting ability (spell save DC 14):",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "elementalism-xphb"
+                            },
+                            {
+                                "spell": "gust-of-wind-xphb"
+                            },
+                            {
+                                "spell": "thunderwave-xphb"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Jump (2/Day)",
+                "ability": "cha",
+                "text": "The scion casts Jump, requiring no spell components and using the same spellcasting ability as Spellcasting.",
+                "display_as": "bonus_actions",
+                "hidden": [
+                    "daily"
+                ],
+                "groups": [
+                    {
+                        "uses": 2,
+                        "per": "day",
+                        "spells": [
+                            {
+                                "spell": "jump-xphb"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Feather Fall (2/Day)",
+                "ability": "cha",
+                "text": "The scion casts Feather Fall in response to that spell's trigger, using the same spellcasting ability as Spellcasting.",
+                "display_as": "reactions",
+                "hidden": [
+                    "daily"
+                ],
+                "groups": [
+                    {
+                        "uses": 2,
+                        "per": "day",
+                        "spells": [
+                            {
+                                "spell": "feather-fall-xphb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "wand-xphb",
+                "qty": 1
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "lightning",
+                "thunder"
+            ],
+            "conditions_inflicted": [
+                "deafened"
+            ],
+            "saves_forced": [
+                "con",
+                "str"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "melee_attack",
+                "ranged_attack"
+            ],
+            "languages": [
+                "common",
+                "elvish"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "medani-inquisitive-efa",
+        "kind": "monster",
+        "name": "Medani Inquisitive",
+        "source": "EFA",
+        "edition": "one",
+        "size": [
+            "small",
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "khoravar"
+            ]
+        },
+        "alignment": [
+            "neutral"
+        ],
+        "ac": [
+            {
+                "value": 14
+            }
+        ],
+        "hp": {
+            "average": 45,
+            "formula": "7d8 + 14"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 14,
+            "dex": 10,
+            "con": 14,
+            "int": 15,
+            "wis": 16,
+            "cha": 14
+        },
+        "saves": {
+            "con": 4,
+            "wis": 5
+        },
+        "skills": {
+            "insight": 5,
+            "investigation": 4
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 13,
+        "languages": [
+            "Common",
+            "Elvish"
+        ],
+        "cr": {
+            "cr": "3",
+            "xp": 700,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The inquisitive makes three Crooked Staff attacks. It can replace one attack with a use of Inquisitive Eye."
+            },
+            {
+                "id": "crooked-staff",
+                "name": "Crooked Staff",
+                "category": "actions",
+                "text": "Melee Attack Roll: +4, reach 5 ft. Hit: 6 (1d8 + 2) Bludgeoning damage. If the target is a Medium or smaller creature, it has the Prone condition. If the target already has the Prone condition, the attack deals an extra 7 (2d6) Radiant damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 2,
+                                "type": "bludgeoning"
+                            },
+                            {
+                                "dice": "2d6",
+                                "type": "radiant"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "inquisitive-eye",
+                "name": "Inquisitive Eye",
+                "category": "actions",
+                "text": "Wisdom Saving Throw: DC 13, one creature the inquisitive can see within 60 feet. Failure: 10 (3d6) Psychic damage, and the target is marked. The inquisitive has Advantage on attack rolls against a target it has marked. While marked, the target can't become hidden from the inquisitive, and if it has the Invisible condition, it gains no benefit from that condition against the inquisitive. The mark disappears after 1 minute or when the inquisitive uses this action again. Success: Half damage only.",
+                "action": {
+                    "save": {
+                        "ability": "wis",
+                        "dc": 13,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "3d6",
+                                "type": "psychic"
+                            }
+                        ],
+                        "conditions": [
+                            "invisible"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "spontaneous-barrier",
+                "name": "Spontaneous Barrier",
+                "category": "reactions",
+                "text": "Trigger: The inquisitive or an ally it can see is hit with an attack roll. Response: The inquisitive adds 2 to its or the ally's AC against that attack, possibly causing it to miss.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 4
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "wis",
+                "dc": 13,
+                "text": "The inquisitive casts one of the following spells, requiring no Material components and using Wisdom as the spellcasting ability (spell save DC 13):",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "guidance-xphb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "detect-thoughts-xphb"
+                            },
+                            {
+                                "spell": "see-invisibility-xphb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "breastplate-xphb",
+                "qty": 1
+            },
+            {
+                "item": "quarterstaff-xphb",
+                "qty": 1
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "radiant",
+                "psychic"
+            ],
+            "conditions_inflicted": [
+                "invisible",
+                "prone"
+            ],
+            "saves_forced": [
+                "wis"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "melee_attack"
+            ],
+            "languages": [
+                "common",
+                "elvish"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "orien-enforcer-efa",
+        "kind": "monster",
+        "name": "Orien Enforcer",
+        "source": "EFA",
+        "edition": "one",
+        "size": [
+            "small",
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "human"
+            ]
+        },
+        "alignment": [
+            "neutral"
+        ],
+        "ac": [
+            {
+                "value": 16
+            }
+        ],
+        "hp": {
+            "average": 55,
+            "formula": "10d8 + 10"
+        },
+        "speed": {
+            "walk": 35
+        },
+        "abilities": {
+            "str": 12,
+            "dex": 18,
+            "con": 13,
+            "int": 16,
+            "wis": 14,
+            "cha": 11
+        },
+        "saves": {
+            "dex": 6,
+            "wis": 4
+        },
+        "skills": {
+            "acrobatics": 6,
+            "perception": 4
+        },
+        "passive_perception": 14,
+        "languages": [
+            "Common plus two other languages"
+        ],
+        "cr": {
+            "cr": "4",
+            "xp": 1100,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 6
+        },
+        "features": [
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The enforcer makes three Dagger attacks. It can replace one attack with a use of Lightning Cage if available."
+            },
+            {
+                "id": "dagger",
+                "name": "Dagger",
+                "category": "actions",
+                "text": "Melee or Ranged Attack Roll: +6, reach 5 ft. or range 20/60 ft. Hit: 9 (2d4 + 4) Piercing damage plus 7 (2d6) Poison damage.",
+                "action": {
+                    "range": "reach 5 ft. or range 20/60 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "2d4",
+                                "bonus": 4,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "2d6",
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "lightning-cage",
+                "name": "Lightning Cage",
+                "category": "actions",
+                "text": "Constitution Saving Throw: DC 13, each creature in a 20-foot-radius Sphere centered on a point the enforcer can see within 60 feet. Failure: 13 (3d8) Lightning damage, and the creature can't take Reactions until the end of the enforcer's next turn. Success: Half damage only.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "area": "20-foot sphere",
+                    "save": {
+                        "ability": "con",
+                        "dc": 13,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "3d8",
+                                "type": "lightning"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "temporal-disruption",
+                "name": "Temporal Disruption",
+                "category": "reactions",
+                "text": "Trigger: The enforcer takes damage from a melee attack. Response: The enforcer teleports up to 30 feet to an unoccupied space it can see. Each creature within 10 feet of the space the enforcer left must succeed on a DC 13 Constitution saving throw, or its Speed is halved until the start of the enforcer's next turn.",
+                "uses": {
+                    "max": 1,
+                    "reset": "long"
+                },
+                "action": {
+                    "save": {
+                        "ability": "con",
+                        "dc": 13,
+                        "on_success": "none"
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Misty Step (2/Day)",
+                "ability": "int",
+                "text": "The enforcer casts Misty Step, using Intelligence as the spellcasting ability.",
+                "display_as": "bonus_actions",
+                "hidden": [
+                    "daily"
+                ],
+                "groups": [
+                    {
+                        "uses": 2,
+                        "per": "day",
+                        "spells": [
+                            {
+                                "spell": "misty-step-xphb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "dagger-xphb",
+                "qty": 6
+            },
+            {
+                "item": "studded-leather-armor-xphb",
+                "qty": 1
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "poison",
+                "lightning",
+                "piercing"
+            ],
+            "saves_forced": [
+                "con"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_attack",
+                "melee_weapon",
+                "ranged_attack",
+                "thrown_weapon"
+            ],
+            "languages": [
+                "common",
+                "any_choose"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "sentinel-marshal-efa",
+        "kind": "monster",
+        "name": "Sentinel Marshal",
+        "source": "EFA",
+        "edition": "one",
+        "size": [
+            "small",
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "human"
+            ]
+        },
+        "alignment": [
+            "lawful neutral"
+        ],
+        "ac": [
+            {
+                "value": 16
+            }
+        ],
+        "hp": {
+            "average": 110,
+            "formula": "20d8 + 20"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 18,
+            "dex": 19,
+            "con": 12,
+            "int": 11,
+            "wis": 15,
+            "cha": 10
+        },
+        "saves": {
+            "dex": 7,
+            "con": 4
+        },
+        "skills": {
+            "athletics": 7,
+            "insight": 5,
+            "perception": 8
+        },
+        "passive_perception": 18,
+        "languages": [
+            "Common plus two other languages"
+        ],
+        "cr": {
+            "cr": "6",
+            "xp": 2300,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 10
+        },
+        "features": [
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The marshal makes three attacks, using Longsword or Pistol in any combination."
+            },
+            {
+                "id": "longsword",
+                "name": "Longsword",
+                "category": "actions",
+                "text": "Melee Attack Roll: +7, reach 5 ft. Hit: 13 (2d8 + 4) Slashing damage, and the target has Disadvantage on the next attack roll it makes before the start of the marshal's next turn.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "2d8",
+                                "bonus": 4,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "pistol",
+                "name": "Pistol",
+                "category": "actions",
+                "text": "Ranged Attack Roll: +7, range 30/90 ft. Hit: 15 (2d10 + 4) Piercing damage.",
+                "action": {
+                    "range": "range 30/90 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "2d10",
+                                "bonus": 4,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Shield (3/Day)",
+                "ability": "wis",
+                "text": "The marshal casts Shield in response to the spell's trigger, using Wisdom as the spellcasting ability.",
+                "display_as": "reactions",
+                "hidden": [
+                    "daily"
+                ],
+                "groups": [
+                    {
+                        "uses": 3,
+                        "per": "day",
+                        "spells": [
+                            {
+                                "spell": "shield-xphb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "longsword-xphb",
+                "qty": 1
+            },
+            {
+                "item": "pistol-xphb",
+                "qty": 1
+            },
+            {
+                "item": "studded-leather-armor-xphb",
+                "qty": 1
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing",
+                "slashing"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "melee_attack",
+                "melee_weapon",
+                "ranged_attack",
+                "ranged_weapon"
+            ],
+            "languages": [
+                "common",
+                "any_choose"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "shadow-marked-agent-efa",
+        "kind": "monster",
+        "name": "Shadow-Marked Agent",
+        "source": "EFA",
+        "edition": "one",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "elf"
+            ]
+        },
+        "alignment": [
+            "neutral"
+        ],
+        "ac": [
+            {
+                "value": 17
+            }
+        ],
+        "hp": {
+            "average": 132,
+            "formula": "24d8 + 24"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 12,
+            "dex": 20,
+            "con": 12,
+            "int": 11,
+            "wis": 16,
+            "cha": 17
+        },
+        "saves": {
+            "dex": 8,
+            "wis": 6
+        },
+        "skills": {
+            "perception": 6,
+            "performance": 6,
+            "sleight_of_hand": 8,
+            "stealth": 11
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 16,
+        "languages": [
+            "Common",
+            "Elvish",
+            "Thieves' cant"
+        ],
+        "cr": {
+            "cr": "7",
+            "xp": 2900,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 8
+        },
+        "features": [
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The agent makes two Shadow Knife attacks."
+            },
+            {
+                "id": "shadow-knife",
+                "name": "Shadow Knife",
+                "category": "actions",
+                "text": "Melee or Ranged Attack Roll: +8, reach 5 ft. or range 20/60 ft. Hit: 10 (2d4 + 5) Piercing damage plus 14 (4d6) Necrotic damage, and the target's Speed is reduced by 10 feet until the end of its next turn.",
+                "action": {
+                    "range": "reach 5 ft. or range 20/60 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 8,
+                        "damage": [
+                            {
+                                "dice": "2d4",
+                                "bonus": 5,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "4d6",
+                                "type": "necrotic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "shadow-cloak",
+                "name": "Shadow Cloak",
+                "category": "bonus_actions",
+                "text": "The agent has the Invisible condition until the start of its next turn. This invisibility ends early immediately after the agent makes an attack roll."
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "cha",
+                "dc": 14,
+                "text": "The agent casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (DC 14):",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "disguise-self-xphb"
+                            },
+                            {
+                                "spell": "minor-illusion-xphb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "spells": [
+                            {
+                                "spell": "pass-without-trace-xphb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "studded-leather-armor-xphb",
+                "qty": 1
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "necrotic",
+                "piercing"
+            ],
+            "conditions_inflicted": [
+                "invisible"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "melee_attack",
+                "ranged_attack"
+            ],
+            "languages": [
+                "common",
+                "elvish",
+                "thieves_cant"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "sivis-scribe-efa",
+        "kind": "monster",
+        "name": "Sivis Scribe",
+        "source": "EFA",
+        "edition": "one",
+        "size": [
+            "small"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "gnome"
+            ]
+        },
+        "alignment": [
+            "neutral"
+        ],
+        "ac": [
+            {
+                "value": 15
+            }
+        ],
+        "hp": {
+            "average": 56,
+            "formula": "16d6"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 11,
+            "dex": 15,
+            "con": 10,
+            "int": 16,
+            "wis": 12,
+            "cha": 11
+        },
+        "saves": {
+            "wis": 3
+        },
+        "skills": {
+            "arcana": 5,
+            "sleight_of_hand": 4
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 11,
+        "languages": [
+            "Common",
+            "Gnomish plus three other languages"
+        ],
+        "cr": {
+            "cr": "3",
+            "xp": 700,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "words-of-reason",
+                "name": "Words of Reason",
+                "category": "traits",
+                "text": "Allies in a 10-foot Emanation originating from the scribe have Advantage on saving throws to avoid or end the Charmed or Frightened condition. This trait doesn't function if the scribe has the Incapacitated condition."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The scribe makes two Bursting Sigil attacks."
+            },
+            {
+                "id": "bursting-sigil",
+                "name": "Bursting Sigil",
+                "category": "actions",
+                "text": "Melee or Ranged Attack Roll: +5, reach 5 ft. or range 60 ft. Hit: 13 (3d6 + 3) Radiant damage.",
+                "action": {
+                    "range": "reach 5 ft. or range 60 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "3d6",
+                                "bonus": 3,
+                                "type": "radiant"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "word-of-stasis",
+                "name": "Word of Stasis",
+                "category": "reactions",
+                "text": "Constitution Saving Throw: DC 13, each creature in a 20-foot-radius Sphere centered on a point the scribe can see within 60 feet. Failure: The target has the Incapacitated condition until the start of the scribe's next turn. While the target is Incapacitated, its Speed is 0 and can't increase.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "area": "20-foot sphere",
+                    "save": {
+                        "ability": "con",
+                        "dc": 13,
+                        "on_success": "none",
+                        "conditions": [
+                            "incapacitated"
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "int",
+                "dc": 13,
+                "text": "The scribe casts one of the following spells, requiring no Material components and using Intelligence as the spellcasting ability (DC 13):",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "comprehend-languages-xphb"
+                            },
+                            {
+                                "spell": "mage-armor-xphb",
+                                "note": "(included in AC)"
+                            },
+                            {
+                                "spell": "message-xphb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "sending-xphb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "radiant"
+            ],
+            "conditions_inflicted": [
+                "incapacitated"
+            ],
+            "saves_forced": [
+                "con"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_attack",
+                "ranged_attack"
+            ],
+            "languages": [
+                "common",
+                "gnomish"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "steel-defender-efa",
+        "kind": "monster",
+        "name": "Steel Defender",
+        "source": "EFA",
+        "edition": "one",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "construct"
+        },
+        "alignment": [
+            "neutral"
+        ],
+        "ac": [
+            {
+                "special": "12 + your Intelligence modifier"
+            }
+        ],
+        "hp": {
+            "special": "5 + five times your Artificer level (the defender has a number of Hit Dice [d8s] equal to your Artificer level)"
+        },
+        "speed": {
+            "walk": 40
+        },
+        "abilities": {
+            "str": 14,
+            "dex": 12,
+            "con": 14,
+            "int": 4,
+            "wis": 10,
+            "cha": 6
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 10,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "exhaustion",
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "understands the languages you know"
+        ],
+        "pb_note": "equals your Proficiency Bonus",
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "steel-bond",
+                "name": "Steel Bond",
+                "category": "traits",
+                "text": "Add your Proficiency Bonus to any ability check or saving throw the defender makes."
+            },
+            {
+                "id": "force-empowered-rend",
+                "name": "Force-Empowered Rend",
+                "category": "actions",
+                "text": "Melee Attack Roll: Bonus equals your spell attack modifier, reach 5 ft. Hit: 1d8 + 2 plus your Intelligence modifier Force damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus_from": "spell_attack",
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": "2 + int_mod",
+                                "type": "force"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "repair",
+                "name": "Repair",
+                "category": "actions",
+                "text": "The defender, or one Construct or object it can see within 5 feet of itself, regains a number of Hit Points equal to 2d8 plus your Intelligence modifier.",
+                "uses": {
+                    "max": 3,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "deflect-attack",
+                "name": "Deflect Attack",
+                "category": "reactions",
+                "text": "Trigger: A creature the defender can see within 5 feet of itself makes an attack roll against a creature other than the defender. Response: The triggering creature makes the attack roll with Disadvantage."
+            }
+        ],
+        "summoned_by": {
+            "class": "artificer-efa"
+        },
+        "filters": {
+            "senses": [
+                "darkvision"
+            ],
+            "misc": [
+                "melee_attack"
+            ]
+        }
+    },
+    {
+        "id": "tarkanan-marauder-efa",
+        "kind": "monster",
+        "name": "Tarkanan Marauder",
+        "source": "EFA",
+        "edition": "one",
+        "size": [
+            "small",
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid"
+        },
+        "alignment": [
+            "chaotic evil"
+        ],
+        "ac": [
+            {
+                "value": 16
+            }
+        ],
+        "hp": {
+            "average": 247,
+            "formula": "26d8 + 130"
+        },
+        "speed": {
+            "walk": 40
+        },
+        "abilities": {
+            "str": 15,
+            "dex": 17,
+            "con": 20,
+            "int": 16,
+            "wis": 15,
+            "cha": 13
+        },
+        "saves": {
+            "dex": 7,
+            "con": 9,
+            "wis": 6
+        },
+        "skills": {
+            "deception": 5,
+            "perception": 6,
+            "stealth": 7
+        },
+        "passive_perception": 16,
+        "languages": [
+            "Common",
+            "Thieves' cant"
+        ],
+        "cr": {
+            "cr": "11",
+            "xp": 7200,
+            "pb": 4
+        },
+        "initiative": {
+            "bonus": 7
+        },
+        "features": [
+            {
+                "id": "evasion",
+                "name": "Evasion",
+                "category": "traits",
+                "text": "If the marauder is subjected to an effect that allows it to make a Dexterity saving throw to take only half damage, the marauder instead takes no damage if it succeeds on the save and only half as much damage if it fails. It can't use this trait if it has the Incapacitated condition."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The marauder makes three Aberrant Strike attacks."
+            },
+            {
+                "id": "aberrant-strike",
+                "name": "Aberrant Strike",
+                "category": "actions",
+                "text": "Melee Attack Roll: +7, reach 5 ft. Hit: 13 (3d6 + 3) Piercing damage, plus 21 (6d6) Force damage if the marauder had Advantage on the attack roll.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "3d6",
+                                "bonus": 3,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "6d6",
+                                "type": "force",
+                                "condition": "if the marauder had Advantage on the attack roll"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "tear-through-space",
+                "name": "Tear Through Space",
+                "category": "bonus_actions",
+                "text": "The marauder teleports to a space it can see within 30 feet, appearing in a dazzling flash. Constitution Saving Throw: DC 17, each creature in a 5-foot Emanation originating from the marauder when it appears. Failure: The target has the Blinded condition until the end of the marauder's next turn.",
+                "action": {
+                    "area": "5-foot emanation",
+                    "save": {
+                        "ability": "con",
+                        "dc": 17,
+                        "on_success": "none",
+                        "conditions": [
+                            "blinded"
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "con",
+                "dc": 17,
+                "text": "The marauder casts one of the following spells, requiring no Material components and using Constitution as the spellcasting ability (spell save DC 17):",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "message-xphb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "spells": [
+                            {
+                                "spell": "disintegrate-xphb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "breastplate-xphb",
+                "qty": 1
+            },
+            {
+                "item": "shortsword-xphb",
+                "qty": 1
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "force",
+                "piercing"
+            ],
+            "conditions_inflicted": [
+                "blinded"
+            ],
+            "saves_forced": [
+                "con",
+                "dex"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "melee_attack"
+            ],
+            "languages": [
+                "common",
+                "thieves_cant"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "tarkanan-ruffian-efa",
+        "kind": "monster",
+        "name": "Tarkanan Ruffian",
+        "source": "EFA",
+        "edition": "one",
+        "size": [
+            "small",
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid"
+        },
+        "alignment": [
+            "chaotic evil"
+        ],
+        "ac": [
+            {
+                "value": 13
+            }
+        ],
+        "hp": {
+            "average": 32,
+            "formula": "5d8 + 10"
+        },
+        "speed": {
+            "walk": 40
+        },
+        "abilities": {
+            "str": 14,
+            "dex": 13,
+            "con": 15,
+            "int": 11,
+            "wis": 10,
+            "cha": 13
+        },
+        "saves": {
+            "dex": 3,
+            "con": 4
+        },
+        "skills": {
+            "intimidation": 3,
+            "perception": 2
+        },
+        "passive_perception": 12,
+        "languages": [
+            "Common",
+            "Thieves' cant"
+        ],
+        "cr": {
+            "cr": "1",
+            "xp": 200,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "aberrant-surge",
+                "name": "Aberrant Surge",
+                "category": "traits",
+                "text": "When the ruffian casts Witch Bolt, roll 1d8. On an even number, the ruffian gains a number of Temporary Hit Points equal to the number rolled. On an odd number, one creature of the ruffian's choice within 30 feet of it takes Force damage equal to the number rolled; if no other creatures are in range, it takes the damage."
+            },
+            {
+                "id": "spear",
+                "name": "Spear",
+                "category": "actions",
+                "text": "Melee or Ranged Attack Roll: +4, reach 5 ft. or range 20/60 ft. Hit: 6 (1d8 + 2) Piercing damage.",
+                "action": {
+                    "range": "reach 5 ft. or range 20/60 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 2,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "con",
+                "dc": 12,
+                "attack": 4,
+                "text": "The ruffian casts one of the following spells, requiring no Material components and using Constitution as the spellcasting ability (spell save DC 12, +4 to hit with spell attacks):",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "thaumaturgy-xphb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "spells": [
+                            {
+                                "spell": "witch-bolt-xphb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "spear-xphb",
+                "qty": 1
+            },
+            {
+                "item": "studded-leather-armor-xphb",
+                "qty": 1
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing",
+                "lightning"
+            ],
+            "misc": [
+                "melee_attack",
+                "melee_weapon",
+                "ranged_attack",
+                "thrown_weapon"
+            ],
+            "languages": [
+                "common",
+                "thieves_cant"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "tharashk-hunter-efa",
+        "kind": "monster",
+        "name": "Tharashk Hunter",
+        "source": "EFA",
+        "edition": "one",
+        "size": [
+            "small",
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "human",
+                "orc"
+            ]
+        },
+        "alignment": [
+            "neutral"
+        ],
+        "ac": [
+            {
+                "value": 16
+            }
+        ],
+        "hp": {
+            "average": 97,
+            "formula": "15d8 + 30"
+        },
+        "speed": {
+            "walk": 40
+        },
+        "abilities": {
+            "str": 12,
+            "dex": 19,
+            "con": 15,
+            "int": 11,
+            "wis": 16,
+            "cha": 10
+        },
+        "saves": {
+            "dex": 7,
+            "con": 5
+        },
+        "skills": {
+            "perception": 6,
+            "stealth": 7,
+            "survival": 6
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 16,
+        "languages": [
+            "Common",
+            "Orc plus one other language"
+        ],
+        "cr": {
+            "cr": "6",
+            "xp": 2300,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 4
+        },
+        "features": [
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The hunter makes three attacks, using Shortsword or Longbow in any combination."
+            },
+            {
+                "id": "shortsword",
+                "name": "Shortsword",
+                "category": "actions",
+                "text": "Melee Attack Roll: +7, reach 5 ft. Hit: 11 (2d6 + 4) Piercing damage, and the target has Disadvantage on attack rolls and ability checks until the end of its next turn.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 4,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "longbow",
+                "name": "Longbow",
+                "category": "actions",
+                "text": "Ranged Attack Roll: +7, range 150/600 ft. Hit: 17 (3d8 + 4) Piercing damage, and the target's Speed is reduced by 10 feet until the end of its next turn.",
+                "action": {
+                    "range": "range 150/600 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "3d8",
+                                "bonus": 4,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "mark-of-tharashk",
+                "name": "Mark of Tharashk",
+                "category": "bonus_actions",
+                "text": "The hunter magically marks one creature it can see within 150 feet. The mark lasts for 1 hour, until the target dies, or until the hunter uses this Bonus Action again. While the target is marked in this way, the hunter has Advantage on attack rolls against the target, and the target gains no benefit from the Invisible condition against the hunter."
+            },
+            {
+                "id": "uncanny-dodge",
+                "name": "Uncanny Dodge",
+                "category": "reactions",
+                "text": "Trigger: The hunter is hit by an attack roll. Response: The hunter halves the damage (round down) it takes from that attack."
+            }
+        ],
+        "items": [
+            {
+                "item": "longbow-xphb",
+                "qty": 1
+            },
+            {
+                "item": "shortsword-xphb",
+                "qty": 1
+            },
+            {
+                "item": "studded-leather-armor-xphb",
+                "qty": 1
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing"
+            ],
+            "conditions_inflicted": [
+                "invisible"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "melee_attack",
+                "melee_weapon",
+                "ranged_attack",
+                "ranged_weapon"
+            ],
+            "languages": [
+                "common",
+                "orc",
+                "any_choose"
+            ]
+        }
+    },
+    {
+        "id": "umbragen-shadow-walker-efa",
+        "kind": "monster",
+        "name": "Umbragen Shadow Walker",
+        "source": "EFA",
+        "edition": "one",
+        "tags": [
+            "Fey Ancestry",
+            "Sunlight Sensitivity"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "elf"
+            ]
+        },
+        "alignment": [
+            "neutral"
+        ],
+        "ac": [
+            {
+                "value": 14
+            }
+        ],
+        "hp": {
+            "average": 162,
+            "formula": "25d8 + 50"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 12,
+            "dex": 19,
+            "con": 14,
+            "int": 13,
+            "wis": 15,
+            "cha": 20
+        },
+        "saves": {
+            "dex": 8,
+            "wis": 6
+        },
+        "skills": {
+            "arcana": 5,
+            "perception": 6,
+            "stealth": 8
+        },
+        "senses": {
+            "darkvision": 120
+        },
+        "passive_perception": 16,
+        "defenses": {
+            "vulnerable": {
+                "types": [
+                    "radiant"
+                ]
+            }
+        },
+        "languages": [
+            "Common",
+            "Elvish",
+            "Undercommon"
+        ],
+        "cr": {
+            "cr": "9",
+            "xp": 5000,
+            "pb": 4
+        },
+        "initiative": {
+            "bonus": 4
+        },
+        "features": [
+            {
+                "id": "fey-ancestry",
+                "name": "Fey Ancestry",
+                "category": "traits",
+                "text": "Magic can't put the shadow walker to sleep."
+            },
+            {
+                "id": "sunlight-sensitivity",
+                "name": "Sunlight Sensitivity",
+                "category": "traits",
+                "text": "While in sunlight, the shadow walker has Disadvantage on ability checks and attack rolls."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The shadow walker makes three Gloom Burst attacks and uses Shadow Cowl."
+            },
+            {
+                "id": "gloom-burst",
+                "name": "Gloom Burst",
+                "category": "actions",
+                "text": "Melee or Ranged Attack Roll: +9, reach 5 ft. or range 120 ft. Hit: 14 (2d8 + 5) Psychic damage.",
+                "action": {
+                    "range": "reach 5 ft. or range 120 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 9,
+                        "damage": [
+                            {
+                                "dice": "2d8",
+                                "bonus": 5,
+                                "type": "psychic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "shadow-cowl",
+                "name": "Shadow Cowl",
+                "category": "actions",
+                "text": "Wisdom Saving Throw: DC 17, one creature the shadow walker can see within 120 feet. Failure: 14 (4d6) Necrotic damage, and the target has the Blinded condition until the start of the shadow walker's next turn.",
+                "action": {
+                    "save": {
+                        "ability": "wis",
+                        "dc": 17,
+                        "on_success": "none",
+                        "damage": [
+                            {
+                                "dice": "4d6",
+                                "type": "necrotic"
+                            }
+                        ],
+                        "conditions": [
+                            "blinded"
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "cha",
+                "dc": 17,
+                "text": "The shadow walker casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save DC 17):",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "dancing-lights-xphb"
+                            },
+                            {
+                                "spell": "darkness-xphb"
+                            },
+                            {
+                                "spell": "minor-illusion-xphb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "necrotic",
+                "psychic"
+            ],
+            "conditions_inflicted": [
+                "blinded"
+            ],
+            "saves_forced": [
+                "wis"
+            ],
+            "senses": [
+                "superior_darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "fey_ancestry",
+                "sunlight_sensitivity"
+            ],
+            "misc": [
+                "melee_attack",
+                "ranged_attack"
+            ],
+            "languages": [
+                "common",
+                "elvish",
+                "undercommon"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "vadalis-heir-efa",
+        "kind": "monster",
+        "name": "Vadalis Heir",
+        "source": "EFA",
+        "edition": "one",
+        "tags": [
+            "Pack Tactics"
+        ],
+        "size": [
+            "small",
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "human"
+            ]
+        },
+        "alignment": [
+            "neutral"
+        ],
+        "ac": [
+            {
+                "value": 14
+            }
+        ],
+        "hp": {
+            "average": 52,
+            "formula": "8d8 + 16"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 12,
+            "dex": 16,
+            "con": 15,
+            "int": 10,
+            "wis": 17,
+            "cha": 13
+        },
+        "saves": {
+            "dex": 5,
+            "con": 4,
+            "wis": 5
+        },
+        "skills": {
+            "animal_handling": 7,
+            "nature": 4,
+            "stealth": 5
+        },
+        "passive_perception": 13,
+        "languages": [
+            "Common",
+            "Sylvan"
+        ],
+        "cr": {
+            "cr": "4",
+            "xp": 1100,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "pack-tactics",
+                "name": "Pack Tactics",
+                "category": "traits",
+                "text": "The heir has Advantage on an attack roll against a creature if at least one of the heir's allies is within 5 feet of the creature and the ally doesn't have the Incapacitated condition."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The heir makes four attacks, using Scimitar or Lunar Wisp in any combination."
+            },
+            {
+                "id": "scimitar",
+                "name": "Scimitar",
+                "category": "actions",
+                "text": "Melee Attack Roll: +5, reach 5 ft. Hit: 6 (1d6 + 3) Slashing damage plus 3 (1d6) Poison damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 3,
+                                "type": "slashing"
+                            },
+                            {
+                                "dice": "1d6",
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "lunar-wisp",
+                "name": "Lunar Wisp",
+                "category": "actions",
+                "text": "Ranged Attack Roll: +5, range 60 ft. Hit: 9 (2d8) Radiant damage, and the target emits Dim Light in a 10-foot radius and can't benefit from the Invisible condition until the end of the heir's next turn.",
+                "action": {
+                    "range": "range 60 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "2d8",
+                                "type": "radiant"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "spur-beast",
+                "name": "Spur Beast",
+                "category": "bonus_actions",
+                "text": "The heir targets a Beast it can see within 30 feet. The target can take a Reaction to move up to half its Speed and make one melee attack."
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "wis",
+                "dc": 13,
+                "text": "The heir casts one of the following spells, using Wisdom as the spellcasting ability (spell save DC 13):",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "druidcraft-xphb"
+                            },
+                            {
+                                "spell": "light-xphb"
+                            },
+                            {
+                                "spell": "speak-with-animals-xphb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "spells": [
+                            {
+                                "spell": "ice-storm-xphb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 3,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "animal-friendship-xphb"
+                            },
+                            {
+                                "spell": "animal-messenger-xphb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "leather-armor-xphb",
+                "qty": 1
+            },
+            {
+                "item": "scimitar-xphb",
+                "qty": 1
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "poison",
+                "radiant",
+                "slashing",
+                "bludgeoning",
+                "cold"
+            ],
+            "conditions_inflicted": [
+                "charmed"
+            ],
+            "saves_forced": [
+                "cha",
+                "dex",
+                "wis"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "pack_tactics"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_attack",
+                "melee_weapon",
+                "ranged_attack"
+            ],
+            "languages": [
+                "common",
+                "sylvan"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "vulkoori-stingblade-efa",
+        "kind": "monster",
+        "name": "Vulkoori Stingblade",
+        "source": "EFA",
+        "edition": "one",
+        "tags": [
+            "Fey Ancestry"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "elf"
+            ]
+        },
+        "alignment": [
+            "neutral"
+        ],
+        "ac": [
+            {
+                "value": 14
+            }
+        ],
+        "hp": {
+            "average": 27,
+            "formula": "6d8"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 11,
+            "dex": 15,
+            "con": 10,
+            "int": 11,
+            "wis": 12,
+            "cha": 12
+        },
+        "saves": {
+            "dex": 4
+        },
+        "skills": {
+            "perception": 3,
+            "stealth": 4
+        },
+        "senses": {
+            "darkvision": 120
+        },
+        "passive_perception": 13,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "poison"
+                ]
+            }
+        },
+        "languages": [
+            "Common",
+            "Elvish",
+            "Giant"
+        ],
+        "cr": {
+            "cr": "1/2",
+            "xp": 100,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 4
+        },
+        "features": [
+            {
+                "id": "fey-ancestry",
+                "name": "Fey Ancestry",
+                "category": "traits",
+                "text": "Magic can't put the stingblade to sleep."
+            },
+            {
+                "id": "stingblade",
+                "name": "Stingblade",
+                "category": "actions",
+                "text": "Melee Attack Roll: +4, reach 5 ft. Hit: 5 (1d6 + 2) Piercing damage plus 2 (1d4) Poison damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 2,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "1d4",
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "boomerang",
+                "name": "Boomerang",
+                "category": "actions",
+                "text": "Ranged Attack Roll: +4, reach 30/120 ft. Hit: 7 (2d4 + 2) Bludgeoning damage.",
+                "action": {
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "2d4",
+                                "bonus": 2,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "items": [
+            {
+                "item": "shortsword-xphb",
+                "qty": 1
+            },
+            {
+                "item": "studded-leather-armor-xphb",
+                "qty": 1
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "poison",
+                "piercing"
+            ],
+            "senses": [
+                "superior_darkvision"
+            ],
+            "traits": [
+                "fey_ancestry"
+            ],
+            "misc": [
+                "melee_attack",
+                "ranged_attack"
+            ],
+            "languages": [
+                "common",
+                "elvish",
+                "giant"
+            ]
+        }
+    },
+    {
+        "id": "vulkoori-venom-priest-efa",
+        "kind": "monster",
+        "name": "Vulkoori Venom Priest",
+        "source": "EFA",
+        "edition": "one",
+        "tags": [
+            "Fey Ancestry"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "elf"
+            ]
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "ac": [
+            {
+                "value": 15
+            }
+        ],
+        "hp": {
+            "average": 44,
+            "formula": "8d8 + 8"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 15,
+            "dex": 16,
+            "con": 12,
+            "int": 10,
+            "wis": 16,
+            "cha": 13
+        },
+        "saves": {
+            "con": 3,
+            "wis": 5
+        },
+        "skills": {
+            "perception": 5,
+            "religion": 2,
+            "stealth": 5
+        },
+        "senses": {
+            "darkvision": 120
+        },
+        "passive_perception": 15,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "poison"
+                ]
+            }
+        },
+        "languages": [
+            "Common",
+            "Elvish",
+            "Giant"
+        ],
+        "cr": {
+            "cr": "2",
+            "xp": 450,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "fey-ancestry",
+                "name": "Fey Ancestry",
+                "category": "traits",
+                "text": "Magic can't put the priest to sleep."
+            },
+            {
+                "id": "venom-staff",
+                "name": "Venom Staff",
+                "category": "actions",
+                "text": "Melee Attack Roll: +4, reach 5 ft. Hit: 9 (2d6 + 2) Bludgeoning damage, and the target has the Poisoned condition until the end of the priest's next turn.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 2,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "intensify-poison",
+                "name": "Intensify Poison",
+                "category": "bonus_actions",
+                "text": "Each creature with the Poisoned condition within a 30-foot Emanation originating from the priest takes 3 (1d6) Poison damage.",
+                "action": {
+                    "damage": [
+                        {
+                            "dice": "1d6",
+                            "type": "poison"
+                        }
+                    ]
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "wis",
+                "dc": 13,
+                "attack": 5,
+                "text": "The priest casts one of the following spells, using Wisdom as the spellcasting ability (spell save DC 13, +5 to hit with spell attacks):",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "dancing-lights-xphb"
+                            },
+                            {
+                                "spell": "ray-of-sickness-xphb"
+                            },
+                            {
+                                "spell": "thaumaturgy-xphb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "cure-wounds-xphb"
+                            },
+                            {
+                                "spell": "hold-person-xphb"
+                            },
+                            {
+                                "spell": "protection-from-poison-xphb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "holy-symbol-xphb",
+                "qty": 1
+            },
+            {
+                "item": "quarterstaff-xphb",
+                "qty": 1
+            },
+            {
+                "item": "studded-leather-armor-xphb",
+                "qty": 1
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "poison"
+            ],
+            "conditions_inflicted": [
+                "poisoned",
+                "paralyzed"
+            ],
+            "saves_forced": [
+                "wis"
+            ],
+            "senses": [
+                "superior_darkvision"
+            ],
+            "traits": [
+                "fey_ancestry"
+            ],
+            "misc": [
+                "melee_attack"
+            ],
+            "languages": [
+                "common",
+                "elvish",
+                "giant"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    }
+]

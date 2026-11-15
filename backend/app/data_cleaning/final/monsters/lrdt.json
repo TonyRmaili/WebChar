@@ -1,0 +1,372 @@
+[
+    {
+        "id": "alax-jadescales-lrdt",
+        "kind": "monster",
+        "name": "Alax Jadescales",
+        "source": "LRDT",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "dragonborn"
+            ]
+        },
+        "alignment": [
+            "neutral good"
+        ],
+        "ac": [
+            {
+                "value": 10
+            }
+        ],
+        "hp": {
+            "average": 58,
+            "formula": "9d8 + 18"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 11,
+            "dex": 10,
+            "con": 14,
+            "int": 11,
+            "wis": 16,
+            "cha": 15
+        },
+        "skills": {
+            "animal_handling": 5,
+            "survival": 5
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 13,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "poison"
+                ]
+            }
+        },
+        "languages": [
+            "Common",
+            "Draconic"
+        ],
+        "cr": {
+            "cr": "2",
+            "xp": 450,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Alax makes two Fire Strike attacks."
+            },
+            {
+                "id": "fire-strike",
+                "name": "Fire Strike",
+                "category": "actions",
+                "text": "Melee or Ranged Spell Attack: +5 to hit, reach 5 ft. or range 60 ft., one target. Hit: 10 (2d6 + 3) fire damage.",
+                "action": {
+                    "range": "reach 5 ft. or range 60 ft.",
+                    "attack": {
+                        "kind": "spell",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 3,
+                                "type": "fire"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "breath-weapon",
+                "name": "Breath Weapon",
+                "category": "actions",
+                "text": "Alax exhales a 15-foot cone of fire. Each creature in that area must make a DC 12 Dexterity saving throw, taking 14 (4d6) fire damage on a failed save, or half as much damage on a successful one.",
+                "uses": {
+                    "max": 1,
+                    "reset": "short"
+                },
+                "action": {
+                    "area": "15-foot cone",
+                    "save": {
+                        "ability": "dex",
+                        "dc": 12,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "4d6",
+                                "type": "fire"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "wis",
+                "dc": 13,
+                "text": "Alax casts one of the following spells, using Wisdom as the spellcasting ability (spell save DC 13):",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "druidcraft-phb"
+                            },
+                            {
+                                "spell": "resistance-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "cure-wounds-phb"
+                            },
+                            {
+                                "spell": "faerie-fire-phb"
+                            },
+                            {
+                                "spell": "purify-food-and-drink-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "fire"
+            ],
+            "saves_forced": [
+                "dex"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "actions": [
+                "breath_weapon",
+                "multiattack"
+            ],
+            "misc": [
+                "area_of_effect"
+            ],
+            "languages": [
+                "common",
+                "draconic"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "ervan-soulfallen-lrdt",
+        "kind": "monster",
+        "name": "Ervan Soulfallen",
+        "source": "LRDT",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "human"
+            ]
+        },
+        "alignment": [
+            "chaotic evil"
+        ],
+        "ac": [
+            {
+                "value": 12
+            },
+            {
+                "value": 15,
+                "condition": "with Mage Armor"
+            }
+        ],
+        "hp": {
+            "average": 84,
+            "formula": "13d8 + 26"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 10,
+            "dex": 15,
+            "con": 14,
+            "int": 11,
+            "wis": 8,
+            "cha": 17
+        },
+        "skills": {
+            "arcana": 3,
+            "deception": 6
+        },
+        "passive_perception": 9,
+        "languages": [
+            "Common",
+            "Draconic"
+        ],
+        "cr": {
+            "cr": "5",
+            "xp": 1800,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Ervan uses his staff to make three Arcane Blast attacks."
+            },
+            {
+                "id": "arcane-blast",
+                "name": "Arcane Blast",
+                "category": "actions",
+                "text": "Melee or Ranged Spell Attack: +6 to hit, reach 5 ft. or range 120 ft., one target. Hit: 13 (3d6 + 3) force damage.",
+                "action": {
+                    "range": "reach 5 ft. or range 120 ft.",
+                    "attack": {
+                        "kind": "spell",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "3d6",
+                                "bonus": 3,
+                                "type": "force"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "acid-rain",
+                "name": "Acid Rain",
+                "category": "actions",
+                "text": "Acid falls in a 10-foot-radius, 20-foot-high cylinder centered on a point Ervan can see within 120 feet of himself. Each creature in that area must make a DC 14 Dexterity saving throw, taking 22 (4d10) acid damage on a failed save, or half as much damage on a successful one.",
+                "uses": {
+                    "max": 1,
+                    "reset": "short"
+                },
+                "action": {
+                    "save": {
+                        "ability": "dex",
+                        "dc": 14,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "4d10",
+                                "type": "acid"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "cha",
+                "dc": 14,
+                "text": "Ervan casts one of the following spells, using Charisma as the spellcasting ability (spell save DC 14):",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "light-phb"
+                            },
+                            {
+                                "spell": "mage-hand-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 2,
+                        "per": "day",
+                        "spells": [
+                            {
+                                "spell": "dimension-door-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "disguise-self-phb"
+                            },
+                            {
+                                "spell": "levitate-phb"
+                            },
+                            {
+                                "spell": "mage-armor-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "acid",
+                "force"
+            ],
+            "saves_forced": [
+                "dex",
+                "con"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "area_of_effect"
+            ],
+            "languages": [
+                "common",
+                "draconic"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    }
+]

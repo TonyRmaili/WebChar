@@ -1,0 +1,1919 @@
+[
+    {
+        "id": "druid-phb",
+        "kind": "class",
+        "name": "Druid",
+        "source": "PHB",
+        "edition": "classic",
+        "srd": {
+            "5.1": "Druid"
+        },
+        "reprinted_as": [
+            "druid-xphb"
+        ],
+        "hit_die": "d8",
+        "hp": {
+            "first": "8 + con_mod",
+            "per_level": "5 + con_mod"
+        },
+        "saves": [
+            "int",
+            "wis"
+        ],
+        "grants": {
+            "tools": [
+                "herbalism_kit"
+            ],
+            "weapons": [
+                "club",
+                "dagger",
+                "dart",
+                "javelin",
+                "mace",
+                "quarterstaff",
+                "scimitar",
+                "sickle",
+                "sling",
+                "spear"
+            ],
+            "armor": [
+                "light",
+                "medium",
+                "shields"
+            ],
+            "items": [
+                {
+                    "item": "leather-armor-phb",
+                    "qty": 1
+                },
+                {
+                    "item": "explorers-pack-phb",
+                    "qty": 1
+                }
+            ]
+        },
+        "choices": [
+            {
+                "type": "pool",
+                "id": "skills",
+                "label": "Skills",
+                "grant": "skills",
+                "count": 2,
+                "from": [
+                    "arcana",
+                    "animal_handling",
+                    "insight",
+                    "medicine",
+                    "nature",
+                    "perception",
+                    "religion",
+                    "survival"
+                ]
+            },
+            {
+                "type": "bundle",
+                "id": "starting_equipment",
+                "label": "Starting Equipment",
+                "options": [
+                    {
+                        "id": "a",
+                        "label": "Shield",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "shield-phb",
+                                    "qty": 1
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "id": "b",
+                        "label": "Simple Weapons",
+                        "choices": [
+                            {
+                                "type": "pool",
+                                "id": "items",
+                                "label": "Simple Weapons",
+                                "grant": "items",
+                                "count": 1,
+                                "from": "simple_weapons"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "bundle",
+                "id": "starting_equipment_2",
+                "label": "Starting Equipment",
+                "options": [
+                    {
+                        "id": "a",
+                        "label": "Scimitar",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "scimitar-phb",
+                                    "qty": 1
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "id": "b",
+                        "label": "Simple Melee Weapons",
+                        "choices": [
+                            {
+                                "type": "pool",
+                                "id": "items_2",
+                                "label": "Simple Melee Weapons",
+                                "grant": "items",
+                                "count": 1,
+                                "from": "simple_melee_weapons"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "pool",
+                "id": "items_3",
+                "label": "Druidic Focuses",
+                "grant": "items",
+                "count": 1,
+                "from": "druidic_focuses"
+            }
+        ],
+        "starting_gold": "2d4 × 10",
+        "multiclass": {
+            "requires": [
+                {
+                    "wis": 13
+                }
+            ],
+            "grants": {
+                "armor": [
+                    "light",
+                    "medium",
+                    "shields"
+                ]
+            }
+        },
+        "subclass": {
+            "title": "Druid Circle",
+            "level": 2,
+            "text": "At 2nd level, you choose to identify with a circle of druids from the list of available circles. Your choice grants you features at 2nd level and again at 6th, 10th, and 14th level."
+        },
+        "resources": [
+            {
+                "id": "wild_shape",
+                "name": "Wild Shape"
+            }
+        ],
+        "spellcasting": {
+            "ability": "wis",
+            "progression": "full",
+            "list": "druid-phb",
+            "cantrips": {
+                "1": 2,
+                "4": 3,
+                "10": 4
+            },
+            "prepared": "class_level + wis_mod",
+            "change": "long_rest",
+            "slots": {
+                "1": [
+                    2
+                ],
+                "2": [
+                    3
+                ],
+                "3": [
+                    4,
+                    2
+                ],
+                "4": [
+                    4,
+                    3
+                ],
+                "5": [
+                    4,
+                    3,
+                    2
+                ],
+                "6": [
+                    4,
+                    3,
+                    3
+                ],
+                "7": [
+                    4,
+                    3,
+                    3,
+                    1
+                ],
+                "8": [
+                    4,
+                    3,
+                    3,
+                    2
+                ],
+                "9": [
+                    4,
+                    3,
+                    3,
+                    3,
+                    1
+                ],
+                "10": [
+                    4,
+                    3,
+                    3,
+                    3,
+                    2
+                ],
+                "11": [
+                    4,
+                    3,
+                    3,
+                    3,
+                    2,
+                    1
+                ],
+                "13": [
+                    4,
+                    3,
+                    3,
+                    3,
+                    2,
+                    1,
+                    1
+                ],
+                "15": [
+                    4,
+                    3,
+                    3,
+                    3,
+                    2,
+                    1,
+                    1,
+                    1
+                ],
+                "17": [
+                    4,
+                    3,
+                    3,
+                    3,
+                    2,
+                    1,
+                    1,
+                    1,
+                    1
+                ],
+                "18": [
+                    4,
+                    3,
+                    3,
+                    3,
+                    3,
+                    1,
+                    1,
+                    1,
+                    1
+                ],
+                "19": [
+                    4,
+                    3,
+                    3,
+                    3,
+                    3,
+                    2,
+                    1,
+                    1,
+                    1
+                ],
+                "20": [
+                    4,
+                    3,
+                    3,
+                    3,
+                    3,
+                    2,
+                    2,
+                    1,
+                    1
+                ]
+            }
+        },
+        "progression": [
+            {
+                "level": 1,
+                "features": [
+                    "druid-phb:druidic",
+                    "druid-phb:spellcasting"
+                ]
+            },
+            {
+                "level": 2,
+                "features": [
+                    "druid-phb:wild-shape",
+                    "druid-phb:wild-companion"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "druid_circle_2",
+                        "label": "Druid Circle",
+                        "grant": "subclass",
+                        "count": 1,
+                        "from": "druid-phb"
+                    }
+                ]
+            },
+            {
+                "level": 4,
+                "features": [
+                    "druid-phb:wild-shape-improvement",
+                    "druid-phb:cantrip-versatility"
+                ],
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_4",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_4",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_4",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 6,
+                "subclass_features": true
+            },
+            {
+                "level": 8,
+                "upgrades": [
+                    "druid-phb:wild-shape-improvement"
+                ],
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_8",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_8",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_8",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 10,
+                "subclass_features": true
+            },
+            {
+                "level": 12,
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_12",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_12",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_12",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 14,
+                "subclass_features": true
+            },
+            {
+                "level": 16,
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_16",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_16",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_16",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 18,
+                "features": [
+                    "druid-phb:timeless-body",
+                    "druid-phb:beast-spells"
+                ]
+            },
+            {
+                "level": 19,
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_19",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_19",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_19",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 20,
+                "features": [
+                    "druid-phb:archdruid"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "druid-phb:druidic",
+                "name": "Druidic",
+                "level": 1,
+                "text": "You know Druidic, the secret language of druids. You can speak the language and use it to leave hidden messages. You and others who know this language automatically spot such a message. Others spot the message's presence with a successful DC 15 Wisdom (Perception) check but can't decipher it without magic.",
+                "srd": {
+                    "5.1": "Druidic"
+                }
+            },
+            {
+                "id": "druid-phb:spellcasting",
+                "name": "Spellcasting",
+                "level": 1,
+                "text": "Drawing on the divine essence of nature itself, you can cast spells to shape that essence to your will. See chapter 10 for the general rules of spellcasting and chapter 11 for the druid spell list.\n\n**Cantrips.** At 1st level, you know two cantrips of your choice from the druid spell list. You learn additional druid cantrips of your choice at higher levels, as shown in the Cantrips Known column of the Druid table.\n\n**Preparing and Casting Spells.** The Druid table shows how many spell slots you have to cast your druid spells of 1st level and higher. To cast one of these druid spells, you must expend a slot of the spell's level or higher. You regain all expended spell slots when you finish a long rest.\n\nYou prepare the list of druid spells that are available for you to cast, choosing from the druid spell list. When you do so, choose a number of druid spells equal to your Wisdom modifier + your druid level (minimum of one spell). The spells must be of a level for which you have spell slots.\n\nFor example, if you are a 3rd-level druid, you have four 1st-level and two 2nd-level spell slots. With a Wisdom of 16, your list of prepared spells can include six spells of 1st or 2nd level, in any combination. If you prepare the 1st-level spell Cure Wounds, you can cast it using a 1st-level or 2nd-level slot. Casting the spell doesn't remove it from your list of prepared spells.\n\nYou can also change your list of prepared spells when you finish a long rest. Preparing a new list of druid spells requires time spent in prayer and meditation: at least 1 minute per spell level for each spell on your list.\n\n**Spellcasting Ability.** Wisdom is your spellcasting ability for your druid spells, since your magic draws upon your devotion and attunement to nature. You use your Wisdom whenever a spell refers to your spellcasting ability. In addition, you use your Wisdom modifier when setting the saving throw DC for a druid spell you cast and when making an attack roll with one.\n\n**Spell save DC** = 8 + your proficiency bonus + your Wisdom modifier\n\n**Spell attack modifier** = your proficiency bonus + your Wisdom modifier\n\n**Ritual Casting.** You can cast a druid spell as a ritual if that spell has the ritual tag and you have the spell prepared.\n\n**Spellcasting Focus.** You can use a druidic focus as a spellcasting focus for your druid spells.",
+                "srd": {
+                    "5.1": "Spellcasting"
+                }
+            },
+            {
+                "id": "druid-phb:wild-shape",
+                "name": "Wild Shape",
+                "level": 2,
+                "text": "Starting at 2nd level, you can use your action to magically assume the shape of a beast that you have seen before. You can use this feature twice. You regain expended uses when you finish a short or long rest.\n\nYour druid level determines the beasts you can transform into, as shown in the Beast Shapes table. At 2nd level, for example, you can transform into any beast that has a challenge rating of 1/4 or lower that doesn't have a flying or swimming speed.\n\nBeast Shapes\n\nLevel | Max. CR | Limitations | Example\n--- | --- | --- | ---\n2nd | 1/4 | No flying or swimming speed | Wolf\n4th | 1/2 | No flying speed | Crocodile\n8th | 1 | — | Giant eagle\n\nYou can stay in a beast shape for a number of hours equal to half your druid level (rounded down). You then revert to your normal form unless you expend another use of this feature. You can revert to your normal form earlier by using a bonus action on your turn. You automatically revert if you fall unconscious, drop to 0 hit points, or die.\n\nWhile you are transformed, the following rules apply:\n\n- Your game statistics are replaced by the statistics of the beast, but you retain your alignment, personality, and Intelligence, Wisdom, and Charisma scores. You also retain all of your skill and saving throw proficiencies, in addition to gaining those of the creature. If the creature has the same proficiency as you and the bonus in its stat block is higher than yours, use the creature's bonus instead of yours. If the creature has any legendary or lair actions, you can't use them.\n- When you transform, you assume the beast's hit points and Hit Dice. When you revert to your normal form, you return to the number of hit points you had before you transformed. However, if you revert as a result of dropping to 0 hit points, any excess damage carries over to your normal form. For example, if you take 10 damage in animal form and have only 1 hit point left, you revert and take 9 damage. As long as the excess damage doesn't reduce your normal form to 0 hit points, you aren't knocked unconscious.\n- You can't cast spells, and your ability to speak or take any action that requires hands is limited to the capabilities of your beast form. Transforming doesn't break your concentration on a spell you've already cast, however, or prevent you from taking actions that are part of a spell, such as Call Lightning, that you've already cast.\n- You retain the benefit of any features from your class, race, or other source and can use them if the new form is physically capable of doing so. However, you can't use any of your special senses, such as darkvision, unless your new form also has that sense.\n- You choose whether your equipment falls to the ground in your space, merges into your new form, or is worn by it. Worn equipment functions as normal, but the DM decides whether it is practical for the new form to wear a piece of equipment, based on the creature's shape and size. Your equipment doesn't change size or shape to match the new form, and any equipment that the new form can't wear must either fall to the ground or merge with it. Equipment that merges with the form has no effect until you leave the form.",
+                "srd": {
+                    "5.1": "Wild Shape"
+                }
+            },
+            {
+                "id": "druid-phb:wild-companion",
+                "name": "Wild Companion",
+                "level": 2,
+                "source": "TCE",
+                "text": "*2nd-level druid optional feature*\n\nYou gain the ability to summon a spirit that assumes an animal form: as an action, you can expend a use of your Wild Shape feature to cast the Find Familiar spell, without material components.\n\nWhen you cast the spell in this way, the familiar is a fey instead of a beast, and the familiar disappears after a number of hours equal to half your druid level.",
+                "optional": true,
+                "consumes": {
+                    "resource": "wild_shape",
+                    "amount": 1
+                }
+            },
+            {
+                "id": "druid-phb:wild-shape-improvement",
+                "name": "Wild Shape Improvement",
+                "level": 4,
+                "text": "At 4th level, your Wild Shape improves as shown on the Beast Shapes table.\n\n**Wild Shape Improvement.** At 8th level, your Wild Shape improves as shown on the Beast Shapes table.",
+                "srd": {
+                    "5.1": "Wild Shape Improvement"
+                }
+            },
+            {
+                "id": "druid-phb:cantrip-versatility",
+                "name": "Cantrip Versatility",
+                "level": 4,
+                "source": "TCE",
+                "text": "*4th-level druid optional feature*\n\nWhenever you reach a level in this class that grants the Ability Score Improvement feature, you can replace one cantrip you learned from this class's Spellcasting feature with another cantrip from the druid spell list.",
+                "optional": true
+            },
+            {
+                "id": "druid-phb:timeless-body",
+                "name": "Timeless Body",
+                "level": 18,
+                "text": "Starting at 18th level, the primal magic that you wield causes you to age more slowly. For every 10 years that pass, your body ages only 1 year.",
+                "srd": {
+                    "5.1": "Timeless Body"
+                }
+            },
+            {
+                "id": "druid-phb:beast-spells",
+                "name": "Beast Spells",
+                "level": 18,
+                "text": "Beginning at 18th level, you can cast many of your druid spells in any shape you assume using Wild Shape. You can perform the somatic and verbal components of a druid spell while in a beast shape, but you aren't able to provide material components.",
+                "srd": {
+                    "5.1": "Beast Spells"
+                }
+            },
+            {
+                "id": "druid-phb:archdruid",
+                "name": "Archdruid",
+                "level": 20,
+                "text": "At 20th level, you can use your Wild Shape an unlimited number of times.\n\nAdditionally, you can ignore the verbal and somatic components of your druid spells, as well as any material components that lack a cost and aren't consumed by a spell. You gain this benefit in both your normal shape and your beast shape from Wild Shape.",
+                "srd": {
+                    "5.1": "Archdruid"
+                }
+            }
+        ]
+    },
+    {
+        "id": "druid-phb:land-phb",
+        "kind": "subclass",
+        "name": "Circle of the Land",
+        "source": "PHB",
+        "edition": "classic",
+        "srd": {
+            "5.1": "Circle of the Land"
+        },
+        "reprinted_as": [
+            "druid-xphb:land-xphb"
+        ],
+        "text": "The Circle of the Land is made up of mystics and sages who safeguard ancient knowledge and rites through a vast oral tradition. These druids meet within sacred circles of trees or standing stones to whisper primal secrets in Druidic. The circle's wisest members preside as the chief priests of communities that hold to the Old Faith and serve as advisors to the rulers of those folk. As a member of this circle, your magic is influenced by the land where you were initiated into the circle's mysterious rites.",
+        "class_id": "druid-phb",
+        "short_name": "Land",
+        "choices": [
+            {
+                "type": "bundle",
+                "id": "spells",
+                "label": "Spells",
+                "options": [
+                    {
+                        "id": "arctic",
+                        "label": "Arctic",
+                        "grants": {
+                            "spells": [
+                                {
+                                    "spell": "hold-person-phb",
+                                    "how": "prepared",
+                                    "at": 3
+                                },
+                                {
+                                    "spell": "spike-growth-phb",
+                                    "how": "prepared",
+                                    "at": 3
+                                },
+                                {
+                                    "spell": "sleet-storm-phb",
+                                    "how": "prepared",
+                                    "at": 5
+                                },
+                                {
+                                    "spell": "slow-phb",
+                                    "how": "prepared",
+                                    "at": 5
+                                },
+                                {
+                                    "spell": "freedom-of-movement-phb",
+                                    "how": "prepared",
+                                    "at": 7
+                                },
+                                {
+                                    "spell": "ice-storm-phb",
+                                    "how": "prepared",
+                                    "at": 7
+                                },
+                                {
+                                    "spell": "commune-with-nature-phb",
+                                    "how": "prepared",
+                                    "at": 9
+                                },
+                                {
+                                    "spell": "cone-of-cold-phb",
+                                    "how": "prepared",
+                                    "at": 9
+                                }
+                            ]
+                        },
+                        "choices": [
+                            {
+                                "type": "pool",
+                                "id": "spells_2",
+                                "label": "Spells",
+                                "grant": "spells",
+                                "count": 1,
+                                "from": {
+                                    "spell_level": 0,
+                                    "class": "druid"
+                                },
+                                "how": "known",
+                                "at": 1
+                            }
+                        ]
+                    },
+                    {
+                        "id": "coast",
+                        "label": "Coast",
+                        "grants": {
+                            "spells": [
+                                {
+                                    "spell": "mirror-image-phb",
+                                    "how": "prepared",
+                                    "at": 3
+                                },
+                                {
+                                    "spell": "misty-step-phb",
+                                    "how": "prepared",
+                                    "at": 3
+                                },
+                                {
+                                    "spell": "water-breathing-phb",
+                                    "how": "prepared",
+                                    "at": 5
+                                },
+                                {
+                                    "spell": "water-walk-phb",
+                                    "how": "prepared",
+                                    "at": 5
+                                },
+                                {
+                                    "spell": "control-water-phb",
+                                    "how": "prepared",
+                                    "at": 7
+                                },
+                                {
+                                    "spell": "freedom-of-movement-phb",
+                                    "how": "prepared",
+                                    "at": 7
+                                },
+                                {
+                                    "spell": "conjure-elemental-phb",
+                                    "how": "prepared",
+                                    "at": 9
+                                },
+                                {
+                                    "spell": "scrying-phb",
+                                    "how": "prepared",
+                                    "at": 9
+                                }
+                            ]
+                        },
+                        "choices": [
+                            {
+                                "type": "pool",
+                                "id": "spells_3",
+                                "label": "Spells",
+                                "grant": "spells",
+                                "count": 1,
+                                "from": {
+                                    "spell_level": 0,
+                                    "class": "druid"
+                                },
+                                "how": "known",
+                                "at": 1
+                            }
+                        ]
+                    },
+                    {
+                        "id": "desert",
+                        "label": "Desert",
+                        "grants": {
+                            "spells": [
+                                {
+                                    "spell": "blur-phb",
+                                    "how": "prepared",
+                                    "at": 3
+                                },
+                                {
+                                    "spell": "silence-phb",
+                                    "how": "prepared",
+                                    "at": 3
+                                },
+                                {
+                                    "spell": "create-food-and-water-phb",
+                                    "how": "prepared",
+                                    "at": 5
+                                },
+                                {
+                                    "spell": "protection-from-energy-phb",
+                                    "how": "prepared",
+                                    "at": 5
+                                },
+                                {
+                                    "spell": "blight-phb",
+                                    "how": "prepared",
+                                    "at": 7
+                                },
+                                {
+                                    "spell": "hallucinatory-terrain-phb",
+                                    "how": "prepared",
+                                    "at": 7
+                                },
+                                {
+                                    "spell": "insect-plague-phb",
+                                    "how": "prepared",
+                                    "at": 9
+                                },
+                                {
+                                    "spell": "wall-of-stone-phb",
+                                    "how": "prepared",
+                                    "at": 9
+                                }
+                            ]
+                        },
+                        "choices": [
+                            {
+                                "type": "pool",
+                                "id": "spells_4",
+                                "label": "Spells",
+                                "grant": "spells",
+                                "count": 1,
+                                "from": {
+                                    "spell_level": 0,
+                                    "class": "druid"
+                                },
+                                "how": "known",
+                                "at": 1
+                            }
+                        ]
+                    },
+                    {
+                        "id": "forest",
+                        "label": "Forest",
+                        "grants": {
+                            "spells": [
+                                {
+                                    "spell": "barkskin-phb",
+                                    "how": "prepared",
+                                    "at": 3
+                                },
+                                {
+                                    "spell": "spider-climb-phb",
+                                    "how": "prepared",
+                                    "at": 3
+                                },
+                                {
+                                    "spell": "call-lightning-phb",
+                                    "how": "prepared",
+                                    "at": 5
+                                },
+                                {
+                                    "spell": "plant-growth-phb",
+                                    "how": "prepared",
+                                    "at": 5
+                                },
+                                {
+                                    "spell": "divination-phb",
+                                    "how": "prepared",
+                                    "at": 7
+                                },
+                                {
+                                    "spell": "freedom-of-movement-phb",
+                                    "how": "prepared",
+                                    "at": 7
+                                },
+                                {
+                                    "spell": "commune-with-nature-phb",
+                                    "how": "prepared",
+                                    "at": 9
+                                },
+                                {
+                                    "spell": "tree-stride-phb",
+                                    "how": "prepared",
+                                    "at": 9
+                                }
+                            ]
+                        },
+                        "choices": [
+                            {
+                                "type": "pool",
+                                "id": "spells_5",
+                                "label": "Spells",
+                                "grant": "spells",
+                                "count": 1,
+                                "from": {
+                                    "spell_level": 0,
+                                    "class": "druid"
+                                },
+                                "how": "known",
+                                "at": 1
+                            }
+                        ]
+                    },
+                    {
+                        "id": "grassland",
+                        "label": "Grassland",
+                        "grants": {
+                            "spells": [
+                                {
+                                    "spell": "invisibility-phb",
+                                    "how": "prepared",
+                                    "at": 3
+                                },
+                                {
+                                    "spell": "pass-without-trace-phb",
+                                    "how": "prepared",
+                                    "at": 3
+                                },
+                                {
+                                    "spell": "daylight-phb",
+                                    "how": "prepared",
+                                    "at": 5
+                                },
+                                {
+                                    "spell": "haste-phb",
+                                    "how": "prepared",
+                                    "at": 5
+                                },
+                                {
+                                    "spell": "divination-phb",
+                                    "how": "prepared",
+                                    "at": 7
+                                },
+                                {
+                                    "spell": "freedom-of-movement-phb",
+                                    "how": "prepared",
+                                    "at": 7
+                                },
+                                {
+                                    "spell": "dream-phb",
+                                    "how": "prepared",
+                                    "at": 9
+                                },
+                                {
+                                    "spell": "insect-plague-phb",
+                                    "how": "prepared",
+                                    "at": 9
+                                }
+                            ]
+                        },
+                        "choices": [
+                            {
+                                "type": "pool",
+                                "id": "spells_6",
+                                "label": "Spells",
+                                "grant": "spells",
+                                "count": 1,
+                                "from": {
+                                    "spell_level": 0,
+                                    "class": "druid"
+                                },
+                                "how": "known",
+                                "at": 1
+                            }
+                        ]
+                    },
+                    {
+                        "id": "mountain",
+                        "label": "Mountain",
+                        "grants": {
+                            "spells": [
+                                {
+                                    "spell": "spider-climb-phb",
+                                    "how": "prepared",
+                                    "at": 3
+                                },
+                                {
+                                    "spell": "spike-growth-phb",
+                                    "how": "prepared",
+                                    "at": 3
+                                },
+                                {
+                                    "spell": "lightning-bolt-phb",
+                                    "how": "prepared",
+                                    "at": 5
+                                },
+                                {
+                                    "spell": "meld-into-stone-phb",
+                                    "how": "prepared",
+                                    "at": 5
+                                },
+                                {
+                                    "spell": "stone-shape-phb",
+                                    "how": "prepared",
+                                    "at": 7
+                                },
+                                {
+                                    "spell": "stoneskin-phb",
+                                    "how": "prepared",
+                                    "at": 7
+                                },
+                                {
+                                    "spell": "passwall-phb",
+                                    "how": "prepared",
+                                    "at": 9
+                                },
+                                {
+                                    "spell": "wall-of-stone-phb",
+                                    "how": "prepared",
+                                    "at": 9
+                                }
+                            ]
+                        },
+                        "choices": [
+                            {
+                                "type": "pool",
+                                "id": "spells_7",
+                                "label": "Spells",
+                                "grant": "spells",
+                                "count": 1,
+                                "from": {
+                                    "spell_level": 0,
+                                    "class": "druid"
+                                },
+                                "how": "known",
+                                "at": 1
+                            }
+                        ]
+                    },
+                    {
+                        "id": "swamp",
+                        "label": "Swamp",
+                        "grants": {
+                            "spells": [
+                                {
+                                    "spell": "darkness-phb",
+                                    "how": "prepared",
+                                    "at": 3
+                                },
+                                {
+                                    "spell": "melfs-acid-arrow-phb",
+                                    "how": "prepared",
+                                    "at": 3
+                                },
+                                {
+                                    "spell": "water-walk-phb",
+                                    "how": "prepared",
+                                    "at": 5
+                                },
+                                {
+                                    "spell": "stinking-cloud-phb",
+                                    "how": "prepared",
+                                    "at": 5
+                                },
+                                {
+                                    "spell": "freedom-of-movement-phb",
+                                    "how": "prepared",
+                                    "at": 7
+                                },
+                                {
+                                    "spell": "locate-creature-phb",
+                                    "how": "prepared",
+                                    "at": 7
+                                },
+                                {
+                                    "spell": "insect-plague-phb",
+                                    "how": "prepared",
+                                    "at": 9
+                                },
+                                {
+                                    "spell": "scrying-phb",
+                                    "how": "prepared",
+                                    "at": 9
+                                }
+                            ]
+                        },
+                        "choices": [
+                            {
+                                "type": "pool",
+                                "id": "spells_8",
+                                "label": "Spells",
+                                "grant": "spells",
+                                "count": 1,
+                                "from": {
+                                    "spell_level": 0,
+                                    "class": "druid"
+                                },
+                                "how": "known",
+                                "at": 1
+                            }
+                        ]
+                    },
+                    {
+                        "id": "underdark",
+                        "label": "Underdark",
+                        "grants": {
+                            "spells": [
+                                {
+                                    "spell": "spider-climb-phb",
+                                    "how": "prepared",
+                                    "at": 3
+                                },
+                                {
+                                    "spell": "web-phb",
+                                    "how": "prepared",
+                                    "at": 3
+                                },
+                                {
+                                    "spell": "gaseous-form-phb",
+                                    "how": "prepared",
+                                    "at": 5
+                                },
+                                {
+                                    "spell": "stinking-cloud-phb",
+                                    "how": "prepared",
+                                    "at": 5
+                                },
+                                {
+                                    "spell": "greater-invisibility-phb",
+                                    "how": "prepared",
+                                    "at": 7
+                                },
+                                {
+                                    "spell": "stone-shape-phb",
+                                    "how": "prepared",
+                                    "at": 7
+                                },
+                                {
+                                    "spell": "cloudkill-phb",
+                                    "how": "prepared",
+                                    "at": 9
+                                },
+                                {
+                                    "spell": "insect-plague-phb",
+                                    "how": "prepared",
+                                    "at": 9
+                                }
+                            ]
+                        },
+                        "choices": [
+                            {
+                                "type": "pool",
+                                "id": "spells_9",
+                                "label": "Spells",
+                                "grant": "spells",
+                                "count": 1,
+                                "from": {
+                                    "spell_level": 0,
+                                    "class": "druid"
+                                },
+                                "how": "known",
+                                "at": 1
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "progression": [
+            {
+                "level": 2,
+                "features": [
+                    "druid-phb:land-phb:bonus-cantrip",
+                    "druid-phb:land-phb:natural-recovery",
+                    "druid-phb:land-phb:circle-spells"
+                ]
+            },
+            {
+                "level": 6,
+                "features": [
+                    "druid-phb:land-phb:lands-stride"
+                ]
+            },
+            {
+                "level": 10,
+                "features": [
+                    "druid-phb:land-phb:natures-ward"
+                ]
+            },
+            {
+                "level": 14,
+                "features": [
+                    "druid-phb:land-phb:natures-sanctuary"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "druid-phb:land-phb:bonus-cantrip",
+                "name": "Bonus Cantrip",
+                "level": 2,
+                "text": "You learn one additional druid cantrip of your choice. This cantrip doesn't count against the number of druid cantrips you know.",
+                "srd": {
+                    "5.1": "Bonus Cantrip"
+                }
+            },
+            {
+                "id": "druid-phb:land-phb:natural-recovery",
+                "name": "Natural Recovery",
+                "level": 2,
+                "text": "Starting at 2nd level, you can regain some of your magical energy by sitting in meditation and communing with nature. During a short rest, you choose expended spell slots to recover. The spell slots can have a combined level that is equal to or less than half your druid level (rounded up), and none of the slots can be 6th level or higher. You can't use this feature again until you finish a long rest.\n\nFor example, when you are a 4th-level druid, you can recover up to two levels worth of spell slots. You can recover either a 2nd-level slot or two 1st-level slots.",
+                "srd": {
+                    "5.1": "Natural Recovery"
+                }
+            },
+            {
+                "id": "druid-phb:land-phb:circle-spells",
+                "name": "Circle Spells",
+                "level": 2,
+                "text": "Your mystical connection to the land infuses you with the ability to cast certain spells. At 3rd, 5th, 7th, and 9th level you gain access to circle spells connected to the land where you became a druid. Choose that land—arctic, coast, desert, forest, grassland, mountain, swamp, or Underdark—and consult the associated list of spells.\n\nOnce you gain access to a circle spell, you always have it prepared, and it doesn't count against the number of spells you can prepare each day. If you gain access to a spell that doesn't appear on the druid spell list, the spell is nonetheless a druid spell for you.\n\nArctic\n\nDruid Level | Circle Spells\n--- | ---\n3rd | Hold Person, Spike Growth\n5th | Sleet Storm, Slow\n7th | Freedom of Movement, Ice Storm\n9th | Commune with Nature, Cone of Cold\n\nCoast\n\nDruid Level | Circle Spells\n--- | ---\n3rd | Mirror Image, Misty Step\n5th | Water Breathing, Water Walk\n7th | Control Water, Freedom of Movement\n9th | Conjure Elemental, Scrying\n\nDesert\n\nDruid Level | Circle Spells\n--- | ---\n3rd | Blur, Silence\n5th | Create Food and Water, Protection from Energy\n7th | Blight, Hallucinatory Terrain\n9th | Insect Plague, Wall of Stone\n\nForest\n\nDruid Level | Circle Spells\n--- | ---\n3rd | Barkskin, Spider Climb\n5th | Call Lightning, Plant Growth\n7th | Divination, Freedom of Movement\n9th | Commune with Nature, Tree Stride\n\nGrassland\n\nDruid Level | Circle Spells\n--- | ---\n3rd | Invisibility, Pass without Trace\n5th | Daylight, Haste\n7th | Divination, Freedom of Movement\n9th | Dream, Insect Plague\n\nMountain\n\nDruid Level | Circle Spells\n--- | ---\n3rd | Spider Climb, Spike Growth\n5th | Lightning Bolt, Meld into Stone\n7th | Stone Shape, Stoneskin\n9th | Passwall, Wall of Stone\n\nSwamp\n\nDruid Level | Circle Spells\n--- | ---\n3rd | Darkness, Melf's Acid Arrow\n5th | Water Walk, Stinking Cloud\n7th | Freedom of Movement, Locate Creature\n9th | Insect Plague, Scrying\n\nUnderdark\n\nDruid Level | Circle Spells\n--- | ---\n3rd | Spider Climb, Web\n5th | Gaseous Form, Stinking Cloud\n7th | Greater Invisibility, Stone Shape\n9th | Cloudkill, Insect Plague",
+                "srd": {
+                    "5.1": "Circle Spells"
+                }
+            },
+            {
+                "id": "druid-phb:land-phb:lands-stride",
+                "name": "Land's Stride",
+                "level": 6,
+                "text": "Starting at 6th level, moving through nonmagical difficult terrain costs you no extra movement. You can also pass through nonmagical plants without being slowed by them and without taking damage from them if they have thorns, spines, or a similar hazard.\n\nIn addition, you have advantage on saving throws against plants that are magically created or manipulated to impede movement, such as those created by the Entangle spell.",
+                "srd": {
+                    "5.1": "Land's Stride"
+                }
+            },
+            {
+                "id": "druid-phb:land-phb:natures-ward",
+                "name": "Nature's Ward",
+                "level": 10,
+                "text": "When you reach 10th level, you can't be charmed or frightened by elementals or fey, and you are immune to poison and disease.",
+                "srd": {
+                    "5.1": "Nature's Ward"
+                }
+            },
+            {
+                "id": "druid-phb:land-phb:natures-sanctuary",
+                "name": "Nature's Sanctuary",
+                "level": 14,
+                "text": "When you reach 14th level, creatures of the natural world sense your connection to nature and become hesitant to attack you. When a beast or plant creature attacks you, that creature must make a Wisdom saving throw against your druid spell save DC. On a failed save, the creature must choose a different target, or the attack automatically misses. On a successful save, the creature is immune to this effect for 24 hours.\n\nThe creature is aware of this effect before it makes its attack against you.",
+                "srd": {
+                    "5.1": "Nature's Sanctuary"
+                }
+            }
+        ]
+    },
+    {
+        "id": "druid-phb:moon-phb",
+        "kind": "subclass",
+        "name": "Circle of the Moon",
+        "source": "PHB",
+        "edition": "classic",
+        "reprinted_as": [
+            "druid-xphb:moon-xphb"
+        ],
+        "text": "Druids of the Circle of the Moon are fierce guardians of the wilds. Their order gathers under the full moon to share news and trade warnings. They haunt the deepest parts of the wilderness, where they might go for weeks on end before crossing paths with another humanoid creature, let alone another druid.\n\nChangeable as the moon, a druid of this circle might prowl as a great cat one night, soar over the treetops as an eagle the next day, and crash through the undergrowth in bear form to drive off a trespassing monster. The wild is in the druid's blood.",
+        "class_id": "druid-phb",
+        "short_name": "Moon",
+        "grants": {
+            "spells": [
+                {
+                    "spell": "alter-self-phb",
+                    "how": "known",
+                    "at": 14
+                }
+            ]
+        },
+        "progression": [
+            {
+                "level": 2,
+                "features": [
+                    "druid-phb:moon-phb:combat-wild-shape",
+                    "druid-phb:moon-phb:circle-forms"
+                ]
+            },
+            {
+                "level": 6,
+                "features": [
+                    "druid-phb:moon-phb:primal-strike"
+                ]
+            },
+            {
+                "level": 10,
+                "features": [
+                    "druid-phb:moon-phb:elemental-wild-shape"
+                ]
+            },
+            {
+                "level": 14,
+                "features": [
+                    "druid-phb:moon-phb:thousand-forms"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "druid-phb:moon-phb:combat-wild-shape",
+                "name": "Combat Wild Shape",
+                "level": 2,
+                "text": "You gain the ability to use Wild Shape on your turn as a bonus action, rather than as an action.\n\nAdditionally, while you are transformed by Wild Shape, you can use a bonus action to expend one spell slot to regain 1d8 hit points per level of the spell slot expended."
+            },
+            {
+                "id": "druid-phb:moon-phb:circle-forms",
+                "name": "Circle Forms",
+                "level": 2,
+                "text": "The rites of your circle grant you the ability to transform into more dangerous animal forms. Starting at 2nd level, you can use your Wild Shape to transform into a beast with a challenge rating as high as 1 (you ignore the Max. CR column of the Beast Shapes table, but must abide by the other limitations there).\n\nStarting at 6th level, you can transform into a beast with a challenge rating as high as your druid level divided by 3, rounded down.\n\nCircle of the Moon Beast Shapes\n\nLevel | Max. CR | Limitations\n--- | --- | ---\n2nd | 1 | No flying or swimming speed\n4th | 1 | No flying speed\n6th | 2 | No flying speed\n8th | 2 | —\n9th | 3 | —\n12th | 4 | —\n15th | 5 | —\n18th | 6 | —"
+            },
+            {
+                "id": "druid-phb:moon-phb:primal-strike",
+                "name": "Primal Strike",
+                "level": 6,
+                "text": "Starting at 6th level, your attacks in beast form count as magical for the purpose of overcoming resistance and immunity to nonmagical attacks and damage."
+            },
+            {
+                "id": "druid-phb:moon-phb:elemental-wild-shape",
+                "name": "Elemental Wild Shape",
+                "level": 10,
+                "text": "At 10th level, you can expend two uses of Wild Shape at the same time to transform into an air elemental, an earth elemental, a fire elemental, or a water elemental.",
+                "consumes": {
+                    "resource": "wild_shape",
+                    "amount": 2
+                }
+            },
+            {
+                "id": "druid-phb:moon-phb:thousand-forms",
+                "name": "Thousand Forms",
+                "level": 14,
+                "text": "By 14th level, you have learned to use magic to alter your physical form in more subtle ways. You can cast the Alter Self spell at will."
+            }
+        ]
+    },
+    {
+        "id": "druid-phb:dreams-xge",
+        "kind": "subclass",
+        "name": "Circle of Dreams",
+        "source": "XGE",
+        "edition": "classic",
+        "text": "Druids who are members of the Circle of Dreams hail from regions that have strong ties to the Feywild and its dreamlike realms. The druids' guardianship of the natural world makes for a natural alliance between them and good-aligned fey. These druids seek to fill the world with dreamy wonder. Their magic mends wounds and brings joy to downcast hearts, and the realms they protect are gleaming, fruitful places, where dream and reality blur together and where the weary can find rest.",
+        "class_id": "druid-phb",
+        "short_name": "Dreams",
+        "progression": [
+            {
+                "level": 2,
+                "features": [
+                    "druid-phb:dreams-xge:balm-of-the-summer-court"
+                ]
+            },
+            {
+                "level": 6,
+                "features": [
+                    "druid-phb:dreams-xge:hearth-of-moonlight-and-shadow"
+                ]
+            },
+            {
+                "level": 10,
+                "features": [
+                    "druid-phb:dreams-xge:hidden-paths"
+                ]
+            },
+            {
+                "level": 14,
+                "features": [
+                    "druid-phb:dreams-xge:walker-in-dreams"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "druid-phb:dreams-xge:balm-of-the-summer-court",
+                "name": "Balm of the Summer Court",
+                "level": 2,
+                "text": "At 2nd level, you become imbued with the blessings of the Summer Court. You are a font of energy that offers respite from injuries. You have a pool of fey energy represented by a number of d6s equal to your druid level.\n\nAs a bonus action, you can choose one creature you can see within 120 feet of you and spend a number of those dice equal to half your druid level or less. Roll the spent dice and add them together. The target regains a number of hit points equal to the total. The target also gains 1 temporary hit point per die spent.\n\nYou regain all expended dice when you finish a long rest."
+            },
+            {
+                "id": "druid-phb:dreams-xge:hearth-of-moonlight-and-shadow",
+                "name": "Hearth of Moonlight and Shadow",
+                "level": 6,
+                "text": "At 6th level, home can be wherever you are. During a short or long rest, you can invoke the shadowy power of the Gloaming Court to help guard your respite. At the start of the rest, you touch a point in space, and an invisible, 30-foot-radius sphere of magic appears, centered on that point. Total cover blocks the sphere.\n\nWhile within the sphere, you and your allies gain a +5 bonus to Dexterity (Stealth) and Wisdom (Perception) checks, and any light from open flames in the sphere (a campfire, torches, or the like) isn't visible outside it.\n\nThe sphere vanishes at the end of the rest or when you leave the sphere."
+            },
+            {
+                "id": "druid-phb:dreams-xge:hidden-paths",
+                "name": "Hidden Paths",
+                "level": 10,
+                "text": "Starting at 10th level, you can use the hidden, magical pathways that some fey use to traverse space in the blink of an eye. As a bonus action on your turn, you can teleport up to 60 feet to an unoccupied space you can see. Alternatively, you can use your action to teleport one willing creature you touch up to 30 feet to an unoccupied space you can see.\n\nYou can use this feature a number of times equal to your Wisdom modifier (minimum of once), and you regain all expended uses of it when you finish a long rest."
+            },
+            {
+                "id": "druid-phb:dreams-xge:walker-in-dreams",
+                "name": "Walker in Dreams",
+                "level": 14,
+                "text": "At 14th level, the magic of the Feywild grants you the ability to travel mentally or physically through dreamlands.\n\nWhen you finish a short rest, you can cast one of the following spells, without expending a spell slot or requiring material components: Dream (with you as the messenger), Scrying, or Teleportation Circle.\n\nThis use of Teleportation Circle is special. Rather than opening a portal to a permanent Teleportation Circle, it opens a portal to the last location where you finished a long rest on your current plane of existence. If you haven't taken a long rest on your current plane, the spell fails but isn't wasted.\n\nOnce you use this feature, you can't use it again until you finish a long rest."
+            }
+        ]
+    },
+    {
+        "id": "druid-phb:shepherd-xge",
+        "kind": "subclass",
+        "name": "Circle of the Shepherd",
+        "source": "XGE",
+        "edition": "classic",
+        "text": "Druids of the Circle of the Shepherd commune with the spirits of nature, especially the spirits of beasts and the fey, and call to those spirits for aid. These druids recognize that all living things play a role in the natural world, yet they focus on protecting animals and fey creatures that have difficulty defending themselves. Shepherds, as they are known, see such creatures as their charges. They ward off monsters that threaten them, rebuke hunters who kill more prey than necessary, and prevent civilization from encroaching on rare animal habitats and on sites sacred to the fey. Many of these druids are happiest far from cities and towns, content to spend their days in the company of animals and the fey creatures of the wilds.\n\nMembers of this circle become adventurers to oppose forces that threaten their charges or to seek knowledge and power that will help them safeguard their charges better. Wherever these druids go, the spirits of the wilderness are with them.",
+        "class_id": "druid-phb",
+        "short_name": "Shepherd",
+        "progression": [
+            {
+                "level": 2,
+                "features": [
+                    "druid-phb:shepherd-xge:speech-of-the-woods",
+                    "druid-phb:shepherd-xge:spirit-totem"
+                ]
+            },
+            {
+                "level": 6,
+                "features": [
+                    "druid-phb:shepherd-xge:mighty-summoner"
+                ]
+            },
+            {
+                "level": 10,
+                "features": [
+                    "druid-phb:shepherd-xge:guardian-spirit"
+                ]
+            },
+            {
+                "level": 14,
+                "features": [
+                    "druid-phb:shepherd-xge:faithful-summons"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "druid-phb:shepherd-xge:speech-of-the-woods",
+                "name": "Speech of the Woods",
+                "level": 2,
+                "text": "At 2nd level, you gain the ability to converse with beasts and many fey.\n\nYou learn to speak, read, and write Sylvan. In addition, beasts can understand your speech, and you gain the ability to decipher their noises and motions. Most beasts lack the intelligence to convey or understand sophisticated concepts, but a friendly beast could relay what it has seen or heard in the recent past. This ability doesn't grant you friendship with beasts, though you can combine this ability with gifts to curry favor with them as you would with any nonplayer character."
+            },
+            {
+                "id": "druid-phb:shepherd-xge:spirit-totem",
+                "name": "Spirit Totem",
+                "level": 2,
+                "text": "Starting at 2nd level, you can call forth nature spirits to influence the world around you. As a bonus action, you can magically summon an incorporeal spirit to a point you can see within 60 feet of you. The spirit creates an aura in a 30-foot radius around that point. It counts as neither a creature nor an object, though it has the spectral appearance of the creature it represents.\n\nAs a bonus action, you can move the spirit up to 60 feet to a point you can see.\n\nThe spirit persists for 1 minute or until you're incapacitated. Once you use this feature, you can't use it again until you finish a short or long rest.\n\nThe effect of the spirit's aura depends on the type of spirit you summon from the options below.\n\n**Bear Spirit.** The bear spirit grants you and your allies its might and endurance. Each creature of your choice in the aura when the spirit appears gains temporary hit points equal to 5 + your druid level. In addition, you and your allies gain advantage on Strength checks and Strength saving throws while in the aura.\n\n**Hawk Spirit.** The hawk spirit is a consummate hunter, aiding you and your allies with its keen sight. When a creature makes an attack roll against a target in the spirit's aura, you can use your reaction to grant advantage to that attack roll. In addition, you and your allies have advantage on Wisdom (Perception) checks while in the aura.\n\n**Unicorn Spirit.** The unicorn spirit lends its protection to those nearby. You and your allies gain advantage on all ability checks made to detect creatures in the spirit's aura. In addition, if you cast a spell using a spell slot that restores hit points to any creature inside or outside the aura, each creature of your choice in the aura also regains hit points equal to your druid level."
+            },
+            {
+                "id": "druid-phb:shepherd-xge:mighty-summoner",
+                "name": "Mighty Summoner",
+                "level": 6,
+                "text": "Starting at 6th level, beasts and fey that you conjure are more resilient than normal. Any beast or fey summoned or created by a spell that you cast gains the following benefits:\n\n- The creature appears with more hit points than normal: 2 extra hit points per Hit Die it has.\n- The damage from its natural weapons is considered magical for the purpose of overcoming immunity and resistance to nonmagical attacks and damage."
+            },
+            {
+                "id": "druid-phb:shepherd-xge:guardian-spirit",
+                "name": "Guardian Spirit",
+                "level": 10,
+                "text": "Beginning at 10th level, your Spirit Totem safeguards the beasts and fey that you call forth with your magic. When a beast or fey that you summoned or created with a spell ends its turn in your Spirit Totem aura, that creature regains a number of hit points equal to half your druid level."
+            },
+            {
+                "id": "druid-phb:shepherd-xge:faithful-summons",
+                "name": "Faithful Summons",
+                "level": 14,
+                "text": "Starting at 14th level, the nature spirits you commune with protect you when you are the most defenseless. If you are reduced to 0 hit points or are incapacitated against your will, you can immediately gain the benefits of Conjure Animals as if it were cast using a 9th-level spell slot. It summons four beasts of your choice that are challenge rating 2 or lower. The conjured beasts appear within 20 feet of you. If they receive no commands from you, they protect you from harm and attack your foes. The spell lasts for 1 hour, requiring no concentration, or until you dismiss it (no action required).\n\nOnce you use this feature, you can't use it again until you finish a long rest."
+            }
+        ]
+    },
+    {
+        "id": "druid-phb:spores-tce",
+        "kind": "subclass",
+        "name": "Circle of Spores",
+        "source": "TCE",
+        "edition": "classic",
+        "text": "Druids of the Circle of Spores find beauty in decay. They see within mold and other fungi the ability to transform lifeless material into abundant, albeit somewhat strange, life.\n\nThese druids believe that life and death are parts of a grand cycle, with one leading to the other and then back again. Death isn't the end of life, but instead a change of state that sees life shift into a new form.\n\nDruids of this circle have a complex relationship with the undead. Unlike most other druids, they see nothing inherently wrong with undeath, which they consider to be a companion to life and death. But these druids believe that the natural cycle is healthiest when each segment of it is vibrant and changing. Undead that seek to replace all life with undeath, or that try to avoid passing to a final rest, violate the cycle and must be thwarted.",
+        "class_id": "druid-phb",
+        "short_name": "Spores",
+        "grants": {
+            "spells": [
+                {
+                    "spell": "chill-touch-phb",
+                    "how": "known",
+                    "at": 2
+                },
+                {
+                    "spell": "blindness-deafness-phb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "gentle-repose-phb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "animate-dead-phb",
+                    "how": "prepared",
+                    "at": 5
+                },
+                {
+                    "spell": "gaseous-form-phb",
+                    "how": "prepared",
+                    "at": 5
+                },
+                {
+                    "spell": "blight-phb",
+                    "how": "prepared",
+                    "at": 7
+                },
+                {
+                    "spell": "confusion-phb",
+                    "how": "prepared",
+                    "at": 7
+                },
+                {
+                    "spell": "cloudkill-phb",
+                    "how": "prepared",
+                    "at": 9
+                },
+                {
+                    "spell": "contagion-phb",
+                    "how": "prepared",
+                    "at": 9
+                }
+            ]
+        },
+        "progression": [
+            {
+                "level": 2,
+                "features": [
+                    "druid-phb:spores-tce:circle-spells",
+                    "druid-phb:spores-tce:halo-of-spores",
+                    "druid-phb:spores-tce:symbiotic-entity"
+                ]
+            },
+            {
+                "level": 6,
+                "features": [
+                    "druid-phb:spores-tce:fungal-infestation"
+                ]
+            },
+            {
+                "level": 10,
+                "features": [
+                    "druid-phb:spores-tce:spreading-spores"
+                ]
+            },
+            {
+                "level": 14,
+                "features": [
+                    "druid-phb:spores-tce:fungal-body"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "druid-phb:spores-tce:circle-spells",
+                "name": "Circle Spells",
+                "level": 2,
+                "text": "Your symbiotic link to fungus and your ability to tap into the cycle of life and death grants you access to certain spells. At 2nd level, you learn the Chill Touch cantrip. At 3rd, 5th, 7th, and 9th level you gain access to the spells listed for that level in the Circle of Spores Spells table.\n\nOnce you gain access to one of these spells, you always have it prepared, and it doesn't count against the number of spells you can prepare each day. If you gain access to a spell that doesn't appear on the druid spell list, the spell is nonetheless a druid spell for you.\n\nCircle of Spores Spells\n\nDruid Level | Circle Spells\n--- | ---\n3rd | Blindness/Deafness, Gentle Repose\n5th | Animate Dead, Gaseous Form\n7th | Blight, Confusion\n9th | Cloudkill, Contagion"
+            },
+            {
+                "id": "druid-phb:spores-tce:halo-of-spores",
+                "name": "Halo of Spores",
+                "level": 2,
+                "text": "Starting at 2nd level, you are surrounded by invisible, necrotic spores that are harmless until you unleash them on a creature nearby. When a creature you can see moves into a space within 10 feet of you or starts its turn there, you can use your reaction to deal 1d4 necrotic damage to that creature unless it succeeds on a Constitution saving throw against your spell save DC. The necrotic damage increases to 1d6 at 6th level, 1d8 at 10th level, and 1d10 at 14th level."
+            },
+            {
+                "id": "druid-phb:spores-tce:symbiotic-entity",
+                "name": "Symbiotic Entity",
+                "level": 2,
+                "text": "At 2nd level, you gain the ability to channel magic into your spores. As an action, you can expend a use of your Wild Shape feature to awaken those spores, rather than transforming into a beast form, and you gain 4 temporary hit points for each level you have in this class. While this feature is active, you gain the following benefits:\n\n- When you deal your Halo of Spores damage, roll the damage die a second time and add it to the total.\n- Your melee weapon attacks deal an extra 1d6 necrotic damage to any target they hit.\n\nThese benefits last for 10 minutes, until you lose all these temporary hit points, or until you use your Wild Shape again.",
+                "consumes": {
+                    "resource": "wild_shape",
+                    "amount": 1
+                }
+            },
+            {
+                "id": "druid-phb:spores-tce:fungal-infestation",
+                "name": "Fungal Infestation",
+                "level": 6,
+                "text": "At 6th level, your spores gain the ability to infest a corpse and animate it. If a beast or a humanoid that is Small or Medium dies within 10 feet of you, you can use your reaction to animate it, causing it to stand up immediately with 1 hit point. The creature uses the zombie stat block in the Monster Manual. It remains animate for 1 hour, after which time it collapses and dies.\n\nIn combat, the zombie's turn comes immediately after yours. It obeys your mental commands, and the only action it can take is the Attack action, making one melee attack.\n\nYou can use this feature a number of times equal to your Wisdom modifier (minimum of once), and you regain all expended uses of it when you finish a long rest."
+            },
+            {
+                "id": "druid-phb:spores-tce:spreading-spores",
+                "name": "Spreading Spores",
+                "level": 10,
+                "text": "At 10th level, you gain the ability to seed an area with deadly spores. As a bonus action while your Symbiotic Entity feature is active, you can hurl spores up to 30 feet away, where they swirl in a 10-foot cube for 1 minute. The spores disappear early if you use this feature again, if you dismiss them as a bonus action, or if your Symbiotic Entity feature is no longer active.\n\nWhenever a creature moves into the cube or starts its turn there, that creature takes your Halo of Spores damage, unless the creature succeeds on a Constitution saving throw against your spell save DC. A creature can take this damage no more than once per turn.\n\nWhile the cube of spores persists, you can't use your Halo of Spores reaction."
+            },
+            {
+                "id": "druid-phb:spores-tce:fungal-body",
+                "name": "Fungal Body",
+                "level": 14,
+                "text": "At 14th level, the fungal spores in your body alter you: you can't be blinded, deafened, frightened, or poisoned, and any critical hit against you counts as a normal hit instead, unless you're incapacitated."
+            }
+        ]
+    },
+    {
+        "id": "druid-phb:stars-tce",
+        "kind": "subclass",
+        "name": "Circle of Stars",
+        "source": "TCE",
+        "edition": "classic",
+        "reprinted_as": [
+            "druid-xphb:stars-xphb"
+        ],
+        "text": "The Circle of Stars allows druids to draw on the power of starlight. These druids have tracked heavenly patterns since time immemorial, discovering secrets hidden amid the constellations. By revealing and understanding these secrets, the Circle of the Stars seeks to harness the powers of the cosmos.\n\nMany druids of this circle keep records of the constellations and the stars' effects on the world. Some groups document these observations at megalithic sites, which serve as enigmatic libraries of lore. These repositories might take the form of stone circles, pyramids, petroglyphs, and underground temples-any construction durable enough to protect the circle's sacred knowledge even against a great cataclysm.",
+        "class_id": "druid-phb",
+        "short_name": "Stars",
+        "grants": {
+            "spells": [
+                {
+                    "spell": "guidance-phb",
+                    "how": "known",
+                    "at": 2
+                },
+                {
+                    "spell": "guiding-bolt-phb",
+                    "how": "prepared",
+                    "at": 2
+                }
+            ]
+        },
+        "progression": [
+            {
+                "level": 2,
+                "features": [
+                    "druid-phb:stars-tce:star-map",
+                    "druid-phb:stars-tce:starry-form"
+                ]
+            },
+            {
+                "level": 6,
+                "features": [
+                    "druid-phb:stars-tce:cosmic-omen"
+                ]
+            },
+            {
+                "level": 10,
+                "features": [
+                    "druid-phb:stars-tce:twinkling-constellations"
+                ]
+            },
+            {
+                "level": 14,
+                "features": [
+                    "druid-phb:stars-tce:full-of-stars"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "druid-phb:stars-tce:star-map",
+                "name": "Star Map",
+                "level": 2,
+                "text": "*2nd-level Circle of the Stars feature*\n\nYou've created a star chart as part of your heavenly studies. It is a Tiny object and can serve as a spellcasting focus for your druid spells. You determine its form by rolling on the Star Map table or by choosing one.\n\nStar Map\n\nd6 | Map Form\n--- | ---\n1 | A scroll covered with depictions of constellations\n2 | A stone tablet with fine holes drilled through it\n3 | A speckled owlbear hide, tooled with raised marks\n4 | A collection of maps bound in an ebony cover\n5 | A crystal that projects starry patterns when placed before a light\n6 | Glass disks that depict constellations\n\nWhile holding this map, you have these benefits:\n\n- You know the Guidance cantrip.\n- You have the Guiding Bolt spell prepared. It counts as a druid spell for you, and it doesn't count against the number of spells you can have prepared.\n- You can cast Guiding Bolt without expending a spell slot. You can do so a number of times equal to your proficiency bonus, and you regain all expended uses when you finish a long rest.\n\nIf you lose the map, you can perform a 1-hour ceremony to magically create a replacement. This ceremony can be performed during a short or long rest, and it destroys the previous map."
+            },
+            {
+                "id": "druid-phb:stars-tce:starry-form",
+                "name": "Starry Form",
+                "level": 2,
+                "text": "*2nd-level Circle of the Stars feature*\n\nAs a bonus action, you can expend a use of your Wild Shape feature to take on a starry form, rather than transforming into a beast.\n\nWhile in your starry form, you retain your game statistics, but your body becomes luminous; your joints glimmer like stars, and glowing lines connect them as on a star chart. This form sheds bright light in a 10-foot radius and dim light for an additional 10 feet. The form lasts for 10 minutes. It ends early if you dismiss it (no action required), are incapacitated, die, or use this feature again.\n\nWhenever you assume your starry form, choose which of the following constellations glimmers on your body; your choice gives you certain benefits while in the form:",
+                "consumes": {
+                    "resource": "wild_shape",
+                    "amount": 1
+                }
+            },
+            {
+                "id": "druid-phb:stars-tce:archer",
+                "name": "Archer",
+                "level": 2,
+                "text": "A constellation of an archer appears on you. When you activate this form, and as a bonus action on your subsequent turns while it lasts, you can make a ranged spell attack, hurling a luminous arrow that targets one creature within 60 feet of you. On a hit, the attack deals radiant damage equal to 1d8 + your Wisdom modifier.",
+                "parent": "druid-phb:stars-tce:starry-form"
+            },
+            {
+                "id": "druid-phb:stars-tce:chalice",
+                "name": "Chalice",
+                "level": 2,
+                "text": "A constellation of a life-giving goblet appears on you. Whenever you cast a spell using a spell slot that restores hit points to a creature, you or another creature within 30 feet of you can regain hit points equal to 1d8 + your Wisdom modifier.",
+                "parent": "druid-phb:stars-tce:starry-form"
+            },
+            {
+                "id": "druid-phb:stars-tce:dragon",
+                "name": "Dragon",
+                "level": 2,
+                "text": "A constellation of a wise dragon appears on you. When you make an Intelligence or a Wisdom check or a Constitution saving throw to maintain concentration on a spell, you can treat a roll of 9 or lower on the d20 as a 10.",
+                "parent": "druid-phb:stars-tce:starry-form"
+            },
+            {
+                "id": "druid-phb:stars-tce:cosmic-omen",
+                "name": "Cosmic Omen",
+                "level": 6,
+                "text": "*6th-level Circle of the Stars feature*\n\nWhenever you finish a long rest, you can consult your Star Map for omens. When you do so, roll a die. Until you finish your next long rest, you gain access to a special reaction based on whether you rolled an even or an odd number on the die:\n\n- **Weal (even).** Whenever a creature you can see within 30 feet of you is about to make an attack roll, a saving throw, or an ability check, you can use your reaction to roll a d6 and add the number rolled to the total.\n- **Woe (odd).** Whenever a creature you can see within 30 feet of you is about to make an attack roll, a saving throw, or an ability check, you can use your reaction to roll a d6 and subtract the number rolled from the total.\n\nYou can use this reaction a number of times equal to your proficiency bonus, and you regain all expended uses when you finish a long rest."
+            },
+            {
+                "id": "druid-phb:stars-tce:twinkling-constellations",
+                "name": "Twinkling Constellations",
+                "level": 10,
+                "text": "*10th-level Circle of the Stars feature*\n\nThe constellations of your Starry Form improve. The 1d8 of the Archer and the Chalice becomes 2d8, and while the Dragon is active, you have a flying speed of 20 feet and can hover.\n\nMoreover, at the start of each of your turns while in your Starry Form, you can change which constellation glimmers on your body."
+            },
+            {
+                "id": "druid-phb:stars-tce:full-of-stars",
+                "name": "Full of Stars",
+                "level": 14,
+                "text": "*14th-level Circle of the Stars feature*\n\nWhile in your Starry Form, you become partially incorporeal, giving you resistance to bludgeoning, piercing, and slashing damage."
+            }
+        ]
+    },
+    {
+        "id": "druid-phb:wildfire-tce",
+        "kind": "subclass",
+        "name": "Circle of Wildfire",
+        "source": "TCE",
+        "edition": "classic",
+        "text": "Druids within the Circle of Wildfire understand that destruction is sometimes the precursor of creation, such as when a forest fire promotes later growth. These druids bond with a primal spirit that harbors both destructive and creative power, allowing the druids to create controlled flames that burn away one thing but give life to another.",
+        "class_id": "druid-phb",
+        "short_name": "Wildfire",
+        "grants": {
+            "spells": [
+                {
+                    "spell": "burning-hands-phb",
+                    "how": "prepared",
+                    "at": 2
+                },
+                {
+                    "spell": "cure-wounds-phb",
+                    "how": "prepared",
+                    "at": 2
+                },
+                {
+                    "spell": "flaming-sphere-phb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "scorching-ray-phb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "plant-growth-phb",
+                    "how": "prepared",
+                    "at": 5
+                },
+                {
+                    "spell": "revivify-phb",
+                    "how": "prepared",
+                    "at": 5
+                },
+                {
+                    "spell": "aura-of-life-phb",
+                    "how": "prepared",
+                    "at": 7
+                },
+                {
+                    "spell": "fire-shield-phb",
+                    "how": "prepared",
+                    "at": 7
+                },
+                {
+                    "spell": "flame-strike-phb",
+                    "how": "prepared",
+                    "at": 9
+                },
+                {
+                    "spell": "mass-cure-wounds-phb",
+                    "how": "prepared",
+                    "at": 9
+                }
+            ]
+        },
+        "progression": [
+            {
+                "level": 2,
+                "features": [
+                    "druid-phb:wildfire-tce:circle-spells",
+                    "druid-phb:wildfire-tce:summon-wildfire-spirit"
+                ]
+            },
+            {
+                "level": 6,
+                "features": [
+                    "druid-phb:wildfire-tce:enhanced-bond"
+                ]
+            },
+            {
+                "level": 10,
+                "features": [
+                    "druid-phb:wildfire-tce:cauterizing-flames"
+                ]
+            },
+            {
+                "level": 14,
+                "features": [
+                    "druid-phb:wildfire-tce:blazing-revival"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "druid-phb:wildfire-tce:circle-spells",
+                "name": "Circle Spells",
+                "level": 2,
+                "text": "*2nd-level Circle of Wildfire feature*\n\nYou have formed a bond with a wildfire spirit, a primal being of creation and destruction. Your link with this spirit grants you access to some spells when you reach certain levels in this class, as shown on the Circle of Wildfire Spells table.\n\nOnce you gain access to one of these spells, you always have it prepared, and it doesn't count against the number of spells you can prepare each day. If you gain access to a spell that doesn't appear on the druid spell list, the spell is nonetheless a druid spell for you.\n\nCircle of Wildfire Spells\n\nDruid Level | Circle Spells\n--- | ---\n2nd | Burning Hands, Cure Wounds\n3rd | Flaming Sphere, Scorching Ray\n5th | Plant Growth, Revivify\n7th | Aura of Life, Fire Shield\n9th | Flame Strike, Mass Cure Wounds"
+            },
+            {
+                "id": "druid-phb:wildfire-tce:summon-wildfire-spirit",
+                "name": "Summon Wildfire Spirit",
+                "level": 2,
+                "text": "*2nd-level Circle of Wildfire feature*\n\nYou can summon the primal spirit bound to your soul. As an action, you can expend one use of your Wild Shape feature to summon your wildfire spirit, rather than assuming a beast form.\n\nThe spirit appears in an unoccupied space of your choice that you can see within 30 feet of you. Each creature within 10 feet of the spirit (other than you) when it appears must succeed on a Dexterity saving throw against your spell save DC or take 2d6 fire damage.\n\nThe spirit is friendly to you and your companions and obeys your commands. See this creature's game statistics in the Wildfire Spirit stat block, which uses your proficiency bonus (PB) in several places. You determine the spirit's appearance. Some spirits take the form of a humanoid figure made of gnarled branches covered in flame, while others look like beasts wreathed in fire.\n\nIn combat, the spirit shares your initiative count, but it takes its turn immediately after yours. The only action it takes on its turn is the Dodge action, unless you take a bonus action on your turn to command it to take another action. That action can be one in its stat block or some other action. If you are incapacitated, the spirit can take any action of its choice, not just Dodge.\n\nThe spirit manifests for 1 hour, until it is reduced to 0 hit points, until you use this feature to summon the spirit again, or until you die.",
+                "consumes": {
+                    "resource": "wild_shape",
+                    "amount": 1
+                }
+            },
+            {
+                "id": "druid-phb:wildfire-tce:enhanced-bond",
+                "name": "Enhanced Bond",
+                "level": 6,
+                "text": "*6th-level Circle of Wildfire feature*\n\nThe bond with your wildfire spirit enhances your destructive and restorative spells. Whenever you cast a spell that deals fire damage or restores hit points while your wildfire spirit is summoned, roll a d8, and you gain a bonus equal to the number rolled to one damage or healing roll of the spell.\n\nIn addition, when you cast a spell with a range other than self, the spell can originate from you or your wildfire spirit."
+            },
+            {
+                "id": "druid-phb:wildfire-tce:cauterizing-flames",
+                "name": "Cauterizing Flames",
+                "level": 10,
+                "text": "*10th-level Circle of Wildfire feature*\n\nYou gain the ability to turn death into magical flames that can heal or incinerate. When a Small or larger creature dies within 30 feet of you or your wildfire spirit, a harmless spectral flame springs forth in the dead creature's space and flickers there for 1 minute. When a creature you can see enters that space, you can use your reaction to extinguish the spectral flame there and either heal the creature or deal fire damage to it. The healing or damage equals 2d10 + your Wisdom modifier.\n\nYou can use this reaction a number of times equal to your proficiency bonus, and you regain all expended uses when you finish a long rest."
+            },
+            {
+                "id": "druid-phb:wildfire-tce:blazing-revival",
+                "name": "Blazing Revival",
+                "level": 14,
+                "text": "*14th-level Circle of Wildfire feature*\n\nThe bond with your wildfire spirit can save you from death. If the spirit is within 120 feet of you when you are reduced to 0 hit points and thereby fall unconscious, you can cause the spirit to drop to 0 hit points. You then regain half your hit points and immediately rise to your feet.\n\nOnce you use this feature, you can't use it again until you finish a long rest."
+            }
+        ]
+    }
+]

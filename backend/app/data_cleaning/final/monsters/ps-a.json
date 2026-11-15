@@ -1,0 +1,4682 @@
+[
+    {
+        "id": "adult-amonkhet-dragon-psa",
+        "kind": "monster",
+        "name": "Adult Amonkhet Dragon",
+        "source": "PSA",
+        "edition": "classic",
+        "tags": [
+            "Legendary Resistances"
+        ],
+        "size": [
+            "huge"
+        ],
+        "creature_type": {
+            "type": "dragon"
+        },
+        "alignment": [
+            "chaotic evil"
+        ],
+        "ac": [
+            {
+                "value": 19,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 256,
+            "formula": "19d12 + 133"
+        },
+        "speed": {
+            "walk": 40,
+            "fly": 80,
+            "climb": 40
+        },
+        "abilities": {
+            "str": 27,
+            "dex": 10,
+            "con": 25,
+            "int": 8,
+            "wis": 13,
+            "cha": 21
+        },
+        "saves": {
+            "dex": 6,
+            "con": 13,
+            "wis": 7,
+            "cha": 11
+        },
+        "skills": {
+            "perception": 13,
+            "stealth": 6
+        },
+        "senses": {
+            "darkvision": 120,
+            "blindsight": 60
+        },
+        "passive_perception": 23,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "fire"
+                ]
+            }
+        },
+        "languages": [
+            "Common",
+            "Draconic"
+        ],
+        "cr": {
+            "cr": "17",
+            "xp": 18000,
+            "pb": 6
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "legendary-resistance",
+                "name": "Legendary Resistance",
+                "category": "traits",
+                "text": "If the dragon fails a saving throw, it can choose to succeed instead.",
+                "uses": {
+                    "max": 3,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The dragon can use its Frightful Presence. It then makes three attacks: one with its bite and two with its claws."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +14 to hit, reach 10 ft., one target. Hit: 19 (2d10 + 8) piercing damage plus 7 (2d6) fire damage.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 14,
+                        "damage": [
+                            {
+                                "dice": "2d10",
+                                "bonus": 8,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "2d6",
+                                "type": "fire"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "claw",
+                "name": "Claw",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +14 to hit, reach 5 ft., one target. Hit: 15 (2d6 + 8) slashing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 14,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 8,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "tail",
+                "name": "Tail",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +14 to hit, reach 15 ft., one target. Hit: 17 (2d8 + 8) bludgeoning damage.",
+                "action": {
+                    "range": "reach 15 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 14,
+                        "damage": [
+                            {
+                                "dice": "2d8",
+                                "bonus": 8,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "frightful-presence",
+                "name": "Frightful Presence",
+                "category": "actions",
+                "text": "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a DC 19 Wisdom saving throw or become frightened for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. If a creature's saving throw is successful or the effect ends for it, the creature is immune to the dragon's Frightful Presence for the next 24 hours.",
+                "action": {
+                    "save": {
+                        "ability": "wis",
+                        "dc": 19,
+                        "on_success": "none",
+                        "conditions": [
+                            "frightened"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "fire-breath",
+                "name": "Fire Breath",
+                "category": "actions",
+                "text": "The dragon exhales fire in a 60-foot cone. Each creature in that area must make a DC 21 Dexterity saving throw, taking 63 (18d6) fire damage on a failed save, or half as much damage on a successful one.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "area": "60-foot cone",
+                    "save": {
+                        "ability": "dex",
+                        "dc": 21,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "18d6",
+                                "type": "fire"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "detect",
+                "name": "Detect",
+                "category": "legendary_actions",
+                "text": "The dragon makes a Wisdom (Perception) check."
+            },
+            {
+                "id": "tail-attack",
+                "name": "Tail Attack",
+                "category": "legendary_actions",
+                "text": "The dragon makes a tail attack."
+            },
+            {
+                "id": "wing-attack",
+                "name": "Wing Attack",
+                "category": "legendary_actions",
+                "text": "The dragon beats its wings. Each creature within 10 feet of the dragon must succeed on a DC 22 Dexterity saving throw or take 15 (2d6 + 8) bludgeoning damage and be knocked prone. The dragon can then fly up to half its flying speed.",
+                "cost": 2,
+                "action": {
+                    "save": {
+                        "ability": "dex",
+                        "dc": 22,
+                        "on_success": "none",
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 8,
+                                "type": "bludgeoning"
+                            }
+                        ],
+                        "conditions": [
+                            "prone"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "lair-actions",
+                "name": "Lair Actions",
+                "category": "lair_actions",
+                "text": "On initiative count 20 (losing initiative ties), the dragon takes a lair action to cause one of the following effects; the dragon can't use the same effect two rounds in a row:\n\n- Magma erupts from a point on the ground the dragon can see within 120 feet of it, creating a 20-foot-high, 5-foot-radius geyser. Each creature in the geyser's area must make a DC 15 Dexterity saving throw, taking 21 (6d6) fire damage on a failed save, or half as much damage on a successful one.\n- A tremor shakes the lair in a 60-foot radius around the dragon. Each creature other than the dragon on the ground in that area must succeed on a DC 15 Dexterity saving throw or be knocked prone.\n- Volcanic gases form a cloud in a 20-foot-radius sphere centered on a point the dragon can see within 120 feet of it. The sphere spreads around corners, and its area is lightly obscured. It lasts until initiative count 20 on the next round. Each creature that starts its turn in the cloud must succeed on a DC 13 Constitution saving throw or be poisoned until the end of its turn. While poisoned in this way, a creature is incapacitated.\n\n**Additional Lair Actions.** At your discretion, a legendary (adult or ancient) red dragon can use one or both of the following additional lair actions while in its lair:\n\n- **Noxious Smoke.** A cloud of thick, dark smoke fills a 20-foot-radius sphere centered on a point the dragon can see within 120 feet of it. The sphere spreads around corners, and its area is heavily obscured. A creature other than the dragon that starts its turn in the cloud or enters it for the first time on its turn must succeed on a DC 15 Constitution saving throw or be poisoned until the end of its turn. The cloud lasts until initiative count 20 on the next round.\n- **Searing Heat.** Searing heat spreads out in a 15-foot-radius sphere centered on a point the dragon can see within 120 feet of it. Any creature that enters the affected area or starts its turn there must make a DC 15 Constitution saving throw, taking 10 (3d6) fire damage on a failed save, or half as much damage on a successful one. The heat lasts until initiative count 20 on the next round."
+            },
+            {
+                "id": "regional-effects",
+                "name": "Regional Effects",
+                "category": "regional_effects",
+                "text": "The region containing a legendary red dragon's lair is warped by the dragon's magic, which creates one or more of the following effects:\n\n- Small earthquakes are common within 6 miles of the dragon's lair.\n- Water sources within 1 mile of the lair are supernaturally warm and tainted by sulfur.\n- Rocky fissures within 1 mile of the dragon's lair form portals to the Elemental Plane of Fire, allowing creatures of elemental fire into the world to dwell nearby.\n\nIf the dragon dies, these effects fade over the course of 1d10 days.\n\n**Additional Regional Effects.** Any of these effects might appear in the area around a red dragon's lair, in addition to or instead of the effects described in the *Monster Manual*:\n\n- **Desertification.** Precipitation is almost nonexistent within 6 miles of the dragon's lair, making the land parched and arid and most plant life withered and brown.\n- **Fiery Senses.** The dragon can hear up to 30 feet through any open flame within 1 mile of the dragon's lair.\n- **Ominous Flames.** Open flames within 6 miles of the dragon's lair are tinged dark red, hiss and crackle constantly, and throw off embers and showers of sparks."
+            }
+        ],
+        "legendary_actions": {
+            "uses": 3
+        },
+        "variants": [
+            {
+                "id": "customizing-dragons",
+                "name": "Customizing Dragons",
+                "text": "You can customize any dragon's stat block to reflect the dragon's unique character. Minor changes such as those below are easy to make and have no impact on a dragon's challenge rating.\n\n**Languages.** Most dragons prefer to speak Draconic but learn Common for dealing with allies and minions. But given their high Intelligence and long life span, dragons can easily learn additional languages. You can add languages to a dragon's stat block.\n\n**Skills.** Most dragons are proficient in the Perception and Stealth skills, and many dragons have additional skill proficiencies. As with languages, you can customize a dragon's skill list (even doubling their proficiency bonus with certain skills) to reflect particular interests and activities. You can also give a dragon tool proficiencies, particularly if the dragon spends time in Humanoid form.\n\n**Spells.** See the \"Variant: Dragons as Innate Spellcasters\" inset(s), below.\n\n**Other Traits and Actions.** You can borrow traits and actions from other monsters to add unique flavor to a dragon. Consider these examples:\n\n- **Damage Absorption.** You might decide that this dragon is not only unharmed by fire damage, but actually healed by it. Whenever the dragon is subjected to fire damage, it takes no damage and instead regains a number of hit points equal to the fire damage dealt.\n- **Flyby.** The dragon is an agile flier, quick to fly out of enemies' reach. The dragon doesn't provoke an opportunity attack when it flies out of an enemy's reach.\n- **Mimicry.** Impersonating characters or their allies could be a fun trick for a crafty dragon. The dragon can mimic any sounds it has heard, including voices. A creature that hears the sounds can tell they are imitations with a successful DC 13 Wisdom (Insight) check.\n- **Rejuvenation.** You might decide that dragons in your campaign, being an essential part of the Material Plane, are nearly impossible to destroy. A dragon's life essence might be preserved in the egg from which it first emerged, in its hoard, or in a cavernous hall at the center of the world, just as a lich's essence is hidden in a phylactery. If it has an essence-preserving object, a destroyed dragon gains a new body in 1d10 days, regaining all its hit points and becoming active again. The new body appears within 5 feet of the object.\n- **Special Senses.** Most dragons have blindsight and darkvision. You might upgrade blindsight to truesight, or you could give a dragon with a burrowing speed tremorsense."
+            }
+        ],
+        "flags": {
+            "dragon_age": "adult",
+            "dragon_casting_color": "red"
+        },
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "fire",
+                "piercing",
+                "slashing"
+            ],
+            "conditions_inflicted": [
+                "frightened",
+                "prone",
+                "incapacitated",
+                "poisoned"
+            ],
+            "saves_forced": [
+                "dex",
+                "wis",
+                "con"
+            ],
+            "senses": [
+                "blindsight",
+                "superior_darkvision"
+            ],
+            "movement": [
+                "fly",
+                "climb"
+            ],
+            "actions": [
+                "breath_weapon",
+                "frightful_presence",
+                "multiattack"
+            ],
+            "traits": [
+                "legendary_resistances"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_weapon_attack",
+                "reach"
+            ],
+            "languages": [
+                "common",
+                "draconic"
+            ],
+            "environment": [
+                "mountain",
+                "hill"
+            ],
+            "groups": [
+                "Chromatic Dragon"
+            ]
+        }
+    },
+    {
+        "id": "ammit-psa",
+        "kind": "monster",
+        "name": "Ammit",
+        "source": "PSA",
+        "edition": "classic",
+        "tags": [
+            "Hold Breath"
+        ],
+        "size": [
+            "huge"
+        ],
+        "creature_type": {
+            "type": "beast"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 14,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 85,
+            "formula": "9d12 + 27"
+        },
+        "speed": {
+            "walk": 30,
+            "swim": 50
+        },
+        "abilities": {
+            "str": 21,
+            "dex": 9,
+            "con": 17,
+            "int": 2,
+            "wis": 10,
+            "cha": 7
+        },
+        "skills": {
+            "stealth": 5
+        },
+        "passive_perception": 10,
+        "cr": {
+            "cr": "5",
+            "xp": 1800,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": -1
+        },
+        "features": [
+            {
+                "id": "hold-breath",
+                "name": "Hold Breath",
+                "category": "traits",
+                "text": "The ammit can hold its breath for 30 minutes."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The ammit makes two attacks: one with its bite and one with its tail."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +8 to hit, reach 5 ft., one target. Hit: 21 (3d10 + 5) piercing damage, and the target is grappled (escape DC 16). Until this grapple ends, the target is restrained, and the ammit can't bite another target.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 8,
+                        "damage": [
+                            {
+                                "dice": "3d10",
+                                "bonus": 5,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "tail",
+                "name": "Tail",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +8 to hit, reach 10 ft., one target not grappled by the ammit. Hit: 14 (2d8 + 5) bludgeoning damage. If the target is a creature, it must succeed on a DC 16 Strength saving throw or be knocked prone.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 8,
+                        "damage": [
+                            {
+                                "dice": "2d8",
+                                "bonus": 5,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "str",
+                        "dc": 16,
+                        "on_success": "none",
+                        "conditions": [
+                            "prone"
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "piercing"
+            ],
+            "conditions_inflicted": [
+                "grappled",
+                "prone",
+                "restrained"
+            ],
+            "saves_forced": [
+                "str"
+            ],
+            "movement": [
+                "swim"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "hold_breath"
+            ],
+            "misc": [
+                "melee_weapon_attack",
+                "reach"
+            ],
+            "environment": [
+                "swamp"
+            ]
+        }
+    },
+    {
+        "id": "amonkhet-dragon-wyrmling-psa",
+        "kind": "monster",
+        "name": "Amonkhet Dragon Wyrmling",
+        "source": "PSA",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "dragon"
+        },
+        "alignment": [
+            "chaotic evil"
+        ],
+        "ac": [
+            {
+                "value": 17,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 75,
+            "formula": "10d8 + 30"
+        },
+        "speed": {
+            "walk": 30,
+            "fly": 60,
+            "climb": 30
+        },
+        "abilities": {
+            "str": 19,
+            "dex": 10,
+            "con": 17,
+            "int": 5,
+            "wis": 11,
+            "cha": 15
+        },
+        "saves": {
+            "dex": 2,
+            "con": 5,
+            "wis": 2,
+            "cha": 4
+        },
+        "skills": {
+            "perception": 4,
+            "stealth": 2
+        },
+        "senses": {
+            "darkvision": 60,
+            "blindsight": 10
+        },
+        "passive_perception": 14,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "fire"
+                ]
+            }
+        },
+        "languages": [
+            "Draconic"
+        ],
+        "cr": {
+            "cr": "4",
+            "xp": 1100,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 9 (1d10 + 4) piercing damage plus 3 (1d6) fire damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "1d10",
+                                "bonus": 4,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "1d6",
+                                "type": "fire"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "fire-breath",
+                "name": "Fire Breath",
+                "category": "actions",
+                "text": "The dragon exhales fire in a 15-foot cone. Each creature in that area must make a DC 13 Dexterity saving throw, taking 24 (7d6) fire damage on a failed save, or half as much damage on a successful one.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "area": "15-foot cone",
+                    "save": {
+                        "ability": "dex",
+                        "dc": 13,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "7d6",
+                                "type": "fire"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "variants": [
+            {
+                "id": "customizing-dragons",
+                "name": "Customizing Dragons",
+                "text": "You can customize any dragon's stat block to reflect the dragon's unique character. Minor changes such as those below are easy to make and have no impact on a dragon's challenge rating.\n\n**Languages.** Most dragons prefer to speak Draconic but learn Common for dealing with allies and minions. But given their high Intelligence and long life span, dragons can easily learn additional languages. You can add languages to a dragon's stat block.\n\n**Skills.** Most dragons are proficient in the Perception and Stealth skills, and many dragons have additional skill proficiencies. As with languages, you can customize a dragon's skill list (even doubling their proficiency bonus with certain skills) to reflect particular interests and activities. You can also give a dragon tool proficiencies, particularly if the dragon spends time in Humanoid form.\n\n**Spells.** See the \"Variant: Dragons as Innate Spellcasters\" inset(s), below.\n\n**Other Traits and Actions.** You can borrow traits and actions from other monsters to add unique flavor to a dragon. Consider these examples:\n\n- **Damage Absorption.** You might decide that this dragon is not only unharmed by fire damage, but actually healed by it. Whenever the dragon is subjected to fire damage, it takes no damage and instead regains a number of hit points equal to the fire damage dealt.\n- **Flyby.** The dragon is an agile flier, quick to fly out of enemies' reach. The dragon doesn't provoke an opportunity attack when it flies out of an enemy's reach.\n- **Mimicry.** Impersonating characters or their allies could be a fun trick for a crafty dragon. The dragon can mimic any sounds it has heard, including voices. A creature that hears the sounds can tell they are imitations with a successful DC 10 Wisdom (Insight) check.\n- **Rejuvenation.** You might decide that dragons in your campaign, being an essential part of the Material Plane, are nearly impossible to destroy. A dragon's life essence might be preserved in the egg from which it first emerged, in its hoard, or in a cavernous hall at the center of the world, just as a lich's essence is hidden in a phylactery. If it has an essence-preserving object, a destroyed dragon gains a new body in 1d10 days, regaining all its hit points and becoming active again. The new body appears within 5 feet of the object.\n- **Special Senses.** Most dragons have blindsight and darkvision. You might upgrade blindsight to truesight, or you could give a dragon with a burrowing speed tremorsense."
+            }
+        ],
+        "flags": {
+            "dragon_age": "wyrmling"
+        },
+        "filters": {
+            "damage_dealt": [
+                "fire",
+                "piercing"
+            ],
+            "saves_forced": [
+                "dex"
+            ],
+            "senses": [
+                "blindsight",
+                "darkvision"
+            ],
+            "movement": [
+                "fly",
+                "climb"
+            ],
+            "actions": [
+                "breath_weapon"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "draconic"
+            ],
+            "groups": [
+                "Chromatic Dragon"
+            ]
+        }
+    },
+    {
+        "id": "amonkhet-hydra-psa",
+        "kind": "monster",
+        "name": "Amonkhet Hydra",
+        "source": "PSA",
+        "edition": "classic",
+        "tags": [
+            "Hold Breath"
+        ],
+        "size": [
+            "huge"
+        ],
+        "creature_type": {
+            "type": "monstrosity"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 15,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 172,
+            "formula": "15d12 + 75"
+        },
+        "speed": {
+            "walk": 30,
+            "swim": 30
+        },
+        "abilities": {
+            "str": 20,
+            "dex": 12,
+            "con": 20,
+            "int": 2,
+            "wis": 10,
+            "cha": 7
+        },
+        "skills": {
+            "perception": 6
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 16,
+        "cr": {
+            "cr": "8",
+            "xp": 3900,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "hold-breath",
+                "name": "Hold Breath",
+                "category": "traits",
+                "text": "The hydra can hold its breath for 1 hour."
+            },
+            {
+                "id": "multiple-heads",
+                "name": "Multiple Heads",
+                "category": "traits",
+                "text": "The hydra has five heads. While it has more than one head, the hydra has advantage on saving throws against being blinded, charmed, deafened, frightened, stunned, and knocked unconscious.\n\nWhenever the hydra takes 25 or more damage in a single turn, one of its heads dies. If all its heads die, the hydra dies.\n\nAt the end of its turn, it grows two heads for each of its heads that died since its last turn, unless it has taken fire damage since its last turn. The hydra regains 10 hit points for each head regrown in this way."
+            },
+            {
+                "id": "reactive-heads",
+                "name": "Reactive Heads",
+                "category": "traits",
+                "text": "For each head the hydra has beyond one, it gets an extra reaction that can be used only for opportunity attacks."
+            },
+            {
+                "id": "wakeful",
+                "name": "Wakeful",
+                "category": "traits",
+                "text": "While the hydra sleeps, at least one of its heads is awake."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The hydra makes as many bite attacks as it has heads."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +8 to hit, reach 10 ft., one target. Hit: 7 (1d4 + 5) piercing damage, and the target must make on a DC 16 Constitution saving throw, taking 7 (2d6) poison damage on a failed save, or half as much damage on a successful one.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 8,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 5,
+                                "type": "piercing"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "con",
+                        "dc": 16,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "poison",
+                "piercing"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "movement": [
+                "swim"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "hold_breath"
+            ],
+            "misc": [
+                "melee_weapon_attack",
+                "reach"
+            ],
+            "environment": [
+                "swamp"
+            ]
+        }
+    },
+    {
+        "id": "amonkhet-mummy-psa",
+        "kind": "monster",
+        "name": "Amonkhet Mummy",
+        "source": "PSA",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "undead"
+        },
+        "alignment": [
+            "lawful evil"
+        ],
+        "ac": [
+            {
+                "value": 11,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 58,
+            "formula": "9d8 + 18"
+        },
+        "speed": {
+            "walk": 20
+        },
+        "abilities": {
+            "str": 16,
+            "dex": 8,
+            "con": 15,
+            "int": 6,
+            "wis": 10,
+            "cha": 12
+        },
+        "saves": {
+            "wis": 2
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 10,
+        "defenses": {
+            "resist": {
+                "conditional": [
+                    {
+                        "types": [
+                            "bludgeoning",
+                            "piercing",
+                            "slashing"
+                        ],
+                        "note": "from nonmagical attacks"
+                    }
+                ]
+            },
+            "immune": {
+                "types": [
+                    "necrotic",
+                    "poison"
+                ]
+            },
+            "vulnerable": {
+                "types": [
+                    "fire"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "exhaustion",
+                    "frightened",
+                    "paralyzed",
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "the languages it knew in life"
+        ],
+        "cr": {
+            "cr": "3",
+            "xp": 700,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": -1
+        },
+        "features": [
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The mummy can use its Dreadful Glare and makes one attack with its rotting fist."
+            },
+            {
+                "id": "rotting-fist",
+                "name": "Rotting Fist",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) bludgeoning damage plus 10 (3d6) necrotic damage. If the target is a creature, it must succeed on a DC 12 Constitution saving throw or be cursed with mummy rot. The cursed target can't regain hit points, and its hit point maximum decreases by 10 (3d6) for every 24 hours that elapse. If the curse reduces the target's hit point maximum to 0, the target dies, and its body turns to dust. The curse lasts until removed by the Remove Curse spell or other magic.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 3,
+                                "type": "bludgeoning"
+                            },
+                            {
+                                "dice": "3d6",
+                                "type": "necrotic"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "con",
+                        "dc": 12,
+                        "on_success": "none"
+                    }
+                }
+            },
+            {
+                "id": "dreadful-glare",
+                "name": "Dreadful Glare",
+                "category": "actions",
+                "text": "The mummy targets one creature it can see within 60 feet of it. If the target can see the mummy, it must succeed on a DC 11 Wisdom saving throw against this magic or become frightened until the end of the mummy's next turn. If the target fails the saving throw by 5 or more, it is also paralyzed for the same duration. A target that succeeds on the saving throw is immune to the Dreadful Glare of all mummies (but not mummy lords) for the next 24 hours.",
+                "action": {
+                    "save": {
+                        "ability": "wis",
+                        "dc": 11,
+                        "on_success": "none",
+                        "conditions": [
+                            "frightened",
+                            "paralyzed"
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "necrotic"
+            ],
+            "conditions_inflicted": [
+                "frightened",
+                "paralyzed"
+            ],
+            "saves_forced": [
+                "con",
+                "wis"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "curse",
+                "hit_point_reduction",
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "known_in_life"
+            ],
+            "environment": [
+                "desert"
+            ]
+        }
+    },
+    {
+        "id": "amonkhet-mummy-lord-psa",
+        "kind": "monster",
+        "name": "Amonkhet Mummy Lord",
+        "source": "PSA",
+        "edition": "classic",
+        "tags": [
+            "Magic Resistance",
+            "Rejuvenation"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "undead"
+        },
+        "alignment": [
+            "lawful evil"
+        ],
+        "ac": [
+            {
+                "value": 17,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 97,
+            "formula": "13d8 + 39"
+        },
+        "speed": {
+            "walk": 20
+        },
+        "abilities": {
+            "str": 18,
+            "dex": 10,
+            "con": 17,
+            "int": 11,
+            "wis": 18,
+            "cha": 16
+        },
+        "saves": {
+            "con": 8,
+            "int": 5,
+            "wis": 9,
+            "cha": 8
+        },
+        "skills": {
+            "history": 5,
+            "religion": 5
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 14,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "necrotic",
+                    "poison"
+                ],
+                "conditional": [
+                    {
+                        "types": [
+                            "bludgeoning",
+                            "piercing",
+                            "slashing"
+                        ],
+                        "note": "from nonmagical attacks"
+                    }
+                ]
+            },
+            "vulnerable": {
+                "types": [
+                    "fire"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "exhaustion",
+                    "frightened",
+                    "paralyzed",
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "the languages it knew in life"
+        ],
+        "cr": {
+            "cr": "15",
+            "xp": 13000,
+            "pb": 5,
+            "lair": "16",
+            "xp_lair": 15000
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The mummy lord has advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "rejuvenation",
+                "name": "Rejuvenation",
+                "category": "traits",
+                "text": "A destroyed mummy lord gains a new body in 24 hours if its heart is intact, regaining all its hit points and becoming active again. The new body appears within 5 feet of the mummy lord's heart."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The mummy can use its Dreadful Glare and makes one attack with its rotting fist."
+            },
+            {
+                "id": "rotting-fist",
+                "name": "Rotting Fist",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +9 to hit, reach 5 ft., one target. Hit: 14 (3d6 + 4) bludgeoning damage plus 21 (6d6) necrotic damage. If the target is a creature, it must succeed on a DC 16 Constitution saving throw or be cursed with mummy rot. The cursed target can't regain hit points, and its hit point maximum decreases by 10 (3d6) for every 24 hours that elapse. If the curse reduces the target's hit point maximum to 0, the target dies, and its body turns to dust. The curse lasts until removed by the Remove Curse spell or other magic.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 9,
+                        "damage": [
+                            {
+                                "dice": "3d6",
+                                "bonus": 4,
+                                "type": "bludgeoning"
+                            },
+                            {
+                                "dice": "6d6",
+                                "type": "necrotic"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "con",
+                        "dc": 16,
+                        "on_success": "none"
+                    }
+                }
+            },
+            {
+                "id": "dreadful-glare",
+                "name": "Dreadful Glare",
+                "category": "actions",
+                "text": "The mummy lord targets one creature it can see within 60 feet of it. If the target can see the mummy lord, it must succeed on a DC 16 Wisdom saving throw against this magic or become frightened until the end of the mummy's next turn. If the target fails the saving throw by 5 or more, it is also paralyzed for the same duration. A target that succeeds on the saving throw is immune to the Dreadful Glare of all mummies and mummy lords for the next 24 hours.",
+                "action": {
+                    "save": {
+                        "ability": "wis",
+                        "dc": 16,
+                        "on_success": "none",
+                        "conditions": [
+                            "frightened",
+                            "paralyzed"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "attack",
+                "name": "Attack",
+                "category": "legendary_actions",
+                "text": "The mummy lord makes one attack with its rotting fist or uses its Dreadful Glare."
+            },
+            {
+                "id": "blinding-dust",
+                "name": "Blinding Dust",
+                "category": "legendary_actions",
+                "text": "Blinding dust and sand swirls magically around the mummy lord. Each creature within 5 feet of the mummy lord must succeed on a DC 16 Constitution saving throw or be blinded until the end of the creature's next turn.",
+                "action": {
+                    "save": {
+                        "ability": "con",
+                        "dc": 16,
+                        "on_success": "none",
+                        "conditions": [
+                            "blinded"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "blasphemous-word",
+                "name": "Blasphemous Word",
+                "category": "legendary_actions",
+                "text": "The mummy lord utters a blasphemous word. Each non-undead creature within 10 feet of the mummy lord that can hear the magical utterance must succeed on a DC 16 Constitution saving throw or be stunned until the end of the mummy lord's next turn.",
+                "cost": 2,
+                "action": {
+                    "save": {
+                        "ability": "con",
+                        "dc": 16,
+                        "on_success": "none",
+                        "conditions": [
+                            "stunned"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "channel-negative-energy",
+                "name": "Channel Negative Energy",
+                "category": "legendary_actions",
+                "text": "The mummy lord magically unleashes negative energy. Creatures within 60 feet of the mummy lord, including ones behind barriers and around corners, can't regain hit points until the end of the mummy lord's next turn.",
+                "cost": 2
+            },
+            {
+                "id": "whirlwind-of-sand",
+                "name": "Whirlwind of Sand",
+                "category": "legendary_actions",
+                "text": "The mummy lord magically transforms into a whirlwind of sand, moves up to 60 feet, and reverts to its normal form. While in whirlwind form, the mummy lord is immune to all damage, and it can't be grappled, petrified, knocked prone, restrained, or stunned. Equipment worn or carried by the mummy lord remain in its possession.",
+                "cost": 2
+            },
+            {
+                "id": "lair-actions",
+                "name": "Lair Actions",
+                "category": "lair_actions",
+                "text": "On initiative count 20 (losing initiative ties), the mummy lord takes a lair action to cause one of the following effects; the mummy lord can't use the same effect two rounds in a row:\n\n- Each undead creature in the lair can pinpoint the location of each living creature within 120 feet of it until initiative count 20 on the next round.\n- Each undead in the lair has advantage on saving throws against effects that turn undead until initiative count 20 on the next round.\n- Until initiative count 20 on the next round, any non-undead creature that tries to cast a spell of 4th level or lower in the mummy lord's lair is wracked with pain. The creature can choose another action, but if it tries to cast the spell, it must make a DC 16 Constitution saving throw. On a failed save, it takes 1d6 necrotic damage per level of the spell, and the spell has no effect and is wasted."
+            },
+            {
+                "id": "regional-effects",
+                "name": "Regional Effects",
+                "category": "regional_effects",
+                "text": "A mummy lord's temple or tomb is warped in any of the following ways by the creature's dark presence:\n\n- Food instantly molders and water instantly evaporates when brought into the lair. Other non magical drinks are spoiled - wine turning to vinegar, for instance.\n- Divination spells cast within the lair by creatures other than the mummy lord have a 25 percent chance to provide misleading results, as determined by the DM. If a Divination spell already has a chance to fail or become unreliable when cast multiple times, that chance increases by 25 percent.\n- A creature that takes treasure from the lair is cursed until the treasure is returned. The cursed target has disadvantage on all saving throws. The curse lasts until removed by a Remove Curse spell or other magic.\n\nIf the mummy lord is destroyed, these regional effects end immediately."
+            }
+        ],
+        "legendary_actions": {
+            "uses": 3
+        },
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "wis",
+                "dc": 17,
+                "attack": 9,
+                "text": "The mummy lord is a 10th-level spellcaster. Its spellcasting ability is Wisdom (spell save DC 17, +9 to hit with spell attacks). The mummy lord has the following cleric spells prepared:",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "level": 0,
+                        "spells": [
+                            {
+                                "spell": "sacred-flame-phb"
+                            },
+                            {
+                                "spell": "thaumaturgy-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 1,
+                        "slots": 4,
+                        "spells": [
+                            {
+                                "spell": "command-phb"
+                            },
+                            {
+                                "spell": "guiding-bolt-phb"
+                            },
+                            {
+                                "spell": "shield-of-faith-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 2,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "hold-person-phb"
+                            },
+                            {
+                                "spell": "silence-phb"
+                            },
+                            {
+                                "spell": "spiritual-weapon-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 3,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "animate-dead-phb"
+                            },
+                            {
+                                "spell": "dispel-magic-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 4,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "divination-phb"
+                            },
+                            {
+                                "spell": "guardian-of-faith-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 5,
+                        "slots": 2,
+                        "spells": [
+                            {
+                                "spell": "contagion-phb"
+                            },
+                            {
+                                "spell": "insect-plague-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 6,
+                        "slots": 1,
+                        "spells": [
+                            {
+                                "spell": "harm-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "necrotic",
+                "force",
+                "piercing",
+                "radiant"
+            ],
+            "conditions_inflicted": [
+                "blinded",
+                "frightened",
+                "paralyzed",
+                "stunned",
+                "deafened",
+                "poisoned",
+                "prone"
+            ],
+            "saves_forced": [
+                "con",
+                "wis",
+                "dex"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "magic_resistance",
+                "rejuvenation"
+            ],
+            "misc": [
+                "area_of_effect",
+                "curse",
+                "hit_point_reduction",
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "known_in_life"
+            ],
+            "spellcasting": [
+                "cleric"
+            ],
+            "environment": [
+                "desert"
+            ]
+        }
+    },
+    {
+        "id": "amonkhet-sphinx-psa",
+        "kind": "monster",
+        "name": "Amonkhet Sphinx",
+        "source": "PSA",
+        "edition": "classic",
+        "tags": [
+            "Magic Weapons"
+        ],
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "monstrosity"
+        },
+        "alignment": [
+            "lawful neutral"
+        ],
+        "ac": [
+            {
+                "value": 17,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 199,
+            "formula": "19d10 + 95"
+        },
+        "speed": {
+            "walk": 40,
+            "fly": 60
+        },
+        "abilities": {
+            "str": 22,
+            "dex": 10,
+            "con": 20,
+            "int": 16,
+            "wis": 18,
+            "cha": 23
+        },
+        "saves": {
+            "dex": 6,
+            "con": 11,
+            "int": 9,
+            "wis": 10
+        },
+        "skills": {
+            "arcana": 9,
+            "perception": 10,
+            "religion": 15
+        },
+        "senses": {
+            "truesight": 120
+        },
+        "passive_perception": 20,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "psychic"
+                ],
+                "conditional": [
+                    {
+                        "types": [
+                            "bludgeoning",
+                            "piercing",
+                            "slashing"
+                        ],
+                        "note": "from nonmagical attacks"
+                    }
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "frightened"
+                ]
+            }
+        },
+        "languages": [
+            "Common",
+            "Sphinx"
+        ],
+        "cr": {
+            "cr": "17",
+            "xp": 18000,
+            "pb": 6
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "inscrutable",
+                "name": "Inscrutable",
+                "category": "traits",
+                "text": "The sphinx is immune to any effect that would sense its emotions or read its thoughts, as well as any divination spell that it refuses. Wisdom (Insight) checks made to ascertain the sphinx's intentions or sincerity have disadvantage."
+            },
+            {
+                "id": "magic-weapons",
+                "name": "Magic Weapons",
+                "category": "traits",
+                "text": "The sphinx's weapon attacks are magical."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The sphinx makes two claw attacks."
+            },
+            {
+                "id": "claw",
+                "name": "Claw",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +12 to hit, reach 5 ft., one target. Hit: 17 (2d10 + 6) slashing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 12,
+                        "damage": [
+                            {
+                                "dice": "2d10",
+                                "bonus": 6,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "roar",
+                "name": "Roar",
+                "category": "actions",
+                "text": "The sphinx emits a magical roar. Each time it roars before finishing a long rest, the roar is louder and the effect is different, as detailed below. Each creature within 500 feet of the sphinx and able to hear the roar must make a saving throw.\n\n- **First Roar.** Each creature that fails a DC 18 Wisdom saving throw is frightened for 1 minute. A frightened creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.\n- **Second Roar.** Each creature that fails a DC 18 Wisdom saving throw is deafened and frightened for 1 minute. A frightened creature is paralyzed and can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.\n- **Third Roar.** Each creature makes a DC 18 Constitution saving throw. On a failed save, a creature takes 44 (8d10) thunder damage and is knocked prone. On a successful save, the creature takes half as much damage and isn't knocked prone.",
+                "uses": {
+                    "max": 3,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "roar-first-roar",
+                "name": "First Roar",
+                "category": "actions",
+                "parent": "roar",
+                "text": "Each creature that fails a DC 18 Wisdom saving throw is frightened for 1 minute. A frightened creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.",
+                "action": {
+                    "save": {
+                        "ability": "wis",
+                        "dc": 18,
+                        "on_success": "none",
+                        "conditions": [
+                            "frightened"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "roar-second-roar",
+                "name": "Second Roar",
+                "category": "actions",
+                "parent": "roar",
+                "text": "Each creature that fails a DC 18 Wisdom saving throw is deafened and frightened for 1 minute. A frightened creature is paralyzed and can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.",
+                "action": {
+                    "save": {
+                        "ability": "wis",
+                        "dc": 18,
+                        "on_success": "none",
+                        "conditions": [
+                            "deafened",
+                            "frightened",
+                            "paralyzed"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "roar-third-roar",
+                "name": "Third Roar",
+                "category": "actions",
+                "parent": "roar",
+                "text": "Each creature makes a DC 18 Constitution saving throw. On a failed save, a creature takes 44 (8d10) thunder damage and is knocked prone. On a successful save, the creature takes half as much damage and isn't knocked prone.",
+                "action": {
+                    "save": {
+                        "ability": "con",
+                        "dc": 18,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "8d10",
+                                "type": "thunder"
+                            }
+                        ],
+                        "conditions": [
+                            "prone"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "claw-attack",
+                "name": "Claw Attack",
+                "category": "legendary_actions",
+                "text": "The sphinx makes one claw attack."
+            },
+            {
+                "id": "teleport",
+                "name": "Teleport",
+                "category": "legendary_actions",
+                "text": "The sphinx magically teleports, along with any equipment it is wearing or carrying, up to 120 feet to an unoccupied space it can see.",
+                "cost": 2
+            },
+            {
+                "id": "cast-a-spell",
+                "name": "Cast a Spell",
+                "category": "legendary_actions",
+                "text": "The sphinx casts a spell from its list of prepared spells, using a spell slot as normal.",
+                "cost": 3
+            },
+            {
+                "id": "lair-actions",
+                "name": "Lair Actions",
+                "category": "lair_actions",
+                "text": "On initiative count 20 (losing initiative ties), the sphinx can take a lair action to cause one of the following magical effects; the sphinx can't use an effect again until it finishes a short or long rest:\n\n- The flow of time is altered such that every creature in the lair must reroll initiative. The sphinx can choose not to reroll.\n- The effects of time are altered such that every creature in the lair must succeed on a DC 15 Constitution saving throw or become 1d20 years older or younger (the sphinx's choice), but never any younger than 1 year old. A Greater Restoration spell can restore a creature's age to normal.\n- The flow of time within the lair is altered such that everything within moves up to 10 years forward or backward (sphinx's choice). Only the sphinx is immediately aware of the time change. A Wish spell can return the caster and up to seven other creatures designated by the caster to their normal time.\n- The sphinx shifts itself and up to seven other creatures it can see within in its lair to another plane of existence. Once outside its lair, the sphinx can't use lair actions, but it can return to its lair as a bonus action on its turn, taking up to seven creatures with it."
+            }
+        ],
+        "legendary_actions": {
+            "uses": 3
+        },
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "wis",
+                "dc": 18,
+                "attack": 10,
+                "text": "The sphinx is a 12th-level spellcaster. Its spellcasting ability is Wisdom (spell save DC 18, +10 to hit with spell attacks). It requires no material components to cast its spells. The sphinx has the following cleric spells prepared:",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "level": 0,
+                        "spells": [
+                            {
+                                "spell": "sacred-flame-phb"
+                            },
+                            {
+                                "spell": "spare-the-dying-phb"
+                            },
+                            {
+                                "spell": "thaumaturgy-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 1,
+                        "slots": 4,
+                        "spells": [
+                            {
+                                "spell": "command-phb"
+                            },
+                            {
+                                "spell": "detect-evil-and-good-phb"
+                            },
+                            {
+                                "spell": "detect-magic-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 2,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "lesser-restoration-phb"
+                            },
+                            {
+                                "spell": "zone-of-truth-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 3,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "dispel-magic-phb"
+                            },
+                            {
+                                "spell": "tongues-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 4,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "banishment-phb"
+                            },
+                            {
+                                "spell": "freedom-of-movement-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 5,
+                        "slots": 2,
+                        "spells": [
+                            {
+                                "spell": "flame-strike-phb"
+                            },
+                            {
+                                "spell": "greater-restoration-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 6,
+                        "slots": 1,
+                        "spells": [
+                            {
+                                "spell": "heroes-feast-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "slashing",
+                "thunder",
+                "fire",
+                "radiant"
+            ],
+            "conditions_inflicted": [
+                "deafened",
+                "frightened",
+                "paralyzed",
+                "prone",
+                "incapacitated"
+            ],
+            "saves_forced": [
+                "con",
+                "wis",
+                "cha",
+                "dex"
+            ],
+            "senses": [
+                "truesight"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "magic_weapons"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "other"
+            ],
+            "spellcasting": [
+                "cleric"
+            ],
+            "environment": [
+                "desert"
+            ],
+            "groups": [
+                "Sphinxes"
+            ]
+        }
+    },
+    {
+        "id": "ancient-amonkhet-dragon-psa",
+        "kind": "monster",
+        "name": "Ancient Amonkhet Dragon",
+        "source": "PSA",
+        "edition": "classic",
+        "tags": [
+            "Legendary Resistances"
+        ],
+        "size": [
+            "gargantuan"
+        ],
+        "creature_type": {
+            "type": "dragon"
+        },
+        "alignment": [
+            "chaotic evil"
+        ],
+        "ac": [
+            {
+                "value": 22,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 546,
+            "formula": "28d20 + 252"
+        },
+        "speed": {
+            "walk": 40,
+            "fly": 80,
+            "climb": 40
+        },
+        "abilities": {
+            "str": 30,
+            "dex": 10,
+            "con": 29,
+            "int": 10,
+            "wis": 15,
+            "cha": 23
+        },
+        "saves": {
+            "dex": 7,
+            "con": 16,
+            "wis": 9,
+            "cha": 13
+        },
+        "skills": {
+            "perception": 16,
+            "stealth": 7
+        },
+        "senses": {
+            "darkvision": 120,
+            "blindsight": 60
+        },
+        "passive_perception": 26,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "fire"
+                ]
+            }
+        },
+        "languages": [
+            "Common",
+            "Draconic"
+        ],
+        "cr": {
+            "cr": "24",
+            "xp": 62000,
+            "pb": 7
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "legendary-resistance",
+                "name": "Legendary Resistance",
+                "category": "traits",
+                "text": "If the dragon fails a saving throw, it can choose to succeed instead.",
+                "uses": {
+                    "max": 3,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The dragon can use its Frightful Presence. It then makes three attacks: one with its bite and two with its claws."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +17 to hit, reach 15 ft., one target. Hit: 21 (2d10 + 10) piercing damage plus 14 (4d6) fire damage.",
+                "action": {
+                    "range": "reach 15 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 17,
+                        "damage": [
+                            {
+                                "dice": "2d10",
+                                "bonus": 10,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "4d6",
+                                "type": "fire"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "claw",
+                "name": "Claw",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +17 to hit, reach 10 ft., one target. Hit: 17 (2d6 + 10) slashing damage.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 17,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 10,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "tail",
+                "name": "Tail",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +17 to hit, reach 20 ft., one target. Hit: 19 (2d8 + 10) bludgeoning damage.",
+                "action": {
+                    "range": "reach 20 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 17,
+                        "damage": [
+                            {
+                                "dice": "2d8",
+                                "bonus": 10,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "frightful-presence",
+                "name": "Frightful Presence",
+                "category": "actions",
+                "text": "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a DC 21 Wisdom saving throw or become frightened for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. If a creature's saving throw is successful or the effect ends for it, the creature is immune to the dragon's Frightful Presence for the next 24 hours.",
+                "action": {
+                    "save": {
+                        "ability": "wis",
+                        "dc": 21,
+                        "on_success": "none",
+                        "conditions": [
+                            "frightened"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "fire-breath",
+                "name": "Fire Breath",
+                "category": "actions",
+                "text": "The dragon exhales fire in a 90-foot cone. Each creature in that area must make a DC 24 Dexterity saving throw, taking 91 (26d6) fire damage on a failed save, or half as much damage on a successful one.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "area": "90-foot cone",
+                    "save": {
+                        "ability": "dex",
+                        "dc": 24,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "26d6",
+                                "type": "fire"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "detect",
+                "name": "Detect",
+                "category": "legendary_actions",
+                "text": "The dragon makes a Wisdom (Perception) check."
+            },
+            {
+                "id": "tail-attack",
+                "name": "Tail Attack",
+                "category": "legendary_actions",
+                "text": "The dragon makes a tail attack."
+            },
+            {
+                "id": "wing-attack",
+                "name": "Wing Attack",
+                "category": "legendary_actions",
+                "text": "The dragon beats its wings. Each creature within 15 feet of the dragon must succeed on a DC 25 Dexterity saving throw or take 17 (2d6 + 10) bludgeoning damage and be knocked prone. The dragon can then fly up to half its flying speed.",
+                "cost": 2,
+                "action": {
+                    "save": {
+                        "ability": "dex",
+                        "dc": 25,
+                        "on_success": "none",
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 10,
+                                "type": "bludgeoning"
+                            }
+                        ],
+                        "conditions": [
+                            "prone"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "lair-actions",
+                "name": "Lair Actions",
+                "category": "lair_actions",
+                "text": "On initiative count 20 (losing initiative ties), the dragon takes a lair action to cause one of the following effects; the dragon can't use the same effect two rounds in a row:\n\n- Magma erupts from a point on the ground the dragon can see within 120 feet of it, creating a 20-foot-high, 5-foot-radius geyser. Each creature in the geyser's area must make a DC 15 Dexterity saving throw, taking 21 (6d6) fire damage on a failed save, or half as much damage on a successful one.\n- A tremor shakes the lair in a 60-foot radius around the dragon. Each creature other than the dragon on the ground in that area must succeed on a DC 15 Dexterity saving throw or be knocked prone.\n- Volcanic gases form a cloud in a 20-foot-radius sphere centered on a point the dragon can see within 120 feet of it. The sphere spreads around corners, and its area is lightly obscured. It lasts until initiative count 20 on the next round. Each creature that starts its turn in the cloud must succeed on a DC 13 Constitution saving throw or be poisoned until the end of its turn. While poisoned in this way, a creature is incapacitated.\n\n**Additional Lair Actions.** At your discretion, a legendary (adult or ancient) red dragon can use one or both of the following additional lair actions while in its lair:\n\n- **Noxious Smoke.** A cloud of thick, dark smoke fills a 20-foot-radius sphere centered on a point the dragon can see within 120 feet of it. The sphere spreads around corners, and its area is heavily obscured. A creature other than the dragon that starts its turn in the cloud or enters it for the first time on its turn must succeed on a DC 15 Constitution saving throw or be poisoned until the end of its turn. The cloud lasts until initiative count 20 on the next round.\n- **Searing Heat.** Searing heat spreads out in a 15-foot-radius sphere centered on a point the dragon can see within 120 feet of it. Any creature that enters the affected area or starts its turn there must make a DC 15 Constitution saving throw, taking 10 (3d6) fire damage on a failed save, or half as much damage on a successful one. The heat lasts until initiative count 20 on the next round."
+            },
+            {
+                "id": "regional-effects",
+                "name": "Regional Effects",
+                "category": "regional_effects",
+                "text": "The region containing a legendary red dragon's lair is warped by the dragon's magic, which creates one or more of the following effects:\n\n- Small earthquakes are common within 6 miles of the dragon's lair.\n- Water sources within 1 mile of the lair are supernaturally warm and tainted by sulfur.\n- Rocky fissures within 1 mile of the dragon's lair form portals to the Elemental Plane of Fire, allowing creatures of elemental fire into the world to dwell nearby.\n\nIf the dragon dies, these effects fade over the course of 1d10 days.\n\n**Additional Regional Effects.** Any of these effects might appear in the area around a red dragon's lair, in addition to or instead of the effects described in the *Monster Manual*:\n\n- **Desertification.** Precipitation is almost nonexistent within 6 miles of the dragon's lair, making the land parched and arid and most plant life withered and brown.\n- **Fiery Senses.** The dragon can hear up to 30 feet through any open flame within 1 mile of the dragon's lair.\n- **Ominous Flames.** Open flames within 6 miles of the dragon's lair are tinged dark red, hiss and crackle constantly, and throw off embers and showers of sparks."
+            }
+        ],
+        "legendary_actions": {
+            "uses": 3
+        },
+        "variants": [
+            {
+                "id": "customizing-dragons",
+                "name": "Customizing Dragons",
+                "text": "You can customize any dragon's stat block to reflect the dragon's unique character. Minor changes such as those below are easy to make and have no impact on a dragon's challenge rating.\n\n**Languages.** Most dragons prefer to speak Draconic but learn Common for dealing with allies and minions. But given their high Intelligence and long life span, dragons can easily learn additional languages. You can add languages to a dragon's stat block.\n\n**Skills.** Most dragons are proficient in the Perception and Stealth skills, and many dragons have additional skill proficiencies. As with languages, you can customize a dragon's skill list (even doubling their proficiency bonus with certain skills) to reflect particular interests and activities. You can also give a dragon tool proficiencies, particularly if the dragon spends time in Humanoid form.\n\n**Spells.** See the \"Variant: Dragons as Innate Spellcasters\" inset(s), below.\n\n**Other Traits and Actions.** You can borrow traits and actions from other monsters to add unique flavor to a dragon. Consider these examples:\n\n- **Damage Absorption.** You might decide that this dragon is not only unharmed by fire damage, but actually healed by it. Whenever the dragon is subjected to fire damage, it takes no damage and instead regains a number of hit points equal to the fire damage dealt.\n- **Flyby.** The dragon is an agile flier, quick to fly out of enemies' reach. The dragon doesn't provoke an opportunity attack when it flies out of an enemy's reach.\n- **Mimicry.** Impersonating characters or their allies could be a fun trick for a crafty dragon. The dragon can mimic any sounds it has heard, including voices. A creature that hears the sounds can tell they are imitations with a successful DC 14 Wisdom (Insight) check.\n- **Rejuvenation.** You might decide that dragons in your campaign, being an essential part of the Material Plane, are nearly impossible to destroy. A dragon's life essence might be preserved in the egg from which it first emerged, in its hoard, or in a cavernous hall at the center of the world, just as a lich's essence is hidden in a phylactery. If it has an essence-preserving object, a destroyed dragon gains a new body in 1d10 days, regaining all its hit points and becoming active again. The new body appears within 5 feet of the object.\n- **Special Senses.** Most dragons have blindsight and darkvision. You might upgrade blindsight to truesight, or you could give a dragon with a burrowing speed tremorsense."
+            }
+        ],
+        "flags": {
+            "dragon_age": "ancient",
+            "dragon_casting_color": "red"
+        },
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "fire",
+                "piercing",
+                "slashing"
+            ],
+            "conditions_inflicted": [
+                "frightened",
+                "prone",
+                "incapacitated",
+                "poisoned"
+            ],
+            "saves_forced": [
+                "dex",
+                "wis",
+                "con"
+            ],
+            "senses": [
+                "blindsight",
+                "superior_darkvision"
+            ],
+            "movement": [
+                "fly",
+                "climb"
+            ],
+            "actions": [
+                "breath_weapon",
+                "frightful_presence",
+                "multiattack"
+            ],
+            "traits": [
+                "legendary_resistances"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_weapon_attack",
+                "reach"
+            ],
+            "languages": [
+                "common",
+                "draconic"
+            ],
+            "environment": [
+                "mountain",
+                "hill"
+            ],
+            "groups": [
+                "Chromatic Dragon"
+            ]
+        }
+    },
+    {
+        "id": "angel-of-amonkhet-psa",
+        "kind": "monster",
+        "name": "Angel of Amonkhet",
+        "source": "PSA",
+        "edition": "classic",
+        "tags": [
+            "Magic Resistance"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "celestial"
+        },
+        "alignment": [
+            "lawful good"
+        ],
+        "ac": [
+            {
+                "value": 17,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 136,
+            "formula": "16d8 + 64"
+        },
+        "speed": {
+            "walk": 30,
+            "fly": 90
+        },
+        "abilities": {
+            "str": 18,
+            "dex": 18,
+            "con": 18,
+            "int": 17,
+            "wis": 20,
+            "cha": 20
+        },
+        "saves": {
+            "wis": 9,
+            "cha": 9
+        },
+        "skills": {
+            "insight": 9,
+            "perception": 9
+        },
+        "senses": {
+            "darkvision": 120
+        },
+        "passive_perception": 19,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "radiant"
+                ],
+                "conditional": [
+                    {
+                        "types": [
+                            "bludgeoning",
+                            "piercing",
+                            "slashing"
+                        ],
+                        "note": "from nonmagical attacks"
+                    }
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "exhaustion",
+                    "frightened"
+                ]
+            }
+        },
+        "languages": [
+            "all",
+            "telepathy 120 ft."
+        ],
+        "cr": {
+            "cr": "10",
+            "xp": 5900,
+            "pb": 4
+        },
+        "initiative": {
+            "bonus": 4
+        },
+        "features": [
+            {
+                "id": "angelic-weapons",
+                "name": "Angelic Weapons",
+                "category": "traits",
+                "text": "The angel's weapon attacks are magical. When the angel hits with any weapon, the weapon deals an extra 4d8 radiant damage (included in the attack).",
+                "action": {
+                    "attack": {
+                        "kind": "any",
+                        "damage": [
+                            {
+                                "dice": "4d8",
+                                "type": "radiant"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The angel has advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The angel makes two melee attacks."
+            },
+            {
+                "id": "staff",
+                "name": "Staff",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +8 to hit, reach 5 ft., one target. Hit: 7 (1d8 + 4) bludgeoning damage plus 18 (4d8) radiant damage, and the target is grappled (escape DC 17). Until this grapple ends, the target is restrained, and the angel can't attack another target with its staff.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 8,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 4,
+                                "type": "bludgeoning"
+                            },
+                            {
+                                "dice": "4d8",
+                                "type": "radiant"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "healing-touch",
+                "name": "Healing Touch",
+                "category": "actions",
+                "text": "The angel touches another creature. The target magically regains 20 (4d8 + 2) hit points and is freed from any curse, disease, poison, blindness, or deafness.",
+                "uses": {
+                    "max": 3,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "change-shape",
+                "name": "Change Shape",
+                "category": "actions",
+                "text": "The angel magically polymorphs into a humanoid or beast that has a challenge rating equal to or less than its own, or back into its true form. It reverts to its true form if it dies. Any equipment it is wearing or carrying is absorbed or borne by the new form (the angel's choice).\n\nIn a new form, the angel retains its game statistics and ability to speak, but its AC, movement modes, Strength, Dexterity, and special senses are replaced by those of the new form, and it gains any statistics and capabilities (except class features, legendary actions, and lair actions) that the new form has but that it lacks."
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Innate Spellcasting",
+                "ability": "cha",
+                "dc": 17,
+                "text": "The angel's spellcasting ability is Charisma (spell save DC 17). The angel can innately cast the following spells, requiring only verbal components:",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "detect-evil-and-good-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "commune-phb"
+                            },
+                            {
+                                "spell": "raise-dead-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "mace-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "radiant"
+            ],
+            "senses": [
+                "superior_darkvision"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "actions": [
+                "multiattack",
+                "shapechanger"
+            ],
+            "traits": [
+                "magic_resistance"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "telepathy",
+                "all"
+            ],
+            "spellcasting": [
+                "innate"
+            ],
+            "groups": [
+                "Angels"
+            ]
+        }
+    },
+    {
+        "id": "anointed-psa",
+        "kind": "monster",
+        "name": "Anointed",
+        "source": "PSA",
+        "edition": "classic",
+        "tags": [
+            "Undead Fortitude"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "undead"
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "ac": [
+            {
+                "value": 8
+            }
+        ],
+        "hp": {
+            "average": 22,
+            "formula": "3d8 + 9"
+        },
+        "speed": {
+            "walk": 20
+        },
+        "abilities": {
+            "str": 13,
+            "dex": 6,
+            "con": 16,
+            "int": 3,
+            "wis": 6,
+            "cha": 5
+        },
+        "saves": {
+            "wis": 0
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 8,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "understands all languages it spoke in life but can't speak"
+        ],
+        "cr": {
+            "cr": "1/4",
+            "xp": 50,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": -2
+        },
+        "features": [
+            {
+                "id": "undead-fortitude",
+                "name": "Undead Fortitude",
+                "category": "traits",
+                "text": "If damage reduces the anointed to 0 hit points, it must make a Constitution saving throw with a DC of 5 + the damage taken, unless the damage is radiant or from a critical hit. On a success, the anointed drops to 1 hit point instead."
+            },
+            {
+                "id": "slam",
+                "name": "Slam",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: 4 (1d6 + 1) bludgeoning damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 3,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 1,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "traits": [
+                "undead_fortitude"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "cant_speak",
+                "known_in_life"
+            ],
+            "environment": [
+                "urban"
+            ]
+        }
+    },
+    {
+        "id": "archfiend-of-ifnir-psa",
+        "kind": "monster",
+        "name": "Archfiend of Ifnir",
+        "source": "PSA",
+        "edition": "classic",
+        "tags": [
+            "Magic Resistance"
+        ],
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "fiend",
+            "tags": [
+                "demon"
+            ]
+        },
+        "alignment": [
+            "chaotic evil"
+        ],
+        "ac": [
+            {
+                "value": 18,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 184,
+            "formula": "16d10 + 96"
+        },
+        "speed": {
+            "walk": 20,
+            "fly": 30
+        },
+        "abilities": {
+            "str": 21,
+            "dex": 10,
+            "con": 22,
+            "int": 19,
+            "wis": 12,
+            "cha": 15
+        },
+        "saves": {
+            "con": 11,
+            "int": 9,
+            "wis": 6,
+            "cha": 7
+        },
+        "senses": {
+            "truesight": 120
+        },
+        "passive_perception": 11,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "cold",
+                    "fire",
+                    "lightning"
+                ],
+                "conditional": [
+                    {
+                        "types": [
+                            "bludgeoning",
+                            "piercing",
+                            "slashing"
+                        ],
+                        "note": "from nonmagical attacks"
+                    }
+                ]
+            },
+            "immune": {
+                "types": [
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "Abyssal",
+            "telepathy 120 ft."
+        ],
+        "cr": {
+            "cr": "13",
+            "xp": 10000,
+            "pb": 5
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The archfiend has advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The archfiend uses Horror Nimbus if it can. It then makes three attacks: one with its bite and two with its claws."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +10 to hit, reach 5 ft., one target. Hit: 32 (5d10 + 5) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 10,
+                        "damage": [
+                            {
+                                "dice": "5d10",
+                                "bonus": 5,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "claw",
+                "name": "Claw",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +10 to hit, reach 10 ft., one target. Hit: 15 (3d6 + 5) slashing damage.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 10,
+                        "damage": [
+                            {
+                                "dice": "3d6",
+                                "bonus": 5,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "horror-nimbus",
+                "name": "Horror Nimbus",
+                "category": "actions",
+                "text": "The archfiend magically emits scintillating, multicolored light. Each creature within 15 feet of the archfiend that can see the light must succeed on a DC 15 Wisdom saving throw or be frightened for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. If a creature's saving throw is successful or the effect ends for it, the creature is immune to the archfiend's Horror Nimbus for the next 24 hours.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "save": {
+                        "ability": "wis",
+                        "dc": 15,
+                        "on_success": "none",
+                        "conditions": [
+                            "frightened"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "teleport",
+                "name": "Teleport",
+                "category": "actions",
+                "text": "The archfiend magically teleports, along with any equipment it is wearing or carrying, up to 120 feet to an unoccupied space it can see."
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing",
+                "slashing"
+            ],
+            "conditions_inflicted": [
+                "frightened"
+            ],
+            "saves_forced": [
+                "wis"
+            ],
+            "senses": [
+                "truesight"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "actions": [
+                "multiattack",
+                "teleport"
+            ],
+            "traits": [
+                "magic_resistance"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_weapon_attack",
+                "reach"
+            ],
+            "languages": [
+                "abyssal",
+                "telepathy"
+            ]
+        }
+    },
+    {
+        "id": "cerodon-psa",
+        "kind": "monster",
+        "name": "Cerodon",
+        "source": "PSA",
+        "edition": "classic",
+        "tags": [
+            "Siege Monster"
+        ],
+        "size": [
+            "huge"
+        ],
+        "creature_type": {
+            "type": "beast"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 13,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 126,
+            "formula": "11d12 + 55"
+        },
+        "speed": {
+            "walk": 40
+        },
+        "abilities": {
+            "str": 24,
+            "dex": 9,
+            "con": 21,
+            "int": 3,
+            "wis": 11,
+            "cha": 6
+        },
+        "passive_perception": 10,
+        "cr": {
+            "cr": "6",
+            "xp": 2300,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": -1
+        },
+        "features": [
+            {
+                "id": "trampling-charge",
+                "name": "Trampling Charge",
+                "category": "traits",
+                "text": "If the cerodon moves at least 20 feet straight toward a creature and then hits it with a gore attack on the same turn, that target must succeed on a DC 18 Strength saving throw or be knocked prone. If the target is prone, the cerodon can make one stomp attack against it as a bonus action.",
+                "action": {
+                    "save": {
+                        "ability": "str",
+                        "dc": 18,
+                        "on_success": "none",
+                        "conditions": [
+                            "prone"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "siege-monster",
+                "name": "Siege Monster",
+                "category": "traits",
+                "text": "The cerodon deals double damage to objects and structures."
+            },
+            {
+                "id": "gore",
+                "name": "Gore",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +10 to hit, reach 10 ft., one target. Hit: 25 (4d8 + 7) piercing damage.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 10,
+                        "damage": [
+                            {
+                                "dice": "4d8",
+                                "bonus": 7,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "stomp",
+                "name": "Stomp",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +10 to hit, reach 5 ft., one prone creature. Hit: 29 (4d10 + 7) bludgeoning damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 10,
+                        "damage": [
+                            {
+                                "dice": "4d10",
+                                "bonus": 7,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "piercing"
+            ],
+            "conditions_inflicted": [
+                "prone"
+            ],
+            "saves_forced": [
+                "str"
+            ],
+            "traits": [
+                "siege_monster"
+            ],
+            "misc": [
+                "melee_weapon_attack",
+                "reach"
+            ],
+            "environment": [
+                "arctic"
+            ]
+        }
+    },
+    {
+        "id": "criosphinx-psa",
+        "kind": "monster",
+        "name": "Criosphinx",
+        "source": "PSA",
+        "edition": "classic",
+        "tags": [
+            "Magic Weapons"
+        ],
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "monstrosity"
+        },
+        "alignment": [
+            "neutral"
+        ],
+        "ac": [
+            {
+                "value": 18,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 228,
+            "formula": "24d10 + 96"
+        },
+        "speed": {
+            "walk": 30,
+            "fly": 60
+        },
+        "abilities": {
+            "str": 18,
+            "dex": 15,
+            "con": 18,
+            "int": 16,
+            "wis": 16,
+            "cha": 16
+        },
+        "skills": {
+            "arcana": 8,
+            "history": 8,
+            "perception": 8,
+            "religion": 8
+        },
+        "senses": {
+            "truesight": 120
+        },
+        "passive_perception": 18,
+        "defenses": {
+            "resist": {
+                "conditional": [
+                    {
+                        "types": [
+                            "bludgeoning",
+                            "piercing",
+                            "slashing"
+                        ],
+                        "note": "from nonmagical attacks"
+                    }
+                ]
+            },
+            "immune": {
+                "types": [
+                    "psychic"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "frightened"
+                ]
+            }
+        },
+        "languages": [
+            "understands Common",
+            "Sphinx"
+        ],
+        "cr": {
+            "cr": "13",
+            "xp": 10000,
+            "pb": 5
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "inscrutable",
+                "name": "Inscrutable",
+                "category": "traits",
+                "text": "The sphinx is immune to any effect that would sense its emotions or read its thoughts, as well as any divination spell that it refuses. Wisdom (Insight) checks made to ascertain the sphinx's intentions or sincerity have disadvantage."
+            },
+            {
+                "id": "magic-weapons",
+                "name": "Magic Weapons",
+                "category": "traits",
+                "text": "The sphinx's weapon attacks are magical."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The sphinx makes a ram attack and two claw attacks."
+            },
+            {
+                "id": "ram",
+                "name": "Ram",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +9 to hit, reach 5 ft., one target. Hit: 17 (3d8 + 4) bludgeoning damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 9,
+                        "damage": [
+                            {
+                                "dice": "3d8",
+                                "bonus": 4,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "claw",
+                "name": "Claw",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +9 to hit, reach 5 ft., one target. Hit: 13 (2d8 + 4) slashing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 9,
+                        "damage": [
+                            {
+                                "dice": "2d8",
+                                "bonus": 4,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "ram-attack",
+                "name": "Ram Attack",
+                "category": "legendary_actions",
+                "text": "The sphinx makes one ram attack."
+            },
+            {
+                "id": "teleport",
+                "name": "Teleport",
+                "category": "legendary_actions",
+                "text": "The sphinx magically teleports, along with any equipment it is wearing or carrying, up to 120 feet to an unoccupied space it can see.",
+                "cost": 2
+            }
+        ],
+        "legendary_actions": {
+            "uses": 3
+        },
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "slashing"
+            ],
+            "senses": [
+                "truesight"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "magic_weapons"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "eternal-psa",
+        "kind": "monster",
+        "name": "Eternal",
+        "source": "PSA",
+        "edition": "classic",
+        "tags": [
+            "Sunlight Sensitivity"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "undead"
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "ac": [
+            {
+                "value": 14,
+                "from": [
+                    "studded leather"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 45,
+            "formula": "6d8 + 18"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 15,
+            "dex": 14,
+            "con": 16,
+            "int": 10,
+            "wis": 13,
+            "cha": 15
+        },
+        "skills": {
+            "perception": 3,
+            "stealth": 4
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 13,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "necrotic"
+                ],
+                "conditional": [
+                    {
+                        "types": [
+                            "bludgeoning",
+                            "piercing",
+                            "slashing"
+                        ],
+                        "note": "from nonmagical attacks that aren't silvered"
+                    }
+                ]
+            },
+            "immune": {
+                "types": [
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "exhaustion",
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "the languages it knew in life"
+        ],
+        "cr": {
+            "cr": "3",
+            "xp": 700,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "sunlight-sensitivity",
+                "name": "Sunlight Sensitivity",
+                "category": "traits",
+                "text": "While in sunlight, the eternal has disadvantage on attack rolls, as well as on Wisdom (Perception) checks that rely on sight."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The eternal makes two longsword attacks or two longbow attacks. It can use its Life Drain in place of one longsword attack."
+            },
+            {
+                "id": "life-drain",
+                "name": "Life Drain",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +4 to hit, reach 5 ft., one creature. Hit: 5 (1d6 + 2) necrotic damage. The target must succeed on a DC 13 Constitution saving throw or its hit point maximum is reduced by an amount equal to the damage taken. This reduction lasts until the target finishes a long rest. The target dies if this effect reduces its hit point maximum to 0.\n\nA humanoid slain by this attack rises 24 hours later as a zombie under the eternal's control, unless the humanoid is restored to life or its body is destroyed. The eternal can have no more than twelve zombies under its control at one time.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 2,
+                                "type": "necrotic"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "con",
+                        "dc": 13,
+                        "on_success": "none"
+                    }
+                }
+            },
+            {
+                "id": "longsword",
+                "name": "Longsword",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 6 (1d8 + 2) slashing damage, or 7 (1d10 + 2) slashing damage if used with two hands.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 2,
+                                "type": "slashing"
+                            },
+                            {
+                                "dice": "1d10",
+                                "bonus": 2,
+                                "type": "slashing",
+                                "condition": "if used with two hands"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "longbow",
+                "name": "Longbow",
+                "category": "actions",
+                "text": "Ranged Weapon Attack: +4 to hit, range 150/600 ft., one target. Hit: 6 (1d8 + 2) piercing damage.",
+                "action": {
+                    "range": "range 150/600 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 2,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "items": [
+            {
+                "item": "longbow-phb",
+                "qty": 1,
+                "attacks": true
+            },
+            {
+                "item": "longsword-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "necrotic",
+                "piercing",
+                "slashing"
+            ],
+            "saves_forced": [
+                "con"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "sunlight_sensitivity"
+            ],
+            "misc": [
+                "hit_point_reduction",
+                "melee_weapon",
+                "melee_weapon_attack",
+                "ranged_weapon",
+                "ranged_weapon_attack"
+            ],
+            "languages": [
+                "known_in_life"
+            ],
+            "environment": [
+                "underdark",
+                "swamp",
+                "urban",
+                "desert"
+            ]
+        }
+    },
+    {
+        "id": "giant-river-serpent-psa",
+        "kind": "monster",
+        "name": "Giant River Serpent",
+        "source": "PSA",
+        "edition": "classic",
+        "size": [
+            "huge"
+        ],
+        "creature_type": {
+            "type": "monstrosity"
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "ac": [
+            {
+                "value": 17,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 168,
+            "formula": "16d12 + 64"
+        },
+        "speed": {
+            "walk": 50,
+            "climb": 40
+        },
+        "abilities": {
+            "str": 23,
+            "dex": 16,
+            "con": 18,
+            "int": 7,
+            "wis": 14,
+            "cha": 12
+        },
+        "skills": {
+            "perception": 6,
+            "stealth": 7
+        },
+        "senses": {
+            "darkvision": 90
+        },
+        "passive_perception": 16,
+        "languages": [
+            "Draconic"
+        ],
+        "cr": {
+            "cr": "11",
+            "xp": 7200,
+            "pb": 4
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The serpent makes two attacks: one with its bite and one to constrict."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +10 to hit, reach 10 ft., one target. Hit: 22 (3d10 + 6) piercing damage.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 10,
+                        "damage": [
+                            {
+                                "dice": "3d10",
+                                "bonus": 6,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "constrict",
+                "name": "Constrict",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +10 to hit, reach 5 ft., one Large or smaller creature. Hit: 17 (2d10 + 6) bludgeoning damage plus 17 (2d10 + 6) slashing damage. The target is grappled (escape DC 16) if the serpent isn't already constricting a creature, and the target is restrained until this grapple ends.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 10,
+                        "damage": [
+                            {
+                                "dice": "2d10",
+                                "bonus": 6,
+                                "type": "bludgeoning"
+                            },
+                            {
+                                "dice": "2d10",
+                                "bonus": 6,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "swallow",
+                "name": "Swallow",
+                "category": "actions",
+                "text": "The serpent makes one bite attack against a Medium or smaller target it is grappling. If the attack hits, the target is also swallowed, and the grapple ends. While swallowed, the target is blinded and restrained, it has total cover against attacks and other effects outside the serpent, and it takes 21 (6d6) acid damage at the start of each of the serpent's turns. A serpent can have only one creature swallowed at a time.\n\nIf the serpent takes 30 damage or more on a single turn from the swallowed creature, the serpent must succeed on a DC 14 Constitution saving throw at the end of that turn or regurgitate the creature, which falls prone in a space within 10 feet of the serpent. If the serpent dies, a swallowed creature is no longer restrained by it and can escape from the corpse by using 15 feet of movement, exiting prone.",
+                "action": {
+                    "save": {
+                        "ability": "con",
+                        "dc": 14,
+                        "on_success": "none",
+                        "conditions": [
+                            "prone",
+                            "restrained"
+                        ]
+                    },
+                    "damage": [
+                        {
+                            "dice": "6d6",
+                            "type": "acid"
+                        }
+                    ]
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "acid",
+                "bludgeoning",
+                "piercing",
+                "slashing"
+            ],
+            "conditions_inflicted": [
+                "blinded",
+                "grappled",
+                "restrained"
+            ],
+            "saves_forced": [
+                "con",
+                "dex"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "movement": [
+                "climb"
+            ],
+            "actions": [
+                "multiattack",
+                "swallow"
+            ],
+            "misc": [
+                "melee_weapon_attack",
+                "reach"
+            ],
+            "languages": [
+                "draconic"
+            ],
+            "environment": [
+                "underdark"
+            ]
+        }
+    },
+    {
+        "id": "hippopotamus-psa",
+        "kind": "monster",
+        "name": "Hippopotamus",
+        "source": "PSA",
+        "edition": "classic",
+        "tags": [
+            "Hold Breath"
+        ],
+        "size": [
+            "huge"
+        ],
+        "creature_type": {
+            "type": "beast"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 12,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 76,
+            "formula": "8d12 + 24"
+        },
+        "speed": {
+            "walk": 40,
+            "swim": 30
+        },
+        "abilities": {
+            "str": 22,
+            "dex": 9,
+            "con": 17,
+            "int": 3,
+            "wis": 11,
+            "cha": 6
+        },
+        "passive_perception": 10,
+        "cr": {
+            "cr": "4",
+            "xp": 1100,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": -1
+        },
+        "features": [
+            {
+                "id": "trampling-charge",
+                "name": "Trampling Charge",
+                "category": "traits",
+                "text": "If the hippopotamus moves at least 20 feet straight toward a creature and then hits it with a bite attack on the same turn, that target must succeed on a DC 12 Strength saving throw or be knocked prone. If the target is prone, the hippopotamus can make one stomp attack against it as a bonus action.",
+                "action": {
+                    "save": {
+                        "ability": "str",
+                        "dc": 12,
+                        "on_success": "none",
+                        "conditions": [
+                            "prone"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "hold-breath",
+                "name": "Hold Breath",
+                "category": "traits",
+                "text": "The hippopotamus can hold its breath for 30 minutes."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +8 to hit, reach 5 ft., one target. Hit: 19 (3d8 + 6) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 8,
+                        "damage": [
+                            {
+                                "dice": "3d8",
+                                "bonus": 6,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "stomp",
+                "name": "Stomp",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +8 to hit, reach 5 ft., one prone creature. Hit: 22 (3d10 + 6) bludgeoning damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 8,
+                        "damage": [
+                            {
+                                "dice": "3d10",
+                                "bonus": 6,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "piercing"
+            ],
+            "conditions_inflicted": [
+                "prone"
+            ],
+            "saves_forced": [
+                "str"
+            ],
+            "movement": [
+                "swim"
+            ],
+            "traits": [
+                "hold_breath"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "environment": [
+                "grassland"
+            ]
+        }
+    },
+    {
+        "id": "large-drake-psa",
+        "kind": "monster",
+        "name": "Large Drake",
+        "source": "PSA",
+        "edition": "classic",
+        "tags": [
+            "Keen Senses"
+        ],
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "beast"
+        },
+        "alignment": [
+            "neutral good"
+        ],
+        "ac": [
+            {
+                "value": 13
+            }
+        ],
+        "hp": {
+            "average": 26,
+            "formula": "4d10 + 4"
+        },
+        "speed": {
+            "walk": 10,
+            "fly": 80
+        },
+        "abilities": {
+            "str": 16,
+            "dex": 17,
+            "con": 13,
+            "int": 8,
+            "wis": 14,
+            "cha": 10
+        },
+        "skills": {
+            "perception": 4
+        },
+        "passive_perception": 14,
+        "languages": [
+            "Giant Eagle",
+            "understands Common and Auran but can't speak them"
+        ],
+        "cr": {
+            "cr": "1",
+            "xp": 200,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "keen-sight",
+                "name": "Keen Sight",
+                "category": "traits",
+                "text": "The drake has advantage on Wisdom (Perception) checks that rely on sight."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The drake makes two attacks: one with its beak and one with its talons."
+            },
+            {
+                "id": "beak",
+                "name": "Beak",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 6 (1d6 + 3) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 3,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "talons",
+                "name": "Talons",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) slashing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 3,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing",
+                "slashing"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "keen_senses"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "auran",
+                "common",
+                "cant_speak",
+                "other"
+            ],
+            "environment": [
+                "mountain",
+                "grassland",
+                "hill",
+                "coastal"
+            ]
+        }
+    },
+    {
+        "id": "manticore-heart-piercer-psa",
+        "kind": "monster",
+        "name": "Manticore, Heart-Piercer",
+        "source": "PSA",
+        "edition": "classic",
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "monstrosity"
+        },
+        "alignment": [
+            "chaotic evil"
+        ],
+        "ac": [
+            {
+                "value": 15,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 136,
+            "formula": "16d10 + 48"
+        },
+        "speed": {
+            "walk": 50
+        },
+        "abilities": {
+            "str": 19,
+            "dex": 14,
+            "con": 16,
+            "int": 5,
+            "wis": 12,
+            "cha": 6
+        },
+        "skills": {
+            "perception": 4
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 14,
+        "cr": {
+            "cr": "5",
+            "xp": 1800,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The manticore makes two attacks, one with its bite and one with its claws."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 11 (2d6 + 4) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 4,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "claws",
+                "name": "Claws",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 13 (2d8 + 4) slashing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "2d8",
+                                "bonus": 4,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "stinger",
+                "name": "Stinger",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +7 to hit, reach 10 ft., one target. Hit: 11 (2d6 + 4) piercing damage. The target must make a DC 14 Constitution saving throw, taking 24 (7d6) poison damage on a failed save, or half as much damage on a successful one.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 4,
+                                "type": "piercing"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "con",
+                        "dc": 14,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "7d6",
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "poison",
+                "piercing",
+                "slashing"
+            ],
+            "saves_forced": [
+                "con"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "melee_weapon_attack",
+                "reach"
+            ]
+        }
+    },
+    {
+        "id": "river-serpent-psa",
+        "kind": "monster",
+        "name": "River Serpent",
+        "source": "PSA",
+        "edition": "classic",
+        "size": [
+            "huge"
+        ],
+        "creature_type": {
+            "type": "beast"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 12
+            }
+        ],
+        "hp": {
+            "average": 60,
+            "formula": "8d12 + 8"
+        },
+        "speed": {
+            "walk": 30,
+            "swim": 30
+        },
+        "abilities": {
+            "str": 19,
+            "dex": 14,
+            "con": 12,
+            "int": 1,
+            "wis": 10,
+            "cha": 3
+        },
+        "skills": {
+            "perception": 2
+        },
+        "senses": {
+            "blindsight": 10
+        },
+        "passive_perception": 12,
+        "cr": {
+            "cr": "2",
+            "xp": 450,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +6 to hit, reach 10 ft., one creature. Hit: 11 (2d6 + 4) piercing damage.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 4,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "constrict",
+                "name": "Constrict",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +6 to hit, reach 5 ft., one creature. Hit: 13 (2d8 + 4) bludgeoning damage, and the target is grappled (escape DC 16). Until this grapple ends, the creature is restrained, and the serpent can't constrict another target.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "2d8",
+                                "bonus": 4,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "piercing"
+            ],
+            "conditions_inflicted": [
+                "grappled",
+                "restrained"
+            ],
+            "senses": [
+                "blindsight"
+            ],
+            "movement": [
+                "swim"
+            ],
+            "misc": [
+                "melee_weapon_attack",
+                "reach"
+            ],
+            "environment": [
+                "underwater",
+                "underdark",
+                "forest",
+                "swamp",
+                "desert"
+            ]
+        }
+    },
+    {
+        "id": "sandwurm-psa",
+        "kind": "monster",
+        "name": "Sandwurm",
+        "source": "PSA",
+        "edition": "classic",
+        "tags": [
+            "Tunneler"
+        ],
+        "size": [
+            "gargantuan"
+        ],
+        "creature_type": {
+            "type": "monstrosity"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 18,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 247,
+            "formula": "15d20 + 90"
+        },
+        "speed": {
+            "walk": 50,
+            "burrow": 30
+        },
+        "abilities": {
+            "str": 28,
+            "dex": 7,
+            "con": 22,
+            "int": 1,
+            "wis": 8,
+            "cha": 4
+        },
+        "saves": {
+            "con": 11,
+            "wis": 4
+        },
+        "senses": {
+            "blindsight": 30,
+            "tremorsense": 60
+        },
+        "passive_perception": 9,
+        "cr": {
+            "cr": "15",
+            "xp": 13000,
+            "pb": 5
+        },
+        "initiative": {
+            "bonus": -2
+        },
+        "features": [
+            {
+                "id": "tunneler",
+                "name": "Tunneler",
+                "category": "traits",
+                "text": "The wurm can burrow through solid rock at half its burrow speed and leaves a 10-foot-diameter tunnel in its wake."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The wurm makes two attacks: one with its bite and one with its stinger."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +14 to hit, reach 10 ft., one target. Hit: 22 (3d8 + 9) piercing damage. If the target is a Large or smaller creature, it must succeed on a DC 19 Dexterity saving throw or be swallowed by the wurm. A swallowed creature is blinded and restrained, it has total cover against attacks and other effects outside the wurm, and it takes 21 (6d6) acid damage at the start of each of the wurm's turns.\n\nIf the wurm takes 30 damage or more on a single turn from a creature inside it, the wurm must succeed on a DC 21 Constitution saving throw at the end of that turn or regurgitate all swallowed creatures, which fall prone in a space within 10 feet of the wurm. If the wurm dies, a swallowed creature is no longer restrained by it and can escape from the corpse by using 20 feet of movement, exiting prone.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 14,
+                        "damage": [
+                            {
+                                "dice": "3d8",
+                                "bonus": 9,
+                                "type": "piercing"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "dex",
+                        "dc": 19,
+                        "on_success": "none",
+                        "damage": [
+                            {
+                                "dice": "6d6",
+                                "type": "acid"
+                            }
+                        ],
+                        "conditions": [
+                            "blinded",
+                            "prone",
+                            "restrained"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "tail-stinger",
+                "name": "Tail Stinger",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +14 to hit, reach 10 ft., one creature. Hit: 19 (3d6 + 9) piercing damage, and the target must make a DC 19 Constitution saving throw, taking 42 (12d6) poison damage on a failed save, or half as much damage on a successful one.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 14,
+                        "damage": [
+                            {
+                                "dice": "3d6",
+                                "bonus": 9,
+                                "type": "piercing"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "con",
+                        "dc": 19,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "12d6",
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "acid",
+                "poison",
+                "piercing"
+            ],
+            "conditions_inflicted": [
+                "blinded",
+                "restrained"
+            ],
+            "saves_forced": [
+                "con",
+                "dex"
+            ],
+            "senses": [
+                "blindsight",
+                "tremorsense"
+            ],
+            "movement": [
+                "burrow"
+            ],
+            "actions": [
+                "multiattack",
+                "swallow"
+            ],
+            "traits": [
+                "tunneler"
+            ],
+            "misc": [
+                "melee_weapon_attack",
+                "reach"
+            ],
+            "environment": [
+                "underdark",
+                "desert"
+            ]
+        }
+    },
+    {
+        "id": "serpopard-psa",
+        "kind": "monster",
+        "name": "Serpopard",
+        "source": "PSA",
+        "edition": "classic",
+        "tags": [
+            "Keen Senses",
+            "Pounce"
+        ],
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "beast"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 12
+            }
+        ],
+        "hp": {
+            "average": 52,
+            "formula": "7d10 + 14"
+        },
+        "speed": {
+            "walk": 40
+        },
+        "abilities": {
+            "str": 18,
+            "dex": 14,
+            "con": 15,
+            "int": 3,
+            "wis": 12,
+            "cha": 8
+        },
+        "skills": {
+            "perception": 3,
+            "stealth": 6
+        },
+        "passive_perception": 13,
+        "cr": {
+            "cr": "3",
+            "xp": 700,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "keen-smell",
+                "name": "Keen Smell",
+                "category": "traits",
+                "text": "The serpopard has advantage on Wisdom (Perception) checks that rely on smell."
+            },
+            {
+                "id": "pounce",
+                "name": "Pounce",
+                "category": "traits",
+                "text": "If the serpopard moves at least 20 feet straight toward a creature and then hits it with a bite attack on the same turn, that target must succeed on a DC 14 Strength saving throw or be knocked prone. If the target is prone, the serpopard can make one bite attack against it as a bonus action.",
+                "action": {
+                    "save": {
+                        "ability": "str",
+                        "dc": 14,
+                        "on_success": "none",
+                        "conditions": [
+                            "prone"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 9 (1d10 + 4) piercing damage, and the target must make a DC 14 Constitution saving throw, taking 10 (3d6) poison damage on a failed save, or half as much damage on a successful one.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "1d10",
+                                "bonus": 4,
+                                "type": "piercing"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "con",
+                        "dc": 14,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "3d6",
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "poison",
+                "piercing"
+            ],
+            "conditions_inflicted": [
+                "prone"
+            ],
+            "saves_forced": [
+                "con",
+                "str"
+            ],
+            "traits": [
+                "keen_senses",
+                "pounce"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ]
+        }
+    },
+    {
+        "id": "small-drake-psa",
+        "kind": "monster",
+        "name": "Small Drake",
+        "source": "PSA",
+        "edition": "classic",
+        "tags": [
+            "Flyby"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "beast"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 13,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 13,
+            "formula": "3d8"
+        },
+        "speed": {
+            "walk": 10,
+            "fly": 60
+        },
+        "abilities": {
+            "str": 12,
+            "dex": 15,
+            "con": 10,
+            "int": 2,
+            "wis": 9,
+            "cha": 5
+        },
+        "skills": {
+            "perception": 1
+        },
+        "passive_perception": 11,
+        "cr": {
+            "cr": "1/4",
+            "xp": 50,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "flyby",
+                "name": "Flyby",
+                "category": "traits",
+                "text": "The drake doesn't provoke opportunity attacks when it flies out of an enemy's reach."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: 6 (2d4 + 1) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 3,
+                        "damage": [
+                            {
+                                "dice": "2d4",
+                                "bonus": 1,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "traits": [
+                "flyby"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "environment": [
+                "mountain",
+                "grassland",
+                "coastal"
+            ],
+            "groups": [
+                "Dinosaurs"
+            ]
+        }
+    },
+    {
+        "id": "soulstinger-demon-psa",
+        "kind": "monster",
+        "name": "Soulstinger Demon",
+        "source": "PSA",
+        "edition": "classic",
+        "tags": [
+            "Devil's Sight",
+            "Magic Resistance"
+        ],
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "fiend",
+            "tags": [
+                "demon"
+            ]
+        },
+        "alignment": [
+            "lawful evil"
+        ],
+        "ac": [
+            {
+                "value": 19,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 142,
+            "formula": "15d10 + 60"
+        },
+        "speed": {
+            "walk": 40,
+            "fly": 40
+        },
+        "abilities": {
+            "str": 18,
+            "dex": 16,
+            "con": 18,
+            "int": 13,
+            "wis": 14,
+            "cha": 16
+        },
+        "saves": {
+            "int": 5,
+            "wis": 6,
+            "cha": 7
+        },
+        "skills": {
+            "deception": 7,
+            "insight": 6
+        },
+        "senses": {
+            "darkvision": 120
+        },
+        "passive_perception": 12,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "cold"
+                ],
+                "conditional": [
+                    {
+                        "types": [
+                            "bludgeoning",
+                            "piercing",
+                            "slashing"
+                        ],
+                        "note": "from nonmagical attacks that aren't silvered"
+                    }
+                ]
+            },
+            "immune": {
+                "types": [
+                    "fire",
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "Infernal",
+            "telepathy 120 ft."
+        ],
+        "cr": {
+            "cr": "9",
+            "xp": 5000,
+            "pb": 4
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "devils-sight",
+                "name": "Devil's Sight",
+                "category": "traits",
+                "text": "Magical darkness doesn't impede the demon's darkvision."
+            },
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The demon has advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The demon makes three attacks: two with its claws and one with its sting."
+            },
+            {
+                "id": "claw",
+                "name": "Claw",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +8 to hit, reach 10 ft., one target. Hit: 8 (1d8 + 4) slashing damage.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 8,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 4,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "sting",
+                "name": "Sting",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +8 to hit, reach 10 ft., one target. Hit: 13 (2d8 + 4) piercing damage plus 17 (5d6) poison damage, and the target must succeed on a DC 14 Constitution saving throw or become poisoned for 1 minute. The target can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 8,
+                        "damage": [
+                            {
+                                "dice": "2d8",
+                                "bonus": 4,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "5d6",
+                                "type": "poison"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "con",
+                        "dc": 14,
+                        "on_success": "none",
+                        "conditions": [
+                            "poisoned"
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "poison",
+                "piercing",
+                "slashing"
+            ],
+            "conditions_inflicted": [
+                "grappled",
+                "poisoned"
+            ],
+            "saves_forced": [
+                "con"
+            ],
+            "senses": [
+                "superior_darkvision"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "devils_sight",
+                "magic_resistance"
+            ],
+            "misc": [
+                "melee_weapon_attack",
+                "reach"
+            ],
+            "languages": [
+                "infernal",
+                "telepathy"
+            ]
+        }
+    },
+    {
+        "id": "young-amonkhet-dragon-psa",
+        "kind": "monster",
+        "name": "Young Amonkhet Dragon",
+        "source": "PSA",
+        "edition": "classic",
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "dragon"
+        },
+        "alignment": [
+            "chaotic evil"
+        ],
+        "ac": [
+            {
+                "value": 18,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 178,
+            "formula": "17d10 + 85"
+        },
+        "speed": {
+            "walk": 40,
+            "fly": 80,
+            "climb": 40
+        },
+        "abilities": {
+            "str": 23,
+            "dex": 10,
+            "con": 21,
+            "int": 6,
+            "wis": 11,
+            "cha": 19
+        },
+        "saves": {
+            "dex": 4,
+            "con": 9,
+            "wis": 4,
+            "cha": 8
+        },
+        "skills": {
+            "perception": 8,
+            "stealth": 4
+        },
+        "senses": {
+            "darkvision": 120,
+            "blindsight": 30
+        },
+        "passive_perception": 18,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "fire"
+                ]
+            }
+        },
+        "languages": [
+            "Common",
+            "Draconic"
+        ],
+        "cr": {
+            "cr": "10",
+            "xp": 5900,
+            "pb": 4
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The dragon makes three attacks: one with its bite and two with its claws."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +10 to hit, reach 10 ft., one target. Hit: 17 (2d10 + 6) piercing damage plus 3 (1d6) fire damage.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 10,
+                        "damage": [
+                            {
+                                "dice": "2d10",
+                                "bonus": 6,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "1d6",
+                                "type": "fire"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "claw",
+                "name": "Claw",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +10 to hit, reach 5 ft., one target. Hit: 13 (2d6 + 6) slashing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 10,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 6,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "fire-breath",
+                "name": "Fire Breath",
+                "category": "actions",
+                "text": "The dragon exhales fire in a 30-foot cone. Each creature in that area must make a DC 17 Dexterity saving throw, taking 56 (16d6) fire damage on a failed save, or half as much damage on a successful one.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "area": "30-foot cone",
+                    "save": {
+                        "ability": "dex",
+                        "dc": 17,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "16d6",
+                                "type": "fire"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "variants": [
+            {
+                "id": "customizing-dragons",
+                "name": "Customizing Dragons",
+                "text": "You can customize any dragon's stat block to reflect the dragon's unique character. Minor changes such as those below are easy to make and have no impact on a dragon's challenge rating.\n\n**Languages.** Most dragons prefer to speak Draconic but learn Common for dealing with allies and minions. But given their high Intelligence and long life span, dragons can easily learn additional languages. You can add languages to a dragon's stat block.\n\n**Skills.** Most dragons are proficient in the Perception and Stealth skills, and many dragons have additional skill proficiencies. As with languages, you can customize a dragon's skill list (even doubling their proficiency bonus with certain skills) to reflect particular interests and activities. You can also give a dragon tool proficiencies, particularly if the dragon spends time in Humanoid form.\n\n**Spells.** See the \"Variant: Dragons as Innate Spellcasters\" inset(s), below.\n\n**Other Traits and Actions.** You can borrow traits and actions from other monsters to add unique flavor to a dragon. Consider these examples:\n\n- **Damage Absorption.** You might decide that this dragon is not only unharmed by fire damage, but actually healed by it. Whenever the dragon is subjected to fire damage, it takes no damage and instead regains a number of hit points equal to the fire damage dealt.\n- **Flyby.** The dragon is an agile flier, quick to fly out of enemies' reach. The dragon doesn't provoke an opportunity attack when it flies out of an enemy's reach.\n- **Mimicry.** Impersonating characters or their allies could be a fun trick for a crafty dragon. The dragon can mimic any sounds it has heard, including voices. A creature that hears the sounds can tell they are imitations with a successful DC 12 Wisdom (Insight) check.\n- **Rejuvenation.** You might decide that dragons in your campaign, being an essential part of the Material Plane, are nearly impossible to destroy. A dragon's life essence might be preserved in the egg from which it first emerged, in its hoard, or in a cavernous hall at the center of the world, just as a lich's essence is hidden in a phylactery. If it has an essence-preserving object, a destroyed dragon gains a new body in 1d10 days, regaining all its hit points and becoming active again. The new body appears within 5 feet of the object.\n- **Special Senses.** Most dragons have blindsight and darkvision. You might upgrade blindsight to truesight, or you could give a dragon with a burrowing speed tremorsense."
+            }
+        ],
+        "flags": {
+            "dragon_age": "young",
+            "dragon_casting_color": "red"
+        },
+        "filters": {
+            "damage_dealt": [
+                "fire",
+                "piercing",
+                "slashing"
+            ],
+            "saves_forced": [
+                "dex"
+            ],
+            "senses": [
+                "blindsight",
+                "superior_darkvision"
+            ],
+            "movement": [
+                "fly",
+                "climb"
+            ],
+            "actions": [
+                "breath_weapon",
+                "multiattack"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_weapon_attack",
+                "reach"
+            ],
+            "languages": [
+                "common",
+                "draconic"
+            ],
+            "environment": [
+                "mountain",
+                "hill"
+            ],
+            "groups": [
+                "Chromatic Dragon"
+            ]
+        }
+    }
+]

@@ -1,0 +1,232 @@
+[
+    {
+        "id": "riall-rwg",
+        "kind": "monster",
+        "name": "Ri'all",
+        "source": "RWG",
+        "edition": "one",
+        "size": [
+            "small",
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid"
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "ac": [
+            {
+                "value": 17
+            }
+        ],
+        "hp": {
+            "average": 127,
+            "formula": "15d8 + 60"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 19,
+            "dex": 12,
+            "con": 18,
+            "int": 12,
+            "wis": 16,
+            "cha": 14
+        },
+        "saves": {
+            "con": 7,
+            "wis": 6
+        },
+        "skills": {
+            "insight": 6,
+            "perception": 6,
+            "religion": 4
+        },
+        "passive_perception": 16,
+        "defenses": {
+            "condition_immune": {
+                "types": [
+                    "blinded",
+                    "charmed",
+                    "deafened",
+                    "exhaustion",
+                    "frightened",
+                    "grappled",
+                    "incapacitated",
+                    "invisible",
+                    "paralyzed",
+                    "petrified",
+                    "poisoned",
+                    "prone",
+                    "restrained",
+                    "stunned",
+                    "unconscious"
+                ]
+            }
+        },
+        "languages": [
+            "Common"
+        ],
+        "cr": {
+            "cr": "8",
+            "xp": 3900,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 4
+        },
+        "features": [
+            {
+                "id": "immunities-and-saves",
+                "name": "Immunities and Saves",
+                "category": "traits",
+                "text": "Ri'all automatically succeeds on all saving throws."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Ri'all makes three attacks, using Dread Scythe or Deathly Ray in any combination."
+            },
+            {
+                "id": "dread-scythe",
+                "name": "Dread Scythe",
+                "category": "actions",
+                "text": "Melee Attack Roll: +7, reach 10 ft. Hit: 9 (1d10 + 4) Slashing damage plus 11 (2d10) Necrotic damage, and the target can't regain Hit Points until the end of its next turn.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "1d10",
+                                "bonus": 4,
+                                "type": "slashing"
+                            },
+                            {
+                                "dice": "2d10",
+                                "type": "necrotic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "deathly-ray",
+                "name": "Deathly Ray",
+                "category": "actions",
+                "text": "Ranged Attack Roll: +6, range 120 ft. Hit: 22 (4d10) Necrotic damage.",
+                "action": {
+                    "range": "range 120 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "4d10",
+                                "type": "necrotic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "spirit-wail",
+                "name": "Spirit Wail",
+                "category": "bonus_actions",
+                "text": "Wisdom Saving Throw: DC 14, each creature, excluding Thayan mercenaries, in a 20-foot Emanation originating from Ri'all. Failure: 7 (2d6) Psychic damage, and the target has the Frightened condition until the end of its next turn. Success: Half damage only.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "area": "20-foot emanation",
+                    "save": {
+                        "ability": "wis",
+                        "dc": 14,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "type": "psychic"
+                            }
+                        ],
+                        "conditions": [
+                            "frightened"
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "wis",
+                "dc": 14,
+                "text": "Ri'all casts one of the following spells, using Wisdom as the spellcasting ability (spell save DC 14):",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "speak-with-dead-xphb"
+                            },
+                            {
+                                "spell": "thaumaturgy-xphb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "splint-armor-xphb",
+                "qty": 1
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "necrotic",
+                "slashing",
+                "psychic"
+            ],
+            "conditions_inflicted": [
+                "frightened"
+            ],
+            "saves_forced": [
+                "wis"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "melee_attack",
+                "ranged_attack",
+                "reach"
+            ],
+            "languages": [
+                "common"
+            ],
+            "spellcasting": [
+                "other"
+            ],
+            "environment": [
+                "any"
+            ],
+            "treasure": [
+                "individual",
+                "relics"
+            ]
+        }
+    }
+]

@@ -1,0 +1,870 @@
+[
+    {
+        "id": "death-knight-wow",
+        "kind": "class",
+        "name": "Death Knight",
+        "source": "WoW",
+        "edition": "one",
+        "hit_die": "d10",
+        "hp": {
+            "first": "10 + con_mod",
+            "per_level": "6 + con_mod"
+        },
+        "primary_ability": [
+            [
+                "str",
+                "cha"
+            ]
+        ],
+        "saves": [
+            "wis",
+            "cha"
+        ],
+        "grants": {
+            "weapons": [
+                "simple_weapons",
+                "martial_weapons"
+            ],
+            "armor": [
+                "light",
+                "medium",
+                "heavy",
+                "shields"
+            ],
+            "spells": [
+                {
+                    "spell": "rune-strike-wow",
+                    "how": "prepared",
+                    "at": 2,
+                    "uses": {
+                        "max": 1,
+                        "reset": "long"
+                    }
+                },
+                {
+                    "spell": "find-steed-xphb",
+                    "how": "prepared",
+                    "at": 5,
+                    "uses": {
+                        "max": 1,
+                        "reset": "long"
+                    }
+                }
+            ]
+        },
+        "choices": [
+            {
+                "type": "pool",
+                "id": "skills",
+                "label": "Skills",
+                "grant": "skills",
+                "count": 2,
+                "from": [
+                    "athletics",
+                    "insight",
+                    "intimidation",
+                    "medicine",
+                    "persuasion",
+                    "religion"
+                ]
+            },
+            {
+                "type": "bundle",
+                "id": "starting_equipment",
+                "label": "Starting Equipment",
+                "options": [
+                    {
+                        "id": "a",
+                        "label": "Chain Mail, Shield, Longsword, 6 Javelin, Holy Symbol, Priest's Pack, 9 GP",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "chain-mail-xphb",
+                                    "qty": 1
+                                },
+                                {
+                                    "item": "shield-xphb",
+                                    "qty": 1
+                                },
+                                {
+                                    "item": "longsword-xphb",
+                                    "qty": 1
+                                },
+                                {
+                                    "item": "javelin-xphb",
+                                    "qty": 6
+                                },
+                                {
+                                    "item": "holy-symbol-xphb",
+                                    "qty": 1
+                                },
+                                {
+                                    "item": "priests-pack-xphb",
+                                    "qty": 1
+                                }
+                            ],
+                            "currency": {
+                                "gp": 9
+                            }
+                        }
+                    },
+                    {
+                        "id": "b",
+                        "label": "150 GP",
+                        "grants": {
+                            "currency": {
+                                "gp": 150
+                            }
+                        }
+                    }
+                ]
+            }
+        ],
+        "multiclass": {
+            "requires": [
+                {
+                    "str": 13,
+                    "cha": 13
+                }
+            ],
+            "grants": {
+                "weapons": [
+                    "martial_weapons"
+                ],
+                "armor": [
+                    "light",
+                    "medium",
+                    "shields"
+                ]
+            }
+        },
+        "subclass": {
+            "title": "Death Knight Subclass",
+            "level": 3,
+            "text": "You gain a Death Knight subclass of your choice. A subclass is a specialization that grants you features at certain Death Knight levels. For the rest of your career, you gain each of your subclass's features that are of your Death Knight level or lower."
+        },
+        "columns": [
+            {
+                "id": "channel_divinity",
+                "name": "Channel Divinity",
+                "values": {
+                    "3": 2,
+                    "11": 3
+                }
+            }
+        ],
+        "resources": [
+            {
+                "id": "channel_divinity",
+                "name": "Channel Divinity",
+                "max": {
+                    "3": 2,
+                    "11": 3
+                }
+            }
+        ],
+        "spellcasting": {
+            "ability": "cha",
+            "progression": "half_up",
+            "list": "death-knight-wow",
+            "prepared": {
+                "1": 2,
+                "2": 3,
+                "3": 4,
+                "4": 5,
+                "5": 6,
+                "7": 7,
+                "9": 9,
+                "11": 10,
+                "13": 11,
+                "15": 12,
+                "17": 14,
+                "19": 15
+            },
+            "change": "long_rest",
+            "slots": {
+                "1": [
+                    2
+                ],
+                "3": [
+                    3
+                ],
+                "5": [
+                    4,
+                    2
+                ],
+                "7": [
+                    4,
+                    3
+                ],
+                "9": [
+                    4,
+                    3,
+                    2
+                ],
+                "11": [
+                    4,
+                    3,
+                    3
+                ],
+                "13": [
+                    4,
+                    3,
+                    3,
+                    1
+                ],
+                "15": [
+                    4,
+                    3,
+                    3,
+                    2
+                ],
+                "17": [
+                    4,
+                    3,
+                    3,
+                    3,
+                    1
+                ],
+                "19": [
+                    4,
+                    3,
+                    3,
+                    3,
+                    2
+                ]
+            }
+        },
+        "progression": [
+            {
+                "level": 1,
+                "features": [
+                    "death-knight-wow:death-coil",
+                    "paladin-xphb:spellcasting",
+                    "paladin-xphb:weapon-mastery"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "weapon_mastery_1",
+                        "label": "Weapon Mastery",
+                        "grant": "weapon_masteries",
+                        "count": 2,
+                        "from": "proficient_weapons"
+                    }
+                ]
+            },
+            {
+                "level": 2,
+                "features": [
+                    "paladin-xphb:fighting-style",
+                    "death-knight-wow:runic-smite"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "fighting_style_2",
+                        "label": "Fighting Style",
+                        "grant": "feats",
+                        "count": 1,
+                        "from": {
+                            "category": [
+                                "fighting_style"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 3,
+                "features": [
+                    "paladin-xphb:channel-divinity"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "death_knight_subclass_3",
+                        "label": "Death Knight Subclass",
+                        "grant": "subclass",
+                        "count": 1,
+                        "from": "death-knight-wow"
+                    }
+                ]
+            },
+            {
+                "level": 4,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "ability_score_improvement_4",
+                        "label": "Ability Score Improvement",
+                        "grant": "feats",
+                        "count": 1,
+                        "from": {
+                            "category": [
+                                "general"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 5,
+                "features": [
+                    "paladin-xphb:extra-attack",
+                    "death-knight-wow:faithful-steed"
+                ]
+            },
+            {
+                "level": 6,
+                "features": [
+                    "paladin-xphb:aura-of-protection"
+                ]
+            },
+            {
+                "level": 7,
+                "subclass_features": true
+            },
+            {
+                "level": 8,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "ability_score_improvement_8",
+                        "label": "Ability Score Improvement",
+                        "grant": "feats",
+                        "count": 1,
+                        "from": {
+                            "category": [
+                                "general"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 9,
+                "features": [
+                    "paladin-xphb:abjure-foes"
+                ]
+            },
+            {
+                "level": 10,
+                "features": [
+                    "paladin-xphb:aura-of-courage"
+                ]
+            },
+            {
+                "level": 11,
+                "features": [
+                    "death-knight-wow:runic-strikes"
+                ]
+            },
+            {
+                "level": 12,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "ability_score_improvement_12",
+                        "label": "Ability Score Improvement",
+                        "grant": "feats",
+                        "count": 1,
+                        "from": {
+                            "category": [
+                                "general"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 14,
+                "features": [
+                    "death-knight-wow:improved-death-coil"
+                ]
+            },
+            {
+                "level": 15,
+                "subclass_features": true
+            },
+            {
+                "level": 16,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "ability_score_improvement_16",
+                        "label": "Ability Score Improvement",
+                        "grant": "feats",
+                        "count": 1,
+                        "from": {
+                            "category": [
+                                "general"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 18,
+                "features": [
+                    "paladin-xphb:aura-expansion"
+                ]
+            },
+            {
+                "level": 19,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "epic_boon_19",
+                        "label": "Epic Boon",
+                        "grant": "feats",
+                        "count": 1,
+                        "from": {
+                            "category": [
+                                "epic_boon"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 20,
+                "subclass_features": true
+            }
+        ],
+        "features": [
+            {
+                "id": "death-knight-wow:death-coil",
+                "name": "Death Coil",
+                "level": 1,
+                "text": "This feature replaces the Lay On Hands feature of the Paladin class.\n\nYour creature type becomes Undead.\n\nYou also gain the ability to manipulate negative energy. You have a pool of d8s to fuel this ability. The number of dice in the pool equals one plus your Charisma modifier (minimum of one die).\n\nAs a Bonus Action, you can target a creature you can see within 60 feet of yourself and force it to make a Constitution saving throw, expending dice from the pool. The maximum number of dice you can expend at once equals your Charisma modifier (minimum of one die). Roll the dice you expend. The target takes Necrotic damage equal to the roll's total on a failed save or half as much damage on a successful one. If the target is an Undead, you can choose to have it regain Hit Points equal to the roll's total instead. Your pool regains all expended dice when you finish a Long Rest."
+            },
+            {
+                "id": "paladin-xphb:spellcasting",
+                "name": "Spellcasting",
+                "level": 1,
+                "source": "XPHB",
+                "text": "You have learned to cast spells through prayer and meditation. See chapter 7 for the rules on spellcasting. The information below details how you use those rules with Paladin spells, which appear in the Paladin spell list later in the class's description.\n\n**Spell Slots.** The Paladin Features table shows how many spell slots you have to cast your level 1+ spells. You regain all expended slots when you finish a Long Rest.\n\n**Prepared Spells of Level 1+.** You prepare the list of level 1+ spells that are available for you to cast with this feature. To start, choose two level 1 Paladin spells. Heroism and Searing Smite are recommended.\n\nThe number of spells on your list increases as you gain Paladin levels, as shown in the Prepared Spells column of the Paladin Features table. Whenever that number increases, choose additional Paladin spells until the number of spells on your list matches the number in the Paladin Features table. The chosen spells must be of a level for which you have spell slots. For example, if you're a level 5 Paladin, your list of prepared spells can include six Paladin spells of level 1 or 2 in any combination.\n\nIf another Paladin feature gives you spells that you always have prepared, those spells don't count against the number of spells you can prepare with this feature, but those spells otherwise count as Paladin spells for you.\n\n**Changing Your Prepared Spells.** Whenever you finish a Long Rest, you can replace one spell on your list with another Paladin spell for which you have spell slots.\n\n**Spellcasting Ability.** Charisma is your spellcasting ability for your Paladin spells.\n\n**Spellcasting Focus.** You can use a Holy Symbol as a Spellcasting Focus for your Paladin spells.",
+                "srd": {
+                    "5.2": "Spellcasting"
+                }
+            },
+            {
+                "id": "paladin-xphb:weapon-mastery",
+                "name": "Weapon Mastery",
+                "level": 1,
+                "source": "XPHB",
+                "text": "Your training with weapons allows you to use the mastery properties of two kinds of weapons of your choice with which you have proficiency, such as Longswords and Javelins.\n\nWhenever you finish a Long Rest, you can change the kinds of weapons you chose. For example, you could switch to using the mastery properties of Halberds and Flails.",
+                "srd": {
+                    "5.2": "Weapon Mastery"
+                }
+            },
+            {
+                "id": "paladin-xphb:fighting-style",
+                "name": "Fighting Style",
+                "level": 2,
+                "source": "XPHB",
+                "text": "You gain a Fighting Style feat of your choice. Instead of choosing one of those feats, you can choose the option below.\n\n- Blessed Warrior",
+                "srd": {
+                    "5.2": "Fighting Style"
+                }
+            },
+            {
+                "id": "death-knight-wow:runic-smite",
+                "name": "Runic Smite",
+                "level": 2,
+                "text": "This feature replaces the Paladin's Smite feature of the Paladin class.\n\nYou always have the Rune Strike spell prepared. You can cast it once without a spell slot, and you regain the ability to cast it in that way when you finish a Long Rest."
+            },
+            {
+                "id": "paladin-xphb:channel-divinity",
+                "name": "Channel Divinity",
+                "level": 3,
+                "source": "XPHB",
+                "text": "You can channel divine energy directly from the Outer Planes, using it to fuel magical effects. You start with one such effect: Divine Sense, which is described below. Other Paladin features give additional Channel Divinity effect options. Each time you use this class's Channel Divinity, you choose which effect from this class to create.\n\nYou can use this class's Channel Divinity twice. You regain one of its expended uses when you finish a Short Rest, and you regain all expended uses when you finish a Long Rest. You gain an additional use when you reach Paladin level 11.\n\nIf a Channel Divinity effect requires a saving throw, the DC equals the spell save DC from this class's Spellcasting feature.",
+                "srd": {
+                    "5.2": "Channel Divinity"
+                }
+            },
+            {
+                "id": "paladin-xphb:divine-sense",
+                "name": "Divine Sense",
+                "level": 3,
+                "source": "XPHB",
+                "text": "As a Bonus Action, you can open your awareness to detect Celestials, Fiends, and Undead. For the next 10 minutes or until you have the Incapacitated condition, you know the location of any creature of those types within 60 feet of yourself, and you know its creature type. Within the same radius, you also detect the presence of any place or object that has been consecrated or desecrated, as with the Hallow spell.",
+                "parent": "paladin-xphb:channel-divinity",
+                "consumes": {
+                    "resource": "channel_divinity",
+                    "amount": 1
+                },
+                "srd": {
+                    "5.2": "Divine Sense"
+                }
+            },
+            {
+                "id": "paladin-xphb:extra-attack",
+                "name": "Extra Attack",
+                "level": 5,
+                "source": "XPHB",
+                "text": "You can attack twice instead of once whenever you take the Attack action on your turn.",
+                "srd": {
+                    "5.2": "Extra Attack"
+                }
+            },
+            {
+                "id": "death-knight-wow:faithful-steed",
+                "name": "Faithful Steed",
+                "level": 5,
+                "text": "You can call on the aid of an otherworldly steed. You always have the Find Steed spell prepared.\n\nYou can also cast the spell once without expending a spell slot, and you regain the ability to do so when you finish a Long Rest.\n\nIn addition to the benefits of the Paladin's Faithful Steed feature, when you cast Find Steed, the **Otherworldly Steed** can be Undead. An Undead steed deals Necrotic damage with its Otherworldly Slam action and has this Bonus Action:\n\n**Ghostly Stride (Undead Only; Recharges After a Long Rest).** The steed and its rider can move through other creatures and objects this turn as if they were Difficult Terrain. Both steed and rider take 5 (1d10) Force damage if they end their turn inside an object."
+            },
+            {
+                "id": "paladin-xphb:aura-of-protection",
+                "name": "Aura of Protection",
+                "level": 6,
+                "source": "XPHB",
+                "text": "You radiate a protective, unseeable aura in a 10-foot Emanation that originates from you. The aura is inactive while you have the Incapacitated condition.\n\nYou and your allies in the aura gain a bonus to saving throws equal to your Charisma modifier (minimum bonus of +1).\n\nIf another Paladin is present, a creature can benefit from only one Aura of Protection at a time; the creature chooses which aura while in them.",
+                "srd": {
+                    "5.2": "Aura of Protection"
+                }
+            },
+            {
+                "id": "paladin-xphb:abjure-foes",
+                "name": "Abjure Foes",
+                "level": 9,
+                "source": "XPHB",
+                "text": "As a Magic action, you can expend one use of this class's Channel Divinity to overwhelm foes with awe. As you present your Holy Symbol or weapon, you can target a number of creatures equal to your Charisma modifier (minimum of one creature) that you can see within 60 feet of yourself. Each target must succeed on a Wisdom saving throw or have the Frightened condition for 1 minute or until it takes any damage. While Frightened in this way, a target can do only one of the following on its turns: move, take an action, or take a Bonus Action.",
+                "consumes": {
+                    "resource": "channel_divinity",
+                    "amount": 1
+                },
+                "srd": {
+                    "5.2": "Abjure Foes"
+                }
+            },
+            {
+                "id": "paladin-xphb:aura-of-courage",
+                "name": "Aura of Courage",
+                "level": 10,
+                "source": "XPHB",
+                "text": "You and your allies have Immunity to the Frightened condition while in your Aura of Protection. If a Frightened ally enters the aura, that condition has no effect on that ally while there.",
+                "srd": {
+                    "5.2": "Aura of Courage"
+                }
+            },
+            {
+                "id": "death-knight-wow:runic-strikes",
+                "name": "Runic Strikes",
+                "level": 11,
+                "text": "This feature replaces the Paladin's Radiant Strikes feature.\n\nWhen you hit a target with an attack roll using a Melee weapon or an Unarmed Strike, the target takes an extra 1d8 Necrotic damage."
+            },
+            {
+                "id": "death-knight-wow:improved-death-coil",
+                "name": "Improved Death Coil",
+                "level": 14,
+                "text": "This feature replaces the Paladin's Restoring Touch feature.\n\nWhen you use Death Coil to deal damage, the target takes extra Necrotic damage equal to your Charisma modifier (minimum of 1) whether or not it fails its saving throw. If the target is an Undead, and you have it regain Hit Points, it regains additional Hit Points equal to your Paladin level."
+            },
+            {
+                "id": "paladin-xphb:aura-expansion",
+                "name": "Aura Expansion",
+                "level": 18,
+                "source": "XPHB",
+                "text": "Your Aura of Protection is now a 30-foot Emanation.",
+                "srd": {
+                    "5.2": "Aura Expansion"
+                }
+            }
+        ]
+    },
+    {
+        "id": "death-knight-wow:ebon-blade-wow",
+        "kind": "subclass",
+        "name": "Oath of the Ebon Blade",
+        "source": "WoW",
+        "edition": "one",
+        "text": "*Wield the Power of Death Against the Scourge*\n\nThe Oath of the Ebon Blade unites the free death knights of Azeroth. No longer directly under the Lich King's control, they still serve Bolvar Fordragon—first as agents of the new Lich King, and later, after the destruction of the Helm of Domination, as troops devoted to stopping the Scourge's spread.",
+        "class_id": "death-knight-wow",
+        "short_name": "Ebon Blade",
+        "choices": [
+            {
+                "type": "bundle",
+                "id": "spells",
+                "label": "Spells",
+                "options": [
+                    {
+                        "id": "blood",
+                        "label": "Blood",
+                        "grants": {
+                            "spells": [
+                                {
+                                    "spell": "death-grip-wow",
+                                    "how": "prepared",
+                                    "at": 3,
+                                    "ability": "cha"
+                                },
+                                {
+                                    "spell": "vampiric-blood-wow",
+                                    "how": "prepared",
+                                    "at": 3,
+                                    "ability": "cha"
+                                },
+                                {
+                                    "spell": "death-and-decay-wow",
+                                    "how": "prepared",
+                                    "at": 5,
+                                    "ability": "cha"
+                                },
+                                {
+                                    "spell": "spiritual-weapon-xphb",
+                                    "how": "prepared",
+                                    "at": 5,
+                                    "ability": "cha"
+                                },
+                                {
+                                    "spell": "summon-undead-xphb",
+                                    "how": "prepared",
+                                    "at": 9,
+                                    "ability": "cha"
+                                },
+                                {
+                                    "spell": "leeching-strike-wow",
+                                    "how": "prepared",
+                                    "at": 9,
+                                    "ability": "cha"
+                                },
+                                {
+                                    "spell": "freedom-of-movement-xphb",
+                                    "how": "prepared",
+                                    "at": 13,
+                                    "ability": "cha"
+                                },
+                                {
+                                    "spell": "evards-black-tentacles-xphb",
+                                    "how": "prepared",
+                                    "at": 13,
+                                    "ability": "cha"
+                                },
+                                {
+                                    "spell": "circle-of-power-xphb",
+                                    "how": "prepared",
+                                    "at": 17,
+                                    "ability": "cha"
+                                },
+                                {
+                                    "spell": "bonestorm-wow",
+                                    "how": "prepared",
+                                    "at": 17,
+                                    "ability": "cha"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "id": "frost",
+                        "label": "Frost",
+                        "grants": {
+                            "spells": [
+                                {
+                                    "spell": "death-grip-wow",
+                                    "how": "prepared",
+                                    "at": 3,
+                                    "ability": "cha"
+                                },
+                                {
+                                    "spell": "chains-of-ice-wow",
+                                    "how": "prepared",
+                                    "at": 3,
+                                    "ability": "cha"
+                                },
+                                {
+                                    "spell": "death-and-decay-wow",
+                                    "how": "prepared",
+                                    "at": 5,
+                                    "ability": "cha"
+                                },
+                                {
+                                    "spell": "frostscythe-wow",
+                                    "how": "prepared",
+                                    "at": 5,
+                                    "ability": "cha"
+                                },
+                                {
+                                    "spell": "summon-undead-xphb",
+                                    "how": "prepared",
+                                    "at": 9,
+                                    "ability": "cha"
+                                },
+                                {
+                                    "spell": "remorseless-winter-wow",
+                                    "how": "prepared",
+                                    "at": 9,
+                                    "ability": "cha"
+                                },
+                                {
+                                    "spell": "freedom-of-movement-xphb",
+                                    "how": "prepared",
+                                    "at": 13,
+                                    "ability": "cha"
+                                },
+                                {
+                                    "spell": "ice-storm-xphb",
+                                    "how": "prepared",
+                                    "at": 13,
+                                    "ability": "cha"
+                                },
+                                {
+                                    "spell": "circle-of-power-xphb",
+                                    "how": "prepared",
+                                    "at": 17,
+                                    "ability": "cha"
+                                },
+                                {
+                                    "spell": "cone-of-cold-xphb",
+                                    "how": "prepared",
+                                    "at": 17,
+                                    "ability": "cha"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "id": "unholy",
+                        "label": "Unholy",
+                        "grants": {
+                            "spells": [
+                                {
+                                    "spell": "death-grip-wow",
+                                    "how": "prepared",
+                                    "at": 3,
+                                    "ability": "cha"
+                                },
+                                {
+                                    "spell": "scourge-strike-wow",
+                                    "how": "prepared",
+                                    "at": 3,
+                                    "ability": "cha"
+                                },
+                                {
+                                    "spell": "death-and-decay-wow",
+                                    "how": "prepared",
+                                    "at": 5,
+                                    "ability": "cha"
+                                },
+                                {
+                                    "spell": "ray-of-enfeeblement-xphb",
+                                    "how": "prepared",
+                                    "at": 5,
+                                    "ability": "cha"
+                                },
+                                {
+                                    "spell": "summon-undead-xphb",
+                                    "how": "prepared",
+                                    "at": 9,
+                                    "ability": "cha"
+                                },
+                                {
+                                    "spell": "bestow-curse-xphb",
+                                    "how": "prepared",
+                                    "at": 9,
+                                    "ability": "cha"
+                                },
+                                {
+                                    "spell": "freedom-of-movement-xphb",
+                                    "how": "prepared",
+                                    "at": 13,
+                                    "ability": "cha"
+                                },
+                                {
+                                    "spell": "blight-xphb",
+                                    "how": "prepared",
+                                    "at": 13,
+                                    "ability": "cha"
+                                },
+                                {
+                                    "spell": "circle-of-power-xphb",
+                                    "how": "prepared",
+                                    "at": 17,
+                                    "ability": "cha"
+                                },
+                                {
+                                    "spell": "contagion-xphb",
+                                    "how": "prepared",
+                                    "at": 17,
+                                    "ability": "cha"
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        ],
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "death-knight-wow:ebon-blade-wow:oath-of-the-ebon-blade-spells",
+                    "death-knight-wow:ebon-blade-wow:runeforging",
+                    "death-knight-wow:ebon-blade-wow:runic-power"
+                ]
+            },
+            {
+                "level": 7,
+                "features": [
+                    "death-knight-wow:ebon-blade-wow:aura-of-deathly-endurance"
+                ]
+            },
+            {
+                "level": 15,
+                "features": [
+                    "death-knight-wow:ebon-blade-wow:runic-mastery"
+                ]
+            },
+            {
+                "level": 20,
+                "features": [
+                    "death-knight-wow:ebon-blade-wow:aspect-of-the-horsemen"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "death-knight-wow:ebon-blade-wow:oath-of-the-ebon-blade-spells",
+                "name": "Oath of the Ebon Blade Spells",
+                "level": 3,
+                "text": "The magic of your oath and your Runeforging feature (see below) ensure you always have certain spells ready; when you reach a Paladin level specified in the Oath of the Ebon Blade Spells table, you thereafter always have the spell in the Spells (All) column prepared. You also have the additional spells listed in the column matching the rune you have inscribed on your weapon, if any.\n\nOath of the Ebon Blade Spells\n\nPaladin Level | Spells (All) | Spells (Blood) | Spells (Frost) | Spells (Unholy)\n--- | --- | --- | --- | ---\n3 | Death Grip | Vampiric Blood | Chains of Ice | Scourge Strike\n5 | Death and Decay | Spiritual Weapon | Frostscythe | Ray of Enfeeblement\n9 | Summon Undead | Leeching Strike | Remorseless Winter | Bestow Curse\n13 | Freedom of Movement | Evard's Black Tentacles | Ice Storm | Blight\n17 | Circle of Power | Bonestorm | Cone of Cold | Contagion"
+            },
+            {
+                "id": "death-knight-wow:ebon-blade-wow:runeforging",
+                "name": "Runeforging",
+                "level": 3,
+                "text": "When you finish a Long Rest, you can inscribe one of the following runes on a melee weapon you are holding, or you can transfer the rune to a different weapon. Whenever you gain a level, you can replace it with a different rune.\n\n**Blood.** When you inscribe this rune on your weapon, and whenever you finish a Long Rest while the rune is inscribed on your weapon, you gain Temporary Hit Points equal to your Charisma modifier plus your Paladin level. While you are wielding your inscribed weapon, you gain these Temporary Hit Points whenever you reduce an enemy to 0 Hit Points.\n\n**Frost.** While you are wielding your inscribed weapon, damage from your weapon attacks, Paladin spells, and Paladin features ignores Resistance to Cold damage. When you make the extra attack of the Light property and hit while wielding your inscribed weapon, you deal an extra 1d4 Cold damage.\n\n**Unholy.** While you are wielding your inscribed weapon, damage from your weapon attacks, Paladin spells, and Paladin features ignores Resistance to Necrotic damage. If your inscribed weapon has the Heavy property, the first creature you hit with it each turn takes extra Necrotic damage equal to your Charisma modifier (minimum of 1)."
+            },
+            {
+                "id": "death-knight-wow:ebon-blade-wow:runic-power",
+                "name": "Runic Power",
+                "level": 3,
+                "text": "Immediately after you cast Rune Strike, you can expend one use of your Channel Divinity to gain one of the following benefits based on the rune inscribed on your weapon.\n\n**Blood.** You regain a number of Hit Points equal to the Necrotic damage dealt with your Rune Strike.\n\n**Frost.** Frost covers your weapon and shatters on impact. The target of your Rune Strike and each enemy in a 10-foot Emanation originating from the target take 2d6 Cold damage.\n\n**Unholy.** The target of your Rune Strike is cursed until the end of your next turn. The next time the cursed target makes a saving throw, it subtracts 1d6 from the roll, and the curse ends.",
+                "consumes": {
+                    "resource": "channel_divinity",
+                    "amount": 1
+                }
+            },
+            {
+                "id": "death-knight-wow:ebon-blade-wow:aura-of-deathly-endurance",
+                "name": "Aura of Deathly Endurance",
+                "level": 7,
+                "text": "You and your allies have Resistance to Cold, Necrotic, and Psychic damage while in your Aura of Protection."
+            },
+            {
+                "id": "death-knight-wow:ebon-blade-wow:runic-mastery",
+                "name": "Runic Mastery",
+                "level": 15,
+                "text": "You can invoke the power of the rune inscribed on your weapon. Once you use this feature, you can't do so again until you finish a Long Rest. The effect depends on the rune you have inscribed.\n\n**Blood.** When a creature hits another creature you can see within 10 feet of you with an attack roll, you can take a Reaction to reduce the damage the target takes by your Paladin level. You then lose a number of Hit Points equal to your Paladin level.\n\n**Frost.** When you take the Attack action on your turn, you can replace one attack with an exhalation of frost magic in a 30-foot Cone. Each creature in that area makes a Dexterity saving throw against your spell save DC. A creature takes 8d6 Cold damage on a failed save or half as much damage on a successful one.\n\n**Unholy.** When you cast Summon Undead, you can modify it so that the spell doesn't require Concentration. If you do so, the spell's duration becomes 1 minute for that casting, and when summoned, the **Undead Spirit** has a number of Temporary Hit Points equal to your Paladin level plus your Charisma modifier. In addition, the first time each turn the spirit hits a creature, the spirit deals extra Necrotic damage equal to half your Paladin level (round up)."
+            },
+            {
+                "id": "death-knight-wow:ebon-blade-wow:aspect-of-the-horsemen",
+                "name": "Aspect of the Horsemen",
+                "level": 20,
+                "text": "As a Bonus Action, you gain the benefits below for 10 minutes or until you end them (no action required). Once you use this feature, you can't use it again until you finish a Long Rest. You can also restore your use of it by expending a level 5 spell slot (no action required).\n\n**Generate Runic Power.** You can restore a use of your Runic Mastery by expending a level 4 spell slot (no action required).\n\n**Runeforging.** When you use your Runic Power and Runic Mastery features, you can choose any effect, not just the one that corresponds to the rune inscribed on your weapon."
+            }
+        ]
+    }
+]

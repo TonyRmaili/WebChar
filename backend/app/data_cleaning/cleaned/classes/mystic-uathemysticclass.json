@@ -1,0 +1,1083 @@
+[
+    {
+        "id": "mystic-uathemysticclass",
+        "kind": "class",
+        "name": "Mystic",
+        "source": "UATheMysticClass",
+        "edition": "classic",
+        "hit_die": "d8",
+        "hp": {
+            "first": "8 + con_mod",
+            "per_level": "5 + con_mod"
+        },
+        "saves": [
+            "int",
+            "wis"
+        ],
+        "grants": {
+            "weapons": [
+                "simple_weapons"
+            ],
+            "armor": [
+                "light"
+            ]
+        },
+        "choices": [
+            {
+                "type": "pool",
+                "id": "skills",
+                "label": "Skills",
+                "grant": "skills",
+                "count": 2,
+                "from": [
+                    "arcana",
+                    "history",
+                    "insight",
+                    "medicine",
+                    "nature",
+                    "perception",
+                    "religion"
+                ]
+            },
+            {
+                "type": "bundle",
+                "id": "starting_equipment",
+                "label": "Starting Equipment",
+                "options": [
+                    {
+                        "id": "a",
+                        "label": "Spear",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "spear-phb",
+                                    "qty": 1
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "id": "b",
+                        "label": "Mace",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "mace-phb",
+                                    "qty": 1
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "type": "bundle",
+                "id": "starting_equipment_2",
+                "label": "Starting Equipment",
+                "options": [
+                    {
+                        "id": "a",
+                        "label": "Leather Armor",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "leather-armor-phb",
+                                    "qty": 1
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "id": "b",
+                        "label": "Studded Leather Armor",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "studded-leather-armor-phb",
+                                    "qty": 1
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "type": "bundle",
+                "id": "starting_equipment_3",
+                "label": "Starting Equipment",
+                "options": [
+                    {
+                        "id": "a",
+                        "label": "Light Crossbow, Crossbow Bolts (20)",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "light-crossbow-phb",
+                                    "qty": 1
+                                },
+                                {
+                                    "item": "crossbow-bolts-20-phb",
+                                    "qty": 1
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "id": "b",
+                        "label": "Simple Weapons",
+                        "choices": [
+                            {
+                                "type": "pool",
+                                "id": "items",
+                                "label": "Simple Weapons",
+                                "grant": "items",
+                                "count": 1,
+                                "from": "simple_weapons"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "bundle",
+                "id": "starting_equipment_4",
+                "label": "Starting Equipment",
+                "options": [
+                    {
+                        "id": "a",
+                        "label": "Scholar's Pack",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "scholars-pack-phb",
+                                    "qty": 1
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "id": "b",
+                        "label": "Explorer's Pack",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "explorers-pack-phb",
+                                    "qty": 1
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        ],
+        "starting_gold": "5d4 × 10",
+        "subclass": {
+            "title": "Mystic Order",
+            "level": 1,
+            "text": "At 1st level, you choose a Mystic Order from the list of available orders. Each order specializes in a specific approach to psionics.\n\nYour order gives you features when you choose it at 1st level and additional features at 3rd, 6th, and 14th level."
+        },
+        "columns": [
+            {
+                "id": "talents_known",
+                "name": "Talents Known",
+                "values": {
+                    "1": 1,
+                    "3": 2,
+                    "10": 3,
+                    "17": 4
+                }
+            },
+            {
+                "id": "disciplines_known",
+                "name": "Disciplines Known",
+                "values": {
+                    "1": 1,
+                    "3": 2,
+                    "5": 3,
+                    "7": 4,
+                    "9": 5,
+                    "12": 6,
+                    "15": 7,
+                    "18": 8
+                }
+            },
+            {
+                "id": "psi_points",
+                "name": "Psi Points",
+                "values": {
+                    "1": 4,
+                    "2": 6,
+                    "3": 14,
+                    "4": 17,
+                    "5": 27,
+                    "6": 32,
+                    "7": 38,
+                    "8": 44,
+                    "9": 57,
+                    "10": 64,
+                    "18": 71
+                }
+            },
+            {
+                "id": "psi_limit",
+                "name": "Psi Limit",
+                "values": {
+                    "1": 2,
+                    "3": 3,
+                    "5": 5,
+                    "7": 6,
+                    "9": 7
+                }
+            }
+        ],
+        "resources": [
+            {
+                "id": "psi_points",
+                "name": "Psi Points",
+                "max": {
+                    "1": 4,
+                    "2": 6,
+                    "3": 14,
+                    "4": 17,
+                    "5": 27,
+                    "6": 32,
+                    "7": 38,
+                    "8": 44,
+                    "9": 57,
+                    "10": 64,
+                    "18": 71
+                }
+            }
+        ],
+        "progression": [
+            {
+                "level": 1,
+                "features": [
+                    "mystic-uathemysticclass:psionics",
+                    "mystic-uathemysticclass:psionic-disciplines-and-talents",
+                    "mystic-uathemysticclass:using-a-discipline"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "mystic_order_1",
+                        "label": "Mystic Order",
+                        "grant": "subclass",
+                        "count": 1,
+                        "from": "mystic-uathemysticclass"
+                    }
+                ]
+            },
+            {
+                "level": 2,
+                "features": [
+                    "mystic-uathemysticclass:mystical-recovery",
+                    "mystic-uathemysticclass:telepathy"
+                ]
+            },
+            {
+                "level": 3,
+                "subclass_features": true
+            },
+            {
+                "level": 4,
+                "features": [
+                    "mystic-uathemysticclass:strength-of-mind"
+                ],
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_4",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_4",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_4",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 6,
+                "subclass_features": true
+            },
+            {
+                "level": 8,
+                "features": [
+                    "mystic-uathemysticclass:potent-psionics-1d8"
+                ],
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_8",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_8",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_8",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 10,
+                "features": [
+                    "mystic-uathemysticclass:consumptive-power"
+                ]
+            },
+            {
+                "level": 11,
+                "features": [
+                    "mystic-uathemysticclass:psionic-mastery-1-day"
+                ]
+            },
+            {
+                "level": 12,
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_12",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_12",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_12",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 13,
+                "upgrades": [
+                    "mystic-uathemysticclass:psionic-mastery-1-day"
+                ]
+            },
+            {
+                "level": 14,
+                "upgrades": [
+                    "mystic-uathemysticclass:potent-psionics-1d8"
+                ],
+                "subclass_features": true
+            },
+            {
+                "level": 15,
+                "upgrades": [
+                    "mystic-uathemysticclass:psionic-mastery-1-day"
+                ]
+            },
+            {
+                "level": 16,
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_16",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_16",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_16",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 17,
+                "upgrades": [
+                    "mystic-uathemysticclass:psionic-mastery-1-day"
+                ]
+            },
+            {
+                "level": 19,
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_19",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_19",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_19",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 20,
+                "features": [
+                    "mystic-uathemysticclass:psionic-body"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "mystic-uathemysticclass:psionics",
+                "name": "Psionics",
+                "level": 1,
+                "text": "As a student of psionics, you can master and use psionic talents and disciplines, the rules for which appear at the end of this document. Psionics is a special form of magic use, distinct from spellcasting.\n\n**Psionic Talents.** A psionic talent is a minor psionic effect you have mastered. At 1st level, you know one psionic talent of your choice. You learn additional talents of your choice at higher levels. The Talents Known column of the Mystic table shows the total number of talents you know at each level; when that number goes up for you, choose a new talent.\n\n**Psionic Disciplines.** A psionic discipline is a rigid set of mental exercises that allows a mystic to manifest psionic power. A mystic masters only a few disciplines at a time.\n\nAt 1st level, you know one psionic discipline of your choice. The Disciplines Known column of the Mystic table shows the total number of disciplines you know at each level; when that number goes up for you, choose a new discipline.\n\nIn addition, whenever you gain a level in this class, you can replace one discipline you know with a different one of your choice.\n\n**Psi Points.** You have an internal reservoir of energy that can be devoted to psionic disciplines you know. This energy is represented by psi points. Each psionic discipline describes effects you can create with it by spending a certain number of psi points. A psionic talent requires no psi points.\n\nThe number of psi points you have is based on your mystic level, as shown in the Psi Points column of the Mystic table. The number shown for your level is your psi point maximum. Your psi point total returns to its maximum when you finish a long rest. The number of psi points you have can't go below 0 or over your maximum.\n\n**Psi Limit.** Though you have access to a potent amount of psionic energy, it takes training and practice to channel that energy. There is a limit on the number of psi points you can spend to activate a psionic discipline. The limit is based on your mystic level, as shown in the Psi Limit column of the Mystic table. For example, as a 3rd-level mystic, you can spend no more than 3 psi points on a discipline each time you use it, no matter how many psi points you have.\n\n**Psychic Focus.** You can focus psionic energy on one of your psionic disciplines to draw ongoing benefits from it. As a bonus action, you can choose one of your psionic disciplines and gain its psychic focus benefit, which is detailed in that discipline's description. The benefit lasts until you are incapacitated or until you use another bonus action to choose a different focus benefit.\n\nYou can have only one psychic focus benefit at a time, and using the psychic focus of one discipline doesn't limit your ability to use other disciplines.\n\n**Psionic Ability.** Intelligence is your psionic ability for your psionic disciplines. You use your Intelligence modifier when setting the saving throw DC for a psionic discipline or when making an attack roll with one.\n\n**Discipline save DC** = 8 + your proficiency bonus + your Intelligence modifier\n\n**Discipline attack modifier** = your proficiency bonus + your Intelligence modifier"
+            },
+            {
+                "id": "mystic-uathemysticclass:psionic-disciplines-and-talents",
+                "name": "Psionic Disciplines and Talents",
+                "level": 1,
+                "text": "Psionic talents and disciplines are the heart of a mystic's craft. They are the mental exercises and psionic formulae used to forge will into tangible, magical effects.\n\nPsionic disciplines were each discovered by different orders and tend to reflect their creators' specialties. However, a mystic can learn any discipline regardless of its associated order."
+            },
+            {
+                "id": "mystic-uathemysticclass:using-a-discipline",
+                "name": "Using a Discipline",
+                "level": 1,
+                "text": "Each psionic discipline has several ways you can use it, all contained in its description. The discipline specifies the type of action and number of psi points it requires. It also details whether you must concentrate on its effects, how many targets it affects, what saving throws it requires, and so on.\n\nThe following sections go into more detail on using a discipline. Psionic disciplines are magical and function similarly to spells.\n\n**Psychic Focus.** The Psychic Focus section of a discipline describes the benefit you gain when you choose that discipline for your psychic focus.\n\n**Effect Options and Psi Points.** A discipline provides different options for how to use it with your psi points. Each effect option has a name, and the psi point cost of that option appears in parentheses after its name. You must spend that number of psi points to use that option, while abiding by your psi limit. If you don't have enough psi points left, or the cost is above your psi limit, you can't use the option.\n\nSome options show a range of psi points, rather than a specific cost. To use that option, you must spend a number of points within that point range, still abiding by your psi limit. Some options let you spend additional psi points to increase a discipline's potency. Again, you must abide by your psi limit, and you must spend all the points when you first use the discipline; you can't decide to spend additional points once you see the discipline in action.\n\nEach option notes specific information about its effect, including any action required to use it and its range.\n\n**Components.** Disciplines don't require the components that many spells require. Using a discipline requires no spoken words, gestures, or materials. The power of psionics comes from the mind.\n\n**Duration.** An effect option in a discipline specifies how long its effect lasts.\n\n**Instantaneous.** If no duration is specified, the effect of the option is instantaneous.\n\n**Concentration.** Some options require concentration to maintain their effects. This requirement is noted with \"conc.\" after the option's psi point cost. The \"conc.\" notation is followed by the maximum duration of the concentration. For example, if an option says \"conc., 1 min.,\" you can concentrate on its effect for up to 1 minute.\n\nConcentrating on a discipline follows the same rules as concentrating on a spell. This rule means you can't concentrate on a spell and a discipline at the same time, nor can you concentrate on two disciplines at the same time. See chapter 10, \"Spellcasting,\" in the Player's Handbook for how concentration works.\n\n**Targets and Areas of Effect.** Psionic disciplines use the same rules as spells for determining targets and areas of effect, as presented in chapter 10, \"Spellcasting,\" of the Player's Handbook.\n\n**Saving Throws and Attack Rolls.** If a discipline requires a saving throw, it specifies the type of save and the results of a successful or failed saving throw. The DC is determined by your psionic ability.\n\nSome disciplines require you to make an attack roll to determine whether the discipline's effect hits its target. The attack roll uses your psionic ability.\n\n**Combining Psionic Effects.** The effects of different psionic disciplines add together while the durations of the disciplines overlap. Likewise, different options from a psionic discipline combine if they are active at the same time. However, a specific option from a psionic discipline doesn't combine with itself if the option is used multiple times. Instead, the most potent effect—usually dependent on how many psi points were used to create the effect—applies while the durations of the effects overlap.\n\nPsionics and spells are separate effects, and therefore their benefits and drawbacks overlap. A psionic effect that reproduces a spell is an exception to this rule."
+            },
+            {
+                "id": "mystic-uathemysticclass:mystical-recovery",
+                "name": "Mystical Recovery",
+                "level": 2,
+                "text": "Starting at 2nd level, you can draw vigor from the psi energy you use to power your psionic disciplines.\n\nImmediately after you spend psi points on a psionic discipline, you can take a bonus action to regain hit points equal to the number of psi points you spent."
+            },
+            {
+                "id": "mystic-uathemysticclass:telepathy",
+                "name": "Telepathy",
+                "level": 2,
+                "text": "At 2nd level, your mind awakens to the ability to communicate via telepathy. You can telepathically speak to any creature you can see within 120 feet of you in this manner. You don't need to share a language with the creature for it to understand your telepathic messages, but the creature must be able to understand at least one language or be telepathic itself."
+            },
+            {
+                "id": "mystic-uathemysticclass:strength-of-mind",
+                "name": "Strength of Mind",
+                "level": 4,
+                "text": "Even the simplest psionic technique requires a deep understanding of how psionic energy can augment mind and body. This understanding allows you to alter your defenses to better deal with threats.\n\nStarting at 4th level, you can replace your proficiency in Wisdom saving throws whenever you finish a short or long rest. To do so, choose Strength, Dexterity, Constitution, or Charisma. You gain proficiency in saves using that ability, instead of Wisdom. This change lasts until you finish your next short or long rest."
+            },
+            {
+                "id": "mystic-uathemysticclass:potent-psionics-1d8",
+                "name": "Potent Psionics (1d8)",
+                "level": 8,
+                "text": "At 8th level, you gain the ability to infuse your weapon attacks with psychic energy. Once on each of your turns when you hit a creature with a weapon, you can deal an extra 1d8 psychic damage to that target. When you reach 14th level, this extra damage increases to 2d8.\n\nIn addition, you add your Intelligence modifier to any damage roll you make for a psionic talent.\n\n**Potent Psionics (2d8).** At 14th level, your Potent Psionics damage increases to 2d8."
+            },
+            {
+                "id": "mystic-uathemysticclass:consumptive-power",
+                "name": "Consumptive Power",
+                "level": 10,
+                "text": "At 10th level, you gain the ability to sacrifice your physical durability in exchange for psionic power. When activating a psionic discipline, you can pay its psi point cost with your hit points, instead of using any psi points. Your current hit points and hit point maximum are both reduced by the number of hit points you spend. This reduction can't be lessened in any way, and the reduction to your hit point maximum lasts until you finish a long rest.\n\nOnce you use this feature, you can't use it again until you finish a long rest."
+            },
+            {
+                "id": "mystic-uathemysticclass:psionic-mastery-1-day",
+                "name": "Psionic Mastery (1/Day)",
+                "level": 11,
+                "text": "Beginning at 11th level, your mastery of psionic energy allows you to push your mind beyond its normal limits. As an action, you gain 9 special psi points that you can spend only on disciplines that require an action or a bonus action to use. You can use all 9 points on one discipline, or you can spread them across multiple disciplines. You can't also spend your normal psi points on these disciplines; you can spend only the special points gained from this feature. When you finish a long rest, you lose any of these special points that you haven't spent.\n\nIf more than one of the disciplines you activate with these points require concentration, you can concentrate on all of them. Activating one of them ends any effect you were already concentrating on, and if you begin concentrating on an effect that doesn't use these special points, the disciplines that you're concentrating on end.\n\nAt 15th level, the pool of psi points you gain from this feature increases to 11.\n\nYou have one use of this feature, and you regain any expended use of it with a long rest. You gain one additional use of this feature at 13th, 15th, and 17th level.\n\n**Psionic Mastery (2/Day).** At 13th level, you can use your Psionic Mastery twice per day.\n\n**Psionic Mastery (3/Day).** At 15th level, you can use your Psionic Mastery three times per day.\n\n**Psionic Mastery (4/Day).** At 17th level, you can use your Psionic Mastery four times per day."
+            },
+            {
+                "id": "mystic-uathemysticclass:psionic-body",
+                "name": "Psionic Body",
+                "level": 20,
+                "text": "At 20th level, your mastery of psionic power causes your mind to transcend the body. Your physical form is infused with psionic energy. You gain the following benefits:\n\n- You gain resistance to bludgeoning, piercing, and slashing damage.\n- You no longer age.\n- You are immune to disease, poison damage, and the poisoned condition.\n- If you die, roll a d20. On a 10 or higher, you discorporate with 0 hit points, instead of dying, and you fall unconscious. You and your gear disappear. You appear at a spot of your choice 1d3 days later on the plane of existence where you died, having gained the benefits of one long rest."
+            }
+        ]
+    },
+    {
+        "id": "mystic-uathemysticclass:avatar-uathemysticclass",
+        "kind": "subclass",
+        "name": "Order of the Avatar",
+        "source": "UATheMysticClass",
+        "edition": "classic",
+        "text": "Mystics of the Order of the Avatar delve into the world of emotion, mastering their inner life to such an extent that they can manipulate and amplify the emotions of others with the same ease that an artist shapes clay. Known as Avatars, these mystics vary from tyrants to inspiring leaders who are loved by their followers.\n\nAvatars can bring out extreme emotions in the people around them. For their allies, they can lend hope, ferocity, and courage, transforming a fighting band into a deadly, unified force. For their enemies, they bring fear, disgust, and trepidation that can make even the most hardened veteran act like a shaky rookie.",
+        "class_id": "mystic-uathemysticclass",
+        "short_name": "Avatar",
+        "progression": [
+            {
+                "level": 1,
+                "features": [
+                    "mystic-uathemysticclass:avatar-uathemysticclass:bonus-disciplines",
+                    "mystic-uathemysticclass:avatar-uathemysticclass:armor-training"
+                ]
+            },
+            {
+                "level": 3,
+                "features": [
+                    "mystic-uathemysticclass:avatar-uathemysticclass:avatar-of-battle"
+                ]
+            },
+            {
+                "level": 6,
+                "features": [
+                    "mystic-uathemysticclass:avatar-uathemysticclass:avatar-of-healing"
+                ]
+            },
+            {
+                "level": 14,
+                "features": [
+                    "mystic-uathemysticclass:avatar-uathemysticclass:avatar-of-speed"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "mystic-uathemysticclass:avatar-uathemysticclass:bonus-disciplines",
+                "name": "Bonus Disciplines",
+                "level": 1,
+                "text": "At 1st level, you learn two additional psionic disciplines of your choice. They must be chosen from among the Avatar disciplines."
+            },
+            {
+                "id": "mystic-uathemysticclass:avatar-uathemysticclass:armor-training",
+                "name": "Armor Training",
+                "level": 1,
+                "text": "At 1st level, you gain proficiency with medium armor and shields."
+            },
+            {
+                "id": "mystic-uathemysticclass:avatar-uathemysticclass:avatar-of-battle",
+                "name": "Avatar of Battle",
+                "level": 3,
+                "text": "Starting at 3rd level, you project an inspiring aura. While you aren't incapacitated, each ally within 30 feet of you who can see you gains a +2 bonus to initiative rolls."
+            },
+            {
+                "id": "mystic-uathemysticclass:avatar-uathemysticclass:avatar-of-healing",
+                "name": "Avatar of Healing",
+                "level": 6,
+                "text": "Beginning at 6th level, you project an aura of resilience. While you aren't incapacitated, each ally within 30 feet of you who can see you regains additional hit points equal to your Intelligence modifier (minimum of 0) whenever they regain hit points from a psionic discipline."
+            },
+            {
+                "id": "mystic-uathemysticclass:avatar-uathemysticclass:avatar-of-speed",
+                "name": "Avatar of Speed",
+                "level": 14,
+                "text": "Starting at 14th level, you project an aura of speed. While you aren't incapacitated, any ally within 30 feet of you who can see you can take the Dash action as a bonus action."
+            }
+        ]
+    },
+    {
+        "id": "mystic-uathemysticclass:awakened-uathemysticclass",
+        "kind": "subclass",
+        "name": "Order of the Awakened",
+        "source": "UATheMysticClass",
+        "edition": "classic",
+        "text": "Mystics dedicated to the Order of the Awakened seek to unlock the full potential of the mind. By transcending the physical, the Awakened hope to attain a state of being focused on pure intellect and mental energy.\n\nThe Awakened are skilled at bending minds and unleashing devastating psionic attacks, and they can read the secrets of the world through psionic energy. Awakened mystics who take to adventuring excel at unraveling mysteries, solving puzzles, and defeating monsters by turning them into unwilling pawns.",
+        "class_id": "mystic-uathemysticclass",
+        "short_name": "Awakened",
+        "progression": [
+            {
+                "level": 1,
+                "features": [
+                    "mystic-uathemysticclass:awakened-uathemysticclass:bonus-disciplines",
+                    "mystic-uathemysticclass:awakened-uathemysticclass:awakened-talent"
+                ]
+            },
+            {
+                "level": 3,
+                "features": [
+                    "mystic-uathemysticclass:awakened-uathemysticclass:psionic-investigation"
+                ]
+            },
+            {
+                "level": 6,
+                "features": [
+                    "mystic-uathemysticclass:awakened-uathemysticclass:psionic-surge"
+                ]
+            },
+            {
+                "level": 14,
+                "features": [
+                    "mystic-uathemysticclass:awakened-uathemysticclass:spectral-form"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "mystic-uathemysticclass:awakened-uathemysticclass:bonus-disciplines",
+                "name": "Bonus Disciplines",
+                "level": 1,
+                "text": "At 1st level, you learn two additional psionic disciplines of your choice. They must be chosen from among the Awakened disciplines."
+            },
+            {
+                "id": "mystic-uathemysticclass:awakened-uathemysticclass:awakened-talent",
+                "name": "Awakened Talent",
+                "level": 1,
+                "text": "At 1st level, you gain proficiency with two of the following skills of your choice: Animal Handling, Deception, Insight, Intimidation, Investigation, Perception, and Persuasion."
+            },
+            {
+                "id": "mystic-uathemysticclass:awakened-uathemysticclass:psionic-investigation",
+                "name": "Psionic Investigation",
+                "level": 3,
+                "text": "Starting at 3rd level, you can focus your mind to read the psionic imprint left on an object. If you hold an object and concentrate on it for 10 minutes (as if concentrating on a psionic discipline), you learn a few basic facts about it. You gain a mental image from the object's point of view, showing the last creature to hold the object within the past 24 hours.\n\nYou also learn of any events that have occurred within 20 feet of the object within the past hour. The events you perceive unfold from the object's perspective. You see and hear such events as if you were there, but can't use other senses.\n\nAdditionally, you can embed an intangible psionic sensor within the object. For the next 24 hours, you can use an action to learn the object's location relative to you (its distance and direction) and to look at the object's surroundings from its point of view as if you were there. This perception lasts until the start of your next turn.\n\nOnce you use this feature, you can't use it again until you finish a short or long rest."
+            },
+            {
+                "id": "mystic-uathemysticclass:awakened-uathemysticclass:psionic-surge",
+                "name": "Psionic Surge",
+                "level": 6,
+                "text": "Starting at 6th level, you can overload your psychic focus to batter down an opponent's defenses. You can impose disadvantage on a target's saving throw against a discipline or talent you use, but at the cost of using your psychic focus. Your psychic focus immediately ends if it's active, and you can't use it until you finish a short or long rest.\n\nYou can't use this feature if you can't use your psychic focus."
+            },
+            {
+                "id": "mystic-uathemysticclass:awakened-uathemysticclass:spectral-form",
+                "name": "Spectral Form",
+                "level": 14,
+                "text": "At 14th level, you gain the ability to become a ghostly figure of psionic energy. As an action, you can transform into a transparent, ghostly version of yourself. While in this form, you have resistance to all damage, move at half speed, and can pass through objects and creatures while moving but can't willingly end your movement in their spaces. The form lasts for 10 minutes or until you use an action to end it.\n\nOnce you use this feature, you can't use it again until you finish a long rest."
+            }
+        ]
+    },
+    {
+        "id": "mystic-uathemysticclass:immortal-uathemysticclass",
+        "kind": "subclass",
+        "name": "Order of the Immortal",
+        "source": "UATheMysticClass",
+        "edition": "classic",
+        "text": "The Order of the Immortal uses psionic energy to augment and modify the physical form. Followers of this order are known as Immortals. They use psionic energy to modify their bodies, strengthening them against attack and turning themselves into living weapons.\n\nTheir mastery of the physical form grants them their name, for Immortals are notoriously difficult to kill.",
+        "class_id": "mystic-uathemysticclass",
+        "short_name": "Immortal",
+        "progression": [
+            {
+                "level": 1,
+                "features": [
+                    "mystic-uathemysticclass:immortal-uathemysticclass:bonus-disciplines",
+                    "mystic-uathemysticclass:immortal-uathemysticclass:immortal-durability"
+                ]
+            },
+            {
+                "level": 3,
+                "features": [
+                    "mystic-uathemysticclass:immortal-uathemysticclass:psionic-resilience"
+                ]
+            },
+            {
+                "level": 6,
+                "features": [
+                    "mystic-uathemysticclass:immortal-uathemysticclass:surge-of-health"
+                ]
+            },
+            {
+                "level": 14,
+                "features": [
+                    "mystic-uathemysticclass:immortal-uathemysticclass:immortal-will"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "mystic-uathemysticclass:immortal-uathemysticclass:bonus-disciplines",
+                "name": "Bonus Disciplines",
+                "level": 1,
+                "text": "At 1st level, you learn two additional psionic disciplines of your choice. They must be chosen from among the Immortal disciplines."
+            },
+            {
+                "id": "mystic-uathemysticclass:immortal-uathemysticclass:immortal-durability",
+                "name": "Immortal Durability",
+                "level": 1,
+                "text": "Starting at 1st level, your hit point maximum increases by 1 per mystic level.\n\nIn addition, while you aren't wearing armor or wielding a shield, your base AC equals 10 + your Dexterity modifier + your Constitution modifier."
+            },
+            {
+                "id": "mystic-uathemysticclass:immortal-uathemysticclass:psionic-resilience",
+                "name": "Psionic Resilience",
+                "level": 3,
+                "text": "Starting at 3rd level, your psionic energy grants you extraordinary fortitude. At the start of each of your turns, you gain temporary hit points equal to your Intelligence modifier (minimum of 0) if you have at least 1 hit point."
+            },
+            {
+                "id": "mystic-uathemysticclass:immortal-uathemysticclass:surge-of-health",
+                "name": "Surge of Health",
+                "level": 6,
+                "text": "Starting at 6th level, you can draw on your psychic focus to escape death's grasp. As a reaction when you take damage, you can halve that damage against you. Your psychic focus immediately ends if it's active, and you can't use it until you finish a short or long rest.\n\nYou can't use this feature if you can't use your psychic focus."
+            },
+            {
+                "id": "mystic-uathemysticclass:immortal-uathemysticclass:immortal-will",
+                "name": "Immortal Will",
+                "level": 14,
+                "text": "Starting at 14th level, you can draw on your reserves of psionic power to survive beyond death. At the end of your turn while at 0 hit points, you can spend 5 psi points to immediately regain a number of hit points equal to your mystic level + your Constitution modifier."
+            }
+        ]
+    },
+    {
+        "id": "mystic-uathemysticclass:nomad-uathemysticclass",
+        "kind": "subclass",
+        "name": "Order of the Nomad",
+        "source": "UATheMysticClass",
+        "edition": "classic",
+        "text": "Mystics of the Order of the Nomad keep their minds in a strange, rarified state. They seek to accumulate as much knowledge as possible, as they quest to unravel the mysteries of the multiverse and seek the underlying structure of all things. At the same time, they perceive a bizarre, living web of knowledge they call the noosphere.\n\nNomads, as their name indicates, delight in travel, exploration, and discovery. They desire to accumulate as much knowledge as possible, and the pursuit of secrets and hidden lore can become an obsession for them.",
+        "class_id": "mystic-uathemysticclass",
+        "short_name": "Nomad",
+        "progression": [
+            {
+                "level": 1,
+                "features": [
+                    "mystic-uathemysticclass:nomad-uathemysticclass:bonus-disciplines",
+                    "mystic-uathemysticclass:nomad-uathemysticclass:breadth-of-knowledge"
+                ]
+            },
+            {
+                "level": 3,
+                "features": [
+                    "mystic-uathemysticclass:nomad-uathemysticclass:memory-of-one-thousand-steps"
+                ]
+            },
+            {
+                "level": 6,
+                "features": [
+                    "mystic-uathemysticclass:nomad-uathemysticclass:superior-teleportation"
+                ]
+            },
+            {
+                "level": 14,
+                "features": [
+                    "mystic-uathemysticclass:nomad-uathemysticclass:effortless-journey"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "mystic-uathemysticclass:nomad-uathemysticclass:bonus-disciplines",
+                "name": "Bonus Disciplines",
+                "level": 1,
+                "text": "At 1st level, you learn two additional psionic disciplines of your choice. They must be chosen from among the Nomad disciplines."
+            },
+            {
+                "id": "mystic-uathemysticclass:nomad-uathemysticclass:breadth-of-knowledge",
+                "name": "Breadth of Knowledge",
+                "level": 1,
+                "text": "At 1st level, you gain the ability to extend your knowledge. When you finish a long rest, you gain two proficiencies of your choice: two tools, two skills, or one of each. You can replace one or both of these selections with languages. This benefit lasts until you finish a long rest."
+            },
+            {
+                "id": "mystic-uathemysticclass:nomad-uathemysticclass:memory-of-one-thousand-steps",
+                "name": "Memory of One Thousand Steps",
+                "level": 3,
+                "text": "At 3rd level, you gain the ability to use psionics to recall your steps. As a reaction when you are hit by an attack, you can teleport to an unoccupied space that you occupied since the start of your last turn, and the attack misses you. Once you use this feature, you can't use it again until you finish a short or long rest."
+            },
+            {
+                "id": "mystic-uathemysticclass:nomad-uathemysticclass:superior-teleportation",
+                "name": "Superior Teleportation",
+                "level": 6,
+                "text": "At 6th level, you gain a superior talent for teleportation. When you use a psionic discipline to teleport any distance, you can increase that distance by up to 10 feet."
+            },
+            {
+                "id": "mystic-uathemysticclass:nomad-uathemysticclass:effortless-journey",
+                "name": "Effortless Journey",
+                "level": 14,
+                "text": "Starting at 14th level, your mind can mystically move your body. Once on each of your turns, you can forfeit up to 30 feet of your movement to teleport the distance you forfeited. You must teleport to an unoccupied space you can see."
+            }
+        ]
+    },
+    {
+        "id": "mystic-uathemysticclass:soul-knife-uathemysticclass",
+        "kind": "subclass",
+        "name": "Order of the Soul Knife",
+        "source": "UATheMysticClass",
+        "edition": "classic",
+        "text": "The Order of the Soul Knife sacrifices the breadth of knowledge other mystics gain to focus on a specific psionic technique. These mystics learn to manifest a deadly weapon of pure psychic energy that they can use to cleave through foes.\n\nSoul knives vary widely in their approach to this path. Some follow it out of a desire to achieve martial perfection. Others are ruthless assassins who seek to become the perfect killer.",
+        "class_id": "mystic-uathemysticclass",
+        "short_name": "Soul Knife",
+        "progression": [
+            {
+                "level": 1,
+                "features": [
+                    "mystic-uathemysticclass:soul-knife-uathemysticclass:martial-training",
+                    "mystic-uathemysticclass:soul-knife-uathemysticclass:soul-knife"
+                ]
+            },
+            {
+                "level": 3,
+                "features": [
+                    "mystic-uathemysticclass:soul-knife-uathemysticclass:hone-the-blade"
+                ]
+            },
+            {
+                "level": 6,
+                "features": [
+                    "mystic-uathemysticclass:soul-knife-uathemysticclass:consumptive-knife"
+                ]
+            },
+            {
+                "level": 14,
+                "features": [
+                    "mystic-uathemysticclass:soul-knife-uathemysticclass:phantom-knife"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "mystic-uathemysticclass:soul-knife-uathemysticclass:martial-training",
+                "name": "Martial Training",
+                "level": 1,
+                "text": "At 1st level, you gain proficiency with medium armor and martial weapons."
+            },
+            {
+                "id": "mystic-uathemysticclass:soul-knife-uathemysticclass:soul-knife",
+                "name": "Soul Knife",
+                "level": 1,
+                "text": "Starting at 1st level, you gain the ability to manifest a blade of psychic energy. As a bonus action, you create scintillating knives of energy that project from both of your fists. You can't hold anything in your hands while manifesting these blades. You can dismiss them as a bonus action.\n\nFor you, a soul knife is a martial melee weapon with the light and finesse properties. It deals 1d8 psychic damage on a hit.\n\nAs a bonus action, you can prepare to use the blades to parry; you gain a +2 bonus to AC until the start of your next turn or until you are incapacitated."
+            },
+            {
+                "id": "mystic-uathemysticclass:soul-knife-uathemysticclass:hone-the-blade",
+                "name": "Hone the Blade",
+                "level": 3,
+                "text": "Starting at 3rd level, you can spend psi points to augment your soul knife's attack rolls and damage. You gain a bonus to attack and damage rolls with your soul knives depending on the number of psi points spent, as shown on the table below. This bonus lasts for 10 minutes.\n\nPsi Points | Attack and Damage Bonus\n--- | ---\n2 | +1\n5 | +2\n7 | +4"
+            },
+            {
+                "id": "mystic-uathemysticclass:soul-knife-uathemysticclass:consumptive-knife",
+                "name": "Consumptive Knife",
+                "level": 6,
+                "text": "Starting at 6th level, whenever you slay an enemy creature with a soul knife attack, you immediately regain 2 psi points."
+            },
+            {
+                "id": "mystic-uathemysticclass:soul-knife-uathemysticclass:phantom-knife",
+                "name": "Phantom Knife",
+                "level": 14,
+                "text": "Starting at 14th level, you can make an attack that phases through most defenses. As an action, you can make one attack with your soul knife. Treat the target's AC as 10 against this attack, regardless of the target's actual AC."
+            }
+        ]
+    },
+    {
+        "id": "mystic-uathemysticclass:wu-jen-uathemysticclass",
+        "kind": "subclass",
+        "name": "Order of the Wu Jen",
+        "source": "UATheMysticClass",
+        "edition": "classic",
+        "text": "The Order of the Wu Jen features some of the most devoted mystics. These mystics seek to lock themselves away from the world, denying the limits of the physical world and replacing it with a reality that they create for themselves. Known as wu jens, these mystics cast their minds into the world, seize control of its fundamental principles, and rebuild it.\n\nIn practical terms, wu jens excel at controlling the forces of the natural world. They can hurl objects with their minds, control the four elements, and alter reality to fit their desires.",
+        "class_id": "mystic-uathemysticclass",
+        "short_name": "Wu Jen",
+        "progression": [
+            {
+                "level": 1,
+                "features": [
+                    "mystic-uathemysticclass:wu-jen-uathemysticclass:bonus-disciplines",
+                    "mystic-uathemysticclass:wu-jen-uathemysticclass:hermits-study"
+                ]
+            },
+            {
+                "level": 3,
+                "features": [
+                    "mystic-uathemysticclass:wu-jen-uathemysticclass:elemental-attunement"
+                ]
+            },
+            {
+                "level": 6,
+                "features": [
+                    "mystic-uathemysticclass:wu-jen-uathemysticclass:arcane-dabbler"
+                ]
+            },
+            {
+                "level": 14,
+                "features": [
+                    "mystic-uathemysticclass:wu-jen-uathemysticclass:elemental-mastery"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "mystic-uathemysticclass:wu-jen-uathemysticclass:bonus-disciplines",
+                "name": "Bonus Disciplines",
+                "level": 1,
+                "text": "At 1st level, you learn two additional psionic disciplines of your choice. They must be chosen from among the Wu Jen disciplines."
+            },
+            {
+                "id": "mystic-uathemysticclass:wu-jen-uathemysticclass:hermits-study",
+                "name": "Hermit's Study",
+                "level": 1,
+                "text": "At 1st level, you gain proficiency with two of the following skills of your choice: Animal Handling, Arcana, History, Insight, Medicine, Nature, Perception, Religion, or Survival."
+            },
+            {
+                "id": "mystic-uathemysticclass:wu-jen-uathemysticclass:elemental-attunement",
+                "name": "Elemental Attunement",
+                "level": 3,
+                "text": "Starting at 3rd level, when a creature's resistance reduces the damage dealt by a psionic discipline of yours, you can spend 1 psi point to cause that use of the discipline to ignore the creature's resistance. You can't spend this point if doing so would increase the discipline's cost above your psi limit."
+            },
+            {
+                "id": "mystic-uathemysticclass:wu-jen-uathemysticclass:arcane-dabbler",
+                "name": "Arcane Dabbler",
+                "level": 6,
+                "text": "At 6th level, you learn three wizard spells of your choice and always have them prepared. The spells must be of 1st through 3rd level.\n\nAs a bonus action, you can spend psi points to create spell slots that you can use to cast these spells, as well as other spells you are capable of casting. The psi-point cost of each spell slot is detailed on the table below.\n\nSpell Slot Level | Psi Cost\n--- | ---\n1st | 2\n2nd | 3\n3rd | 5\n4th | 6\n5th | 7\n\nThe spell slot remains until you use it or finish a long rest. You must observe your psi limit when spending psi points to create a spell slot.\n\nWhenever you gain a level in this class, you can replace one of the chosen wizard spells with a different wizard spell of 1st through 3rd level."
+            },
+            {
+                "id": "mystic-uathemysticclass:wu-jen-uathemysticclass:elemental-mastery",
+                "name": "Elemental Mastery",
+                "level": 14,
+                "text": "Starting at 14th level, if you have resistance to a type of damage, you can spend 2 psi points as a reaction when you take damage of that type to ignore that damage; you gain immunity to that damage type until the end of your next turn."
+            }
+        ]
+    }
+]

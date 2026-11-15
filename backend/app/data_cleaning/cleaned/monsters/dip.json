@@ -1,0 +1,937 @@
+[
+    {
+        "id": "anchorite-of-talos-dip",
+        "kind": "monster",
+        "name": "Anchorite of Talos",
+        "source": "DIP",
+        "edition": "classic",
+        "tags": [
+            "Shapechanger"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "half-orc",
+                "shapechanger"
+            ]
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "ac": [
+            {
+                "value": 13,
+                "from": [
+                    "hide armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 58,
+            "formula": "9d8 + 18"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 16,
+            "dex": 13,
+            "con": 14,
+            "int": 9,
+            "wis": 15,
+            "cha": 12
+        },
+        "skills": {
+            "nature": 1,
+            "stealth": 3,
+            "survival": 4
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 12,
+        "languages": [
+            "Common",
+            "Orc"
+        ],
+        "cr": {
+            "cr": "3",
+            "xp": 700,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "shapechanger",
+                "name": "Shapechanger",
+                "category": "traits",
+                "text": "The anchorite can use its action to polymorph into a boar or back into its true form, which is humanoid. Its statistics are the same in each form. Any equipment it is wearing or carrying isn't transformed. It reverts to its true form if it dies."
+            },
+            {
+                "id": "clawed-gauntlet-humanoid-form-only",
+                "name": "Clawed Gauntlet (Humanoid Form Only)",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 5 (1d4 + 3) slashing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 3,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "tusk-boar-form-only",
+                "name": "Tusk (Boar Form Only)",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 6 (1d6 + 3) slashing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 3,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Innate Spellcasting",
+                "ability": "wis",
+                "dc": 12,
+                "text": "The anchorite's innate spellcasting ability is Wisdom (spell save DC 12). It can innately cast the following spells, requiring no material components:",
+                "groups": [
+                    {
+                        "uses": 3,
+                        "per": "day",
+                        "spells": [
+                            {
+                                "spell": "thunderwave-phb",
+                                "note": "(2d8 damage)"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "augury-phb"
+                            },
+                            {
+                                "spell": "bless-phb"
+                            },
+                            {
+                                "spell": "lightning-bolt-phb",
+                                "note": "(8d6 damage)"
+                            },
+                            {
+                                "spell": "revivify-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "slashing",
+                "lightning",
+                "thunder"
+            ],
+            "saves_forced": [
+                "con",
+                "dex"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "traits": [
+                "shapechanger"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "orc"
+            ],
+            "spellcasting": [
+                "innate"
+            ]
+        }
+    },
+    {
+        "id": "don-jon-raskin-dip",
+        "kind": "monster",
+        "name": "Don-Jon Raskin",
+        "source": "DIP",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "human"
+            ]
+        },
+        "alignment": [
+            "neutral"
+        ],
+        "ac": [
+            {
+                "value": 10
+            }
+        ],
+        "hp": {
+            "average": 44,
+            "formula": "8d8 + 8"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 11,
+            "dex": 10,
+            "con": 13,
+            "int": 12,
+            "wis": 10,
+            "cha": 14
+        },
+        "saves": {
+            "dex": 2,
+            "con": 3
+        },
+        "skills": {
+            "deception": 4,
+            "persuasion": 4
+        },
+        "passive_perception": 10,
+        "languages": [
+            "Common",
+            "Dwarvish"
+        ],
+        "cr": {
+            "cr": "1/2",
+            "xp": 100,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "brave",
+                "name": "Brave",
+                "category": "traits",
+                "text": "Don-Jon has advantage on saving throws against being frightened."
+            },
+            {
+                "id": "not-dead-yet",
+                "name": "Not Dead Yet",
+                "category": "traits",
+                "text": "If damage reduces Don-Jon to 0 hit points, he drops to 1 hit point instead and gains advantage on attack rolls until the end of his next turn.",
+                "uses": {
+                    "max": 1,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Don-Jon makes three melee attacks."
+            },
+            {
+                "id": "dagger",
+                "name": "Dagger",
+                "category": "actions",
+                "text": "Melee or Ranged Weapon Attack: +2 to hit, reach 5 ft. or range 20/60 ft., one target. Hit: 2 (1d4) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft. or range 20/60 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 2,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "sling",
+                "name": "Sling",
+                "category": "actions",
+                "text": "Ranged Weapon Attack: +2 to hit, range 30/120 ft., one target. Hit: 2 (1d4) bludgeoning damage.",
+                "action": {
+                    "range": "range 30/120 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 2,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "items": [
+            {
+                "item": "dagger-phb",
+                "qty": 1,
+                "attacks": true
+            },
+            {
+                "item": "sling-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "piercing"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack",
+                "ranged_weapon",
+                "ranged_weapon_attack",
+                "thrown_weapon"
+            ],
+            "languages": [
+                "common",
+                "dwarvish"
+            ]
+        }
+    },
+    {
+        "id": "falcon-the-hunter-dip",
+        "kind": "monster",
+        "name": "Falcon the Hunter",
+        "source": "DIP",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "human"
+            ]
+        },
+        "alignment": [
+            "neutral good"
+        ],
+        "ac": [
+            {
+                "value": 14,
+                "from": [
+                    "studded leather"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 112,
+            "formula": "15d8 + 45"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 14,
+            "dex": 15,
+            "con": 16,
+            "int": 11,
+            "wis": 16,
+            "cha": 15
+        },
+        "saves": {
+            "dex": 4,
+            "wis": 5
+        },
+        "skills": {
+            "athletics": 4,
+            "perception": 7,
+            "survival": 5
+        },
+        "passive_perception": 17,
+        "languages": [
+            "Common"
+        ],
+        "cr": {
+            "cr": "4",
+            "xp": 1100,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "archer",
+                "name": "Archer",
+                "category": "traits",
+                "text": "A longbow or shortbow deals one extra die of its damage when Falcon hits with it (included in his longbow attack)."
+            },
+            {
+                "id": "sharpshooter",
+                "name": "Sharpshooter",
+                "category": "traits",
+                "text": "Falcon's ranged weapon attacks ignore half cover and three-quarters cover."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Falcon makes three melee attacks or two ranged attacks."
+            },
+            {
+                "id": "longsword",
+                "name": "Longsword",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 6 (1d8 + 2) slashing damage, or 7 (1d10 + 2) slashing damage if used with two hands.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 2,
+                                "type": "slashing"
+                            },
+                            {
+                                "dice": "1d10",
+                                "bonus": 2,
+                                "type": "slashing",
+                                "condition": "if used with two hands"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "longbow",
+                "name": "Longbow",
+                "category": "actions",
+                "text": "Ranged Weapon Attack: +4 to hit, range 150/600 ft., one target. Hit: 11 (2d8 + 2) piercing damage.",
+                "action": {
+                    "range": "range 150/600 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "2d8",
+                                "bonus": 2,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "items": [
+            {
+                "item": "longbow-phb",
+                "qty": 1,
+                "attacks": true
+            },
+            {
+                "item": "longsword-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "piercing",
+                "slashing"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack",
+                "ranged_weapon",
+                "ranged_weapon_attack"
+            ],
+            "languages": [
+                "common"
+            ]
+        }
+    },
+    {
+        "id": "gorthok-the-thunder-boar-dip",
+        "kind": "monster",
+        "name": "Gorthok the Thunder Boar",
+        "source": "DIP",
+        "edition": "classic",
+        "size": [
+            "huge"
+        ],
+        "creature_type": {
+            "type": "monstrosity"
+        },
+        "alignment": [
+            "chaotic evil"
+        ],
+        "ac": [
+            {
+                "value": 15,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 73,
+            "formula": "7d12 + 28"
+        },
+        "speed": {
+            "walk": 50
+        },
+        "abilities": {
+            "str": 20,
+            "dex": 11,
+            "con": 19,
+            "int": 6,
+            "wis": 10,
+            "cha": 14
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 10,
+        "defenses": {
+            "resist": {
+                "conditional": [
+                    {
+                        "types": [
+                            "bludgeoning",
+                            "piercing",
+                            "slashing"
+                        ],
+                        "note": "from nonmagical attacks"
+                    }
+                ]
+            },
+            "immune": {
+                "types": [
+                    "lightning",
+                    "thunder"
+                ]
+            }
+        },
+        "cr": {
+            "cr": "6",
+            "xp": 2300,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "relentless",
+                "name": "Relentless",
+                "category": "traits",
+                "text": "If Gorthok takes 27 damage or less that would reduce it to 0 hit points, it is reduced to 1 hit point instead.",
+                "uses": {
+                    "max": 1,
+                    "reset": "short"
+                }
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Gorthok makes two melee attacks: one with its lightning tusks and one with its thunder hooves."
+            },
+            {
+                "id": "lightning-tusks",
+                "name": "Lightning Tusks",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +8 to hit, reach 10 ft., one target. Hit: 12 (2d6 + 5) slashing damage plus 7 (2d6) lightning damage.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 8,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 5,
+                                "type": "slashing"
+                            },
+                            {
+                                "dice": "2d6",
+                                "type": "lightning"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "thunder-hooves",
+                "name": "Thunder Hooves",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +8 to hit, reach 10 ft., one target. Hit: 12 (2d6 + 5) bludgeoning damage plus 7 (2d6) thunder damage.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 8,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 5,
+                                "type": "bludgeoning"
+                            },
+                            {
+                                "dice": "2d6",
+                                "type": "thunder"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "lightning-bolt",
+                "name": "Lightning Bolt",
+                "category": "actions",
+                "text": "Gorthok shoots a bolt of lightning at one creature it can see within 120 feet of it. The target must make a DC 15 Dexterity saving throw, taking 18 (4d8) lightning damage on a failed save, or half as much damage on a successful one.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 6
+                },
+                "action": {
+                    "save": {
+                        "ability": "dex",
+                        "dc": 15,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "4d8",
+                                "type": "lightning"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "lightning",
+                "slashing",
+                "thunder"
+            ],
+            "saves_forced": [
+                "dex"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "melee_weapon_attack",
+                "reach"
+            ]
+        }
+    },
+    {
+        "id": "rock-gnome-recluse-dip",
+        "kind": "monster",
+        "name": "Rock Gnome Recluse",
+        "source": "DIP",
+        "edition": "classic",
+        "size": [
+            "small"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "gnome"
+            ]
+        },
+        "alignment": [
+            "chaotic neutral"
+        ],
+        "ac": [
+            {
+                "value": 10
+            },
+            {
+                "value": 13,
+                "condition": "with Mage Armor"
+            }
+        ],
+        "hp": {
+            "average": 7,
+            "formula": "2d6"
+        },
+        "speed": {
+            "walk": 25
+        },
+        "abilities": {
+            "str": 6,
+            "dex": 11,
+            "con": 10,
+            "int": 15,
+            "wis": 10,
+            "cha": 13
+        },
+        "skills": {
+            "arcana": 4,
+            "history": 4
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 10,
+        "languages": [
+            "Common",
+            "Gnomish"
+        ],
+        "cr": {
+            "cr": "1/4",
+            "xp": 50,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "gnome-cunning",
+                "name": "Gnome Cunning",
+                "category": "traits",
+                "text": "The gnome has advantage on Intelligence, Wisdom, and Charisma saving throws against magic."
+            },
+            {
+                "id": "magic-missile-expends-a-1st-level-spell-slot",
+                "name": "Magic Missile (Expends a 1st-Level Spell Slot)",
+                "category": "actions",
+                "text": "The gnome creates three magical darts. Each dart hits a creature the gnome chooses within 120 feet of it and deals 3 (1d4 + 1) force damage.",
+                "action": {
+                    "damage": [
+                        {
+                            "dice": "1d4",
+                            "bonus": 1,
+                            "type": "force"
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "ray-of-frost",
+                "name": "Ray of Frost",
+                "category": "actions",
+                "text": "Ranged Spell Attack: +4 to hit, range 60 ft., one creature. Hit: 4 (1d8) cold damage, and the target's speed is reduced by 10 feet until the start of the gnome's next turn.",
+                "action": {
+                    "range": "range 60 ft.",
+                    "attack": {
+                        "kind": "spell",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "type": "cold"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "int",
+                "dc": 12,
+                "attack": 4,
+                "text": "The gnome is a 2nd-level spellcaster. Its spellcasting ability is Intelligence (spell save DC 12, +4 to hit with spell attacks). It has the following wizard spells prepared:",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "level": 0,
+                        "spells": [
+                            {
+                                "spell": "mage-hand-phb"
+                            },
+                            {
+                                "spell": "prestidigitation-phb"
+                            },
+                            {
+                                "spell": "ray-of-frost-phb",
+                                "note": "(see \"Actions\" below)"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 1,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "detect-magic-phb"
+                            },
+                            {
+                                "spell": "mage-armor-phb"
+                            },
+                            {
+                                "spell": "magic-missile-phb",
+                                "note": "(see \"Actions\" below)"
+                            },
+                            {
+                                "spell": "shield-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "cold",
+                "force"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "languages": [
+                "common",
+                "gnomish"
+            ],
+            "spellcasting": [
+                "wizard"
+            ]
+        }
+    },
+    {
+        "id": "skeletal-riding-horse-dip",
+        "kind": "monster",
+        "name": "Skeletal Riding Horse",
+        "source": "DIP",
+        "edition": "classic",
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "undead"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 10
+            }
+        ],
+        "hp": {
+            "average": 13,
+            "formula": "2d10 + 2"
+        },
+        "speed": {
+            "walk": 60
+        },
+        "abilities": {
+            "str": 16,
+            "dex": 10,
+            "con": 12,
+            "int": 2,
+            "wis": 11,
+            "cha": 7
+        },
+        "passive_perception": 10,
+        "cr": {
+            "cr": "1/4",
+            "xp": 50,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "hooves",
+                "name": "Hooves",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 8 (2d4 + 3) bludgeoning damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "2d4",
+                                "bonus": 3,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "environment": [
+                "grassland",
+                "urban"
+            ]
+        }
+    }
+]

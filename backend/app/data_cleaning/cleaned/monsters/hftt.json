@@ -1,0 +1,524 @@
+[
+    {
+        "id": "demogorgon-hftt",
+        "kind": "monster",
+        "name": "Demogorgon",
+        "source": "HftT",
+        "edition": "classic",
+        "tags": [
+            "Keen Senses",
+            "Regeneration"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "monstrosity"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 15,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 60,
+            "formula": "8d8 + 24"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 16,
+            "dex": 12,
+            "con": 16,
+            "int": 3,
+            "wis": 12,
+            "cha": 5
+        },
+        "skills": {
+            "perception": 3,
+            "stealth": 5
+        },
+        "senses": {
+            "blindsight": 60
+        },
+        "passive_perception": 13,
+        "cr": {
+            "cr": "4",
+            "xp": 1100,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "keen-smell",
+                "name": "Keen Smell",
+                "category": "traits",
+                "text": "The demogorgon has advantage on Wisdom (Perception) checks that rely on smell."
+            },
+            {
+                "id": "blood-frenzy",
+                "name": "Blood Frenzy",
+                "category": "traits",
+                "text": "The demogorgon has advantage on melee attack rolls against any creature that doesn't have all its hit points."
+            },
+            {
+                "id": "regeneration",
+                "name": "Regeneration",
+                "category": "traits",
+                "text": "The demogorgon regains 10 hit points at the start of its turn. If the demogorgon takes acid or fire damage, this trait doesn't function at the start of the demogorgon's next turn. The demogorgon dies only if it starts its turn with 0 hit points and doesn't regenerate."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The demogorgon makes three attacks: one with its bite and two with its claws."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 7 (1d8 + 3) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 3,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "claw",
+                "name": "Claw",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 12 (2d8 + 3) slashing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "2d8",
+                                "bonus": 3,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing",
+                "slashing"
+            ],
+            "senses": [
+                "blindsight"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "keen_senses",
+                "regeneration"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ]
+        }
+    },
+    {
+        "id": "evil-mage-hftt",
+        "kind": "monster",
+        "name": "Evil Mage",
+        "source": "HftT",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "human"
+            ]
+        },
+        "alignment": [
+            "lawful evil"
+        ],
+        "ac": [
+            {
+                "value": 12
+            }
+        ],
+        "hp": {
+            "average": 22,
+            "formula": "5d8"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 9,
+            "dex": 14,
+            "con": 11,
+            "int": 17,
+            "wis": 12,
+            "cha": 11
+        },
+        "saves": {
+            "int": 5,
+            "wis": 3
+        },
+        "skills": {
+            "arcana": 5,
+            "history": 5
+        },
+        "passive_perception": 11,
+        "languages": [
+            "Common",
+            "Draconic",
+            "Dwarvish",
+            "Elvish"
+        ],
+        "cr": {
+            "cr": "1",
+            "xp": 200,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "quarterstaff",
+                "name": "Quarterstaff",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +1 to hit, reach 5 ft., one target. Hit: 3 (1d8 -1) bludgeoning damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 1,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": -1,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "int",
+                "dc": 13,
+                "attack": 5,
+                "text": "The mage is a 4th-level spellcaster that uses Intelligence as its spellcasting ability (spell save DC 13, +5 to hit with spell attacks). The mage knows the following spells from the wizard's spell list:",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "level": 0,
+                        "spells": [
+                            {
+                                "spell": "light-phb"
+                            },
+                            {
+                                "spell": "mage-hand-phb"
+                            },
+                            {
+                                "spell": "shocking-grasp-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 1,
+                        "slots": 4,
+                        "spells": [
+                            {
+                                "spell": "charm-person-phb"
+                            },
+                            {
+                                "spell": "magic-missile-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 2,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "hold-person-phb"
+                            },
+                            {
+                                "spell": "misty-step-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "quarterstaff-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "lightning",
+                "force"
+            ],
+            "saves_forced": [
+                "dex",
+                "wis"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "dwarvish",
+                "draconic",
+                "elvish"
+            ],
+            "spellcasting": [
+                "wizard"
+            ]
+        }
+    },
+    {
+        "id": "thessalhydra-hftt",
+        "kind": "monster",
+        "name": "Thessalhydra",
+        "source": "HftT",
+        "edition": "classic",
+        "size": [
+            "huge"
+        ],
+        "creature_type": {
+            "type": "monstrosity"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 14,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 69,
+            "formula": "6d12 + 30"
+        },
+        "speed": {
+            "walk": 30,
+            "swim": 30
+        },
+        "abilities": {
+            "str": 19,
+            "dex": 12,
+            "con": 20,
+            "int": 5,
+            "wis": 10,
+            "cha": 7
+        },
+        "skills": {
+            "perception": 4
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 14,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "acid"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "blinded",
+                    "charmed",
+                    "deafened",
+                    "frightened",
+                    "stunned"
+                ]
+            }
+        },
+        "cr": {
+            "cr": "4",
+            "xp": 1100,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The thessalhydra makes one maw attack and one Flurry of Bites."
+            },
+            {
+                "id": "flurry-of-bites",
+                "name": "Flurry of Bites",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +7 to hit, reach 10 ft., one target. Hit: 7 (1d6 + 4) piercing damage plus 10 (4d4) poison damage.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 4,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "4d4",
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "maw",
+                "name": "Maw",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 9 (1d10 + 4) piercing damage plus 5 (1d10) acid damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "1d10",
+                                "bonus": 4,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "1d10",
+                                "type": "acid"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "tail-pincer",
+                "name": "Tail Pincer",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +7 to hit, reach 10 ft., one target. Hit: 10 (1d12 + 4) slashing damage, and the target is grappled. As an action, the target can escape the grapple by succeeding on a DC 14 Strength (Athletics) or Dexterity (Acrobatics) check (its choice). Until this grapple ends, the thessalhydra can't use its tail pincer.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "1d12",
+                                "bonus": 4,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "acid-saliva",
+                "name": "Acid Saliva",
+                "category": "actions",
+                "text": "The thessalhydra spits a glob of acid at a point it can see within 30 feet of it. Each creature within 10 feet of that point must make a DC 15 Dexterity saving throw, taking 18 (4d8) acid damage on a failed save, or half as much damage on a successful one.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "save": {
+                        "ability": "dex",
+                        "dc": 15,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "4d8",
+                                "type": "acid"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "detect",
+                "name": "Detect",
+                "category": "legendary_actions",
+                "text": "The thessalhydra makes a Wisdom (Perception) check with advantage."
+            },
+            {
+                "id": "tail-swipe",
+                "name": "Tail Swipe",
+                "category": "legendary_actions",
+                "text": "The thessalhydra makes a tail pincer attack."
+            }
+        ],
+        "legendary_actions": {
+            "uses": 2
+        },
+        "filters": {
+            "damage_dealt": [
+                "acid",
+                "poison",
+                "piercing",
+                "slashing"
+            ],
+            "conditions_inflicted": [
+                "grappled"
+            ],
+            "saves_forced": [
+                "dex"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "movement": [
+                "swim"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_weapon_attack",
+                "reach"
+            ]
+        }
+    }
+]

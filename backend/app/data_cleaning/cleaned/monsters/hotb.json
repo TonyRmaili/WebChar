@@ -1,0 +1,1591 @@
+[
+    {
+        "id": "curate-hotb",
+        "kind": "monster",
+        "name": "Curate",
+        "source": "HotB",
+        "edition": "one",
+        "tags": [
+            "Magic Resistance"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid"
+        },
+        "alignment": [
+            "lawful good"
+        ],
+        "ac": [
+            {
+                "value": 12
+            }
+        ],
+        "hp": {
+            "average": 97,
+            "formula": "15d8 + 30"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 8,
+            "dex": 14,
+            "con": 14,
+            "int": 14,
+            "wis": 18,
+            "cha": 14
+        },
+        "saves": {
+            "int": 5,
+            "wis": 7,
+            "cha": 5
+        },
+        "skills": {
+            "persuasion": 5,
+            "religion": 5
+        },
+        "passive_perception": 14,
+        "defenses": {
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "frightened"
+                ]
+            }
+        },
+        "languages": [
+            "Celestial",
+            "Common"
+        ],
+        "cr": {
+            "cr": "6",
+            "xp": 2300,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The curate has Advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "raise-the-dead",
+                "name": "Raise the Dead",
+                "category": "traits",
+                "text": "In a ritual that takes 8 hours, the curate touches a creature that has died within the past 7 days. That creature returns to life with 1 Hit Point. The curate can't revive a creature that died of old age.",
+                "uses": {
+                    "max": 1,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The curate makes three Celestial Radiance attacks."
+            },
+            {
+                "id": "celestial-radiance",
+                "name": "Celestial Radiance",
+                "category": "actions",
+                "text": "Melee or Ranged Attack Roll: +7, reach 5 ft. or range 60 ft. Hit: 18 (4d8) Radiant damage.",
+                "action": {
+                    "range": "reach 5 ft. or range 60 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "4d8",
+                                "type": "radiant"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "healers-touch",
+                "name": "Healer's Touch",
+                "category": "actions",
+                "text": "The curate touches another creature. That creature regains 13 (2d8 + 4) Hit Points.",
+                "uses": {
+                    "max": 2,
+                    "reset": "long"
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "radiant"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "magic_resistance"
+            ],
+            "misc": [
+                "melee_attack",
+                "ranged_attack"
+            ],
+            "languages": [
+                "common",
+                "celestial"
+            ]
+        }
+    },
+    {
+        "id": "gray-ooze-glob-hotb",
+        "kind": "monster",
+        "name": "Gray Ooze Glob",
+        "source": "HotB",
+        "edition": "one",
+        "tags": [
+            "Amorphous"
+        ],
+        "size": [
+            "small"
+        ],
+        "creature_type": {
+            "type": "ooze"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 9
+            }
+        ],
+        "hp": {
+            "average": 19,
+            "formula": "3d6 + 9"
+        },
+        "speed": {
+            "walk": 10,
+            "climb": 10
+        },
+        "abilities": {
+            "str": 12,
+            "dex": 6,
+            "con": 16,
+            "int": 1,
+            "wis": 6,
+            "cha": 2
+        },
+        "skills": {
+            "stealth": 2
+        },
+        "senses": {
+            "blindsight": 60
+        },
+        "passive_perception": 8,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "acid",
+                    "cold",
+                    "fire"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "blinded",
+                    "charmed",
+                    "deafened",
+                    "exhaustion",
+                    "frightened",
+                    "grappled",
+                    "prone",
+                    "restrained"
+                ]
+            }
+        },
+        "cr": {
+            "cr": "1/2",
+            "xp": 100,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": -2
+        },
+        "features": [
+            {
+                "id": "amorphous",
+                "name": "Amorphous",
+                "category": "traits",
+                "text": "The ooze can move through a space as narrow as 1 inch without expending extra movement to do so."
+            },
+            {
+                "id": "corrosive-form",
+                "name": "Corrosive Form",
+                "category": "traits",
+                "text": "Whenever a creature hits the ooze with a melee attack, that creature takes 2 Acid damage.",
+                "action": {
+                    "damage": [
+                        {
+                            "bonus": 2,
+                            "type": "acid"
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "pseudopod",
+                "name": "Pseudopod",
+                "category": "actions",
+                "text": "Melee Attack Roll: +3, reach 5 ft. Hit: 10 (2d8 + 1) Acid damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 3,
+                        "damage": [
+                            {
+                                "dice": "2d8",
+                                "bonus": 1,
+                                "type": "acid"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "acid"
+            ],
+            "senses": [
+                "blindsight"
+            ],
+            "movement": [
+                "climb"
+            ],
+            "traits": [
+                "amorphous"
+            ],
+            "misc": [
+                "melee_attack"
+            ]
+        }
+    },
+    {
+        "id": "ivlis-hotb",
+        "kind": "monster",
+        "name": "Ivlis",
+        "source": "HotB",
+        "edition": "one",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "human"
+            ]
+        },
+        "alignment": [
+            "chaotic evil"
+        ],
+        "ac": [
+            {
+                "value": 13
+            }
+        ],
+        "hp": {
+            "average": 49,
+            "formula": "10d8 + 10"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 11,
+            "dex": 14,
+            "con": 12,
+            "int": 10,
+            "wis": 14,
+            "cha": 14
+        },
+        "skills": {
+            "deception": 4,
+            "persuasion": 4
+        },
+        "passive_perception": 12,
+        "languages": [
+            "Common"
+        ],
+        "cr": {
+            "cr": "2",
+            "xp": 450,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Ivlis makes three Chaos Blast attacks. She can replace one attack with a use of Sinister Command if available."
+            },
+            {
+                "id": "chaos-blast",
+                "name": "Chaos Blast",
+                "category": "actions",
+                "text": "Melee or Ranged Attack Roll: +4, reach 5 ft. or range 60 ft. Hit: 7 (2d6) damage. Roll 1d4 to determine the damage type: 1, Acid; 2, Cold; 3, Fire; 4, Lightning.",
+                "action": {
+                    "range": "reach 5 ft. or range 60 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "type": "weapon"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "sinister-command",
+                "name": "Sinister Command",
+                "category": "actions",
+                "text": "Wisdom Saving Throw: DC 12, one creature Ivlis can see within 60 feet. Failure: The target has the Charmed condition until the end of its next turn. While Charmed, the target has the Incapacitated condition.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "save": {
+                        "ability": "wis",
+                        "dc": 12,
+                        "on_success": "none",
+                        "conditions": [
+                            "charmed",
+                            "incapacitated"
+                        ]
+                    }
+                }
+            }
+        ],
+        "items": [
+            {
+                "item": "leather-armor-xphb",
+                "qty": 1
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "conditions_inflicted": [
+                "charmed",
+                "incapacitated"
+            ],
+            "saves_forced": [
+                "wis"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "melee_attack",
+                "ranged_attack"
+            ],
+            "languages": [
+                "common"
+            ]
+        }
+    },
+    {
+        "id": "jacko-hotb",
+        "kind": "monster",
+        "name": "Jacko",
+        "source": "HotB",
+        "edition": "one",
+        "size": [
+            "small"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "halfling"
+            ]
+        },
+        "alignment": [
+            "chaotic neutral"
+        ],
+        "ac": [
+            {
+                "value": 13
+            }
+        ],
+        "hp": {
+            "average": 22,
+            "formula": "5d8"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 10,
+            "dex": 16,
+            "con": 10,
+            "int": 12,
+            "wis": 14,
+            "cha": 16
+        },
+        "skills": {
+            "perception": 6,
+            "stealth": 5
+        },
+        "passive_perception": 16,
+        "languages": [
+            "Common",
+            "Halfling"
+        ],
+        "cr": {
+            "cr": "1",
+            "xp": 200,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "quick-disguise",
+                "name": "Quick Disguise",
+                "category": "traits",
+                "text": "Jacko spends 1 minute to disguise himself as a different Humanoid of approximately his height and weight. While Jacko is disguised, a creature that takes the Study action to inspect Jacko's appearance can make a DC 13 Intelligence (Investigation) check, discerning his disguise on a successful check."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Jacko makes two Poison Dagger attacks."
+            },
+            {
+                "id": "poison-dagger",
+                "name": "Poison Dagger",
+                "category": "actions",
+                "text": "Melee or Ranged Attack Roll: +5, reach 5 ft. or range 20/60 ft. Hit: 5 (1d4 + 3) Piercing damage plus 3 (1d6) Poison damage.",
+                "action": {
+                    "range": "reach 5 ft. or range 20/60 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 3,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "1d6",
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "cunning-action",
+                "name": "Cunning Action",
+                "category": "bonus_actions",
+                "text": "Jacko takes the Dash, Disengage, or Hide action."
+            }
+        ],
+        "items": [
+            {
+                "item": "dagger-xphb",
+                "qty": 6
+            },
+            {
+                "item": "disguise-kit-xphb",
+                "qty": 1
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "poison",
+                "piercing"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "melee_attack",
+                "melee_weapon",
+                "ranged_attack",
+                "thrown_weapon"
+            ],
+            "languages": [
+                "common",
+                "halfling"
+            ]
+        }
+    },
+    {
+        "id": "kuo-toa-marauder-hotb",
+        "kind": "monster",
+        "name": "Kuo-toa Marauder",
+        "source": "HotB",
+        "edition": "one",
+        "tags": [
+            "Amphibious",
+            "Sunlight Sensitivity"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "aberration"
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "ac": [
+            {
+                "value": 12
+            }
+        ],
+        "hp": {
+            "average": 22,
+            "formula": "4d8 + 4"
+        },
+        "speed": {
+            "walk": 30,
+            "swim": 30
+        },
+        "abilities": {
+            "str": 14,
+            "dex": 10,
+            "con": 12,
+            "int": 10,
+            "wis": 11,
+            "cha": 10
+        },
+        "skills": {
+            "perception": 4
+        },
+        "senses": {
+            "darkvision": 120,
+            "truesight": 30
+        },
+        "passive_perception": 14,
+        "languages": [
+            "Common",
+            "Undercommon"
+        ],
+        "cr": {
+            "cr": "1/2",
+            "xp": 100,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "amphibious",
+                "name": "Amphibious",
+                "category": "traits",
+                "text": "The kuo-toa can breathe air and water."
+            },
+            {
+                "id": "sunlight-sensitivity",
+                "name": "Sunlight Sensitivity",
+                "category": "traits",
+                "text": "While in sunlight, the kuo-toa has Disadvantage on ability checks and attack rolls."
+            },
+            {
+                "id": "brine-slicer",
+                "name": "Brine Slicer",
+                "category": "actions",
+                "text": "Melee Attack Roll: +4, reach 5 ft. Hit: 9 (2d6 + 2) Slashing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 2,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "slippery",
+                "name": "Slippery",
+                "category": "bonus_actions",
+                "text": "The kuo-toa takes the Disengage action."
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "slashing"
+            ],
+            "senses": [
+                "superior_darkvision",
+                "truesight"
+            ],
+            "movement": [
+                "swim"
+            ],
+            "traits": [
+                "amphibious",
+                "sunlight_sensitivity"
+            ],
+            "misc": [
+                "melee_attack"
+            ],
+            "languages": [
+                "common",
+                "undercommon"
+            ]
+        }
+    },
+    {
+        "id": "lizardfolk-warden-hotb",
+        "kind": "monster",
+        "name": "Lizardfolk Warden",
+        "source": "HotB",
+        "edition": "one",
+        "tags": [
+            "Hold Breath"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "elemental"
+        },
+        "alignment": [
+            "neutral"
+        ],
+        "ac": [
+            {
+                "value": 15
+            }
+        ],
+        "hp": {
+            "average": 32,
+            "formula": "5d8 + 10"
+        },
+        "speed": {
+            "walk": 30,
+            "swim": 30
+        },
+        "abilities": {
+            "str": 15,
+            "dex": 12,
+            "con": 14,
+            "int": 10,
+            "wis": 12,
+            "cha": 8
+        },
+        "skills": {
+            "stealth": 5,
+            "survival": 5
+        },
+        "passive_perception": 11,
+        "languages": [
+            "Common",
+            "Draconic"
+        ],
+        "cr": {
+            "cr": "1",
+            "xp": 200,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "hold-breath",
+                "name": "Hold Breath",
+                "category": "traits",
+                "text": "The lizardfolk can hold its breath for 15 minutes."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The lizardfolk makes one Bite attack and one Bone Pike attack."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Attack Roll: +4, reach 5 ft. Hit: 5 (1d6 + 2) Piercing damage plus 3 (1d6) Poison damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 2,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "1d6",
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "bone-pike",
+                "name": "Bone Pike",
+                "category": "actions",
+                "text": "Melee Attack Roll: +4, reach 10 ft. Hit: 7 (1d10 + 2) Piercing damage.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d10",
+                                "bonus": 2,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "poison-spit",
+                "name": "Poison Spit",
+                "category": "actions",
+                "text": "Ranged Attack Roll: +4, range 60 ft. Hit: 12 (3d6 + 2) Poison damage.",
+                "action": {
+                    "range": "range 60 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "3d6",
+                                "bonus": 2,
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "items": [
+            {
+                "item": "shield-xphb",
+                "qty": 1
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "poison",
+                "piercing"
+            ],
+            "movement": [
+                "swim"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "hold_breath"
+            ],
+            "misc": [
+                "melee_attack",
+                "melee_weapon",
+                "ranged_attack",
+                "reach"
+            ],
+            "languages": [
+                "common",
+                "draconic"
+            ]
+        }
+    },
+    {
+        "id": "narthus-hotb",
+        "kind": "monster",
+        "name": "Narthus",
+        "source": "HotB",
+        "edition": "one",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "human"
+            ]
+        },
+        "alignment": [
+            "chaotic evil"
+        ],
+        "ac": [
+            {
+                "value": 13
+            }
+        ],
+        "hp": {
+            "average": 22,
+            "formula": "4d8 + 4"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 14,
+            "dex": 11,
+            "con": 12,
+            "int": 10,
+            "wis": 14,
+            "cha": 10
+        },
+        "skills": {
+            "medicine": 4,
+            "religion": 2
+        },
+        "passive_perception": 12,
+        "languages": [
+            "Common"
+        ],
+        "cr": {
+            "cr": "1",
+            "xp": 200,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Narthus makes two attacks using Vile Mace or Fateful Bolt in any combination."
+            },
+            {
+                "id": "vile-mace",
+                "name": "Vile Mace",
+                "category": "actions",
+                "text": "Melee Attack Roll: +4, reach 5 ft. Hit: 5 (1d6 + 2) Bludgeoning damage plus 3 (1d6) Necrotic damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 2,
+                                "type": "bludgeoning"
+                            },
+                            {
+                                "dice": "1d6",
+                                "type": "necrotic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "fateful-bolt",
+                "name": "Fateful Bolt",
+                "category": "actions",
+                "text": "Ranged Attack Roll: +4, range 120 ft. Hit: 8 (1d12 + 2) Necrotic damage, and the next attack roll made against the target before the end of Narthus's next turn has Advantage.",
+                "action": {
+                    "range": "range 120 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d12",
+                                "bonus": 2,
+                                "type": "necrotic"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "items": [
+            {
+                "item": "chain-shirt-xphb",
+                "qty": 1
+            },
+            {
+                "item": "mace-xphb",
+                "qty": 1
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "necrotic"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "melee_attack",
+                "melee_weapon",
+                "ranged_attack"
+            ],
+            "languages": [
+                "common"
+            ]
+        }
+    },
+    {
+        "id": "pral-hotb",
+        "kind": "monster",
+        "name": "Pral",
+        "source": "HotB",
+        "edition": "one",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "human"
+            ]
+        },
+        "alignment": [
+            "lawful evil"
+        ],
+        "ac": [
+            {
+                "value": 14
+            }
+        ],
+        "hp": {
+            "average": 52,
+            "formula": "8d8 + 16"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 15,
+            "dex": 16,
+            "con": 14,
+            "int": 14,
+            "wis": 11,
+            "cha": 14
+        },
+        "saves": {
+            "dex": 5
+        },
+        "skills": {
+            "athletics": 4,
+            "deception": 4
+        },
+        "passive_perception": 10,
+        "languages": [
+            "Common"
+        ],
+        "cr": {
+            "cr": "1",
+            "xp": 200,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "rapier",
+                "name": "Rapier",
+                "category": "actions",
+                "text": "Melee Attack Roll: +5, reach 5 ft. Hit: 7 (1d8 + 3) Piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 3,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "light-crossbow",
+                "name": "Light Crossbow",
+                "category": "actions",
+                "text": "Ranged Attack Roll: +5, range 80/320 ft. Hit: 7 (1d8 + 3) Piercing damage.",
+                "action": {
+                    "range": "range 80/320 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 3,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "parry",
+                "name": "Parry",
+                "category": "reactions",
+                "text": "Trigger: Pral is hit with a melee attack roll while holding a weapon. Response: Pral adds 2 to his AC against that attack, potentially causing the attack to miss."
+            }
+        ],
+        "items": [
+            {
+                "item": "leather-armor-xphb",
+                "qty": 1
+            },
+            {
+                "item": "light-crossbow-xphb",
+                "qty": 1
+            },
+            {
+                "item": "rapier-xphb",
+                "qty": 1
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "piercing"
+            ],
+            "actions": [
+                "parry"
+            ],
+            "misc": [
+                "melee_attack",
+                "melee_weapon",
+                "ranged_attack",
+                "ranged_weapon"
+            ],
+            "languages": [
+                "common"
+            ]
+        }
+    },
+    {
+        "id": "sprite-skirmisher-hotb",
+        "kind": "monster",
+        "name": "Sprite Skirmisher",
+        "source": "HotB",
+        "edition": "one",
+        "size": [
+            "tiny"
+        ],
+        "creature_type": {
+            "type": "fey"
+        },
+        "alignment": [
+            "neutral good"
+        ],
+        "ac": [
+            {
+                "value": 15
+            }
+        ],
+        "hp": {
+            "average": 10,
+            "formula": "4d4"
+        },
+        "speed": {
+            "walk": 10,
+            "fly": 40
+        },
+        "abilities": {
+            "str": 3,
+            "dex": 18,
+            "con": 10,
+            "int": 14,
+            "wis": 13,
+            "cha": 11
+        },
+        "skills": {
+            "perception": 3,
+            "stealth": 8
+        },
+        "passive_perception": 13,
+        "languages": [
+            "Common",
+            "Elvish",
+            "Sylvan"
+        ],
+        "cr": {
+            "cr": "1/4",
+            "xp": 50,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 4
+        },
+        "features": [
+            {
+                "id": "needle-sword",
+                "name": "Needle Sword",
+                "category": "actions",
+                "text": "Melee Attack Roll: +6, reach 5 ft. Hit: 6 (1d4 + 4) Piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 4,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "enchanting-bow",
+                "name": "Enchanting Bow",
+                "category": "actions",
+                "text": "Ranged Attack Roll: +6, range 40/160 ft. Hit: 1 Piercing damage, and the target has the Charmed condition until the start of the sprite's next turn.",
+                "action": {
+                    "range": "range 40/160 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "bonus": 1,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "heart-sight",
+                "name": "Heart Sight",
+                "category": "actions",
+                "text": "Charisma Saving Throw: DC 10, one creature within 5 feet the sprite can see (Celestials, Fiends, Undead automatically fail the save). Failure: The sprite knows the target's emotions.",
+                "action": {
+                    "save": {
+                        "ability": "cha",
+                        "dc": 10,
+                        "on_success": "none"
+                    }
+                }
+            },
+            {
+                "id": "invisibility",
+                "name": "Invisibility",
+                "category": "actions",
+                "text": "The sprite has the Invisible condition for 1 minute. This effect ends early immediately after the sprite makes an attack roll or deals damage, or if the sprite has the Incapacitated condition."
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing"
+            ],
+            "conditions_inflicted": [
+                "charmed",
+                "incapacitated",
+                "invisible"
+            ],
+            "saves_forced": [
+                "cha"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "misc": [
+                "melee_attack",
+                "ranged_attack"
+            ],
+            "languages": [
+                "common",
+                "elvish",
+                "sylvan"
+            ]
+        }
+    },
+    {
+        "id": "vinx-hotb",
+        "kind": "monster",
+        "name": "Vinx",
+        "source": "HotB",
+        "edition": "one",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "dwarf"
+            ]
+        },
+        "alignment": [
+            "chaotic good"
+        ],
+        "ac": [
+            {
+                "value": 13
+            }
+        ],
+        "hp": {
+            "average": 11,
+            "formula": "2d8 + 2"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 11,
+            "dex": 14,
+            "con": 12,
+            "int": 11,
+            "wis": 13,
+            "cha": 11
+        },
+        "skills": {
+            "perception": 5,
+            "stealth": 6,
+            "survival": 5
+        },
+        "passive_perception": 15,
+        "languages": [
+            "Common",
+            "Dwarvish"
+        ],
+        "cr": {
+            "cr": "1/4",
+            "xp": 50,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Vinx makes two attacks, using Shortsword and Sling in any combination."
+            },
+            {
+                "id": "shortsword",
+                "name": "Shortsword",
+                "category": "actions",
+                "text": "Melee Attack Roll: +4, reach 5 ft. Hit: 5 (1d6 + 2) Piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 2,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "sling",
+                "name": "Sling",
+                "category": "actions",
+                "text": "Ranged Attack Roll: +4, range 30/120 ft. Hit: 4 (1d4 + 2) Bludgeoning damage.",
+                "action": {
+                    "range": "range 30/120 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 2,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "items": [
+            {
+                "item": "leather-armor-xphb",
+                "qty": 1
+            },
+            {
+                "item": "shortsword-xphb",
+                "qty": 1
+            },
+            {
+                "item": "sling-xphb",
+                "qty": 1
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "piercing"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "melee_attack",
+                "melee_weapon",
+                "ranged_attack",
+                "ranged_weapon"
+            ],
+            "languages": [
+                "common",
+                "dwarvish"
+            ]
+        }
+    },
+    {
+        "id": "wight-lifedrinker-hotb",
+        "kind": "monster",
+        "name": "Wight Lifedrinker",
+        "source": "HotB",
+        "edition": "one",
+        "tags": [
+            "Sunlight Sensitivity"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "undead"
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "ac": [
+            {
+                "value": 14
+            }
+        ],
+        "hp": {
+            "average": 82,
+            "formula": "11d8 + 33"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 15,
+            "dex": 14,
+            "con": 16,
+            "int": 10,
+            "wis": 13,
+            "cha": 15
+        },
+        "skills": {
+            "perception": 3,
+            "stealth": 4
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 13,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "necrotic"
+                ]
+            },
+            "immune": {
+                "types": [
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "exhaustion",
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "Common plus one other language"
+        ],
+        "cr": {
+            "cr": "3",
+            "xp": 700,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 4
+        },
+        "features": [
+            {
+                "id": "sunlight-sensitivity",
+                "name": "Sunlight Sensitivity",
+                "category": "traits",
+                "text": "While in sunlight, the wight has Disadvantage on ability checks and attack rolls."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The wight makes two attacks, using Necrotic Sword or Necrotic Bow in any combination. It can replace one attack with a use of Drink Life."
+            },
+            {
+                "id": "necrotic-sword",
+                "name": "Necrotic Sword",
+                "category": "actions",
+                "text": "Melee Attack Roll: +4, reach 5 ft. Hit: 6 (1d8 + 2) Slashing damage plus 4 (1d8) Necrotic damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 2,
+                                "type": "slashing"
+                            },
+                            {
+                                "dice": "1d8",
+                                "type": "necrotic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "necrotic-bow",
+                "name": "Necrotic Bow",
+                "category": "actions",
+                "text": "Ranged Attack Roll: +4, range 150/600 ft. Hit: 6 (1d8 + 2) Piercing damage plus 4 (1d8) Necrotic damage.",
+                "action": {
+                    "range": "range 150/600 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 2,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "1d8",
+                                "type": "necrotic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "drink-life",
+                "name": "Drink Life",
+                "category": "actions",
+                "text": "Constitution Saving Throw: DC 13, one creature within 5 feet. Failure: 6 (1d8 + 2) Necrotic damage, and the wight regains a number of Hit Points equal to the Necrotic damage taken.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "save": {
+                        "ability": "con",
+                        "dc": 13,
+                        "on_success": "none",
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 2,
+                                "type": "necrotic"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "items": [
+            {
+                "item": "studded-leather-armor-xphb",
+                "qty": 1
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "necrotic",
+                "piercing",
+                "slashing"
+            ],
+            "saves_forced": [
+                "con"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "sunlight_sensitivity"
+            ],
+            "misc": [
+                "melee_attack",
+                "ranged_attack"
+            ],
+            "languages": [
+                "common",
+                "any_choose"
+            ]
+        }
+    }
+]

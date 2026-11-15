@@ -1,0 +1,4738 @@
+[
+    {
+        "id": "ancient-deep-crow-ai",
+        "kind": "monster",
+        "name": "Ancient Deep Crow",
+        "source": "AI",
+        "edition": "classic",
+        "tags": [
+            "Magic Resistance"
+        ],
+        "size": [
+            "huge"
+        ],
+        "creature_type": {
+            "type": "monstrosity"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 18,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 187,
+            "formula": "15d12 + 90"
+        },
+        "speed": {
+            "walk": 20,
+            "fly": 80
+        },
+        "abilities": {
+            "str": 23,
+            "dex": 16,
+            "con": 23,
+            "int": 10,
+            "wis": 15,
+            "cha": 19
+        },
+        "saves": {
+            "con": 11,
+            "wis": 7
+        },
+        "skills": {
+            "perception": 7,
+            "stealth": 13
+        },
+        "senses": {
+            "darkvision": 120,
+            "blindsight": 60
+        },
+        "passive_perception": 17,
+        "defenses": {
+            "resist": {
+                "conditional": [
+                    {
+                        "types": [
+                            "bludgeoning",
+                            "piercing",
+                            "slashing"
+                        ],
+                        "note": "from nonmagical attacks"
+                    }
+                ]
+            }
+        },
+        "languages": [
+            "Deep Crow"
+        ],
+        "cr": {
+            "cr": "15",
+            "xp": 13000,
+            "pb": 5
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The ancient deep crow has advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "shadow-stealth",
+                "name": "Shadow Stealth",
+                "category": "traits",
+                "text": "While in dim light or darkness, the ancient deep crow can take the Hide action as a bonus action."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The ancient deep crow makes three attacks: one with its mandibles and two with its claws."
+            },
+            {
+                "id": "mandibles",
+                "name": "Mandibles",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +11 to hit, reach 10 ft., one target. Hit: 17 (2d10 + 6) piercing damage, and the target is grappled (escape DC 19). Until this grapple ends, the target is restrained, and the ancient deep crow can't use its mandibles on another target.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 11,
+                        "damage": [
+                            {
+                                "dice": "2d10",
+                                "bonus": 6,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "claw",
+                "name": "Claw",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +11 to hit, reach 5 ft., one target. Hit: 13 (2d6 + 6) slashing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 11,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 6,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "shadow-caw",
+                "name": "Shadow Caw",
+                "category": "actions",
+                "text": "The ancient deep crow releases an ear-splitting caw. Each creature within 60 feet of the crow and able to hear it must make a DC 17 Constitution saving throw. On a failure, a creature takes 10 (3d6) psychic damage.",
+                "action": {
+                    "save": {
+                        "ability": "con",
+                        "dc": 17,
+                        "on_success": "none",
+                        "damage": [
+                            {
+                                "dice": "3d6",
+                                "type": "psychic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "detect",
+                "name": "Detect",
+                "category": "legendary_actions",
+                "text": "The deep crow makes a Wisdom (Perception) check."
+            },
+            {
+                "id": "shadow-caw-2",
+                "name": "Shadow Caw",
+                "category": "legendary_actions",
+                "text": "The ancient deep crow uses Shadow Caw.",
+                "cost": 2
+            },
+            {
+                "id": "wing-attack",
+                "name": "Wing Attack",
+                "category": "legendary_actions",
+                "text": "The ancient deep crow beats its wings. Each creature within 10 feet of the deep crow must succeed on a DC 19 Dexterity saving throw or take 13 (2d6 + 6) bludgeoning damage and be knocked prone. The ancient deep crow can then fly up to half its flying speed.",
+                "cost": 2,
+                "action": {
+                    "save": {
+                        "ability": "dex",
+                        "dc": 19,
+                        "on_success": "none",
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 6,
+                                "type": "bludgeoning"
+                            }
+                        ],
+                        "conditions": [
+                            "prone"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "regional-effects",
+                "name": "Regional Effects",
+                "category": "regional_effects",
+                "text": "The region containing an ancient deep crow's lair is transformed by the creature's presence, which creates one or more of the following effects:\n\n- Supernatural shadow turns all bright light to dim light in underground regions within 6 miles of the lair.\n- Intermittent, echoing caws can be heard coming from all directions within 6 miles of the lair.\n- Subterranean beasts within 1 mile of the ancient deep crow's lair serve as the creature's eyes and ears, alerting it to the presence of intruders and making it all but impossible to surprise the ancient deep crow.\n\nIf the ancient deep crow dies, these effects fade immediately."
+            }
+        ],
+        "legendary_actions": {
+            "uses": 3
+        },
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "piercing",
+                "slashing",
+                "psychic"
+            ],
+            "conditions_inflicted": [
+                "grappled",
+                "prone",
+                "restrained"
+            ],
+            "saves_forced": [
+                "con",
+                "dex"
+            ],
+            "senses": [
+                "blindsight",
+                "superior_darkvision"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "magic_resistance"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_weapon_attack",
+                "reach"
+            ],
+            "languages": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "auspicia-dran-ai",
+        "kind": "monster",
+        "name": "Auspicia Dran",
+        "source": "AI",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "half-elf"
+            ]
+        },
+        "alignment": [
+            "neutral good"
+        ],
+        "ac": [
+            {
+                "value": 15,
+                "from": [
+                    "chain shirt"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 52,
+            "formula": "8d8 + 16"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 16,
+            "dex": 14,
+            "con": 14,
+            "int": 15,
+            "wis": 12,
+            "cha": 10
+        },
+        "skills": {
+            "athletics": 5,
+            "perception": 3
+        },
+        "passive_perception": 13,
+        "languages": [
+            "Common",
+            "Elvish"
+        ],
+        "cr": {
+            "cr": "2",
+            "xp": 450,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Auspicia makes two attacks."
+            },
+            {
+                "id": "longsword",
+                "name": "Longsword",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 7 (1d8 + 3) slashing damage, or 8 (1d10 + 3) slashing damage if used with two hands.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 3,
+                                "type": "slashing"
+                            },
+                            {
+                                "dice": "1d10",
+                                "bonus": 3,
+                                "type": "slashing",
+                                "condition": "if used with two hands"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "light-crossbow",
+                "name": "Light Crossbow",
+                "category": "actions",
+                "text": "Ranged Weapon Attack: +4 to hit, range 80/320 ft., one target. Hit: 6 (1d8 + 2) piercing damage.",
+                "action": {
+                    "range": "range 80/320 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 2,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Innate Spellcasting (Psionics)",
+                "ability": "int",
+                "text": "Auspicia's innate spellcasting ability is Intelligence. She can innately cast the following spells, requiring no components:",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "detect-thoughts-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "augury-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "light-crossbow-phb",
+                "qty": 1,
+                "attacks": true
+            },
+            {
+                "item": "longsword-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "flags": {
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "piercing",
+                "slashing"
+            ],
+            "saves_forced": [
+                "wis"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack",
+                "ranged_weapon",
+                "ranged_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "elvish"
+            ],
+            "spellcasting": [
+                "innate",
+                "psionics"
+            ]
+        }
+    },
+    {
+        "id": "brahma-lutier-ai",
+        "kind": "monster",
+        "name": "Brahma Lutier",
+        "source": "AI",
+        "edition": "classic",
+        "tags": [
+            "Fey Ancestry"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "elf"
+            ]
+        },
+        "alignment": [
+            "neutral"
+        ],
+        "ac": [
+            {
+                "value": 12
+            }
+        ],
+        "hp": {
+            "average": 33,
+            "formula": "6d8 + 6"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 12,
+            "dex": 15,
+            "con": 12,
+            "int": 11,
+            "wis": 13,
+            "cha": 16
+        },
+        "skills": {
+            "perception": 3,
+            "performance": 5,
+            "persuasion": 5
+        },
+        "passive_perception": 13,
+        "languages": [
+            "Common",
+            "Elvish"
+        ],
+        "cr": {
+            "cr": "2",
+            "xp": 450,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "fey-ancestry",
+                "name": "Fey Ancestry",
+                "category": "traits",
+                "text": "Brahma has advantage on saving throws against being charmed, and magic can't put her to sleep."
+            },
+            {
+                "id": "taunt",
+                "name": "Taunt",
+                "category": "traits",
+                "text": "Brahma can use a bonus action to target one creature she can see within 30 feet of her. If the target can hear Brahma, it must succeed on a DC 13 Charisma saving throw or have disadvantage on ability checks, attack rolls, and saving throws until the start of Brahma's next turn.",
+                "uses": {
+                    "max": 2,
+                    "reset": "long"
+                },
+                "action": {
+                    "save": {
+                        "ability": "cha",
+                        "dc": 13,
+                        "on_success": "none"
+                    }
+                }
+            },
+            {
+                "id": "war-lute",
+                "name": "War Lute",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 5 (1d6 + 2) slashing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 2,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "song-of-domination",
+                "name": "Song of Domination",
+                "category": "actions",
+                "text": "Brahma targets one creature that can see or hear her, which must succeed on a DC 13 Wisdom saving throw or be charmed by her for 1 minute. The target can repeat the save at the end of each of its turns, ending the effect on itself on a success. It has disadvantage on these saves if being charmed by Brahma is something the target openly or secretly desires. For 1 hour after the charm effect ends, the target has disadvantage on Intelligence, Wisdom, or Charisma checks made as part of a contest with Brahma.",
+                "uses": {
+                    "max": 3,
+                    "reset": "long"
+                },
+                "action": {
+                    "save": {
+                        "ability": "wis",
+                        "dc": 13,
+                        "on_success": "none",
+                        "conditions": [
+                            "charmed"
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "cha",
+                "dc": 13,
+                "attack": 5,
+                "text": "Brahma is a 4th-level spellcaster. Her spellcasting ability is Charisma (spell save DC 13, +5 to hit with spell attacks). She has the following bard spells prepared:",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "level": 0,
+                        "spells": [
+                            {
+                                "spell": "mage-hand-phb"
+                            },
+                            {
+                                "spell": "message-phb"
+                            },
+                            {
+                                "spell": "vicious-mockery-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 1,
+                        "slots": 4,
+                        "spells": [
+                            {
+                                "spell": "charm-person-phb"
+                            },
+                            {
+                                "spell": "heroism-phb"
+                            },
+                            {
+                                "spell": "illusory-script-phb"
+                            },
+                            {
+                                "spell": "sleep-phb"
+                            },
+                            {
+                                "spell": "unseen-servant-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 2,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "cloud-of-daggers-phb"
+                            },
+                            {
+                                "spell": "invisibility-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "flags": {
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "slashing",
+                "psychic"
+            ],
+            "conditions_inflicted": [
+                "charmed",
+                "invisible",
+                "unconscious"
+            ],
+            "saves_forced": [
+                "cha",
+                "wis"
+            ],
+            "traits": [
+                "fey_ancestry"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "elvish"
+            ],
+            "spellcasting": [
+                "bard"
+            ]
+        }
+    },
+    {
+        "id": "chaos-quadrapod-ai",
+        "kind": "monster",
+        "name": "Chaos Quadrapod",
+        "source": "AI",
+        "edition": "classic",
+        "tags": [
+            "Magic Resistance"
+        ],
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "aberration"
+        },
+        "alignment": [
+            "chaotic evil"
+        ],
+        "ac": [
+            {
+                "value": 14,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 52,
+            "formula": "7d10 + 14"
+        },
+        "speed": {
+            "walk": 40,
+            "climb": 40
+        },
+        "abilities": {
+            "str": 18,
+            "dex": 13,
+            "con": 15,
+            "int": 6,
+            "wis": 10,
+            "cha": 4
+        },
+        "skills": {
+            "acrobatics": 5,
+            "perception": 4
+        },
+        "senses": {
+            "blindsight": 120,
+            "notes": "blindsight (blind beyond this radius)"
+        },
+        "passive_perception": 14,
+        "cr": {
+            "cr": "4",
+            "xp": 1100,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The chaos quadrapod has advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The chaos quadrapod makes up to two tentacle attacks."
+            },
+            {
+                "id": "tentacle",
+                "name": "Tentacle",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +6 to hit, reach 15 ft., one target. Hit: 11 (2d6 + 4) bludgeoning damage. If the target is a creature, it is grappled (escape DC 14). Until this grapple ends, the target is restrained. The chaos quadrapod can grapple no more than two targets at a time.",
+                "action": {
+                    "range": "reach 15 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 4,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "chaos-cloud",
+                "name": "Chaos Cloud",
+                "category": "actions",
+                "text": "The chaos quadrapod shoots forth a knot of roiling ethereal light that explodes at a point it can see within 60 feet of it. Each creature in a 20-foot-radius sphere centered on that point must succeed on a DC 14 Charisma saving throw or be stunned until the end of its next turn.",
+                "uses": {
+                    "max": 1,
+                    "reset": "short"
+                },
+                "action": {
+                    "area": "20-foot sphere",
+                    "save": {
+                        "ability": "cha",
+                        "dc": 14,
+                        "on_success": "none",
+                        "conditions": [
+                            "stunned"
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning"
+            ],
+            "conditions_inflicted": [
+                "grappled",
+                "restrained",
+                "stunned"
+            ],
+            "saves_forced": [
+                "cha"
+            ],
+            "senses": [
+                "blindsight"
+            ],
+            "movement": [
+                "climb"
+            ],
+            "actions": [
+                "multiattack",
+                "tentacles"
+            ],
+            "traits": [
+                "magic_resistance"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_weapon_attack",
+                "reach"
+            ]
+        }
+    },
+    {
+        "id": "clockwork-dragon-ai",
+        "kind": "monster",
+        "name": "Clockwork Dragon",
+        "source": "AI",
+        "edition": "classic",
+        "tags": [
+            "False Appearance"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "construct"
+        },
+        "alignment": [
+            "neutral"
+        ],
+        "ac": [
+            {
+                "value": 16,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 22,
+            "formula": "4d8 + 4"
+        },
+        "speed": {
+            "walk": 30,
+            "fly": 60
+        },
+        "abilities": {
+            "str": 14,
+            "dex": 10,
+            "con": 12,
+            "int": 10,
+            "wis": 11,
+            "cha": 13
+        },
+        "skills": {
+            "acrobatics": 2,
+            "perception": 4
+        },
+        "senses": {
+            "darkvision": 60,
+            "blindsight": 60
+        },
+        "passive_perception": 14,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "poison",
+                    "psychic"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "blinded",
+                    "charmed",
+                    "deafened",
+                    "exhaustion",
+                    "frightened",
+                    "paralyzed",
+                    "petrified",
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "Common",
+            "Draconic"
+        ],
+        "cr": {
+            "cr": "1",
+            "xp": 200,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "false-appearance",
+                "name": "False Appearance",
+                "category": "traits",
+                "text": "While the clockwork dragon remains motionless, it is indistinguishable from a metal statue."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 7 (1d10 + 2) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d10",
+                                "bonus": 2,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "fire-breath",
+                "name": "Fire Breath",
+                "category": "actions",
+                "text": "The clockwork dragon exhales fire in a 15-foot cone. Each creature in that area must make a DC 11 Dexterity saving throw, taking 14 (4d6) fire damage on a failed save, or half as much damage on a successful one.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "area": "15-foot cone",
+                    "save": {
+                        "ability": "dex",
+                        "dc": 11,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "4d6",
+                                "type": "fire"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "fire",
+                "piercing"
+            ],
+            "saves_forced": [
+                "dex"
+            ],
+            "senses": [
+                "blindsight",
+                "darkvision"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "actions": [
+                "breath_weapon"
+            ],
+            "traits": [
+                "false_appearance"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "draconic"
+            ]
+        }
+    },
+    {
+        "id": "deep-crow-ai",
+        "kind": "monster",
+        "name": "Deep Crow",
+        "source": "AI",
+        "edition": "classic",
+        "tags": [
+            "Magic Resistance",
+            "Sunlight Sensitivity"
+        ],
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "monstrosity"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 17,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 133,
+            "formula": "14d10 + 56"
+        },
+        "speed": {
+            "walk": 20,
+            "fly": 80
+        },
+        "abilities": {
+            "str": 20,
+            "dex": 16,
+            "con": 18,
+            "int": 8,
+            "wis": 15,
+            "cha": 14
+        },
+        "saves": {
+            "con": 8,
+            "wis": 6
+        },
+        "skills": {
+            "perception": 6,
+            "stealth": 11
+        },
+        "senses": {
+            "darkvision": 120,
+            "blindsight": 30
+        },
+        "passive_perception": 16,
+        "languages": [
+            "Deep Crow"
+        ],
+        "cr": {
+            "cr": "9",
+            "xp": 5000,
+            "pb": 4
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The deep crow has advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "shadow-stealth",
+                "name": "Shadow Stealth",
+                "category": "traits",
+                "text": "While in dim light or darkness, the deep crow can take the Hide action as a bonus action."
+            },
+            {
+                "id": "sunlight-sensitivity",
+                "name": "Sunlight Sensitivity",
+                "category": "traits",
+                "text": "While in sunlight, the deep crow has disadvantage on attack rolls, as well as on Wisdom (Perception) checks that rely on sight."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The deep crow makes three attacks: one with its mandibles and two with its claws."
+            },
+            {
+                "id": "mandibles",
+                "name": "Mandibles",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +9 to hit, reach 10 ft., one target. Hit: 16 (2d10 + 5) piercing damage, and the target is grappled (escape DC 17). Until this grapple ends, the target is restrained, and the deep crow can't use its mandibles on another target.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 9,
+                        "damage": [
+                            {
+                                "dice": "2d10",
+                                "bonus": 5,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "claw",
+                "name": "Claw",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +9 to hit, reach 5 ft., one target. Hit: 12 (2d6 + 5) slashing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 9,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 5,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing",
+                "slashing"
+            ],
+            "conditions_inflicted": [
+                "grappled",
+                "restrained"
+            ],
+            "senses": [
+                "blindsight",
+                "superior_darkvision"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "magic_resistance",
+                "sunlight_sensitivity"
+            ],
+            "misc": [
+                "melee_weapon_attack",
+                "reach"
+            ],
+            "languages": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "donaar-blitzen-ai",
+        "kind": "monster",
+        "name": "Donaar Blit'zen",
+        "source": "AI",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "dragonborn"
+            ]
+        },
+        "alignment": [
+            "chaotic good"
+        ],
+        "ac": [
+            {
+                "value": 18,
+                "from": [
+                    "plate armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 45,
+            "formula": "7d8 + 14"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 17,
+            "dex": 8,
+            "con": 14,
+            "int": 10,
+            "wis": 10,
+            "cha": 16
+        },
+        "saves": {
+            "wis": 2,
+            "cha": 5
+        },
+        "skills": {
+            "history": 2,
+            "insight": 2,
+            "intimidation": 5,
+            "persuasion": 5
+        },
+        "passive_perception": 10,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "acid"
+                ]
+            }
+        },
+        "languages": [
+            "Common",
+            "Draconic",
+            "Orc"
+        ],
+        "cr": {
+            "cr": "3",
+            "xp": 700,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": -1
+        },
+        "features": [
+            {
+                "id": "champion-challenge",
+                "name": "Champion Challenge",
+                "category": "traits",
+                "text": "As a bonus action, Donaar causes each creature of his choice that he can see within 30 feet of him to make a DC 13 Wisdom saving throw. On a failure, a creature can't willingly move more than 30 feet away from Donaar. This effect ends on the creature if Donaar is incapacitated or dies, or if the creature is moved more than 30 feet away from him.",
+                "uses": {
+                    "max": 1,
+                    "reset": "short"
+                },
+                "action": {
+                    "save": {
+                        "ability": "wis",
+                        "dc": 13,
+                        "on_success": "none",
+                        "conditions": [
+                            "incapacitated"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Donaar makes two attacks with his greatsword or his whip."
+            },
+            {
+                "id": "greatsword",
+                "name": "Greatsword",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) slashing damage. Whenever Donaar rolls a 1 or 2 on a damage die, he can reroll the die and must use the new roll.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 3,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "whip",
+                "name": "Whip",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +5 to hit, reach 10 ft., one target. Hit: 5 (1d4 + 3) slashing damage.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 3,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "acid-vomit",
+                "name": "Acid Vomit",
+                "category": "actions",
+                "text": "Donaar regurgitates acid in a 30-foot line that is 5 feet wide. Each creature in that line must make a DC 12 Dexterity saving throw, taking 7 (2d6) acid damage on a failed save, or half as much damage on a successful one.",
+                "action": {
+                    "area": "30-foot line",
+                    "save": {
+                        "ability": "dex",
+                        "dc": 12,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "type": "acid"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "cha",
+                "dc": 13,
+                "attack": 5,
+                "text": "Donaar is a 5th-level spellcaster. His spellcasting ability is Charisma (spell save DC 13, +5 to hit with spell attacks). He has the following paladin spells prepared:",
+                "groups": [
+                    {
+                        "level": 1,
+                        "slots": 4,
+                        "spells": [
+                            {
+                                "spell": "command-phb"
+                            },
+                            {
+                                "spell": "compelled-duel-phb"
+                            },
+                            {
+                                "spell": "cure-wounds-phb"
+                            },
+                            {
+                                "spell": "wrathful-smite-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 2,
+                        "slots": 2,
+                        "spells": [
+                            {
+                                "spell": "aid-phb"
+                            },
+                            {
+                                "spell": "branding-smite-phb"
+                            },
+                            {
+                                "spell": "lesser-restoration-phb"
+                            },
+                            {
+                                "spell": "warding-bond-phb"
+                            },
+                            {
+                                "spell": "zone-of-truth-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "greatsword-phb",
+                "qty": 1,
+                "attacks": true
+            },
+            {
+                "item": "whip-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "acid",
+                "slashing",
+                "radiant",
+                "psychic"
+            ],
+            "conditions_inflicted": [
+                "frightened",
+                "prone"
+            ],
+            "saves_forced": [
+                "dex",
+                "wis",
+                "cha"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_weapon",
+                "melee_weapon_attack",
+                "reach"
+            ],
+            "languages": [
+                "common",
+                "draconic",
+                "orc"
+            ],
+            "spellcasting": [
+                "paladin"
+            ]
+        }
+    },
+    {
+        "id": "flabbergast-ai",
+        "kind": "monster",
+        "name": "Flabbergast",
+        "source": "AI",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "human"
+            ]
+        },
+        "alignment": [
+            "lawful neutral"
+        ],
+        "ac": [
+            {
+                "value": 12
+            },
+            {
+                "value": 15,
+                "condition": "with Mage Armor"
+            }
+        ],
+        "hp": {
+            "average": 40,
+            "formula": "9d8"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 10,
+            "dex": 14,
+            "con": 10,
+            "int": 17,
+            "wis": 13,
+            "cha": 13
+        },
+        "saves": {
+            "int": 5,
+            "wis": 3
+        },
+        "skills": {
+            "arcana": 5,
+            "persuasion": 3,
+            "history": 5,
+            "perception": 3
+        },
+        "passive_perception": 13,
+        "languages": [
+            "Common",
+            "Draconic",
+            "Elvish",
+            "Gnomish"
+        ],
+        "cr": {
+            "cr": "4",
+            "xp": 1100,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "dagger",
+                "name": "Dagger",
+                "category": "actions",
+                "text": "Melee or Ranged Weapon Attack: +4 to hit, reach 5 ft. or range 20/60 ft., one target. Hit: 4 (1d4 + 2) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft. or range 20/60 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 2,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "int",
+                "dc": 13,
+                "attack": 5,
+                "text": "Flabbergast is a 9th-level spellcaster. His spellcasting ability is Intelligence (spell save DC 13, +5 to hit with spell attacks). He has the following wizard spells prepared:",
+                "footer": "*New spell introduced in chapter 3",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "level": 0,
+                        "spells": [
+                            {
+                                "spell": "fire-bolt-phb"
+                            },
+                            {
+                                "spell": "light-phb"
+                            },
+                            {
+                                "spell": "mage-hand-phb"
+                            },
+                            {
+                                "spell": "prestidigitation-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 1,
+                        "slots": 4,
+                        "spells": [
+                            {
+                                "spell": "detect-magic-phb"
+                            },
+                            {
+                                "spell": "mage-armor-phb"
+                            },
+                            {
+                                "spell": "distort-value-ai",
+                                "note": "*"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 2,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "gift-of-gab-ai",
+                                "note": "*"
+                            },
+                            {
+                                "spell": "suggestion-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 3,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "fast-friends-ai",
+                                "note": "*"
+                            },
+                            {
+                                "spell": "lightning-bolt-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 4,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "greater-invisibility-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 5,
+                        "slots": 1,
+                        "spells": [
+                            {
+                                "spell": "cone-of-cold-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "dagger-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "piercing",
+                "cold",
+                "fire",
+                "lightning"
+            ],
+            "saves_forced": [
+                "con",
+                "dex",
+                "wis"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack",
+                "ranged_weapon_attack",
+                "thrown_weapon"
+            ],
+            "languages": [
+                "common",
+                "draconic",
+                "elvish",
+                "gnomish"
+            ],
+            "spellcasting": [
+                "wizard"
+            ]
+        }
+    },
+    {
+        "id": "jim-darkmagic-ai",
+        "kind": "monster",
+        "name": "Jim Darkmagic",
+        "source": "AI",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "human"
+            ]
+        },
+        "alignment": [
+            "chaotic neutral"
+        ],
+        "ac": [
+            {
+                "value": 12
+            },
+            {
+                "value": 15,
+                "condition": "with Mage Armor"
+            }
+        ],
+        "hp": {
+            "average": 40,
+            "formula": "9d8"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 8,
+            "dex": 14,
+            "con": 10,
+            "int": 18,
+            "wis": 12,
+            "cha": 14
+        },
+        "saves": {
+            "int": 7,
+            "wis": 4
+        },
+        "skills": {
+            "acrobatics": 5,
+            "animal_handling": 4,
+            "arcana": 7,
+            "history": 7,
+            "performance": 5
+        },
+        "passive_perception": 11,
+        "languages": [
+            "Common"
+        ],
+        "cr": {
+            "cr": "5",
+            "xp": 1800,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "special-equipment",
+                "name": "Special Equipment",
+                "category": "traits",
+                "text": "Jim carries a wand of wonder."
+            },
+            {
+                "id": "benign-transportation-recharges-after-jim-casts-a-conjuration-spell-of-1st-level-or-higher",
+                "name": "Benign Transportation (Recharges after Jim Casts a Conjuration Spell of 1st Level or Higher)",
+                "category": "traits",
+                "text": "As a bonus action, Jim teleports up to 30 feet to a space he can see. The space must be unoccupied or occupied by a willing Small or Medium creature. If the latter, Jim and the willing creature both teleport, swapping places."
+            },
+            {
+                "id": "dagger",
+                "name": "Dagger",
+                "category": "actions",
+                "text": "Melee or Ranged Weapon Attack: +5 to hit, reach 5 ft. or range 20/60 ft., one target. Hit: 4 (1d4 + 2) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft. or range 20/60 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 2,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "minor-conjuration",
+                "name": "Minor Conjuration",
+                "category": "actions",
+                "text": "Jim conjures an inanimate object, no larger than 3 feet on a side and no more than 10 pounds, in his hand or on the ground in an unoccupied space he can see within 10 feet of him. The object is visibly magical, radiating dim light out to 5 feet. It disappears if it takes any damage, after 1 hour, or when Jim uses this feature again."
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "int",
+                "dc": 15,
+                "attack": 7,
+                "text": "Jim is a 9th-level spellcaster. His spellcasting ability is Intelligence (spell save DC 15, +7 to hit with spell attacks). He has the following wizard spells prepared:",
+                "footer": "*New spell introduced in chapter 3",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "level": 0,
+                        "spells": [
+                            {
+                                "spell": "fire-bolt-phb"
+                            },
+                            {
+                                "spell": "friends-phb"
+                            },
+                            {
+                                "spell": "mage-hand-phb"
+                            },
+                            {
+                                "spell": "minor-illusion-phb"
+                            },
+                            {
+                                "spell": "prestidigitation-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 1,
+                        "slots": 4,
+                        "spells": [
+                            {
+                                "spell": "disguise-self-phb"
+                            },
+                            {
+                                "spell": "jims-magic-missile-ai",
+                                "note": "*"
+                            },
+                            {
+                                "spell": "mage-armor-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 2,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "invisibility-phb"
+                            },
+                            {
+                                "spell": "jims-glowing-coin-ai",
+                                "note": "*"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 3,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "incite-greed-ai",
+                                "note": "*"
+                            },
+                            {
+                                "spell": "fireball-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 4,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "conjure-minor-elementals-phb"
+                            },
+                            {
+                                "spell": "polymorph-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 5,
+                        "slots": 1,
+                        "spells": [
+                            {
+                                "spell": "mislead-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "dagger-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "piercing",
+                "fire",
+                "force"
+            ],
+            "saves_forced": [
+                "dex",
+                "wis"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack",
+                "ranged_weapon_attack",
+                "thrown_weapon"
+            ],
+            "languages": [
+                "common"
+            ],
+            "spellcasting": [
+                "wizard"
+            ]
+        }
+    },
+    {
+        "id": "kthriss-drowb-ai",
+        "kind": "monster",
+        "name": "K'thriss Drow'b",
+        "source": "AI",
+        "edition": "classic",
+        "tags": [
+            "Fey Ancestry"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "elf"
+            ]
+        },
+        "alignment": [
+            "chaotic neutral"
+        ],
+        "ac": [
+            {
+                "value": 14,
+                "from": [
+                    "studded leather"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 44,
+            "formula": "8d8 + 8"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 8,
+            "dex": 14,
+            "con": 12,
+            "int": 14,
+            "wis": 11,
+            "cha": 18
+        },
+        "saves": {
+            "str": 0,
+            "dex": 3,
+            "con": 2,
+            "int": 3,
+            "wis": 3,
+            "cha": 7
+        },
+        "skills": {
+            "arcana": 4,
+            "insight": 2,
+            "investigation": 4,
+            "perception": 2,
+            "religion": 4
+        },
+        "senses": {
+            "darkvision": 120
+        },
+        "passive_perception": 12,
+        "languages": [
+            "Celestial",
+            "Common",
+            "Elvish",
+            "Undercommon; can read all writing"
+        ],
+        "cr": {
+            "cr": "3",
+            "xp": 700,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "special-equipment",
+                "name": "Special Equipment",
+                "category": "traits",
+                "text": "K'thriss wears a robe of stars (accounted for in his statistics). The robe allows him to cast the following spells: 6/day: Magic Missile (7 missiles)"
+            },
+            {
+                "id": "awakened-mind",
+                "name": "Awakened Mind",
+                "category": "traits",
+                "text": "K'thriss can telepathically speak to any creature he can see within 30 feet of him, provided the creature can understand at least one language."
+            },
+            {
+                "id": "fey-ancestry",
+                "name": "Fey Ancestry",
+                "category": "traits",
+                "text": "K'thriss has advantage on saving throws against being charmed, and magic can't put him to sleep. Sunlight Sensitivity. While in sunlight, K'thriss has disadvantage on attack rolls, as well as on Wisdom (Perception) checks that rely on sight."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "K'thriss makes two attacks with his sickle."
+            },
+            {
+                "id": "sickle",
+                "name": "Sickle",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 4 (1d4 + 2) slashing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 2,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Innate Spellcasting",
+                "ability": "cha",
+                "dc": 14,
+                "text": "K'thriss's innate spellcasting ability is Charisma (spell save DC 14). He can innately cast the following spells, requiring no material components:",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "dancing-lights-phb"
+                            },
+                            {
+                                "spell": "disguise-self-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "darkness-phb"
+                            },
+                            {
+                                "spell": "faerie-fire-phb"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Spellcasting",
+                "ability": "cha",
+                "dc": 14,
+                "attack": 6,
+                "text": "K'thriss is a 5th-level spellcaster. His spellcasting ability is Charisma (spell save DC 14, +6 to hit with spell attacks). He regains his expended spell slots when he finishes a short or long rest, and knows the following warlock spells:",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "level": 0,
+                        "spells": [
+                            {
+                                "spell": "chill-touch-phb"
+                            },
+                            {
+                                "spell": "eldritch-blast-phb"
+                            },
+                            {
+                                "spell": "mending-phb"
+                            },
+                            {
+                                "spell": "prestidigitation-phb"
+                            },
+                            {
+                                "spell": "thorn-whip-phb"
+                            },
+                            {
+                                "spell": "vicious-mockery-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 3,
+                        "slots": 2,
+                        "lower": 1,
+                        "spells": [
+                            {
+                                "spell": "dissonant-whispers-phb"
+                            },
+                            {
+                                "spell": "fly-phb"
+                            },
+                            {
+                                "spell": "hex-phb"
+                            },
+                            {
+                                "spell": "misty-step-phb"
+                            },
+                            {
+                                "spell": "sending-phb"
+                            },
+                            {
+                                "spell": "shatter-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "sickle-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "slashing",
+                "necrotic",
+                "force",
+                "piercing",
+                "thunder",
+                "psychic"
+            ],
+            "saves_forced": [
+                "con",
+                "dex",
+                "wis"
+            ],
+            "senses": [
+                "superior_darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "fey_ancestry"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "celestial",
+                "elvish",
+                "undercommon",
+                "all"
+            ],
+            "spellcasting": [
+                "warlock",
+                "innate"
+            ]
+        }
+    },
+    {
+        "id": "keg-robot-ai",
+        "kind": "monster",
+        "name": "Keg Robot",
+        "source": "AI",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "construct"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 14,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 39,
+            "formula": "6d8 + 12"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 16,
+            "dex": 16,
+            "con": 15,
+            "int": 6,
+            "wis": 8,
+            "cha": 5
+        },
+        "skills": {
+            "perception": 1
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 11,
+        "defenses": {
+            "resist": {
+                "conditional": [
+                    {
+                        "types": [
+                            "bludgeoning",
+                            "piercing",
+                            "slashing"
+                        ],
+                        "note": "from nonmagical attacks"
+                    }
+                ]
+            },
+            "immune": {
+                "types": [
+                    "poison",
+                    "psychic"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "exhaustion",
+                    "frightened",
+                    "paralyzed",
+                    "petrified",
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "understands Common but can't speak"
+        ],
+        "cr": {
+            "cr": "2",
+            "xp": 450,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "customizable-storage",
+                "name": "Customizable Storage",
+                "category": "traits",
+                "text": "A keg robot can hold up to three types of liquid payload totaling 12 gallons within its hollow, barrel-shaped body. A full keg robot can make one liquid attack per gallon before the liquid must be refilled. Filling a keg robot takes 2 rounds per gallon. Differing payloads can alter the keg robot's attacks from those presented here."
+            },
+            {
+                "id": "fist",
+                "name": "Fist",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 7 (1d8 + 3) bludgeoning damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 3,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "acid-squirt",
+                "name": "Acid Squirt",
+                "category": "actions",
+                "text": "Ranged Weapon Attack: +5 to hit, range 20/40 ft., one target. Hit: 7 (1d8 + 3) acid damage.",
+                "action": {
+                    "range": "range 20/40 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 3,
+                                "type": "acid"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "beer-shower",
+                "name": "Beer Shower",
+                "category": "actions",
+                "text": "The keg robot spews an unnaturally potent beer in a 15-foot cone or in a 30-foot line that is 5 feet wide. Each creature in the area must succeed on a DC 13 Constitution saving throw or be poisoned. While poisoned in this way, a creature has its speed halved by exposure to the potent brew. An affected creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.\n\nAdditionally, the beer shower extinguishes any fires or open flames in its area.",
+                "action": {
+                    "area": "15-foot cone",
+                    "save": {
+                        "ability": "con",
+                        "dc": 13,
+                        "on_success": "none",
+                        "conditions": [
+                            "poisoned"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "hot-oil-spray",
+                "name": "Hot Oil Spray",
+                "category": "actions",
+                "text": "The keg robot sprays hot oil in a 15-foot cone or in a 30-foot line that is 5 feet wide. Each creature in the area must make a DC 13 Dexterity saving throw. On a failed save, a creature takes 7 (1d8 + 3) fire damage and falls prone. On a successful save, a creature takes half as much damage and doesn't fall prone.\n\nAny creature affected by the hot oil spray that takes fire damage before the oil dries (after 1 minute) takes an additional 3 (1d6) fire damage, and the oil burns away.\n\nIf the oil that remains in the area of the spray is lit, it burns for 1d4 rounds and deals 3 (1d6) fire damage to any creature that enters the area for the first time on a turn or ends its turn there.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "area": "15-foot cone",
+                    "save": {
+                        "ability": "dex",
+                        "dc": 13,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 3,
+                                "type": "fire"
+                            },
+                            {
+                                "dice": "1d6",
+                                "type": "fire"
+                            },
+                            {
+                                "dice": "1d6",
+                                "type": "fire",
+                                "condition": "to any creature that enters the area for the first time on a turn or ends its turn there"
+                            }
+                        ],
+                        "conditions": [
+                            "prone"
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "acid",
+                "bludgeoning",
+                "fire"
+            ],
+            "conditions_inflicted": [
+                "poisoned",
+                "prone"
+            ],
+            "saves_forced": [
+                "con",
+                "dex"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_weapon_attack",
+                "ranged_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "cant_speak"
+            ]
+        }
+    },
+    {
+        "id": "m-rg-n-ai",
+        "kind": "monster",
+        "name": "Môrgæn",
+        "source": "AI",
+        "edition": "classic",
+        "tags": [
+            "Fey Ancestry"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "elf"
+            ]
+        },
+        "alignment": [
+            "chaotic neutral"
+        ],
+        "ac": [
+            {
+                "value": 16,
+                "from": [
+                    "studded leather"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 66,
+            "formula": "12d8 + 12"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 12,
+            "dex": 18,
+            "con": 12,
+            "int": 12,
+            "wis": 14,
+            "cha": 10
+        },
+        "saves": {
+            "str": 3,
+            "dex": 6
+        },
+        "skills": {
+            "athletics": 3,
+            "insight": 4,
+            "nature": 3,
+            "perception": 4,
+            "stealth": 6,
+            "survival": 4
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 14,
+        "languages": [
+            "Common",
+            "Draconic",
+            "Dwarvish",
+            "Giant",
+            "Goblin"
+        ],
+        "cr": {
+            "cr": "4",
+            "xp": 1100,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 4
+        },
+        "features": [
+            {
+                "id": "fey-ancestry",
+                "name": "Fey Ancestry",
+                "category": "traits",
+                "text": "Môrgæn has advantage on saving throws against being charmed, and magic can't put her to sleep."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Môrgæn makes three attacks with her scimitars or her longbow."
+            },
+            {
+                "id": "scimitars",
+                "name": "Scimitars",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 7 (1d6 + 4) slashing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 4,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "longbow",
+                "name": "Longbow",
+                "category": "actions",
+                "text": "Ranged Weapon Attack: +6 to hit, range 150/600 ft., one target. Hit: 8 (1d8 + 4) piercing damage.",
+                "action": {
+                    "range": "range 150/600 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 4,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Innate Spellcasting",
+                "ability": "int",
+                "text": "Môrgæn's spellcasting ability is Intelligence. She can innately cast the following spells, requiring no material components:",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "mage-hand-phb"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Spellcasting",
+                "ability": "wis",
+                "dc": 12,
+                "attack": 4,
+                "text": "Môrgæn is a 9th-level spellcaster. Her spellcasting ability is Wisdom (spell save DC 12, +4 to hit with spell attacks). She has the following ranger spells prepared:",
+                "groups": [
+                    {
+                        "level": 1,
+                        "slots": 4,
+                        "spells": [
+                            {
+                                "spell": "alarm-phb"
+                            },
+                            {
+                                "spell": "animal-friendship-phb"
+                            },
+                            {
+                                "spell": "hunters-mark-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 2,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "pass-without-trace-phb"
+                            },
+                            {
+                                "spell": "spike-growth-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 3,
+                        "slots": 2,
+                        "spells": [
+                            {
+                                "spell": "conjure-animals-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "longbow-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "piercing",
+                "slashing"
+            ],
+            "conditions_inflicted": [
+                "charmed"
+            ],
+            "saves_forced": [
+                "wis"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "fey_ancestry"
+            ],
+            "misc": [
+                "melee_weapon_attack",
+                "ranged_weapon",
+                "ranged_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "dwarvish",
+                "draconic",
+                "giant",
+                "goblin"
+            ],
+            "spellcasting": [
+                "ranger",
+                "innate"
+            ]
+        }
+    },
+    {
+        "id": "oak-truestrike-ai",
+        "kind": "monster",
+        "name": "Oak Truestrike",
+        "source": "AI",
+        "edition": "classic",
+        "tags": [
+            "Fey Ancestry",
+            "Keen Senses"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "elf"
+            ]
+        },
+        "alignment": [
+            "neutral good",
+            "neutral evil"
+        ],
+        "ac": [
+            {
+                "value": 15,
+                "from": [
+                    "studded leather"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 32,
+            "formula": "5d8 + 10"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 13,
+            "dex": 16,
+            "con": 14,
+            "int": 10,
+            "wis": 13,
+            "cha": 11
+        },
+        "skills": {
+            "nature": 4,
+            "perception": 3,
+            "performance": 2,
+            "stealth": 5,
+            "survival": 3
+        },
+        "passive_perception": 13,
+        "languages": [
+            "Common"
+        ],
+        "cr": {
+            "cr": "2",
+            "xp": 450,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "fey-ancestry",
+                "name": "Fey Ancestry",
+                "category": "traits",
+                "text": "Oak has advantage on saving throws against being charmed, and magic can't put him to sleep."
+            },
+            {
+                "id": "keen-hearing-and-sight",
+                "name": "Keen Hearing and Sight",
+                "category": "traits",
+                "text": "Oak has advantage on Wisdom (Perception) checks that rely on hearing or sight."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Oak makes three attacks with his hooked daggers or his hand crossbow."
+            },
+            {
+                "id": "hooked-dagger",
+                "name": "Hooked Dagger",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 5 (1d4 + 3) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 3,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "hand-crossbow",
+                "name": "Hand Crossbow",
+                "category": "actions",
+                "text": "Ranged Weapon Attack: +5 to hit, range 30/120 ft., one target. Hit: 6 (1d6 + 3) piercing damage.",
+                "action": {
+                    "range": "range 30/120 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 3,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "return-the-favor",
+                "name": "Return the Favor",
+                "category": "reactions",
+                "text": "When Oak takes damage from a melee weapon attack, he can make a hooked dagger attack.",
+                "uses": {
+                    "max": 3,
+                    "reset": "long"
+                }
+            }
+        ],
+        "items": [
+            {
+                "item": "hand-crossbow-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "flags": {
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "piercing"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "fey_ancestry",
+                "keen_senses"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack",
+                "ranged_weapon",
+                "ranged_weapon_attack"
+            ],
+            "languages": [
+                "common"
+            ]
+        }
+    },
+    {
+        "id": "omin-dran-ai",
+        "kind": "monster",
+        "name": "Omin Dran",
+        "source": "AI",
+        "edition": "classic",
+        "tags": [
+            "Fey Ancestry"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "half-elf"
+            ]
+        },
+        "alignment": [
+            "lawful neutral"
+        ],
+        "ac": [
+            {
+                "value": 18,
+                "from": [
+                    "plate armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 65,
+            "formula": "10d8 + 20"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 16,
+            "dex": 8,
+            "con": 14,
+            "int": 11,
+            "wis": 18,
+            "cha": 12
+        },
+        "saves": {
+            "wis": 7,
+            "cha": 4
+        },
+        "skills": {
+            "deception": 4,
+            "insight": 7,
+            "intimidation": 4,
+            "medicine": 7,
+            "perception": 7,
+            "persuasion": 4
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 17,
+        "languages": [
+            "Common",
+            "Dwarvish",
+            "Elvish",
+            "Goblin"
+        ],
+        "cr": {
+            "cr": "5",
+            "xp": 1800,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": -1
+        },
+        "features": [
+            {
+                "id": "divine-strike",
+                "name": "Divine Strike",
+                "category": "traits",
+                "text": "Once on each of his turns when he hits a creature with a weapon attack, Omin can cause the attack to deal an extra 4 (1d8) damage of the same type dealt by the weapon.",
+                "action": {
+                    "attack": {
+                        "kind": "any",
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "type": "weapon"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "fey-ancestry",
+                "name": "Fey Ancestry",
+                "category": "traits",
+                "text": "Omin has advantage on saving throws against being charmed, and magic can't put him to sleep."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Omin makes two attacks with his maul."
+            },
+            {
+                "id": "maul",
+                "name": "Maul",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) bludgeoning damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 3,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "war-gods-blessing",
+                "name": "War God's Blessing",
+                "category": "reactions",
+                "text": "When a creature within 30 feet of Omin makes an attack roll, but before learning whether it hits or misses, Omin can grant the creature a +10 bonus to that roll.",
+                "uses": {
+                    "max": 1,
+                    "reset": "short"
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "wis",
+                "dc": 15,
+                "attack": 7,
+                "text": "Omin is a 9th-level spellcaster. His spellcasting ability is Wisdom (spell save DC 15, +7 to hit with spell attacks). He has the following cleric spells prepared:",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "level": 0,
+                        "spells": [
+                            {
+                                "spell": "guidance-phb"
+                            },
+                            {
+                                "spell": "sacred-flame-phb"
+                            },
+                            {
+                                "spell": "spare-the-dying-phb"
+                            },
+                            {
+                                "spell": "thaumaturgy-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 1,
+                        "slots": 4,
+                        "spells": [
+                            {
+                                "spell": "bless-phb"
+                            },
+                            {
+                                "spell": "command-phb"
+                            },
+                            {
+                                "spell": "divine-favor-phb"
+                            },
+                            {
+                                "spell": "shield-of-faith-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 2,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "enhance-ability-phb"
+                            },
+                            {
+                                "spell": "hold-person-phb"
+                            },
+                            {
+                                "spell": "magic-weapon-phb"
+                            },
+                            {
+                                "spell": "silence-phb"
+                            },
+                            {
+                                "spell": "spiritual-weapon-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 3,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "beacon-of-hope-phb"
+                            },
+                            {
+                                "spell": "crusaders-mantle-phb"
+                            },
+                            {
+                                "spell": "dispel-magic-phb"
+                            },
+                            {
+                                "spell": "mass-healing-word-phb"
+                            },
+                            {
+                                "spell": "spirit-guardians-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 4,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "death-ward-phb"
+                            },
+                            {
+                                "spell": "freedom-of-movement-phb"
+                            },
+                            {
+                                "spell": "locate-creature-phb"
+                            },
+                            {
+                                "spell": "stoneskin-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 5,
+                        "slots": 1,
+                        "spells": [
+                            {
+                                "spell": "dispel-evil-and-good-phb"
+                            },
+                            {
+                                "spell": "flame-strike-phb"
+                            },
+                            {
+                                "spell": "hold-monster-phb"
+                            },
+                            {
+                                "spell": "greater-restoration-phb"
+                            },
+                            {
+                                "spell": "legend-lore-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "maul-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "fire",
+                "necrotic",
+                "force",
+                "radiant"
+            ],
+            "conditions_inflicted": [
+                "deafened",
+                "paralyzed",
+                "prone"
+            ],
+            "saves_forced": [
+                "cha",
+                "dex",
+                "wis"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "fey_ancestry"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "dwarvish",
+                "elvish",
+                "goblin"
+            ],
+            "spellcasting": [
+                "cleric"
+            ]
+        }
+    },
+    {
+        "id": "pendragon-beestinger-ai",
+        "kind": "monster",
+        "name": "Pendragon Beestinger",
+        "source": "AI",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "human"
+            ]
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "ac": [
+            {
+                "value": 12
+            },
+            {
+                "value": 15,
+                "condition": "with Mage Armor"
+            }
+        ],
+        "hp": {
+            "average": 27,
+            "formula": "5d8 + 5"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 10,
+            "dex": 14,
+            "con": 12,
+            "int": 17,
+            "wis": 10,
+            "cha": 11
+        },
+        "skills": {
+            "arcana": 5,
+            "investigation": 5,
+            "performance": 2
+        },
+        "passive_perception": 10,
+        "languages": [
+            "Common",
+            "Draconic",
+            "Elvish",
+            "Halfling"
+        ],
+        "cr": {
+            "cr": "2",
+            "xp": 450,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "echo-spell",
+                "name": "Echo Spell",
+                "category": "traits",
+                "text": "Pendragon can cast the spell he cast on his last turn, whose casting time becomes 1 bonus action. This bonus casting uses a spell slot as normal.",
+                "uses": {
+                    "max": 1,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "shortsword",
+                "name": "Shortsword",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 5 (1d6 + 2) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 2,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "int",
+                "dc": 13,
+                "attack": 5,
+                "text": "Pendragon is a 4th-level spellcaster. His spellcasting ability is Intelligence (spell save DC 13, +5 to hit with spell attacks). He has the following wizard spells prepared:",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "level": 0,
+                        "spells": [
+                            {
+                                "spell": "acid-splash-phb"
+                            },
+                            {
+                                "spell": "light-phb"
+                            },
+                            {
+                                "spell": "mage-hand-phb"
+                            },
+                            {
+                                "spell": "poison-spray-phb"
+                            },
+                            {
+                                "spell": "shocking-grasp-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 1,
+                        "slots": 4,
+                        "spells": [
+                            {
+                                "spell": "detect-magic-phb"
+                            },
+                            {
+                                "spell": "mage-armor-phb"
+                            },
+                            {
+                                "spell": "magic-missile-phb"
+                            },
+                            {
+                                "spell": "sleep-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 2,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "blindness-deafness-phb"
+                            },
+                            {
+                                "spell": "cloud-of-daggers-phb"
+                            },
+                            {
+                                "spell": "scorching-ray-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "shortsword-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "flags": {
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "piercing",
+                "acid",
+                "fire",
+                "poison",
+                "lightning",
+                "force",
+                "slashing"
+            ],
+            "saves_forced": [
+                "con",
+                "dex"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "draconic",
+                "elvish",
+                "halfling"
+            ],
+            "spellcasting": [
+                "wizard"
+            ]
+        }
+    },
+    {
+        "id": "phoenix-anvil-ai",
+        "kind": "monster",
+        "name": "Phoenix Anvil",
+        "source": "AI",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "human"
+            ]
+        },
+        "alignment": [
+            "lawful neutral"
+        ],
+        "ac": [
+            {
+                "value": 18,
+                "from": [
+                    "chain mail",
+                    "shield"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 27,
+            "formula": "5d8 + 5"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 15,
+            "dex": 10,
+            "con": 12,
+            "int": 13,
+            "wis": 16,
+            "cha": 13
+        },
+        "skills": {
+            "athletics": 4,
+            "performance": 3,
+            "persuasion": 3,
+            "religion": 3
+        },
+        "passive_perception": 13,
+        "languages": [
+            "Common",
+            "Elvish"
+        ],
+        "cr": {
+            "cr": "2",
+            "xp": 450,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "divine-display",
+                "name": "Divine Display",
+                "category": "traits",
+                "text": "As a bonus action, Phoenix causes his shield to flare with divine light. Each creature of his choice within 30 feet of him must succeed on a DC 13 Wisdom saving throw or be blinded for 1 minute. A creature can repeat the save at the end of each of its turns, ending the effect on itself with a success.",
+                "uses": {
+                    "max": 1,
+                    "reset": "long"
+                },
+                "action": {
+                    "save": {
+                        "ability": "wis",
+                        "dc": 13,
+                        "on_success": "none",
+                        "conditions": [
+                            "blinded"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Phoenix makes two melee attacks."
+            },
+            {
+                "id": "warhammer",
+                "name": "Warhammer",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 6 (1d8 + 2) bludgeoning damage, and the target must succeed on a DC 12 Strength saving throw or be pushed 5 feet.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 2,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "str",
+                        "dc": 12,
+                        "on_success": "none"
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "wis",
+                "dc": 13,
+                "attack": 5,
+                "text": "Phoenix is a 4th-level spellcaster. His spellcasting ability is Wisdom (spell save DC 13, +5 to hit with spell attacks). He has the following cleric spells prepared:",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "level": 0,
+                        "spells": [
+                            {
+                                "spell": "guidance-phb"
+                            },
+                            {
+                                "spell": "light-phb"
+                            },
+                            {
+                                "spell": "mending-phb"
+                            },
+                            {
+                                "spell": "sacred-flame-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 1,
+                        "slots": 4,
+                        "spells": [
+                            {
+                                "spell": "bane-phb"
+                            },
+                            {
+                                "spell": "cure-wounds-phb"
+                            },
+                            {
+                                "spell": "guiding-bolt-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 2,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "hold-person-phb"
+                            },
+                            {
+                                "spell": "spiritual-weapon-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "warhammer-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "flags": {
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "force",
+                "radiant"
+            ],
+            "conditions_inflicted": [
+                "blinded",
+                "paralyzed"
+            ],
+            "saves_forced": [
+                "str",
+                "wis",
+                "cha",
+                "dex"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "elvish"
+            ],
+            "spellcasting": [
+                "cleric"
+            ]
+        }
+    },
+    {
+        "id": "portentia-dran-ai",
+        "kind": "monster",
+        "name": "Portentia Dran",
+        "source": "AI",
+        "edition": "classic",
+        "tags": [
+            "Sneak Attack"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "monstrosity",
+            "tags": [
+                "shapechanger"
+            ]
+        },
+        "alignment": [
+            "lawful evil"
+        ],
+        "ac": [
+            {
+                "value": 17,
+                "from": [
+                    "chain shirt"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 45,
+            "formula": "6d8 + 18"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 12,
+            "dex": 18,
+            "con": 16,
+            "int": 13,
+            "wis": 12,
+            "cha": 14
+        },
+        "skills": {
+            "deception": 6,
+            "insight": 3,
+            "perception": 3
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 13,
+        "defenses": {
+            "condition_immune": {
+                "types": [
+                    "charmed"
+                ]
+            }
+        },
+        "languages": [
+            "Common",
+            "Elvish"
+        ],
+        "cr": {
+            "cr": "3",
+            "xp": 700,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 4
+        },
+        "features": [
+            {
+                "id": "sneak-attack",
+                "name": "Sneak Attack",
+                "category": "traits",
+                "text": "Portentia deals an extra 14 (4d6) damage when she hits a target with a weapon attack and has advantage on the attack roll, or when the target is within 5 feet of an ally of Portentia that isn't incapacitated and Portentia doesn't have disadvantage on the attack roll.",
+                "uses": {
+                    "max": 1,
+                    "reset": "turn"
+                },
+                "action": {
+                    "attack": {
+                        "kind": "any",
+                        "damage": [
+                            {
+                                "dice": "4d6",
+                                "type": "weapon",
+                                "condition": "when she hits a target with a weapon attack and has advantage on the attack roll, or when the target is within 5 feet of an ally of Portentia that isn't incapacitated and Portentia doesn't have disadvantage on the attack roll"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Portentia makes three melee attacks."
+            },
+            {
+                "id": "shortsword",
+                "name": "Shortsword",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 7 (1d6 + 4) slashing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 4,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "change-shape",
+                "name": "Change Shape",
+                "category": "actions",
+                "text": "Portentia magically polymorphs into a humanoid or beast that has a challenge rating equal to or less than her own, or back into her true form. Any equipment she is wearing or carrying is absorbed or borne by the new form (her choice). In a new form, Portentia retains her game statistics and ability to speak, but her AC, movement modes, Strength, Dexterity, and special senses are replaced by those of the new form, and she gains any statistics and capabilities (except class features, legendary actions, and lair actions) that the new form has but that she lacks."
+            }
+        ],
+        "items": [
+            {
+                "item": "shortsword-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "flags": {
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "slashing"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "actions": [
+                "multiattack",
+                "shapechanger"
+            ],
+            "traits": [
+                "sneak_attack"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "elvish"
+            ]
+        }
+    },
+    {
+        "id": "prophetess-dran-ai",
+        "kind": "monster",
+        "name": "Prophetess Dran",
+        "source": "AI",
+        "edition": "classic",
+        "tags": [
+            "Fey Ancestry"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "elf"
+            ]
+        },
+        "alignment": [
+            "lawful good"
+        ],
+        "ac": [
+            {
+                "value": 14,
+                "from": [
+                    "breastplate"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 27,
+            "formula": "5d8 + 5"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 14,
+            "dex": 10,
+            "con": 12,
+            "int": 13,
+            "wis": 16,
+            "cha": 13
+        },
+        "skills": {
+            "medicine": 5,
+            "persuasion": 3,
+            "religion": 5
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 13,
+        "languages": [
+            "Common",
+            "Elvish"
+        ],
+        "cr": {
+            "cr": "2",
+            "xp": 450,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "divine-eminence",
+                "name": "Divine Eminence",
+                "category": "traits",
+                "text": "As a bonus action, Prophetess can expend a spell slot to cause her melee weapon attacks to magically deal an extra 10 (3d6) radiant damage to a target on a hit. This benefit lasts until the end of the turn. If Prophetess expends a spell slot of 2nd level or higher, the extra damage increases by 1d6 for each level above 1st.",
+                "action": {
+                    "attack": {
+                        "kind": "any",
+                        "damage": [
+                            {
+                                "dice": "3d6",
+                                "type": "radiant"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "fey-ancestry",
+                "name": "Fey Ancestry",
+                "category": "traits",
+                "text": "Prophetess has advantage on saving throws against being charmed, and magic can't put her to sleep."
+            },
+            {
+                "id": "maul",
+                "name": "Maul",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 9 (2d6 + 2) bludgeoning damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 2,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "wis",
+                "dc": 13,
+                "attack": 5,
+                "text": "Prophetess is a 5th-level spellcaster. Her spellcasting ability is Wisdom (spell save DC 13, +5 to hit with spell attacks). Prophetess has the following cleric spells prepared:",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "level": 0,
+                        "spells": [
+                            {
+                                "spell": "light-phb"
+                            },
+                            {
+                                "spell": "sacred-flame-phb"
+                            },
+                            {
+                                "spell": "thaumaturgy-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 1,
+                        "slots": 4,
+                        "spells": [
+                            {
+                                "spell": "cure-wounds-phb"
+                            },
+                            {
+                                "spell": "guiding-bolt-phb"
+                            },
+                            {
+                                "spell": "sanctuary-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 2,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "lesser-restoration-phb"
+                            },
+                            {
+                                "spell": "spiritual-weapon-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 3,
+                        "slots": 2,
+                        "spells": [
+                            {
+                                "spell": "dispel-magic-phb"
+                            },
+                            {
+                                "spell": "spirit-guardians-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "maul-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "radiant",
+                "necrotic",
+                "force"
+            ],
+            "saves_forced": [
+                "dex",
+                "wis"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "traits": [
+                "fey_ancestry"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "elvish"
+            ],
+            "spellcasting": [
+                "cleric"
+            ]
+        }
+    },
+    {
+        "id": "rosie-beestinger-ai",
+        "kind": "monster",
+        "name": "Rosie Beestinger",
+        "source": "AI",
+        "edition": "classic",
+        "size": [
+            "small"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "halfling"
+            ]
+        },
+        "alignment": [
+            "chaotic good"
+        ],
+        "ac": [
+            {
+                "value": 15,
+                "from": [
+                    "Unarmored Defense"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 45,
+            "formula": "10d6 + 10"
+        },
+        "speed": {
+            "walk": 40
+        },
+        "abilities": {
+            "str": 8,
+            "dex": 16,
+            "con": 12,
+            "int": 12,
+            "wis": 14,
+            "cha": 14
+        },
+        "saves": {
+            "str": 1,
+            "dex": 5
+        },
+        "skills": {
+            "acrobatics": 5,
+            "history": 3,
+            "intimidation": 4,
+            "stealth": 5
+        },
+        "passive_perception": 12,
+        "languages": [
+            "Common",
+            "Draconic",
+            "Elvish",
+            "Halfling"
+        ],
+        "cr": {
+            "cr": "3",
+            "xp": 700,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "brave",
+                "name": "Brave",
+                "category": "traits",
+                "text": "Rosie has advantage on saving throws against being frightened."
+            },
+            {
+                "id": "halfling-nimbleness",
+                "name": "Halfling Nimbleness",
+                "category": "traits",
+                "text": "Rosie can move through the space of any creature that is of a size larger than hers."
+            },
+            {
+                "id": "evasion",
+                "name": "Evasion",
+                "category": "traits",
+                "text": "If Rosie is subjected to an effect that allows her to make a Dexterity saving throw to take only half damage, she instead takes no damage if she succeeds on the saving throw, and only half damage if she fails. She can't use this trait if she's incapacitated."
+            },
+            {
+                "id": "shadow-step",
+                "name": "Shadow Step",
+                "category": "traits",
+                "text": "When Rosie is in dim light or darkness, she can use a bonus action to teleport 60 feet to an unoccupied space she can see that is also in dim light or darkness. She then has advantage on the first melee attack she makes before the end of the turn."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Rosie makes three attacks, then makes two unarmed strike attacks."
+            },
+            {
+                "id": "staff-of-the-master-1-quarterstaff",
+                "name": "Staff of the Master (+1 Quarterstaff)",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 7 (1d6 + 4) bludgeoning damage, or 8 (1d8 + 4) bludgeoning damage if used with two hands.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 4,
+                                "type": "bludgeoning"
+                            },
+                            {
+                                "dice": "1d8",
+                                "bonus": 4,
+                                "type": "bludgeoning",
+                                "condition": "if used with two hands"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "unarmed-strike",
+                "name": "Unarmed Strike",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 6 (1d6 + 3) bludgeoning damage. Rosie's unarmed strikes are magical.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 3,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "deflect-missiles",
+                "name": "Deflect Missiles",
+                "category": "reactions",
+                "text": "In response to being hit by a ranged weapon attack, Rosie deflects the missile. The damage she takes from the attack is reduced by 1d10 + 9. If the damage is reduced to 0, she catches the missile if it's small enough to hold in one hand and she has a hand free."
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Innate Spellcasting",
+                "ability": "wis",
+                "dc": 12,
+                "text": "Rosie's innate spellcasting ability is Wisdom (spell save DC 12). She can innately cast the following spells, requiring no material components:",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "minor-illusion-phb"
+                            },
+                            {
+                                "spell": "sacred-flame-phb"
+                            },
+                            {
+                                "spell": "thaumaturgy-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "command-phb"
+                            },
+                            {
+                                "spell": "darkness-phb"
+                            },
+                            {
+                                "spell": "darkvision-phb"
+                            },
+                            {
+                                "spell": "pass-without-trace-phb"
+                            },
+                            {
+                                "spell": "silence-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "radiant"
+            ],
+            "conditions_inflicted": [
+                "deafened",
+                "prone"
+            ],
+            "saves_forced": [
+                "dex",
+                "wis"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "draconic",
+                "elvish",
+                "halfling"
+            ],
+            "spellcasting": [
+                "innate"
+            ]
+        }
+    },
+    {
+        "id": "splugoth-the-returned-ai",
+        "kind": "monster",
+        "name": "Splugoth the Returned",
+        "source": "AI",
+        "edition": "classic",
+        "size": [
+            "small"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "goblinoid"
+            ]
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "ac": [
+            {
+                "value": 15,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 27,
+            "formula": "6d6 + 6"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 10,
+            "dex": 14,
+            "con": 12,
+            "int": 14,
+            "wis": 11,
+            "cha": 10
+        },
+        "saves": {
+            "int": 4,
+            "wis": 2
+        },
+        "skills": {
+            "stealth": 6
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 10,
+        "languages": [
+            "Common",
+            "Draconic",
+            "Elvish",
+            "Goblin"
+        ],
+        "cr": {
+            "cr": "2",
+            "xp": 450,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "defensive-advantage",
+                "name": "Defensive Advantage",
+                "category": "traits",
+                "text": "As long as two or more of Splugoth's allies are within 5 feet of him and are not incapacitated, attack rolls against him are made with disadvantage."
+            },
+            {
+                "id": "nimble-escape",
+                "name": "Nimble Escape",
+                "category": "traits",
+                "text": "Splugoth can take the Disengage or Hide action as a bonus action on each of his turns."
+            },
+            {
+                "id": "touch-of-madness",
+                "name": "Touch of Madness",
+                "category": "traits",
+                "text": "Splugoth has advantage on saving throws against being charmed or frightened."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Splugoth makes two attacks with his dagger."
+            },
+            {
+                "id": "dagger",
+                "name": "Dagger",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 4 (1d4 + 2) slashing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 2,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "word-from-beyond",
+                "name": "Word From Beyond",
+                "category": "actions",
+                "text": "Splugoth remembers and repeats aloud a few words from a place he entered while walking back from the next world to this one. Each creature of his choice within 30 feet of him that can hear him must succeed on a DC 12 Wisdom saving throw or be stunned until the end of its next turn.",
+                "uses": {
+                    "max": 1,
+                    "reset": "long"
+                },
+                "action": {
+                    "save": {
+                        "ability": "wis",
+                        "dc": 12,
+                        "on_success": "none",
+                        "conditions": [
+                            "stunned"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "absorb-attack",
+                "name": "Absorb Attack",
+                "category": "reactions",
+                "text": "When a creature Splugoth can see hits him with a melee weapon attack, the weapon snags on a pocket of residual resurrectional energy and is caught fast. The attack is negated and the weapon cannot be used until the creature succeeds on a DC 12 Strength (Athletics) check as an action to pull it out of Splugoth. Natural weapons can have their attacks negated by this feature, but can then be retracted automatically at the end of the attacking creature's turn."
+            }
+        ],
+        "items": [
+            {
+                "item": "dagger-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "slashing"
+            ],
+            "conditions_inflicted": [
+                "stunned"
+            ],
+            "saves_forced": [
+                "wis"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "draconic",
+                "elvish",
+                "goblin"
+            ]
+        }
+    },
+    {
+        "id": "viari-ai",
+        "kind": "monster",
+        "name": "Viari",
+        "source": "AI",
+        "edition": "classic",
+        "tags": [
+            "Sneak Attack"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "human"
+            ]
+        },
+        "alignment": [
+            "chaotic good"
+        ],
+        "ac": [
+            {
+                "value": 18,
+                "from": [
+                    "+1 studded leather"
+                ]
+            },
+            {
+                "value": 19,
+                "condition": "while wielding two melee weapons"
+            }
+        ],
+        "hp": {
+            "average": 65,
+            "formula": "10d8 + 20"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 12,
+            "dex": 20,
+            "con": 14,
+            "int": 10,
+            "wis": 8,
+            "cha": 14
+        },
+        "saves": {
+            "dex": 8,
+            "int": 3
+        },
+        "skills": {
+            "acrobatics": 11,
+            "athletics": 7,
+            "perception": 5,
+            "performance": 5,
+            "persuasion": 5,
+            "sleight_of_hand": 11,
+            "stealth": 8
+        },
+        "passive_perception": 15,
+        "languages": [
+            "Common",
+            "Draconic",
+            "Thieves' cant"
+        ],
+        "cr": {
+            "cr": "5",
+            "xp": 1800,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 5
+        },
+        "features": [
+            {
+                "id": "evasion",
+                "name": "Evasion",
+                "category": "traits",
+                "text": "If Viari is subjected to an effect that allows him to make a Dexterity saving throw to take only half damage, he instead takes no damage if he succeeds on the saving throw, and only half damage if he fails. He can't use this trait if he's incapacitated."
+            },
+            {
+                "id": "second-story-work",
+                "name": "Second-Story Work",
+                "category": "traits",
+                "text": "Climbing does not cost Viari extra movement. Additionally, when he makes a running jump, the distance he covers increases by 5 feet."
+            },
+            {
+                "id": "sneak-attack",
+                "name": "Sneak Attack",
+                "category": "traits",
+                "text": "Viari deals an extra 14 (4d6) damage when he hits a target with a weapon attack and has advantage on the attack roll, or when the target is within 5 feet of an ally of Viari that isn't incapacitated and Viari doesn't have disadvantage on the attack roll.",
+                "uses": {
+                    "max": 1,
+                    "reset": "turn"
+                },
+                "action": {
+                    "attack": {
+                        "kind": "any",
+                        "damage": [
+                            {
+                                "dice": "4d6",
+                                "type": "weapon",
+                                "condition": "when he hits a target with a weapon attack and has advantage on the attack roll, or when the target is within 5 feet of an ally of Viari that isn't incapacitated and Viari doesn't have disadvantage on the attack roll"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Viari makes two attacks with his shortsword and two attacks with his rapier."
+            },
+            {
+                "id": "1-shortsword",
+                "name": "+1 Shortsword",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +9 to hit, reach 5 ft., one target. Hit: 9 (1d6 + 6) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 9,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 6,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "rapier",
+                "name": "Rapier",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +8 to hit, reach 5 ft., one target. Hit: 9 (1d8 + 5) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 8,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 5,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "dagger",
+                "name": "Dagger",
+                "category": "actions",
+                "text": "Melee or Ranged Weapon Attack: +8 to hit, reach 5 ft. or range 20/60 ft., one target. Hit: 7 (1d4 + 5) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft. or range 20/60 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 8,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 5,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "uncanny-dodge",
+                "name": "Uncanny Dodge",
+                "category": "reactions",
+                "text": "Viari halves the damage that he takes from an attack that hits him. He must be able to see the attacker."
+            }
+        ],
+        "items": [
+            {
+                "item": "1-shortsword-dmg",
+                "qty": 1,
+                "attacks": true
+            },
+            {
+                "item": "dagger-phb",
+                "qty": 1,
+                "attacks": true
+            },
+            {
+                "item": "rapier-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "piercing"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "sneak_attack"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack",
+                "ranged_weapon_attack",
+                "thrown_weapon"
+            ],
+            "languages": [
+                "common",
+                "draconic",
+                "thieves_cant"
+            ]
+        }
+    },
+    {
+        "id": "walnut-dankgrass-ai",
+        "kind": "monster",
+        "name": "Walnut Dankgrass",
+        "source": "AI",
+        "edition": "classic",
+        "tags": [
+            "Fey Ancestry"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "elf"
+            ]
+        },
+        "alignment": [
+            "lawful neutral"
+        ],
+        "ac": [
+            {
+                "value": 14,
+                "from": [
+                    "leather armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 52,
+            "formula": "8d8 + 16"
+        },
+        "speed": {
+            "walk": 35
+        },
+        "abilities": {
+            "str": 8,
+            "dex": 16,
+            "con": 14,
+            "int": 10,
+            "wis": 18,
+            "cha": 10
+        },
+        "saves": {
+            "int": 2,
+            "wis": 6
+        },
+        "skills": {
+            "athletics": 1,
+            "insight": 6,
+            "perception": 6,
+            "stealth": 5,
+            "survival": 6
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 16,
+        "languages": [
+            "Common",
+            "Druidic",
+            "Elvish",
+            "Sylvan"
+        ],
+        "cr": {
+            "cr": "3",
+            "xp": 700,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "fey-ancestry",
+                "name": "Fey Ancestry",
+                "category": "traits",
+                "text": "Walnut has advantage on saving throws against being charmed, and magic can't put her to sleep."
+            },
+            {
+                "id": "mask-of-the-wild",
+                "name": "Mask of the Wild",
+                "category": "traits",
+                "text": "Walnut can attempt to hide even when she is only lightly obscured by foliage, heavy rain, falling snow, mist, and other natural phenomena."
+            },
+            {
+                "id": "wild-shape",
+                "name": "Wild Shape",
+                "category": "traits",
+                "text": "As a bonus action, Walnut can assume the shape of a dire wolf. She can stay in this form for 3 hours or until she reverts to her normal form as a bonus action. She automatically reverts if she falls unconscious, drops to 0 hit points, or dies.\n\nWhile transformed, Walnut's game statistics are replaced by the statistics of the dire wolf, except she retains her alignment, personality, and Intelligence, Wisdom, and Charisma scores.\n\nHer attacks in beast form are magical. While in beast form, Walnut can use a bonus action to expend one spell slot and regain 1d8 hit points per level of the spell slot expended.",
+                "uses": {
+                    "max": 1,
+                    "reset": "short"
+                }
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Walnut makes two attacks with Foremother or her longbow."
+            },
+            {
+                "id": "foremother-1-scimitar",
+                "name": "Foremother (+1 Scimitar)",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 7 (1d6 + 4) slashing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 4,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "longbow",
+                "name": "Longbow",
+                "category": "actions",
+                "text": "Ranged Weapon Attack: +5 to hit, range 150/600 ft., one target. Hit: 7 (1d8 + 3) piercing damage.",
+                "action": {
+                    "range": "range 150/600 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 3,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "wis",
+                "dc": 14,
+                "attack": 6,
+                "text": "Walnut is a 7th-level spellcaster. Her spellcasting ability is Wisdom (spell save DC 14, +6 to hit with spell attacks). She has the following druid spells prepared:",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "level": 0,
+                        "spells": [
+                            {
+                                "spell": "druidcraft-phb"
+                            },
+                            {
+                                "spell": "produce-flame-phb"
+                            },
+                            {
+                                "spell": "thorn-whip-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 1,
+                        "slots": 4,
+                        "spells": [
+                            {
+                                "spell": "cure-wounds-phb"
+                            },
+                            {
+                                "spell": "entangle-phb"
+                            },
+                            {
+                                "spell": "thunderwave-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 2,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "flame-blade-phb"
+                            },
+                            {
+                                "spell": "moonbeam-phb"
+                            },
+                            {
+                                "spell": "pass-without-trace-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 3,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "call-lightning-phb"
+                            },
+                            {
+                                "spell": "dispel-magic-phb"
+                            },
+                            {
+                                "spell": "plant-growth-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 4,
+                        "slots": 1,
+                        "spells": [
+                            {
+                                "spell": "blight-phb"
+                            },
+                            {
+                                "spell": "freedom-of-movement-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "longbow-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "piercing",
+                "slashing",
+                "fire",
+                "lightning",
+                "necrotic",
+                "radiant",
+                "thunder"
+            ],
+            "conditions_inflicted": [
+                "restrained"
+            ],
+            "saves_forced": [
+                "con",
+                "dex",
+                "str"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "fey_ancestry"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack",
+                "ranged_weapon",
+                "ranged_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "druidic",
+                "elvish",
+                "sylvan"
+            ],
+            "spellcasting": [
+                "druid"
+            ]
+        }
+    }
+]

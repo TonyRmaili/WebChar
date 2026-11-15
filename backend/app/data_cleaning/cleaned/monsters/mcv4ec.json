@@ -1,0 +1,4889 @@
+[
+    {
+        "id": "archon-of-boundaries-mcv4ec",
+        "kind": "monster",
+        "name": "Archon of Boundaries",
+        "source": "MCV4EC",
+        "edition": "classic",
+        "tags": [
+            "Legendary Resistances",
+            "Magic Resistance"
+        ],
+        "size": [
+            "huge"
+        ],
+        "creature_type": {
+            "type": "celestial"
+        },
+        "alignment": [
+            "lawful good"
+        ],
+        "alignment_prefix": "typically",
+        "ac": [
+            {
+                "value": 17,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 195,
+            "formula": "17d12 + 85"
+        },
+        "speed": {
+            "walk": 60,
+            "fly": 90
+        },
+        "abilities": {
+            "str": 23,
+            "dex": 17,
+            "con": 20,
+            "int": 14,
+            "wis": 18,
+            "cha": 18
+        },
+        "saves": {
+            "con": 10,
+            "wis": 9
+        },
+        "skills": {
+            "insight": 9,
+            "perception": 9
+        },
+        "senses": {
+            "darkvision": 120
+        },
+        "passive_perception": 19,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "radiant"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "exhaustion"
+                ]
+            }
+        },
+        "languages": [
+            "understands Common and Celestial but can't speak"
+        ],
+        "cr": {
+            "cr": "15",
+            "xp": 13000,
+            "pb": 5
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "legendary-resistance",
+                "name": "Legendary Resistance",
+                "category": "traits",
+                "text": "If the archon fails a saving throw, it can choose to succeed instead.",
+                "uses": {
+                    "max": 3,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The archon has advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The archon makes one Hooves attack and one Radiant Lance attack."
+            },
+            {
+                "id": "hooves",
+                "name": "Hooves",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +11 to hit, reach 5 ft., one target. Hit: 20 (4d6 + 6) bludgeoning damage plus 10 (3d6) radiant damage. If the target is a Medium or smaller creature, it must succeed on a DC 19 Strength saving throw or have the prone condition.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 11,
+                        "damage": [
+                            {
+                                "dice": "4d6",
+                                "bonus": 6,
+                                "type": "bludgeoning"
+                            },
+                            {
+                                "dice": "3d6",
+                                "type": "radiant"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "str",
+                        "dc": 19,
+                        "on_success": "none",
+                        "conditions": [
+                            "prone"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "radiant-lance",
+                "name": "Radiant Lance",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +11 to hit, reach 10 ft., one target. Hit: 12 (1d12 + 6) piercing damage plus 28 (8d6) radiant damage, and the target is marked until the start of the archon's next turn. While it is marked, the target has disadvantage on attack rolls against creatures other than the archon.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 11,
+                        "damage": [
+                            {
+                                "dice": "1d12",
+                                "bonus": 6,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "8d6",
+                                "type": "radiant"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "archons-pursuit",
+                "name": "Archon's Pursuit",
+                "category": "reactions",
+                "text": "When a creature marked by the archon's Radiant Lance ends its turn within 120 feet of the archon, the archon teleports to an unoccupied space it can see within 5 feet of the creature."
+            },
+            {
+                "id": "haunting-radiance",
+                "name": "Haunting Radiance",
+                "category": "reactions",
+                "text": "Immediately after a creature within 120 feet of the archon forces it to make a saving throw, the archon responds with a burst of light. The creature must succeed on a DC 17 Constitution saving throw or have the blinded condition until the end of the creature's next turn.",
+                "action": {
+                    "save": {
+                        "ability": "con",
+                        "dc": 17,
+                        "on_success": "none",
+                        "conditions": [
+                            "blinded"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "parry",
+                "name": "Parry",
+                "category": "reactions",
+                "text": "The archon adds 5 to its AC against one melee attack that would hit it, provided it can see the attacker."
+            }
+        ],
+        "section_notes": {
+            "reactions": "The archon can take up to three reactions per round but only one per turn."
+        },
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "cha",
+                "text": "The archon casts one of the following spells, using Charisma as the spellcasting ability:",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "daylight-phb"
+                            },
+                            {
+                                "spell": "lesser-restoration-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "piercing",
+                "radiant"
+            ],
+            "saves_forced": [
+                "con",
+                "str"
+            ],
+            "senses": [
+                "superior_darkvision"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "actions": [
+                "multiattack",
+                "parry"
+            ],
+            "traits": [
+                "legendary_resistances",
+                "magic_resistance"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack",
+                "reach"
+            ],
+            "languages": [
+                "common",
+                "celestial",
+                "cant_speak"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "beanstalk-wurm-mcv4ec",
+        "kind": "monster",
+        "name": "Beanstalk Wurm",
+        "source": "MCV4EC",
+        "edition": "classic",
+        "tags": [
+            "False Appearance",
+            "Legendary Resistances",
+            "Regeneration"
+        ],
+        "size": [
+            "gargantuan"
+        ],
+        "creature_type": {
+            "type": "monstrosity"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 16,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 231,
+            "formula": "14d20 + 84"
+        },
+        "speed": {
+            "walk": 50,
+            "climb": 50
+        },
+        "abilities": {
+            "str": 27,
+            "dex": 18,
+            "con": 22,
+            "int": 4,
+            "wis": 14,
+            "cha": 10
+        },
+        "saves": {
+            "str": 14,
+            "con": 12
+        },
+        "passive_perception": 12,
+        "cr": {
+            "cr": "18",
+            "xp": 20000,
+            "pb": 6
+        },
+        "initiative": {
+            "bonus": 4
+        },
+        "features": [
+            {
+                "id": "false-appearance",
+                "name": "False Appearance",
+                "category": "traits",
+                "text": "If the wurm is motionless at the start of combat, it has advantage on its initiative roll. Moreover, if a creature hasn't observed the wurm move or act, that creature must succeed on a DC 18 Intelligence (Investigation) check to discern that the wurm is animate."
+            },
+            {
+                "id": "leafy-handholds",
+                "name": "Leafy Handholds",
+                "category": "traits",
+                "text": "Creatures have advantage on ability checks made to climb the wurm."
+            },
+            {
+                "id": "legendary-resistance",
+                "name": "Legendary Resistance",
+                "category": "traits",
+                "text": "If the wurm fails a saving throw, it can choose to succeed instead.",
+                "uses": {
+                    "max": 3,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "regeneration",
+                "name": "Regeneration",
+                "category": "traits",
+                "text": "The wurm regains 20 hit points at the start of its turn if it has at least 1 hit point. If the wurm takes fire or lightning damage, this trait doesn't function at the start of the wurm's next turn."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The wurm makes two Bite attacks."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +14 to hit, reach 15 ft., one target. Hit: 30 (5d8 + 8) piercing damage. If the target is a Large or smaller creature, it must succeed on a DC 22 Dexterity saving throw or be swallowed by the wurm. A swallowed creature has the restrained condition, has total cover against attacks and other effects outside the wurm, and takes 28 (8d6) piercing damage at the start of each of the wurm's turns from thorns in the wurm's gullet.\n\nThe wurm's stomach can hold up to two creatures at a time. If the wurm takes 30 damage or more on a single turn from a creature inside it, the wurm must succeed on a DC 22 Constitution saving throw at the end of that turn or regurgitate all swallowed creatures, each of which falls in a space within 10 feet of the wurm and has the prone condition. If the wurm dies, a swallowed creature no longer has the restrained condition and can escape from the corpse by using 10 feet of movement, exiting with the prone condition.",
+                "action": {
+                    "range": "reach 15 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 14,
+                        "damage": [
+                            {
+                                "dice": "5d8",
+                                "bonus": 8,
+                                "type": "piercing"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "dex",
+                        "dc": 22,
+                        "on_success": "none",
+                        "damage": [
+                            {
+                                "dice": "8d6",
+                                "type": "piercing"
+                            }
+                        ],
+                        "conditions": [
+                            "prone",
+                            "restrained"
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing"
+            ],
+            "saves_forced": [
+                "con",
+                "dex"
+            ],
+            "movement": [
+                "climb"
+            ],
+            "actions": [
+                "multiattack",
+                "swallow"
+            ],
+            "traits": [
+                "false_appearance",
+                "legendary_resistances",
+                "regeneration"
+            ],
+            "misc": [
+                "melee_weapon_attack",
+                "reach"
+            ]
+        }
+    },
+    {
+        "id": "deathless-rider-mcv4ec",
+        "kind": "monster",
+        "name": "Deathless Rider",
+        "source": "MCV4EC",
+        "edition": "classic",
+        "tags": [
+            "Undead Fortitude"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "undead"
+        },
+        "alignment": [
+            "lawful evil"
+        ],
+        "alignment_prefix": "typically",
+        "ac": [
+            {
+                "value": 18,
+                "from": [
+                    "chain mail",
+                    "shield"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 84,
+            "formula": "13d8 + 26"
+        },
+        "speed": {
+            "walk": 20
+        },
+        "abilities": {
+            "str": 18,
+            "dex": 10,
+            "con": 14,
+            "int": 6,
+            "wis": 6,
+            "cha": 5
+        },
+        "saves": {
+            "str": 7,
+            "con": 5
+        },
+        "skills": {
+            "athletics": 7,
+            "perception": 1
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 11,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "necrotic"
+                ]
+            },
+            "immune": {
+                "types": [
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "exhaustion",
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "understands the languages it knew in life but can't speak"
+        ],
+        "cr": {
+            "cr": "5",
+            "xp": 1800,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "mounted-adept",
+                "name": "Mounted Adept",
+                "category": "traits",
+                "text": "While mounted and without the incapacitated condition, the rider has advantage on melee attack rolls against any unmounted creature smaller than its mount, the rider and its mount have advantage on Dexterity saving throws, and the rider can force an attack targeted at its mount to target the rider instead."
+            },
+            {
+                "id": "undead-fortitude",
+                "name": "Undead Fortitude",
+                "category": "traits",
+                "text": "If damage reduces the rider to 0 hit points, it must make a Constitution saving throw with a DC equal to 5 + the damage taken, unless the damage is radiant or from a critical hit. On a success, the rider drops to 1 hit point instead."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The rider makes two Axe attacks. It can replace one of these attacks with Fell Glare."
+            },
+            {
+                "id": "axe",
+                "name": "Axe",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 13 (2d8 + 4) slashing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "2d8",
+                                "bonus": 4,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "fell-glare",
+                "name": "Fell Glare",
+                "category": "actions",
+                "text": "The rider gazes at a creature within 30 feet of itself. The creature must succeed on a DC 13 Wisdom saving throw or have the frightened condition for 1 minute. The frightened creature can repeat the saving throw at the end of each of its turns, with disadvantage if it can see the rider, ending the condition on itself on a success.",
+                "action": {
+                    "save": {
+                        "ability": "wis",
+                        "dc": 13,
+                        "on_success": "none",
+                        "conditions": [
+                            "frightened"
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "slashing"
+            ],
+            "conditions_inflicted": [
+                "frightened"
+            ],
+            "saves_forced": [
+                "wis"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "undead_fortitude"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "cant_speak",
+                "known_in_life"
+            ]
+        }
+    },
+    {
+        "id": "dunbarrow-witch-mcv4ec",
+        "kind": "monster",
+        "name": "Dunbarrow Witch",
+        "source": "MCV4EC",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "human"
+            ]
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "alignment_prefix": "typically",
+        "ac": [
+            {
+                "value": 12
+            },
+            {
+                "value": 15,
+                "condition": "with Mage Armor"
+            }
+        ],
+        "hp": {
+            "average": 72,
+            "formula": "16d8"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 12,
+            "dex": 14,
+            "con": 11,
+            "int": 16,
+            "wis": 15,
+            "cha": 20
+        },
+        "saves": {
+            "wis": 5,
+            "cha": 8
+        },
+        "skills": {
+            "arcana": 6,
+            "nature": 6
+        },
+        "passive_perception": 12,
+        "languages": [
+            "Common",
+            "Sylvan",
+            "and any one language"
+        ],
+        "cr": {
+            "cr": "5",
+            "xp": 1800,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The witch makes two Poison Dagger attacks. It can replace one of these attacks with Spellcasting."
+            },
+            {
+                "id": "poison-dagger",
+                "name": "Poison Dagger",
+                "category": "actions",
+                "text": "Melee or Ranged Weapon Attack: +5 to hit, reach 5 ft. or range 20/60 ft., one target. Hit: 4 (1d4 + 2) piercing damage plus 21 (6d6) poison damage.",
+                "action": {
+                    "range": "reach 5 ft. or range 20/60 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 2,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "6d6",
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "polymorph-concoction",
+                "name": "Polymorph Concoction",
+                "category": "actions",
+                "text": "The witch hurls a bottle of liquid at a point up to 20 feet away from itself, which shatters into a cloud of magical smoke that fills a 10-foot-radius sphere. Each creature in that area must succeed on a DC 16 Wisdom saving throw or transform into a creature, as if under the effects of a Polymorph spell, transforming into one of the following forms (roll a d4): 1, bat; 2, frog; 3, lizard; or 4, rat. This transformation lasts for 1 hour or until the creature drops to 0 hit points in its new form.",
+                "uses": {
+                    "max": 1,
+                    "reset": "long"
+                },
+                "action": {
+                    "area": "10-foot sphere",
+                    "save": {
+                        "ability": "wis",
+                        "dc": 16,
+                        "on_success": "none"
+                    }
+                }
+            },
+            {
+                "id": "shattered-shards",
+                "name": "Shattered Shards",
+                "category": "actions",
+                "text": "The witch targets a point it can see within 30 feet of itself. The air there magically solidifies into a mirrorlike pane, then shatters in a 15-foot cone originating from that point. Each creature in that area must make a DC 16 Dexterity saving throw, taking 25 (10d4) force damage on a failed save, or half as much damage on a successful one.",
+                "action": {
+                    "area": "15-foot cone",
+                    "save": {
+                        "ability": "dex",
+                        "dc": 16,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "10d4",
+                                "type": "force"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "cha",
+                "dc": 16,
+                "text": "The witch casts one of the following spells, using Charisma as the spellcasting ability (spell save DC 16):",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "mage-armor-phb",
+                                "note": "(self only)"
+                            },
+                            {
+                                "spell": "prestidigitation-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 2,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "animal-messenger-phb"
+                            },
+                            {
+                                "spell": "charm-person-phb"
+                            },
+                            {
+                                "spell": "tashas-hideous-laughter-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "bestow-curse-phb"
+                            },
+                            {
+                                "spell": "dispel-magic-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "poison",
+                "force",
+                "piercing",
+                "necrotic"
+            ],
+            "conditions_inflicted": [
+                "charmed",
+                "incapacitated",
+                "prone"
+            ],
+            "saves_forced": [
+                "dex",
+                "wis"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_weapon",
+                "melee_weapon_attack",
+                "ranged_weapon_attack",
+                "thrown_weapon"
+            ],
+            "languages": [
+                "common",
+                "sylvan",
+                "any_choose"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "faerie-borrower-mcv4ec",
+        "kind": "monster",
+        "name": "Faerie Borrower",
+        "source": "MCV4EC",
+        "edition": "classic",
+        "tags": [
+            "Flyby"
+        ],
+        "size": [
+            "tiny"
+        ],
+        "creature_type": {
+            "type": "fey"
+        },
+        "alignment": [
+            "chaotic neutral"
+        ],
+        "alignment_prefix": "typically",
+        "ac": [
+            {
+                "value": 15
+            }
+        ],
+        "hp": {
+            "average": 12,
+            "formula": "5d4"
+        },
+        "speed": {
+            "walk": 10,
+            "fly": 30
+        },
+        "abilities": {
+            "str": 2,
+            "dex": 20,
+            "con": 10,
+            "int": 13,
+            "wis": 12,
+            "cha": 16
+        },
+        "skills": {
+            "sleight_of_hand": 7,
+            "stealth": 7
+        },
+        "passive_perception": 11,
+        "languages": [
+            "Common",
+            "Sylvan"
+        ],
+        "cr": {
+            "cr": "1/2",
+            "xp": 100,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 5
+        },
+        "features": [
+            {
+                "id": "flyby",
+                "name": "Flyby",
+                "category": "traits",
+                "text": "The faerie doesn't provoke opportunity attacks when it flies out of an enemy's reach."
+            },
+            {
+                "id": "needle-blade",
+                "name": "Needle Blade",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 7 (1d4 + 5) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 5,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "magic-mockery",
+                "name": "Magic Mockery",
+                "category": "actions",
+                "text": "The faerie hurls magical taunts at one creature it can see within 60 feet of itself. The creature must succeed on a DC 13 Wisdom saving throw or take 3 (1d6) psychic damage and have disadvantage on attack rolls and ability checks until the start of the faerie's next turn.",
+                "action": {
+                    "save": {
+                        "ability": "wis",
+                        "dc": 13,
+                        "on_success": "none",
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "type": "psychic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "tricksy-parry",
+                "name": "Tricksy Parry",
+                "category": "reactions",
+                "text": "Immediately after taking damage, the faerie reduces the damage taken by 2 (1d4)."
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "cha",
+                "dc": 13,
+                "text": "The faerie casts one of the following spells, requiring no material components and using Charisma as the spellcasting ability (spell save DC 13):",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "prestidigitation-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "spells": [
+                            {
+                                "spell": "silent-image-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing",
+                "psychic"
+            ],
+            "saves_forced": [
+                "wis"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "traits": [
+                "flyby"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "sylvan"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "faerie-pathlighter-mcv4ec",
+        "kind": "monster",
+        "name": "Faerie Pathlighter",
+        "source": "MCV4EC",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "fey"
+        },
+        "alignment": [
+            "chaotic good"
+        ],
+        "alignment_prefix": "typically",
+        "ac": [
+            {
+                "value": 12
+            }
+        ],
+        "hp": {
+            "average": 38,
+            "formula": "7d8 + 7"
+        },
+        "speed": {
+            "walk": 30,
+            "fly": 30,
+            "hover": true
+        },
+        "abilities": {
+            "str": 10,
+            "dex": 14,
+            "con": 12,
+            "int": 13,
+            "wis": 17,
+            "cha": 18
+        },
+        "skills": {
+            "insight": 5,
+            "perception": 5,
+            "survival": 5
+        },
+        "passive_perception": 15,
+        "languages": [
+            "Common",
+            "Sylvan"
+        ],
+        "cr": {
+            "cr": "2",
+            "xp": 450,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "faerie-illumination",
+                "name": "Faerie Illumination",
+                "category": "traits",
+                "text": "The faerie sheds dim light in a 15-foot radius."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The faerie makes two Shining Strike attacks."
+            },
+            {
+                "id": "shining-strike",
+                "name": "Shining Strike",
+                "category": "actions",
+                "text": "Melee or Ranged Spell Attack: +6 to hit, reach 5 ft. or range 30 ft., one target. Hit: 7 (2d6) radiant damage, and if the target is a creature, it must succeed on a DC 14 Dexterity saving throw or be wreathed in light until the end of the faerie's next turn. While a creature is wreathed in light, attack rolls against the creature have advantage, and the creature can't benefit from the invisible condition.",
+                "action": {
+                    "range": "reach 5 ft. or range 30 ft.",
+                    "attack": {
+                        "kind": "spell",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "type": "radiant"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "dex",
+                        "dc": 14,
+                        "on_success": "none",
+                        "conditions": [
+                            "invisible"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "guiding-light",
+                "name": "Guiding Light",
+                "category": "bonus_actions",
+                "text": "The faerie summons a 30-foot-radius sphere of magical light centered on itself, which lasts for 1 minute or until the faerie has the incapacitated condition. Each creature of the faerie's choice (other than the faerie) that starts its turn in that area gains 5 temporary hit points and has advantage on Wisdom saving throws and Wisdom checks until the start of its next turn.\n\nThe sphere is bright light, sheds dim light for an additional 30 feet, and moves with the faerie. If any of the sphere's area overlaps with an area of darkness created by a spell of 3rd level or lower, the spell that created the darkness is dispelled.",
+                "uses": {
+                    "max": 2,
+                    "reset": "long"
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "cha",
+                "text": "The faerie casts one of the following spells, requiring no material components and using Charisma as the spellcasting ability:",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "dancing-lights-phb"
+                            },
+                            {
+                                "spell": "detect-magic-phb"
+                            },
+                            {
+                                "spell": "prestidigitation-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "spells": [
+                            {
+                                "spell": "locate-creature-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "radiant"
+            ],
+            "saves_forced": [
+                "dex"
+            ],
+            "movement": [
+                "fly",
+                "hover"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "area_of_effect"
+            ],
+            "languages": [
+                "common",
+                "sylvan"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "faerie-pest-mcv4ec",
+        "kind": "monster",
+        "name": "Faerie Pest",
+        "source": "MCV4EC",
+        "edition": "classic",
+        "size": [
+            "small"
+        ],
+        "creature_type": {
+            "type": "fey"
+        },
+        "alignment": [
+            "chaotic evil"
+        ],
+        "alignment_prefix": "typically",
+        "ac": [
+            {
+                "value": 14,
+                "from": [
+                    "leather armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 22,
+            "formula": "5d6 + 5"
+        },
+        "speed": {
+            "walk": 30,
+            "fly": 30
+        },
+        "abilities": {
+            "str": 8,
+            "dex": 16,
+            "con": 12,
+            "int": 10,
+            "wis": 12,
+            "cha": 14
+        },
+        "skills": {
+            "perception": 3,
+            "stealth": 7
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 13,
+        "languages": [
+            "Common",
+            "Sylvan"
+        ],
+        "cr": {
+            "cr": "1",
+            "xp": 200,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "stingblade",
+                "name": "Stingblade",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 6 (1d6 + 3) slashing damage plus 5 (2d4) poison damage. If the faerie had advantage on the attack roll, the target takes an additional 3 (1d6) slashing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 3,
+                                "type": "slashing"
+                            },
+                            {
+                                "dice": "2d4",
+                                "type": "poison"
+                            },
+                            {
+                                "dice": "1d6",
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "theft-of-nerves",
+                "name": "Theft of Nerves",
+                "category": "actions",
+                "text": "The faerie unleashes a burst of mind-muddling magic in a 15-foot cone. Each creature in that area must succeed on a DC 12 Intelligence saving throw or have the frightened condition for 1 minute. A frightened creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.",
+                "uses": {
+                    "max": 1,
+                    "reset": "long"
+                },
+                "action": {
+                    "area": "15-foot cone",
+                    "save": {
+                        "ability": "int",
+                        "dc": 12,
+                        "on_success": "none",
+                        "conditions": [
+                            "frightened"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "mischievous-stealth",
+                "name": "Mischievous Stealth",
+                "category": "bonus_actions",
+                "text": "The faerie takes the Hide action."
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "cha",
+                "dc": 12,
+                "text": "The faerie casts one of the following spells, requiring no material components and using Charisma as the spellcasting ability (spell save DC 12):",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "spells": [
+                            {
+                                "spell": "blindness-deafness-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 2,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "bane-phb"
+                            },
+                            {
+                                "spell": "grease-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "poison",
+                "slashing"
+            ],
+            "conditions_inflicted": [
+                "blinded",
+                "deafened",
+                "prone"
+            ],
+            "saves_forced": [
+                "int",
+                "cha",
+                "con",
+                "dex"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "sylvan"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "gingerbrute-mcv4ec",
+        "kind": "monster",
+        "name": "Gingerbrute",
+        "source": "MCV4EC",
+        "edition": "classic",
+        "size": [
+            "tiny"
+        ],
+        "creature_type": {
+            "type": "construct"
+        },
+        "alignment": [
+            "chaotic neutral"
+        ],
+        "alignment_prefix": "typically",
+        "ac": [
+            {
+                "value": 14
+            }
+        ],
+        "hp": {
+            "average": 18,
+            "formula": "4d4 + 8"
+        },
+        "speed": {
+            "walk": 60
+        },
+        "abilities": {
+            "str": 13,
+            "dex": 18,
+            "con": 14,
+            "int": 7,
+            "wis": 10,
+            "cha": 12
+        },
+        "skills": {
+            "acrobatics": 6,
+            "athletics": 3
+        },
+        "passive_perception": 10,
+        "defenses": {
+            "vulnerable": {
+                "types": [
+                    "bludgeoning"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "exhaustion"
+                ]
+            }
+        },
+        "languages": [
+            "one language of its creator"
+        ],
+        "cr": {
+            "cr": "1/2",
+            "xp": 100,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 4
+        },
+        "features": [
+            {
+                "id": "cant-catch-me",
+                "name": "Can't Catch Me",
+                "category": "traits",
+                "text": "The gingerbrute has advantage on any ability checks or saving throws it makes to avoid or end the grappled or the restrained condition on itself."
+            },
+            {
+                "id": "sweet-victory",
+                "name": "Sweet Victory",
+                "category": "traits",
+                "text": "Once the gingerbrute is destroyed, a creature can use its action to eat all the remains and gain 5 temporary hit points. The remains crumble away after 24 hours if not eaten."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The gingerbrute makes two Fork attacks, two Gumdrop Slingshot attacks, or one of each."
+            },
+            {
+                "id": "fork",
+                "name": "Fork",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 6 (1d4 + 4) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 4,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "gumdrop-slingshot",
+                "name": "Gumdrop Slingshot",
+                "category": "actions",
+                "text": "Ranged Weapon Attack: +6 to hit, range 30/120 ft., one target. Hit: 6 (1d4 + 4) bludgeoning damage.",
+                "action": {
+                    "range": "range 30/120 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 4,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "piercing"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "melee_weapon_attack",
+                "ranged_weapon_attack"
+            ]
+        }
+    },
+    {
+        "id": "goose-mother-mcv4ec",
+        "kind": "monster",
+        "name": "Goose Mother",
+        "source": "MCV4EC",
+        "edition": "classic",
+        "tags": [
+            "Legendary Resistances"
+        ],
+        "size": [
+            "huge"
+        ],
+        "creature_type": {
+            "type": "fey"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 12
+            }
+        ],
+        "hp": {
+            "average": 114,
+            "formula": "12d12 + 36"
+        },
+        "speed": {
+            "walk": 40,
+            "fly": 40
+        },
+        "abilities": {
+            "str": 17,
+            "dex": 15,
+            "con": 17,
+            "int": 12,
+            "wis": 18,
+            "cha": 15
+        },
+        "saves": {
+            "str": 6,
+            "int": 4
+        },
+        "skills": {
+            "insight": 7,
+            "investigation": 4,
+            "perception": 10
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 20,
+        "defenses": {
+            "condition_immune": {
+                "types": [
+                    "blinded",
+                    "charmed",
+                    "deafened",
+                    "frightened",
+                    "stunned",
+                    "unconscious"
+                ]
+            }
+        },
+        "cr": {
+            "cr": "7",
+            "xp": 2900,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "legendary-resistance",
+                "name": "Legendary Resistance",
+                "category": "traits",
+                "text": "If the Goose Mother fails a saving throw, it can choose to succeed instead.",
+                "uses": {
+                    "max": 3,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "multiple-heads",
+                "name": "Multiple Heads",
+                "category": "traits",
+                "text": "The Goose Mother has five heads. Whenever the Goose Mother takes 25 or more damage in a single turn, one of its heads dies. If all its heads die, the Goose Mother dies.\n\nAt the end of its turn, the Goose Mother grows two heads for each of its heads that died since its last turn, unless it has taken poison damage since its last turn. The Goose Mother regains 10 hit points for each head when it regrows."
+            },
+            {
+                "id": "reactive-heads",
+                "name": "Reactive Heads",
+                "category": "traits",
+                "text": "For each head the Goose Mother has beyond one, it gets an extra reaction that can be used only for opportunity attacks."
+            },
+            {
+                "id": "wakeful",
+                "name": "Wakeful",
+                "category": "traits",
+                "text": "While the Goose Mother sleeps, at least one of its heads is awake."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The Goose Mother makes as many Beak attacks as it has heads and one Wing attack."
+            },
+            {
+                "id": "beak",
+                "name": "Beak",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +6 to hit, reach 10 ft., one target. Hit: 6 (1d6 + 3) bludgeoning damage.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 3,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "wing",
+                "name": "Wing",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +6 to hit, reach 10 ft., one target. Hit: 9 (1d12 + 3) bludgeoning damage. If the target is a Large or smaller creature, it must succeed on a DC 15 Strength saving throw or have the prone condition.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "1d12",
+                                "bonus": 3,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "str",
+                        "dc": 15,
+                        "on_success": "none",
+                        "conditions": [
+                            "prone"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "lullaby-of-honks",
+                "name": "Lullaby of Honks",
+                "category": "actions",
+                "text": "The Goose Mother's heads honk a discordant lullaby. Each creature of the Goose Mother's choice within 10 feet of it must make a DC 15 Constitution saving throw. On a failed save, a creature takes 7 (2d6) thunder damage and falls into a magical slumber. On a successful save, the target takes half as much damage only. The honks can be heard up to 300 feet away.\n\nA creature under magical slumber has the unconscious condition for 8 hours. This effect ends early for a creature if it takes damage or another creature uses an action to shake it awake.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "save": {
+                        "ability": "con",
+                        "dc": 15,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "type": "thunder"
+                            }
+                        ],
+                        "conditions": [
+                            "unconscious"
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "thunder"
+            ],
+            "saves_forced": [
+                "con",
+                "str"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "legendary_resistances"
+            ],
+            "misc": [
+                "melee_weapon_attack",
+                "reach"
+            ]
+        }
+    },
+    {
+        "id": "high-fae-impostor-mcv4ec",
+        "kind": "monster",
+        "name": "High Fae Impostor",
+        "source": "MCV4EC",
+        "edition": "classic",
+        "tags": [
+            "Magic Resistance"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "fey"
+        },
+        "alignment": [
+            "any alignment"
+        ],
+        "ac": [
+            {
+                "value": 15
+            }
+        ],
+        "hp": {
+            "average": 149,
+            "formula": "23d8 + 46"
+        },
+        "speed": {
+            "walk": 30,
+            "fly": 30,
+            "hover": true
+        },
+        "abilities": {
+            "str": 13,
+            "dex": 21,
+            "con": 15,
+            "int": 18,
+            "wis": 16,
+            "cha": 23
+        },
+        "saves": {
+            "dex": 9,
+            "wis": 7
+        },
+        "skills": {
+            "deception": 14,
+            "performance": 10,
+            "stealth": 13
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 13,
+        "defenses": {
+            "resist": {
+                "conditional": [
+                    {
+                        "types": [
+                            "bludgeoning",
+                            "piercing",
+                            "slashing"
+                        ],
+                        "note": "from nonmagical attacks"
+                    }
+                ]
+            }
+        },
+        "languages": [
+            "Common",
+            "Sylvan"
+        ],
+        "cr": {
+            "cr": "11",
+            "xp": 7200,
+            "pb": 4
+        },
+        "initiative": {
+            "bonus": 5
+        },
+        "features": [
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The high fae has advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The high fae makes two Fae Blade attacks and uses Vexing Prank once."
+            },
+            {
+                "id": "fae-blade",
+                "name": "Fae Blade",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +9 to hit, reach 5 ft., one target. Hit: 18 (3d8 + 5) force damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 9,
+                        "damage": [
+                            {
+                                "dice": "3d8",
+                                "bonus": 5,
+                                "type": "force"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "vexing-prank",
+                "name": "Vexing Prank",
+                "category": "actions",
+                "text": "The high fae targets one creature it can see within 60 feet of itself with a magical trick. The target must make a DC 18 Wisdom saving throw. On a failed save, the target takes 21 (6d6) psychic damage and has the frightened condition until the start of the high fae's next turn. On a successful save, the target takes half as much damage only.",
+                "action": {
+                    "save": {
+                        "ability": "wis",
+                        "dc": 18,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "6d6",
+                                "type": "psychic"
+                            }
+                        ],
+                        "conditions": [
+                            "frightened"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "loot-likeness",
+                "name": "Loot Likeness",
+                "category": "bonus_actions",
+                "text": "The high fae magically transforms into a duplicate of a Small or Medium creature it can see. While transformed, the high fae retains its game statistics (other than its size) but gains access to enough general information about the imitated creature, such as background and personality, to reasonably pass itself off as the creature. This transformation ends if the high fae is reduced to 0 hit points, uses this bonus action again, or uses a bonus action to revert to its true form."
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "cha",
+                "dc": 18,
+                "text": "The high fae casts one of the following spells, requiring no material components and using Charisma as the spellcasting ability (spell save DC 18):",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "friends-phb"
+                            },
+                            {
+                                "spell": "minor-illusion-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "enthrall-phb"
+                            },
+                            {
+                                "spell": "nystuls-magic-aura-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "force",
+                "psychic"
+            ],
+            "conditions_inflicted": [
+                "frightened"
+            ],
+            "saves_forced": [
+                "wis"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "movement": [
+                "fly",
+                "hover"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "magic_resistance"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "sylvan"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "high-fae-kindguard-mcv4ec",
+        "kind": "monster",
+        "name": "High Fae Kindguard",
+        "source": "MCV4EC",
+        "edition": "classic",
+        "tags": [
+            "Magic Resistance"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "fey"
+        },
+        "alignment": [
+            "any alignment"
+        ],
+        "ac": [
+            {
+                "value": 17,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 156,
+            "formula": "24d8 + 48"
+        },
+        "speed": {
+            "walk": 40,
+            "fly": 60,
+            "hover": true
+        },
+        "abilities": {
+            "str": 22,
+            "dex": 23,
+            "con": 15,
+            "int": 14,
+            "wis": 17,
+            "cha": 13
+        },
+        "saves": {
+            "str": 10,
+            "dex": 10
+        },
+        "skills": {
+            "acrobatics": 10,
+            "athletics": 10,
+            "perception": 7
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 17,
+        "defenses": {
+            "resist": {
+                "conditional": [
+                    {
+                        "types": [
+                            "bludgeoning",
+                            "piercing",
+                            "slashing"
+                        ],
+                        "note": "from nonmagical attacks"
+                    }
+                ]
+            }
+        },
+        "languages": [
+            "Common",
+            "Sylvan"
+        ],
+        "cr": {
+            "cr": "12",
+            "xp": 8400,
+            "pb": 4
+        },
+        "initiative": {
+            "bonus": 6
+        },
+        "features": [
+            {
+                "id": "evasion",
+                "name": "Evasion",
+                "category": "traits",
+                "text": "If the high fae is subjected to an effect that allows it to make a Dexterity saving throw to take only half damage, it instead takes no damage if it succeeds on the saving throw and only half damage if it fails, provided it doesn't have the incapacitated condition."
+            },
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The high fae has advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The high fae makes two Fae Claymore attacks and uses Tripping Feint."
+            },
+            {
+                "id": "fae-claymore",
+                "name": "Fae Claymore",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +10 to hit, reach 10 ft., one target. Hit: 20 (4d6 + 6) force damage, and the target's speed is reduced by 10 feet, to a minimum speed of 5 feet. The reduction lasts until the start of the high fae's next turn.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 10,
+                        "damage": [
+                            {
+                                "dice": "4d6",
+                                "bonus": 6,
+                                "type": "force"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "tripping-feint",
+                "name": "Tripping Feint",
+                "category": "actions",
+                "text": "The high fae targets one Large or smaller creature it can see within 10 feet of itself. The target must succeed on a DC 18 Dexterity saving throw or have the prone condition.",
+                "action": {
+                    "save": {
+                        "ability": "dex",
+                        "dc": 18,
+                        "on_success": "none",
+                        "conditions": [
+                            "prone"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "darting-flight",
+                "name": "Darting Flight",
+                "category": "bonus_actions",
+                "text": "The high fae moves up to its speed. This movement doesn't provoke opportunity attacks."
+            },
+            {
+                "id": "parry-and-riposte",
+                "name": "Parry and Riposte",
+                "category": "reactions",
+                "text": "The high fae adds 4 to its AC against one melee attack roll that would hit it, provided it can see the attacker. After the attack hits or misses, the high fae then makes one Fae Claymore attack against the attacker."
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "force"
+            ],
+            "conditions_inflicted": [
+                "prone"
+            ],
+            "saves_forced": [
+                "dex"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "movement": [
+                "fly",
+                "hover"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "magic_resistance"
+            ],
+            "misc": [
+                "melee_weapon_attack",
+                "reach"
+            ],
+            "languages": [
+                "common",
+                "sylvan"
+            ]
+        }
+    },
+    {
+        "id": "high-fae-mage-mcv4ec",
+        "kind": "monster",
+        "name": "High Fae Mage",
+        "source": "MCV4EC",
+        "edition": "classic",
+        "tags": [
+            "Magic Resistance"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "fey",
+            "tags": [
+                "sorcerer"
+            ]
+        },
+        "alignment": [
+            "any alignment"
+        ],
+        "ac": [
+            {
+                "value": 14
+            },
+            {
+                "value": 17,
+                "condition": "with Mage Armor"
+            }
+        ],
+        "hp": {
+            "average": 148,
+            "formula": "27d8 + 27"
+        },
+        "speed": {
+            "walk": 30,
+            "fly": 30,
+            "hover": true
+        },
+        "abilities": {
+            "str": 11,
+            "dex": 18,
+            "con": 12,
+            "int": 17,
+            "wis": 15,
+            "cha": 24
+        },
+        "saves": {
+            "int": 7,
+            "wis": 6,
+            "cha": 11
+        },
+        "skills": {
+            "arcana": 11,
+            "investigation": 7,
+            "nature": 7
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 12,
+        "defenses": {
+            "resist": {
+                "conditional": [
+                    {
+                        "types": [
+                            "bludgeoning",
+                            "piercing",
+                            "slashing"
+                        ],
+                        "note": "from nonmagical attacks"
+                    }
+                ]
+            }
+        },
+        "languages": [
+            "Common",
+            "Sylvan"
+        ],
+        "cr": {
+            "cr": "12",
+            "xp": 8400,
+            "pb": 4
+        },
+        "initiative": {
+            "bonus": 4
+        },
+        "features": [
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The high fae has advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The high fae makes two Elemental Strike attacks."
+            },
+            {
+                "id": "elemental-strike",
+                "name": "Elemental Strike",
+                "category": "actions",
+                "text": "Melee or Ranged Spell Attack: +11 to hit, reach 5 ft. or range 60 ft., one target. Hit: 18 (2d10 + 7) acid, cold, fire, force, lightning, or thunder damage (the high fae's choice).",
+                "action": {
+                    "range": "reach 5 ft. or range 60 ft.",
+                    "attack": {
+                        "kind": "spell",
+                        "bonus": 11,
+                        "damage": [
+                            {
+                                "dice": "2d10",
+                                "bonus": 7,
+                                "type": "chosen",
+                                "type_options": [
+                                    "acid",
+                                    "cold",
+                                    "fire",
+                                    "force",
+                                    "lightning",
+                                    "thunder"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "negotiate-life",
+                "name": "Negotiate Life",
+                "category": "actions",
+                "text": "The high fae enacts a magical bargain, siphoning energy from its opponents to heal its wounds. The high fae targets up to three creatures it can see within 60 feet of itself. Each target must make a DC 19 Constitution saving throw, taking 26 (4d12) necrotic damage on a failed save, or half as much damage on a successful one. The high fae then regains 30 hit points.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "save": {
+                        "ability": "con",
+                        "dc": 19,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "4d12",
+                                "type": "necrotic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "fae-counterspell",
+                "name": "Fae Counterspell",
+                "category": "reactions",
+                "text": "The high fae interrupts a creature it can see that is casting a spell with verbal, somatic, or material components. The caster takes 10 (3d6) psychic damage and must make a DC 19 Charisma saving throw. On a failed save, the spell fails and has no effect, but the spell slot used to cast it is not expended.",
+                "action": {
+                    "save": {
+                        "ability": "cha",
+                        "dc": 19,
+                        "on_success": "none"
+                    },
+                    "damage": [
+                        {
+                            "dice": "3d6",
+                            "type": "psychic"
+                        }
+                    ]
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "cha",
+                "dc": 19,
+                "text": "The high fae casts one of the following spells, requiring no material components and using Charisma as the spellcasting ability (spell save DC 19):",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "dancing-lights-phb"
+                            },
+                            {
+                                "spell": "detect-magic-phb"
+                            },
+                            {
+                                "spell": "druidcraft-phb"
+                            },
+                            {
+                                "spell": "mage-armor-phb",
+                                "note": "(self only)"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 2,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "faerie-fire-phb"
+                            },
+                            {
+                                "spell": "gust-of-wind-phb"
+                            },
+                            {
+                                "spell": "mirror-image-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "necrotic",
+                "psychic"
+            ],
+            "saves_forced": [
+                "cha",
+                "con",
+                "dex",
+                "str"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "movement": [
+                "fly",
+                "hover"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "magic_resistance"
+            ],
+            "languages": [
+                "common",
+                "sylvan"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "high-fae-noble-mcv4ec",
+        "kind": "monster",
+        "name": "High Fae Noble",
+        "source": "MCV4EC",
+        "edition": "classic",
+        "tags": [
+            "Legendary Resistances",
+            "Magic Resistance"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "fey"
+        },
+        "alignment": [
+            "any alignment"
+        ],
+        "ac": [
+            {
+                "value": 17
+            }
+        ],
+        "hp": {
+            "average": 175,
+            "formula": "27d8 + 54"
+        },
+        "speed": {
+            "walk": 40,
+            "fly": 40,
+            "hover": true
+        },
+        "abilities": {
+            "str": 13,
+            "dex": 25,
+            "con": 15,
+            "int": 19,
+            "wis": 18,
+            "cha": 22
+        },
+        "saves": {
+            "dex": 12,
+            "int": 9,
+            "wis": 9,
+            "cha": 11
+        },
+        "skills": {
+            "history": 9,
+            "insight": 14,
+            "perception": 9
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 19,
+        "defenses": {
+            "resist": {
+                "conditional": [
+                    {
+                        "types": [
+                            "bludgeoning",
+                            "piercing",
+                            "slashing"
+                        ],
+                        "note": "from nonmagical attacks"
+                    }
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "exhaustion",
+                    "frightened"
+                ]
+            }
+        },
+        "languages": [
+            "Common",
+            "Sylvan",
+            "telepathy 120 ft."
+        ],
+        "cr": {
+            "cr": "13",
+            "xp": 10000,
+            "pb": 5
+        },
+        "initiative": {
+            "bonus": 7
+        },
+        "features": [
+            {
+                "id": "aura-of-overwhelming-splendor",
+                "name": "Aura of Overwhelming Splendor",
+                "category": "traits",
+                "text": "The high fae radiates dazzling and mollifying magic. Each creature of the high fae's choice that starts its turn within 5 feet of the high fae must succeed on a DC 19 Wisdom saving throw or have the charmed condition until the start of its next turn. While charmed, the creature also has the incapacitated condition.",
+                "action": {
+                    "save": {
+                        "ability": "wis",
+                        "dc": 19,
+                        "on_success": "none",
+                        "conditions": [
+                            "charmed",
+                            "incapacitated"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "legendary-resistance",
+                "name": "Legendary Resistance",
+                "category": "traits",
+                "text": "If the high fae fails a saving throw, it can choose to succeed instead.",
+                "uses": {
+                    "max": 3,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The high fae has advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The high fae makes two Fae Blade attacks. It can replace one of these attacks with Stunning Soliloquy if available."
+            },
+            {
+                "id": "fae-blade",
+                "name": "Fae Blade",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +12 to hit, reach 5 ft., one target. Hit: 20 (3d8 + 7) force damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 12,
+                        "damage": [
+                            {
+                                "dice": "3d8",
+                                "bonus": 7,
+                                "type": "force"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "stunning-soliloquy",
+                "name": "Stunning Soliloquy",
+                "category": "actions",
+                "text": "The high fae unleashes a string of magical words. Each creature of the high fae's choice within 30 feet of itself must succeed on a DC 19 Wisdom saving throw or have the stunned condition for 1 minute. A stunned creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "save": {
+                        "ability": "wis",
+                        "dc": 19,
+                        "on_success": "none",
+                        "conditions": [
+                            "stunned"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "capricious-step",
+                "name": "Capricious Step",
+                "category": "reactions",
+                "text": "Immediately after taking damage, the high fae magically has the invisible condition and teleports, along with any equipment it is wearing or carrying, to an unoccupied space it can see within 30 feet of itself. The invisibility lasts until the end of the high fae's next turn."
+            },
+            {
+                "id": "ridicule",
+                "name": "Ridicule",
+                "category": "reactions",
+                "text": "When a creature misses the high fae with an attack roll, the high fae magically mocks the creature, dealing 5 (2d4) psychic damage to the attacker.",
+                "action": {
+                    "damage": [
+                        {
+                            "dice": "2d4",
+                            "type": "psychic",
+                            "condition": "to the attacker"
+                        }
+                    ]
+                }
+            }
+        ],
+        "section_notes": {
+            "reactions": "The high fae can take up to three reactions per round but only one per turn."
+        },
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "cha",
+                "dc": 19,
+                "text": "The high fae casts one of the following spells, requiring no material components and using Charisma as the spellcasting ability (spell save DC 19):",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "detect-magic-phb"
+                            },
+                            {
+                                "spell": "prestidigitation-phb"
+                            },
+                            {
+                                "spell": "suggestion-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "major-image-phb"
+                            },
+                            {
+                                "spell": "zone-of-truth-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "force",
+                "psychic"
+            ],
+            "saves_forced": [
+                "wis",
+                "cha"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "movement": [
+                "fly",
+                "hover"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "legendary_resistances",
+                "magic_resistance"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "sylvan",
+                "telepathy"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "knight-of-eldraine-mcv4ec",
+        "kind": "monster",
+        "name": "Knight of Eldraine",
+        "source": "MCV4EC",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "human"
+            ]
+        },
+        "alignment": [
+            "any alignment"
+        ],
+        "ac": [
+            {
+                "value": 20,
+                "from": [
+                    "plate",
+                    "shield"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 78,
+            "formula": "12d8 + 24"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 16,
+            "dex": 12,
+            "con": 14,
+            "int": 13,
+            "wis": 11,
+            "cha": 13
+        },
+        "saves": {
+            "con": 4,
+            "wis": 2
+        },
+        "passive_perception": 10,
+        "languages": [
+            "Common"
+        ],
+        "cr": {
+            "cr": "3",
+            "xp": 700,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "knightly-virtue",
+                "name": "Knightly Virtue",
+                "category": "traits",
+                "text": "The knight has one of the following traits, depending on the court it serves:\n\n- **Courage (Embereth).** The knight has advantage on Wisdom checks and Wisdom saving throws.\n- **Knowledge (Vantress).** The knight has advantage on Intelligence checks and Intelligence saving throws.\n- **Loyalty (Ardenvale).** The knight has advantage on Charisma checks and Charisma saving throws.\n- **Persistence (Locthwain).** The knight has advantage on Constitution saving throws.\n- **Strength (Garenbrig).** The knight has advantage on Strength checks and Strength saving throws."
+            },
+            {
+                "id": "lance",
+                "name": "Lance",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +5 to hit, reach 10 ft., one target. Hit: 9 (1d12 + 3) piercing damage plus 9 (2d8) radiant damage.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d12",
+                                "bonus": 3,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "2d8",
+                                "type": "radiant"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "longsword",
+                "name": "Longsword",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 7 (1d8 + 3) slashing damage, or 8 (1d10 + 3) slashing damage if used with two hands, plus 9 (2d8) radiant damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 3,
+                                "type": "slashing"
+                            },
+                            {
+                                "dice": "1d10",
+                                "bonus": 3,
+                                "type": "slashing",
+                                "condition": "if used with two hands"
+                            },
+                            {
+                                "dice": "2d8",
+                                "type": "radiant"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "heavy-crossbow",
+                "name": "Heavy Crossbow",
+                "category": "actions",
+                "text": "Ranged Weapon Attack: +3 to hit, range 100/400 ft., one target. Hit: 6 (1d10 + 1) piercing damage plus 9 (2d8) radiant damage.",
+                "action": {
+                    "range": "range 100/400 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 3,
+                        "damage": [
+                            {
+                                "dice": "1d10",
+                                "bonus": 1,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "2d8",
+                                "type": "radiant"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "items": [
+            {
+                "item": "heavy-crossbow-phb",
+                "qty": 1,
+                "attacks": true
+            },
+            {
+                "item": "lance-phb",
+                "qty": 1,
+                "attacks": true
+            },
+            {
+                "item": "longsword-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing",
+                "radiant",
+                "slashing"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack",
+                "reach",
+                "ranged_weapon_attack"
+            ],
+            "languages": [
+                "common"
+            ]
+        }
+    },
+    {
+        "id": "nightmare-haunt-mcv4ec",
+        "kind": "monster",
+        "name": "Nightmare Haunt",
+        "source": "MCV4EC",
+        "edition": "classic",
+        "tags": [
+            "Magic Resistance"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "aberration"
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "alignment_prefix": "typically",
+        "ac": [
+            {
+                "value": 13
+            }
+        ],
+        "hp": {
+            "average": 44,
+            "formula": "8d8 + 8"
+        },
+        "speed": {
+            "walk": 30,
+            "climb": 30
+        },
+        "abilities": {
+            "str": 14,
+            "dex": 17,
+            "con": 13,
+            "int": 9,
+            "wis": 12,
+            "cha": 17
+        },
+        "senses": {
+            "blindsight": 120,
+            "notes": "blindsight (can't see beyond this radius)"
+        },
+        "passive_perception": 11,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "psychic"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "blinded",
+                    "charmed",
+                    "exhaustion",
+                    "frightened"
+                ]
+            }
+        },
+        "languages": [
+            "Deep Speech",
+            "telepathy 120 ft."
+        ],
+        "cr": {
+            "cr": "5",
+            "xp": 1800,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The nightmare haunt has advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "somnophage",
+                "name": "Somnophage",
+                "category": "traits",
+                "text": "At the start of its turn, the nightmare haunt gains a number of temporary hit points equal to 5 times the number of unconscious creatures within 30 feet of itself."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The nightmare haunt makes two Claw attacks."
+            },
+            {
+                "id": "claw",
+                "name": "Claw",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 6 (1d6 + 3) slashing damage plus 9 (2d8) psychic damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 3,
+                                "type": "slashing"
+                            },
+                            {
+                                "dice": "2d8",
+                                "type": "psychic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "tendrils-of-slumber",
+                "name": "Tendrils of Slumber",
+                "category": "actions",
+                "text": "The nightmare haunt creates spectral tendrils that cover the ground in a 20-foot square that it can see within 30 feet of itself for 1 minute or until it uses this action again. When a creature other than the nightmare haunt enters the affected area for the first time or starts its turn there, the creature must succeed on a DC 14 Strength saving throw or take 11 (2d10) necrotic damage and have the restrained condition. The affected ground is also considered difficult terrain for creatures other than the nightmare haunt for the duration of its effect.\n\nA creature that starts its turn in the area and is already restrained by the tendrils must repeat the saving throw. On a failed save, it has the unconscious condition and instead of the restrained condition caused by the tendrils. On a successful save, the effect ends on the creature. An unconscious creature remains asleep until it is no longer in the area with tendrils, takes any damage, or is targeted by a Remove Curse spell or similar magic.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "area": "20-foot square",
+                    "save": {
+                        "ability": "str",
+                        "dc": 14,
+                        "on_success": "none",
+                        "damage": [
+                            {
+                                "dice": "2d10",
+                                "type": "necrotic"
+                            }
+                        ],
+                        "conditions": [
+                            "restrained",
+                            "unconscious"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "shadow-stealth",
+                "name": "Shadow Stealth",
+                "category": "bonus_actions",
+                "text": "While in dim light or darkness, the nightmare haunt takes the Hide action."
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "necrotic",
+                "slashing",
+                "psychic"
+            ],
+            "conditions_inflicted": [
+                "restrained"
+            ],
+            "saves_forced": [
+                "str"
+            ],
+            "senses": [
+                "blindsight"
+            ],
+            "movement": [
+                "climb"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "magic_resistance"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "deep_speech",
+                "telepathy"
+            ]
+        }
+    },
+    {
+        "id": "ogre-chitterlord-mcv4ec",
+        "kind": "monster",
+        "name": "Ogre Chitterlord",
+        "source": "MCV4EC",
+        "edition": "classic",
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "giant",
+            "tags": [
+                "druid"
+            ]
+        },
+        "alignment": [
+            "any alignment"
+        ],
+        "ac": [
+            {
+                "value": 12,
+                "from": [
+                    "hide armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 52,
+            "formula": "7d10 + 14"
+        },
+        "speed": {
+            "walk": 40
+        },
+        "abilities": {
+            "str": 19,
+            "dex": 10,
+            "con": 15,
+            "int": 5,
+            "wis": 12,
+            "cha": 9
+        },
+        "saves": {
+            "wis": 3
+        },
+        "skills": {
+            "animal_handling": 3,
+            "nature": 1
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 11,
+        "languages": [
+            "Common",
+            "Giant"
+        ],
+        "cr": {
+            "cr": "3",
+            "xp": 700,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "speak-with-rats",
+                "name": "Speak with Rats",
+                "category": "traits",
+                "text": "The ogre can verbally communicate simple concepts to ordinary rats and giant rats."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The ogre makes two Club attacks, two Rat-Tail Whip attacks, or one of each."
+            },
+            {
+                "id": "club",
+                "name": "Club",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 15 (2d10 + 4) bludgeoning damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "2d10",
+                                "bonus": 4,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "rat-tail-whip",
+                "name": "Rat-Tail Whip",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +6 to hit, reach 10 ft., one target. Hit: 13 (2d8 + 4) slashing damage, and if the target is Large or smaller, it is pulled 5 feet toward the ogre.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "2d8",
+                                "bonus": 4,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "call-rats",
+                "name": "Call Rats",
+                "category": "bonus_actions",
+                "text": "The ogre magically calls 1d4 giant rats. Each rat appears in an unoccupied space within 30 feet of the ogre that the ogre can see. The rats act as the ogre's allies, obey its spoken commands, and take their turns immediately after the ogre's turn on the same initiative count. The rats remain for 1 hour, until the ogre dies, or until the ogre dismisses them as a bonus action.",
+                "uses": {
+                    "max": 1,
+                    "reset": "long"
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "wis",
+                "dc": 11,
+                "text": "The ogre casts one of the following spells, requiring no material components and using Wisdom as the spellcasting ability (spell save DC 11):",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "beast-sense-phb",
+                                "note": "(rats only)"
+                            },
+                            {
+                                "spell": "druidcraft-phb"
+                            },
+                            {
+                                "spell": "entangle-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "animal-messenger-phb",
+                                "note": "(rats only)"
+                            },
+                            {
+                                "spell": "stinking-cloud-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "club-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "slashing"
+            ],
+            "conditions_inflicted": [
+                "restrained"
+            ],
+            "saves_forced": [
+                "con",
+                "str"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack",
+                "reach"
+            ],
+            "languages": [
+                "common",
+                "giant"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "redtooth-werefox-mcv4ec",
+        "kind": "monster",
+        "name": "Redtooth Werefox",
+        "source": "MCV4EC",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "monstrosity",
+            "tags": [
+                "elf"
+            ]
+        },
+        "alignment": [
+            "any alignment"
+        ],
+        "ac": [
+            {
+                "value": 13
+            }
+        ],
+        "hp": {
+            "average": 60,
+            "formula": "11d8 + 11"
+        },
+        "speed": {
+            "walk": 30,
+            "notes": {
+                "walk": "in elf form; 40 ft. in fox and hybrid form"
+            }
+        },
+        "abilities": {
+            "str": 16,
+            "dex": 17,
+            "con": 12,
+            "int": 11,
+            "wis": 13,
+            "cha": 10
+        },
+        "skills": {
+            "acrobatics": 5,
+            "perception": 5,
+            "survival": 3
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 15,
+        "languages": [
+            "Common",
+            "Elvish (can't speak in fox form)"
+        ],
+        "cr": {
+            "cr": "3",
+            "xp": 700,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The werefox makes two Bite attacks, two Lance attacks, or one Bite attack and one Lance attack."
+            },
+            {
+                "id": "bite-fox-or-hybrid-form-only",
+                "name": "Bite (Fox or Hybrid Form Only)",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 8 (1d10 + 3) piercing damage. If the werefox moved at least 20 feet straight toward the target immediately before the hit and the target is a Medium or smaller creature, the target must succeed on a DC 13 Strength saving throw or have the prone condition.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d10",
+                                "bonus": 3,
+                                "type": "piercing"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "str",
+                        "dc": 13,
+                        "on_success": "none",
+                        "conditions": [
+                            "prone"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "lance-elf-or-hybrid-form-only",
+                "name": "Lance (Elf or Hybrid Form Only)",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +5 to hit, reach 10 ft., one target. Hit: 9 (1d12 + 3) piercing damage.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d12",
+                                "bonus": 3,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "entangling-arrow-elf-or-hybrid-form-only",
+                "name": "Entangling Arrow (Elf or Hybrid Form Only)",
+                "category": "actions",
+                "text": "Ranged Weapon Attack: +5 to hit, range 150/600 ft., one target. Hit: 10 (2d6 + 3) piercing damage, and the target must succeed on a DC 11 Dexterity saving throw or have the restrained condition until the start of the werefox's next turn.",
+                "action": {
+                    "range": "range 150/600 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 3,
+                                "type": "piercing"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "dex",
+                        "dc": 11,
+                        "on_success": "none",
+                        "conditions": [
+                            "restrained"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "change-shape",
+                "name": "Change Shape",
+                "category": "bonus_actions",
+                "text": "The werefox polymorphs into a fox-elf hybrid, into a fox, or back into its elf form. Its game statistics, other than its speed, are the same in each form. Any equipment it is wearing or carrying isn't transformed. It reverts to its elf form if it dies."
+            },
+            {
+                "id": "vulpine-nimbleness-fox-or-hybrid-form-only",
+                "name": "Vulpine Nimbleness (Fox or Hybrid Form Only)",
+                "category": "bonus_actions",
+                "text": "The werefox takes the Dash or Disengage action."
+            }
+        ],
+        "items": [
+            {
+                "item": "lance-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing"
+            ],
+            "conditions_inflicted": [
+                "prone",
+                "restrained"
+            ],
+            "saves_forced": [
+                "dex",
+                "str"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "actions": [
+                "multiattack",
+                "shapechanger"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack",
+                "reach",
+                "ranged_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "cant_speak",
+                "elvish"
+            ]
+        }
+    },
+    {
+        "id": "sewer-king-mcv4ec",
+        "kind": "monster",
+        "name": "Sewer King",
+        "source": "MCV4EC",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "fiend"
+        },
+        "alignment": [
+            "lawful evil"
+        ],
+        "alignment_prefix": "typically",
+        "ac": [
+            {
+                "value": 13,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 52,
+            "formula": "8d8 + 16"
+        },
+        "speed": {
+            "walk": 40
+        },
+        "abilities": {
+            "str": 18,
+            "dex": 13,
+            "con": 14,
+            "int": 8,
+            "wis": 12,
+            "cha": 11
+        },
+        "skills": {
+            "perception": 5,
+            "stealth": 3
+        },
+        "senses": {
+            "darkvision": 120
+        },
+        "passive_perception": 15,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "Infernal",
+            "telepathy 30 ft."
+        ],
+        "cr": {
+            "cr": "2",
+            "xp": 450,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "beast-speech",
+                "name": "Beast Speech",
+                "category": "traits",
+                "text": "The sewer king can comprehend and verbally communicate with any Beast."
+            },
+            {
+                "id": "rancid-bite",
+                "name": "Rancid Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 8 (1d8 + 4) piercing damage plus 7 (2d6) acid damage. If the target is a creature, it must succeed on a DC 12 Constitution saving throw or have the poisoned condition until the start of the sewer king's next turn.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 4,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "2d6",
+                                "type": "acid"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "con",
+                        "dc": 12,
+                        "on_success": "none",
+                        "conditions": [
+                            "poisoned"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "summon-swarm",
+                "name": "Summon Swarm",
+                "category": "actions",
+                "text": "The sewer king chitters and summons a swarm of rats to its aid. The swarm appears in an unoccupied space within 30 feet of the sewer king that the sewer king can see. It acts as the sewer king's ally, obeys the sewer king's commands, and takes its turn immediately after the sewer king's. The swarm remains until it dies, the sewer king dies, or until the sewer king dismisses it as an action.",
+                "uses": {
+                    "max": 1,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "skitter",
+                "name": "Skitter",
+                "category": "bonus_actions",
+                "text": "The sewer king moves up to its speed without provoking opportunity attacks."
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "acid",
+                "piercing"
+            ],
+            "saves_forced": [
+                "con"
+            ],
+            "senses": [
+                "superior_darkvision"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "infernal",
+                "telepathy"
+            ]
+        }
+    },
+    {
+        "id": "snapping-hydra-mcv4ec",
+        "kind": "monster",
+        "name": "Snapping Hydra",
+        "source": "MCV4EC",
+        "edition": "classic",
+        "tags": [
+            "Amphibious"
+        ],
+        "size": [
+            "huge"
+        ],
+        "creature_type": {
+            "type": "monstrosity"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 20,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 149,
+            "formula": "13d12 + 65"
+        },
+        "speed": {
+            "walk": 30,
+            "swim": 40
+        },
+        "abilities": {
+            "str": 21,
+            "dex": 5,
+            "con": 21,
+            "int": 2,
+            "wis": 16,
+            "cha": 7
+        },
+        "skills": {
+            "perception": 11
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 21,
+        "defenses": {
+            "condition_immune": {
+                "types": [
+                    "blinded",
+                    "charmed",
+                    "deafened",
+                    "frightened",
+                    "stunned",
+                    "unconscious"
+                ]
+            }
+        },
+        "cr": {
+            "cr": "11",
+            "xp": 7200,
+            "pb": 4
+        },
+        "initiative": {
+            "bonus": -3
+        },
+        "features": [
+            {
+                "id": "amphibious",
+                "name": "Amphibious",
+                "category": "traits",
+                "text": "The hydra can breathe air and water."
+            },
+            {
+                "id": "multiple-heads",
+                "name": "Multiple Heads",
+                "category": "traits",
+                "text": "The hydra has five heads. Whenever the hydra takes 30 or more damage in a single turn, one of its heads dies. If all its heads die, the hydra dies.\n\nAt the end of its turn, the hydra grows two heads for each of its heads that died since its last turn, unless it has taken cold damage since its last turn. The hydra regains 10 hit points for each head regrown this way."
+            },
+            {
+                "id": "reactive-heads",
+                "name": "Reactive Heads",
+                "category": "traits",
+                "text": "For each head the hydra has beyond one, it gets an extra reaction that can be used only for opportunity attacks."
+            },
+            {
+                "id": "wakeful",
+                "name": "Wakeful",
+                "category": "traits",
+                "text": "While the hydra sleeps, at least one of its heads is awake."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The hydra makes as many Bite attacks as it has heads."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +9 to hit, reach 10 ft., one target. Hit: 14 (2d8 + 5) piercing damage.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 9,
+                        "damage": [
+                            {
+                                "dice": "2d8",
+                                "bonus": 5,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "shell-defense",
+                "name": "Shell Defense",
+                "category": "actions",
+                "text": "The hydra withdraws its limbs and heads into its shell. Until it emerges as a bonus action, it gains a +4 bonus to AC and has advantage on Strength and Constitution saving throws. While in its shell, the hydra has the prone condition, its speed is 0 and can't increase, its heads can't die, it has disadvantage on Dexterity saving throws, and it can't take any other actions or reactions."
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "movement": [
+                "swim"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "amphibious"
+            ],
+            "misc": [
+                "melee_weapon_attack",
+                "reach"
+            ]
+        }
+    },
+    {
+        "id": "specter-of-night-mcv4ec",
+        "kind": "monster",
+        "name": "Specter of Night",
+        "source": "MCV4EC",
+        "edition": "classic",
+        "tags": [
+            "Legendary Resistances",
+            "Magic Resistance"
+        ],
+        "size": [
+            "huge"
+        ],
+        "creature_type": {
+            "type": "undead"
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "alignment_prefix": "typically",
+        "ac": [
+            {
+                "value": 15,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 142,
+            "formula": "15d12 + 45"
+        },
+        "speed": {
+            "walk": 60,
+            "fly": 60
+        },
+        "abilities": {
+            "str": 22,
+            "dex": 18,
+            "con": 17,
+            "int": 12,
+            "wis": 13,
+            "cha": 12
+        },
+        "saves": {
+            "dex": 8,
+            "wis": 5
+        },
+        "skills": {
+            "perception": 5
+        },
+        "senses": {
+            "darkvision": 120
+        },
+        "passive_perception": 15,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "necrotic"
+                ]
+            },
+            "immune": {
+                "types": [
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "exhaustion",
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "understands Common but can't speak"
+        ],
+        "cr": {
+            "cr": "12",
+            "xp": 8400,
+            "pb": 4
+        },
+        "initiative": {
+            "bonus": 4
+        },
+        "features": [
+            {
+                "id": "legendary-resistance",
+                "name": "Legendary Resistance",
+                "category": "traits",
+                "text": "If the specter fails a saving throw, it can choose to succeed instead.",
+                "uses": {
+                    "max": 3,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The specter has advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The specter uses Mournful Keening if available, then makes one Hooves attack and one Reaping Scythe attack."
+            },
+            {
+                "id": "hooves",
+                "name": "Hooves",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +10 to hit, reach 10 ft., one target. Hit: 16 (3d6 + 6) bludgeoning damage plus 28 (8d6) necrotic damage. If the target is a Medium or smaller creature, it must succeed on a DC 18 Strength saving throw or have the prone condition.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 10,
+                        "damage": [
+                            {
+                                "dice": "3d6",
+                                "bonus": 6,
+                                "type": "bludgeoning"
+                            },
+                            {
+                                "dice": "8d6",
+                                "type": "necrotic"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "str",
+                        "dc": 18,
+                        "on_success": "none",
+                        "conditions": [
+                            "prone"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "mournful-keening",
+                "name": "Mournful Keening",
+                "category": "actions",
+                "text": "The specter utters a keening wail, calling to those close to death. Each non-Undead creature within 120 feet of the specter must make a DC 15 Constitution saving throw. On a failure, the creature hears the wail and is marked for death.\n\nA creature marked for death can't regain hit points, has disadvantage on death saving throws, and all attack rolls against it are made with advantage. This effect lasts for 1 minute or until the creature is targeted by a Remove Curse spell or similar magic.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 6
+                },
+                "action": {
+                    "save": {
+                        "ability": "con",
+                        "dc": 15,
+                        "on_success": "none"
+                    }
+                }
+            },
+            {
+                "id": "reaping-scythe",
+                "name": "Reaping Scythe",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +10 to hit, reach 10 ft., one target. Hit: 12 (1d12 + 6) slashing damage plus 28 (8d6) necrotic damage. If the target is a creature, it must succeed on a DC 15 Constitution saving throw or gain a level of exhaustion.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 10,
+                        "damage": [
+                            {
+                                "dice": "1d12",
+                                "bonus": 6,
+                                "type": "slashing"
+                            },
+                            {
+                                "dice": "8d6",
+                                "type": "necrotic"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "con",
+                        "dc": 15,
+                        "on_success": "none",
+                        "conditions": [
+                            "exhaustion"
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "necrotic",
+                "slashing"
+            ],
+            "conditions_inflicted": [
+                "exhaustion"
+            ],
+            "saves_forced": [
+                "con",
+                "str"
+            ],
+            "senses": [
+                "superior_darkvision"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "legendary_resistances",
+                "magic_resistance"
+            ],
+            "misc": [
+                "melee_weapon_attack",
+                "reach"
+            ],
+            "languages": [
+                "common",
+                "cant_speak"
+            ]
+        }
+    },
+    {
+        "id": "sweettooth-horror-mcv4ec",
+        "kind": "monster",
+        "name": "Sweettooth Horror",
+        "source": "MCV4EC",
+        "edition": "classic",
+        "tags": [
+            "Magic Resistance"
+        ],
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "fiend"
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "alignment_prefix": "typically",
+        "ac": [
+            {
+                "value": 14
+            }
+        ],
+        "hp": {
+            "average": 58,
+            "formula": "9d10 + 9"
+        },
+        "speed": {
+            "walk": 40
+        },
+        "abilities": {
+            "str": 15,
+            "dex": 18,
+            "con": 12,
+            "int": 6,
+            "wis": 8,
+            "cha": 12
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 9,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "poison"
+                ]
+            },
+            "vulnerable": {
+                "types": [
+                    "bludgeoning"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "exhaustion",
+                    "poisoned"
+                ]
+            }
+        },
+        "cr": {
+            "cr": "4",
+            "xp": 1100,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 4
+        },
+        "features": [
+            {
+                "id": "caramelization",
+                "name": "Caramelization",
+                "category": "traits",
+                "text": "If the horror takes fire damage, it releases a sweet, mesmerizing scent. Each creature within 30 feet of the horror must succeed on a DC 11 Wisdom saving throw or have the charmed condition. A charmed creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.",
+                "action": {
+                    "save": {
+                        "ability": "wis",
+                        "dc": 11,
+                        "on_success": "none",
+                        "conditions": [
+                            "charmed"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The horror has advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The horror makes one Bite attack and two Candy Cane attacks."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 11 (2d6 + 4) piercing damage plus 10 (3d6) acid damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 4,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "3d6",
+                                "type": "acid"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "candy-cane",
+                "name": "Candy Cane",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +6 to hit, reach 10 ft., one target. Hit: 8 (1d8 + 4) bludgeoning damage. If the target is a Large or smaller creature, the horror can choose to deal no damage; instead, the target has the prone condition, and the horror can pull the target up to 5 feet toward itself.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 4,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "acid",
+                "bludgeoning",
+                "piercing"
+            ],
+            "saves_forced": [
+                "wis"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "magic_resistance"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_weapon_attack",
+                "reach"
+            ]
+        }
+    },
+    {
+        "id": "tempest-hart-mcv4ec",
+        "kind": "monster",
+        "name": "Tempest Hart",
+        "source": "MCV4EC",
+        "edition": "classic",
+        "tags": [
+            "Legendary Resistances"
+        ],
+        "size": [
+            "huge"
+        ],
+        "creature_type": {
+            "type": "elemental"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 13
+            }
+        ],
+        "hp": {
+            "average": 147,
+            "formula": "14d12 + 56"
+        },
+        "speed": {
+            "walk": 50,
+            "fly": 50
+        },
+        "abilities": {
+            "str": 21,
+            "dex": 17,
+            "con": 18,
+            "int": 3,
+            "wis": 18,
+            "cha": 14
+        },
+        "saves": {
+            "dex": 7,
+            "wis": 8
+        },
+        "skills": {
+            "perception": 12
+        },
+        "passive_perception": 22,
+        "defenses": {
+            "resist": {
+                "conditional": [
+                    {
+                        "types": [
+                            "bludgeoning",
+                            "piercing",
+                            "slashing"
+                        ],
+                        "note": "from nonmagical attacks"
+                    }
+                ]
+            },
+            "immune": {
+                "types": [
+                    "lightning",
+                    "thunder"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "exhaustion"
+                ]
+            }
+        },
+        "cr": {
+            "cr": "11",
+            "xp": 7200,
+            "pb": 4
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "legendary-resistance",
+                "name": "Legendary Resistance",
+                "category": "traits",
+                "text": "If the hart fails a saving throw, it can choose to succeed instead.",
+                "uses": {
+                    "max": 3,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The hart makes a Lightning Antlers attack and a Thunder Hooves attack."
+            },
+            {
+                "id": "lightning-antlers",
+                "name": "Lightning Antlers",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +9 to hit, reach 15 ft., one target. Hit: 16 (2d10 + 5) lightning damage. If the target is a creature, it must succeed on a DC 16 Constitution saving throw or have the stunned condition until the start of the hart's next turn.",
+                "action": {
+                    "range": "reach 15 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 9,
+                        "damage": [
+                            {
+                                "dice": "2d10",
+                                "bonus": 5,
+                                "type": "lightning"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "con",
+                        "dc": 16,
+                        "on_success": "none",
+                        "conditions": [
+                            "stunned"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "thunder-hooves",
+                "name": "Thunder Hooves",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +9 to hit, reach 5 ft., one target. Hit: 14 (2d8 + 5) thunder damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 9,
+                        "damage": [
+                            {
+                                "dice": "2d8",
+                                "bonus": 5,
+                                "type": "thunder"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "entangling-growth",
+                "name": "Entangling Growth",
+                "category": "reactions",
+                "text": "Immediately after a creature the hart can see within 120 feet of itself hits it with an attack roll, the hart reduces the damage to itself by half. The attacker must immediately make a DC 16 Strength saving throw as beanstalks coil around it in its space. On a failed save, the creature has the grappled condition (escape DC 16) and has the restrained condition as long as it is grappled. The beanstalks vanish after 1 minute, if the hart has the incapacitated condition, or when the hart dies.",
+                "action": {
+                    "save": {
+                        "ability": "str",
+                        "dc": 16,
+                        "on_success": "none",
+                        "conditions": [
+                            "grappled",
+                            "incapacitated",
+                            "restrained"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "lightning-call",
+                "name": "Lightning Call",
+                "category": "reactions",
+                "text": "In response to making a saving throw, the hart calls down a bolt of lightning that targets a creature it can see within 120 feet of itself. The target must make a DC 16 Dexterity saving throw, taking 19 (3d12) lightning damage on a failed save, or half as much damage on a successful one.",
+                "action": {
+                    "save": {
+                        "ability": "dex",
+                        "dc": 16,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "3d12",
+                                "type": "lightning"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "section_notes": {
+            "reactions": "The hart can take up to two reactions per round but only one per turn."
+        },
+        "filters": {
+            "damage_dealt": [
+                "lightning",
+                "thunder"
+            ],
+            "conditions_inflicted": [
+                "grappled"
+            ],
+            "saves_forced": [
+                "con",
+                "dex",
+                "str"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "legendary_resistances"
+            ],
+            "misc": [
+                "melee_weapon_attack",
+                "reach"
+            ]
+        }
+    },
+    {
+        "id": "treefolk-mcv4ec",
+        "kind": "monster",
+        "name": "Treefolk",
+        "source": "MCV4EC",
+        "edition": "classic",
+        "tags": [
+            "Camouflage",
+            "Tree Stride"
+        ],
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "plant",
+            "tags": [
+                "druid"
+            ]
+        },
+        "alignment": [
+            "any alignment"
+        ],
+        "ac": [
+            {
+                "value": 17,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 171,
+            "formula": "18d10 + 72"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 23,
+            "dex": 12,
+            "con": 18,
+            "int": 10,
+            "wis": 20,
+            "cha": 11
+        },
+        "saves": {
+            "con": 8,
+            "int": 4,
+            "wis": 9
+        },
+        "skills": {
+            "insight": 9,
+            "nature": 8,
+            "perception": 9
+        },
+        "senses": {
+            "blindsight": 30
+        },
+        "passive_perception": 19,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "bludgeoning",
+                    "piercing"
+                ]
+            },
+            "vulnerable": {
+                "types": [
+                    "fire"
+                ]
+            }
+        },
+        "languages": [
+            "Common",
+            "Druidic",
+            "Sylvan"
+        ],
+        "cr": {
+            "cr": "11",
+            "xp": 7200,
+            "pb": 4
+        },
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "plant-camouflage",
+                "name": "Plant Camouflage",
+                "category": "traits",
+                "text": "The treefolk has advantage on Dexterity (Stealth) checks it makes in forest terrain."
+            },
+            {
+                "id": "tree-stride",
+                "name": "Tree Stride",
+                "category": "traits",
+                "text": "Once on each of its turns, the treefolk can use 10 feet of its movement to step magically into one living tree within 5 feet of itself and emerge from a second living tree within 60 feet of itself that it can see, appearing in an unoccupied space within 5 feet of the second tree. Both trees must be at least as large as the treefolk."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The treefolk makes two Crushing Vine attacks, two Nightshade Bolt attacks, or one of each."
+            },
+            {
+                "id": "crushing-vine",
+                "name": "Crushing Vine",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +10 to hit, reach 10 ft., one target. Hit: 25 (3d12 + 6) bludgeoning damage. If the target is a creature, it has the grappled condition (escape DC 18). While grappled, the creature also has the restrained condition. The treefolk can grapple up to six creatures this way.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 10,
+                        "damage": [
+                            {
+                                "dice": "3d12",
+                                "bonus": 6,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "nightshade-bolt",
+                "name": "Nightshade Bolt",
+                "category": "actions",
+                "text": "Ranged Spell Attack: +9 to hit, range 60 ft., one target. Hit: 33 (6d10) poison damage.",
+                "action": {
+                    "range": "range 60 ft.",
+                    "attack": {
+                        "kind": "spell",
+                        "bonus": 9,
+                        "damage": [
+                            {
+                                "dice": "6d10",
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "oaken-boon",
+                "name": "Oaken Boon",
+                "category": "bonus_actions",
+                "text": "The treefolk blesses one creature other than itself that it can see within 60 feet of itself with the might and wisdom of the forest. While blessed in this way, a creature can use the treefolk's Tree Stride trait and gains 5 (2d4) temporary hit points at the start of each of its turns. This blessing lasts for 1 minute, until the treefolk has the incapacitated condition, or until the treefolk uses this bonus action again."
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "wis",
+                "dc": 17,
+                "text": "The treefolk casts one of the following spells, requiring no material components and using Wisdom as the spellcasting ability (spell save DC 17):",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "detect-poison-and-disease-phb"
+                            },
+                            {
+                                "spell": "druidcraft-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "spells": [
+                            {
+                                "spell": "commune-with-nature-phb",
+                                "note": "(as an action)"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 2,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "enlarge-reduce-phb"
+                            },
+                            {
+                                "spell": "speak-with-plants-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "poison"
+            ],
+            "saves_forced": [
+                "con"
+            ],
+            "senses": [
+                "blindsight"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "camouflage",
+                "tree_stride"
+            ],
+            "misc": [
+                "melee_weapon_attack",
+                "reach"
+            ],
+            "languages": [
+                "common",
+                "druidic",
+                "sylvan"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "witchkite-mcv4ec",
+        "kind": "monster",
+        "name": "Witchkite",
+        "source": "MCV4EC",
+        "edition": "classic",
+        "tags": [
+            "Legendary Resistances"
+        ],
+        "size": [
+            "huge"
+        ],
+        "creature_type": {
+            "type": "dragon",
+            "tags": [
+                "warlock"
+            ]
+        },
+        "alignment": [
+            "chaotic evil"
+        ],
+        "alignment_prefix": "typically",
+        "ac": [
+            {
+                "value": 16,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 220,
+            "formula": "21d12 + 84"
+        },
+        "speed": {
+            "walk": 40,
+            "fly": 80
+        },
+        "abilities": {
+            "str": 23,
+            "dex": 10,
+            "con": 18,
+            "int": 15,
+            "wis": 17,
+            "cha": 19
+        },
+        "saves": {
+            "dex": 5,
+            "wis": 8,
+            "cha": 9
+        },
+        "skills": {
+            "arcana": 7,
+            "perception": 8,
+            "stealth": 5
+        },
+        "senses": {
+            "darkvision": 120
+        },
+        "passive_perception": 18,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "fire",
+                    "psychic"
+                ]
+            }
+        },
+        "languages": [
+            "Draconic"
+        ],
+        "cr": {
+            "cr": "15",
+            "xp": 13000,
+            "pb": 5
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "legendary-resistance",
+                "name": "Legendary Resistance",
+                "category": "traits",
+                "text": "If the witchkite fails a saving throw, it can choose to succeed instead.",
+                "uses": {
+                    "max": 3,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The witchkite makes two Rend attacks and uses Malevolent Flare once."
+            },
+            {
+                "id": "rend",
+                "name": "Rend",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +11 to hit, reach 10 ft., one target. Hit: 16 (3d6 + 6) slashing damage.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 11,
+                        "damage": [
+                            {
+                                "dice": "3d6",
+                                "bonus": 6,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "malevolent-flare",
+                "name": "Malevolent Flare",
+                "category": "actions",
+                "text": "The witchkite spits magical, green-tinged flame at one creature it can see within 60 feet of itself. The target must make a DC 17 Dexterity saving throw. On a failed save, the target takes 22 (5d8) fire damage and suffers one of the following effects of the witchkite's choice:\n\n- The target must use its reaction to make a melee attack against another creature of the witchkite's choice that is within the target's reach.\n- The target takes 13 (2d12) psychic damage.\n\nOn a successful save, the target takes half as much damage only.",
+                "action": {
+                    "save": {
+                        "ability": "dex",
+                        "dc": 17,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "5d8",
+                                "type": "fire"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "enchanting-gaze",
+                "name": "Enchanting Gaze",
+                "category": "reactions",
+                "text": "When a creature the witchkite can see moves within 10 feet of it, the witchkite emits an enchanting gaze at the creature. The creature must succeed on a DC 17 Wisdom saving throw or take 10 (3d6) psychic damage and have the charmed condition until the end of its next turn.",
+                "action": {
+                    "save": {
+                        "ability": "wis",
+                        "dc": 17,
+                        "on_success": "none",
+                        "damage": [
+                            {
+                                "dice": "3d6",
+                                "type": "psychic"
+                            }
+                        ],
+                        "conditions": [
+                            "charmed"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "retribution",
+                "name": "Retribution",
+                "category": "reactions",
+                "text": "Immediately after taking damage from a melee attack, the witchkite makes one Rend attack against the attacker."
+            }
+        ],
+        "section_notes": {
+            "reactions": "The witchkite can take up to two reactions per round but only one per turn."
+        },
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "cha",
+                "dc": 17,
+                "text": "The witchkite casts one of the following spells, requiring no material components and using Charisma as the spellcasting ability (spell save DC 17):",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "detect-magic-phb"
+                            },
+                            {
+                                "spell": "minor-illusion-phb"
+                            },
+                            {
+                                "spell": "speak-with-dead-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "detect-thoughts-phb"
+                            },
+                            {
+                                "spell": "dimension-door-phb"
+                            },
+                            {
+                                "spell": "hold-monster-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "fire",
+                "slashing",
+                "psychic",
+                "force"
+            ],
+            "conditions_inflicted": [
+                "charmed",
+                "paralyzed"
+            ],
+            "saves_forced": [
+                "dex",
+                "wis"
+            ],
+            "senses": [
+                "superior_darkvision"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "legendary_resistances"
+            ],
+            "misc": [
+                "melee_weapon_attack",
+                "reach"
+            ],
+            "languages": [
+                "draconic"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "witchstalker-mcv4ec",
+        "kind": "monster",
+        "name": "Witchstalker",
+        "source": "MCV4EC",
+        "edition": "classic",
+        "tags": [
+            "Magic Resistance"
+        ],
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "monstrosity"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 13
+            }
+        ],
+        "hp": {
+            "average": 82,
+            "formula": "11d10 + 22"
+        },
+        "speed": {
+            "walk": 60
+        },
+        "abilities": {
+            "str": 18,
+            "dex": 16,
+            "con": 15,
+            "int": 8,
+            "wis": 12,
+            "cha": 6
+        },
+        "saves": {
+            "str": 7,
+            "wis": 4
+        },
+        "skills": {
+            "perception": 7,
+            "stealth": 6
+        },
+        "senses": {
+            "truesight": 60
+        },
+        "passive_perception": 17,
+        "languages": [
+            "understands Common but can't speak"
+        ],
+        "cr": {
+            "cr": "6",
+            "xp": 2300,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The witchstalker has advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "smell-magic",
+                "name": "Smell Magic",
+                "category": "traits",
+                "text": "The witchstalker can sense the presence and location of magic within 120 feet of itself. It also has advantage on attack rolls against creatures that have cast a spell since the end of the witchstalker's last turn."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The witchstalker makes two Bite attacks."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 14 (3d6 + 4) piercing damage. If the target is a Large or smaller creature, it must succeed on a DC 15 Strength saving throw or have the prone condition.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "3d6",
+                                "bonus": 4,
+                                "type": "piercing"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "str",
+                        "dc": 15,
+                        "on_success": "none",
+                        "conditions": [
+                            "prone"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "mind-wracking-howl",
+                "name": "Mind-Wracking Howl",
+                "category": "actions",
+                "text": "The witchstalker unleashes a terrible howl, and each creature within 30 feet of it that isn't a Monstrosity must make a DC 13 Wisdom saving throw. On a failed save, a creature takes 24 (7d6) psychic damage and has disadvantage on Constitution saving throws to maintain concentration on spells until the end of its next turn. On a successful save, a creature takes half as much damage only.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "save": {
+                        "ability": "wis",
+                        "dc": 13,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "7d6",
+                                "type": "psychic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "spell-stalk",
+                "name": "Spell Stalk",
+                "category": "reactions",
+                "text": "Immediately after a creature within 120 feet of the witchstalker casts a spell, the witchstalker magically teleports to an unoccupied space within 5 feet of the creature and can make one Bite attack against the creature."
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing",
+                "psychic"
+            ],
+            "saves_forced": [
+                "str",
+                "wis"
+            ],
+            "senses": [
+                "truesight"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "magic_resistance"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "cant_speak"
+            ]
+        }
+    }
+]

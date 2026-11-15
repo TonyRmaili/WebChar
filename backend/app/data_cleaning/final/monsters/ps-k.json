@@ -1,0 +1,4528 @@
+[
+    {
+        "id": "angel-psk",
+        "kind": "monster",
+        "name": "Angel",
+        "source": "PSK",
+        "edition": "classic",
+        "tags": [
+            "Magic Resistance"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "celestial"
+        },
+        "alignment": [
+            "lawful good"
+        ],
+        "ac": [
+            {
+                "value": 17,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 136,
+            "formula": "16d8 + 64"
+        },
+        "speed": {
+            "walk": 30,
+            "fly": 90
+        },
+        "abilities": {
+            "str": 18,
+            "dex": 18,
+            "con": 18,
+            "int": 17,
+            "wis": 20,
+            "cha": 20
+        },
+        "saves": {
+            "wis": 9,
+            "cha": 9
+        },
+        "skills": {
+            "insight": 9,
+            "perception": 9
+        },
+        "senses": {
+            "darkvision": 120
+        },
+        "passive_perception": 19,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "radiant"
+                ],
+                "conditional": [
+                    {
+                        "types": [
+                            "bludgeoning",
+                            "piercing",
+                            "slashing"
+                        ],
+                        "note": "from nonmagical attacks"
+                    }
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "exhaustion",
+                    "frightened"
+                ]
+            }
+        },
+        "languages": [
+            "all",
+            "telepathy 120 ft."
+        ],
+        "cr": {
+            "cr": "10",
+            "xp": 5900,
+            "pb": 4
+        },
+        "initiative": {
+            "bonus": 4
+        },
+        "features": [
+            {
+                "id": "angelic-weapons",
+                "name": "Angelic Weapons",
+                "category": "traits",
+                "text": "The angel's weapon attacks are magical. When the angel hits with any weapon, the weapon deals an extra 1d10 radiant damage (included in the attack).",
+                "action": {
+                    "attack": {
+                        "kind": "any",
+                        "damage": [
+                            {
+                                "dice": "1d10",
+                                "type": "radiant"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The angel has advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The angel makes four melee attacks."
+            },
+            {
+                "id": "shortsword",
+                "name": "Shortsword",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +8 to hit, reach 5 ft., one target. Hit: 7 (1d6 + 4) slashing damage plus 13 (1d10) radiant damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 8,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 4,
+                                "type": "slashing"
+                            },
+                            {
+                                "dice": "1d10",
+                                "type": "radiant"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "healing-touch",
+                "name": "Healing Touch",
+                "category": "actions",
+                "text": "The angel touches another creature. The target magically regains 20 (4d8 + 2) hit points and is freed from any curse, disease, poison, blindness, or deafness.",
+                "uses": {
+                    "max": 3,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "change-shape",
+                "name": "Change Shape",
+                "category": "actions",
+                "text": "The angel magically polymorphs into a humanoid or beast that has a challenge rating equal to or less than its own, or back into its true form. It reverts to its true form if it dies. Any equipment it is wearing or carrying is absorbed or borne by the new form (the angel's choice).\n\nIn a new form, the angel retains its game statistics and ability to speak, but its AC, movement modes, Strength, Dexterity, and special senses are replaced by those of the new form, and it gains any statistics and capabilities (except class features, legendary actions, and lair actions) that the new form has but that it lacks."
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Innate Spellcasting",
+                "ability": "cha",
+                "dc": 17,
+                "text": "The angel's spellcasting ability is Charisma (spell save DC 17). The angel can innately cast the following spells, requiring only verbal components:",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "detect-evil-and-good-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "commune-phb"
+                            },
+                            {
+                                "spell": "raise-dead-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "mace-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "radiant"
+            ],
+            "senses": [
+                "superior_darkvision"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "actions": [
+                "multiattack",
+                "shapechanger"
+            ],
+            "traits": [
+                "magic_resistance"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "telepathy",
+                "all"
+            ],
+            "spellcasting": [
+                "innate"
+            ],
+            "groups": [
+                "Angels"
+            ]
+        }
+    },
+    {
+        "id": "construct-animated-armor-psk",
+        "kind": "monster",
+        "name": "Construct (Animated Armor)",
+        "source": "PSK",
+        "edition": "classic",
+        "tags": [
+            "Antimagic Susceptibility",
+            "False Appearance"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "construct"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 18,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 33,
+            "formula": "6d8 + 6"
+        },
+        "speed": {
+            "walk": 25
+        },
+        "abilities": {
+            "str": 14,
+            "dex": 11,
+            "con": 13,
+            "int": 1,
+            "wis": 3,
+            "cha": 1
+        },
+        "senses": {
+            "blindsight": 60,
+            "notes": "blindsight (blind beyond this radius)"
+        },
+        "passive_perception": 6,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "poison",
+                    "psychic"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "blinded",
+                    "charmed",
+                    "deafened",
+                    "exhaustion",
+                    "frightened",
+                    "paralyzed",
+                    "petrified",
+                    "poisoned"
+                ]
+            }
+        },
+        "cr": {
+            "cr": "1",
+            "xp": 200,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "antimagic-susceptibility",
+                "name": "Antimagic Susceptibility",
+                "category": "traits",
+                "text": "The construct is incapacitated while in the area of an Antimagic Field. If targeted by Dispel Magic, the construct must succeed on a Constitution saving throw against the caster's spell save DC or fall unconscious for 1 minute."
+            },
+            {
+                "id": "false-appearance",
+                "name": "False Appearance",
+                "category": "traits",
+                "text": "While the construct remains motionless, it is indistinguishable from a normal suit of construct."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The construct makes two melee attacks."
+            },
+            {
+                "id": "slam",
+                "name": "Slam",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 5 (1d6 + 2) bludgeoning damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 2,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning"
+            ],
+            "senses": [
+                "blindsight"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "antimagic_susceptibility",
+                "false_appearance"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "groups": [
+                "Animated Objects"
+            ]
+        }
+    },
+    {
+        "id": "construct-helmed-horror-psk",
+        "kind": "monster",
+        "name": "Construct (Helmed Horror)",
+        "source": "PSK",
+        "edition": "classic",
+        "tags": [
+            "Magic Resistance",
+            "Spell Immunity"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "construct"
+        },
+        "alignment": [
+            "neutral"
+        ],
+        "ac": [
+            {
+                "value": 20,
+                "from": [
+                    "plate armor",
+                    "shield"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 60,
+            "formula": "8d8 + 24"
+        },
+        "speed": {
+            "walk": 30,
+            "fly": 30
+        },
+        "abilities": {
+            "str": 18,
+            "dex": 13,
+            "con": 16,
+            "int": 10,
+            "wis": 10,
+            "cha": 10
+        },
+        "skills": {
+            "perception": 4
+        },
+        "senses": {
+            "blindsight": 60,
+            "notes": "blindsight (blind beyond this radius)"
+        },
+        "passive_perception": 14,
+        "defenses": {
+            "resist": {
+                "conditional": [
+                    {
+                        "types": [
+                            "bludgeoning",
+                            "piercing",
+                            "slashing"
+                        ],
+                        "note": "from nonmagical attacks that aren't adamantine"
+                    }
+                ]
+            },
+            "immune": {
+                "types": [
+                    "force",
+                    "necrotic",
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "blinded",
+                    "charmed",
+                    "deafened",
+                    "frightened",
+                    "paralyzed",
+                    "petrified",
+                    "poisoned",
+                    "stunned"
+                ]
+            }
+        },
+        "languages": [
+            "understands the languages of its creator but can't speak"
+        ],
+        "cr": {
+            "cr": "4",
+            "xp": 1100,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The construct has advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "spell-immunity",
+                "name": "Spell Immunity",
+                "category": "traits",
+                "text": "The construct is immune to three spells chosen by its creator. Typical immunities include Fireball, Heat Metal, and Lightning Bolt."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The construct makes two longsword attacks."
+            },
+            {
+                "id": "longsword",
+                "name": "Longsword",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 8 (1d8 + 4) slashing damage, or 9 (1d10 + 4) slashing damage if used with two hands.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 4,
+                                "type": "slashing"
+                            },
+                            {
+                                "dice": "1d10",
+                                "bonus": 4,
+                                "type": "slashing",
+                                "condition": "if used with two hands"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "items": [
+            {
+                "item": "longsword-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "slashing"
+            ],
+            "senses": [
+                "blindsight"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "magic_resistance",
+                "spell_immunity"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "cant_speak"
+            ]
+        }
+    },
+    {
+        "id": "construct-modron-psk",
+        "kind": "monster",
+        "name": "Construct (Modron)",
+        "source": "PSK",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "construct"
+        },
+        "alignment": [
+            "lawful neutral"
+        ],
+        "ac": [
+            {
+                "value": 15,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 5,
+            "formula": "1d8 + 1"
+        },
+        "speed": {
+            "walk": 30,
+            "fly": 30
+        },
+        "abilities": {
+            "str": 10,
+            "dex": 13,
+            "con": 12,
+            "int": 4,
+            "wis": 10,
+            "cha": 5
+        },
+        "senses": {
+            "truesight": 120
+        },
+        "passive_perception": 10,
+        "languages": [
+            "Modron"
+        ],
+        "cr": {
+            "cr": "1/8",
+            "xp": 25,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "axiomatic-mind",
+                "name": "Axiomatic Mind",
+                "category": "traits",
+                "text": "The construct can't be compelled to act in a manner contrary to its nature or its instructions."
+            },
+            {
+                "id": "disintegration",
+                "name": "Disintegration",
+                "category": "traits",
+                "text": "If the construct dies, its body disintegrates into dust, leaving behind its weapons and anything else it was carrying."
+            },
+            {
+                "id": "dagger",
+                "name": "Dagger",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: 3 (1d4 + 1) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 3,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 1,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "javelin",
+                "name": "Javelin",
+                "category": "actions",
+                "text": "Melee or Ranged Weapon Attack: +2 to hit, reach 5 ft. or range 30/120 ft., one target. Hit: 3 (1d6) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft. or range 30/120 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 2,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "items": [
+            {
+                "item": "dagger-phb",
+                "qty": 1,
+                "attacks": true
+            },
+            {
+                "item": "javelin-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "variants": [
+            {
+                "id": "rogue-modrons",
+                "name": "Rogue Modrons",
+                "text": "A modron unit sometimes becomes defective, either through natural decay or exposure to chaotic forces. Rogue modrons don't act in accordance with Primus's wishes and directives, breaking laws, disobeying orders, and even engaging in violence. Other modrons hunt down such rogues.\n\nA rogue modron loses the Axiomatic Mind trait and can have any alignment other than lawful neutral. Otherwise, it has the same statistics as a regular modron of its rank."
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing"
+            ],
+            "senses": [
+                "truesight"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack",
+                "ranged_weapon_attack",
+                "thrown_weapon"
+            ],
+            "languages": [
+                "other"
+            ],
+            "groups": [
+                "Modrons"
+            ]
+        }
+    },
+    {
+        "id": "construct-shield-guardian-psk",
+        "kind": "monster",
+        "name": "Construct (Shield Guardian)",
+        "source": "PSK",
+        "edition": "classic",
+        "aliases": [
+            "Shield Golem"
+        ],
+        "tags": [
+            "Regeneration"
+        ],
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "construct"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 17,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 142,
+            "formula": "15d10 + 60"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 18,
+            "dex": 8,
+            "con": 18,
+            "int": 7,
+            "wis": 10,
+            "cha": 3
+        },
+        "senses": {
+            "darkvision": 60,
+            "blindsight": 10
+        },
+        "passive_perception": 10,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "exhaustion",
+                    "frightened",
+                    "paralyzed",
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "understands commands given in any language but can't speak"
+        ],
+        "cr": {
+            "cr": "7",
+            "xp": 2900,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": -1
+        },
+        "features": [
+            {
+                "id": "bound",
+                "name": "Bound",
+                "category": "traits",
+                "text": "The construct is magically bound to an amulet. As long as the construct and its amulet are on the same plane of existence, the amulet's wearer can telepathically call the construct to travel to it, and the construct knows the distance and direction to the amulet. If the construct is within 60 feet of the amulet's wearer, half of any damage the wearer takes (rounded up) is transferred to the construct."
+            },
+            {
+                "id": "regeneration",
+                "name": "Regeneration",
+                "category": "traits",
+                "text": "The construct regains 10 hit points at the start of its turn if it has at least 1 hit point."
+            },
+            {
+                "id": "spell-storing",
+                "name": "Spell Storing",
+                "category": "traits",
+                "text": "A spellcaster who wears the construct's amulet can cause the construct to store one spell of 4th level or lower. To do so, the wearer must cast the spell on the construct. The spell has no effect but is stored within the construct. When commanded to do so by the wearer or when a situation arises that was predefined by the spellcaster, the construct casts the stored spell with any parameters set by the original caster, requiring no components. When the spell is cast or a new spell is stored, any previously stored spell is lost."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The construct makes two fist attacks."
+            },
+            {
+                "id": "fist",
+                "name": "Fist",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 11 (2d6 + 4) bludgeoning damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 4,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "shield",
+                "name": "Shield",
+                "category": "reactions",
+                "text": "When a creature makes an attack against the wearer of the construct's amulet, the construct grants a +2 bonus to the wearer's AC if the construct is within 5 feet of the wearer."
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning"
+            ],
+            "senses": [
+                "blindsight",
+                "darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "regeneration"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "cant_speak",
+                "any_choose"
+            ],
+            "environment": [
+                "urban"
+            ]
+        }
+    },
+    {
+        "id": "demon-psk",
+        "kind": "monster",
+        "name": "Demon",
+        "source": "PSK",
+        "edition": "classic",
+        "tags": [
+            "Magic Resistance"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "fiend",
+            "tags": [
+                "devil"
+            ]
+        },
+        "alignment": [
+            "lawful evil"
+        ],
+        "ac": [
+            {
+                "value": 18,
+                "from": [
+                    "plate armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 153,
+            "formula": "18d8 + 72"
+        },
+        "speed": {
+            "walk": 30,
+            "fly": 60
+        },
+        "abilities": {
+            "str": 18,
+            "dex": 16,
+            "con": 18,
+            "int": 14,
+            "wis": 14,
+            "cha": 18
+        },
+        "saves": {
+            "dex": 7,
+            "con": 8,
+            "wis": 6,
+            "cha": 8
+        },
+        "senses": {
+            "truesight": 120
+        },
+        "passive_perception": 12,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "cold"
+                ],
+                "conditional": [
+                    {
+                        "types": [
+                            "bludgeoning",
+                            "piercing",
+                            "slashing"
+                        ],
+                        "note": "from nonmagical attacks that aren't silvered"
+                    }
+                ]
+            },
+            "immune": {
+                "types": [
+                    "fire",
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "Infernal",
+            "telepathy 120 ft."
+        ],
+        "cr": {
+            "cr": "12",
+            "xp": 8400,
+            "pb": 4
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "hellish-weapons",
+                "name": "Hellish Weapons",
+                "category": "traits",
+                "text": "The demon's weapon attacks are magical and deal an extra 13 (3d8) necrotic damage on a hit (included in the attacks).",
+                "action": {
+                    "attack": {
+                        "kind": "any",
+                        "damage": [
+                            {
+                                "dice": "3d8",
+                                "type": "necrotic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The demon has advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The demon makes three attacks."
+            },
+            {
+                "id": "longsword",
+                "name": "Longsword",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +8 to hit, reach 5 ft., one target. Hit: 8 (1d8 + 4) slashing damage, or 9 (1d10 + 4) slashing damage if used with two hands, plus 13 (3d8) necrotic damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 8,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 4,
+                                "type": "slashing"
+                            },
+                            {
+                                "dice": "1d10",
+                                "bonus": 4,
+                                "type": "slashing",
+                                "condition": "if used with two hands"
+                            },
+                            {
+                                "dice": "3d8",
+                                "type": "necrotic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "longbow",
+                "name": "Longbow",
+                "category": "actions",
+                "text": "Ranged Weapon Attack: +7 to hit, range 150/600 ft., one target. Hit: 7 (1d8 + 3) piercing damage plus 13 (3d8) necrotic damage.",
+                "action": {
+                    "range": "range 150/600 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 3,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "3d8",
+                                "type": "necrotic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "parry",
+                "name": "Parry",
+                "category": "reactions",
+                "text": "The demon adds 4 to its AC against one melee attack that would hit it. To do so, the demon must see the attacker and be wielding a melee weapon."
+            }
+        ],
+        "items": [
+            {
+                "item": "longbow-phb",
+                "qty": 1,
+                "attacks": true
+            },
+            {
+                "item": "longsword-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "variants": [
+            {
+                "id": "rope-of-entanglement",
+                "name": "Rope of Entanglement",
+                "text": "Some demon carry a rope of entanglement (detailed in the Dungeon Master's Guide). When such an demon uses its Multiattack, the demon can use the rope in place of two of the attacks."
+            },
+            {
+                "id": "summon-devil-1-day",
+                "name": "Summon Devil (1/Day)",
+                "text": "The devil chooses what to summon and attempts a magical summoning.\n\nAn demon has a 50 percent chance of summoning 3d6 spined devils, 1d6 bearded devils, or one erinyes.\n\nA summoned devil appears in an unoccupied space within 60 feet of its summoner, acts as an ally of its summoner, and can't summon other devils. It remains for 1 minute, until it or its summoner dies, or until its summoner dismisses it as an action.",
+                "version": "erinyes-summoner-psk"
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "poison",
+                "piercing",
+                "slashing"
+            ],
+            "conditions_inflicted": [
+                "poisoned"
+            ],
+            "saves_forced": [
+                "con"
+            ],
+            "senses": [
+                "truesight"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "actions": [
+                "multiattack",
+                "parry"
+            ],
+            "traits": [
+                "magic_resistance"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack",
+                "ranged_weapon",
+                "ranged_weapon_attack"
+            ],
+            "languages": [
+                "infernal",
+                "telepathy"
+            ]
+        }
+    },
+    {
+        "id": "erinyes-summoner-psk",
+        "kind": "monster",
+        "name": "Erinyes (Summoner)",
+        "source": "PSK",
+        "edition": "classic",
+        "tags": [
+            "Magic Resistance"
+        ],
+        "version_of": "demon-psk",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "fiend",
+            "tags": [
+                "devil"
+            ]
+        },
+        "alignment": [
+            "lawful evil"
+        ],
+        "ac": [
+            {
+                "value": 18,
+                "from": [
+                    "plate armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 153,
+            "formula": "18d8 + 72"
+        },
+        "speed": {
+            "walk": 30,
+            "fly": 60
+        },
+        "abilities": {
+            "str": 18,
+            "dex": 16,
+            "con": 18,
+            "int": 14,
+            "wis": 14,
+            "cha": 18
+        },
+        "saves": {
+            "dex": 7,
+            "con": 8,
+            "wis": 6,
+            "cha": 8
+        },
+        "senses": {
+            "truesight": 120
+        },
+        "passive_perception": 12,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "cold"
+                ],
+                "conditional": [
+                    {
+                        "types": [
+                            "bludgeoning",
+                            "piercing",
+                            "slashing"
+                        ],
+                        "note": "from nonmagical attacks that aren't silvered"
+                    }
+                ]
+            },
+            "immune": {
+                "types": [
+                    "fire",
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "Infernal",
+            "telepathy 120 ft."
+        ],
+        "cr": {
+            "cr": "12",
+            "xp": 8400,
+            "pb": 4
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "hellish-weapons",
+                "name": "Hellish Weapons",
+                "category": "traits",
+                "text": "The demon's weapon attacks are magical and deal an extra 13 (3d8) necrotic damage on a hit (included in the attacks).",
+                "action": {
+                    "attack": {
+                        "kind": "any",
+                        "damage": [
+                            {
+                                "dice": "3d8",
+                                "type": "necrotic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The demon has advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The demon makes three attacks."
+            },
+            {
+                "id": "longsword",
+                "name": "Longsword",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +8 to hit, reach 5 ft., one target. Hit: 8 (1d8 + 4) slashing damage, or 9 (1d10 + 4) slashing damage if used with two hands, plus 13 (3d8) necrotic damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 8,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 4,
+                                "type": "slashing"
+                            },
+                            {
+                                "dice": "1d10",
+                                "bonus": 4,
+                                "type": "slashing",
+                                "condition": "if used with two hands"
+                            },
+                            {
+                                "dice": "3d8",
+                                "type": "necrotic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "longbow",
+                "name": "Longbow",
+                "category": "actions",
+                "text": "Ranged Weapon Attack: +7 to hit, range 150/600 ft., one target. Hit: 7 (1d8 + 3) piercing damage plus 13 (3d8) necrotic damage.",
+                "action": {
+                    "range": "range 150/600 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 3,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "3d8",
+                                "type": "necrotic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "summon-devil",
+                "name": "Summon Devil",
+                "category": "actions",
+                "text": "The devil chooses what to summon and attempts a magical summoning.\n\nAn demon has a 50 percent chance of summoning 3d6 spined devils, 1d6 bearded devils, or one erinyes.\n\nA summoned devil appears in an unoccupied space within 60 feet of its summoner, acts as an ally of its summoner, and can't summon other devils. It remains for 1 minute, until it or its summoner dies, or until its summoner dismisses it as an action.",
+                "uses": {
+                    "max": 1,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "parry",
+                "name": "Parry",
+                "category": "reactions",
+                "text": "The demon adds 4 to its AC against one melee attack that would hit it. To do so, the demon must see the attacker and be wielding a melee weapon."
+            }
+        ],
+        "items": [
+            {
+                "item": "longbow-phb",
+                "qty": 1,
+                "attacks": true
+            },
+            {
+                "item": "longsword-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "poison",
+                "piercing",
+                "slashing"
+            ],
+            "conditions_inflicted": [
+                "poisoned"
+            ],
+            "saves_forced": [
+                "con"
+            ],
+            "senses": [
+                "truesight"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "actions": [
+                "multiattack",
+                "parry"
+            ],
+            "traits": [
+                "magic_resistance"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack",
+                "ranged_weapon",
+                "ranged_weapon_attack"
+            ],
+            "languages": [
+                "infernal",
+                "telepathy"
+            ]
+        }
+    },
+    {
+        "id": "dragon-psk",
+        "kind": "monster",
+        "name": "Dragon",
+        "source": "PSK",
+        "edition": "classic",
+        "tags": [
+            "Legendary Resistances"
+        ],
+        "size": [
+            "huge"
+        ],
+        "creature_type": {
+            "type": "dragon"
+        },
+        "alignment": [
+            "chaotic evil"
+        ],
+        "ac": [
+            {
+                "value": 19,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 256,
+            "formula": "19d12 + 133"
+        },
+        "speed": {
+            "walk": 40,
+            "fly": 80,
+            "climb": 40
+        },
+        "abilities": {
+            "str": 27,
+            "dex": 10,
+            "con": 25,
+            "int": 16,
+            "wis": 13,
+            "cha": 21
+        },
+        "saves": {
+            "dex": 6,
+            "con": 13,
+            "wis": 7,
+            "cha": 11
+        },
+        "skills": {
+            "perception": 13,
+            "stealth": 6
+        },
+        "senses": {
+            "darkvision": 120,
+            "blindsight": 60
+        },
+        "passive_perception": 23,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "fire"
+                ]
+            }
+        },
+        "languages": [
+            "Common",
+            "Draconic"
+        ],
+        "cr": {
+            "cr": "17",
+            "xp": 18000,
+            "pb": 6
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "legendary-resistance",
+                "name": "Legendary Resistance",
+                "category": "traits",
+                "text": "If the dragon fails a saving throw, it can choose to succeed instead.",
+                "uses": {
+                    "max": 3,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The dragon can use its Frightful Presence. It then makes three attacks: one with its bite and two with its claws."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +14 to hit, reach 10 ft., one target. Hit: 19 (2d10 + 8) piercing damage plus 7 (2d6) fire damage.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 14,
+                        "damage": [
+                            {
+                                "dice": "2d10",
+                                "bonus": 8,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "2d6",
+                                "type": "fire"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "claw",
+                "name": "Claw",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +14 to hit, reach 5 ft., one target. Hit: 15 (2d6 + 8) slashing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 14,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 8,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "tail",
+                "name": "Tail",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +14 to hit, reach 15 ft., one target. Hit: 17 (2d8 + 8) bludgeoning damage.",
+                "action": {
+                    "range": "reach 15 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 14,
+                        "damage": [
+                            {
+                                "dice": "2d8",
+                                "bonus": 8,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "frightful-presence",
+                "name": "Frightful Presence",
+                "category": "actions",
+                "text": "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a DC 19 Wisdom saving throw or become frightened for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. If a creature's saving throw is successful or the effect ends for it, the creature is immune to the dragon's Frightful Presence for the next 24 hours.",
+                "action": {
+                    "save": {
+                        "ability": "wis",
+                        "dc": 19,
+                        "on_success": "none",
+                        "conditions": [
+                            "frightened"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "fire-breath",
+                "name": "Fire Breath",
+                "category": "actions",
+                "text": "The dragon exhales fire in a 60-foot cone. Each creature in that area must make a DC 21 Dexterity saving throw, taking 63 (18d6) fire damage on a failed save, or half as much damage on a successful one.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "area": "60-foot cone",
+                    "save": {
+                        "ability": "dex",
+                        "dc": 21,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "18d6",
+                                "type": "fire"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "fiery-bite",
+                "name": "Fiery Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +14 to hit, reach 10 ft., one target. Hit: 19 (2d10 + 8) piercing damage plus 63 (18d6) fire damage. This counts as a use of the dragon's breath weapon.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 14,
+                        "damage": [
+                            {
+                                "dice": "2d10",
+                                "bonus": 8,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "18d6",
+                                "type": "fire"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "detect",
+                "name": "Detect",
+                "category": "legendary_actions",
+                "text": "The dragon makes a Wisdom (Perception) check."
+            },
+            {
+                "id": "tail-attack",
+                "name": "Tail Attack",
+                "category": "legendary_actions",
+                "text": "The dragon makes a tail attack."
+            },
+            {
+                "id": "wing-attack",
+                "name": "Wing Attack",
+                "category": "legendary_actions",
+                "text": "The dragon beats its wings. Each creature within 10 feet of the dragon must succeed on a DC 22 Dexterity saving throw or take 15 (2d6 + 8) bludgeoning damage and be knocked prone. The dragon can then fly up to half its flying speed.",
+                "cost": 2,
+                "action": {
+                    "save": {
+                        "ability": "dex",
+                        "dc": 22,
+                        "on_success": "none",
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 8,
+                                "type": "bludgeoning"
+                            }
+                        ],
+                        "conditions": [
+                            "prone"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "lair-actions",
+                "name": "Lair Actions",
+                "category": "lair_actions",
+                "text": "On initiative count 20 (losing initiative ties), the dragon takes a lair action to cause one of the following effects; the dragon can't use the same effect two rounds in a row:\n\n- Magma erupts from a point on the ground the dragon can see within 120 feet of it, creating a 20-foot-high, 5-foot-radius geyser. Each creature in the geyser's area must make a DC 15 Dexterity saving throw, taking 21 (6d6) fire damage on a failed save, or half as much damage on a successful one.\n- A tremor shakes the lair in a 60-foot radius around the dragon. Each creature other than the dragon on the ground in that area must succeed on a DC 15 Dexterity saving throw or be knocked prone.\n- Volcanic gases form a cloud in a 20-foot-radius sphere centered on a point the dragon can see within 120 feet of it. The sphere spreads around corners, and its area is lightly obscured. It lasts until initiative count 20 on the next round. Each creature that starts its turn in the cloud must succeed on a DC 13 Constitution saving throw or be poisoned until the end of its turn. While poisoned in this way, a creature is incapacitated.\n\n**Additional Lair Actions.** At your discretion, a legendary (adult or ancient) red dragon can use one or both of the following additional lair actions while in its lair:\n\n- **Noxious Smoke.** A cloud of thick, dark smoke fills a 20-foot-radius sphere centered on a point the dragon can see within 120 feet of it. The sphere spreads around corners, and its area is heavily obscured. A creature other than the dragon that starts its turn in the cloud or enters it for the first time on its turn must succeed on a DC 15 Constitution saving throw or be poisoned until the end of its turn. The cloud lasts until initiative count 20 on the next round.\n- **Searing Heat.** Searing heat spreads out in a 15-foot-radius sphere centered on a point the dragon can see within 120 feet of it. Any creature that enters the affected area or starts its turn there must make a DC 15 Constitution saving throw, taking 10 (3d6) fire damage on a failed save, or half as much damage on a successful one. The heat lasts until initiative count 20 on the next round."
+            },
+            {
+                "id": "regional-effects",
+                "name": "Regional Effects",
+                "category": "regional_effects",
+                "text": "The region containing a legendary red dragon's lair is warped by the dragon's magic, which creates one or more of the following effects:\n\n- Small earthquakes are common within 6 miles of the dragon's lair.\n- Water sources within 1 mile of the lair are supernaturally warm and tainted by sulfur.\n- Rocky fissures within 1 mile of the dragon's lair form portals to the Elemental Plane of Fire, allowing creatures of elemental fire into the world to dwell nearby.\n\nIf the dragon dies, these effects fade over the course of 1d10 days.\n\n**Additional Regional Effects.** Any of these effects might appear in the area around a red dragon's lair, in addition to or instead of the effects described in the *Monster Manual*:\n\n- **Desertification.** Precipitation is almost nonexistent within 6 miles of the dragon's lair, making the land parched and arid and most plant life withered and brown.\n- **Fiery Senses.** The dragon can hear up to 30 feet through any open flame within 1 mile of the dragon's lair.\n- **Ominous Flames.** Open flames within 6 miles of the dragon's lair are tinged dark red, hiss and crackle constantly, and throw off embers and showers of sparks."
+            }
+        ],
+        "legendary_actions": {
+            "uses": 3
+        },
+        "variants": [
+            {
+                "id": "customizing-dragons",
+                "name": "Customizing Dragons",
+                "text": "You can customize any dragon's stat block to reflect the dragon's unique character. Minor changes such as those below are easy to make and have no impact on a dragon's challenge rating.\n\n**Languages.** Most dragons prefer to speak Draconic but learn Common for dealing with allies and minions. But given their high Intelligence and long life span, dragons can easily learn additional languages. You can add languages to a dragon's stat block.\n\n**Skills.** Most dragons are proficient in the Perception and Stealth skills, and many dragons have additional skill proficiencies. As with languages, you can customize a dragon's skill list (even doubling their proficiency bonus with certain skills) to reflect particular interests and activities. You can also give a dragon tool proficiencies, particularly if the dragon spends time in Humanoid form.\n\n**Spells.** See the \"Variant: Dragons as Innate Spellcasters\" inset(s), below.\n\n**Other Traits and Actions.** You can borrow traits and actions from other monsters to add unique flavor to a dragon. Consider these examples:\n\n- **Damage Absorption.** You might decide that this dragon is not only unharmed by fire damage, but actually healed by it. Whenever the dragon is subjected to fire damage, it takes no damage and instead regains a number of hit points equal to the fire damage dealt.\n- **Flyby.** The dragon is an agile flier, quick to fly out of enemies' reach. The dragon doesn't provoke an opportunity attack when it flies out of an enemy's reach.\n- **Mimicry.** Impersonating characters or their allies could be a fun trick for a crafty dragon. The dragon can mimic any sounds it has heard, including voices. A creature that hears the sounds can tell they are imitations with a successful DC 13 Wisdom (Insight) check.\n- **Rejuvenation.** You might decide that dragons in your campaign, being an essential part of the Material Plane, are nearly impossible to destroy. A dragon's life essence might be preserved in the egg from which it first emerged, in its hoard, or in a cavernous hall at the center of the world, just as a lich's essence is hidden in a phylactery. If it has an essence-preserving object, a destroyed dragon gains a new body in 1d10 days, regaining all its hit points and becoming active again. The new body appears within 5 feet of the object.\n- **Special Senses.** Most dragons have blindsight and darkvision. You might upgrade blindsight to truesight, or you could give a dragon with a burrowing speed tremorsense."
+            }
+        ],
+        "flags": {
+            "dragon_age": "adult",
+            "dragon_casting_color": "red"
+        },
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "fire",
+                "piercing",
+                "slashing"
+            ],
+            "conditions_inflicted": [
+                "frightened",
+                "prone",
+                "incapacitated",
+                "poisoned"
+            ],
+            "saves_forced": [
+                "dex",
+                "wis",
+                "con"
+            ],
+            "senses": [
+                "blindsight",
+                "superior_darkvision"
+            ],
+            "movement": [
+                "fly",
+                "climb"
+            ],
+            "actions": [
+                "breath_weapon",
+                "frightful_presence",
+                "multiattack"
+            ],
+            "traits": [
+                "legendary_resistances"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_weapon_attack",
+                "reach"
+            ],
+            "languages": [
+                "common",
+                "draconic"
+            ],
+            "environment": [
+                "mountain",
+                "hill"
+            ],
+            "groups": [
+                "Chromatic Dragon"
+            ]
+        }
+    },
+    {
+        "id": "drake-large-psk",
+        "kind": "monster",
+        "name": "Drake (Large)",
+        "source": "PSK",
+        "edition": "classic",
+        "tags": [
+            "Keen Senses"
+        ],
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "beast"
+        },
+        "alignment": [
+            "neutral good"
+        ],
+        "ac": [
+            {
+                "value": 13
+            }
+        ],
+        "hp": {
+            "average": 26,
+            "formula": "4d10 + 4"
+        },
+        "speed": {
+            "walk": 10,
+            "fly": 80
+        },
+        "abilities": {
+            "str": 16,
+            "dex": 17,
+            "con": 13,
+            "int": 8,
+            "wis": 14,
+            "cha": 10
+        },
+        "skills": {
+            "perception": 4
+        },
+        "passive_perception": 14,
+        "cr": {
+            "cr": "1",
+            "xp": 200,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "keen-sight",
+                "name": "Keen Sight",
+                "category": "traits",
+                "text": "The drake has advantage on Wisdom (Perception) checks that rely on sight."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The drake makes two attacks: one with its beak and one with its talons."
+            },
+            {
+                "id": "beak",
+                "name": "Beak",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 6 (1d6 + 3) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 3,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "talons",
+                "name": "Talons",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) slashing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 3,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing",
+                "slashing"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "keen_senses"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "auran",
+                "common",
+                "cant_speak",
+                "other"
+            ],
+            "environment": [
+                "mountain",
+                "grassland",
+                "hill",
+                "coastal"
+            ]
+        }
+    },
+    {
+        "id": "drake-small-psk",
+        "kind": "monster",
+        "name": "Drake (Small)",
+        "source": "PSK",
+        "edition": "classic",
+        "tags": [
+            "Flyby"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "beast"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 13,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 13,
+            "formula": "3d8"
+        },
+        "speed": {
+            "walk": 10,
+            "fly": 60
+        },
+        "abilities": {
+            "str": 12,
+            "dex": 15,
+            "con": 10,
+            "int": 2,
+            "wis": 9,
+            "cha": 5
+        },
+        "skills": {
+            "perception": 1
+        },
+        "passive_perception": 11,
+        "cr": {
+            "cr": "1/4",
+            "xp": 50,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "flyby",
+                "name": "Flyby",
+                "category": "traits",
+                "text": "The drake doesn't provoke opportunity attacks when it flies out of an enemy's reach."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: 6 (2d4 + 1) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 3,
+                        "damage": [
+                            {
+                                "dice": "2d4",
+                                "bonus": 1,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "traits": [
+                "flyby"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "environment": [
+                "mountain",
+                "grassland",
+                "coastal"
+            ],
+            "groups": [
+                "Dinosaurs"
+            ]
+        }
+    },
+    {
+        "id": "giant-psk",
+        "kind": "monster",
+        "name": "Giant",
+        "source": "PSK",
+        "edition": "classic",
+        "tags": [
+            "Camouflage"
+        ],
+        "size": [
+            "huge"
+        ],
+        "creature_type": {
+            "type": "giant"
+        },
+        "alignment": [
+            "neutral"
+        ],
+        "ac": [
+            {
+                "value": 17,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 126,
+            "formula": "11d12 + 55"
+        },
+        "speed": {
+            "walk": 40
+        },
+        "abilities": {
+            "str": 23,
+            "dex": 15,
+            "con": 20,
+            "int": 10,
+            "wis": 12,
+            "cha": 9
+        },
+        "saves": {
+            "dex": 5,
+            "con": 8,
+            "wis": 4
+        },
+        "skills": {
+            "athletics": 12,
+            "perception": 4
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 14,
+        "languages": [
+            "Giant"
+        ],
+        "cr": {
+            "cr": "7",
+            "xp": 2900,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "stone-camouflage",
+                "name": "Stone Camouflage",
+                "category": "traits",
+                "text": "The giant has advantage on Dexterity (Stealth) checks made to hide in rocky terrain."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The giant makes two greatclub attacks."
+            },
+            {
+                "id": "greatclub",
+                "name": "Greatclub",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +9 to hit, reach 15 ft., one target. Hit: 19 (3d8 + 6) bludgeoning damage.",
+                "action": {
+                    "range": "reach 15 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 9,
+                        "damage": [
+                            {
+                                "dice": "3d8",
+                                "bonus": 6,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "rock",
+                "name": "Rock",
+                "category": "actions",
+                "text": "Ranged Weapon Attack: +9 to hit, range 60/240 ft., one target. Hit: 28 (4d10 + 6) bludgeoning damage. If the target is a creature, it must succeed on a DC 17 Strength saving throw or be knocked prone.",
+                "action": {
+                    "range": "range 60/240 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 9,
+                        "damage": [
+                            {
+                                "dice": "4d10",
+                                "bonus": 6,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "str",
+                        "dc": 17,
+                        "on_success": "none",
+                        "conditions": [
+                            "prone"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "rock-catching",
+                "name": "Rock Catching",
+                "category": "reactions",
+                "text": "If a rock or similar object is hurled at the giant, the giant can, with a successful DC 10 Dexterity saving throw, catch the missile and take no bludgeoning damage from it.",
+                "action": {
+                    "save": {
+                        "ability": "dex",
+                        "dc": 10,
+                        "on_success": "none"
+                    }
+                }
+            }
+        ],
+        "items": [
+            {
+                "item": "greatclub-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "variants": [
+            {
+                "id": "new-giant-options",
+                "name": "New Giant Options",
+                "text": "Some adult stone giants like to grab enemies and fling them through the air. They can also roll boulders across the ground, striking multiple enemies in a line. These abilities are represented by the following action options.\n\n**Fling.** The giant tries to throw a Small or Medium creature within 10 feet of it. The target must succeed on a DC 17 Dexterity saving throw or be hurled up to 60 feet horizontally in a direction of the giant's choice and land prone, taking 3 (1d6) bludgeoning damage for every 10 feet it was thrown.\n\n**Rolling Rock.** The giant sends a rock tumbling along the ground in a 30-foot line that is 5 feet wide. Each creature in that line must make a DC 17 Dexterity saving throw, taking 22 (3d10 + 6) bludgeoning damage and falling prone on a failed save",
+                "version": "stone-giant-optional-actions-skt"
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning"
+            ],
+            "conditions_inflicted": [
+                "prone"
+            ],
+            "saves_forced": [
+                "dex",
+                "str"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "camouflage"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack",
+                "reach",
+                "ranged_weapon_attack"
+            ],
+            "languages": [
+                "giant"
+            ],
+            "environment": [
+                "underdark",
+                "mountain",
+                "hill"
+            ]
+        }
+    },
+    {
+        "id": "gremlin-psk",
+        "kind": "monster",
+        "name": "Gremlin",
+        "source": "PSK",
+        "edition": "classic",
+        "size": [
+            "small"
+        ],
+        "creature_type": {
+            "type": "beast"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 11
+            }
+        ],
+        "hp": {
+            "average": 27,
+            "formula": "5d8 + 5"
+        },
+        "speed": {
+            "walk": 40
+        },
+        "abilities": {
+            "str": 12,
+            "dex": 13,
+            "con": 13,
+            "int": 3,
+            "wis": 13,
+            "cha": 6
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 11,
+        "cr": {
+            "cr": "1/2",
+            "xp": 100,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "aether-scent",
+                "name": "Aether Scent",
+                "category": "traits",
+                "text": "The gremlin can pinpoint, by scent, the location of refined or unrefined aether within 30 feet of it."
+            },
+            {
+                "id": "claws",
+                "name": "Claws",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: 5 (1d8 + 1) slashing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 3,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 1,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "siphon",
+                "name": "Siphon",
+                "category": "actions",
+                "text": "The gremlin drains aether from an aether-powered device it can see within 5 feet of it. If the object isn't being worn or carried, the touch automatically drains aether. If the object is being worn or carried by a creature, the creature must succeed on a DC 11 Dexterity saving throw to keep it out of the gremlin's reach.\n\nIf the aether-powered device grants any bonus (to attack rolls, damage rolls, Armor Class, and so on), that bonus is reduced by 1. If the device has charges, it loses 1 charge. Otherwise, it stops functioning for 1 round. Left unhindered, a gremlin can completely destroy an aether-powered device.",
+                "action": {
+                    "save": {
+                        "ability": "dex",
+                        "dc": 11,
+                        "on_success": "none"
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "slashing"
+            ],
+            "saves_forced": [
+                "dex"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ]
+        }
+    },
+    {
+        "id": "hellion-huge-psk",
+        "kind": "monster",
+        "name": "Hellion (Huge)",
+        "source": "PSK",
+        "edition": "classic",
+        "size": [
+            "huge"
+        ],
+        "creature_type": {
+            "type": "monstrosity"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 17,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 195,
+            "formula": "17d12 + 85"
+        },
+        "speed": {
+            "walk": 30,
+            "burrow": 20
+        },
+        "abilities": {
+            "str": 24,
+            "dex": 13,
+            "con": 21,
+            "int": 4,
+            "wis": 10,
+            "cha": 5
+        },
+        "senses": {
+            "darkvision": 60,
+            "tremorsense": 60
+        },
+        "passive_perception": 10,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "cold",
+                    "fire"
+                ]
+            }
+        },
+        "cr": {
+            "cr": "11",
+            "xp": 7200,
+            "pb": 4
+        },
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "heated-body",
+                "name": "Heated Body",
+                "category": "traits",
+                "text": "A creature that touches the hellion or hits it with a melee attack while within 5 feet of it takes 10 (3d6) fire damage.",
+                "action": {
+                    "damage": [
+                        {
+                            "dice": "3d6",
+                            "type": "fire"
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +11 to hit, reach 10 ft., one target. Hit: 40 (6d10 + 7) piercing damage plus 10 (3d6) fire damage. If the target is a creature, it is grappled (escape DC 17). Until this grapple ends, the target is restrained, and the hellion can't bite another target.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 11,
+                        "damage": [
+                            {
+                                "dice": "6d10",
+                                "bonus": 7,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "3d6",
+                                "type": "fire"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "swallow",
+                "name": "Swallow",
+                "category": "actions",
+                "text": "The hellion makes one bite attack against a Medium or smaller creature it is grappling. If the attack hits, that creature takes the bite's damage and is swallowed, and the grapple ends. While swallowed, the creature is blinded and restrained, it has total cover against attacks and other effects outside the hellion, and it takes 21 (6d6) acid damage at the start of each of the hellion's turns.\n\nIf the hellion takes 30 damage or more on a single turn from a creature inside it, the hellion must succeed on a DC 15 Constitution saving throw at the end of that turn or regurgitate all swallowed creatures, which fall prone in a space within 10 feet of the hellion. If the hellion dies, a swallowed creature is no longer restrained by it and can escape from the corpse using 15 feet of movement, exiting prone.",
+                "action": {
+                    "save": {
+                        "ability": "con",
+                        "dc": 15,
+                        "on_success": "none",
+                        "conditions": [
+                            "prone",
+                            "restrained"
+                        ]
+                    },
+                    "damage": [
+                        {
+                            "dice": "6d6",
+                            "type": "acid"
+                        }
+                    ]
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "acid",
+                "fire",
+                "piercing"
+            ],
+            "conditions_inflicted": [
+                "blinded",
+                "grappled",
+                "restrained"
+            ],
+            "saves_forced": [
+                "con"
+            ],
+            "senses": [
+                "darkvision",
+                "tremorsense"
+            ],
+            "movement": [
+                "burrow"
+            ],
+            "actions": [
+                "swallow"
+            ],
+            "misc": [
+                "melee_weapon_attack",
+                "reach"
+            ],
+            "environment": [
+                "arctic"
+            ]
+        }
+    },
+    {
+        "id": "hellion-large-psk",
+        "kind": "monster",
+        "name": "Hellion (Large)",
+        "source": "PSK",
+        "edition": "classic",
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "monstrosity"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 14,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 93,
+            "formula": "11d10 + 33"
+        },
+        "speed": {
+            "walk": 30,
+            "burrow": 30
+        },
+        "abilities": {
+            "str": 18,
+            "dex": 13,
+            "con": 17,
+            "int": 3,
+            "wis": 10,
+            "cha": 4
+        },
+        "senses": {
+            "darkvision": 60,
+            "tremorsense": 60
+        },
+        "passive_perception": 10,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "cold",
+                    "fire"
+                ]
+            }
+        },
+        "cr": {
+            "cr": "5",
+            "xp": 1800,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "heated-body",
+                "name": "Heated Body",
+                "category": "traits",
+                "text": "A creature that touches the hellion or hits it with a melee attack while within 5 feet of it takes 7 (2d6) fire damage.",
+                "action": {
+                    "damage": [
+                        {
+                            "dice": "2d6",
+                            "type": "fire"
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 20 (3d10 + 4) piercing damage plus 7 (2d6) fire damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "3d10",
+                                "bonus": 4,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "2d6",
+                                "type": "fire"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "fire",
+                "piercing"
+            ],
+            "senses": [
+                "darkvision",
+                "tremorsense"
+            ],
+            "movement": [
+                "burrow"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "environment": [
+                "arctic"
+            ]
+        }
+    },
+    {
+        "id": "hydra-psk",
+        "kind": "monster",
+        "name": "Hydra",
+        "source": "PSK",
+        "edition": "classic",
+        "tags": [
+            "Hold Breath"
+        ],
+        "size": [
+            "huge"
+        ],
+        "creature_type": {
+            "type": "monstrosity"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 15,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 172,
+            "formula": "15d12 + 75"
+        },
+        "speed": {
+            "walk": 30,
+            "swim": 30
+        },
+        "abilities": {
+            "str": 20,
+            "dex": 12,
+            "con": 20,
+            "int": 2,
+            "wis": 10,
+            "cha": 7
+        },
+        "skills": {
+            "perception": 6
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 16,
+        "cr": {
+            "cr": "8",
+            "xp": 3900,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "hold-breath",
+                "name": "Hold Breath",
+                "category": "traits",
+                "text": "The hydra can hold its breath for 1 hour."
+            },
+            {
+                "id": "multiple-heads",
+                "name": "Multiple Heads",
+                "category": "traits",
+                "text": "The hydra has five heads. While it has more than one head, the hydra has advantage on saving throws against being blinded, charmed, deafened, frightened, stunned, and knocked unconscious.\n\nWhenever the hydra takes 25 or more damage in a single turn, one of its heads dies. If all its heads die, the hydra dies.\n\nAt the end of its turn, it grows two heads for each of its heads that died since its last turn, unless it has taken fire damage since its last turn. The hydra regains 10 hit points for each head regrown in this way."
+            },
+            {
+                "id": "reactive-heads",
+                "name": "Reactive Heads",
+                "category": "traits",
+                "text": "For each head the hydra has beyond one, it gets an extra reaction that can be used only for opportunity attacks."
+            },
+            {
+                "id": "wakeful",
+                "name": "Wakeful",
+                "category": "traits",
+                "text": "While the hydra sleeps, at least one of its heads is awake."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The hydra makes as many bite attacks as it has heads."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +8 to hit, reach 10 ft., one target. Hit: 10 (1d10 + 5) piercing damage.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 8,
+                        "damage": [
+                            {
+                                "dice": "1d10",
+                                "bonus": 5,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "movement": [
+                "swim"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "hold_breath"
+            ],
+            "misc": [
+                "melee_weapon_attack",
+                "reach"
+            ],
+            "environment": [
+                "swamp"
+            ]
+        }
+    },
+    {
+        "id": "lifecraft-elephant-psk",
+        "kind": "monster",
+        "name": "Lifecraft Elephant",
+        "source": "PSK",
+        "edition": "classic",
+        "size": [
+            "huge"
+        ],
+        "creature_type": {
+            "type": "construct"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 12,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 76,
+            "formula": "8d12 + 24"
+        },
+        "speed": {
+            "walk": 40
+        },
+        "abilities": {
+            "str": 22,
+            "dex": 9,
+            "con": 17,
+            "int": 3,
+            "wis": 11,
+            "cha": 6
+        },
+        "passive_perception": 10,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "poisoned"
+                ]
+            }
+        },
+        "cr": {
+            "cr": "4",
+            "xp": 1100,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": -1
+        },
+        "features": [
+            {
+                "id": "trampling-charge",
+                "name": "Trampling Charge",
+                "category": "traits",
+                "text": "If the elephant moves at least 20 feet straight toward a creature and then hits it with a gore attack on the same turn, that target must succeed on a DC 12 Strength saving throw or be knocked prone. If the target is prone, the elephant can make one stomp attack against it as a bonus action.",
+                "action": {
+                    "save": {
+                        "ability": "str",
+                        "dc": 12,
+                        "on_success": "none",
+                        "conditions": [
+                            "prone"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "gore",
+                "name": "Gore",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +8 to hit, reach 5 ft., one target. Hit: 19 (3d8 + 6) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 8,
+                        "damage": [
+                            {
+                                "dice": "3d8",
+                                "bonus": 6,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "stomp",
+                "name": "Stomp",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +8 to hit, reach 5 ft., one prone creature. Hit: 22 (3d10 + 6) bludgeoning damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 8,
+                        "damage": [
+                            {
+                                "dice": "3d10",
+                                "bonus": 6,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "piercing"
+            ],
+            "conditions_inflicted": [
+                "prone"
+            ],
+            "saves_forced": [
+                "str"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "environment": [
+                "grassland"
+            ]
+        }
+    },
+    {
+        "id": "servo-psk",
+        "kind": "monster",
+        "name": "Servo",
+        "source": "PSK",
+        "edition": "classic",
+        "size": [
+            "tiny"
+        ],
+        "creature_type": {
+            "type": "construct"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 11,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 10,
+            "formula": "3d4 + 3"
+        },
+        "speed": {
+            "walk": 20
+        },
+        "abilities": {
+            "str": 4,
+            "dex": 11,
+            "con": 12,
+            "int": 3,
+            "wis": 10,
+            "cha": 7
+        },
+        "passive_perception": 10,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "poisoned"
+                ]
+            }
+        },
+        "cr": {
+            "cr": "0",
+            "xp": 10,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "claw",
+                "name": "Claw",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +0 to hit, reach 5 ft., one target. Hit: 1 slashing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 0,
+                        "damage": [
+                            {
+                                "bonus": 1,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "flags": {
+            "familiar": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "slashing"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ]
+        }
+    },
+    {
+        "id": "sky-leviathan-psk",
+        "kind": "monster",
+        "name": "Sky Leviathan",
+        "source": "PSK",
+        "edition": "classic",
+        "size": [
+            "gargantuan"
+        ],
+        "creature_type": {
+            "type": "beast"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 14,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 247,
+            "formula": "15d20 + 90"
+        },
+        "speed": {
+            "fly": 50,
+            "hover": true
+        },
+        "abilities": {
+            "str": 28,
+            "dex": 7,
+            "con": 22,
+            "int": 1,
+            "wis": 8,
+            "cha": 4
+        },
+        "saves": {
+            "con": 10,
+            "wis": 3
+        },
+        "passive_perception": 9,
+        "cr": {
+            "cr": "10",
+            "xp": 5900,
+            "pb": 4
+        },
+        "initiative": {
+            "bonus": -2
+        },
+        "features": [
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +9 to hit, reach 10 ft., one target. Hit: 22 (3d8 + 9) piercing damage. If the target is a Large or smaller creature, it must succeed on a DC 18 Dexterity saving throw or be swallowed by the leviathan. A swallowed creature is blinded and restrained, it has total cover against attacks and other effects outside the leviathan, and it takes 21 (6d6) acid damage at the start of each of the leviathan's turns.\n\nIf the leviathan takes 30 damage or more on a single turn from a creature inside it, the leviathan must succeed on a DC 21 Constitution saving throw at the end of that turn or regurgitate all swallowed creatures, which fall prone in a space within 10 feet of the leviathan. If the leviathan dies, a swallowed creature is no longer restrained by it and can escape from the corpse by using 20 feet of movement, exiting prone.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 9,
+                        "damage": [
+                            {
+                                "dice": "3d8",
+                                "bonus": 9,
+                                "type": "piercing"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "dex",
+                        "dc": 18,
+                        "on_success": "none",
+                        "damage": [
+                            {
+                                "dice": "6d6",
+                                "type": "acid"
+                            }
+                        ],
+                        "conditions": [
+                            "blinded",
+                            "prone",
+                            "restrained"
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "acid",
+                "piercing"
+            ],
+            "conditions_inflicted": [
+                "blinded",
+                "restrained"
+            ],
+            "saves_forced": [
+                "con",
+                "dex"
+            ],
+            "movement": [
+                "fly",
+                "hover"
+            ],
+            "actions": [
+                "swallow"
+            ],
+            "misc": [
+                "melee_weapon_attack",
+                "reach"
+            ]
+        }
+    },
+    {
+        "id": "sky-whale-psk",
+        "kind": "monster",
+        "name": "Sky Whale",
+        "source": "PSK",
+        "edition": "classic",
+        "tags": [
+            "Hold Breath"
+        ],
+        "size": [
+            "huge"
+        ],
+        "creature_type": {
+            "type": "beast"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 14,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 85,
+            "formula": "9d12 + 27"
+        },
+        "speed": {
+            "fly": 50,
+            "hover": true
+        },
+        "abilities": {
+            "str": 21,
+            "dex": 9,
+            "con": 17,
+            "int": 2,
+            "wis": 10,
+            "cha": 7
+        },
+        "skills": {
+            "stealth": 5
+        },
+        "passive_perception": 10,
+        "cr": {
+            "cr": "5",
+            "xp": 1800,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": -1
+        },
+        "features": [
+            {
+                "id": "hold-breath",
+                "name": "Hold Breath",
+                "category": "traits",
+                "text": "The whale can hold its breath for 30 minutes."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The whale makes two attacks: one with its bite and one with its tail."
+            },
+            {
+                "id": "flipper",
+                "name": "Flipper",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +8 to hit, reach 10 ft., one target not grappled by the whale. Hit: 14 (2d8 + 5) bludgeoning damage. If the target is a creature, it must succeed on a DC 16 Strength saving throw or be knocked prone.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 8,
+                        "damage": [
+                            {
+                                "dice": "2d8",
+                                "bonus": 5,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "str",
+                        "dc": 16,
+                        "on_success": "none",
+                        "conditions": [
+                            "prone"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "tail",
+                "name": "Tail",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +8 to hit, reach 10 ft., one target not grappled by the whale. Hit: 14 (2d8 + 5) bludgeoning damage. If the target is a creature, it must succeed on a DC 16 Strength saving throw or be knocked prone.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 8,
+                        "damage": [
+                            {
+                                "dice": "2d8",
+                                "bonus": 5,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "str",
+                        "dc": 16,
+                        "on_success": "none",
+                        "conditions": [
+                            "prone"
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "piercing"
+            ],
+            "conditions_inflicted": [
+                "grappled",
+                "prone",
+                "restrained"
+            ],
+            "saves_forced": [
+                "str"
+            ],
+            "movement": [
+                "fly",
+                "hover"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "hold_breath"
+            ],
+            "misc": [
+                "melee_weapon_attack",
+                "reach"
+            ],
+            "environment": [
+                "swamp"
+            ]
+        }
+    },
+    {
+        "id": "thopter-bat-psk",
+        "kind": "monster",
+        "name": "Thopter (Bat)",
+        "source": "PSK",
+        "edition": "classic",
+        "tags": [
+            "Keen Senses"
+        ],
+        "size": [
+            "tiny"
+        ],
+        "creature_type": {
+            "type": "construct"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 12
+            }
+        ],
+        "hp": {
+            "average": 1,
+            "formula": "1d4 - 1"
+        },
+        "speed": {
+            "walk": 5,
+            "fly": 30
+        },
+        "abilities": {
+            "str": 2,
+            "dex": 15,
+            "con": 8,
+            "int": 2,
+            "wis": 12,
+            "cha": 4
+        },
+        "senses": {
+            "blindsight": 60
+        },
+        "passive_perception": 11,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "poisoned"
+                ]
+            }
+        },
+        "cr": {
+            "cr": "0",
+            "xp": 10,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "echolocation",
+                "name": "Echolocation",
+                "category": "traits",
+                "text": "The thopter can't use its blindsight while deafened."
+            },
+            {
+                "id": "keen-hearing",
+                "name": "Keen Hearing",
+                "category": "traits",
+                "text": "The thopter has advantage on Wisdom (Perception) checks that rely on hearing."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +0 to hit, reach 5 ft., one creature. Hit: 1 piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 0,
+                        "damage": [
+                            {
+                                "bonus": 1,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "flags": {
+            "familiar": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "piercing"
+            ],
+            "senses": [
+                "blindsight"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "traits": [
+                "keen_senses"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ]
+        }
+    },
+    {
+        "id": "thopter-blood-hawk-psk",
+        "kind": "monster",
+        "name": "Thopter (Blood Hawk)",
+        "source": "PSK",
+        "edition": "classic",
+        "tags": [
+            "Keen Senses",
+            "Pack Tactics"
+        ],
+        "size": [
+            "small"
+        ],
+        "creature_type": {
+            "type": "construct"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 12
+            }
+        ],
+        "hp": {
+            "average": 7,
+            "formula": "2d6"
+        },
+        "speed": {
+            "walk": 10,
+            "fly": 60
+        },
+        "abilities": {
+            "str": 6,
+            "dex": 14,
+            "con": 10,
+            "int": 3,
+            "wis": 14,
+            "cha": 5
+        },
+        "skills": {
+            "perception": 4
+        },
+        "passive_perception": 14,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "poisoned"
+                ]
+            }
+        },
+        "cr": {
+            "cr": "1/8",
+            "xp": 25,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "keen-sight",
+                "name": "Keen Sight",
+                "category": "traits",
+                "text": "The thopter has advantage on Wisdom (Perception) checks that rely on sight."
+            },
+            {
+                "id": "pack-tactics",
+                "name": "Pack Tactics",
+                "category": "traits",
+                "text": "The thopter has advantage on an attack roll against a creature if at least one of the thopter's allies is within 5 feet of the creature and the ally isn't incapacitated."
+            },
+            {
+                "id": "beak",
+                "name": "Beak",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 4 (1d4 + 2) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 2,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "traits": [
+                "keen_senses",
+                "pack_tactics"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "environment": [
+                "mountain",
+                "grassland",
+                "forest",
+                "hill",
+                "coastal",
+                "arctic"
+            ]
+        }
+    },
+    {
+        "id": "thopter-eagle-psk",
+        "kind": "monster",
+        "name": "Thopter (Eagle)",
+        "source": "PSK",
+        "edition": "classic",
+        "tags": [
+            "Keen Senses"
+        ],
+        "size": [
+            "small"
+        ],
+        "creature_type": {
+            "type": "construct"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 12
+            }
+        ],
+        "hp": {
+            "average": 3,
+            "formula": "1d6"
+        },
+        "speed": {
+            "walk": 10,
+            "fly": 60
+        },
+        "abilities": {
+            "str": 6,
+            "dex": 15,
+            "con": 10,
+            "int": 2,
+            "wis": 14,
+            "cha": 7
+        },
+        "skills": {
+            "perception": 4
+        },
+        "passive_perception": 14,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "poisoned"
+                ]
+            }
+        },
+        "cr": {
+            "cr": "0",
+            "xp": 10,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "keen-sight",
+                "name": "Keen Sight",
+                "category": "traits",
+                "text": "The thopter has advantage on Wisdom (Perception) checks that rely on sight."
+            },
+            {
+                "id": "talons",
+                "name": "Talons",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 4 (1d4 + 2) slashing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 2,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "flags": {
+            "familiar": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "slashing"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "traits": [
+                "keen_senses"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "environment": [
+                "mountain",
+                "grassland",
+                "hill",
+                "coastal"
+            ]
+        }
+    },
+    {
+        "id": "thopter-hawk-psk",
+        "kind": "monster",
+        "name": "Thopter (Hawk)",
+        "source": "PSK",
+        "edition": "classic",
+        "tags": [
+            "Keen Senses"
+        ],
+        "size": [
+            "tiny"
+        ],
+        "creature_type": {
+            "type": "construct"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 13
+            }
+        ],
+        "hp": {
+            "average": 1,
+            "formula": "1d4 - 1"
+        },
+        "speed": {
+            "walk": 10,
+            "fly": 60
+        },
+        "abilities": {
+            "str": 5,
+            "dex": 16,
+            "con": 8,
+            "int": 2,
+            "wis": 14,
+            "cha": 6
+        },
+        "skills": {
+            "perception": 4
+        },
+        "passive_perception": 14,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "poisoned"
+                ]
+            }
+        },
+        "cr": {
+            "cr": "0",
+            "xp": 10,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "keen-sight",
+                "name": "Keen Sight",
+                "category": "traits",
+                "text": "The thopter has advantage on Wisdom (Perception) checks that rely on sight."
+            },
+            {
+                "id": "talons",
+                "name": "Talons",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 1 slashing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "bonus": 1,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "flags": {
+            "familiar": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "slashing"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "traits": [
+                "keen_senses"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ]
+        }
+    },
+    {
+        "id": "thopter-owl-psk",
+        "kind": "monster",
+        "name": "Thopter (Owl)",
+        "source": "PSK",
+        "edition": "classic",
+        "tags": [
+            "Flyby",
+            "Keen Senses"
+        ],
+        "size": [
+            "tiny"
+        ],
+        "creature_type": {
+            "type": "construct"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 11
+            }
+        ],
+        "hp": {
+            "average": 1,
+            "formula": "1d4 - 1"
+        },
+        "speed": {
+            "walk": 5,
+            "fly": 60
+        },
+        "abilities": {
+            "str": 3,
+            "dex": 13,
+            "con": 8,
+            "int": 2,
+            "wis": 12,
+            "cha": 7
+        },
+        "skills": {
+            "perception": 3,
+            "stealth": 3
+        },
+        "senses": {
+            "darkvision": 120
+        },
+        "passive_perception": 13,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "poisoned"
+                ]
+            }
+        },
+        "cr": {
+            "cr": "0",
+            "xp": 10,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "flyby",
+                "name": "Flyby",
+                "category": "traits",
+                "text": "The thopter doesn't provoke opportunity attacks when it flies out of an enemy's reach."
+            },
+            {
+                "id": "keen-hearing-and-sight",
+                "name": "Keen Hearing and Sight",
+                "category": "traits",
+                "text": "The thopter has advantage on Wisdom (Perception) checks that rely on hearing or sight."
+            },
+            {
+                "id": "talons",
+                "name": "Talons",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: 1 slashing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 3,
+                        "damage": [
+                            {
+                                "bonus": 1,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "flags": {
+            "familiar": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "slashing"
+            ],
+            "senses": [
+                "superior_darkvision"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "traits": [
+                "flyby",
+                "keen_senses"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "environment": [
+                "forest",
+                "arctic"
+            ]
+        }
+    },
+    {
+        "id": "thopter-pseudodragon-psk",
+        "kind": "monster",
+        "name": "Thopter (Pseudodragon)",
+        "source": "PSK",
+        "edition": "classic",
+        "tags": [
+            "Keen Senses",
+            "Magic Resistance"
+        ],
+        "size": [
+            "tiny"
+        ],
+        "creature_type": {
+            "type": "construct"
+        },
+        "alignment": [
+            "neutral good"
+        ],
+        "ac": [
+            {
+                "value": 13
+            }
+        ],
+        "hp": {
+            "average": 7,
+            "formula": "2d4 + 2"
+        },
+        "speed": {
+            "walk": 15,
+            "fly": 60
+        },
+        "abilities": {
+            "str": 6,
+            "dex": 15,
+            "con": 13,
+            "int": 10,
+            "wis": 12,
+            "cha": 10
+        },
+        "skills": {
+            "perception": 3,
+            "stealth": 4
+        },
+        "senses": {
+            "darkvision": 60,
+            "blindsight": 10
+        },
+        "passive_perception": 13,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "understands Common and Draconic but can't speak"
+        ],
+        "cr": {
+            "cr": "1/4",
+            "xp": 50,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "keen-senses",
+                "name": "Keen Senses",
+                "category": "traits",
+                "text": "The thopter has advantage on Wisdom (Perception) checks that rely on sight, hearing, or smell."
+            },
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The thopter has advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "limited-telepathy",
+                "name": "Limited Telepathy",
+                "category": "traits",
+                "text": "The thopter can magically communicate simple ideas, emotions, and images telepathically with any creature within 100 feet of it that can understand a language."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 4 (1d4 + 2) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 2,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "sting",
+                "name": "Sting",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +4 to hit, reach 5 ft., one creature. Hit: 4 (1d4 + 2) piercing damage, and the target must succeed on a DC 11 Constitution saving throw or become poisoned for 1 hour. If the saving throw fails by 5 or more, the target falls unconscious for the same duration, or until it takes damage or another creature uses an action to shake it awake.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 2,
+                                "type": "piercing"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "con",
+                        "dc": 11,
+                        "on_success": "none",
+                        "conditions": [
+                            "poisoned",
+                            "unconscious"
+                        ]
+                    }
+                }
+            }
+        ],
+        "variants": [
+            {
+                "id": "pseudodragon-familiar",
+                "name": "Pseudodragon Familiar",
+                "text": "Some thopters are willing to serve spellcasters as a familiar. Such thopters have the following trait.\n\n**Familiar.** The thopter can serve another creature as a familiar, forming a magic, telepathic bond with that willing companion. While the two are bonded, the companion can sense what the thopter senses as long as they are within 1 mile of each other. While the thopter is within 10 feet of its companion, the companion shares the thopter's Magic Resistance trait. At any time and for any reason, the thopter can end its service as a familiar, ending the telepathic bond.",
+                "version": "pseudodragon-familiar-psk"
+            }
+        ],
+        "flags": {
+            "familiar": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "piercing"
+            ],
+            "conditions_inflicted": [
+                "poisoned",
+                "unconscious"
+            ],
+            "saves_forced": [
+                "con"
+            ],
+            "senses": [
+                "blindsight",
+                "darkvision"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "traits": [
+                "keen_senses",
+                "magic_resistance"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "cant_speak",
+                "draconic"
+            ],
+            "environment": [
+                "mountain",
+                "forest",
+                "hill",
+                "urban",
+                "desert",
+                "coastal"
+            ]
+        }
+    },
+    {
+        "id": "pseudodragon-familiar-psk",
+        "kind": "monster",
+        "name": "Pseudodragon Familiar",
+        "source": "PSK",
+        "edition": "classic",
+        "tags": [
+            "Keen Senses",
+            "Magic Resistance"
+        ],
+        "version_of": "thopter-pseudodragon-psk",
+        "size": [
+            "tiny"
+        ],
+        "creature_type": {
+            "type": "construct"
+        },
+        "alignment": [
+            "neutral good"
+        ],
+        "ac": [
+            {
+                "value": 13
+            }
+        ],
+        "hp": {
+            "average": 7,
+            "formula": "2d4 + 2"
+        },
+        "speed": {
+            "walk": 15,
+            "fly": 60
+        },
+        "abilities": {
+            "str": 6,
+            "dex": 15,
+            "con": 13,
+            "int": 10,
+            "wis": 12,
+            "cha": 10
+        },
+        "skills": {
+            "perception": 3,
+            "stealth": 4
+        },
+        "senses": {
+            "darkvision": 60,
+            "blindsight": 10
+        },
+        "passive_perception": 13,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "understands Common and Draconic but can't speak"
+        ],
+        "cr": {
+            "cr": "1/4",
+            "xp": 50,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "keen-senses",
+                "name": "Keen Senses",
+                "category": "traits",
+                "text": "The thopter has advantage on Wisdom (Perception) checks that rely on sight, hearing, or smell."
+            },
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The thopter has advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "limited-telepathy",
+                "name": "Limited Telepathy",
+                "category": "traits",
+                "text": "The thopter can magically communicate simple ideas, emotions, and images telepathically with any creature within 100 feet of it that can understand a language."
+            },
+            {
+                "id": "familiar",
+                "name": "Familiar",
+                "category": "traits",
+                "text": "The thopter can serve another creature as a familiar, forming a magic, telepathic bond with that willing companion. While the two are bonded, the companion can sense what the thopter senses as long as they are within 1 mile of each other. While the thopter is within 10 feet of its companion, the companion shares the thopter's Magic Resistance trait. At any time and for any reason, the thopter can end its service as a familiar, ending the telepathic bond."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 4 (1d4 + 2) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 2,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "sting",
+                "name": "Sting",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +4 to hit, reach 5 ft., one creature. Hit: 4 (1d4 + 2) piercing damage, and the target must succeed on a DC 11 Constitution saving throw or become poisoned for 1 hour. If the saving throw fails by 5 or more, the target falls unconscious for the same duration, or until it takes damage or another creature uses an action to shake it awake.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 2,
+                                "type": "piercing"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "con",
+                        "dc": 11,
+                        "on_success": "none",
+                        "conditions": [
+                            "poisoned",
+                            "unconscious"
+                        ]
+                    }
+                }
+            }
+        ],
+        "flags": {
+            "familiar": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "piercing"
+            ],
+            "conditions_inflicted": [
+                "poisoned",
+                "unconscious"
+            ],
+            "saves_forced": [
+                "con"
+            ],
+            "senses": [
+                "blindsight",
+                "darkvision"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "traits": [
+                "keen_senses",
+                "magic_resistance"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "cant_speak",
+                "draconic"
+            ],
+            "environment": [
+                "mountain",
+                "forest",
+                "hill",
+                "urban",
+                "desert",
+                "coastal"
+            ]
+        }
+    },
+    {
+        "id": "thopter-raven-psk",
+        "kind": "monster",
+        "name": "Thopter (Raven)",
+        "source": "PSK",
+        "edition": "classic",
+        "tags": [
+            "Mimicry"
+        ],
+        "size": [
+            "tiny"
+        ],
+        "creature_type": {
+            "type": "construct"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 12
+            }
+        ],
+        "hp": {
+            "average": 1,
+            "formula": "1d4 - 1"
+        },
+        "speed": {
+            "walk": 10,
+            "fly": 50
+        },
+        "abilities": {
+            "str": 2,
+            "dex": 14,
+            "con": 8,
+            "int": 2,
+            "wis": 12,
+            "cha": 6
+        },
+        "skills": {
+            "perception": 3
+        },
+        "passive_perception": 13,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "poisoned"
+                ]
+            }
+        },
+        "cr": {
+            "cr": "0",
+            "xp": 10,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "mimicry",
+                "name": "Mimicry",
+                "category": "traits",
+                "text": "The thopter can mimic simple sounds it has heard, such as a person whispering, a baby crying, or an animal chittering. A creature that hears the sounds can tell they are imitations with a successful DC 10 Wisdom (Insight) check."
+            },
+            {
+                "id": "beak",
+                "name": "Beak",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 1 piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "bonus": 1,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "flags": {
+            "familiar": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "piercing"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "traits": [
+                "mimicry"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "environment": [
+                "swamp",
+                "hill",
+                "urban"
+            ]
+        }
+    },
+    {
+        "id": "thopter-vulture-psk",
+        "kind": "monster",
+        "name": "Thopter (Vulture)",
+        "source": "PSK",
+        "edition": "classic",
+        "tags": [
+            "Keen Senses",
+            "Pack Tactics"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "construct"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 10
+            }
+        ],
+        "hp": {
+            "average": 5,
+            "formula": "1d8 + 1"
+        },
+        "speed": {
+            "walk": 10,
+            "fly": 50
+        },
+        "abilities": {
+            "str": 7,
+            "dex": 10,
+            "con": 13,
+            "int": 2,
+            "wis": 12,
+            "cha": 4
+        },
+        "skills": {
+            "perception": 3
+        },
+        "passive_perception": 13,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "poisoned"
+                ]
+            }
+        },
+        "cr": {
+            "cr": "0",
+            "xp": 10,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "keen-sight-and-smell",
+                "name": "Keen Sight and Smell",
+                "category": "traits",
+                "text": "The thopter has advantage on Wisdom (Perception) checks that rely on sight or smell."
+            },
+            {
+                "id": "pack-tactics",
+                "name": "Pack Tactics",
+                "category": "traits",
+                "text": "The thopter has advantage on an attack roll against a creature if at least one of the thopter's allies is within 5 feet of the creature and the ally isn't incapacitated."
+            },
+            {
+                "id": "beak",
+                "name": "Beak",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +2 to hit, reach 5 ft., one target. Hit: 2 (1d4) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 2,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "flags": {
+            "familiar": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "piercing"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "traits": [
+                "keen_senses",
+                "pack_tactics"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "environment": [
+                "grassland",
+                "hill",
+                "desert"
+            ]
+        }
+    },
+    {
+        "id": "wurm-psk",
+        "kind": "monster",
+        "name": "Wurm",
+        "source": "PSK",
+        "edition": "classic",
+        "tags": [
+            "Tunneler"
+        ],
+        "size": [
+            "gargantuan"
+        ],
+        "creature_type": {
+            "type": "monstrosity"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 18,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 247,
+            "formula": "15d20 + 90"
+        },
+        "speed": {
+            "walk": 50,
+            "burrow": 30
+        },
+        "abilities": {
+            "str": 28,
+            "dex": 7,
+            "con": 22,
+            "int": 1,
+            "wis": 8,
+            "cha": 4
+        },
+        "saves": {
+            "con": 11,
+            "wis": 4
+        },
+        "senses": {
+            "blindsight": 30,
+            "tremorsense": 60
+        },
+        "passive_perception": 9,
+        "cr": {
+            "cr": "15",
+            "xp": 13000,
+            "pb": 5
+        },
+        "initiative": {
+            "bonus": -2
+        },
+        "features": [
+            {
+                "id": "tunneler",
+                "name": "Tunneler",
+                "category": "traits",
+                "text": "The wurm can burrow through solid rock at half its burrow speed and leaves a 10-foot-diameter tunnel in its wake."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The wurm makes two attacks: one with its bite and one with its stinger."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +14 to hit, reach 10 ft., one target. Hit: 22 (3d8 + 9) piercing damage. If the target is a Large or smaller creature, it must succeed on a DC 19 Dexterity saving throw or be swallowed by the wurm. A swallowed creature is blinded and restrained, it has total cover against attacks and other effects outside the wurm, and it takes 21 (6d6) acid damage at the start of each of the wurm's turns.\n\nIf the wurm takes 30 damage or more on a single turn from a creature inside it, the wurm must succeed on a DC 21 Constitution saving throw at the end of that turn or regurgitate all swallowed creatures, which fall prone in a space within 10 feet of the wurm. If the wurm dies, a swallowed creature is no longer restrained by it and can escape from the corpse by using 20 feet of movement, exiting prone.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 14,
+                        "damage": [
+                            {
+                                "dice": "3d8",
+                                "bonus": 9,
+                                "type": "piercing"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "dex",
+                        "dc": 19,
+                        "on_success": "none",
+                        "damage": [
+                            {
+                                "dice": "6d6",
+                                "type": "acid"
+                            }
+                        ],
+                        "conditions": [
+                            "blinded",
+                            "prone",
+                            "restrained"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "tail-stinger",
+                "name": "Tail Stinger",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +14 to hit, reach 10 ft., one creature. Hit: 19 (3d6 + 9) piercing damage, and the target must make a DC 19 Constitution saving throw, taking 42 (12d6) poison damage on a failed save, or half as much damage on a successful one.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 14,
+                        "damage": [
+                            {
+                                "dice": "3d6",
+                                "bonus": 9,
+                                "type": "piercing"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "con",
+                        "dc": 19,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "12d6",
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "acid",
+                "poison",
+                "piercing"
+            ],
+            "conditions_inflicted": [
+                "blinded",
+                "restrained"
+            ],
+            "saves_forced": [
+                "con",
+                "dex"
+            ],
+            "senses": [
+                "blindsight",
+                "tremorsense"
+            ],
+            "movement": [
+                "burrow"
+            ],
+            "actions": [
+                "multiattack",
+                "swallow"
+            ],
+            "traits": [
+                "tunneler"
+            ],
+            "misc": [
+                "melee_weapon_attack",
+                "reach"
+            ],
+            "environment": [
+                "underdark",
+                "desert"
+            ]
+        }
+    }
+]

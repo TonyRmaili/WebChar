@@ -1,0 +1,794 @@
+[
+    {
+        "id": "blaze-mcv3mc",
+        "kind": "monster",
+        "name": "Blaze",
+        "source": "MCV3MC",
+        "edition": "classic",
+        "tags": [
+            "Illumination"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "elemental"
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "alignment_prefix": "typically",
+        "ac": [
+            {
+                "value": 13
+            }
+        ],
+        "hp": {
+            "average": 75,
+            "formula": "10d8 + 30"
+        },
+        "speed": {
+            "walk": 20,
+            "fly": 20,
+            "hover": true,
+            "notes": {
+                "fly": "vertical movement only; hover"
+            }
+        },
+        "abilities": {
+            "str": 16,
+            "dex": 17,
+            "con": 16,
+            "int": 6,
+            "wis": 10,
+            "cha": 7
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 10,
+        "defenses": {
+            "resist": {
+                "conditional": [
+                    {
+                        "types": [
+                            "bludgeoning",
+                            "piercing",
+                            "slashing"
+                        ],
+                        "note": "from nonmagical attacks"
+                    }
+                ]
+            },
+            "immune": {
+                "types": [
+                    "fire"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "exhaustion",
+                    "grappled",
+                    "paralyzed",
+                    "petrified",
+                    "poisoned",
+                    "prone",
+                    "restrained"
+                ]
+            }
+        },
+        "cr": {
+            "cr": "5",
+            "xp": 1800,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "blaze-rod",
+                "name": "Blaze Rod",
+                "category": "traits",
+                "text": "When the blaze drops to 0 hit points, it disappears in a cloud of smoke and has a 50 percent chance of leaving behind a glowing rod worth 100 gp. The rod sheds dim light in a 5-foot radius. As an action, a creature can try to snap the rod, doing so with a successful DC 14 Strength check. The snapped rod releases its fiery energy in a 5-foot-radius sphere centered on itself. Each creature in that area must make a DC 14 Dexterity saving throw, taking 6 (1d12) fire damage on a failed save, or half as much damage on a successful one.",
+                "action": {
+                    "area": "5-foot radius",
+                    "save": {
+                        "ability": "dex",
+                        "dc": 14,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "1d12",
+                                "type": "fire"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "heat-aura",
+                "name": "Heat Aura",
+                "category": "traits",
+                "text": "Any creature that starts its turn within 5 feet of the blaze takes 3 (1d6) fire damage.",
+                "action": {
+                    "damage": [
+                        {
+                            "dice": "1d6",
+                            "type": "fire"
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "illumination",
+                "name": "Illumination",
+                "category": "traits",
+                "text": "The blaze sheds bright light in a 20-foot radius and dim light for an additional 20 feet."
+            },
+            {
+                "id": "water-susceptibility",
+                "name": "Water Susceptibility",
+                "category": "traits",
+                "text": "The blaze takes 1 cold damage for every 5 feet it moves in water, for every gallon of water splashed on it, or whenever it starts its turn in the rain.",
+                "action": {
+                    "damage": [
+                        {
+                            "bonus": 1,
+                            "type": "cold"
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The blaze makes three Fiery Doom attacks."
+            },
+            {
+                "id": "fiery-doom",
+                "name": "Fiery Doom",
+                "category": "actions",
+                "text": "Melee or Ranged Spell Attack: +6 to hit; reach 5 ft. or ranged 60 ft., one target. Hit: 8 (1d10 + 3) fire damage, and the target catches fire if it's a creature or a flammable object. Until a creature takes an action to extinguish the fire, the burning target takes 3 (1d6) fire damage at the end of each of its turns.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "spell",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "1d10",
+                                "bonus": 3,
+                                "type": "fire"
+                            },
+                            {
+                                "dice": "1d6",
+                                "type": "fire"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "cold",
+                "fire"
+            ],
+            "saves_forced": [
+                "dex"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "movement": [
+                "fly",
+                "hover"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "illumination"
+            ],
+            "misc": [
+                "area_of_effect"
+            ]
+        }
+    },
+    {
+        "id": "creeper-mcv3mc",
+        "kind": "monster",
+        "name": "Creeper",
+        "source": "MCV3MC",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "monstrosity"
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "alignment_prefix": "typically",
+        "ac": [
+            {
+                "value": 12,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 19,
+            "formula": "3d8 + 6"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 10,
+            "dex": 11,
+            "con": 14,
+            "int": 6,
+            "wis": 8,
+            "cha": 3
+        },
+        "skills": {
+            "perception": 3,
+            "stealth": 4
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 13,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "lightning"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "exhaustion"
+                ]
+            }
+        },
+        "cr": {
+            "cr": "1/2",
+            "xp": 100,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "bizarre-physiology",
+                "name": "Bizarre Physiology",
+                "category": "traits",
+                "text": "The creeper can't take actions except for Dash, Disengage, Hide, and Search. It can't take bonus actions or reactions."
+            },
+            {
+                "id": "creeper-head",
+                "name": "Creeper Head",
+                "category": "traits",
+                "text": "When a creeper drops to 0 hit points from a charged creeper's explosion (see the Destruction trait), it dies and its head falls off. A creeper's fallen head is hollow and can be worn as a mask with eye and mouth openings."
+            },
+            {
+                "id": "destruction",
+                "name": "Destruction",
+                "category": "traits",
+                "text": "When it ends its turn within 10 feet of a Humanoid that it can see, the creeper stops moving and emits a hiss loud enough to be heard by creatures within 30 feet of itself.\n\nIf the creeper drops to 0 hit points before the start of its next turn, the hissing stops, and the creeper dies. Otherwise, at the start of the creeper's next turn, one of following things happens:\n\n- If there are no Humanoids within 10 feet of the hissing creeper, it stops hissing. It then uses any available movement to approach the nearest Humanoid it can see.\n- If there are one or more Humanoids within 10 feet of the hissing creeper, the creeper explodes in a ball of energy that fills a 20-foot-radius sphere centered on itself. This energy spreads around corners. The creeper is destroyed, and every other creature in the explosion's area must make a DC 12 Dexterity saving throw, taking 14 (4d6) lightning damage on a failed save, or half as much damage on a successful one. Increase this damage by 7 (2d6) if the creeper is charged (see \"Electrical Charge\" below). Objects in the area that aren't being worn or carried take 14 (4d6) lightning damage, or 21 (6d6) lightning damage if the creeper is charged."
+            },
+            {
+                "id": "electrical-charge",
+                "name": "Electrical Charge",
+                "category": "traits",
+                "text": "Whenever the creeper is subjected to lightning damage, it takes no damage and instead becomes charged for 1 minute. While charged, the creeper emits dim blue light in a 5-foot radius."
+            },
+            {
+                "id": "fear-of-felines",
+                "name": "Fear of Felines",
+                "category": "traits",
+                "text": "The creeper has the frightened condition whenever it starts its turn within 60 feet of a feline creature it can see. The condition lasts until the start of the creeper's next turn."
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "lightning"
+            ],
+            "saves_forced": [
+                "dex"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "misc": [
+                "area_of_effect"
+            ]
+        }
+    },
+    {
+        "id": "ender-dragon-mcv3mc",
+        "kind": "monster",
+        "name": "Ender Dragon",
+        "source": "MCV3MC",
+        "edition": "classic",
+        "tags": [
+            "Legendary Resistances"
+        ],
+        "size": [
+            "gargantuan"
+        ],
+        "creature_type": {
+            "type": "dragon"
+        },
+        "alignment": [
+            "chaotic evil"
+        ],
+        "ac": [
+            {
+                "value": 22,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 350,
+            "formula": "20d20 + 140"
+        },
+        "speed": {
+            "walk": 30,
+            "fly": 120
+        },
+        "abilities": {
+            "str": 27,
+            "dex": 14,
+            "con": 25,
+            "int": 10,
+            "wis": 15,
+            "cha": 19
+        },
+        "saves": {
+            "con": 13,
+            "int": 6,
+            "wis": 8
+        },
+        "skills": {
+            "perception": 14,
+            "stealth": 8
+        },
+        "senses": {
+            "darkvision": 240
+        },
+        "passive_perception": 24,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "fire"
+                ]
+            },
+            "immune": {
+                "types": [
+                    "necrotic"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "frightened"
+                ]
+            }
+        },
+        "languages": [
+            "Draconic"
+        ],
+        "cr": {
+            "cr": "19",
+            "xp": 22000,
+            "pb": 6
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "dragon-egg",
+                "name": "Dragon Egg",
+                "category": "traits",
+                "text": "When the Ender Dragon drops to 0 hit points, it radiates beams of purple light and then disappears, leaving behind an inert, jet-black dragon egg worth 5,000 gp."
+            },
+            {
+                "id": "legendary-resistance",
+                "name": "Legendary Resistance",
+                "category": "traits",
+                "text": "If the dragon fails a saving throw, it can choose to succeed instead.",
+                "uses": {
+                    "max": 4,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The dragon makes one Bite attack and uses Beating Wings."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +14 to hit; reach 15 ft., one target. Hit: 18 (3d6 + 8) piercing damage plus 7 (2d6) necrotic damage.",
+                "action": {
+                    "range": "reach 15 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 14,
+                        "damage": [
+                            {
+                                "dice": "3d6",
+                                "bonus": 8,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "2d6",
+                                "type": "necrotic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "beating-wings",
+                "name": "Beating Wings",
+                "category": "actions",
+                "text": "The dragon beats its great wings. Each creature within 15 feet of the dragon must succeed on a DC 21 Dexterity saving throw or take 10 (1d4 + 8) bludgeoning damage, be pushed 10 feet away from the dragon, and have the prone condition.",
+                "action": {
+                    "save": {
+                        "ability": "dex",
+                        "dc": 21,
+                        "on_success": "none",
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 8,
+                                "type": "bludgeoning"
+                            }
+                        ],
+                        "conditions": [
+                            "prone"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "harmful-breath",
+                "name": "Harmful Breath",
+                "category": "actions",
+                "text": "The dragon exhales putrid gas in a 60-foot cone. Each creature in that area must make a DC 21 Constitution saving throw, taking 52 (15d6) necrotic damage on a failed save, or half as much damage on a successful one. The dragon then chooses a point it can see where the cone makes contact with the ground. That point becomes the center of a 10-foot-high, 10-foot-radius cylinder of lingering gas that disappears at the start of the dragon's next turn. Any creature that starts its turn in the cylinder takes 10 (3d6) necrotic damage.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "area": "60-foot cone",
+                    "save": {
+                        "ability": "con",
+                        "dc": 21,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "15d6",
+                                "type": "necrotic"
+                            },
+                            {
+                                "dice": "3d6",
+                                "type": "necrotic"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "necrotic",
+                "piercing"
+            ],
+            "conditions_inflicted": [
+                "prone"
+            ],
+            "saves_forced": [
+                "con",
+                "dex"
+            ],
+            "senses": [
+                "superior_darkvision"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "actions": [
+                "breath_weapon",
+                "multiattack"
+            ],
+            "traits": [
+                "legendary_resistances"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_weapon_attack",
+                "reach"
+            ],
+            "languages": [
+                "draconic"
+            ]
+        }
+    },
+    {
+        "id": "enderman-mcv3mc",
+        "kind": "monster",
+        "name": "Enderman",
+        "source": "MCV3MC",
+        "edition": "classic",
+        "tags": [
+            "Sunlight Sensitivity"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "aberration"
+        },
+        "alignment": [
+            "chaotic neutral"
+        ],
+        "alignment_prefix": "typically",
+        "ac": [
+            {
+                "value": 14
+            }
+        ],
+        "hp": {
+            "average": 78,
+            "formula": "12d8 + 24"
+        },
+        "speed": {
+            "walk": 40
+        },
+        "abilities": {
+            "str": 15,
+            "dex": 18,
+            "con": 15,
+            "int": 10,
+            "wis": 18,
+            "cha": 11
+        },
+        "saves": {
+            "str": 5,
+            "con": 5
+        },
+        "skills": {
+            "perception": 7,
+            "stealth": 7,
+            "survival": 7
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 17,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "necrotic"
+                ]
+            }
+        },
+        "languages": [
+            "Endspeech"
+        ],
+        "cr": {
+            "cr": "6",
+            "xp": 2300,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 4
+        },
+        "features": [
+            {
+                "id": "evasive-teleportation",
+                "name": "Evasive Teleportation",
+                "category": "traits",
+                "text": "Whenever it takes damage or is the target of a ranged attack, the Enderman can teleport, along with any equipment it is wearing or carrying, to an unoccupied space it can see within 20 feet of itself (no action required). If this effect is triggered by a ranged attack, the Enderman teleports just before the attack hits, causing the attack to miss it. This trait is suppressed while the Enderman has the incapacitated condition."
+            },
+            {
+                "id": "implosion",
+                "name": "Implosion",
+                "category": "traits",
+                "text": "When the Enderman drops to 0 hit points, it dies as its body implodes. Roll a d10. On a roll of 9 or less, the Enderman leaves no remains. On a roll of 10, the Enderman leaves behind a glowing, purple orb called an Ender pearl, worth 500 gp. A creature can throw the pearl up to 60 feet; if the pearl lands in an unoccupied space big enough to contain the creature, the creature teleports to that space, along with any equipment it is wearing or carrying, and the pearl disappears."
+            },
+            {
+                "id": "sunlight-sensitivity",
+                "name": "Sunlight Sensitivity",
+                "category": "traits",
+                "text": "While in sunlight, the Enderman has disadvantage on attack rolls."
+            },
+            {
+                "id": "water-susceptibility",
+                "name": "Water Susceptibility",
+                "category": "traits",
+                "text": "The Enderman takes 1 cold damage for every 5 feet it moves in water, for every gallon of water splashed on it, or whenever it starts its turn in the rain.",
+                "action": {
+                    "damage": [
+                        {
+                            "bonus": 1,
+                            "type": "cold"
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The Enderman makes two Slam attacks."
+            },
+            {
+                "id": "slam",
+                "name": "Slam",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +7 to hit; reach 10 ft., one target. Hit: 8 (1d8 + 4) bludgeoning damage plus 9 (2d8) necrotic damage.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 4,
+                                "type": "bludgeoning"
+                            },
+                            {
+                                "dice": "2d8",
+                                "type": "necrotic"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "cold",
+                "necrotic"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "sunlight_sensitivity"
+            ],
+            "misc": [
+                "melee_weapon_attack",
+                "reach"
+            ]
+        }
+    },
+    {
+        "id": "wolf-of-the-overworld-mcv3mc",
+        "kind": "monster",
+        "name": "Wolf of the Overworld",
+        "source": "MCV3MC",
+        "edition": "classic",
+        "tags": [
+            "Pack Tactics"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "beast"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 13,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 11,
+            "formula": "2d8 + 2"
+        },
+        "speed": {
+            "walk": 40
+        },
+        "abilities": {
+            "str": 12,
+            "dex": 15,
+            "con": 12,
+            "int": 3,
+            "wis": 12,
+            "cha": 6
+        },
+        "skills": {
+            "perception": 5,
+            "stealth": 4
+        },
+        "passive_perception": 15,
+        "cr": {
+            "cr": "1/4",
+            "xp": 50,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "pack-tactics",
+                "name": "Pack Tactics",
+                "category": "traits",
+                "text": "The wolf has advantage on attack rolls against a creature if at least one of the wolf's allies is within 5 feet of the creature and the ally doesn't have the incapacitated condition."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +4 to hit; reach 5 ft., one target. Hit: 7 (2d4 + 2) piercing damage. If the target is a creature, it must succeed on a DC 11 Strength saving throw or have the prone condition.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "2d4",
+                                "bonus": 2,
+                                "type": "piercing"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "str",
+                        "dc": 11,
+                        "on_success": "none",
+                        "conditions": [
+                            "prone"
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing"
+            ],
+            "saves_forced": [
+                "str"
+            ],
+            "traits": [
+                "pack_tactics"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ]
+        }
+    }
+]

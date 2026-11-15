@@ -1,0 +1,1367 @@
+[
+    {
+        "id": "big-water-slurpent-awm",
+        "kind": "monster",
+        "name": "Big Water Slurpent",
+        "source": "AWM",
+        "edition": "classic",
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "elemental"
+        },
+        "alignment": [
+            "neutral"
+        ],
+        "ac": [
+            {
+                "value": 13
+            }
+        ],
+        "hp": {
+            "average": 58
+        },
+        "speed": {
+            "walk": 0,
+            "swim": 60
+        },
+        "abilities": {
+            "str": 17,
+            "dex": 16,
+            "con": 13,
+            "int": 11,
+            "wis": 10,
+            "cha": 10
+        },
+        "cr": {
+            "cr": "3",
+            "xp": 700,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "invisible-in-water",
+                "name": "Invisible in Water",
+                "category": "traits",
+                "text": "The big water slurpent is invisible while fully immersed in water."
+            },
+            {
+                "id": "water-bound",
+                "name": "Water Bound",
+                "category": "traits",
+                "text": "The big water slurpent dies if it leaves the water to which it is bound or if that water is destroyed."
+            },
+            {
+                "id": "constrict",
+                "name": "Constrict",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +5 to hit, one target. Hit: 13 (3d6+3) bludgeoning damage. If the target is Medium or smaller, it is grappled (escape DC 13) and pulled 5 feet toward the big water slurpent. Until this grapple ends, the target is restrained, the big water slurpent tries to drown it, and the big water slurpent can't constrict another target.",
+                "action": {
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "3d6",
+                                "bonus": 3,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning"
+            ],
+            "conditions_inflicted": [
+                "grappled",
+                "restrained"
+            ],
+            "movement": [
+                "swim"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ]
+        }
+    },
+    {
+        "id": "birdsquirrel-awm",
+        "kind": "monster",
+        "name": "Birdsquirrel",
+        "source": "AWM",
+        "edition": "classic",
+        "tags": [
+            "Pack Tactics"
+        ],
+        "size": [
+            "tiny"
+        ],
+        "creature_type": {
+            "type": "beast"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 13
+            }
+        ],
+        "hp": {
+            "average": 10
+        },
+        "speed": {
+            "walk": 20,
+            "fly": 30,
+            "climb": 20
+        },
+        "abilities": {
+            "str": 6,
+            "dex": 14,
+            "con": 13,
+            "int": 4,
+            "wis": 12,
+            "cha": 6
+        },
+        "cr": {
+            "cr": "1/4",
+            "xp": 50,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "pack-tactics",
+                "name": "Pack Tactics",
+                "category": "traits",
+                "text": "Birdsquirrel has advantage on an attack roll against a creature if at least one of the Birdsquirrel's allies is within 5 feet of the creature and the ally isn't incapacitated."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Birdsquirrel makes two attacks: one with its bite and one with its claws."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 5 (1d6+2) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 2,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "claws",
+                "name": "Claws",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 4 (1d4+2) slashing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 2,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "piercing",
+                "slashing"
+            ],
+            "movement": [
+                "fly",
+                "climb"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "pack_tactics"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ]
+        }
+    },
+    {
+        "id": "boontu-monkey-awm",
+        "kind": "monster",
+        "name": "Boontu Monkey",
+        "source": "AWM",
+        "edition": "classic",
+        "tags": [
+            "Pack Tactics"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "beast"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 12
+            }
+        ],
+        "hp": {
+            "average": 3
+        },
+        "speed": {
+            "walk": 20,
+            "climb": 20
+        },
+        "abilities": {
+            "str": 8,
+            "dex": 14,
+            "con": 11,
+            "int": 5,
+            "wis": 12,
+            "cha": 6
+        },
+        "cr": {
+            "cr": "0",
+            "xp": 10,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "pack-tactics",
+                "name": "Pack Tactics",
+                "category": "traits",
+                "text": "The Boontu monkey has advantage on an attack roll against a creature if at least one of the boontu monkey's allies is within 5 feet of the creature and the ally isn't incapacitated."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +1 to hit, reach 5 ft., one target. Hit: 1 (1d4 - 1) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 1,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": -1,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "flags": {
+            "familiar": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "piercing"
+            ],
+            "movement": [
+                "climb"
+            ],
+            "traits": [
+                "pack_tactics"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ]
+        }
+    },
+    {
+        "id": "crystal-cave-merfolk-awm",
+        "kind": "monster",
+        "name": "Crystal Cave Merfolk",
+        "source": "AWM",
+        "edition": "classic",
+        "tags": [
+            "Amphibious"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "merfolk"
+            ]
+        },
+        "alignment": [
+            "neutral"
+        ],
+        "ac": [
+            {
+                "value": 11
+            }
+        ],
+        "hp": {
+            "average": 11
+        },
+        "speed": {
+            "walk": 10,
+            "swim": 40
+        },
+        "abilities": {
+            "str": 10,
+            "dex": 13,
+            "con": 12,
+            "int": 11,
+            "wis": 11,
+            "cha": 12
+        },
+        "cr": {
+            "cr": "1/8",
+            "xp": 25,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "amphibious",
+                "name": "Amphibious",
+                "category": "traits",
+                "text": "The merfolk can breathe air and water."
+            },
+            {
+                "id": "siren-song",
+                "name": "Siren Song",
+                "category": "traits",
+                "text": "Lovely singing voices charm every humanoid or giant within 300 feet. The targets must succeed on a DC 11 Wisdom saving throw or be charmed until the song ends.",
+                "action": {
+                    "save": {
+                        "ability": "wis",
+                        "dc": 11,
+                        "on_success": "none",
+                        "conditions": [
+                            "charmed"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +2 to hit, one target. Hit: 3 (1d6) piercing damage.",
+                "action": {
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 2,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing"
+            ],
+            "conditions_inflicted": [
+                "charmed"
+            ],
+            "saves_forced": [
+                "wis"
+            ],
+            "movement": [
+                "swim"
+            ],
+            "traits": [
+                "amphibious"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ]
+        }
+    },
+    {
+        "id": "dankwood-hag-awm",
+        "kind": "monster",
+        "name": "Dankwood Hag",
+        "source": "AWM",
+        "edition": "classic",
+        "tags": [
+            "Amphibious",
+            "Mimicry"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "fey"
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "ac": [
+            {
+                "value": 17
+            }
+        ],
+        "hp": {
+            "average": 82
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 18,
+            "dex": 12,
+            "con": 16,
+            "int": 13,
+            "wis": 14,
+            "cha": 14
+        },
+        "cr": {
+            "cr": "3",
+            "xp": 700,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "amphibious",
+                "name": "Amphibious",
+                "category": "traits",
+                "text": "The hag can breathe air and water."
+            },
+            {
+                "id": "mimicry-green-hag",
+                "name": "Mimicry (Green Hag)",
+                "category": "traits",
+                "text": "The hag can mimic animal sounds and humanoid voices. A creature that hears the sounds can tell they are imitations with a successful DC 14 Wisdom (Insight) check."
+            },
+            {
+                "id": "illusory-appearance",
+                "name": "Illusory Appearance",
+                "category": "actions",
+                "text": "The hag covers herself with a magical illusion that allows her to look like another creature of her general size and shape. The illusion ends when the hag chooses, or if she dies. A DC 20 Intelligence (Investigation) check will expose the hag's disguise."
+            },
+            {
+                "id": "invisible-passage",
+                "name": "Invisible Passage",
+                "category": "actions",
+                "text": "The hag magically turns invisible until she attacks or casts a spell, or until her concentration ends. While invisible, she leaves no physical evidence of her passage, and can only be tracked by magic."
+            },
+            {
+                "id": "claws",
+                "name": "Claws",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +6 to hit, one target. Hit: 17 (2d8 + 4) slashing damage.",
+                "action": {
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "2d8",
+                                "bonus": 4,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Innate Spellcasting",
+                "dc": 12,
+                "text": "The hag's spellcasting ability is Charisma (spell save DC 12). It can innately cast the following spells:",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "dancing-lights-phb"
+                            },
+                            {
+                                "spell": "minor-illusion-phb"
+                            },
+                            {
+                                "spell": "vicious-mockery-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "slashing",
+                "psychic"
+            ],
+            "saves_forced": [
+                "wis"
+            ],
+            "traits": [
+                "amphibious",
+                "mimicry"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "spellcasting": [
+                "innate"
+            ]
+        }
+    },
+    {
+        "id": "dum-dum-goblin-awm",
+        "kind": "monster",
+        "name": "Dum-Dum Goblin",
+        "source": "AWM",
+        "edition": "classic",
+        "size": [
+            "small"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "goblinoid"
+            ]
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "ac": [
+            {
+                "value": 7
+            }
+        ],
+        "hp": {
+            "average": 7
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 8,
+            "dex": 14,
+            "con": 10,
+            "int": 10,
+            "wis": 8,
+            "cha": 8
+        },
+        "cr": {
+            "cr": "1/4",
+            "xp": 50,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "nimble-escape",
+                "name": "Nimble Escape",
+                "category": "traits",
+                "text": "The goblin can take the Disengage or Hide action as a bonus action on each of its turns."
+            },
+            {
+                "id": "catch-me-if-you-can",
+                "name": "Catch me if you can!",
+                "category": "actions",
+                "text": "Dum-Dum Goblins will opt to run and hide before fighting! A DC 15 Dexterity check must be made before they can be attacked."
+            },
+            {
+                "id": "scimitar",
+                "name": "Scimitar",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +4 to hit, one target. Hit: 3 (1d6 +2) slashing damage.",
+                "action": {
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 2,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "shortbow",
+                "name": "Shortbow",
+                "category": "actions",
+                "text": "Ranged Weapon Attack: +4 to hit, one target. Hit: 6 (1d6 + 2) piercing damage.",
+                "action": {
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 2,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "items": [
+            {
+                "item": "scimitar-phb",
+                "qty": 1,
+                "attacks": true
+            },
+            {
+                "item": "shortbow-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing",
+                "slashing"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack",
+                "ranged_weapon",
+                "ranged_weapon_attack"
+            ]
+        }
+    },
+    {
+        "id": "dwarf-awm",
+        "kind": "monster",
+        "name": "Dwarf",
+        "source": "AWM",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "dwarf"
+            ]
+        },
+        "alignment": [
+            "lawful good"
+        ],
+        "ac": [
+            {
+                "value": 10
+            }
+        ],
+        "hp": {
+            "average": 30
+        },
+        "speed": {
+            "walk": 25
+        },
+        "abilities": {
+            "str": 16,
+            "dex": 13,
+            "con": 14,
+            "int": 10,
+            "wis": 11,
+            "cha": 10
+        },
+        "defenses": {
+            "resist": {
+                "types": [
+                    "poison"
+                ]
+            }
+        },
+        "cr": {
+            "cr": "1/4",
+            "xp": 50,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "dwarven-resilience",
+                "name": "Dwarven Resilience",
+                "category": "traits",
+                "text": "They have advantage on saving throws against poison, and they have resistance to poison damage."
+            },
+            {
+                "id": "shortbow",
+                "name": "Shortbow",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +3 to hit, one target. Hit: 4 (1d6 + 1) slashing damage.",
+                "action": {
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 3,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 1,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "items": [
+            {
+                "item": "shortbow-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "slashing"
+            ],
+            "misc": [
+                "melee_weapon_attack",
+                "ranged_weapon"
+            ]
+        }
+    },
+    {
+        "id": "great-kroom-purple-worm-awm",
+        "kind": "monster",
+        "name": "Great Kroom, Purple Worm",
+        "source": "AWM",
+        "edition": "classic",
+        "tags": [
+            "Tunneler"
+        ],
+        "short_name": "Great Kroom",
+        "size": [
+            "gargantuan"
+        ],
+        "creature_type": {
+            "type": "monstrosity"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 18,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 247
+        },
+        "speed": {
+            "walk": 50,
+            "burrow": 30
+        },
+        "abilities": {
+            "str": 10,
+            "dex": 13,
+            "con": 12,
+            "int": 11,
+            "wis": 11,
+            "cha": 12
+        },
+        "cr": {
+            "cr": "15",
+            "xp": 13000,
+            "pb": 5
+        },
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "tunneler",
+                "name": "Tunneler",
+                "category": "traits",
+                "text": "The worm can burrow through solid rock at half its burrow speed and leaves a 10-foot-diameter tunnel in its wake."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The worm makes two attacks:"
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +14 to hit, one target. Hit: 22 (3d8) piercing damage. Target must make a DC 19 Dexterity save, or be swallowed by the worm!",
+                "action": {
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 14,
+                        "damage": [
+                            {
+                                "dice": "3d8",
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "tail-stinger",
+                "name": "Tail Stinger",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +14 to hit, one creature. Hit: 19 (3d6 + 9) piercing damage Target must make a DC 19 Constitution save, or take 42 (12d6) poison damage.",
+                "action": {
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 14,
+                        "damage": [
+                            {
+                                "dice": "3d6",
+                                "bonus": 9,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "12d6",
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "poison",
+                "piercing"
+            ],
+            "movement": [
+                "burrow"
+            ],
+            "actions": [
+                "multiattack",
+                "swallow"
+            ],
+            "traits": [
+                "tunneler"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ]
+        }
+    },
+    {
+        "id": "hangry-otyugh-awm",
+        "kind": "monster",
+        "name": "Hangry Otyugh",
+        "source": "AWM",
+        "edition": "classic",
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "aberration"
+        },
+        "alignment": [
+            "neutral"
+        ],
+        "ac": [
+            {
+                "value": 14
+            }
+        ],
+        "hp": {
+            "average": 114
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 16,
+            "dex": 11,
+            "con": 19,
+            "int": 6,
+            "wis": 13,
+            "cha": 6
+        },
+        "cr": {
+            "cr": "5",
+            "xp": 1800,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "limited-telepathy",
+                "name": "Limited Telepathy",
+                "category": "traits",
+                "text": "The otyugh can magically transmit simple messages and images to any creature within 120 feet of it that can understand a language. This form of telepathy doesn't allow the receiving creature to telepathically respond."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The otyugh makes three attacks:"
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 12 (2d8 + 3) piercing damage. Target must make a DC 15 Constitution save, or take 6 (1d10) poison damage until cured.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "2d8",
+                                "bonus": 3,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "1d10",
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "tentacle",
+                "name": "Tentacle",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +6 to hit, reach 10 ft., one target. Hit: 7 (1d8 + 3) bludgeoning damage. Target must make a DC 19 Constitution save, or take 42 (12d6) poison damage.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 3,
+                                "type": "bludgeoning"
+                            },
+                            {
+                                "dice": "12d6",
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "slam",
+                "name": "Slam!",
+                "category": "actions",
+                "text": "Target must make a DC 14 Constitution save, or be grappled."
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "poison",
+                "piercing"
+            ],
+            "conditions_inflicted": [
+                "grappled"
+            ],
+            "actions": [
+                "multiattack",
+                "tentacles"
+            ],
+            "misc": [
+                "melee_weapon_attack",
+                "reach"
+            ],
+            "environment": [
+                "underdark"
+            ]
+        }
+    },
+    {
+        "id": "hill-giant-blorbo-awm",
+        "kind": "monster",
+        "name": "Hill Giant, Blorbo",
+        "source": "AWM",
+        "edition": "classic",
+        "short_name": "Blorbo",
+        "size": [
+            "huge"
+        ],
+        "creature_type": {
+            "type": "giant"
+        },
+        "alignment": [
+            "chaotic evil"
+        ],
+        "ac": [
+            {
+                "value": 13
+            }
+        ],
+        "hp": {
+            "average": 105
+        },
+        "speed": {
+            "walk": 40
+        },
+        "abilities": {
+            "str": 21,
+            "dex": 8,
+            "con": 19,
+            "int": 5,
+            "wis": 9,
+            "cha": 6
+        },
+        "cr": {
+            "cr": "4",
+            "xp": 1100,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": -1
+        },
+        "features": [
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The giant makes two greatclub attacks."
+            },
+            {
+                "id": "greatclub",
+                "name": "Greatclub",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +8 to hit, one target. Hit: 18 (3d8 + 5) bludgeoning damage.",
+                "action": {
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 8,
+                        "damage": [
+                            {
+                                "dice": "3d8",
+                                "bonus": 5,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "rock",
+                "name": "Rock",
+                "category": "actions",
+                "text": "Ranged Weapon Attack: +8 to hit, one target. Hit: 21 (3d10 + 5) bludgeoning damage.",
+                "action": {
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 8,
+                        "damage": [
+                            {
+                                "dice": "3d10",
+                                "bonus": 5,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "items": [
+            {
+                "item": "greatclub-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack",
+                "ranged_weapon_attack"
+            ]
+        }
+    },
+    {
+        "id": "saleeth-the-couatl-awm",
+        "kind": "monster",
+        "name": "Saleeth the Couatl",
+        "source": "AWM",
+        "edition": "classic",
+        "tags": [
+            "Magic Weapons"
+        ],
+        "short_name": "Saleeth",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "celestial"
+        },
+        "alignment": [
+            "lawful good"
+        ],
+        "ac": [
+            {
+                "value": 19,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 97
+        },
+        "speed": {
+            "walk": 30,
+            "fly": 90
+        },
+        "abilities": {
+            "str": 16,
+            "dex": 20,
+            "con": 17,
+            "int": 18,
+            "wis": 20,
+            "cha": 18
+        },
+        "cr": {
+            "cr": "4",
+            "xp": 1100,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 5
+        },
+        "features": [
+            {
+                "id": "magic-weapons",
+                "name": "Magic Weapons",
+                "category": "traits",
+                "text": "The couatl's weapon attacks are magical."
+            },
+            {
+                "id": "shielded-mind",
+                "name": "Shielded Mind",
+                "category": "traits",
+                "text": "The couatl is immune to Scrying and to any effect that would sense its emotions, read its thoughts, or detect its location."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +8 to hit, reach 5 ft., one creature. Hit: 8 (1d6 + 5) piercing damage. Target must make a DC 13 Constitution save, or fall unconscious. Another creature can use an action to shake the target awake.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 8,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 5,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "constrict",
+                "name": "Constrict",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +6 to hit, reach 10 ft., one Medium or smaller creature. Hit: 10 (2d6 + 3) bludgeoning damage. Target is grappled (escape DC 15). The couatl can constrain only one target at a time.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 3,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "change-shape",
+                "name": "Change Shape",
+                "category": "actions",
+                "text": "The couatl magically polymorphs into a humanoid or beast that has a challenge rating equal to or less than its own, or back into its true form. It reverts to its true form if it dies. Any equipment it is wearing or carrying is absorbed or borne by the new form (the couatl's choice).\n\nIn a new form, the couatl retains its game statistics and ability to speak, but its AC, movement modes, Strength, Dexterity, and other actions are replaced by those of the new form, and it gains any statistics and capabilities (except class features, legendary actions, and lair actions) that the new form has but that it lacks. If the new form has a bite attack, the couatl can use its bite in that form."
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Innate Spellcasting",
+                "ability": "cha",
+                "dc": 14,
+                "text": "The couatl's spellcasting ability is Charisma (spell save DC 14). It can innately cast the following spells, requiring only verbal components:",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "detect-evil-and-good-phb"
+                            },
+                            {
+                                "spell": "detect-magic-phb"
+                            },
+                            {
+                                "spell": "detect-thoughts-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 3,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "bless-phb"
+                            },
+                            {
+                                "spell": "create-food-and-water-phb"
+                            },
+                            {
+                                "spell": "cure-wounds-phb"
+                            },
+                            {
+                                "spell": "lesser-restoration-phb"
+                            },
+                            {
+                                "spell": "protection-from-poison-phb"
+                            },
+                            {
+                                "spell": "sanctuary-phb"
+                            },
+                            {
+                                "spell": "shield-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "dream-phb"
+                            },
+                            {
+                                "spell": "greater-restoration-phb"
+                            },
+                            {
+                                "spell": "scrying-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "piercing",
+                "psychic"
+            ],
+            "conditions_inflicted": [
+                "grappled",
+                "unconscious"
+            ],
+            "saves_forced": [
+                "wis"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "actions": [
+                "shapechanger"
+            ],
+            "traits": [
+                "magic_weapons"
+            ],
+            "misc": [
+                "melee_weapon_attack",
+                "reach"
+            ],
+            "spellcasting": [
+                "innate"
+            ]
+        }
+    }
+]

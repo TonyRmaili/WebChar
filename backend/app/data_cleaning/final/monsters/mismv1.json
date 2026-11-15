@@ -1,0 +1,1395 @@
+[
+    {
+        "id": "coral-mismv1",
+        "kind": "monster",
+        "name": "Coral",
+        "source": "MisMV1",
+        "edition": "classic",
+        "tags": [
+            "Magic Resistance"
+        ],
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "fey"
+        },
+        "alignment": [
+            "chaotic good"
+        ],
+        "ac": [
+            {
+                "value": 17,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 135,
+            "formula": "18d10 + 36"
+        },
+        "speed": {
+            "walk": 10,
+            "fly": 60,
+            "swim": 60
+        },
+        "abilities": {
+            "str": 20,
+            "dex": 13,
+            "con": 15,
+            "int": 14,
+            "wis": 18,
+            "cha": 19
+        },
+        "saves": {
+            "dex": 5,
+            "con": 6,
+            "wis": 8,
+            "cha": 8
+        },
+        "skills": {
+            "arcana": 6,
+            "insight": 8,
+            "perception": 8
+        },
+        "senses": {
+            "blindsight": 60
+        },
+        "passive_perception": 18,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "Common",
+            "Primordial",
+            "Sylvan"
+        ],
+        "cr": {
+            "cr": "9",
+            "xp": 5000,
+            "pb": 4
+        },
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "Coral has advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Coral makes two Hoof attacks and uses Tail Thump."
+            },
+            {
+                "id": "hoof",
+                "name": "Hoof",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +9 to hit, reach 5 ft., one target. Hit: 12 (2d6 + 5) bludgeoning damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 9,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 5,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "tail-thump",
+                "name": "Tail Thump",
+                "category": "actions",
+                "text": "Coral slams her tail down, unleashing a burst of magical force toward one creature she can see within 60 feet of her. The target must make a DC 16 Dexterity saving throw. On a failed save, the target takes 22 (4d10) force damage and has the prone condition. On a successful save, the target takes half as much damage only. If this damage reduces the target to 0 hit points, the target dies, and its body is reduced to fine dust.",
+                "action": {
+                    "save": {
+                        "ability": "dex",
+                        "dc": 16,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "4d10",
+                                "type": "force"
+                            }
+                        ],
+                        "conditions": [
+                            "prone"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "bubbles-of-whimsy",
+                "name": "Bubbles of Whimsy",
+                "category": "bonus_actions",
+                "text": "Coral produces a stream of magical bubbles from her horn. These bubbles float toward a creature Coral can see within 60 feet of herself. Roll a d6 to determine the bubbles' effect:\n\n- **1-2: Bolstering Treat.** The bubbles transform into 1d4 cookies that appear in the target's space. The target gains 11 (2d8 + 2) temporary hit points if it immediately uses its reaction to eat one of the cookies. Any leftover cookies are delicious but confer no benefits.\n- **3-4: Sparkle Burst.** The bubbles transform into glitter that swirls around the target before bursting outward. Each creature within 5 feet of the target must succeed on a DC 16 Constitution saving throw or have the blinded condition until the start of Coral's next turn.\n- **5-6: Stink Bomb Shield.** The bubbles transform into a foul-smelling cloud of gas that surrounds and shields the target. The target has half cover until the gas disappears at the start of Coral's next turn.",
+                "uses": {
+                    "max": 2,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "bubbles-of-whimsy-bolstering-treat",
+                "name": "Bolstering Treat",
+                "category": "bonus_actions",
+                "parent": "bubbles-of-whimsy",
+                "roll": "1-2",
+                "text": "The bubbles transform into 1d4 cookies that appear in the target's space. The target gains 11 (2d8 + 2) temporary hit points if it immediately uses its reaction to eat one of the cookies. Any leftover cookies are delicious but confer no benefits."
+            },
+            {
+                "id": "bubbles-of-whimsy-sparkle-burst",
+                "name": "Sparkle Burst",
+                "category": "bonus_actions",
+                "parent": "bubbles-of-whimsy",
+                "roll": "3-4",
+                "text": "The bubbles transform into glitter that swirls around the target before bursting outward. Each creature within 5 feet of the target must succeed on a DC 16 Constitution saving throw or have the blinded condition until the start of Coral's next turn.",
+                "action": {
+                    "save": {
+                        "ability": "con",
+                        "dc": 16,
+                        "on_success": "none",
+                        "conditions": [
+                            "blinded"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "bubbles-of-whimsy-stink-bomb-shield",
+                "name": "Stink Bomb Shield",
+                "category": "bonus_actions",
+                "parent": "bubbles-of-whimsy",
+                "roll": "5-6",
+                "text": "The bubbles transform into a foul-smelling cloud of gas that surrounds and shields the target. The target has half cover until the gas disappears at the start of Coral's next turn."
+            },
+            {
+                "id": "gift-of-speech",
+                "name": "Gift of Speech",
+                "category": "bonus_actions",
+                "text": "Coral targets one Beast she can see within 10 feet of herself. The target gains the ability to understand and speak Common or Sylvan (Coral's choice) for 10 minutes.",
+                "uses": {
+                    "max": 1,
+                    "reset": "long"
+                }
+            }
+        ],
+        "flags": {
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "force"
+            ],
+            "conditions_inflicted": [
+                "blinded",
+                "prone"
+            ],
+            "saves_forced": [
+                "con",
+                "dex"
+            ],
+            "senses": [
+                "blindsight"
+            ],
+            "movement": [
+                "fly",
+                "swim"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "magic_resistance"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "primordial",
+                "sylvan"
+            ]
+        }
+    },
+    {
+        "id": "dandylion-mismv1",
+        "kind": "monster",
+        "name": "Dandylion",
+        "source": "MisMV1",
+        "edition": "classic",
+        "tags": [
+            "Magic Resistance",
+            "Pack Tactics"
+        ],
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "fey"
+        },
+        "alignment": [
+            "chaotic neutral"
+        ],
+        "alignment_prefix": "typically",
+        "ac": [
+            {
+                "value": 14
+            }
+        ],
+        "hp": {
+            "average": 90,
+            "formula": "12d10 + 24"
+        },
+        "speed": {
+            "walk": 50
+        },
+        "abilities": {
+            "str": 22,
+            "dex": 19,
+            "con": 14,
+            "int": 16,
+            "wis": 17,
+            "cha": 18
+        },
+        "saves": {
+            "str": 9,
+            "cha": 7
+        },
+        "skills": {
+            "nature": 9,
+            "perception": 6,
+            "survival": 6
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 16,
+        "languages": [
+            "Common",
+            "Sylvan"
+        ],
+        "cr": {
+            "cr": "6",
+            "xp": 2300,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 4
+        },
+        "features": [
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The dandylion has advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "pack-tactics",
+                "name": "Pack Tactics",
+                "category": "traits",
+                "text": "The dandylion has advantage on an attack roll against a creature if at least one of the dandylion's allies is within 5 feet of the creature and the ally doesn't have the incapacitated condition."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The dandylion makes one Bite attack and one Claws attack."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +9 to hit, reach 5 ft., one target. Hit: 13 (2d6 + 6) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 9,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 6,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "claws",
+                "name": "Claws",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +9 to hit, reach 5 ft., one target. Hit: 20 (4d6 + 6) slashing damage. If the dandylion moved at least 20 feet straight toward the target immediately before the hit, the target must succeed on a DC 17 Strength saving throw or have the prone condition. If the target has the prone condition, the dandylion can make one Bite attack against it as a bonus action.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 9,
+                        "damage": [
+                            {
+                                "dice": "4d6",
+                                "bonus": 6,
+                                "type": "slashing"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "str",
+                        "dc": 17,
+                        "on_success": "none",
+                        "conditions": [
+                            "prone"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "rejuvenating-seedpods",
+                "name": "Rejuvenating Seedpods",
+                "category": "actions",
+                "text": "The dandylion releases a burst of seedpods from its tail, filling a 10-foot-radius sphere centered on itself. Each creature of the dandylion's choice in the sphere can immediately end one of the following conditions on itself (creature's choice): blinded, deafened, paralyzed, or poisoned. In addition, all soil in the sphere's area is enriched, restoring withered vegetation in the area to full health and causing all crops in the area to produce twice the normal harvest for the next year.",
+                "uses": {
+                    "max": 2,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "roar-of-pride",
+                "name": "Roar of Pride",
+                "category": "reactions",
+                "text": "When a creature within 60 feet of the dandylion hits it with an attack roll, the dandylion can unleash a furious roar. The creature that triggered this reaction must succeed on a DC 15 Wisdom saving throw or have the frightened condition until the end of the dandylion's next turn.",
+                "action": {
+                    "save": {
+                        "ability": "wis",
+                        "dc": 15,
+                        "on_success": "none",
+                        "conditions": [
+                            "frightened"
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "cha",
+                "dc": 15,
+                "text": "The dandylion casts one of the following spells, requiring no material components and using Charisma as the spellcasting ability (spell save DC 15):",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "druidcraft-phb"
+                            },
+                            {
+                                "spell": "guidance-phb"
+                            },
+                            {
+                                "spell": "purify-food-and-drink-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "spells": [
+                            {
+                                "spell": "speak-with-plants-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 2,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "entangle-phb"
+                            },
+                            {
+                                "spell": "goodberry-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing",
+                "slashing"
+            ],
+            "conditions_inflicted": [
+                "prone",
+                "restrained"
+            ],
+            "saves_forced": [
+                "str",
+                "wis"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "magic_resistance",
+                "pack_tactics"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "sylvan"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "rain-mismv1",
+        "kind": "monster",
+        "name": "Rain",
+        "source": "MisMV1",
+        "edition": "classic",
+        "tags": [
+            "Magic Resistance"
+        ],
+        "size": [
+            "small"
+        ],
+        "creature_type": {
+            "type": "celestial"
+        },
+        "alignment": [
+            "lawful good"
+        ],
+        "ac": [
+            {
+                "value": 15,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 60,
+            "formula": "11d6 + 22"
+        },
+        "speed": {
+            "walk": 30,
+            "fly": 120
+        },
+        "abilities": {
+            "str": 10,
+            "dex": 11,
+            "con": 14,
+            "int": 14,
+            "wis": 18,
+            "cha": 15
+        },
+        "saves": {
+            "dex": 3,
+            "con": 5,
+            "wis": 7
+        },
+        "skills": {
+            "acrobatics": 3,
+            "insight": 7,
+            "stealth": 3
+        },
+        "passive_perception": 14,
+        "defenses": {
+            "resist": {
+                "conditional": [
+                    {
+                        "types": [
+                            "bludgeoning",
+                            "piercing",
+                            "slashing"
+                        ],
+                        "note": "from nonmagical attacks"
+                    }
+                ]
+            },
+            "immune": {
+                "types": [
+                    "fire",
+                    "poison",
+                    "radiant"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "paralyzed",
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "Celestial",
+            "Common"
+        ],
+        "cr": {
+            "cr": "5",
+            "xp": 1800,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "fiery-wings",
+                "name": "Fiery Wings",
+                "category": "traits",
+                "text": "Rain's wings are made of flame, and they shed bright light out to 15 feet and dim light for an additional 15 feet. At the start of each of Rain's turns, each creature of Rain's choice within 5 feet of her takes 3 (1d6) fire damage. A creature that hits Rain with a melee attack takes 3 (1d6) fire damage.",
+                "action": {
+                    "damage": [
+                        {
+                            "dice": "1d6",
+                            "type": "fire"
+                        },
+                        {
+                            "dice": "1d6",
+                            "type": "fire"
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "Rain has advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Rain makes two Hoof attacks."
+            },
+            {
+                "id": "hoof",
+                "name": "Hoof",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: 5 (2d4) bludgeoning damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 3,
+                        "damage": [
+                            {
+                                "dice": "2d4",
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "haloed-horn-burst",
+                "name": "Haloed Horn Burst",
+                "category": "actions",
+                "text": "Rain uses her haloed horn to produce one of the following magical effects:",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                }
+            },
+            {
+                "id": "glitterstorm",
+                "name": "Glitterstorm",
+                "category": "actions",
+                "text": "Rain emits a rainbow beam in a 30-foot line that is 5 feet wide. Each creature in that area must make a DC 15 Dexterity saving throw, taking 21 (6d6) radiant damage on a failed saving throw, or half as much damage on a successful one; creatures of evil alignment have disadvantage on this saving throw. If the damage from this effect reduces a creature to 0 hit points, the creature dies, and its body turns into glittery flowers.",
+                "action": {
+                    "area": "30-foot line",
+                    "save": {
+                        "ability": "dex",
+                        "dc": 15,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "6d6",
+                                "type": "radiant"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "healing-rainbows",
+                "name": "Healing Rainbows",
+                "category": "actions",
+                "text": "Rain releases a wave of rejuvenating multicolored light in a 30-foot cone. Each creature of Rain's choice in that area regains 18 (4d8) hit points."
+            },
+            {
+                "id": "nimble-escape",
+                "name": "Nimble Escape",
+                "category": "bonus_actions",
+                "text": "Rain takes either the Disengage or the Hide action."
+            }
+        ],
+        "flags": {
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "fire",
+                "radiant"
+            ],
+            "saves_forced": [
+                "dex"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "magic_resistance"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "celestial"
+            ]
+        }
+    },
+    {
+        "id": "scrapper-mismv1",
+        "kind": "monster",
+        "name": "Scrapper",
+        "source": "MisMV1",
+        "edition": "classic",
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "construct"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 18,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 126,
+            "formula": "12d10 + 60"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 20,
+            "dex": 10,
+            "con": 20,
+            "int": 3,
+            "wis": 10,
+            "cha": 1
+        },
+        "skills": {
+            "perception": 6
+        },
+        "senses": {
+            "darkvision": 120
+        },
+        "passive_perception": 16,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "lightning"
+                ]
+            },
+            "immune": {
+                "types": [
+                    "poison",
+                    "psychic"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "exhaustion",
+                    "frightened",
+                    "paralyzed",
+                    "petrified",
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "understands the languages of its creator but can't speak"
+        ],
+        "cr": {
+            "cr": "8",
+            "xp": 3900,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "electrified-chassis",
+                "name": "Electrified Chassis",
+                "category": "traits",
+                "text": "A creature that hits the scrapper with a melee attack while within 5 feet of it takes 19 (3d12) lightning damage.",
+                "action": {
+                    "damage": [
+                        {
+                            "dice": "3d12",
+                            "type": "lightning"
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The scrapper makes two Spike Punch attacks. It can replace one of those with a Wires attack."
+            },
+            {
+                "id": "spike-punch",
+                "name": "Spike Punch",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +8 to hit, reach 5 ft., one target. Hit: 14 (2d8 + 5) bludgeoning damage plus 5 (1d10) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 8,
+                        "damage": [
+                            {
+                                "dice": "2d8",
+                                "bonus": 5,
+                                "type": "bludgeoning"
+                            },
+                            {
+                                "dice": "1d10",
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "wires",
+                "name": "Wires",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +8 to hit, reach 20 ft., one Large or smaller creature. Hit: The target has the grappled condition (escape DC 16) and must succeed on a DC 16 Strength saving throw or be pulled into an unoccupied space within 5 feet of the scrapper and take 19 (3d12) lightning damage. The scrapper can have only one creature grappled in this way at a time.",
+                "action": {
+                    "range": "reach 20 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 8
+                    },
+                    "save": {
+                        "ability": "str",
+                        "dc": 16,
+                        "on_success": "none",
+                        "damage": [
+                            {
+                                "dice": "3d12",
+                                "type": "lightning"
+                            }
+                        ],
+                        "conditions": [
+                            "grappled"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "eye-beam",
+                "name": "Eye Beam",
+                "category": "actions",
+                "text": "The scrapper shoots a magical beam from its extended eye at one creature it can see within 120 feet of itself. The target must make a DC 16 Dexterity saving throw, taking 44 (8d10) force damage on a failed save, or half as much damage on a successful one.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "save": {
+                        "ability": "dex",
+                        "dc": 16,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "8d10",
+                                "type": "force"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "lightning",
+                "force",
+                "piercing"
+            ],
+            "saves_forced": [
+                "dex",
+                "str"
+            ],
+            "senses": [
+                "superior_darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "melee_weapon_attack",
+                "reach"
+            ],
+            "languages": [
+                "cant_speak"
+            ]
+        }
+    },
+    {
+        "id": "seth-the-shapeshifting-dragon-mismv1",
+        "kind": "monster",
+        "name": "Seth the Shapeshifting Dragon",
+        "source": "MisMV1",
+        "edition": "classic",
+        "tags": [
+            "Amphibious"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "dragon"
+        },
+        "alignment": [
+            "neutral"
+        ],
+        "ac": [
+            {
+                "value": 17
+            }
+        ],
+        "hp": {
+            "average": 153,
+            "formula": "18d8 + 72"
+        },
+        "speed": {
+            "walk": 50,
+            "swim": 50
+        },
+        "abilities": {
+            "str": 16,
+            "dex": 25,
+            "con": 19,
+            "int": 13,
+            "wis": 15,
+            "cha": 14
+        },
+        "saves": {
+            "str": 7,
+            "dex": 11,
+            "con": 8
+        },
+        "skills": {
+            "perception": 6,
+            "stealth": 11
+        },
+        "senses": {
+            "darkvision": 120,
+            "blindsight": 30
+        },
+        "passive_perception": 16,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "cold",
+                    "fire"
+                ]
+            },
+            "immune": {
+                "types": [
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "grappled",
+                    "poisoned",
+                    "restrained"
+                ]
+            }
+        },
+        "languages": [
+            "Aquan",
+            "Common",
+            "Draconic"
+        ],
+        "cr": {
+            "cr": "10",
+            "xp": 5900,
+            "pb": 4
+        },
+        "initiative": {
+            "bonus": 7
+        },
+        "features": [
+            {
+                "id": "amphibious",
+                "name": "Amphibious",
+                "category": "traits",
+                "text": "Seth can breathe air and water."
+            },
+            {
+                "id": "invisible-in-water",
+                "name": "Invisible in Water",
+                "category": "traits",
+                "text": "Seth has the invisible condition while fully immersed in water."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Seth makes one Bite attack and two Claw attacks."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +11 to hit, reach 10 ft., one target. Hit: 10 (1d6 + 7) piercing damage plus 9 (2d8) cold damage.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 11,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 7,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "2d8",
+                                "type": "cold"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "claw",
+                "name": "Claw",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +11 to hit, reach 5 ft., one target. Hit: 14 (2d6 + 7) slashing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 11,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 7,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "riptide-breath",
+                "name": "Riptide Breath",
+                "category": "actions",
+                "text": "Seth exhales a torrent of frigid water in a 30-foot cone. Each creature in that area must make a DC 16 Constitution saving throw. On a failed save, the creature takes 36 (8d8) cold damage and has the incapacitated condition until the end of its next turn. On a successful save, the creature takes half as much damage only.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "area": "30-foot cone",
+                    "save": {
+                        "ability": "con",
+                        "dc": 16,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "8d8",
+                                "type": "cold"
+                            }
+                        ],
+                        "conditions": [
+                            "incapacitated"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "change-shape",
+                "name": "Change Shape",
+                "category": "bonus_actions",
+                "text": "Seth magically transforms into a Small Humanoid or a Beast that is Tiny or Small, while retaining his game statistics (other than his size). This transformation ends if Seth is reduced to 0 hit points or uses another bonus action to end it."
+            },
+            {
+                "id": "superspeed",
+                "name": "Superspeed",
+                "category": "bonus_actions",
+                "text": "Seth's speed is doubled for as long as he maintains concentration (as if concentrating on a spell). While his speed is increased in this way, all attack rolls against him are made with disadvantage, and he becomes partially incorporeal, allowing him to move through creatures and objects as if they were difficult terrain. Seth takes 5 (1d10) force damage if he ends his turn inside an object.",
+                "uses": {
+                    "max": 2,
+                    "reset": "long"
+                },
+                "action": {
+                    "damage": [
+                        {
+                            "dice": "1d10",
+                            "type": "force",
+                            "condition": "if he ends his turn inside an object"
+                        }
+                    ]
+                }
+            }
+        ],
+        "flags": {
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "cold",
+                "force",
+                "piercing",
+                "slashing"
+            ],
+            "conditions_inflicted": [
+                "incapacitated"
+            ],
+            "saves_forced": [
+                "con"
+            ],
+            "senses": [
+                "blindsight",
+                "superior_darkvision"
+            ],
+            "movement": [
+                "swim"
+            ],
+            "actions": [
+                "breath_weapon",
+                "multiattack",
+                "shapechanger"
+            ],
+            "traits": [
+                "amphibious"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_weapon_attack",
+                "reach"
+            ],
+            "languages": [
+                "aquan",
+                "common",
+                "draconic"
+            ]
+        }
+    },
+    {
+        "id": "sheldon-the-blueberry-dragon-mismv1",
+        "kind": "monster",
+        "name": "Sheldon the Blueberry Dragon",
+        "source": "MisMV1",
+        "edition": "classic",
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "dragon"
+        },
+        "alignment": [
+            "neutral good"
+        ],
+        "ac": [
+            {
+                "value": 16,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 142,
+            "formula": "15d10 + 60"
+        },
+        "speed": {
+            "walk": 30,
+            "fly": 60
+        },
+        "abilities": {
+            "str": 19,
+            "dex": 13,
+            "con": 18,
+            "int": 17,
+            "wis": 14,
+            "cha": 16
+        },
+        "saves": {
+            "dex": 4,
+            "con": 7,
+            "int": 6
+        },
+        "skills": {
+            "acrobatics": 7,
+            "athletics": 7,
+            "performance": 6
+        },
+        "senses": {
+            "darkvision": 120,
+            "blindsight": 30
+        },
+        "passive_perception": 12,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "force",
+                    "psychic"
+                ]
+            }
+        },
+        "languages": [
+            "Common",
+            "Draconic",
+            "telepathy 120 ft."
+        ],
+        "cr": {
+            "cr": "7",
+            "xp": 2900,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "space-dweller",
+                "name": "Space Dweller",
+                "category": "traits",
+                "text": "Sheldon can breathe normally in a vacuum."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Sheldon makes either two Bite attacks, two Blueberry Fling attacks, or one of each."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 7 (1d6 + 4) piercing damage plus 4 (1d8) psychic damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 4,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "1d8",
+                                "type": "psychic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "blueberry-fling",
+                "name": "Blueberry Fling",
+                "category": "actions",
+                "text": "Ranged Weapon Attack: +7 to hit, range 30 ft., one creature. Hit: 11 (2d6 + 4) blueberry damage.",
+                "action": {
+                    "range": "range 30 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 7
+                    }
+                }
+            },
+            {
+                "id": "jetstream-breath",
+                "name": "Jetstream Breath",
+                "category": "actions",
+                "text": "Sheldon exhales a line of magical wind that is 60 feet long and 5 feet wide. Each creature in that area must make a DC 15 Strength saving throw. On a failed save, the creature takes 21 (6d6) force damage, is pushed 15 feet away from Sheldon, and has the prone condition. On a successful save, the creature takes half as much damage only.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "save": {
+                        "ability": "str",
+                        "dc": 15,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "6d6",
+                                "type": "force"
+                            }
+                        ],
+                        "conditions": [
+                            "prone"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "wind-dash",
+                "name": "Wind Dash",
+                "category": "bonus_actions",
+                "text": "Sheldon summons a powerful gust of wind and flies up to his speed. This movement doesn't provoke opportunity attacks. At the end of this movement, each creature within 5 feet of Sheldon must succeed on a DC 15 Strength saving throw or have the prone condition, as the wind bursts around Sheldon.",
+                "uses": {
+                    "max": 2,
+                    "reset": "long"
+                },
+                "action": {
+                    "save": {
+                        "ability": "str",
+                        "dc": 15,
+                        "on_success": "none",
+                        "conditions": [
+                            "prone"
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting (Psionics)",
+                "ability": "int",
+                "dc": 14,
+                "text": "Sheldon casts one of the following spells, requiring no spell components and using Intelligence as the spellcasting ability (spell save DC 14):",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "light-phb"
+                            },
+                            {
+                                "spell": "mage-hand-phb",
+                                "note": "(the hand is invisible)"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "dimension-door-phb"
+                            },
+                            {
+                                "spell": "telekinesis-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "flags": {
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "force",
+                "piercing",
+                "psychic"
+            ],
+            "conditions_inflicted": [
+                "prone",
+                "restrained"
+            ],
+            "saves_forced": [
+                "str",
+                "dex"
+            ],
+            "senses": [
+                "blindsight",
+                "superior_darkvision"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "actions": [
+                "breath_weapon",
+                "multiattack"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_weapon_attack",
+                "ranged_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "draconic",
+                "telepathy"
+            ],
+            "spellcasting": [
+                "psionics"
+            ]
+        }
+    }
+]

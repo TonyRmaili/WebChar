@@ -1,0 +1,1058 @@
+[
+    {
+        "id": "ebondeath-dc",
+        "kind": "monster",
+        "name": "Ebondeath",
+        "source": "DC",
+        "edition": "classic",
+        "tags": [
+            "Ethereal Sight",
+            "Incorporeal Movement",
+            "Legendary Resistances"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "undead"
+        },
+        "alignment": [
+            "any alignment"
+        ],
+        "ac": [
+            {
+                "value": 15
+            }
+        ],
+        "hp": {
+            "average": 225,
+            "formula": "10d8"
+        },
+        "speed": {
+            "walk": 0,
+            "fly": 40
+        },
+        "abilities": {
+            "str": 7,
+            "dex": 13,
+            "con": 10,
+            "int": 10,
+            "wis": 12,
+            "cha": 17
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 11,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "acid",
+                    "fire",
+                    "lightning",
+                    "thunder"
+                ],
+                "conditional": [
+                    {
+                        "types": [
+                            "bludgeoning",
+                            "piercing",
+                            "slashing"
+                        ],
+                        "note": "from nonmagical attacks"
+                    }
+                ]
+            },
+            "immune": {
+                "types": [
+                    "cold",
+                    "necrotic",
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "exhaustion",
+                    "frightened",
+                    "grappled",
+                    "paralyzed",
+                    "petrified",
+                    "poisoned",
+                    "prone",
+                    "restrained"
+                ]
+            }
+        },
+        "languages": [
+            "Any languages it knew in life"
+        ],
+        "cr": {
+            "cr": "4",
+            "xp": 1100,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "ethereal-sight",
+                "name": "Ethereal Sight",
+                "category": "traits",
+                "text": "Ebondeath can see 60 feet into the Ethereal Plane when it is on the Material Plane, and vice versa."
+            },
+            {
+                "id": "incorporeal-movement",
+                "name": "Incorporeal Movement",
+                "category": "traits",
+                "text": "Ebondeath can move through other creatures and objects as if they were difficult terrain. It takes 5 (1d10) force damage if it ends its turn inside an object.",
+                "action": {
+                    "damage": [
+                        {
+                            "dice": "1d10",
+                            "type": "force",
+                            "condition": "if it ends its turn inside an object"
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "legendary-resistance",
+                "name": "Legendary Resistance",
+                "category": "traits",
+                "text": "If the dragon fails a saving throw, it can choose to succeed instead.",
+                "uses": {
+                    "max": 3,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "withering-touch",
+                "name": "Withering Touch",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 17 (4d6 + 3) necrotic damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "4d6",
+                                "bonus": 3,
+                                "type": "necrotic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "etherealness",
+                "name": "Etherealness",
+                "category": "actions",
+                "text": "Ebondeath enters the Ethereal Plane from the Material Plane, or vice versa. It is visible on the Material Plane while it is in the Border Ethereal, and vice versa, yet it can't affect or be affected by anything on the other plane."
+            },
+            {
+                "id": "horrifying-visage",
+                "name": "Horrifying Visage",
+                "category": "actions",
+                "text": "Each non-undead creature within 60 feet of Ebondeath that can see it must succeed on a DC 13 Wisdom saving throw or be frightened for 1 minute. If the save fails by 5 or more, the target also ages 1d4 × 10 years. A frightened target can repeat the saving throw at the end of each of its turns, ending the frightened condition on itself on a success. If a target's saving throw is successful or the effect ends for it, the target is immune to this Ebondeath's Horrifying Visage for the next 24 hours. The aging effect can be reversed with a Greater Restoration spell, but only within 24 hours of it occurring.",
+                "action": {
+                    "save": {
+                        "ability": "wis",
+                        "dc": 13,
+                        "on_success": "none",
+                        "conditions": [
+                            "frightened"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "possession",
+                "name": "Possession",
+                "category": "actions",
+                "text": "One humanoid that Ebondeath can see within 5 feet of it must succeed on a DC 20 Charisma saving throw or be possessed by Ebondeath; Ebondeath then disappears, and the target is incapacitated and loses control of its body. Ebondeath now controls the body but doesn't deprive the target of awareness. Ebondeath can't be targeted by any attack, spell, or other effect, except ones that turn undead, and it retains its alignment, Intelligence, Wisdom, Charisma, and immunity to being charmed and frightened. It otherwise uses the possessed target's statistics, including gaining access to the target's knowledge, class features, and proficiencies.\n\nThe possession lasts until the body drops to 0 hit points, Ebondeath ends it as a bonus action, or Ebondeath is turned or forced out by an effect like the Dispel Evil and Good spell. When the possession ends, Ebondeath reappears in an unoccupied space within 5 feet of the body. The target is immune to Ebondeath Possession for 24 hours after succeeding on the saving throw or after the possession ends.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 6
+                },
+                "action": {
+                    "save": {
+                        "ability": "cha",
+                        "dc": 20,
+                        "on_success": "none",
+                        "conditions": [
+                            "charmed",
+                            "frightened",
+                            "incapacitated"
+                        ]
+                    }
+                }
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "necrotic",
+                "force"
+            ],
+            "conditions_inflicted": [
+                "frightened",
+                "incapacitated"
+            ],
+            "saves_forced": [
+                "cha",
+                "wis"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "traits": [
+                "ethereal_sight",
+                "incorporeal_movement",
+                "legendary_resistances"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "known_in_life"
+            ]
+        }
+    },
+    {
+        "id": "expert-dc",
+        "kind": "monster",
+        "name": "Expert",
+        "source": "DC",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid"
+        },
+        "ac": [
+            {
+                "value": 17,
+                "from": [
+                    "studded leather"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 66,
+            "formula": "12d8 + 12"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 10,
+            "dex": 20,
+            "con": 12,
+            "int": 14,
+            "wis": 10,
+            "cha": 14
+        },
+        "saves": {
+            "dex": 9
+        },
+        "skills": {
+            "acrobatics": 13,
+            "performance": 6,
+            "persuasion": 6,
+            "sleight_of_hand": 9,
+            "stealth": 13
+        },
+        "passive_perception": 10,
+        "languages": [
+            "Common",
+            "plus one of your choice"
+        ],
+        "level": 11,
+        "initiative": {
+            "bonus": 5
+        },
+        "features": [
+            {
+                "id": "helpful",
+                "name": "Helpful",
+                "category": "traits",
+                "text": "The expert can take the Help action as a bonus action, and the creature who receives the help gains a 1d6 bonus to the d20 roll. If that roll is an attack roll, the creature can forgo adding the bonus to it, and then if the attack hits, the creature can add the bonus to the attack's damage roll against one target."
+            },
+            {
+                "id": "evasion",
+                "name": "Evasion",
+                "category": "traits",
+                "text": "When the expert is not incapacitated and subjected to an effect that allows it to make a Dexterity saving throw to take only half damage, it instead takes no damage if it succeeds on the saving throw, and only half damage if it failed."
+            },
+            {
+                "id": "reliable-talent",
+                "name": "Reliable Talent",
+                "category": "traits",
+                "text": "Whenever the expert makes an ability check that includes its whole proficiency bonus, it can treat a d20 roll of 9 or lower as a 10."
+            },
+            {
+                "id": "tools",
+                "name": "Tools",
+                "category": "traits",
+                "text": "The expert has thieves' tools and a musical instrument."
+            },
+            {
+                "id": "extra-attack",
+                "name": "Extra Attack",
+                "category": "actions",
+                "text": "The expert can attack twice, instead of once, whenever it takes the attack action on its turn."
+            },
+            {
+                "id": "shortsword",
+                "name": "Shortsword",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +9 to hit, reach 5 ft., one target. Hit: 8 (1d6 + 5) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 9,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 5,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "dagger",
+                "name": "Dagger",
+                "category": "actions",
+                "text": "Melee or Ranged Weapon Attack: +9 to hit, reach 5 ft. or range 20/60 ft., one target. Hit: 7 (1d4 + 5) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft. or range 20/60 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 9,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 5,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "shortbow",
+                "name": "Shortbow",
+                "category": "actions",
+                "text": "Ranged Weapon Attack: +9 to hit, range 80/320 ft., one target. Hit: 8 (1d6 + 5) piercing damage.",
+                "action": {
+                    "range": "range 80/320 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 9,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 5,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "items": [
+            {
+                "item": "dagger-phb",
+                "qty": 1,
+                "attacks": true
+            },
+            {
+                "item": "shortbow-phb",
+                "qty": 1,
+                "attacks": true
+            },
+            {
+                "item": "shortsword-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack",
+                "ranged_weapon",
+                "ranged_weapon_attack",
+                "thrown_weapon"
+            ],
+            "languages": [
+                "common"
+            ]
+        }
+    },
+    {
+        "id": "spellcaster-healer-dc",
+        "kind": "monster",
+        "name": "Spellcaster (Healer)",
+        "source": "DC",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "healer"
+            ]
+        },
+        "ac": [
+            {
+                "value": 13,
+                "from": [
+                    "studded leather"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 54,
+            "formula": "12d8"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 10,
+            "dex": 12,
+            "con": 10,
+            "int": 15,
+            "wis": 18,
+            "cha": 13
+        },
+        "saves": {
+            "wis": 8
+        },
+        "skills": {
+            "arcana": 6,
+            "investigation": 6,
+            "religion": 6
+        },
+        "passive_perception": 14,
+        "languages": [
+            "Common",
+            "plus one of your choice"
+        ],
+        "level": 11,
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "empowered-spells",
+                "name": "Empowered Spells",
+                "category": "traits",
+                "text": "Whenever the spellcaster casts a spell of the evocation school by expending a spell slot, the spellcaster can add its spellcasting ability modifier to the spell's damage roll or healing roll, if any."
+            },
+            {
+                "id": "potent-cantrip",
+                "name": "Potent Cantrip",
+                "category": "traits",
+                "text": "The spellcaster can add its spellcasting ability modifier to the damage it deals with any cantrip."
+            },
+            {
+                "id": "quarterstaff",
+                "name": "Quarterstaff",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 3 (1d6) bludgeoning damage, or 4 (1d8) bludgeoning damage if used with two hands.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "type": "bludgeoning"
+                            },
+                            {
+                                "dice": "1d8",
+                                "type": "bludgeoning",
+                                "condition": "if used with two hands"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting (Healer)",
+                "ability": "wis",
+                "dc": 16,
+                "attack": 8,
+                "text": "The spellcaster's spellcasting ability is Wisdom (spell save DC 16, +8 to hit with spell attacks). The spellcaster has following cleric spells prepared:",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "level": 0,
+                        "spells": [
+                            {
+                                "spell": "guidance-phb"
+                            },
+                            {
+                                "spell": "light-phb"
+                            },
+                            {
+                                "spell": "resistance-phb"
+                            },
+                            {
+                                "spell": "sacred-flame-phb"
+                            },
+                            {
+                                "spell": "spare-the-dying-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 1,
+                        "slots": 4,
+                        "spells": [
+                            {
+                                "spell": "bless-phb"
+                            },
+                            {
+                                "spell": "cure-wounds-phb"
+                            },
+                            {
+                                "spell": "shield-of-faith-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 2,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "aid-phb"
+                            },
+                            {
+                                "spell": "lesser-restoration-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 3,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "protection-from-energy-phb"
+                            },
+                            {
+                                "spell": "revivify-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 4,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "banishment-phb"
+                            },
+                            {
+                                "spell": "death-ward-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 5,
+                        "slots": 2,
+                        "spells": [
+                            {
+                                "spell": "greater-restoration-phb"
+                            },
+                            {
+                                "spell": "mass-cure-wounds-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 6,
+                        "slots": 1,
+                        "spells": [
+                            {
+                                "spell": "heal-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "quarterstaff-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "radiant"
+            ],
+            "conditions_inflicted": [
+                "incapacitated"
+            ],
+            "saves_forced": [
+                "cha",
+                "dex"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "common"
+            ],
+            "spellcasting": [
+                "cleric"
+            ]
+        }
+    },
+    {
+        "id": "spellcaster-mage-dc",
+        "kind": "monster",
+        "name": "Spellcaster (Mage)",
+        "source": "DC",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "mage"
+            ]
+        },
+        "ac": [
+            {
+                "value": 13,
+                "from": [
+                    "studded leather"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 54,
+            "formula": "12d8"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 10,
+            "dex": 12,
+            "con": 10,
+            "int": 18,
+            "wis": 14,
+            "cha": 14
+        },
+        "saves": {
+            "wis": 6
+        },
+        "skills": {
+            "arcana": 8,
+            "investigation": 8,
+            "religion": 8
+        },
+        "passive_perception": 12,
+        "languages": [
+            "Common",
+            "plus one of your choice"
+        ],
+        "level": 11,
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "empowered-spells",
+                "name": "Empowered Spells",
+                "category": "traits",
+                "text": "Whenever the spellcaster casts a spell of the evocation school by expending a spell slot, the spellcaster can add its spellcasting ability modifier to the spell's damage roll or healing roll, if any."
+            },
+            {
+                "id": "potent-cantrip",
+                "name": "Potent Cantrip",
+                "category": "traits",
+                "text": "The spellcaster can add its spellcasting ability modifier to the damage it deals with any cantrip."
+            },
+            {
+                "id": "quarterstaff",
+                "name": "Quarterstaff",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 3 (1d6) bludgeoning damage, or 4 (1d8) bludgeoning damage if used with two hands.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "type": "bludgeoning"
+                            },
+                            {
+                                "dice": "1d8",
+                                "type": "bludgeoning",
+                                "condition": "if used with two hands"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting (Mage)",
+                "ability": "int",
+                "dc": 16,
+                "attack": 8,
+                "text": "The spellcaster's spellcasting ability is Intelligence (spell save DC 16, +8 to hit with spell attacks). The spellcaster has following wizard spells prepared:",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "level": 0,
+                        "spells": [
+                            {
+                                "spell": "fire-bolt-phb"
+                            },
+                            {
+                                "spell": "light-phb"
+                            },
+                            {
+                                "spell": "mage-hand-phb"
+                            },
+                            {
+                                "spell": "minor-illusion-phb"
+                            },
+                            {
+                                "spell": "shocking-grasp-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 1,
+                        "slots": 4,
+                        "spells": [
+                            {
+                                "spell": "burning-hands-phb"
+                            },
+                            {
+                                "spell": "shield-phb"
+                            },
+                            {
+                                "spell": "sleep-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 2,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "flaming-sphere-phb"
+                            },
+                            {
+                                "spell": "invisibility-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 3,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "fireball-phb"
+                            },
+                            {
+                                "spell": "fly-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 4,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "polymorph-phb"
+                            },
+                            {
+                                "spell": "wall-of-fire-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 5,
+                        "slots": 2,
+                        "spells": [
+                            {
+                                "spell": "cone-of-cold-phb"
+                            },
+                            {
+                                "spell": "hold-monster-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 6,
+                        "slots": 1,
+                        "spells": [
+                            {
+                                "spell": "chain-lightning-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "quarterstaff-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "cold",
+                "fire",
+                "lightning"
+            ],
+            "conditions_inflicted": [
+                "invisible",
+                "paralyzed",
+                "unconscious"
+            ],
+            "saves_forced": [
+                "con",
+                "dex",
+                "wis"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "common"
+            ],
+            "spellcasting": [
+                "wizard"
+            ]
+        }
+    },
+    {
+        "id": "warrior-dc",
+        "kind": "monster",
+        "name": "Warrior",
+        "source": "DC",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid"
+        },
+        "ac": [
+            {
+                "value": 21,
+                "from": [
+                    "plate",
+                    "shield"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 78,
+            "formula": "12d8 + 24"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 18,
+            "dex": 14,
+            "con": 14,
+            "int": 10,
+            "wis": 12,
+            "cha": 10
+        },
+        "saves": {
+            "con": 6
+        },
+        "skills": {
+            "athletics": 8,
+            "perception": 5,
+            "survival": 5
+        },
+        "passive_perception": 15,
+        "languages": [
+            "Common",
+            "plus one of your choice"
+        ],
+        "level": 11,
+        "initiative": {
+            "bonus": 2,
+            "advantage": true
+        },
+        "features": [
+            {
+                "id": "battle-readiness",
+                "name": "Battle Readiness",
+                "category": "traits",
+                "text": "The warrior has advantage on initiative rolls."
+            },
+            {
+                "id": "improved-critical",
+                "name": "Improved Critical",
+                "category": "traits",
+                "text": "The warrior's attack rolls score a critical hit on a roll of 19 or 20 on the d20."
+            },
+            {
+                "id": "improved-defense",
+                "name": "Improved Defense",
+                "category": "traits",
+                "text": "The warrior's AC increases by 1."
+            },
+            {
+                "id": "indomitable",
+                "name": "Indomitable",
+                "category": "traits",
+                "text": "The warrior can reroll a saving throw that it fails, but it must use the new result.",
+                "uses": {
+                    "max": 1,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "martial-role",
+                "name": "Martial Role",
+                "category": "traits",
+                "text": "The warrior has one of the following traits of your choice:\n\n- **Attacker.** The warrior gains a +2 bonus to attack rolls.\n- **Defender.** The warrior gains the Protection reaction below."
+            },
+            {
+                "id": "second-wind",
+                "name": "Second Wind",
+                "category": "traits",
+                "text": "The warrior can use a bonus action on its turn to regain hit points equal to 1d10 + its level.",
+                "uses": {
+                    "max": 1,
+                    "reset": "short"
+                }
+            },
+            {
+                "id": "extra-attack",
+                "name": "Extra Attack",
+                "category": "actions",
+                "text": "The warrior can attack three times, instead of once, whenever it takes the attack action on its turn."
+            },
+            {
+                "id": "longsword",
+                "name": "Longsword",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +8 to hit, reach 5 ft., one target. Hit: 8 (1d8 + 4) slashing damage, or 9 (1d10 + 4) slashing damage if used with two hands.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 8,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 4,
+                                "type": "slashing"
+                            },
+                            {
+                                "dice": "1d10",
+                                "bonus": 4,
+                                "type": "slashing",
+                                "condition": "if used with two hands"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "longbow",
+                "name": "Longbow",
+                "category": "actions",
+                "text": "Ranged Weapon Attack: +6 to hit, range 150/600 ft., one target. Hit: 6 (1d8 + 2) piercing damage.",
+                "action": {
+                    "range": "range 150/600 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 2,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "protection-defender-only",
+                "name": "Protection (Defender Only)",
+                "category": "reactions",
+                "text": "When a creature the warrior can see attacks a target other than the warrior that is within 5 feet of the warrior, the warrior can use their reaction to impose disadvantage on the attack roll. The warrior must be wielding a shield."
+            }
+        ],
+        "items": [
+            {
+                "item": "longbow-phb",
+                "qty": 1,
+                "attacks": true
+            },
+            {
+                "item": "longsword-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing",
+                "slashing"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack",
+                "ranged_weapon",
+                "ranged_weapon_attack"
+            ],
+            "languages": [
+                "common"
+            ]
+        }
+    }
+]

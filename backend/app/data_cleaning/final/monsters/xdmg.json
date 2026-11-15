@@ -1,0 +1,211 @@
+[
+    {
+        "id": "avatar-of-death-xdmg",
+        "kind": "monster",
+        "name": "Avatar of Death",
+        "source": "XDMG",
+        "edition": "one",
+        "srd": {
+            "5.2": "Avatar of Death"
+        },
+        "tags": [
+            "Incorporeal Movement"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "undead"
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "ac": [
+            {
+                "value": 20
+            }
+        ],
+        "hp": {
+            "special": "Half the HP maximum of its summoner"
+        },
+        "speed": {
+            "walk": 60,
+            "fly": 60,
+            "hover": true
+        },
+        "abilities": {
+            "str": 16,
+            "dex": 16,
+            "con": 16,
+            "int": 16,
+            "wis": 16,
+            "cha": 16
+        },
+        "senses": {
+            "truesight": 60
+        },
+        "passive_perception": 13,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "necrotic",
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "exhaustion",
+                    "frightened",
+                    "paralyzed",
+                    "petrified",
+                    "poisoned",
+                    "unconscious"
+                ]
+            }
+        },
+        "languages": [
+            "all languages known to its summoner"
+        ],
+        "pb_note": "equals its summoner's",
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "incorporeal-movement",
+                "name": "Incorporeal Movement",
+                "category": "traits",
+                "text": "The avatar can move through other creatures and objects as if they were Difficult Terrain. It takes 5 (1d10) Force damage if it ends its turn inside an object.",
+                "action": {
+                    "damage": [
+                        {
+                            "dice": "1d10",
+                            "type": "force",
+                            "condition": "if it ends its turn inside an object"
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The avatar makes a number of Reaping Scythe attacks equal to half the summoner's Proficiency Bonus (rounded up)."
+            },
+            {
+                "id": "reaping-scythe",
+                "name": "Reaping Scythe",
+                "category": "actions",
+                "text": "Melee Attack Roll: Automatic hit, reach 5 ft. Hit: 7 (1d8 + 3) Slashing damage plus 4 (1d8) Necrotic damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "auto_hit": true,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 3,
+                                "type": "slashing"
+                            },
+                            {
+                                "dice": "1d8",
+                                "type": "necrotic"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "necrotic",
+                "force",
+                "slashing"
+            ],
+            "senses": [
+                "truesight"
+            ],
+            "movement": [
+                "fly",
+                "hover"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "incorporeal_movement"
+            ],
+            "misc": [
+                "melee_attack"
+            ],
+            "languages": [
+                "all"
+            ]
+        }
+    },
+    {
+        "id": "giant-fly-xdmg",
+        "kind": "monster",
+        "name": "Giant Fly",
+        "source": "XDMG",
+        "edition": "one",
+        "srd": {
+            "5.2": "Giant Fly"
+        },
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "beast"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 11
+            }
+        ],
+        "hp": {
+            "average": 19,
+            "formula": "3d10 + 3"
+        },
+        "speed": {
+            "walk": 30,
+            "fly": 60
+        },
+        "abilities": {
+            "str": 14,
+            "dex": 13,
+            "con": 13,
+            "int": 2,
+            "wis": 10,
+            "cha": 3
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 10,
+        "cr": {
+            "cr": "0",
+            "xp": 0,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 1
+        },
+        "flags": {
+            "familiar": true
+        },
+        "filters": {
+            "senses": [
+                "darkvision"
+            ],
+            "movement": [
+                "fly"
+            ]
+        }
+    }
+]

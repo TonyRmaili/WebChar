@@ -1,0 +1,1403 @@
+[
+    {
+        "id": "homarid-psd",
+        "kind": "monster",
+        "name": "Homarid",
+        "source": "PSD",
+        "edition": "classic",
+        "tags": [
+            "Amphibious"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "monstrosity"
+        },
+        "alignment": [
+            "chaotic evil"
+        ],
+        "ac": [
+            {
+                "value": 14,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 44,
+            "formula": "8d8 + 8"
+        },
+        "speed": {
+            "walk": 20,
+            "swim": 30
+        },
+        "abilities": {
+            "str": 13,
+            "dex": 8,
+            "con": 13,
+            "int": 9,
+            "wis": 14,
+            "cha": 10
+        },
+        "skills": {
+            "perception": 4,
+            "stealth": 3
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 14,
+        "languages": [
+            "Homarid"
+        ],
+        "cr": {
+            "cr": "1",
+            "xp": 200,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": -1
+        },
+        "features": [
+            {
+                "id": "amphibious",
+                "name": "Amphibious",
+                "category": "traits",
+                "text": "The homarid can breathe air and water."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The homarid makes two claw attacks."
+            },
+            {
+                "id": "claw",
+                "name": "Claw",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: 5 (1d8 + 1) slashing damage, and the target is grappled (escape DC 11). The homarid has two claws, each of which can grapple only one target.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 3,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 1,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "slashing"
+            ],
+            "conditions_inflicted": [
+                "grappled"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "movement": [
+                "swim"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "amphibious"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "kavu-predator-psd",
+        "kind": "monster",
+        "name": "Kavu Predator",
+        "source": "PSD",
+        "edition": "classic",
+        "tags": [
+            "Pounce"
+        ],
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "beast"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 15,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 75,
+            "formula": "10d10 + 20"
+        },
+        "speed": {
+            "walk": 30,
+            "climb": 30
+        },
+        "abilities": {
+            "str": 18,
+            "dex": 12,
+            "con": 15,
+            "int": 6,
+            "wis": 14,
+            "cha": 8
+        },
+        "skills": {
+            "perception": 4,
+            "stealth": 5
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 14,
+        "languages": [
+            "understands Elvish"
+        ],
+        "cr": {
+            "cr": "2",
+            "xp": 450,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "pounce",
+                "name": "Pounce",
+                "category": "traits",
+                "text": "If the kavu moves at least 20 feet straight toward a creature and then hits it with a claw attack on the same turn, that target must succeed on a DC 14 Strength saving throw or be knocked prone. If the target is prone, the kavu can make one bite attack against it as a bonus action.",
+                "action": {
+                    "save": {
+                        "ability": "str",
+                        "dc": 14,
+                        "on_success": "none",
+                        "conditions": [
+                            "prone"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The kavu makes two claw attacks."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 9 (1d10 + 4) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "1d10",
+                                "bonus": 4,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "claw",
+                "name": "Claw",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 7 (1d6 + 4) slashing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 4,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing",
+                "slashing"
+            ],
+            "conditions_inflicted": [
+                "prone"
+            ],
+            "saves_forced": [
+                "str"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "movement": [
+                "climb"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "pounce"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "elvish"
+            ]
+        }
+    },
+    {
+        "id": "lyra-psd",
+        "kind": "monster",
+        "name": "Lyra",
+        "source": "PSD",
+        "edition": "classic",
+        "aliases": [
+            "Perfidious Muderator"
+        ],
+        "tags": [
+            "Magic Resistance"
+        ],
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "celestial"
+        },
+        "alignment": [
+            "lawful good"
+        ],
+        "ac": [
+            {
+                "value": 19,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 200,
+            "formula": "16d10 + 112"
+        },
+        "speed": {
+            "walk": 40,
+            "fly": 120
+        },
+        "abilities": {
+            "str": 24,
+            "dex": 20,
+            "con": 24,
+            "int": 19,
+            "wis": 22,
+            "cha": 25
+        },
+        "saves": {
+            "con": 12,
+            "wis": 11,
+            "cha": 12
+        },
+        "skills": {
+            "perception": 11
+        },
+        "senses": {
+            "truesight": 120
+        },
+        "passive_perception": 21,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "radiant"
+                ],
+                "conditional": [
+                    {
+                        "types": [
+                            "bludgeoning",
+                            "piercing",
+                            "slashing"
+                        ],
+                        "note": "from nonmagical attacks"
+                    }
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "exhaustion",
+                    "frightened"
+                ]
+            }
+        },
+        "languages": [
+            "all",
+            "telepathy 120 ft."
+        ],
+        "cr": {
+            "cr": "16",
+            "xp": 15000,
+            "pb": 5
+        },
+        "initiative": {
+            "bonus": 5
+        },
+        "features": [
+            {
+                "id": "angelic-weapons",
+                "name": "Angelic Weapons",
+                "category": "traits",
+                "text": "Lyra's weapon attacks are magical. When Lyra hits with any weapon, the weapon deals an extra 5d8 radiant damage (included in the attack).",
+                "action": {
+                    "attack": {
+                        "kind": "any",
+                        "damage": [
+                            {
+                                "dice": "5d8",
+                                "type": "radiant"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "divine-awareness",
+                "name": "Divine Awareness",
+                "category": "traits",
+                "text": "Lyra knows if it hears a lie."
+            },
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "Lyra has advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Lyra makes two melee attacks."
+            },
+            {
+                "id": "greatsword",
+                "name": "Greatsword",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +12 to hit, reach 5 ft., one target. Hit: 21 (4d6 + 7) slashing damage plus 22 (5d8) radiant damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 12,
+                        "damage": [
+                            {
+                                "dice": "4d6",
+                                "bonus": 7,
+                                "type": "slashing"
+                            },
+                            {
+                                "dice": "5d8",
+                                "type": "radiant"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "healing-touch",
+                "name": "Healing Touch",
+                "category": "actions",
+                "text": "Lyra touches another creature. The target magically regains 30 (6d8 + 3) hit points and is freed from any curse, disease, poison, blindness, or deafness.",
+                "uses": {
+                    "max": 4,
+                    "reset": "long"
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Innate Spellcasting",
+                "ability": "cha",
+                "dc": 20,
+                "text": "Lyra's spellcasting ability is Charisma (spell save DC 20). Lyra can innately cast the following spells, requiring no material components:",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "detect-evil-and-good-phb"
+                            },
+                            {
+                                "spell": "invisibility-phb",
+                                "note": "(self only)"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 3,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "blade-barrier-phb"
+                            },
+                            {
+                                "spell": "dispel-evil-and-good-phb"
+                            },
+                            {
+                                "spell": "flame-strike-phb"
+                            },
+                            {
+                                "spell": "raise-dead-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "commune-phb"
+                            },
+                            {
+                                "spell": "control-weather-phb"
+                            },
+                            {
+                                "spell": "insect-plague-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "greatsword-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "flags": {
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "radiant",
+                "slashing",
+                "fire",
+                "piercing"
+            ],
+            "conditions_inflicted": [
+                "invisible"
+            ],
+            "saves_forced": [
+                "cha",
+                "con",
+                "dex"
+            ],
+            "senses": [
+                "truesight"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "magic_resistance"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "telepathy",
+                "all"
+            ],
+            "spellcasting": [
+                "innate"
+            ],
+            "groups": [
+                "Angels"
+            ]
+        }
+    },
+    {
+        "id": "serra-angel-psd",
+        "kind": "monster",
+        "name": "Serra Angel",
+        "source": "PSD",
+        "edition": "classic",
+        "tags": [
+            "Magic Resistance"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "celestial"
+        },
+        "alignment": [
+            "lawful good"
+        ],
+        "ac": [
+            {
+                "value": 17,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 136,
+            "formula": "16d8 + 64"
+        },
+        "speed": {
+            "walk": 30,
+            "fly": 90
+        },
+        "abilities": {
+            "str": 18,
+            "dex": 18,
+            "con": 18,
+            "int": 17,
+            "wis": 20,
+            "cha": 20
+        },
+        "saves": {
+            "wis": 9,
+            "cha": 9
+        },
+        "skills": {
+            "insight": 9,
+            "perception": 9
+        },
+        "senses": {
+            "darkvision": 120
+        },
+        "passive_perception": 19,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "radiant"
+                ],
+                "conditional": [
+                    {
+                        "types": [
+                            "bludgeoning",
+                            "piercing",
+                            "slashing"
+                        ],
+                        "note": "from nonmagical attacks"
+                    }
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "exhaustion",
+                    "frightened"
+                ]
+            }
+        },
+        "languages": [
+            "all",
+            "telepathy 120 ft."
+        ],
+        "cr": {
+            "cr": "10",
+            "xp": 5900,
+            "pb": 4
+        },
+        "initiative": {
+            "bonus": 4
+        },
+        "features": [
+            {
+                "id": "angelic-weapons",
+                "name": "Angelic Weapons",
+                "category": "traits",
+                "text": "The angel's weapon attacks are magical. When the angel hits with any weapon, the weapon deals an extra 4d8 radiant damage (included in the attack).",
+                "action": {
+                    "attack": {
+                        "kind": "any",
+                        "damage": [
+                            {
+                                "dice": "4d8",
+                                "type": "radiant"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The angel has advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The angel makes two melee attacks."
+            },
+            {
+                "id": "mace",
+                "name": "Mace",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +8 to hit, reach 5 ft., one target. Hit: 7 (1d6 + 4) bludgeoning damage plus 18 (4d8) radiant damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 8,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 4,
+                                "type": "bludgeoning"
+                            },
+                            {
+                                "dice": "4d8",
+                                "type": "radiant"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "healing-touch",
+                "name": "Healing Touch",
+                "category": "actions",
+                "text": "The angel touches another creature. The target magically regains 20 (4d8 + 2) hit points and is freed from any curse, disease, poison, blindness, or deafness.",
+                "uses": {
+                    "max": 3,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "change-shape",
+                "name": "Change Shape",
+                "category": "actions",
+                "text": "The angel magically polymorphs into a humanoid or beast that has a challenge rating equal to or less than its own, or back into its true form. It reverts to its true form if it dies. Any equipment it is wearing or carrying is absorbed or borne by the new form (the angel's choice).\n\nIn a new form, the angel retains its game statistics and ability to speak, but its AC, movement modes, Strength, Dexterity, and special senses are replaced by those of the new form, and it gains any statistics and capabilities (except class features, legendary actions, and lair actions) that the new form has but that it lacks."
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Innate Spellcasting",
+                "ability": "cha",
+                "dc": 17,
+                "text": "The angel's spellcasting ability is Charisma (spell save DC 17). The angel can innately cast the following spells, requiring only verbal components:",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "detect-evil-and-good-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "commune-phb"
+                            },
+                            {
+                                "spell": "raise-dead-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "mace-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "radiant"
+            ],
+            "senses": [
+                "superior_darkvision"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "actions": [
+                "multiattack",
+                "shapechanger"
+            ],
+            "traits": [
+                "magic_resistance"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "telepathy",
+                "all"
+            ],
+            "spellcasting": [
+                "innate"
+            ],
+            "groups": [
+                "Angels"
+            ]
+        }
+    },
+    {
+        "id": "shalai-psd",
+        "kind": "monster",
+        "name": "Shalai",
+        "source": "PSD",
+        "edition": "classic",
+        "tags": [
+            "Magic Resistance"
+        ],
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "celestial"
+        },
+        "alignment": [
+            "lawful good"
+        ],
+        "ac": [
+            {
+                "value": 21,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 243,
+            "formula": "18d10 + 144"
+        },
+        "speed": {
+            "walk": 50,
+            "fly": 150
+        },
+        "abilities": {
+            "str": 26,
+            "dex": 22,
+            "con": 26,
+            "int": 25,
+            "wis": 25,
+            "cha": 30
+        },
+        "saves": {
+            "int": 14,
+            "wis": 14,
+            "cha": 17
+        },
+        "skills": {
+            "perception": 14
+        },
+        "senses": {
+            "truesight": 120
+        },
+        "passive_perception": 24,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "radiant"
+                ],
+                "conditional": [
+                    {
+                        "types": [
+                            "bludgeoning",
+                            "piercing",
+                            "slashing"
+                        ],
+                        "note": "from nonmagical attacks"
+                    }
+                ]
+            },
+            "immune": {
+                "types": [
+                    "necrotic",
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "exhaustion",
+                    "frightened",
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "all",
+            "telepathy 120 ft."
+        ],
+        "cr": {
+            "cr": "21",
+            "xp": 33000,
+            "pb": 7
+        },
+        "initiative": {
+            "bonus": 6
+        },
+        "features": [
+            {
+                "id": "angelic-weapons",
+                "name": "Angelic Weapons",
+                "category": "traits",
+                "text": "Shalai's weapon attacks are magical. When Shalai hits with any weapon, the weapon deals an extra 6d8 radiant damage (included in the attack).",
+                "action": {
+                    "attack": {
+                        "kind": "any",
+                        "damage": [
+                            {
+                                "dice": "6d8",
+                                "type": "radiant"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "divine-awareness",
+                "name": "Divine Awareness",
+                "category": "traits",
+                "text": "Shalai knows if it hears a lie."
+            },
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "Shalai has advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Shalai makes two greatsword attacks."
+            },
+            {
+                "id": "greatsword",
+                "name": "Greatsword",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +15 to hit, reach 5 ft., one target. Hit: 22 (4d6 + 8) slashing damage plus 27 (6d8) radiant damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 15,
+                        "damage": [
+                            {
+                                "dice": "4d6",
+                                "bonus": 8,
+                                "type": "slashing"
+                            },
+                            {
+                                "dice": "6d8",
+                                "type": "radiant"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "slaying-longbow",
+                "name": "Slaying Longbow",
+                "category": "actions",
+                "text": "Ranged Weapon Attack: +13 to hit, range 150/600 ft., one target. Hit: 15 (2d8 + 6) piercing damage plus 27 (6d8) radiant damage. If the target is a creature that has 100 hit points or fewer, it must succeed on a DC 15 Constitution saving throw or die.",
+                "action": {
+                    "range": "range 150/600 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 13,
+                        "damage": [
+                            {
+                                "dice": "2d8",
+                                "bonus": 6,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "6d8",
+                                "type": "radiant"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "con",
+                        "dc": 15,
+                        "on_success": "none"
+                    }
+                }
+            },
+            {
+                "id": "flying-sword",
+                "name": "Flying Sword",
+                "category": "actions",
+                "text": "Shalai releases its greatsword to hover magically in an unoccupied space within 5 feet of it. If Shalai can see the sword, Shalai can mentally command it as a bonus action to fly up to 50 feet and either make one attack against a target or return to Shalai's hands. If the hovering sword is targeted by any effect, Shalai is considered to be holding it. The hovering sword falls if Shalai dies."
+            },
+            {
+                "id": "healing-touch",
+                "name": "Healing Touch",
+                "category": "actions",
+                "text": "Shalai touches another creature. The target magically regains 40 (8d8 + 4) hit points and is freed from any curse, disease, poison, blindness, or deafness.",
+                "uses": {
+                    "max": 4,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "teleport",
+                "name": "Teleport",
+                "category": "legendary_actions",
+                "text": "Shalai magically teleports, along with any equipment it is wearing or carrying, up to 120 feet to an unoccupied space it can see."
+            },
+            {
+                "id": "searing-burst",
+                "name": "Searing Burst",
+                "category": "legendary_actions",
+                "text": "Shalai emits magical, divine energy. Each creature of its choice in a 10-foot radius must make a DC 23 Dexterity saving throw, taking 14 (4d6) fire damage plus 14 (4d6) radiant damage on a failed save, or half as much damage on a successful one.",
+                "cost": 2,
+                "action": {
+                    "area": "10-foot radius",
+                    "save": {
+                        "ability": "dex",
+                        "dc": 23,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "4d6",
+                                "type": "fire"
+                            },
+                            {
+                                "dice": "4d6",
+                                "type": "radiant"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "blinding-gaze",
+                "name": "Blinding Gaze",
+                "category": "legendary_actions",
+                "text": "Shalai targets one creature it can see within 30 feet of it. If the target can see it, the target must succeed on a DC 15 Constitution saving throw or be blinded until magic such as the Lesser Restoration spell removes the blindness.",
+                "cost": 3,
+                "action": {
+                    "save": {
+                        "ability": "con",
+                        "dc": 15,
+                        "on_success": "none",
+                        "conditions": [
+                            "blinded"
+                        ]
+                    }
+                }
+            }
+        ],
+        "legendary_actions": {
+            "uses": 3
+        },
+        "spellcasting": [
+            {
+                "name": "Innate Spellcasting",
+                "ability": "cha",
+                "dc": 25,
+                "text": "Shalai's spellcasting ability is Charisma (spell save DC 25). It can innately cast the following spells, requiring no material components:",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "detect-evil-and-good-phb"
+                            },
+                            {
+                                "spell": "invisibility-phb",
+                                "note": "(self only)"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 3,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "blade-barrier-phb"
+                            },
+                            {
+                                "spell": "dispel-evil-and-good-phb"
+                            },
+                            {
+                                "spell": "resurrection-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "commune-phb"
+                            },
+                            {
+                                "spell": "control-weather-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "greatsword-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "flags": {
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "fire",
+                "piercing",
+                "radiant",
+                "slashing"
+            ],
+            "conditions_inflicted": [
+                "blinded",
+                "invisible"
+            ],
+            "saves_forced": [
+                "con",
+                "dex",
+                "cha"
+            ],
+            "senses": [
+                "truesight"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "magic_resistance"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_weapon",
+                "melee_weapon_attack",
+                "ranged_weapon",
+                "ranged_weapon_attack"
+            ],
+            "languages": [
+                "telepathy",
+                "all"
+            ],
+            "spellcasting": [
+                "innate"
+            ],
+            "groups": [
+                "Angels"
+            ]
+        }
+    },
+    {
+        "id": "steel-leaf-kavu-psd",
+        "kind": "monster",
+        "name": "Steel Leaf Kavu",
+        "source": "PSD",
+        "edition": "classic",
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "beast"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 16,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 142,
+            "formula": "15d10 + 60"
+        },
+        "speed": {
+            "walk": 40
+        },
+        "abilities": {
+            "str": 20,
+            "dex": 12,
+            "con": 18,
+            "int": 6,
+            "wis": 14,
+            "cha": 8
+        },
+        "skills": {
+            "perception": 4
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 14,
+        "languages": [
+            "understands Elvish"
+        ],
+        "cr": {
+            "cr": "4",
+            "xp": 1100,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "raking-charge",
+                "name": "Raking Charge",
+                "category": "traits",
+                "text": "If the kavu moves at least 20 feet straight toward a creature and then hits it with a bite attack on the same turn, that target must succeed on a DC 15 Strength saving throw or be knocked prone. If the target is prone, the kavu can make one rend attack against it as a bonus action.",
+                "action": {
+                    "save": {
+                        "ability": "str",
+                        "dc": 15,
+                        "on_success": "none",
+                        "conditions": [
+                            "prone"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 14 (2d8 + 5) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "2d8",
+                                "bonus": 5,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "rend",
+                "name": "Rend",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +7 to hit, reach 5 ft., one prone creature. Hit: 23 (4d8 + 5) slashing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "4d8",
+                                "bonus": 5,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing",
+                "slashing"
+            ],
+            "conditions_inflicted": [
+                "prone"
+            ],
+            "saves_forced": [
+                "str"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "elvish"
+            ]
+        }
+    },
+    {
+        "id": "zombie-horse-psd",
+        "kind": "monster",
+        "name": "Zombie Horse",
+        "source": "PSD",
+        "edition": "classic",
+        "tags": [
+            "Undead Fortitude"
+        ],
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "undead"
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "ac": [
+            {
+                "value": 8
+            }
+        ],
+        "hp": {
+            "average": 22,
+            "formula": "3d8 + 9"
+        },
+        "speed": {
+            "walk": 20
+        },
+        "abilities": {
+            "str": 13,
+            "dex": 6,
+            "con": 16,
+            "int": 3,
+            "wis": 6,
+            "cha": 5
+        },
+        "saves": {
+            "wis": 0
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 8,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "understands all languages it spoke in life but can't speak"
+        ],
+        "cr": {
+            "cr": "1/4",
+            "xp": 50,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": -2
+        },
+        "features": [
+            {
+                "id": "undead-fortitude",
+                "name": "Undead Fortitude",
+                "category": "traits",
+                "text": "If damage reduces the zombie to 0 hit points, it must make a Constitution saving throw with a DC of 5 + the damage taken, unless the damage is radiant or from a critical hit. On a success, the zombie drops to 1 hit point instead."
+            },
+            {
+                "id": "slam",
+                "name": "Slam",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: 4 (1d6 + 1) bludgeoning damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 3,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 1,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "traits": [
+                "undead_fortitude"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "cant_speak",
+                "known_in_life"
+            ],
+            "environment": [
+                "urban"
+            ]
+        }
+    }
+]

@@ -1,0 +1,1711 @@
+[
+    {
+        "id": "ranger-phb",
+        "kind": "class",
+        "name": "Ranger",
+        "source": "PHB",
+        "edition": "classic",
+        "srd": {
+            "5.1": "Ranger"
+        },
+        "reprinted_as": [
+            "ranger-xphb"
+        ],
+        "hit_die": "d10",
+        "hp": {
+            "first": "10 + con_mod",
+            "per_level": "6 + con_mod"
+        },
+        "saves": [
+            "str",
+            "dex"
+        ],
+        "grants": {
+            "weapons": [
+                "simple_weapons",
+                "martial_weapons"
+            ],
+            "armor": [
+                "light",
+                "medium",
+                "shields"
+            ],
+            "items": [
+                {
+                    "item": "longbow-phb",
+                    "qty": 1
+                },
+                {
+                    "item": "arrows-20-phb",
+                    "qty": 1
+                }
+            ]
+        },
+        "choices": [
+            {
+                "type": "pool",
+                "id": "skills",
+                "label": "Skills",
+                "grant": "skills",
+                "count": 3,
+                "from": [
+                    "animal_handling",
+                    "athletics",
+                    "insight",
+                    "investigation",
+                    "nature",
+                    "perception",
+                    "stealth",
+                    "survival"
+                ]
+            },
+            {
+                "type": "bundle",
+                "id": "starting_equipment",
+                "label": "Starting Equipment",
+                "options": [
+                    {
+                        "id": "a",
+                        "label": "Scale Mail",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "scale-mail-phb",
+                                    "qty": 1
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "id": "b",
+                        "label": "Leather Armor",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "leather-armor-phb",
+                                    "qty": 1
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "type": "bundle",
+                "id": "starting_equipment_2",
+                "label": "Starting Equipment",
+                "options": [
+                    {
+                        "id": "a",
+                        "label": "2 Shortsword",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "shortsword-phb",
+                                    "qty": 2
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "id": "b",
+                        "label": "Simple Melee Weapons",
+                        "choices": [
+                            {
+                                "type": "pool",
+                                "id": "items",
+                                "label": "Simple Melee Weapons",
+                                "grant": "items",
+                                "count": 2,
+                                "from": "simple_melee_weapons"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "bundle",
+                "id": "starting_equipment_3",
+                "label": "Starting Equipment",
+                "options": [
+                    {
+                        "id": "a",
+                        "label": "Dungeoneer's Pack",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "dungeoneers-pack-phb",
+                                    "qty": 1
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "id": "b",
+                        "label": "Explorer's Pack",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "explorers-pack-phb",
+                                    "qty": 1
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        ],
+        "starting_gold": "5d4 × 10",
+        "multiclass": {
+            "requires": [
+                {
+                    "dex": 13,
+                    "wis": 13
+                }
+            ],
+            "grants": {
+                "weapons": [
+                    "simple_weapons",
+                    "martial_weapons"
+                ],
+                "armor": [
+                    "light",
+                    "medium",
+                    "shields"
+                ]
+            },
+            "choices": [
+                {
+                    "type": "pool",
+                    "id": "skills",
+                    "label": "Skills",
+                    "grant": "skills",
+                    "count": 1,
+                    "from": [
+                        "animal_handling",
+                        "athletics",
+                        "insight",
+                        "investigation",
+                        "nature",
+                        "perception",
+                        "stealth",
+                        "survival"
+                    ]
+                }
+            ]
+        },
+        "subclass": {
+            "title": "Ranger Archetype",
+            "level": 3,
+            "text": "At 3rd level, you choose an archetype that you strive to emulate from the list of available archetypes. Your choice grants features at 3rd level, and again at 7th, 11th, and 15th level."
+        },
+        "spellcasting": {
+            "ability": "wis",
+            "progression": "half",
+            "list": "ranger-phb",
+            "known": {
+                "2": 2,
+                "3": 3,
+                "5": 4,
+                "7": 5,
+                "9": 6,
+                "11": 7,
+                "13": 8,
+                "15": 9,
+                "17": 10,
+                "19": 11
+            },
+            "slots": {
+                "2": [
+                    2
+                ],
+                "3": [
+                    3
+                ],
+                "5": [
+                    4,
+                    2
+                ],
+                "7": [
+                    4,
+                    3
+                ],
+                "9": [
+                    4,
+                    3,
+                    2
+                ],
+                "11": [
+                    4,
+                    3,
+                    3
+                ],
+                "13": [
+                    4,
+                    3,
+                    3,
+                    1
+                ],
+                "15": [
+                    4,
+                    3,
+                    3,
+                    2
+                ],
+                "17": [
+                    4,
+                    3,
+                    3,
+                    3,
+                    1
+                ],
+                "19": [
+                    4,
+                    3,
+                    3,
+                    3,
+                    2
+                ]
+            }
+        },
+        "progression": [
+            {
+                "level": 1,
+                "features": [
+                    "ranger-phb:favored-enemy",
+                    "ranger-phb:favored-foe",
+                    "ranger-phb:natural-explorer",
+                    "ranger-phb:deft-explorer"
+                ]
+            },
+            {
+                "level": 2,
+                "features": [
+                    "ranger-phb:fighting-style",
+                    "ranger-phb:spellcasting",
+                    "ranger-phb:spellcasting-focus"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "fighting_style_2",
+                        "label": "Fighting Style",
+                        "grant": "optional_features",
+                        "count": 1,
+                        "from": {
+                            "feature_type": [
+                                "fighting_style"
+                            ],
+                            "class": [
+                                "ranger"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 3,
+                "features": [
+                    "ranger-phb:primeval-awareness",
+                    "ranger-phb:primal-awareness"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "ranger_archetype_3",
+                        "label": "Ranger Archetype",
+                        "grant": "subclass",
+                        "count": 1,
+                        "from": "ranger-phb"
+                    }
+                ]
+            },
+            {
+                "level": 4,
+                "features": [
+                    "ranger-phb:martial-versatility"
+                ],
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_4",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_4",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_4",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 5,
+                "features": [
+                    "ranger-phb:extra-attack"
+                ]
+            },
+            {
+                "level": 6,
+                "features": [
+                    "ranger-phb:favored-enemy-and-natural-explorer-improvements",
+                    "ranger-phb:deft-explorer-improvement"
+                ]
+            },
+            {
+                "level": 7,
+                "subclass_features": true
+            },
+            {
+                "level": 8,
+                "features": [
+                    "ranger-phb:lands-stride"
+                ],
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_8",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_8",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_8",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 10,
+                "features": [
+                    "ranger-phb:hide-in-plain-sight",
+                    "ranger-phb:natures-veil",
+                    "ranger-phb:natural-explorer-improvement"
+                ],
+                "upgrades": [
+                    "ranger-phb:deft-explorer-improvement"
+                ]
+            },
+            {
+                "level": 11,
+                "subclass_features": true
+            },
+            {
+                "level": 12,
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_12",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_12",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_12",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 14,
+                "features": [
+                    "ranger-phb:vanish",
+                    "ranger-phb:favored-enemy-improvement"
+                ]
+            },
+            {
+                "level": 15,
+                "subclass_features": true
+            },
+            {
+                "level": 16,
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_16",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_16",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_16",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 18,
+                "features": [
+                    "ranger-phb:feral-senses"
+                ]
+            },
+            {
+                "level": 19,
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_19",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_19",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_19",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 20,
+                "features": [
+                    "ranger-phb:foe-slayer"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "ranger-phb:favored-enemy",
+                "name": "Favored Enemy",
+                "level": 1,
+                "text": "Beginning at 1st level, you have significant experience studying, tracking, hunting, and even talking to a certain type of enemy.\n\nChoose a type of favored enemy: aberrations, beasts, celestials, constructs, dragons, elementals, fey, fiends, giants, monstrosities, oozes, plants, or undead. Alternatively, you can select two races of humanoid (such as gnolls and orcs) as favored enemies.\n\nYou have advantage on Wisdom (Survival) checks to track your favored enemies, as well as on Intelligence checks to recall information about them.\n\nWhen you gain this feature, you also learn one language of your choice that is spoken by your favored enemies, if they speak one at all.\n\nYou choose one additional favored enemy, as well as an associated language, at 6th and 14th level. As you gain levels, your choices should reflect the types of monsters you have encountered on your adventures.",
+                "srd": {
+                    "5.1": "Favored Enemy"
+                }
+            },
+            {
+                "id": "ranger-phb:favored-foe",
+                "name": "Favored Foe",
+                "level": 1,
+                "source": "TCE",
+                "text": "*1st-level ranger optional feature, which replaces the Favored Enemy feature and works with the Foe Slayer feature*\n\nWhen you hit a creature with an attack roll, you can call on your mystical bond with nature to mark the target as your favored enemy for 1 minute or until you lose your concentration (as if you were concentrating on a spell).\n\nThe first time on each of your turns that you hit the favored enemy and deal damage to it, including when you mark it, you can increase that damage by 1d4.\n\nYou can use this feature to mark a favored enemy a number of times equal to your proficiency bonus, and you regain all expended uses when you finish a long rest.\n\nThis feature's extra damage increases when you reach certain levels in this class: to 1d6 at 6th level and to 1d8 at 14th level.",
+                "optional": true
+            },
+            {
+                "id": "ranger-phb:natural-explorer",
+                "name": "Natural Explorer",
+                "level": 1,
+                "text": "You are particularly familiar with one type of natural environment and are adept at traveling and surviving in such regions. Choose one type of favored terrain: arctic, coast, desert, forest, grassland, mountain, swamp, or the Underdark. When you make an Intelligence or Wisdom check related to your favored terrain, your proficiency bonus is doubled if you are using a skill that you're proficient in.\n\nWhile traveling for an hour or more in your favored terrain, you gain the following benefits:\n\n- Difficult terrain doesn't slow your group's travel.\n- Your group can't become lost except by magical means.\n- Even when you are engaged in another activity while traveling (such as foraging, navigating, or tracking), you remain alert to danger.\n- If you are traveling alone, you can move stealthily at a normal pace.\n- When you forage, you find twice as much food as you normally would.\n- While tracking other creatures, you also learn their exact number, their sizes, and how long ago they passed through the area.\n\nYou choose additional favored terrain types at 6th and 10th level.",
+                "srd": {
+                    "5.1": "Natural Explorer"
+                }
+            },
+            {
+                "id": "ranger-phb:deft-explorer",
+                "name": "Deft Explorer",
+                "level": 1,
+                "source": "TCE",
+                "text": "*1st-level ranger optional feature, which replaces the Natural Explorer feature*\n\nYou are an unsurpassed explorer and survivor, both in the wilderness and in dealing with others on your travels. You gain the Canny benefit below, and you gain an additional benefit below when you reach 6th level and 10th level in this class.\n\n**Canny.** Choose one of your skill proficiencies. Your proficiency bonus is doubled for any ability check you make that uses the chosen skill.\n\nYou can also speak, read, and write two additional languages of your choice.",
+                "optional": true
+            },
+            {
+                "id": "ranger-phb:fighting-style",
+                "name": "Fighting Style",
+                "level": 2,
+                "text": "At 2nd level, you adopt a particular style of fighting as your specialty. Choose one of the following options. You can't take a Fighting Style option more than once, even if you later get to choose again.\n\n- Archery\n- Defense\n- Dueling\n- Two-Weapon Fighting\n- Blind Fighting\n- Druidic Warrior\n- Thrown Weapon Fighting",
+                "srd": {
+                    "5.1": "Fighting Style"
+                }
+            },
+            {
+                "id": "ranger-phb:spellcasting",
+                "name": "Spellcasting",
+                "level": 2,
+                "text": "By the time you reach 2nd level, you have learned to use the magical essence of nature to cast spells, much as a druid does. See chapter 10 for the general rules of spellcasting and chapter 11 for the ranger spell list.\n\n**Spell Slots.** The Ranger table shows how many spell slots you have to cast your ranger spells of 1st level and higher. To cast one of these spells, you must expend a slot of the spell's level or higher. You regain all expended spell slots when you finish a long rest.\n\nFor example, if you know the 1st-level spell Animal Friendship and have a 1st-level and a 2nd-level spell slot available, you can cast Animal Friendship using either slot.\n\n**Spells Known of 1st Level and Higher.** You know two 1st-level spells of your choice from the ranger spell list.\n\nThe Spells Known column of the Ranger table shows when you learn more ranger spells of your choice. Each of these spells must be of a level for which you have spell slots. For instance, when you reach 5th level in this class, you can learn one new spell of 1st or 2nd level.\n\nAdditionally, when you gain a level in this class, you can choose one of the ranger spells you know and replace it with another spell from the ranger spell list, which also must be of a level for which you have spell slots.\n\n**Spellcasting Ability.** Wisdom is your spellcasting ability for your ranger spells, since your magic draws on your attunement to nature. You use your Wisdom whenever a spell refers to your spellcasting ability. In addition, you use your Wisdom modifier when setting the saving throw DC for a ranger spell you cast and when making an attack roll with one.\n\n**Spell save DC** = 8 + your proficiency bonus + your Wisdom modifier\n\n**Spell attack modifier** = your proficiency bonus + your Wisdom modifier",
+                "srd": {
+                    "5.1": "Spellcasting"
+                }
+            },
+            {
+                "id": "ranger-phb:spellcasting-focus",
+                "name": "Spellcasting Focus",
+                "level": 2,
+                "source": "TCE",
+                "text": "*2nd-level ranger optional feature*\n\nYou can use a druidic focus as a spellcasting focus for your ranger spells. A druidic focus might be a sprig of mistletoe or holly, a wand or rod made of yew or another special wood, a staff drawn whole from a living tree, or an object incorporating feathers, fur, bones, and teeth from sacred animals.",
+                "optional": true
+            },
+            {
+                "id": "ranger-phb:primeval-awareness",
+                "name": "Primeval Awareness",
+                "level": 3,
+                "text": "Beginning at 3rd level, you can use your action and expend one ranger spell slot to focus your awareness on the region around you. For 1 minute per level of the spell slot you expend, you can sense whether the following types of creatures are present within 1 mile of you (or within up to 6 miles if you are in your favored terrain): aberrations, celestials, dragons, elementals, fey, fiends, and undead. This feature doesn't reveal the creatures' location or number.",
+                "srd": {
+                    "5.1": "Primeval Awareness"
+                }
+            },
+            {
+                "id": "ranger-phb:primal-awareness",
+                "name": "Primal Awareness",
+                "level": 3,
+                "source": "TCE",
+                "text": "*3rd-level ranger optional feature, which replaces the Primeval Awareness feature*\n\nYou can focus your awareness through the interconnections of nature: you learn additional spells when you reach certain levels in this class if you don't already know them, as shown in the Primal Awareness Spells table. These spells don't count against the number of ranger spells you know.\n\nPrimal Awareness Spells\n\nRanger Level | Spell\n--- | ---\n3rd | Speak with Animals\n5th | Beast Sense\n9th | Speak with Plants\n13th | Locate Creature\n17th | Commune with Nature\n\nYou can cast each of these spells once without expending a spell slot. Once you cast a spell in this way, you can't do so again until you finish a long rest.",
+                "optional": true
+            },
+            {
+                "id": "ranger-phb:martial-versatility",
+                "name": "Martial Versatility",
+                "level": 4,
+                "source": "TCE",
+                "text": "*4th-level ranger optional feature*\n\nWhenever you reach a level in this class that grants the Ability Score Improvement feature, you can replace a fighting style you know with another fighting style available to rangers. This replacement represents a shift of focus in your martial practice.",
+                "optional": true
+            },
+            {
+                "id": "ranger-phb:extra-attack",
+                "name": "Extra Attack",
+                "level": 5,
+                "text": "Beginning at 5th level, you can attack twice, instead of once, whenever you take the Attack action on your turn.",
+                "srd": {
+                    "5.1": "Extra Attack"
+                }
+            },
+            {
+                "id": "ranger-phb:favored-enemy-and-natural-explorer-improvements",
+                "name": "Favored Enemy and Natural Explorer improvements",
+                "level": 6,
+                "text": "At 6th level, you gain an additional favored terrain.\n\nAt 6th level, you choose one additional favored enemy, as well as an associated language. Your choice should reflect the types of monsters you have encountered on your adventures.",
+                "srd": {
+                    "5.1": "Favored Enemy and Natural Explorer improvements"
+                }
+            },
+            {
+                "id": "ranger-phb:deft-explorer-improvement",
+                "name": "Deft Explorer Improvement",
+                "level": 6,
+                "source": "TCE",
+                "text": "You gain an additional benefit when you reach 6th level in this class.\n\n**Roving.** Your walking speed increases by 5, and you gain a climbing speed and a swimming speed equal to your walking speed.\n\n**Deft Explorer Improvement.** You gain an additional benefit when you reach 10th level in this class.\n\n**Tireless.** As an action, you can give yourself a number of temporary hit points equal to 1d8 + your Wisdom modifier (minimum of 1 temporary hit point). You can use this action a number of times equal to your proficiency bonus, and you regain all expended uses when you finish a long rest.\n\nIn addition, whenever you finish a short rest, your exhaustion level, if any, is decreased by 1.",
+                "optional": true
+            },
+            {
+                "id": "ranger-phb:lands-stride",
+                "name": "Land's Stride",
+                "level": 8,
+                "text": "Starting at 8th level, moving through nonmagical difficult terrain costs you no extra movement. You can also pass through nonmagical plants without being slowed by them and without taking damage from them if they have thorns, spines, or a similar hazard.\n\nIn addition, you have advantage on saving throws against plants that are magically created or manipulated to impede movement, such as those created by the Entangle spell.",
+                "srd": {
+                    "5.1": "Land's Stride"
+                }
+            },
+            {
+                "id": "ranger-phb:hide-in-plain-sight",
+                "name": "Hide in Plain Sight",
+                "level": 10,
+                "text": "Starting at 10th level, you can spend 1 minute creating camouflage for yourself. You must have access to fresh mud, dirt, plants, soot, and other naturally occurring materials with which to create your camouflage.\n\nOnce you are camouflaged in this way, you can try to hide by pressing yourself up against a solid surface, such as a tree or wall, that is at least as tall and wide as you are. You gain a +10 bonus to Dexterity (Stealth) checks as long as you remain there without moving or taking actions. Once you move or take an action or a reaction, you must camouflage yourself again to gain this benefit.",
+                "srd": {
+                    "5.1": "Hide in Plain Sight"
+                }
+            },
+            {
+                "id": "ranger-phb:natures-veil",
+                "name": "Nature's Veil",
+                "level": 10,
+                "source": "TCE",
+                "text": "*10th-level ranger optional feature, which replaces the Hide in Plain Sight feature*\n\nYou draw on the powers of nature to hide yourself from view briefly. As a bonus action, you can magically become invisible, along with any equipment you are wearing or carrying, until the start of your next turn.\n\nYou can use this feature a number of times equal to your proficiency bonus, and you regain all expended uses when you finish a long rest.",
+                "optional": true
+            },
+            {
+                "id": "ranger-phb:natural-explorer-improvement",
+                "name": "Natural Explorer improvement",
+                "level": 10,
+                "text": "You gain an additional favored terrain.",
+                "srd": {
+                    "5.1": "Natural Explorer improvement"
+                }
+            },
+            {
+                "id": "ranger-phb:vanish",
+                "name": "Vanish",
+                "level": 14,
+                "text": "Starting at 14th level, you can use the Hide action as a bonus action on your turn. Also, you can't be tracked by nonmagical means, unless you choose to leave a trail.",
+                "srd": {
+                    "5.1": "Vanish"
+                }
+            },
+            {
+                "id": "ranger-phb:favored-enemy-improvement",
+                "name": "Favored Enemy improvement",
+                "level": 14,
+                "text": "At 14th level, you choose one additional favored enemy, as well as an associated language. Your choice should reflect the types of monsters you have encountered on your adventures.",
+                "srd": {
+                    "5.1": "Favored Enemy improvement"
+                }
+            },
+            {
+                "id": "ranger-phb:feral-senses",
+                "name": "Feral Senses",
+                "level": 18,
+                "text": "At 18th level, you gain preternatural senses that help you fight creatures you can't see. When you attack a creature you can't see, your inability to see it doesn't impose disadvantage on your attack rolls against it. You are also aware of the location of any invisible creature within 30 feet of you, provided that the creature isn't hidden from you and you aren't blinded or deafened.",
+                "srd": {
+                    "5.1": "Feral Senses"
+                }
+            },
+            {
+                "id": "ranger-phb:foe-slayer",
+                "name": "Foe Slayer",
+                "level": 20,
+                "text": "At 20th level, you become an unparalleled hunter of your enemies. Once on each of your turns, you can add your Wisdom modifier to the attack roll or the damage roll of an attack you make against one of your favored enemies. You can choose to use this feature before or after the roll, but before any effects of the roll are applied.",
+                "srd": {
+                    "5.1": "Foe Slayer"
+                }
+            }
+        ]
+    },
+    {
+        "id": "ranger-phb:beast-master-phb",
+        "kind": "subclass",
+        "name": "Beast Master",
+        "source": "PHB",
+        "edition": "classic",
+        "reprinted_as": [
+            "ranger-xphb:beast-master-xphb"
+        ],
+        "text": "The Beast Master archetype embodies a friendship between the civilized races and the beasts of the world. United in focus, beast and ranger work as one to fight the monstrous foes that threaten civilization and the wilderness alike. Emulating the Beast Master archetype means committing yourself to this ideal, working in partnership with an animal as its companion and friend.",
+        "class_id": "ranger-phb",
+        "short_name": "Beast Master",
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "ranger-phb:beast-master-phb:rangers-companion",
+                    "ranger-phb:beast-master-phb:primal-companion"
+                ]
+            },
+            {
+                "level": 7,
+                "features": [
+                    "ranger-phb:beast-master-phb:exceptional-training"
+                ]
+            },
+            {
+                "level": 11,
+                "features": [
+                    "ranger-phb:beast-master-phb:bestial-fury"
+                ]
+            },
+            {
+                "level": 15,
+                "features": [
+                    "ranger-phb:beast-master-phb:share-spells"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "ranger-phb:beast-master-phb:rangers-companion",
+                "name": "Ranger's Companion",
+                "level": 3,
+                "text": "You gain a beast companion that accompanies you on your adventures and is trained to fight alongside you. Choose a beast that is no larger than Medium and that has a challenge rating of 1/4 or lower. Add your proficiency bonus to the beast's AC, attack rolls, and damage rolls, as well as to any saving throws and skills it is proficient in. Its hit point maximum equals its normal maximum or four times your ranger level, whichever is higher. Like any creature, the beast can spend Hit Dice during a short rest.\n\nThe beast obeys your commands as best as it can. It takes its turn on your initiative. On your turn, you can verbally command the beast where to move (no action required by you). You can use your action to verbally command it to take the Attack, Dash, Disengage, or Help action. If you don't issue a command, the beast takes the Dodge action. Once you have the Extra Attack feature, you can make one weapon attack yourself when you command the beast to take the Attack action.\n\nIf you are incapacitated or absent, your beast companion acts on its own, focusing on protecting you and itself. It never requires your command to use its reaction, such as when making an opportunity attack.\n\nWhile traveling through your favored terrain with only the beast, you can move stealthily at a normal pace.\n\nIf the beast dies, you can obtain a new companion by spending 8 hours magically bonding with a beast that isn't hostile to you and that meets the requirements."
+            },
+            {
+                "id": "ranger-phb:beast-master-phb:primal-companion",
+                "name": "Primal Companion",
+                "level": 3,
+                "source": "TCE",
+                "text": "*3rd-level Beast Master variant feature, which replaces the Ranger's Companion feature*\n\nYou magically summon a primal beast, which draws strength from your bond with nature. The beast is friendly to you and your companions and obeys your commands. Choose its stat block—Beast of the Land, Beast of the Sea, or Beast of the Sky—which uses your proficiency bonus (PB) in several places. You also determine the kind of animal the beast is, choosing a kind appropriate for the stat block. Whatever kind you choose, the beast bears primal markings, indicating its mystical origin.\n\nIn combat, the beast acts during your turn. It can move and use its reaction on its own, but the only action it takes is the Dodge action, unless you take a bonus action on your turn to command it to take another action. That action can be one in its stat block or some other action. You can also sacrifice one of your attacks when you take the Attack action to command the beast to take the Attack action. If you are incapacitated, the beast can take any action of its choice, not just Dodge.\n\nIf the beast has died within the last hour, you can use your action to touch it and expend a spell slot of 1st level or higher. The beast returns to life after 1 minute with all its hit points restored.\n\nWhen you finish a long rest, you can summon a different primal beast. The new beast appears in an unoccupied space within 5 feet of you, and you choose its stat block and appearance. If you already have a beast from this feature, it vanishes when the new beast appears. The beast also vanishes if you die.",
+                "optional": true
+            },
+            {
+                "id": "ranger-phb:beast-master-phb:exceptional-training",
+                "name": "Exceptional Training",
+                "level": 7,
+                "text": "Beginning at 7th level, on any of your turns when your beast companion doesn't attack, you can use a bonus action to command the beast to take the Dash, Disengage, or Help action on its turn. In addition, the beast's attacks now count as magical for the purpose of overcoming resistance and immunity to nonmagical attacks and damage."
+            },
+            {
+                "id": "ranger-phb:beast-master-phb:bestial-fury",
+                "name": "Bestial Fury",
+                "level": 11,
+                "text": "Starting at 11th level, when you command your beast companion to take the Attack action, the beast can make two attacks, or it can take the Multiattack action if it has that action."
+            },
+            {
+                "id": "ranger-phb:beast-master-phb:share-spells",
+                "name": "Share Spells",
+                "level": 15,
+                "text": "Beginning at 15th level, when you cast a spell targeting yourself, you can also affect your beast companion with the spell if the beast is within 30 feet of you."
+            }
+        ]
+    },
+    {
+        "id": "ranger-phb:hunter-phb",
+        "kind": "subclass",
+        "name": "Hunter",
+        "source": "PHB",
+        "edition": "classic",
+        "srd": {
+            "5.1": "Hunter"
+        },
+        "reprinted_as": [
+            "ranger-xphb:hunter-xphb"
+        ],
+        "text": "Emulating the Hunter archetype means accepting your place as a bulwark between civilization and the terrors of the wilderness. As you walk the Hunter's path, you learn specialized techniques for fighting the threats you face, from rampaging ogres and hordes of orcs to towering giants and terrifying dragons.",
+        "class_id": "ranger-phb",
+        "short_name": "Hunter",
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "ranger-phb:hunter-phb:hunters-prey"
+                ]
+            },
+            {
+                "level": 7,
+                "features": [
+                    "ranger-phb:hunter-phb:defensive-tactics"
+                ]
+            },
+            {
+                "level": 11,
+                "features": [
+                    "ranger-phb:hunter-phb:multiattack"
+                ]
+            },
+            {
+                "level": 15,
+                "features": [
+                    "ranger-phb:hunter-phb:superior-hunters-defense"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "ranger-phb:hunter-phb:hunters-prey",
+                "name": "Hunter's Prey",
+                "level": 3,
+                "text": "At 3rd level, you gain one of the following features of your choice.",
+                "srd": {
+                    "5.1": "Hunter's Prey"
+                }
+            },
+            {
+                "id": "ranger-phb:hunter-phb:colossus-slayer",
+                "name": "Colossus Slayer",
+                "level": 3,
+                "text": "Your tenacity can wear down the most potent foes. When you hit a creature with a weapon attack, the creature takes an extra 1d8 damage if it's below its hit point maximum. You can deal this extra damage only once per turn.",
+                "parent": "ranger-phb:hunter-phb:hunters-prey",
+                "srd": {
+                    "5.1": "Colossus Slayer"
+                }
+            },
+            {
+                "id": "ranger-phb:hunter-phb:giant-killer",
+                "name": "Giant Killer",
+                "level": 3,
+                "text": "When a Large or larger creature within 5 feet of you hits or misses you with an attack, you can use your reaction to attack that creature immediately after its attack, provided that you can see the creature.",
+                "parent": "ranger-phb:hunter-phb:hunters-prey",
+                "srd": {
+                    "5.1": "Giant Killer"
+                }
+            },
+            {
+                "id": "ranger-phb:hunter-phb:horde-breaker",
+                "name": "Horde Breaker",
+                "level": 3,
+                "text": "Once on each of your turns when you make a weapon attack, you can make another attack with the same weapon against a different creature that is within 5 feet of the original target and within range of your weapon.",
+                "parent": "ranger-phb:hunter-phb:hunters-prey",
+                "srd": {
+                    "5.1": "Horde Breaker"
+                }
+            },
+            {
+                "id": "ranger-phb:hunter-phb:defensive-tactics",
+                "name": "Defensive Tactics",
+                "level": 7,
+                "text": "At 7th level, you gain one of the following features of your choice.",
+                "srd": {
+                    "5.1": "Defensive Tactics"
+                }
+            },
+            {
+                "id": "ranger-phb:hunter-phb:escape-the-horde",
+                "name": "Escape the Horde",
+                "level": 7,
+                "text": "Opportunity attacks against you are made with disadvantage.",
+                "parent": "ranger-phb:hunter-phb:defensive-tactics",
+                "srd": {
+                    "5.1": "Escape the Horde"
+                }
+            },
+            {
+                "id": "ranger-phb:hunter-phb:multiattack-defense",
+                "name": "Multiattack Defense",
+                "level": 7,
+                "text": "When a creature hits you with an attack, you gain a +4 bonus to AC against all subsequent attacks made by that creature for the rest of the turn.",
+                "parent": "ranger-phb:hunter-phb:defensive-tactics",
+                "srd": {
+                    "5.1": "Multiattack Defense"
+                }
+            },
+            {
+                "id": "ranger-phb:hunter-phb:steel-will",
+                "name": "Steel Will",
+                "level": 7,
+                "text": "You have advantage on saving throws against being frightened.",
+                "parent": "ranger-phb:hunter-phb:defensive-tactics",
+                "srd": {
+                    "5.1": "Steel Will"
+                }
+            },
+            {
+                "id": "ranger-phb:hunter-phb:multiattack",
+                "name": "Multiattack",
+                "level": 11,
+                "text": "At 11th level, you gain one of the following features of your choice.",
+                "srd": {
+                    "5.1": "Multiattack"
+                }
+            },
+            {
+                "id": "ranger-phb:hunter-phb:volley",
+                "name": "Volley",
+                "level": 11,
+                "text": "You can use your action to make a ranged attack against any number of creatures within 10 feet of a point you can see within your weapon's range. You must have ammunition for each target, as normal, and you make a separate attack roll for each target.",
+                "parent": "ranger-phb:hunter-phb:multiattack",
+                "srd": {
+                    "5.1": "Volley"
+                }
+            },
+            {
+                "id": "ranger-phb:hunter-phb:whirlwind-attack",
+                "name": "Whirlwind Attack",
+                "level": 11,
+                "text": "You can use your action to make a melee attack against any number of creatures within 5 feet of you, with a separate attack roll for each target.",
+                "parent": "ranger-phb:hunter-phb:multiattack",
+                "srd": {
+                    "5.1": "Whirlwind Attack"
+                }
+            },
+            {
+                "id": "ranger-phb:hunter-phb:superior-hunters-defense",
+                "name": "Superior Hunter's Defense",
+                "level": 15,
+                "text": "At 15th level, you gain one of the following features of your choice.",
+                "srd": {
+                    "5.1": "Superior Hunter's Defense"
+                }
+            },
+            {
+                "id": "ranger-phb:hunter-phb:evasion",
+                "name": "Evasion",
+                "level": 15,
+                "text": "You can nimbly dodge out of the way of certain area effects, such as a red dragon's fiery breath or a Lightning Bolt spell. When you are subjected to an effect that allows you to make a Dexterity saving throw to take only half damage, you instead take no damage if you succeed on the saving throw, and only half damage if you fail.",
+                "parent": "ranger-phb:hunter-phb:superior-hunters-defense",
+                "srd": {
+                    "5.1": "Evasion"
+                }
+            },
+            {
+                "id": "ranger-phb:hunter-phb:stand-against-the-tide",
+                "name": "Stand Against the Tide",
+                "level": 15,
+                "text": "When a hostile creature misses you with a melee attack, you can use your reaction to force that creature to repeat the same attack against another creature (other than itself) of your choice.",
+                "parent": "ranger-phb:hunter-phb:superior-hunters-defense",
+                "srd": {
+                    "5.1": "Stand Against the Tide"
+                }
+            },
+            {
+                "id": "ranger-phb:hunter-phb:uncanny-dodge",
+                "name": "Uncanny Dodge",
+                "level": 15,
+                "text": "When an attacker that you can see hits you with an attack, you can use your reaction to halve the attack's damage against you.",
+                "parent": "ranger-phb:hunter-phb:superior-hunters-defense",
+                "srd": {
+                    "5.1": "Uncanny Dodge"
+                }
+            }
+        ]
+    },
+    {
+        "id": "ranger-phb:gloom-stalker-xge",
+        "kind": "subclass",
+        "name": "Gloom Stalker",
+        "source": "XGE",
+        "edition": "classic",
+        "reprinted_as": [
+            "ranger-xphb:gloom-stalker-xphb"
+        ],
+        "text": "Gloom Stalkers are at home in the darkest places: deep under the earth, in gloomy alleyways, in primeval forests, and wherever else the light dims. Most folk enter such places with trepidation, but a Gloom Stalker ventures boldly into the darkness, seeking to ambush threats before they can reach the broader world. Such rangers are often found in the Underdark, but they will go any place where evil lurks in the shadows.",
+        "class_id": "ranger-phb",
+        "short_name": "Gloom Stalker",
+        "grants": {
+            "spells": [
+                {
+                    "spell": "disguise-self-phb",
+                    "how": "known",
+                    "at": 3
+                },
+                {
+                    "spell": "rope-trick-phb",
+                    "how": "known",
+                    "at": 5
+                },
+                {
+                    "spell": "fear-phb",
+                    "how": "known",
+                    "at": 9
+                },
+                {
+                    "spell": "greater-invisibility-phb",
+                    "how": "known",
+                    "at": 13
+                },
+                {
+                    "spell": "seeming-phb",
+                    "how": "known",
+                    "at": 17
+                }
+            ]
+        },
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "ranger-phb:gloom-stalker-xge:gloom-stalker-magic",
+                    "ranger-phb:gloom-stalker-xge:dread-ambusher",
+                    "ranger-phb:gloom-stalker-xge:umbral-sight"
+                ]
+            },
+            {
+                "level": 7,
+                "features": [
+                    "ranger-phb:gloom-stalker-xge:iron-mind"
+                ]
+            },
+            {
+                "level": 11,
+                "features": [
+                    "ranger-phb:gloom-stalker-xge:stalkers-flurry"
+                ]
+            },
+            {
+                "level": 15,
+                "features": [
+                    "ranger-phb:gloom-stalker-xge:shadowy-dodge"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "ranger-phb:gloom-stalker-xge:gloom-stalker-magic",
+                "name": "Gloom Stalker Magic",
+                "level": 3,
+                "text": "Starting at 3rd level, you learn an additional spell when you reach certain levels in this class, as shown in the Gloom Stalker Spells table. The spell counts as a ranger spell for you, but it doesn't count against the number of ranger spells you know.\n\nGloom Stalker Spells\n\nRanger Level | Spells\n--- | ---\n3rd | Disguise Self\n5th | Rope Trick\n9th | Fear\n13th | Greater Invisibility\n17th | Seeming"
+            },
+            {
+                "id": "ranger-phb:gloom-stalker-xge:dread-ambusher",
+                "name": "Dread Ambusher",
+                "level": 3,
+                "text": "At 3rd level, you master the art of the ambush. You can give yourself a bonus to your initiative rolls equal to your Wisdom modifier.\n\nAt the start of your first turn of each combat, your walking speed increases by 10 feet, which lasts until the end of that turn. If you take the Attack action on that turn, you can make one additional weapon attack as part of that action. If that attack hits, the target takes an extra 1d8 damage of the weapon's damage type."
+            },
+            {
+                "id": "ranger-phb:gloom-stalker-xge:umbral-sight",
+                "name": "Umbral Sight",
+                "level": 3,
+                "text": "At 3rd level, you gain darkvision out to a range of 60 feet. If you already have darkvision from your race, its range increases by 30 feet.\n\nYou are also adept at evading creatures that rely on darkvision. While in darkness, you are invisible to any creature that relies on darkvision to see you in that darkness."
+            },
+            {
+                "id": "ranger-phb:gloom-stalker-xge:iron-mind",
+                "name": "Iron Mind",
+                "level": 7,
+                "text": "By 7th level, you have honed your ability to resist the mind-altering powers of your prey. You gain proficiency in Wisdom saving throws. If you already have this proficiency, you instead gain proficiency in Intelligence or Charisma saving throws (your choice)."
+            },
+            {
+                "id": "ranger-phb:gloom-stalker-xge:stalkers-flurry",
+                "name": "Stalker's Flurry",
+                "level": 11,
+                "text": "At 11th level, you learn to attack with such unexpected speed that you can turn a miss into another strike. Once on each of your turns when you miss with a weapon attack, you can make another weapon attack as part of the same action."
+            },
+            {
+                "id": "ranger-phb:gloom-stalker-xge:shadowy-dodge",
+                "name": "Shadowy Dodge",
+                "level": 15,
+                "text": "Starting at 15th level, you can dodge in unforeseen ways, with wisps of supernatural shadow around you. Whenever a creature makes an attack roll against you and doesn't have advantage on the roll, you can use your reaction to impose disadvantage on it. You must use this feature before you know the outcome of the attack roll."
+            }
+        ]
+    },
+    {
+        "id": "ranger-phb:horizon-walker-xge",
+        "kind": "subclass",
+        "name": "Horizon Walker",
+        "source": "XGE",
+        "edition": "classic",
+        "text": "Horizon Walkers guard the world against threats that originate from other planes or that seek to ravage the mortal realm with otherworldly magic. They seek out planar portals and keep watch over them, venturing to the Inner Planes and the Outer Planes as needed to pursue their foes. These rangers are also friends to any forces in the multiverse—especially benevolent dragons, fey, and elementals—that work to preserve life and the order of the planes.",
+        "class_id": "ranger-phb",
+        "short_name": "Horizon Walker",
+        "grants": {
+            "spells": [
+                {
+                    "spell": "protection-from-evil-and-good-phb",
+                    "how": "known",
+                    "at": 3
+                },
+                {
+                    "spell": "misty-step-phb",
+                    "how": "known",
+                    "at": 5
+                },
+                {
+                    "spell": "haste-phb",
+                    "how": "known",
+                    "at": 9
+                },
+                {
+                    "spell": "banishment-phb",
+                    "how": "known",
+                    "at": 13
+                },
+                {
+                    "spell": "teleportation-circle-phb",
+                    "how": "known",
+                    "at": 17
+                }
+            ]
+        },
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "ranger-phb:horizon-walker-xge:horizon-walker-magic",
+                    "ranger-phb:horizon-walker-xge:detect-portal",
+                    "ranger-phb:horizon-walker-xge:planar-warrior"
+                ]
+            },
+            {
+                "level": 7,
+                "features": [
+                    "ranger-phb:horizon-walker-xge:ethereal-step"
+                ]
+            },
+            {
+                "level": 11,
+                "features": [
+                    "ranger-phb:horizon-walker-xge:distant-strike"
+                ]
+            },
+            {
+                "level": 15,
+                "features": [
+                    "ranger-phb:horizon-walker-xge:spectral-defense"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "ranger-phb:horizon-walker-xge:horizon-walker-magic",
+                "name": "Horizon Walker Magic",
+                "level": 3,
+                "text": "Starting at 3rd level, you learn an additional spell when you reach certain levels in this class, as shown in the Horizon Walker Spells table. The spell counts as a ranger spell for you, but it doesn't count against the number of ranger spells you know.\n\nHorizon Walker Spells\n\nRanger Level | Spells\n--- | ---\n3rd | Protection from Evil and Good\n5th | Misty Step\n9th | Haste\n13th | Banishment\n17th | Teleportation Circle"
+            },
+            {
+                "id": "ranger-phb:horizon-walker-xge:detect-portal",
+                "name": "Detect Portal",
+                "level": 3,
+                "text": "At 3rd level, you gain the ability to magically sense the presence of a planar portal. As an action, you detect the distance and direction to the closest planar portal within 1 mile of you.\n\nOnce you use this feature, you can't use it again until you finish a short or long rest.\n\nSee the \"Planar Travel\" section in chapter 2 of the Dungeon Master's Guide for examples of planar portals."
+            },
+            {
+                "id": "ranger-phb:horizon-walker-xge:planar-warrior",
+                "name": "Planar Warrior",
+                "level": 3,
+                "text": "At 3rd level, you learn to draw on the energy of the multiverse to augment your attacks.\n\nAs a bonus action, choose one creature you can see within 30 feet of you. The next time you hit that creature on this turn with a weapon attack, all damage dealt by the attack becomes force damage, and the creature takes an extra 1d8 force damage from the attack. When you reach 11th level in this class, the extra damage increases to 2d8."
+            },
+            {
+                "id": "ranger-phb:horizon-walker-xge:ethereal-step",
+                "name": "Ethereal Step",
+                "level": 7,
+                "text": "At 7th level, you learn to step through the Ethereal Plane. As a bonus action, you can cast the Etherealness spell with this feature, without expending a spell slot, but the spell ends at the end of the current turn.\n\nOnce you use this feature, you can't use it again until you finish a short or long rest."
+            },
+            {
+                "id": "ranger-phb:horizon-walker-xge:distant-strike",
+                "name": "Distant Strike",
+                "level": 11,
+                "text": "At 11th level, you gain the ability to pass between the planes in the blink of an eye. When you take the Attack action, you can teleport up to 10 feet before each attack to an unoccupied space you can see.\n\nIf you attack at least two different creatures with the action, you can make one additional attack with it against a third creature."
+            },
+            {
+                "id": "ranger-phb:horizon-walker-xge:spectral-defense",
+                "name": "Spectral Defense",
+                "level": 15,
+                "text": "At 15th level, your ability to move between planes enables you to slip through the planar boundaries to lessen the harm done to you during battle. When you take damage from an attack, you can use your reaction to give yourself resistance to all of that attack's damage on this turn."
+            }
+        ]
+    },
+    {
+        "id": "ranger-phb:monster-slayer-xge",
+        "kind": "subclass",
+        "name": "Monster Slayer",
+        "source": "XGE",
+        "edition": "classic",
+        "text": "You have dedicated yourself to hunting down creatures of the night and wielders of grim magic. A Monster Slayer seeks out vampires, dragons, evil fey, fiends, and other magical threats. Trained in supernatural techniques to overcome such monsters, slayers are experts at unearthing and defeating mighty, mystical foes.",
+        "class_id": "ranger-phb",
+        "short_name": "Monster Slayer",
+        "grants": {
+            "spells": [
+                {
+                    "spell": "protection-from-evil-and-good-phb",
+                    "how": "known",
+                    "at": 3
+                },
+                {
+                    "spell": "zone-of-truth-phb",
+                    "how": "known",
+                    "at": 5
+                },
+                {
+                    "spell": "magic-circle-phb",
+                    "how": "known",
+                    "at": 9
+                },
+                {
+                    "spell": "banishment-phb",
+                    "how": "known",
+                    "at": 13
+                },
+                {
+                    "spell": "hold-monster-phb",
+                    "how": "known",
+                    "at": 17
+                }
+            ]
+        },
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "ranger-phb:monster-slayer-xge:monster-slayer-magic",
+                    "ranger-phb:monster-slayer-xge:hunters-sense",
+                    "ranger-phb:monster-slayer-xge:slayers-prey"
+                ]
+            },
+            {
+                "level": 7,
+                "features": [
+                    "ranger-phb:monster-slayer-xge:supernatural-defense"
+                ]
+            },
+            {
+                "level": 11,
+                "features": [
+                    "ranger-phb:monster-slayer-xge:magic-users-nemesis"
+                ]
+            },
+            {
+                "level": 15,
+                "features": [
+                    "ranger-phb:monster-slayer-xge:slayers-counter"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "ranger-phb:monster-slayer-xge:monster-slayer-magic",
+                "name": "Monster Slayer Magic",
+                "level": 3,
+                "text": "Starting at 3rd level, you learn an additional spell when you reach certain levels in this class, as shown in the Monster Slayer Spells table. The spell counts as a ranger spell for you, but it doesn't count against the number of ranger spells you know.\n\nMonster Slayer Spells\n\nRanger Level | Spells\n--- | ---\n3rd | Protection from Evil and Good\n5th | Zone of Truth\n9th | Magic Circle\n13th | Banishment\n17th | Hold Monster"
+            },
+            {
+                "id": "ranger-phb:monster-slayer-xge:hunters-sense",
+                "name": "Hunter's Sense",
+                "level": 3,
+                "text": "At 3rd level, you gain the ability to peer at a creature and magically discern how best to hurt it. As an action, choose one creature you can see within 60 feet of you. You immediately learn whether the creature has any damage immunities, resistances, or vulnerabilities and what they are. If the creature is hidden from divination magic, you sense that it has no damage immunities, resistances, or vulnerabilities.\n\nYou can use this feature a number of times equal to your Wisdom modifier (minimum of once). You regain all expended uses of it when you finish a long rest."
+            },
+            {
+                "id": "ranger-phb:monster-slayer-xge:slayers-prey",
+                "name": "Slayer's Prey",
+                "level": 3,
+                "text": "Starting at 3rd level, you can focus your ire on one foe, increasing the harm you inflict on it. As a bonus action, you designate one creature you can see within 60 feet of you as the target of this feature. The first time each turn that you hit that target with a weapon attack, it takes an extra 1d6 damage from the weapon.\n\nThis benefit lasts until you finish a short or long rest. It ends early if you designate a different creature."
+            },
+            {
+                "id": "ranger-phb:monster-slayer-xge:supernatural-defense",
+                "name": "Supernatural Defense",
+                "level": 7,
+                "text": "At 7th level, you gain extra resilience against your prey's assaults on your mind and body. Whenever the target of your Slayer's Prey forces you to make a saving throw and whenever you make an ability check to escape that target's grapple, add 1d6 to your roll."
+            },
+            {
+                "id": "ranger-phb:monster-slayer-xge:magic-users-nemesis",
+                "name": "Magic-User's Nemesis",
+                "level": 11,
+                "text": "At 11th level, you gain the ability to thwart someone else's magic. When you see a creature casting a spell or teleporting within 60 feet of you, you can use your reaction to try to magically foil it. The creature must succeed on a Wisdom saving throw against your spell save DC, or its spell or teleport fails and is wasted.\n\nOnce you use this feature, you can't use it again until you finish a short or long rest."
+            },
+            {
+                "id": "ranger-phb:monster-slayer-xge:slayers-counter",
+                "name": "Slayer's Counter",
+                "level": 15,
+                "text": "At 15th level, you gain the ability to counterattack when your prey tries to sabotage you. If the target of your Slayer's Prey forces you to make a saving throw, you can use your reaction to make one weapon attack against the quarry. You make this attack immediately before making the saving throw. If your attack hits, your save automatically succeeds, in addition to the attack's normal effects."
+            }
+        ]
+    },
+    {
+        "id": "ranger-phb:fey-wanderer-tce",
+        "kind": "subclass",
+        "name": "Fey Wanderer",
+        "source": "TCE",
+        "edition": "classic",
+        "reprinted_as": [
+            "ranger-xphb:fey-wanderer-xphb"
+        ],
+        "text": "A fey mystique surrounds you, thanks to the boon of an archfey, the shining fruit you ate from a talking tree, the magic spring you swam in, or some other auspicious event. However you acquired your fey magic, you are now a Fey Wanderer, a ranger who represents both the mortal and the fey realms. As you wander the multiverse, your joyful laughter brightens the hearts of the downtrodden, and your martial prowess strikes terror in your foes, for great is the mirth of the fey and dreadful is their fury.",
+        "class_id": "ranger-phb",
+        "short_name": "Fey Wanderer",
+        "grants": {
+            "spells": [
+                {
+                    "spell": "charm-person-phb",
+                    "how": "known",
+                    "at": 3
+                },
+                {
+                    "spell": "misty-step-phb",
+                    "how": "known",
+                    "at": 5
+                },
+                {
+                    "spell": "dispel-magic-phb",
+                    "how": "known",
+                    "at": 9
+                },
+                {
+                    "spell": "dimension-door-phb",
+                    "how": "known",
+                    "at": 13
+                },
+                {
+                    "spell": "mislead-phb",
+                    "how": "known",
+                    "at": 17
+                }
+            ]
+        },
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "ranger-phb:fey-wanderer-tce:dreadful-strikes",
+                    "ranger-phb:fey-wanderer-tce:fey-wanderer-magic",
+                    "ranger-phb:fey-wanderer-tce:otherworldly-glamour"
+                ]
+            },
+            {
+                "level": 7,
+                "features": [
+                    "ranger-phb:fey-wanderer-tce:beguiling-twist"
+                ]
+            },
+            {
+                "level": 11,
+                "features": [
+                    "ranger-phb:fey-wanderer-tce:fey-reinforcements"
+                ]
+            },
+            {
+                "level": 15,
+                "features": [
+                    "ranger-phb:fey-wanderer-tce:misty-wanderer"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "ranger-phb:fey-wanderer-tce:dreadful-strikes",
+                "name": "Dreadful Strikes",
+                "level": 3,
+                "text": "*3rd-level Fey Wanderer feature*\n\nYou can augment your weapon strikes with mind-scarring magic, drawn from the gloomy hollows of the Feywild. When you hit a creature with a weapon, you can deal an extra 1d4 psychic damage to the target, which can take this extra damage only once per turn.\n\nThe extra damage increases to 1d6 when you reach 11th level in this class."
+            },
+            {
+                "id": "ranger-phb:fey-wanderer-tce:fey-wanderer-magic",
+                "name": "Fey Wanderer Magic",
+                "level": 3,
+                "text": "*3rd-level Fey Wanderer feature*\n\nYou learn an additional spell when you reach certain levels in this class, as shown in the Fey Wanderer Spells table. Each spell counts as a ranger spell for you, but it doesn't count against the number of ranger spells you know.\n\nFey Wanderer Spells\n\nRanger Level | Spells\n--- | ---\n3rd | Charm Person\n5th | Misty Step\n9th | Dispel Magic\n13th | Dimension Door\n17th | Mislead\n\nYou also possess a preternatural blessing from a fey ally or a place of fey power. Choose your blessing from the Feywild Gifts table or determine it randomly.\n\nFeywild Gifts\n\nd6 | Gift\n--- | ---\n1 | Illusory butterflies flutter around you while you take a short or long rest.\n2 | Fresh, seasonal flowers sprout from your hair each dawn.\n3 | You faintly smell of cinnamon, lavender, nutmeg, or another comforting herb or spice.\n4 | Your shadow dances while no one is looking directly at it.\n5 | Horns or antlers sprout from your head.\n6 | Your skin and hair change color to match the season at each dawn."
+            },
+            {
+                "id": "ranger-phb:fey-wanderer-tce:otherworldly-glamour",
+                "name": "Otherworldly Glamour",
+                "level": 3,
+                "text": "*3rd-level Fey Wanderer feature*\n\nYour fey qualities give you a supernatural charm. As a result, whenever you make a Charisma check, you gain a bonus to the check equal to your Wisdom modifier (minimum of +1).\n\nIn addition, you gain proficiency in one of the following skills of your choice: Deception, Performance, or Persuasion."
+            },
+            {
+                "id": "ranger-phb:fey-wanderer-tce:beguiling-twist",
+                "name": "Beguiling Twist",
+                "level": 7,
+                "text": "*7th-level Fey Wanderer feature*\n\nThe magic of the Feywild guards your mind. You have advantage on saving throws against being charmed or frightened.\n\nIn addition, whenever you or a creature you can see within 120 feet of you succeeds on a saving throw against being charmed or frightened, you can use your reaction to force a different creature you can see within 120 feet of you to make a Wisdom saving throw against your spell save DC. If the save fails, the target is charmed or frightened by you (your choice) for 1 minute. The target can repeat the saving throw at the end of each of its turns, ending the effect on itself on a successful save."
+            },
+            {
+                "id": "ranger-phb:fey-wanderer-tce:fey-reinforcements",
+                "name": "Fey Reinforcements",
+                "level": 11,
+                "text": "*11th-level Fey Wanderer feature*\n\nThe royal courts of the Feywild have blessed you with the assistance of fey beings: you know Summon Fey. It doesn't count against the number of ranger spells you know, and you can cast it without a material component. You can also cast it once without a spell slot, and you regain the ability to do so when you finish a long rest.\n\nWhenever you start casting the spell, you can modify it so that it doesn't require concentration. If you do so, the spell's duration becomes 1 minute for that casting."
+            },
+            {
+                "id": "ranger-phb:fey-wanderer-tce:misty-wanderer",
+                "name": "Misty Wanderer",
+                "level": 15,
+                "text": "*15th-level Fey Wanderer feature*\n\nYou can slip in and out of the Feywild to move in a blink of an eye: you can cast Misty Step without expending a spell slot. You can do so a number of times equal to your Wisdom modifier (minimum of once), and you regain all expended uses when you finish a long rest.\n\nIn addition, whenever you cast Misty Step, you can bring along one willing creature you can see within 5 feet of you. That creature teleports to an unoccupied space of your choice within 5 feet of your destination space."
+            }
+        ]
+    },
+    {
+        "id": "ranger-phb:swarmkeeper-tce",
+        "kind": "subclass",
+        "name": "Swarmkeeper",
+        "source": "TCE",
+        "edition": "classic",
+        "text": "Feeling a deep connection to the environment around them, some rangers reach out through their magical connection to the world and bond with a swarm of nature spirits. The swarm becomes a potent force in battle, as well as helpful company for the ranger. Some Swarmkeepers are outcasts or hermits, keeping to themselves and their attendant swarms rather than dealing with the discomfort of others. Other Swarmkeepers enjoy building vibrant communities that work for the mutual benefit of all those they consider part of their swarm.",
+        "class_id": "ranger-phb",
+        "short_name": "Swarmkeeper",
+        "grants": {
+            "spells": [
+                {
+                    "spell": "mage-hand-phb",
+                    "how": "known",
+                    "at": 3
+                },
+                {
+                    "spell": "faerie-fire-phb",
+                    "how": "known",
+                    "at": 3
+                },
+                {
+                    "spell": "web-phb",
+                    "how": "known",
+                    "at": 5
+                },
+                {
+                    "spell": "gaseous-form-phb",
+                    "how": "known",
+                    "at": 9
+                },
+                {
+                    "spell": "arcane-eye-phb",
+                    "how": "known",
+                    "at": 13
+                },
+                {
+                    "spell": "insect-plague-phb",
+                    "how": "known",
+                    "at": 17
+                }
+            ]
+        },
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "ranger-phb:swarmkeeper-tce:gathered-swarm",
+                    "ranger-phb:swarmkeeper-tce:swarmkeeper-magic"
+                ]
+            },
+            {
+                "level": 7,
+                "features": [
+                    "ranger-phb:swarmkeeper-tce:writhing-tide"
+                ]
+            },
+            {
+                "level": 11,
+                "features": [
+                    "ranger-phb:swarmkeeper-tce:mighty-swarm"
+                ]
+            },
+            {
+                "level": 15,
+                "features": [
+                    "ranger-phb:swarmkeeper-tce:swarming-dispersal"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "ranger-phb:swarmkeeper-tce:gathered-swarm",
+                "name": "Gathered Swarm",
+                "level": 3,
+                "text": "*3rd-level Swarmkeeper feature*\n\nA swarm of intangible nature spirits has bonded itself to you and can assist you in battle. While you're alive, the swarm remains in your space, crawling on you or flying and skittering around you within your space. You determine its appearance, or you generate its appearance by rolling on the Swarm Appearance table.\n\nSwarm Appearance\n\nd4 | Appearance\n--- | ---\n1 | Swarming insects\n2 | Miniature twig blights\n3 | Fluttering birds\n4 | Playful pixies\n\nOnce on each of your turns, you can cause the swarm to assist you in one of the following ways, immediately after you hit a creature with an attack:\n\n- The attack's target takes 1d6 piercing damage from the swarm.\n- The attack's target must succeed on a Strength saving throw against your spell save DC or be moved by the swarm up to 15 feet horizontally in a direction of your choice.\n- You are moved by the swarm 5 feet horizontally in a direction of your choice.\n\n**It's Your Swarm.** A Swarmkeeper's swarm and spells are reflections of the character's bond with nature spirits. Take the opportunity to describe the swarm and the ranger's magic in play. For example, when your ranger casts gaseous form, they might appear to melt into the swarm, instead of a cloud of mist, or the Arcane Eye spell could create an extension of your swarm that spies for you. Such descriptions don't change the effects of spells, but they are an exciting opportunity to explore your character's narrative through their class abilities. For more guidance on customizing spells, see the \"Personalizing Spells\" section in chapter 3.\n\nAlso, remember that the swarm's appearance is yours to customize, and don't feel confined to a single appearance. Perhaps the spirits' look changes with the ranger's mood or with the seasons. You decide!"
+            },
+            {
+                "id": "ranger-phb:swarmkeeper-tce:swarmkeeper-magic",
+                "name": "Swarmkeeper Magic",
+                "level": 3,
+                "text": "*3rd-level Swarmkeeper feature*\n\nYou learn the Mage Hand cantrip if you don't already know it. When you cast it, the hand takes the form of your swarming nature spirits.\n\nYou also learn an additional spell of 1st level or higher when you reach certain levels in this class, as shown in the Swarmkeeper Spells table. Each spell counts as a ranger spell for you, but it doesn't count against the number of ranger spells you know.\n\nSwarmkeeper Spells\n\nRanger Level | Spells\n--- | ---\n3rd | Faerie Fire\n5th | Web\n9th | Gaseous Form\n13th | Arcane Eye\n17th | Insect Plague"
+            },
+            {
+                "id": "ranger-phb:swarmkeeper-tce:writhing-tide",
+                "name": "Writhing Tide",
+                "level": 7,
+                "text": "*7th-level Swarmkeeper feature*\n\nYou can condense part of your swarm into a focused mass that lifts you up. As a bonus action, you gain a flying speed of 10 feet and can hover. This effect lasts for 1 minute or until you are incapacitated.\n\nYou can use this feature a number of times equal to your proficiency bonus, and you regain all expended uses when you finish a long rest."
+            },
+            {
+                "id": "ranger-phb:swarmkeeper-tce:mighty-swarm",
+                "name": "Mighty Swarm",
+                "level": 11,
+                "text": "*11th-level Swarmkeeper feature*\n\nYour Gathered Swarm grows mightier in the following ways:\n\n- The damage of Gathered Swarm increases to 1d8.\n- If a creature fails its saving throw against being moved by Gathered Swarm, you can also cause the swarm to knock the creature prone.\n- When you are moved by Gathered Swarm, it gives you half cover until the start of your next turn."
+            },
+            {
+                "id": "ranger-phb:swarmkeeper-tce:swarming-dispersal",
+                "name": "Swarming Dispersal",
+                "level": 15,
+                "text": "*15th-level Swarmkeeper feature*\n\nYou can discorporate into your swarm, avoiding danger. When you take damage, you can use your reaction to give yourself resistance to that damage. You vanish into your swarm and then teleport to an unoccupied space that you can see within 30 feet of you, where you reappear with the swarm.\n\nYou can use this feature a number of times equal to your proficiency bonus, and you regain all expended uses when you finish a long rest."
+            }
+        ]
+    },
+    {
+        "id": "ranger-phb:drakewarden-ftd",
+        "kind": "subclass",
+        "name": "Drakewarden",
+        "source": "FTD",
+        "edition": "classic",
+        "text": "Your connection to the natural world takes the form of a draconic spirit, which can manifest in physical form as a drake. As your powers grow, your drake grows as well, blossoming from a small four-legged companion to a majestic winged creature large and strong enough for you to ride. Along the way, you gain an increasing share of the awe-inspiring power of dragons.\n\nConsider the source of the draconic spirit you have bonded with. The Drakewarden Origin table offers examples.\n\nDrakewarden Origin\n\nd6 | Origin\n--- | ---\n1 | You studied a dragon's scale or claw, or a trinket from a dragon's hoard, creating your bond through that token's lingering draconic magic.\n2 | A secret order of rangers who collect and guard draconic lore taught you their ways.\n3 | A dragon gave you a geode or gemstone to care for. To your surprise, the drake hatched from that stone.\n4 | You ingested a few drops of dragon blood, forever infusing your nature magic with draconic power.\n5 | An ancient Draconic inscription on a standing stone empowered you when you read it aloud.\n6 | You had a vivid dream of a mysterious figure accompanied by seven yellow canaries, who warned you of impending doom. When you awoke, your drake was there, watching you.",
+        "class_id": "ranger-phb",
+        "short_name": "Drakewarden",
+        "grants": {
+            "spells": [
+                {
+                    "spell": "thaumaturgy-phb",
+                    "how": "known",
+                    "at": 3
+                }
+            ]
+        },
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "ranger-phb:drakewarden-ftd:draconic-gift",
+                    "ranger-phb:drakewarden-ftd:drake-companion"
+                ]
+            },
+            {
+                "level": 7,
+                "features": [
+                    "ranger-phb:drakewarden-ftd:bond-of-fang-and-scale"
+                ]
+            },
+            {
+                "level": 11,
+                "features": [
+                    "ranger-phb:drakewarden-ftd:drakes-breath"
+                ]
+            },
+            {
+                "level": 15,
+                "features": [
+                    "ranger-phb:drakewarden-ftd:perfected-bond"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "ranger-phb:drakewarden-ftd:draconic-gift",
+                "name": "Draconic Gift",
+                "level": 3,
+                "text": "*3rd-level Drakewarden feature*\n\nThe bond you share with your drake creates a connection to dragonkind, granting you understanding and empowering your presence. You gain the following benefits:\n\n- **Thaumaturgy.** You learn the Thaumaturgy cantrip, which is a ranger spell for you.\n- **Tongue of Dragons.** You learn to speak, read, and write Draconic or one other language of your choice."
+            },
+            {
+                "id": "ranger-phb:drakewarden-ftd:drake-companion",
+                "name": "Drake Companion",
+                "level": 3,
+                "text": "*3rd-level Drakewarden feature*\n\nAs an action, you can magically summon the drake that is bound to you. It appears in an unoccupied space of your choice within 30 feet of you.\n\nThe drake is friendly to you and your companions, and it obeys your commands. See its game statistics in the accompanying Drake Companion stat block, which uses your proficiency bonus (PB) in several places. Whenever you summon the drake, choose a damage type listed in its Draconic Essence trait. You can determine the cosmetic characteristics of the drake, such as its color, its scale texture, or any visible effect of its Draconic Essence; your choice has no effect on its game statistics.\n\nIn combat, the drake shares your initiative count, but it takes its turn immediately after yours. It can move and use its reaction on its own, but the only action it takes on its turn is the Dodge action, unless you take a bonus action on your turn to command it to take another action. That action can be one in its stat block or some other action. If you are incapacitated, the drake can take any action of its choice, not just Dodge.\n\nThe drake remains until it is reduced to 0 hit points, until you use this feature to summon the drake again, or until you die. Anything the drake was wearing or carrying is left behind when the drake vanishes.\n\nOnce you summon the drake, you can't do so again until you finish a long rest, unless you expend a spell slot of 1st level or higher to summon it."
+            },
+            {
+                "id": "ranger-phb:drakewarden-ftd:bond-of-fang-and-scale",
+                "name": "Bond of Fang and Scale",
+                "level": 7,
+                "text": "*7th-level Drakewarden feature*\n\nThe bond you share with your drake intensifies, protecting you and stoking the drake's fury. When you summon your drake, it grows wings on its back and gains a flying speed equal to its walking speed.\n\nIn addition, while your drake is summoned, you and the drake gain the following benefits:\n\n- **Drake Mount.** The drake grows to Medium size. Reflecting your special bond, you can use the drake as a mount if your size is Medium or smaller. While you are riding your drake, it can't use the flying speed of this feature.\n- **Magic Fang.** The drake's Bite attack deals an extra 1d6 damage of the type chosen for the drake's Draconic Essence.\n- **Resistance.** You gain resistance to the damage type chosen for the drake's Draconic Essence."
+            },
+            {
+                "id": "ranger-phb:drakewarden-ftd:drakes-breath",
+                "name": "Drake's Breath",
+                "level": 11,
+                "text": "*11th-level Drakewarden feature*\n\nAs an action, you can exhale a 30-foot cone of damaging breath or cause your drake to exhale it. Choose acid, cold, fire, lightning, or poison damage (your choice doesn't have to match your drake's Draconic Essence). Each creature in the cone must make a Dexterity saving throw against your spell save DC, taking 8d6 damage on a failed save, or half as much damage on a successful one.\n\nThis damage increases to 10d6 when you reach 15th level in this class.\n\nOnce you use this feature, you can't do so again until you finish a long rest, unless you expend a spell slot of 3rd level or higher to use it again."
+            },
+            {
+                "id": "ranger-phb:drakewarden-ftd:perfected-bond",
+                "name": "Perfected Bond",
+                "level": 15,
+                "text": "*15th-level Drakewarden feature*\n\nYour bond to your drake reaches the pinnacle of its power. While your drake is summoned, you and the drake gain the following benefits:\n\n- **Empowered Bite.** The drake's Bite attack deals an extra 1d6 damage of the type chosen for its Draconic Essence (for a total of 2d6 extra damage).\n- **Large Drake.** The drake grows to Large size. When you ride your drake, it is no longer prohibited from using the flying speed of Bond of Fang and Scale.\n- **Reflexive Resistance.** When either you or the drake takes damage while you're within 30 feet of each other, you can use your reaction to give yourself or the drake resistance to that instance of damage. You can use this reaction a number of times equal to your proficiency bonus, and you regain all expended uses when you finish a long rest."
+            }
+        ]
+    }
+]

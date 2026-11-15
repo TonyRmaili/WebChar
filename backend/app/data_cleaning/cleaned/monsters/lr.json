@@ -1,0 +1,1701 @@
+[
+    {
+        "id": "amble-lr",
+        "kind": "monster",
+        "name": "Amble",
+        "source": "LR",
+        "edition": "classic",
+        "tags": [
+            "Hold Breath"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "tortle"
+            ]
+        },
+        "alignment": [
+            "lawful good"
+        ],
+        "ac": [
+            {
+                "value": 18,
+                "from": [
+                    "natural armor",
+                    "ring of protection"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 90,
+            "formula": "12d8 + 36"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 14,
+            "dex": 10,
+            "con": 16,
+            "int": 10,
+            "wis": 18,
+            "cha": 14
+        },
+        "saves": {
+            "str": 6,
+            "dex": 4,
+            "con": 7,
+            "int": 4,
+            "wis": 8,
+            "cha": 6
+        },
+        "skills": {
+            "animal_handling": 8,
+            "insight": 8,
+            "medicine": 8,
+            "perception": 8,
+            "survival": 8
+        },
+        "passive_perception": 18,
+        "languages": [
+            "Aquan",
+            "Common",
+            "Druidic"
+        ],
+        "cr": {
+            "cr": "10",
+            "xp": 5900,
+            "pb": 4
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "hearth-of-moonlight-and-shadow",
+                "name": "Hearth of Moonlight and Shadow",
+                "category": "traits",
+                "text": "At the start of a short or long rest, Amble can touch a point in space, and an invisible, 30-foot-radius sphere of magic appears, centered on that point. Total cover blocks the sphere.\n\nWhile within the sphere, Amble and their allies gain a +5 bonus to Dexterity (Stealth) and Wisdom (Perception) checks, and any light from open flames in the sphere isn't visible outside it.\n\nThe sphere vanishes at the end of the rest or when Amble leaves the sphere."
+            },
+            {
+                "id": "hold-breath",
+                "name": "Hold Breath",
+                "category": "traits",
+                "text": "Amble can hold their breath for up to 1 hour at a time."
+            },
+            {
+                "id": "balm-of-the-summer-court-12d6",
+                "name": "Balm of the Summer Court (12d6)",
+                "category": "traits",
+                "text": "(As a Bonus Action) Amble can choose one creature they can see within 120 feet of them and spend up to 6d6 of their die pool. Roll the spent dice and add them together. The target regains a number of hit points equal to the total. The target also gains 1 temporary hit point per die spent. Amble regains all expended dice when they finish a long rest."
+            },
+            {
+                "id": "hidden-paths",
+                "name": "Hidden Paths",
+                "category": "traits",
+                "text": "(As a Bonus Action) Amble may teleport up to 60 feet to an unoccupied space they can see.",
+                "uses": {
+                    "max": 4,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "change-shape",
+                "name": "Change Shape",
+                "category": "actions",
+                "text": "Amble magically polymorphs into a beast with a challenge rating of 1 or less, and can remain in this form for up to 6 hours. Amble's equipment melds with their new form. Amble reverts to their true form if they die or fall unconscious. Amble can revert to their true form using a bonus action on their turn.\n\nAmble's game statistics are replaced by the statistics of the beast, but they retain their alignment, personality, and Intelligence, Wisdom, and Charisma scores. Amble also retains all their skill and saving throw proficiencies, in addition to gaining those of the creature. If the creature has the same proficiency as Amble and the bonus in its stat block is higher, use the creature's bonus instead of Amble's.\n\nWhen Amble transforms, they assume the beast's hit points and Hit Dice. When Amble reverts to their normal form, they return to the number of hit points they had before they transformed. However, if Amble reverts as a result of dropping to 0 hit points, any excess damage carries over their normal form.\n\nAmble can't cast spells, and their ability to speak or take any action that requires hands is limited to the capabilities of their beast form. Transforming doesn't break Amble's concentration on a spell they've already cast however, or prevent them from taking actions that are part of a spell.",
+                "uses": {
+                    "max": 2,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "claws",
+                "name": "Claws",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 4 (1d4 + 2) slashing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 2,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "club",
+                "name": "Club",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +6 to hit (+8 to hit with shillelagh), reach 5 ft., one target. Hit: 5 (1d6 + 2) bludgeoning damage, or 8 (1d8 + 4) bludgeoning damage with shillelagh.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 2,
+                                "type": "bludgeoning"
+                            },
+                            {
+                                "dice": "1d8",
+                                "bonus": 4,
+                                "type": "bludgeoning",
+                                "condition": "instead"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "wis",
+                "dc": 16,
+                "attack": 8,
+                "text": "Amble is a 12th-level spellcaster. Their spellcasting ability is Wisdom (spell save DC 16, +8 to hit with spell attacks). Amble has the following druid spells prepared:",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "level": 0,
+                        "spells": [
+                            {
+                                "spell": "guidance-phb"
+                            },
+                            {
+                                "spell": "mending-phb"
+                            },
+                            {
+                                "spell": "shape-water-xge"
+                            },
+                            {
+                                "spell": "shillelagh-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 1,
+                        "slots": 4,
+                        "spells": [
+                            {
+                                "spell": "absorb-elements-xge"
+                            },
+                            {
+                                "spell": "cure-wounds-phb"
+                            },
+                            {
+                                "spell": "entangle-phb"
+                            },
+                            {
+                                "spell": "speak-with-animals-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 2,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "darkvision-phb"
+                            },
+                            {
+                                "spell": "hold-person-phb"
+                            },
+                            {
+                                "spell": "lesser-restoration-phb"
+                            },
+                            {
+                                "spell": "moonbeam-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 3,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "conjure-animals-phb"
+                            },
+                            {
+                                "spell": "dispel-magic-phb"
+                            },
+                            {
+                                "spell": "water-breathing-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 4,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "charm-monster-xge"
+                            },
+                            {
+                                "spell": "freedom-of-movement-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 5,
+                        "slots": 2,
+                        "spells": [
+                            {
+                                "spell": "greater-restoration-phb"
+                            },
+                            {
+                                "spell": "mass-cure-wounds-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 6,
+                        "slots": 1,
+                        "spells": [
+                            {
+                                "spell": "conjure-fey-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "club-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "slashing",
+                "radiant"
+            ],
+            "conditions_inflicted": [
+                "charmed",
+                "paralyzed",
+                "restrained"
+            ],
+            "saves_forced": [
+                "con",
+                "str",
+                "wis"
+            ],
+            "actions": [
+                "shapechanger"
+            ],
+            "traits": [
+                "hold_breath"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_weapon",
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "aquan",
+                "common",
+                "druidic"
+            ],
+            "spellcasting": [
+                "druid"
+            ]
+        }
+    },
+    {
+        "id": "fhenimore-lr",
+        "kind": "monster",
+        "name": "Fhenimore",
+        "source": "LR",
+        "edition": "classic",
+        "tags": [
+            "Amphibious"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "human"
+            ]
+        },
+        "alignment": [
+            "lawful evil"
+        ],
+        "ac": [
+            {
+                "value": 13,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 75,
+            "formula": "10d8 + 30"
+        },
+        "speed": {
+            "walk": 30,
+            "swim": 30
+        },
+        "abilities": {
+            "str": 16,
+            "dex": 10,
+            "con": 16,
+            "int": 10,
+            "wis": 15,
+            "cha": 14
+        },
+        "skills": {
+            "perception": 5
+        },
+        "passive_perception": 15,
+        "defenses": {
+            "resist": {
+                "conditional": [
+                    {
+                        "types": [
+                            "bludgeoning",
+                            "piercing",
+                            "slashing"
+                        ],
+                        "note": "from nonmagical attacks"
+                    }
+                ]
+            }
+        },
+        "languages": [
+            "Common",
+            "Aquan"
+        ],
+        "cr": {
+            "cr": "5",
+            "xp": 1800,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "amphibious",
+                "name": "Amphibious",
+                "category": "traits",
+                "text": "Fhenimore can breathe air and water."
+            },
+            {
+                "id": "blood-frenzy",
+                "name": "Blood Frenzy",
+                "category": "traits",
+                "text": "Fhenimore has advantage on melee attack rolls against any creature that doesn't have all its hit points."
+            },
+            {
+                "id": "thunderous-touch",
+                "name": "Thunderous Touch",
+                "category": "actions",
+                "text": "Melee Spell Attack: +5 to hit, reach 5 ft., one creature. Hit: 27 (5d10) thunder damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "spell",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "5d10",
+                                "type": "thunder"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Fhenimore can attack once with her bite attack and once with Thunderous Touch."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 8 (1d10 + 3) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "1d10",
+                                "bonus": 3,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Innate Spellcasting",
+                "ability": "wis",
+                "dc": 13,
+                "attack": 5,
+                "text": "Fhenimore's spellcasting ability is Wisdom (spell save DC 13, +5 to hit with spell attacks). It can innately cast the following spells, requiring no material components:",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "command-phb"
+                            },
+                            {
+                                "spell": "create-or-destroy-water-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 3,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "control-water-phb"
+                            },
+                            {
+                                "spell": "darkness-phb"
+                            },
+                            {
+                                "spell": "water-breathing-phb"
+                            },
+                            {
+                                "spell": "water-walk-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "lightning-bolt-phb"
+                            },
+                            {
+                                "spell": "evards-black-tentacles-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "piercing",
+                "thunder",
+                "bludgeoning",
+                "lightning"
+            ],
+            "conditions_inflicted": [
+                "frightened",
+                "prone",
+                "restrained"
+            ],
+            "saves_forced": [
+                "cha",
+                "dex",
+                "str",
+                "wis"
+            ],
+            "movement": [
+                "swim"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "amphibious"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "aquan",
+                "common"
+            ],
+            "spellcasting": [
+                "innate"
+            ],
+            "environment": [
+                "coastal",
+                "underwater"
+            ]
+        }
+    },
+    {
+        "id": "gar-shatterkeel-lr",
+        "kind": "monster",
+        "name": "Gar Shatterkeel",
+        "source": "LR",
+        "edition": "classic",
+        "tags": [
+            "Amphibious",
+            "Legendary Resistances"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid"
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "ac": [
+            {
+                "value": 17,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 144,
+            "formula": "17d8 + 68"
+        },
+        "speed": {
+            "walk": 30,
+            "swim": 30
+        },
+        "abilities": {
+            "str": 16,
+            "dex": 16,
+            "con": 18,
+            "int": 12,
+            "wis": 20,
+            "cha": 14
+        },
+        "skills": {
+            "nature": 11,
+            "perception": 10,
+            "survival": 10
+        },
+        "passive_perception": 20,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "cold"
+                ]
+            }
+        },
+        "languages": [
+            "Aquan",
+            "Common"
+        ],
+        "cr": {
+            "cr": "15",
+            "xp": 13000,
+            "pb": 5
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "amphibious",
+                "name": "Amphibious",
+                "category": "traits",
+                "text": "Gar can breathe air and water."
+            },
+            {
+                "id": "legendary-resistance",
+                "name": "Legendary Resistance",
+                "category": "traits",
+                "text": "If Gar fails a saving throw, he can choose to succeed instead.",
+                "uses": {
+                    "max": 3,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "water-walk",
+                "name": "Water Walk",
+                "category": "traits",
+                "text": "Gar can stand and move on liquid surfaces as if they were solid ground."
+            },
+            {
+                "id": "watery-fall",
+                "name": "Watery Fall",
+                "category": "traits",
+                "text": "When Gar drops to 0 hit points, his body collapses into a pool of inky water that rapidly disperses. Except for Wave and his claw, anything he was wearing or carrying is left behind."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Gar makes two melee attacks, one with his claw and one with Wave."
+            },
+            {
+                "id": "claw",
+                "name": "Claw",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +8 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) bludgeoning damage, and the target is grappled (escape DC 16). Until the grapple ends, Gar can't attack other creatures with his claw.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 8,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 3,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "wave",
+                "name": "Wave",
+                "category": "actions",
+                "text": "Melee or Ranged Weapon Attack: +11 to hit, reach 5 ft. or range 20/60 ft., one target. Hit: 9 (1d6 + 6) piercing damage or 10 (1d8 + 6) piercing damage when used with two hands. If Gar scores a critical hit with this weapon, the target takes extra necrotic damage equal to half its hit point maximum.",
+                "action": {
+                    "range": "reach 5 ft. or range 20/60 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 11,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 6,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "1d8",
+                                "bonus": 6,
+                                "type": "piercing",
+                                "condition": "when used with two hands"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "umberlees-wake",
+                "name": "Umberlee's Wake",
+                "category": "actions",
+                "text": "Power ripples out in a 60-foot radius sphere from a point within range (150 ft.) as the will of Umberlee affects all in her watery embrace. Each creature in that area must succeed on a DC 18 Constitution saving throw. On a failed save, the creature can't use reactions, its speed is halved, and it can't make more than one attack on its turn. In addition, the creature can use either an action or a bonus action on its turn, but not both. These effects last for 1 minute. The creature can repeat the saving throw at the end of each of its turns, ending the effect on itself with a successful save. This only affects targets that are submerged or floating in water. Gar Shatterkeel and any undead serving him are immune to this effect.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "area": "60-foot radius",
+                    "save": {
+                        "ability": "con",
+                        "dc": 18,
+                        "on_success": "none"
+                    }
+                }
+            },
+            {
+                "id": "move",
+                "name": "Move",
+                "category": "legendary_actions",
+                "text": "Gar moves up to his speed without provoking opportunity attacks."
+            },
+            {
+                "id": "claw-2",
+                "name": "Claw",
+                "category": "legendary_actions",
+                "text": "Gar makes one attack with his claw."
+            },
+            {
+                "id": "wave-2",
+                "name": "Wave",
+                "category": "legendary_actions",
+                "text": "Gar makes one attack with Wave with advantage.",
+                "cost": 2
+            },
+            {
+                "id": "lair-actions",
+                "name": "Lair Actions",
+                "category": "lair_actions",
+                "text": "Gar can employ lair actions while he's within the coral mountain.\n\nOn initiative count 20 (losing initiative ties), Gar Shatterkeel takes a lair action to cause one of the following effects; Gar can't use the same effect two rounds in a row.\n\n- Gar may teleport anywhere within the coral mountain, bringing up to five willing creatures with him.\n- The coral in a 60-foot radius grows rapidly around creatures inside the coral mountain. Each creature must succeed on a DC 18 Strength saving throw or become restrained. Restrained creatures can take an action on their turn to make a DC 18 Strength (Athletics) or Dexterity (Acrobatics) check to free themselves. This effect lasts for 1 minute unless dispelled (it counts as a 6th level spell), and doesn't require Gar to maintain concentration. Gar Shatterkeel and any creatures he designates are immune to this effect.\n- Up to five corpses that Gar can see within 60 feet rise up as drowned blades and attack anyone Gar directs them to on his turn."
+            }
+        ],
+        "legendary_actions": {
+            "uses": 3
+        },
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "wis",
+                "dc": 18,
+                "attack": 10,
+                "text": "Gar is a 13th-level spellcaster. His spellcasting ability is Wisdom (spell save DC 18, +10 to hit with spell attacks). He has the following druid spells prepared:",
+                "footer": "*Circle spells don't count against spells prepared.",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "level": 0,
+                        "spells": [
+                            {
+                                "spell": "frostbite-xge"
+                            },
+                            {
+                                "spell": "mending-phb"
+                            },
+                            {
+                                "spell": "resistance-phb"
+                            },
+                            {
+                                "spell": "shape-water-xge"
+                            },
+                            {
+                                "spell": "thunderclap-xge",
+                                "note": "*"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 1,
+                        "slots": 4,
+                        "spells": [
+                            {
+                                "spell": "create-or-destroy-water-phb"
+                            },
+                            {
+                                "spell": "charm-person-phb"
+                            },
+                            {
+                                "spell": "cure-wounds-phb"
+                            },
+                            {
+                                "spell": "thunderwave-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 2,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "darkvision-phb"
+                            },
+                            {
+                                "spell": "hold-person-phb"
+                            },
+                            {
+                                "spell": "mirror-image-phb",
+                                "note": "*"
+                            },
+                            {
+                                "spell": "misty-step-phb",
+                                "note": "*"
+                            },
+                            {
+                                "spell": "pass-without-trace-phb"
+                            },
+                            {
+                                "spell": "protection-from-poison-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 3,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "conjure-animals-phb"
+                            },
+                            {
+                                "spell": "dispel-magic-phb"
+                            },
+                            {
+                                "spell": "tidal-wave-xge"
+                            },
+                            {
+                                "spell": "water-breathing-phb",
+                                "note": "*"
+                            },
+                            {
+                                "spell": "water-walk-phb",
+                                "note": "*"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 4,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "charm-monster-xge"
+                            },
+                            {
+                                "spell": "control-water-phb",
+                                "note": "*"
+                            },
+                            {
+                                "spell": "dominate-beast-phb"
+                            },
+                            {
+                                "spell": "freedom-of-movement-phb",
+                                "note": "*"
+                            },
+                            {
+                                "spell": "watery-sphere-xge"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 5,
+                        "slots": 2,
+                        "spells": [
+                            {
+                                "spell": "conjure-elemental-phb",
+                                "note": "*"
+                            },
+                            {
+                                "spell": "maelstrom-xge"
+                            },
+                            {
+                                "spell": "scrying-phb",
+                                "note": "*"
+                            },
+                            {
+                                "spell": "tree-stride-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 6,
+                        "slots": 1,
+                        "spells": [
+                            {
+                                "spell": "heal-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 7,
+                        "slots": 1,
+                        "spells": [
+                            {
+                                "spell": "plane-shift-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "wave-dmg",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "piercing",
+                "cold",
+                "thunder"
+            ],
+            "conditions_inflicted": [
+                "grappled",
+                "charmed",
+                "paralyzed",
+                "prone",
+                "restrained"
+            ],
+            "saves_forced": [
+                "con",
+                "cha",
+                "dex",
+                "str",
+                "wis"
+            ],
+            "movement": [
+                "swim"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "amphibious",
+                "legendary_resistances"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_weapon_attack",
+                "ranged_weapon_attack"
+            ],
+            "languages": [
+                "aquan",
+                "common"
+            ],
+            "spellcasting": [
+                "druid"
+            ]
+        }
+    },
+    {
+        "id": "shoalar-quanderil-lr",
+        "kind": "monster",
+        "name": "Shoalar Quanderil",
+        "source": "LR",
+        "edition": "classic",
+        "tags": [
+            "Amphibious"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "water genasi"
+            ]
+        },
+        "alignment": [
+            "lawful evil"
+        ],
+        "ac": [
+            {
+                "value": 11
+            },
+            {
+                "value": 14,
+                "condition": "with Mage Armor"
+            }
+        ],
+        "hp": {
+            "average": 75,
+            "formula": "10d8 + 30"
+        },
+        "speed": {
+            "walk": 30,
+            "swim": 30
+        },
+        "abilities": {
+            "str": 12,
+            "dex": 12,
+            "con": 16,
+            "int": 14,
+            "wis": 10,
+            "cha": 18
+        },
+        "skills": {
+            "arcana": 6,
+            "deception": 8,
+            "insight": 4,
+            "persuasion": 8
+        },
+        "passive_perception": 10,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "acid",
+                    "lightning",
+                    "thunder"
+                ]
+            }
+        },
+        "languages": [
+            "Aquan",
+            "Common"
+        ],
+        "cr": {
+            "cr": "4",
+            "xp": 1100,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "amphibious",
+                "name": "Amphibious",
+                "category": "traits",
+                "text": "Shoalar can breathe air and water."
+            },
+            {
+                "id": "dagger",
+                "name": "Dagger",
+                "category": "actions",
+                "text": "Melee or Ranged Weapon Attack: +4 to hit, reach 5 ft. or ranged 20/60 ft., one target. Hit: 3 (1d4 + 1) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 1,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Innate Spellcasting",
+                "ability": "con",
+                "dc": 14,
+                "attack": 6,
+                "text": "Shoalar's innate spellcasting ability is Constitution (spell save DC 14, +6 to hit with spell attacks). He can innately cast the following spells:",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "shape-water-xge"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "spells": [
+                            {
+                                "spell": "create-or-destroy-water-phb"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Spellcasting",
+                "ability": "cha",
+                "dc": 15,
+                "attack": 7,
+                "text": "Shoalar is a 7th-level spellcaster. His spellcasting ability is Charisma (spell save DC 15, +7 to hit with spell attacks). He knows the following sorcerer spells:",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "level": 0,
+                        "spells": [
+                            {
+                                "spell": "acid-splash-phb"
+                            },
+                            {
+                                "spell": "chill-touch-phb"
+                            },
+                            {
+                                "spell": "light-phb"
+                            },
+                            {
+                                "spell": "prestidigitation-phb"
+                            },
+                            {
+                                "spell": "ray-of-frost-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 1,
+                        "slots": 4,
+                        "spells": [
+                            {
+                                "spell": "disguise-self-phb"
+                            },
+                            {
+                                "spell": "mage-armor-phb"
+                            },
+                            {
+                                "spell": "shield-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 2,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "hold-person-phb"
+                            },
+                            {
+                                "spell": "misty-step-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 3,
+                        "slots": 2,
+                        "spells": [
+                            {
+                                "spell": "lightning-bolt-phb"
+                            },
+                            {
+                                "spell": "tidal-wave-xge"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 4,
+                        "slots": 1,
+                        "spells": [
+                            {
+                                "spell": "watery-sphere-xge"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "dagger-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "piercing",
+                "acid",
+                "bludgeoning",
+                "cold",
+                "lightning",
+                "necrotic"
+            ],
+            "saves_forced": [
+                "dex",
+                "str",
+                "wis"
+            ],
+            "movement": [
+                "swim"
+            ],
+            "traits": [
+                "amphibious"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack",
+                "ranged_weapon_attack",
+                "thrown_weapon"
+            ],
+            "languages": [
+                "aquan",
+                "common"
+            ],
+            "spellcasting": [
+                "sorcerer",
+                "innate"
+            ]
+        }
+    },
+    {
+        "id": "whymsee-lr",
+        "kind": "monster",
+        "name": "Whymsee",
+        "source": "LR",
+        "edition": "classic",
+        "tags": [
+            "Amphibious"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "human"
+            ]
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "ac": [
+            {
+                "value": 17,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 75,
+            "formula": "10d8 + 30"
+        },
+        "speed": {
+            "walk": 30,
+            "swim": 30
+        },
+        "abilities": {
+            "str": 12,
+            "dex": 10,
+            "con": 16,
+            "int": 10,
+            "wis": 15,
+            "cha": 14
+        },
+        "skills": {
+            "perception": 5
+        },
+        "passive_perception": 15,
+        "defenses": {
+            "resist": {
+                "conditional": [
+                    {
+                        "types": [
+                            "bludgeoning",
+                            "piercing",
+                            "slashing"
+                        ],
+                        "note": "from nonmagical attacks"
+                    }
+                ]
+            }
+        },
+        "languages": [
+            "Common",
+            "Aquan"
+        ],
+        "cr": {
+            "cr": "5",
+            "xp": 1800,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "amphibious",
+                "name": "Amphibious",
+                "category": "traits",
+                "text": "Whymsee can breathe air and water."
+            },
+            {
+                "id": "thunderous-touch",
+                "name": "Thunderous Touch",
+                "category": "actions",
+                "text": "Melee Spell Attack: +5 to hit, reach 5 ft., one creature. Hit: 27 (5d10) thunder damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "spell",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "5d10",
+                                "type": "thunder"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "ink-cloud",
+                "name": "Ink Cloud",
+                "category": "actions",
+                "text": "While underwater, Whymsee can expel an ink cloud in a 20-foot radius. The cloud spreads around corners, and that area is heavily obscured to creatures other than kraken priests or a kraken. Each creature other than a kraken priest or a kraken that ends its turn there must succeed on a DC 14 Constitution saving throw, taking 9 (2d8) poison damage on a failed save, or half as much damage on a successful one. A strong current disperses the cloud, which otherwise disappears at the end of Whymsee's next turn.",
+                "action": {
+                    "area": "20-foot radius",
+                    "save": {
+                        "ability": "con",
+                        "dc": 14,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "2d8",
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "shell-defense",
+                "name": "Shell Defense",
+                "category": "actions",
+                "text": "Whymsee withdraws into her shell. Until she emerges, she gains a +4 bonus to AC and has advantage on Strength and Constitution saving throws. While in her shell, Whymsee is prone, her speed is 0 and can't increase, she has disadvantage on Dexterity saving throws, it can't take reactions, and the only action she can take is a bonus action to emerge."
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Innate Spellcasting",
+                "ability": "wis",
+                "dc": 13,
+                "attack": 5,
+                "text": "Whymsee's spellcasting ability is Wisdom (spell save DC 13, +5 to hit with spell attacks). It can innately cast the following spells, requiring no material components:",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "command-phb"
+                            },
+                            {
+                                "spell": "create-or-destroy-water-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 3,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "control-water-phb"
+                            },
+                            {
+                                "spell": "darkness-phb"
+                            },
+                            {
+                                "spell": "water-breathing-phb"
+                            },
+                            {
+                                "spell": "water-walk-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "lightning-bolt-phb"
+                            },
+                            {
+                                "spell": "evards-black-tentacles-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "poison",
+                "thunder",
+                "bludgeoning",
+                "lightning"
+            ],
+            "conditions_inflicted": [
+                "frightened",
+                "prone",
+                "restrained"
+            ],
+            "saves_forced": [
+                "cha",
+                "dex",
+                "str",
+                "wis"
+            ],
+            "movement": [
+                "swim"
+            ],
+            "traits": [
+                "amphibious"
+            ],
+            "misc": [
+                "area_of_effect"
+            ],
+            "languages": [
+                "aquan",
+                "common"
+            ],
+            "spellcasting": [
+                "innate"
+            ],
+            "environment": [
+                "coastal",
+                "underwater"
+            ]
+        }
+    },
+    {
+        "id": "young-kraken-lr",
+        "kind": "monster",
+        "name": "Young Kraken",
+        "source": "LR",
+        "edition": "classic",
+        "tags": [
+            "Amphibious"
+        ],
+        "size": [
+            "huge"
+        ],
+        "creature_type": {
+            "type": "monstrosity",
+            "tags": [
+                "titan"
+            ]
+        },
+        "alignment": [
+            "chaotic evil"
+        ],
+        "ac": [
+            {
+                "value": 16,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 207,
+            "formula": "18d12 + 90"
+        },
+        "speed": {
+            "walk": 20,
+            "swim": 50
+        },
+        "abilities": {
+            "str": 24,
+            "dex": 11,
+            "con": 20,
+            "int": 19,
+            "wis": 15,
+            "cha": 17
+        },
+        "saves": {
+            "str": 12,
+            "dex": 5,
+            "con": 10,
+            "int": 9,
+            "wis": 7
+        },
+        "senses": {
+            "truesight": 120
+        },
+        "passive_perception": 14,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "lightning"
+                ],
+                "conditional": [
+                    {
+                        "types": [
+                            "bludgeoning",
+                            "piercing",
+                            "slashing"
+                        ],
+                        "note": "from nonmagical attacks"
+                    }
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "frightened",
+                    "paralyzed"
+                ]
+            }
+        },
+        "languages": [
+            "Abyssal",
+            "Celestial",
+            "Infernal",
+            "Primordial",
+            "telepathy 60 ft. but can't speak"
+        ],
+        "cr": {
+            "cr": "14",
+            "xp": 11500,
+            "pb": 5
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "amphibious",
+                "name": "Amphibious",
+                "category": "traits",
+                "text": "The kraken can breathe air and water."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The kraken makes two tentacle attacks, each of which it can replace with one use of Fling."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +12 to hit, reach 5 ft., one target. Hit: 20 (3d8 + 7) piercing damage.\n\nIf the target is a Medium or smaller creature grappled by the kraken, that creature is swallowed and the grapple ends. While swallowed, the creature is blinded and restrained, it has total cover against attacks and other effects outside the kraken, and it takes 21 (6d6) acid damage at the start of each of the kraken's turns. One Medium or two smaller creatures can be swallowed at the same time.\n\nIf the kraken takes 35 damage or more on a single turn from a creature inside it, the kraken must succeed on a DC 23 Constitution saving throw at the end of that turn or regurgitate all swallowed creatures, which fall prone in spaces within 10 feet of the kraken. If the kraken dies, a swallowed creature is no longer restrained by it and can escape from the corpse using 10 feet of movement, exiting prone.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 12,
+                        "damage": [
+                            {
+                                "dice": "3d8",
+                                "bonus": 7,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "6d6",
+                                "type": "acid"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "con",
+                        "dc": 23,
+                        "on_success": "none",
+                        "conditions": [
+                            "prone",
+                            "restrained"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "tentacle",
+                "name": "Tentacle",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +12 to hit, reach 20 ft., one target. Hit: 17 (3d6 + 7) bludgeoning damage, and the target is grappled (escape DC 20). Until the grapple ends, the target is restrained. The kraken has ten tentacles, each of which can grapple one target.",
+                "action": {
+                    "range": "reach 20 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 12,
+                        "damage": [
+                            {
+                                "dice": "3d6",
+                                "bonus": 7,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "fling",
+                "name": "Fling",
+                "category": "actions",
+                "text": "One Medium or smaller object held or creature grappled by the kraken is thrown up to 40 feet in a random direction and knocked prone. If a thrown target strikes a solid surface, the target takes 3 (1d6) bludgeoning damage for every 10 feet it was thrown. If the target is thrown at another creature, that creature must succeed on a DC 13 Dexterity saving throw or take the same damage and be knocked prone.",
+                "action": {
+                    "save": {
+                        "ability": "dex",
+                        "dc": 13,
+                        "on_success": "none",
+                        "conditions": [
+                            "prone"
+                        ]
+                    },
+                    "damage": [
+                        {
+                            "dice": "1d6",
+                            "type": "bludgeoning"
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "lightning-strike",
+                "name": "Lightning Strike",
+                "category": "actions",
+                "text": "The kraken magically create a bolt of lightning, which can strike a target the kraken can see within 90 feet of it. The target must make a DC 18 Dexterity saving throw, taking 22 (4d10) lightning damage on a failed save, or half as much damage on a successful one.",
+                "action": {
+                    "save": {
+                        "ability": "dex",
+                        "dc": 18,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "4d10",
+                                "type": "lightning"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "acid",
+                "bludgeoning",
+                "lightning",
+                "piercing"
+            ],
+            "conditions_inflicted": [
+                "blinded",
+                "grappled",
+                "prone",
+                "restrained"
+            ],
+            "saves_forced": [
+                "con",
+                "dex"
+            ],
+            "senses": [
+                "truesight"
+            ],
+            "movement": [
+                "swim"
+            ],
+            "actions": [
+                "multiattack",
+                "swallow",
+                "tentacles"
+            ],
+            "traits": [
+                "amphibious"
+            ],
+            "misc": [
+                "melee_weapon_attack",
+                "reach"
+            ],
+            "languages": [
+                "abyssal",
+                "celestial",
+                "cant_speak",
+                "infernal",
+                "primordial",
+                "telepathy"
+            ]
+        }
+    }
+]

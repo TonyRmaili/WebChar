@@ -1,0 +1,456 @@
+[
+    {
+        "id": "goblin-gang-member-kkw",
+        "kind": "monster",
+        "name": "Goblin Gang Member",
+        "source": "KKW",
+        "edition": "classic",
+        "size": [
+            "small"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "goblinoid"
+            ]
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "ac": [
+            {
+                "value": 14,
+                "from": [
+                    "leather armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 10,
+            "formula": "3d6"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 8,
+            "dex": 16,
+            "con": 10,
+            "int": 10,
+            "wis": 10,
+            "cha": 8
+        },
+        "skills": {
+            "stealth": 5
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 10,
+        "languages": [
+            "Common",
+            "Goblin"
+        ],
+        "cr": {
+            "cr": "1/4",
+            "xp": 50,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "nimble-escape",
+                "name": "Nimble Escape",
+                "category": "traits",
+                "text": "The goblin can take the Disengage or Hide action as a bonus action on each of its turns."
+            },
+            {
+                "id": "dagger",
+                "name": "Dagger",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 5 (1d4 + 3) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 3,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "light-crossbow",
+                "name": "Light Crossbow",
+                "category": "actions",
+                "text": "Ranged Weapon Attack: +5 to hit, range 80/320 ft., one target. Hit: 7 (1d8 + 3) piercing damage.",
+                "action": {
+                    "range": "range 80/320 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 3,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "items": [
+            {
+                "item": "dagger-phb",
+                "qty": 1,
+                "attacks": true
+            },
+            {
+                "item": "light-crossbow-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack",
+                "ranged_weapon",
+                "ranged_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "goblin"
+            ]
+        }
+    },
+    {
+        "id": "krenko-kkw",
+        "kind": "monster",
+        "name": "Krenko",
+        "source": "KKW",
+        "edition": "classic",
+        "size": [
+            "small"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "goblinoid"
+            ]
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "ac": [
+            {
+                "value": 17,
+                "from": [
+                    "chain shirt",
+                    "shield"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 21,
+            "formula": "6d6"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 10,
+            "dex": 14,
+            "con": 10,
+            "int": 10,
+            "wis": 8,
+            "cha": 14
+        },
+        "skills": {
+            "stealth": 6,
+            "deception": 4,
+            "persuasion": 4
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 9,
+        "languages": [
+            "Common",
+            "Goblin"
+        ],
+        "cr": {
+            "cr": "1",
+            "xp": 200,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "nimble-escape",
+                "name": "Nimble Escape",
+                "category": "traits",
+                "text": "Krenko can take the Disengage or Hide action as a bonus action on each of his turns."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Krenko makes two attacks with his scimitar."
+            },
+            {
+                "id": "scimitar",
+                "name": "Scimitar",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 5 (1d6 + 2) slashing damage plus 2 (1d4) poison damage..",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 2,
+                                "type": "slashing"
+                            },
+                            {
+                                "dice": "1d4",
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "light-crossbow",
+                "name": "Light Crossbow",
+                "category": "actions",
+                "text": "Ranged Weapon Attack: +4 to hit, range 80/320 ft., one target. Hit: 6 (1d8 + 2) piercing damage.",
+                "action": {
+                    "range": "range 80/320 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 2,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "redirect-attack",
+                "name": "Redirect Attack",
+                "category": "reactions",
+                "text": "When a creature Krenko can see targets him with an attack, Krenko chooses another goblin within 5 feet of him. The two goblins swap places, and the chosen goblin becomes the target instead."
+            }
+        ],
+        "items": [
+            {
+                "item": "light-crossbow-phb",
+                "qty": 1,
+                "attacks": true
+            },
+            {
+                "item": "scimitar-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "poison",
+                "piercing",
+                "slashing"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack",
+                "ranged_weapon",
+                "ranged_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "goblin"
+            ]
+        }
+    },
+    {
+        "id": "loading-rig-kkw",
+        "kind": "monster",
+        "name": "Loading Rig",
+        "source": "KKW",
+        "edition": "classic",
+        "tags": [
+            "Antimagic Susceptibility"
+        ],
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "construct"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 18,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 39,
+            "formula": "6d10 + 6"
+        },
+        "speed": {
+            "walk": 25
+        },
+        "abilities": {
+            "str": 18,
+            "dex": 11,
+            "con": 13,
+            "int": 1,
+            "wis": 3,
+            "cha": 1
+        },
+        "senses": {
+            "blindsight": 60,
+            "notes": "blindsight (blind beyond this radius)"
+        },
+        "passive_perception": 6,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "poison",
+                    "psychic"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "blinded",
+                    "charmed",
+                    "deafened",
+                    "exhaustion",
+                    "frightened",
+                    "paralyzed",
+                    "petrified",
+                    "poisoned"
+                ]
+            }
+        },
+        "cr": {
+            "cr": "1",
+            "xp": 200,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "antimagic-susceptibility",
+                "name": "Antimagic Susceptibility",
+                "category": "traits",
+                "text": "The rig is incapacitated while in the area of an Antimagic Field. If targeted by Dispel Magic, the rig must succeed on a Constitution saving throw against the caster's spell save DC or fall unconscious for 1 minute."
+            },
+            {
+                "id": "unstable",
+                "name": "Unstable",
+                "category": "traits",
+                "text": "If the rig takes damage, it must succeed on a DC 10 Constitution saving throw or be incapacitated with a speed of 0 until a creature activates it with a successful DC 10 Intelligence (Arcana) check made as an action.",
+                "action": {
+                    "save": {
+                        "ability": "con",
+                        "dc": 10,
+                        "on_success": "none",
+                        "conditions": [
+                            "incapacitated"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The armor makes two melee attacks."
+            },
+            {
+                "id": "slam",
+                "name": "Slam",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 7 (1d6 + 4) bludgeoning damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 4,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "flags": {
+            "npc": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning"
+            ],
+            "saves_forced": [
+                "con"
+            ],
+            "senses": [
+                "blindsight"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "antimagic_susceptibility"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ]
+        }
+    }
+]

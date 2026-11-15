@@ -1,0 +1,61 @@
+[
+    {
+        "id": "nikos-mace-uthftlh",
+        "kind": "item",
+        "name": "Niko's Mace",
+        "source": "UtHftLH",
+        "edition": "one",
+        "text": "This Mace has 6 charges and regains 1d6 expended charges daily at dawn. While holding the Mace, you can expend 1 of its charges to cast Summon Celestial (+9 to hit with spell attacks).",
+        "item_types": [
+            "melee_weapon"
+        ],
+        "rarity": "very rare",
+        "weight": 4,
+        "weapon": {
+            "category": "simple",
+            "kind": "melee",
+            "damage": {
+                "dice": "1d6",
+                "type": "bludgeoning"
+            },
+            "mastery": [
+                "sap"
+            ],
+            "bonus": {
+                "attack": 9,
+                "damage": 0
+            }
+        },
+        "attunement": {
+            "required": true,
+            "note": "by a spellcaster",
+            "requires": [
+                {
+                    "spellcasting": true
+                }
+            ]
+        },
+        "charges": {
+            "max": 6,
+            "reset": "dawn",
+            "regain": "1d6"
+        },
+        "grants": {
+            "spells": [
+                {
+                    "spell": "summon-celestial-xphb",
+                    "how": "item",
+                    "uses": {
+                        "resource": "charges",
+                        "cost": 1
+                    }
+                }
+            ]
+        },
+        "item_tags": [
+            "weapon",
+            "mace"
+        ],
+        "base_item": "mace-xphb"
+    }
+]

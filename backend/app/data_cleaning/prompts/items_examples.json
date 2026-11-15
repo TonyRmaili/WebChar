@@ -1,0 +1,186 @@
+[
+ {
+  "why": "A variant whose power is switched on with a Bonus Action: a toggle in bonus_actions. While it is on, the weapon deals extra fire damage on a hit: a rider (attack with bonus null) on the weapon's own melee attack. The light is data, so no grant for it.",
+  "input": {
+   "name": "Flame Tongue",
+   "kind": "item_variant",
+   "edition": "one",
+   "race": null,
+   "race_blocks": [],
+   "text": "While holding this magic weapon, you can take a Bonus Action and use a command word to cause flames to engulf the damage-dealing part of the weapon. These flames shed Bright Light in a 40-foot radius and Dim Light for an additional 40 feet. While the weapon is ablaze, it deals an extra 2d6 Fire damage on a hit. The flames last until you take a Bonus Action to issue the command again or until you drop, stow, or sheathe the weapon."
+  },
+  "output": {
+   "features": [
+    {
+     "name": "Flame Tongue",
+     "level": 1,
+     "category": "bonus_actions",
+     "uses": null,
+     "action": {
+      "range": null,
+      "area": null,
+      "attack": {
+       "kind": "melee",
+       "bonus": null,
+       "damage": [
+        {
+         "dice": {
+          "value": "2d6",
+          "steps": []
+         },
+         "bonus": null,
+         "type": "fire",
+         "condition": null,
+         "per_slot": null
+        }
+       ]
+      },
+      "save": null,
+      "damage": [],
+      "heal": null,
+      "heal_per_slot": null,
+      "temp_hp": null,
+      "temp_hp_per_slot": null
+     },
+     "toggle": {
+      "uses_charge": false,
+      "grants": null,
+      "modifiers": []
+     },
+     "modifiers": []
+    }
+   ],
+   "extra_grants": {
+    "skills": [],
+    "saves": [],
+    "tools": [],
+    "languages": [],
+    "weapons": [],
+    "armor": [],
+    "resist": [],
+    "immune": [],
+    "vulnerable": [],
+    "condition_immune": [],
+    "senses": [],
+    "speed": null
+   }
+  }
+ },
+ {
+  "why": "Everything here is data: the charges, how they come back, and the spell cast with them. The crumbling on the last charge is a rule in the text, not a feature. So: no features.",
+  "input": {
+   "name": "Wand of Fireballs",
+   "kind": "item",
+   "edition": "one",
+   "race": null,
+   "race_blocks": [],
+   "text": "This wand has 7 charges. While holding it, you can expend 1 or more of its charges to cast Fireball (save DC 15) from it. For 1 charge, you cast the level 3 version of the spell. You can increase the spell slot level by one for each additional charge you expend.\n\n**Regaining Charges.** The wand regains 1d6 + 1 expended charges daily at dawn. If you expend the wand's last charge, roll 1d20. On a 1, the wand crumbles into ashes and is destroyed."
+  },
+  "output": {
+   "features": [],
+   "extra_grants": {
+    "skills": [],
+    "saves": [],
+    "tools": [],
+    "languages": [],
+    "weapons": [],
+    "armor": [],
+    "resist": [],
+    "immune": [],
+    "vulnerable": [],
+    "condition_immune": [],
+    "senses": [],
+    "speed": null
+   }
+  }
+ },
+ {
+  "why": "A power with its own once-per-dawn limit (no charges): uses with reset dawn. It is used when you throw the javelin, an action: a save for everyone in the line (fixed DC 13, half on success) plus a ranged attack against the target with extra lightning damage. The javelin's own damage comes from its weapon data, so only the extra 4d6 is written.",
+  "input": {
+   "name": "Javelin of Lightning",
+   "kind": "item",
+   "edition": "classic",
+   "race": null,
+   "race_blocks": [],
+   "text": "This javelin is a magic weapon. When you hurl it and speak its command word, it transforms into a bolt of lightning, forming a line 5 feet wide that extends out from you to a target within 120 feet. Each creature in the line excluding you and the target must make a DC 13 Dexterity saving throw, taking 4d6 lightning damage on a failed save, and half as much damage on a successful one. The lightning bolt turns back into a javelin when it reaches the target. Make a ranged weapon attack against the target. On a hit, the target takes damage from the javelin plus 4d6 lightning damage.\n\nThe javelin's property can't be used again until the next dawn. In the meantime, the javelin can still be used as a magic weapon."
+  },
+  "output": {
+   "features": [
+    {
+     "name": "Javelin of Lightning",
+     "level": 1,
+     "category": "actions",
+     "uses": {
+      "max": {
+       "value": "1",
+       "steps": []
+      },
+      "reset": "dawn"
+     },
+     "action": {
+      "range": "120 ft.",
+      "area": "5-foot-wide line",
+      "attack": {
+       "kind": "ranged",
+       "bonus": null,
+       "damage": [
+        {
+         "dice": {
+          "value": "4d6",
+          "steps": []
+         },
+         "bonus": null,
+         "type": "lightning",
+         "condition": null,
+         "per_slot": null
+        }
+       ]
+      },
+      "save": {
+       "ability": "dex",
+       "dc": {
+        "value": "13",
+        "steps": []
+       },
+       "on_success": "half",
+       "damage": [
+        {
+         "dice": {
+          "value": "4d6",
+          "steps": []
+         },
+         "bonus": null,
+         "type": "lightning",
+         "condition": null,
+         "per_slot": null
+        }
+       ],
+       "conditions": []
+      },
+      "damage": [],
+      "heal": null,
+      "heal_per_slot": null,
+      "temp_hp": null,
+      "temp_hp_per_slot": null
+     },
+     "toggle": null,
+     "modifiers": []
+    }
+   ],
+   "extra_grants": {
+    "skills": [],
+    "saves": [],
+    "tools": [],
+    "languages": [],
+    "weapons": [],
+    "armor": [],
+    "resist": [],
+    "immune": [],
+    "vulnerable": [],
+    "condition_immune": [],
+    "senses": [],
+    "speed": null
+   }
+  }
+ }
+]

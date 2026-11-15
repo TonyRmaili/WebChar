@@ -1,0 +1,1545 @@
+[
+    {
+        "id": "abveku-aud",
+        "kind": "monster",
+        "name": "Abveku",
+        "source": "AUD",
+        "edition": "one",
+        "tags": [
+            "Magic Resistance"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "fiend",
+            "tags": [
+                "demon"
+            ]
+        },
+        "alignment": [
+            "chaotic evil"
+        ],
+        "ac": [
+            {
+                "value": 17
+            }
+        ],
+        "hp": {
+            "average": 209,
+            "formula": "22d8 + 110"
+        },
+        "speed": {
+            "walk": 40
+        },
+        "abilities": {
+            "str": 16,
+            "dex": 22,
+            "con": 20,
+            "int": 17,
+            "wis": 18,
+            "cha": 15
+        },
+        "saves": {
+            "str": 8,
+            "dex": 11,
+            "int": 8,
+            "wis": 9
+        },
+        "skills": {
+            "acrobatics": 11,
+            "perception": 9,
+            "stealth": 16
+        },
+        "senses": {
+            "truesight": 120
+        },
+        "passive_perception": 19,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "cold",
+                    "fire",
+                    "lightning"
+                ]
+            },
+            "immune": {
+                "types": [
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "Abyssal; telepathy 120 ft."
+        ],
+        "cr": {
+            "cr": "14",
+            "xp": 11500,
+            "pb": 5
+        },
+        "initiative": {
+            "bonus": 11
+        },
+        "features": [
+            {
+                "id": "demonic-restoration",
+                "name": "Demonic Restoration",
+                "category": "traits",
+                "text": "If the abveku dies outside the Abyss, its body dissolves into ichor, and it gains a new body instantly, reviving with all its Hit Points somewhere in the Abyss."
+            },
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The abveku has Advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The abveku makes four Scything Claw attacks and uses Mesmerizing Dance if available."
+            },
+            {
+                "id": "scything-claw",
+                "name": "Scything Claw",
+                "category": "actions",
+                "text": "Melee Attack Roll: +11, reach 10 ft. Hit: 19 (3d8 + 6) Slashing damage.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 11,
+                        "damage": [
+                            {
+                                "dice": "3d8",
+                                "bonus": 6,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "mesmerizing-dance",
+                "name": "Mesmerizing Dance",
+                "category": "actions",
+                "text": "Wisdom Saving Throw: DC 18, each creature within a 20-foot Emanation originating from the abveku. Failure: The target has the Paralyzed condition and repeats the save at the end of each of its turns, ending the effect on itself on a success. After 1 minute, it succeeds automatically.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "area": "20-foot emanation",
+                    "save": {
+                        "ability": "wis",
+                        "dc": 18,
+                        "on_success": "none",
+                        "conditions": [
+                            "paralyzed"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "shadow-stealth",
+                "name": "Shadow Stealth",
+                "category": "bonus_actions",
+                "text": "While in Dim Light or Darkness, the abveku takes the Hide action."
+            },
+            {
+                "id": "parry",
+                "name": "Parry",
+                "category": "reactions",
+                "text": "Trigger: The abveku is hit by a melee attack roll. Response: The abveku adds 5 to its AC against that attack, possibly causing it to miss."
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "slashing"
+            ],
+            "conditions_inflicted": [
+                "paralyzed"
+            ],
+            "saves_forced": [
+                "wis"
+            ],
+            "senses": [
+                "truesight"
+            ],
+            "actions": [
+                "multiattack",
+                "parry"
+            ],
+            "traits": [
+                "magic_resistance"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_attack",
+                "reach"
+            ],
+            "languages": [
+                "abyssal",
+                "telepathy"
+            ],
+            "environment": [
+                "abyss"
+            ]
+        }
+    },
+    {
+        "id": "arisen-sarrukh-aud",
+        "kind": "monster",
+        "name": "Arisen Sarrukh",
+        "source": "AUD",
+        "edition": "one",
+        "tags": [
+            "Legendary Resistances",
+            "Magic Resistance"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "undead"
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "ac": [
+            {
+                "value": 18
+            }
+        ],
+        "hp": {
+            "average": 273,
+            "formula": "26d8 + 156"
+        },
+        "speed": {
+            "walk": 40
+        },
+        "abilities": {
+            "str": 23,
+            "dex": 17,
+            "con": 22,
+            "int": 18,
+            "wis": 17,
+            "cha": 18
+        },
+        "saves": {
+            "str": 12,
+            "dex": 9,
+            "con": 12,
+            "wis": 9
+        },
+        "skills": {
+            "perception": 9,
+            "stealth": 12
+        },
+        "senses": {
+            "truesight": 120
+        },
+        "passive_perception": 19,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "fire",
+                    "necrotic",
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "frightened",
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "Common",
+            "Draconic; telepathy 120 ft."
+        ],
+        "cr": {
+            "cr": "18",
+            "xp": 20000,
+            "pb": 6
+        },
+        "initiative": {
+            "bonus": 9
+        },
+        "features": [
+            {
+                "id": "legendary-resistance",
+                "name": "Legendary Resistance",
+                "category": "traits",
+                "text": "If the sarrukh fails a saving throw, it can choose to succeed instead.",
+                "uses": {
+                    "max": 3,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The sarrukh has Advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The sarrukh makes three attacks, using Trident or Necrotic Spit in any combination."
+            },
+            {
+                "id": "trident",
+                "name": "Trident",
+                "category": "actions",
+                "text": "Melee Attack Roll: +12, reach 10 ft. Hit: 33 (6d8 + 6) Piercing damage.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 12,
+                        "damage": [
+                            {
+                                "dice": "6d8",
+                                "bonus": 6,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "necrotic-spit",
+                "name": "Necrotic Spit",
+                "category": "actions",
+                "text": "Ranged Attack Roll: +12, range 90 ft. Hit: 11 (2d10) Poison damage plus 22 (4d10) Necrotic damage.",
+                "action": {
+                    "range": "range 90 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 12,
+                        "damage": [
+                            {
+                                "dice": "2d10",
+                                "type": "poison"
+                            },
+                            {
+                                "dice": "4d10",
+                                "type": "necrotic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "venomous-teleport",
+                "name": "Venomous Teleport",
+                "category": "bonus_actions",
+                "text": "The sarrukh teleports up to 120 feet to an occupied space it can see, and each creature within 10 feet of the space the sarrukh leaves or arrives in (sarrukh's choice) is subjected to the following effect. Constitution Saving Throw: DC 20. Failure: 22 (4d10) Poison damage. Success: Half damage.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "save": {
+                        "ability": "con",
+                        "dc": 20,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "4d10",
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "shape-control",
+                "name": "Shape Control",
+                "category": "reactions",
+                "text": "Trigger: A creature the sarrukh can see shape-shifts. Response: The sarrukh chooses the resulting form from among the options available to the shape-shifting creature or prevents the creature from shape-shifting."
+            }
+        ],
+        "items": [
+            {
+                "item": "trident-xphb",
+                "qty": 1
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "poison",
+                "necrotic",
+                "piercing"
+            ],
+            "saves_forced": [
+                "con"
+            ],
+            "senses": [
+                "truesight"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "legendary_resistances",
+                "magic_resistance"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_attack",
+                "melee_weapon",
+                "ranged_attack",
+                "reach"
+            ],
+            "languages": [
+                "common",
+                "draconic",
+                "telepathy"
+            ],
+            "environment": [
+                "underdark"
+            ],
+            "treasure": [
+                "relics"
+            ]
+        }
+    },
+    {
+        "id": "rendelith-aud",
+        "kind": "monster",
+        "name": "Rendelith",
+        "source": "AUD",
+        "edition": "one",
+        "tags": [
+            "Magic Resistance",
+            "Siege Monster"
+        ],
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "fiend",
+            "tags": [
+                "demon"
+            ]
+        },
+        "alignment": [
+            "chaotic evil"
+        ],
+        "ac": [
+            {
+                "value": 20
+            }
+        ],
+        "hp": {
+            "average": 294,
+            "formula": "31d10 + 124"
+        },
+        "speed": {
+            "walk": 50
+        },
+        "abilities": {
+            "str": 25,
+            "dex": 12,
+            "con": 19,
+            "int": 20,
+            "wis": 17,
+            "cha": 18
+        },
+        "saves": {
+            "str": 13,
+            "dex": 7,
+            "con": 10,
+            "wis": 9
+        },
+        "passive_perception": 19,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "cold",
+                    "fire",
+                    "lightning"
+                ]
+            },
+            "immune": {
+                "types": [
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "Abyssal; telepathy 120 ft."
+        ],
+        "cr": {
+            "cr": "18",
+            "xp": 20000,
+            "pb": 6
+        },
+        "initiative": {
+            "bonus": 7
+        },
+        "features": [
+            {
+                "id": "demonic-restoration",
+                "name": "Demonic Restoration",
+                "category": "traits",
+                "text": "If the rendelith dies outside the Abyss, its body dissolves into gravel, and it gains a new body instantly, reviving with all its Hit Points somewhere in the Abyss."
+            },
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The rendelith has Advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "siege-monster",
+                "name": "Siege Monster",
+                "category": "traits",
+                "text": "The rendelith deals double damage to objects and structures."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The rendelith makes two Stone Hammer attacks and uses Spellcasting to cast Shatter (level 6 version)."
+            },
+            {
+                "id": "stone-hammer",
+                "name": "Stone Hammer",
+                "category": "actions",
+                "text": "Melee or Ranged Attack Roll: +13, reach 10 ft. or range 120 ft. Hit: 21 (4d6 + 7) Bludgeoning damage. If the target is a Large or smaller creature, it has the Prone condition. If the target already has the Prone condition, it instead takes an extra 7 (2d6) Bludgeoning damage. Hit or Miss: The hammer magically returns to the rendelith's hand immediately after a ranged attack.",
+                "action": {
+                    "range": "reach 10 ft. or range 120 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 13,
+                        "damage": [
+                            {
+                                "dice": "4d6",
+                                "bonus": 7,
+                                "type": "bludgeoning"
+                            },
+                            {
+                                "dice": "2d6",
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "quick-fortifications",
+                "name": "Quick Fortifications",
+                "category": "bonus_actions",
+                "text": "The rendelith uses Spellcasting to cast Move Earth or Wall of Stone.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "int",
+                "dc": 19,
+                "text": "The rendelith casts one of the following spells, requiring no Material components and using Intelligence as the spellcasting ability (spell save DC 19):",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "move-earth-xphb"
+                            },
+                            {
+                                "spell": "passwall-xphb"
+                            },
+                            {
+                                "spell": "shatter-xphb",
+                                "note": "(level 6 version)"
+                            },
+                            {
+                                "spell": "wall-of-stone-xphb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "thunder"
+            ],
+            "conditions_inflicted": [
+                "prone"
+            ],
+            "saves_forced": [
+                "con",
+                "dex"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "magic_resistance",
+                "siege_monster"
+            ],
+            "misc": [
+                "melee_attack",
+                "ranged_attack",
+                "reach"
+            ],
+            "languages": [
+                "abyssal",
+                "telepathy"
+            ],
+            "spellcasting": [
+                "other"
+            ],
+            "environment": [
+                "abyss"
+            ],
+            "treasure": [
+                "armaments"
+            ]
+        }
+    },
+    {
+        "id": "sarrukh-tyrant-aud",
+        "kind": "monster",
+        "name": "Sarrukh Tyrant",
+        "source": "AUD",
+        "edition": "one",
+        "tags": [
+            "Legendary Resistances",
+            "Magic Resistance"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "monstrosity"
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "ac": [
+            {
+                "value": 19
+            }
+        ],
+        "hp": {
+            "average": 256,
+            "formula": "27d8 + 135"
+        },
+        "speed": {
+            "walk": 40
+        },
+        "abilities": {
+            "str": 22,
+            "dex": 15,
+            "con": 20,
+            "int": 23,
+            "wis": 19,
+            "cha": 18
+        },
+        "saves": {
+            "dex": 8,
+            "int": 12,
+            "wis": 10,
+            "cha": 10
+        },
+        "skills": {
+            "arcana": 12,
+            "perception": 10
+        },
+        "senses": {
+            "truesight": 120
+        },
+        "passive_perception": 20,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "fire"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "frightened"
+                ]
+            }
+        },
+        "languages": [
+            "Common",
+            "Draconic; telepathy 120 ft."
+        ],
+        "cr": {
+            "cr": "17",
+            "xp": 18000,
+            "pb": 6
+        },
+        "initiative": {
+            "bonus": 8
+        },
+        "features": [
+            {
+                "id": "legendary-resistance",
+                "name": "Legendary Resistance",
+                "category": "traits",
+                "text": "If the sarrukh fails a saving throw, it can choose to succeed instead.",
+                "uses": {
+                    "max": 3,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The sarrukh has Advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The sarrukh makes two attacks, using Bite or Fearsome Fauchard in any combination."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Attack Roll: +12, reach 5 ft. Hit: 13 (2d6 + 6) Piercing damage plus 13 (3d8) Poison damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 12,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 6,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "3d8",
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "fearsome-fauchard",
+                "name": "Fearsome Fauchard",
+                "category": "actions",
+                "text": "Melee or Ranged Attack Roll: +12, reach 5 ft. or range 20/60 ft. Hit: 17 (2d10 + 6) Piercing damage. If the target is a creature, it has the Frightened condition. If the target already has the Frightened condition, it takes an additional 10 (3d6) Psychic damage. Hit or Miss: The fauchard magically returns to the sarrukh's hand immediately after a ranged attack.",
+                "action": {
+                    "range": "reach 5 ft. or range 20/60 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 12,
+                        "damage": [
+                            {
+                                "dice": "2d10",
+                                "bonus": 6,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "3d6",
+                                "type": "psychic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "shape-control",
+                "name": "Shape Control",
+                "category": "reactions",
+                "text": "Trigger: A creature the sarrukh can see shape-shifts. Response: The sarrukh chooses the resulting form from among the options available to the shape-shifting creature or prevents the creature from shape-shifting."
+            },
+            {
+                "id": "fearsome-glance",
+                "name": "Fearsome Glance",
+                "category": "legendary_actions",
+                "text": "Wisdom Saving Throw: DC 20, one creature the sarrukh can see within 30 feet. Failure: 18 (4d8) Psychic damage, and the target has the Frightened condition. Success: Half damage only.",
+                "action": {
+                    "save": {
+                        "ability": "wis",
+                        "dc": 20,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "4d8",
+                                "type": "psychic"
+                            }
+                        ],
+                        "conditions": [
+                            "frightened"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "slither",
+                "name": "Slither",
+                "category": "legendary_actions",
+                "text": "The sarrukh moves up to half its Speed without provoking Opportunity Attacks, and it makes one Bite attack."
+            },
+            {
+                "id": "twisted-transformation",
+                "name": "Twisted Transformation",
+                "category": "legendary_actions",
+                "text": "The sarrukh uses Spellcasting to cast Polymorph, and if the target fails its saving throw, the target also has the Stunned condition until the end of its next turn. The sarrukh can't take this action again until the start of its next turn."
+            }
+        ],
+        "legendary_actions": {
+            "uses": 3
+        },
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "int",
+                "dc": 20,
+                "text": "The sarrukh casts one of the following spells, requiring no Material components and using Intelligence as the spellcasting ability (spell save DC 20):",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "detect-magic-xphb"
+                            },
+                            {
+                                "spell": "invisibility-xphb"
+                            },
+                            {
+                                "spell": "polymorph-xphb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 2,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "fireball-xphb",
+                                "note": "(level 5 version)"
+                            },
+                            {
+                                "spell": "scrying-xphb"
+                            },
+                            {
+                                "spell": "teleport-xphb"
+                            },
+                            {
+                                "spell": "wall-of-force-xphb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "poison",
+                "piercing",
+                "psychic",
+                "fire",
+                "force"
+            ],
+            "conditions_inflicted": [
+                "frightened",
+                "stunned",
+                "invisible"
+            ],
+            "saves_forced": [
+                "wis",
+                "dex"
+            ],
+            "senses": [
+                "truesight"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "legendary_resistances",
+                "magic_resistance"
+            ],
+            "misc": [
+                "melee_attack",
+                "ranged_attack"
+            ],
+            "languages": [
+                "common",
+                "draconic",
+                "telepathy"
+            ],
+            "spellcasting": [
+                "other"
+            ],
+            "environment": [
+                "underdark"
+            ],
+            "treasure": [
+                "relics"
+            ]
+        }
+    },
+    {
+        "id": "szass-tam-aud",
+        "kind": "monster",
+        "name": "Szass Tam",
+        "source": "AUD",
+        "edition": "one",
+        "tags": [
+            "Legendary Resistances"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "undead",
+            "tags": [
+                "wizard"
+            ]
+        },
+        "alignment": [
+            "lawful evil"
+        ],
+        "ac": [
+            {
+                "value": 20
+            }
+        ],
+        "hp": {
+            "average": 397,
+            "formula": "53d8 + 159"
+        },
+        "speed": {
+            "walk": 30,
+            "fly": 30
+        },
+        "abilities": {
+            "str": 12,
+            "dex": 14,
+            "con": 16,
+            "int": 23,
+            "wis": 18,
+            "cha": 19
+        },
+        "saves": {
+            "dex": 9,
+            "con": 10,
+            "int": 13,
+            "wis": 11
+        },
+        "skills": {
+            "arcana": 20,
+            "insight": 11,
+            "investigation": 13,
+            "perception": 11
+        },
+        "senses": {
+            "truesight": 120
+        },
+        "passive_perception": 21,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "cold",
+                    "lightning"
+                ]
+            },
+            "immune": {
+                "types": [
+                    "necrotic",
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "frightened",
+                    "paralyzed",
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "all"
+        ],
+        "cr": {
+            "cr": "23",
+            "xp": 50000,
+            "pb": 7,
+            "xp_lair": 62000
+        },
+        "initiative": {
+            "bonus": 16
+        },
+        "features": [
+            {
+                "id": "legendary-resistance",
+                "name": "Legendary Resistance",
+                "category": "traits",
+                "text": "If Szass Tam fails a saving throw, he can choose to succeed instead.",
+                "uses": {
+                    "max": 4,
+                    "reset": "long",
+                    "max_in_lair": 5
+                }
+            },
+            {
+                "id": "spirit-jar",
+                "name": "Spirit Jar",
+                "category": "traits",
+                "text": "If destroyed, Szass Tam re-forms in 1d10 days if he has a spirit jar, reviving with all his Hit Points. The new body appears in an unoccupied space within Szass Tam's lair."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Szass Tam makes three attacks, using Paralyzing Touch or Soul-Draining Ray in any combination. He can replace two attacks with a use of Spellcasting to cast Finger of Death."
+            },
+            {
+                "id": "paralyzing-touch",
+                "name": "Paralyzing Touch",
+                "category": "actions",
+                "text": "Melee Attack Roll: +13, reach 5 ft. Hit: 16 (3d6 + 6) Cold damage, and the target has the Paralyzed condition until the start of Szass Tam's next turn.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 13,
+                        "damage": [
+                            {
+                                "dice": "3d6",
+                                "bonus": 6,
+                                "type": "cold"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "soul-draining-ray",
+                "name": "Soul-Draining Ray",
+                "category": "actions",
+                "text": "Ranged Attack Roll: +13, range 120 ft. Hit: 25 (3d12 + 6) Necrotic damage, and the target has Disadvantage on attack rolls and saving throws until the end of its next turn.",
+                "action": {
+                    "range": "range 120 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 13,
+                        "damage": [
+                            {
+                                "dice": "3d12",
+                                "bonus": 6,
+                                "type": "necrotic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "deathly-teleport",
+                "name": "Deathly Teleport",
+                "category": "legendary_actions",
+                "text": "Szass Tam teleports up to 60 feet to an unoccupied space he can see, and each creature within 10 feet of the space he left takes 13 (3d8) Necrotic damage.",
+                "action": {
+                    "damage": [
+                        {
+                            "dice": "3d8",
+                            "type": "necrotic"
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "disrupt-life",
+                "name": "Disrupt Life",
+                "category": "legendary_actions",
+                "text": "Constitution Saving Throw: DC 21, each creature that isn't an Undead in a 20-foot Emanation originating from Szass Tam. Failure: 14 (4d6) Necrotic damage and the creature's Hit Point maximum decreases by an amount equal to the damage taken. Success: Half damage only. Failure or Success: Szass Tam can't take this action again until the start of his next turn.",
+                "action": {
+                    "area": "20-foot emanation",
+                    "save": {
+                        "ability": "con",
+                        "dc": 21,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "4d6",
+                                "type": "necrotic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "regional-effects",
+                "name": "Regional Effects",
+                "category": "regional_effects",
+                "text": "Szass Tam extends his presence into the region he inhabits, creating the following effects:\n\n- **Soul Siphon.** Whenever a Humanoid dies within the lair, its soul is immediately consumed by Szass Tam. A Humanoid whose soul is consumed in this way can be brought back to life only by a True Resurrection or Wish spell.\n- **Whispers of Necromancy.** Whenever a creature within 1 mile of the lair casts a Necromancy spell, Szass Tam knows the spell and the identity of the creature that cast it.\n\nIf Szass Tam is destroyed or moves his lair elsewhere, these effects end immediately. These effects resume if Szass Tam gains a new body (see his Spirit Jar trait)."
+            }
+        ],
+        "legendary_actions": {
+            "uses": 3,
+            "uses_in_lair": 4
+        },
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "int",
+                "dc": 21,
+                "attack": 13,
+                "text": "Szass Tam casts one of the following spells, using Intelligence as the spellcasting ability (spell save DC 21, +13 to hit with spell attacks):",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "detect-magic-xphb"
+                            },
+                            {
+                                "spell": "detect-thoughts-xphb"
+                            },
+                            {
+                                "spell": "finger-of-death-xphb"
+                            },
+                            {
+                                "spell": "fireball-xphb",
+                                "note": "(level 8 version)"
+                            },
+                            {
+                                "spell": "lightning-bolt-xphb",
+                                "note": "(level 8 version)"
+                            },
+                            {
+                                "spell": "mage-hand-xphb"
+                            },
+                            {
+                                "spell": "prestidigitation-xphb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 2,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "animate-dead-xphb"
+                            },
+                            {
+                                "spell": "dimension-door-xphb"
+                            },
+                            {
+                                "spell": "plane-shift-xphb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "power-word-kill-xphb"
+                            },
+                            {
+                                "spell": "project-image-xphb"
+                            },
+                            {
+                                "spell": "scrying-xphb"
+                            },
+                            {
+                                "spell": "sending-xphb"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Protective Magic",
+                "ability": "int",
+                "text": "Szass Tam casts Counterspell or Shield in response to the spell's trigger, using the same spellcasting ability as Spellcasting.",
+                "display_as": "reactions",
+                "hidden": [
+                    "will"
+                ],
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "counterspell-xphb"
+                            },
+                            {
+                                "spell": "shield-xphb"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Withering Magic",
+                "ability": "int",
+                "text": "Szass Tam casts Blight or Dispel Magic, using the same spellcasting ability as Spellcasting.",
+                "display_as": "legendary_actions",
+                "hidden": [
+                    "legendary"
+                ],
+                "groups": [
+                    {
+                        "how": "legendary",
+                        "uses": 1,
+                        "spells": [
+                            {
+                                "spell": "blight-xphb"
+                            },
+                            {
+                                "spell": "dispel-magic-xphb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "component-pouch-xphb",
+                "qty": 1
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "cold",
+                "necrotic",
+                "fire",
+                "lightning",
+                "force",
+                "psychic"
+            ],
+            "conditions_inflicted": [
+                "paralyzed"
+            ],
+            "saves_forced": [
+                "con",
+                "dex",
+                "wis"
+            ],
+            "senses": [
+                "truesight"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "legendary_resistances"
+            ],
+            "misc": [
+                "area_of_effect",
+                "hit_point_reduction",
+                "melee_attack",
+                "ranged_attack"
+            ],
+            "languages": [
+                "all"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "xelnene-thrul-aud",
+        "kind": "monster",
+        "name": "Xelnene Thrul",
+        "source": "AUD",
+        "edition": "one",
+        "tags": [
+            "Magic Resistance"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "wizard"
+            ]
+        },
+        "alignment": [
+            "neutral good"
+        ],
+        "ac": [
+            {
+                "value": 17
+            }
+        ],
+        "hp": {
+            "average": 208,
+            "formula": "32d8 + 64"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 10,
+            "dex": 18,
+            "con": 15,
+            "int": 21,
+            "wis": 16,
+            "cha": 19
+        },
+        "saves": {
+            "con": 8,
+            "int": 11,
+            "wis": 9
+        },
+        "skills": {
+            "arcana": 17,
+            "history": 11,
+            "perception": 9,
+            "persuasion": 10
+        },
+        "passive_perception": 19,
+        "languages": [
+            "Celestial",
+            "Common",
+            "Draconic",
+            "Infernal"
+        ],
+        "cr": {
+            "cr": "17",
+            "xp": 18000,
+            "pb": 6
+        },
+        "initiative": {
+            "bonus": 10
+        },
+        "features": [
+            {
+                "id": "evocation-sculptor",
+                "name": "Evocation Sculptor",
+                "category": "traits",
+                "text": "When Thrul casts a spell that creates an area of effect, she can choose herself and up to five other creatures she can see, sculpting the spell's energy around them. A chosen creature automatically succeeds on its saving throw against the spell, and it takes no damage if it would normally take half damage on a successful save."
+            },
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "Thrul has Advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Thrul makes four Arcane Burst attacks. She can replace two attacks with a use of Spellcasting to cast Fireball (level 5 version) or Lightning Bolt (level 5 version)."
+            },
+            {
+                "id": "arcane-burst",
+                "name": "Arcane Burst",
+                "category": "actions",
+                "text": "Melee or Ranged Attack Roll: +11, reach 5 ft. or range 120 ft. Hit: 32 (5d10 + 5) Force damage.",
+                "action": {
+                    "range": "reach 5 ft. or range 120 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 11,
+                        "damage": [
+                            {
+                                "dice": "5d10",
+                                "bonus": 5,
+                                "type": "force"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "int",
+                "dc": 19,
+                "text": "Thrul casts one of the following spells, using Intelligence as the spellcasting ability (spell save DC 19):",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "alter-self-xphb"
+                            },
+                            {
+                                "spell": "detect-magic-xphb"
+                            },
+                            {
+                                "spell": "fireball-xphb",
+                                "note": "(level 5 version)"
+                            },
+                            {
+                                "spell": "illusory-script-xphb"
+                            },
+                            {
+                                "spell": "lightning-bolt-xphb",
+                                "note": "(level 5 version)"
+                            },
+                            {
+                                "spell": "mage-armor-xphb",
+                                "note": "(included in AC)"
+                            },
+                            {
+                                "spell": "mage-hand-xphb"
+                            },
+                            {
+                                "spell": "prestidigitation-xphb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 2,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "demiplane-xphb"
+                            },
+                            {
+                                "spell": "modify-memory-xphb"
+                            },
+                            {
+                                "spell": "scrying-xphb"
+                            },
+                            {
+                                "spell": "sending-xphb"
+                            },
+                            {
+                                "spell": "teleport-xphb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "chain-lightning-xphb"
+                            },
+                            {
+                                "spell": "sunburst-xphb"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Protective Magic (3/Day)",
+                "ability": "int",
+                "text": "Thrul casts Counterspell or Shield in response to the spell's trigger, using the same spellcasting ability as Spellcasting.",
+                "display_as": "reactions",
+                "hidden": [
+                    "daily"
+                ],
+                "groups": [
+                    {
+                        "uses": 3,
+                        "per": "day",
+                        "spells": [
+                            {
+                                "spell": "counterspell-xphb"
+                            },
+                            {
+                                "spell": "shield-xphb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "orb-xphb",
+                "qty": 1
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "force",
+                "bludgeoning",
+                "fire",
+                "lightning",
+                "piercing",
+                "radiant",
+                "slashing"
+            ],
+            "conditions_inflicted": [
+                "blinded",
+                "charmed",
+                "incapacitated"
+            ],
+            "saves_forced": [
+                "con",
+                "dex",
+                "wis"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "magic_resistance"
+            ],
+            "misc": [
+                "melee_attack",
+                "ranged_attack"
+            ],
+            "languages": [
+                "common",
+                "celestial",
+                "draconic",
+                "infernal"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    }
+]

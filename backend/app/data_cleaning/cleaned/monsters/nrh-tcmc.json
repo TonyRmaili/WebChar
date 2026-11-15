@@ -1,0 +1,323 @@
+[
+    {
+        "id": "mr-honeycutt-nrh-tcmc",
+        "kind": "monster",
+        "name": "Mr. Honeycutt",
+        "source": "NRH-TCMC",
+        "edition": "classic",
+        "tags": [
+            "Keen Senses",
+            "Shapechanger"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "human",
+                "shapechanger"
+            ]
+        },
+        "alignment": [
+            "lawful evil"
+        ],
+        "ac": [
+            {
+                "value": 12
+            }
+        ],
+        "hp": {
+            "average": 33,
+            "formula": "6d8 + 6"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 10,
+            "dex": 15,
+            "con": 12,
+            "int": 11,
+            "wis": 10,
+            "cha": 8
+        },
+        "skills": {
+            "perception": 2,
+            "stealth": 4
+        },
+        "senses": {
+            "darkvision": 60,
+            "notes": "darkvision (rat form only)"
+        },
+        "passive_perception": 12,
+        "defenses": {
+            "immune": {
+                "conditional": [
+                    {
+                        "types": [
+                            "bludgeoning",
+                            "piercing",
+                            "slashing"
+                        ],
+                        "note": "from nonmagical attacks that aren't silvered"
+                    }
+                ]
+            }
+        },
+        "languages": [
+            "Common (can't speak in rat form)"
+        ],
+        "cr": {
+            "cr": "2",
+            "xp": 450,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "shapechanger",
+                "name": "Shapechanger",
+                "category": "traits",
+                "text": "Mr. Honeycutt can use its action to polymorph into a rat-humanoid hybrid or into a giant rat, or back into its true form, which is humanoid. Its statistics, other than its size, are the same in each form. Any equipment it is wearing or carrying isn't transformed. It reverts to its true form if it dies."
+            },
+            {
+                "id": "keen-smell",
+                "name": "Keen Smell",
+                "category": "traits",
+                "text": "Mr. Honeycutt has advantage on Wisdom (Perception) checks that rely on smell."
+            },
+            {
+                "id": "multiattack-humanoid-or-hybrid-form-only",
+                "name": "Multiattack (Humanoid or Hybrid Form Only)",
+                "category": "actions",
+                "text": "Mr. Honeycutt makes two attacks, only one of which can be a bite."
+            },
+            {
+                "id": "bite-rat-or-hybrid-form-only",
+                "name": "Bite (Rat or Hybrid Form Only)",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 4 (1d4 + 2) piercing damage. If the target is a humanoid, it must succeed on a DC 11 Constitution saving throw or be cursed with wererat lycanthropy.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 2,
+                                "type": "piercing"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "con",
+                        "dc": 11,
+                        "on_success": "none"
+                    }
+                }
+            },
+            {
+                "id": "shortsword-humanoid-or-hybrid-form-only",
+                "name": "Shortsword (Humanoid or Hybrid Form Only)",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 5 (1d6 + 2) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 2,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "hand-crossbow-humanoid-or-hybrid-form-only",
+                "name": "Hand Crossbow (Humanoid or Hybrid Form Only)",
+                "category": "actions",
+                "text": "Ranged Weapon Attack: +4 to hit, range 30/120 ft., one target. Hit: 5 (1d6 + 2) piercing damage.",
+                "action": {
+                    "range": "range 30/120 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 2,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "items": [
+            {
+                "item": "hand-crossbow-phb",
+                "qty": 1,
+                "attacks": true
+            },
+            {
+                "item": "shortsword-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "variants": [
+            {
+                "id": "nonhuman-lycanthropes",
+                "name": "Nonhuman Lycanthropes",
+                "text": "The statistics presented in this section assume a base creature of human. However, you can also use the statistics to represent nonhuman lycanthropes, adding verisimilitude by allowing a nonhuman lycanthrope to retain one or more of its humanoid racial traits. For example, an elf werewolf might have the Fey Ancestry trait."
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "piercing"
+            ],
+            "saves_forced": [
+                "con"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "keen_senses",
+                "shapechanger"
+            ],
+            "misc": [
+                "curse",
+                "melee_weapon",
+                "melee_weapon_attack",
+                "ranged_weapon",
+                "ranged_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "cant_speak"
+            ],
+            "environment": [
+                "forest",
+                "urban"
+            ],
+            "groups": [
+                "Lycanthropes"
+            ]
+        }
+    },
+    {
+        "id": "slurmy-nrh-tcmc",
+        "kind": "monster",
+        "name": "Slurmy",
+        "source": "NRH-TCMC",
+        "edition": "classic",
+        "size": [
+            "small"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "goblinoid"
+            ]
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "ac": [
+            {
+                "value": 14,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 11,
+            "formula": "2d8 + 2"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 8,
+            "dex": 14,
+            "con": 12,
+            "int": 8,
+            "wis": 14,
+            "cha": 8
+        },
+        "skills": {
+            "perception": 4
+        },
+        "passive_perception": 12,
+        "languages": [
+            "Common"
+        ],
+        "cr": {
+            "cr": "1/8",
+            "xp": 25,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "nimble-escape",
+                "name": "Nimble Escape",
+                "category": "traits",
+                "text": "Slurmy can take the Disengage or Hide action as a bonus action on each of their turns."
+            },
+            {
+                "id": "claw",
+                "name": "Claw",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 5 (1d6 + 2) slashing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 2,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "flags": {
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "slashing"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "common"
+            ]
+        }
+    }
+]

@@ -1,0 +1,772 @@
+[
+    {
+        "id": "giant-zombie-constrictor-snake-aitfr-dn",
+        "kind": "monster",
+        "name": "Giant Zombie Constrictor Snake",
+        "source": "AitFR-DN",
+        "edition": "classic",
+        "tags": [
+            "Undead Fortitude"
+        ],
+        "size": [
+            "huge"
+        ],
+        "creature_type": {
+            "type": "undead"
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "ac": [
+            {
+                "value": 15,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 187,
+            "formula": "22d12 + 44"
+        },
+        "speed": {
+            "walk": 30,
+            "swim": 30,
+            "climb": 20
+        },
+        "abilities": {
+            "str": 19,
+            "dex": 16,
+            "con": 14,
+            "int": 1,
+            "wis": 15,
+            "cha": 4
+        },
+        "skills": {
+            "perception": 5,
+            "stealth": 6
+        },
+        "senses": {
+            "darkvision": 60,
+            "blindsight": 15
+        },
+        "passive_perception": 15,
+        "defenses": {
+            "vulnerable": {
+                "types": [
+                    "poison"
+                ]
+            }
+        },
+        "cr": {
+            "cr": "8",
+            "xp": 3900,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "sunlight-vulnerability",
+                "name": "Sunlight Vulnerability",
+                "category": "traits",
+                "text": "While in sunlight, the snake has disadvantage on attack rolls and on Wisdom (Perception) checks that rely on sight. When the snake begins its turn in sunlight, it immediately suffers 10 radiant damage.",
+                "action": {
+                    "damage": [
+                        {
+                            "bonus": 10,
+                            "type": "radiant"
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "undead-fortitude",
+                "name": "Undead Fortitude",
+                "category": "traits",
+                "text": "If damage reduces the snake to 0 hit points, it must make a Constitution saving throw with a DC of 5 + the damage taken, unless the damage is radiant or from a critical hit. On a success, the snake drops to 1 hit point instead."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The snake makes two attacks: one with its bite and one with a constrict attack."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +7 to hit, reach 10 ft., one target. Hit: 17 (3d8 + 4) piercing damage, and the target must make a DC 15 Constitution saving throw, taking 17 (5d6) poison damage on a failed save, or half as much damage on a successful one.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "3d8",
+                                "bonus": 4,
+                                "type": "piercing"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "con",
+                        "dc": 15,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "5d6",
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "constrict",
+                "name": "Constrict",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 17 (3d8 + 4) bludgeoning damage, and the target is grappled (escape DC 16). Until this grapple ends, the creature is restrained and the snake cannot constrict another target.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "3d8",
+                                "bonus": 4,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "poison",
+                "piercing"
+            ],
+            "conditions_inflicted": [
+                "grappled",
+                "restrained"
+            ],
+            "saves_forced": [
+                "con"
+            ],
+            "senses": [
+                "blindsight",
+                "darkvision"
+            ],
+            "movement": [
+                "swim",
+                "climb"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "undead_fortitude"
+            ],
+            "misc": [
+                "melee_weapon_attack",
+                "reach"
+            ]
+        }
+    },
+    {
+        "id": "hamish-hewland-aitfr-dn",
+        "kind": "monster",
+        "name": "Hamish Hewland",
+        "source": "AitFR-DN",
+        "edition": "classic",
+        "size": [
+            "huge"
+        ],
+        "creature_type": {
+            "type": "giant"
+        },
+        "alignment": [
+            "neutral good"
+        ],
+        "ac": [
+            {
+                "value": 13
+            }
+        ],
+        "hp": {
+            "average": 85,
+            "formula": "10d12 + 20"
+        },
+        "speed": {
+            "walk": 40
+        },
+        "abilities": {
+            "str": 23,
+            "dex": 11,
+            "con": 15,
+            "int": 10,
+            "wis": 14,
+            "cha": 10
+        },
+        "saves": {
+            "str": 9,
+            "wis": 5
+        },
+        "skills": {
+            "athletics": 9,
+            "history": 3,
+            "insight": 5,
+            "perception": 5
+        },
+        "passive_perception": 15,
+        "languages": [
+            "Common",
+            "Dwarvish",
+            "Giant"
+        ],
+        "cr": {
+            "cr": "5",
+            "xp": 1800,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Hamish makes two attacks with his axe or throws two rocks."
+            },
+            {
+                "id": "axe",
+                "name": "Axe",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +9 to hit, reach 5 ft., one target. Hit: 17 (2d10 + 6) slashing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 9,
+                        "damage": [
+                            {
+                                "dice": "2d10",
+                                "bonus": 6,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "rock",
+                "name": "Rock",
+                "category": "actions",
+                "text": "Ranged Weapon Attack: +9 to hit, range 60/240 ft., one target. Hit: 17 (2d10 + 6) bludgeoning damage.",
+                "action": {
+                    "range": "range 60/240 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 9,
+                        "damage": [
+                            {
+                                "dice": "2d10",
+                                "bonus": 6,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "parry",
+                "name": "Parry",
+                "category": "reactions",
+                "text": "Hamish adds 2 to his AC against one melee attack that would hit him. To do so, he must see the attacker and be wielding a melee weapon or a shield."
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "slashing"
+            ],
+            "actions": [
+                "multiattack",
+                "parry"
+            ],
+            "misc": [
+                "melee_weapon_attack",
+                "ranged_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "dwarvish",
+                "giant"
+            ]
+        }
+    },
+    {
+        "id": "kyrilla-accursed-gorgon-aitfr-dn",
+        "kind": "monster",
+        "name": "Kyrilla, Accursed Gorgon",
+        "source": "AitFR-DN",
+        "edition": "classic",
+        "tags": [
+            "Legendary Resistances",
+            "Sunlight Sensitivity"
+        ],
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "monstrosity"
+        },
+        "alignment": [
+            "lawful evil"
+        ],
+        "ac": [
+            {
+                "value": 15,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 127,
+            "formula": "15d10 + 45"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 11,
+            "dex": 16,
+            "con": 16,
+            "int": 14,
+            "wis": 14,
+            "cha": 15
+        },
+        "saves": {
+            "wis": 6,
+            "cha": 6
+        },
+        "skills": {
+            "deception": 6,
+            "insight": 6,
+            "perception": 6,
+            "stealth": 7
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 16,
+        "defenses": {
+            "resist": {
+                "conditional": [
+                    {
+                        "types": [
+                            "bludgeoning",
+                            "piercing",
+                            "slashing"
+                        ],
+                        "note": "from nonmagical attacks"
+                    }
+                ]
+            },
+            "immune": {
+                "types": [
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed"
+                ]
+            }
+        },
+        "languages": [
+            "Common",
+            "Draconic",
+            "Primordial"
+        ],
+        "cr": {
+            "cr": "10",
+            "xp": 5900,
+            "pb": 4
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "feed-on-pain",
+                "name": "Feed on Pain",
+                "category": "traits",
+                "text": "The first time she hits with a weapon attack on her turn, Kyrilla can deal an extra 16 (3d10) poison damage to the target and regains a number of hit points equal to half the damage dealt.",
+                "uses": {
+                    "max": 2,
+                    "reset": "long"
+                },
+                "action": {
+                    "attack": {
+                        "kind": "any",
+                        "damage": [
+                            {
+                                "dice": "3d10",
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "legendary-resistance",
+                "name": "Legendary Resistance",
+                "category": "traits",
+                "text": "If she fails a saving throw, Kyrilla can choose to succeed instead.",
+                "uses": {
+                    "max": 2,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "petrifying-gaze",
+                "name": "Petrifying Gaze",
+                "category": "traits",
+                "text": "When a creature that can see Kyrilla's eyes starts its turn within 30 feet of her, Kyrilla can force it to make a DC 14 Constitution saving throw if Kyrilla isn't incapacitated and can see the creature. If the saving throw fails by 5 or more, the creature is instantly petrified. Otherwise, a creature that fails the save begins to turn to stone and is restrained. The restrained creature must repeat the saving throw at the end of its next turn, becoming petrified on a failure or ending the effect on a success. The petrification lasts until the creature is freed by the Greater Restoration spell or other magic.\n\nUnless surprised, a creature can avert its eyes to avoid the saving throw at the start of its turn. If the creature does so, it can't see Kyrilla until the start of its next turn, when it can avert its eyes again. If the creature looks at Kyrilla in the meantime, it must immediately make the save.\n\nKyrilla's accursed gaze does not affect undead or constructs. If Kyrilla sees herself reflected on a polished surface within 30 feet of her and in an area of bright light, she is, due to her curse, affected by her own gaze.",
+                "action": {
+                    "save": {
+                        "ability": "con",
+                        "dc": 14,
+                        "on_success": "none",
+                        "conditions": [
+                            "incapacitated",
+                            "petrified",
+                            "restrained"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "sunlight-sensitivity",
+                "name": "Sunlight Sensitivity",
+                "category": "traits",
+                "text": "While in sunlight, Kyrilla has disadvantage on attack rolls and on Wisdom (Perception) checks that rely on sight."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Kyrilla makes one attack to constrict and two attacks with her claws, or she makes three attacks with her longbow."
+            },
+            {
+                "id": "claw",
+                "name": "Claw",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 13 (3d6 + 3) slashing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "3d6",
+                                "bonus": 3,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "constrict",
+                "name": "Constrict",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +4 to hit, reach 10 ft., one target. Hit: 10 (3d6) bludgeoning damage, and the target is grappled (escape DC 13) if it is a Large or smaller creature. Until this grapple ends, the target is restrained, and Kyrilla can't constrict another target.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "3d6",
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "longbow",
+                "name": "Longbow",
+                "category": "actions",
+                "text": "Ranged Weapon Attack: +7 to hit, range 150/600 ft., one target. Hit: 16 (3d8 + 3) piercing damage.",
+                "action": {
+                    "range": "range 150/600 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "3d8",
+                                "bonus": 3,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "summon-swarm-of-poisonous-snakes",
+                "name": "Summon Swarm of Poisonous Snakes",
+                "category": "actions",
+                "text": "Kyrilla conjures a swarm of poisonous snakes into an empty space within 10 feet of her. The swarm is under Kyrilla's control and acts on her turn, immediately after her in the initiative order.\n\nIt remains in existence for up to 1 hour. She can summon no more than three swarms per day. Kyrilla can banish any or all of her summoned swarms with a bonus action.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                }
+            },
+            {
+                "id": "claw-2",
+                "name": "Claw",
+                "category": "legendary_actions",
+                "text": "Kyrilla or a swarm of poisonous snakes makes a weapon attack."
+            },
+            {
+                "id": "detect",
+                "name": "Detect",
+                "category": "legendary_actions",
+                "text": "Kyrilla makes a Wisdom (Perception) check."
+            },
+            {
+                "id": "slither",
+                "name": "Slither",
+                "category": "legendary_actions",
+                "text": "Kyrilla moves up to her speed without provoking opportunity attacks."
+            },
+            {
+                "id": "lair-actions",
+                "name": "Lair Actions",
+                "category": "lair_actions",
+                "text": "When fighting inside her lair, Kyrilla can invoke the ambient magic there to take lair actions. On initiative count 20 (losing initiative ties), she takes a lair action to cause one of the following effects:\n\n- Kyrilla casts Moonbeam (no components required). While maintaining concentration on this effect, she can't take other lair actions.\n- Kyrilla casts Cloud of Daggers (no components required), except the daggers are flying snakes and the spell deals piercing damage. While maintaining concentration on this effect, she can't take other lair actions.\n- Pools of liquid within 60 feet of Kyrilla surge and froth, splashing and soaking any creature on the ground within 5 feet of such pools. Creatures that succeed on a DC 14 Dexterity saving throw avoid getting liquid in their eyes and mouths. Kyrilla can't use this lair action again until she has used a different one."
+            },
+            {
+                "id": "regional-effects",
+                "name": "Regional Effects",
+                "category": "regional_effects",
+                "text": "The region containing Kyrilla's lair is warped by her accursed nature and the meteoric stone around her, which together create the following effects:\n\n- Water sources within the lair are supernaturally fouled and poisonous. Creatures that drink these waters must make a DC 14 Constitution saving throw or be poisoned for 1 minute. Afflicted creatures can make a new saving throw at the end of each of their turns, ending the condition on a success.\n- Plants within 1 mile of the lair suffer from a calcifying mold that dries and hardens leaves, killing many otherwise hearty thistles and heather.\n- Fog lightly obscures the land within 3 miles of the lair."
+            }
+        ],
+        "legendary_actions": {
+            "uses": 3
+        },
+        "items": [
+            {
+                "item": "longbow-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "poison",
+                "piercing",
+                "slashing",
+                "radiant"
+            ],
+            "conditions_inflicted": [
+                "grappled",
+                "petrified",
+                "restrained",
+                "poisoned"
+            ],
+            "saves_forced": [
+                "con",
+                "dex"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "legendary_resistances",
+                "sunlight_sensitivity"
+            ],
+            "misc": [
+                "melee_weapon_attack",
+                "reach",
+                "ranged_weapon",
+                "ranged_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "draconic",
+                "primordial"
+            ]
+        }
+    },
+    {
+        "id": "skeletal-horror-aitfr-dn",
+        "kind": "monster",
+        "name": "Skeletal Horror",
+        "source": "AitFR-DN",
+        "edition": "classic",
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "undead"
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "ac": [
+            {
+                "value": 13
+            }
+        ],
+        "hp": {
+            "average": 150,
+            "formula": "20d10 + 40"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 16,
+            "dex": 14,
+            "con": 15,
+            "int": 6,
+            "wis": 10,
+            "cha": 5
+        },
+        "skills": {
+            "perception": 3
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 16,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "poison"
+                ]
+            },
+            "vulnerable": {
+                "types": [
+                    "bludgeoning"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "exhaustion",
+                    "poisoned"
+                ]
+            }
+        },
+        "cr": {
+            "cr": "6",
+            "xp": 2300,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The horror makes two attacks with its claws."
+            },
+            {
+                "id": "claw",
+                "name": "Claw",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 19 (3d10 + 3) slashing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "3d10",
+                                "bonus": 3,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "wave-of-bones",
+                "name": "Wave of Bones",
+                "category": "actions",
+                "text": "The horror crashes into foes like a wave before quickly reforming. Each creature within 10 feet of the horror must make a DC 15 Dexterity saving throw, taking 18 (4d8) bludgeoning damage on a failed save, or half as much damage on a successful one. A creature that fails this saving throw is also knocked prone.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "save": {
+                        "ability": "dex",
+                        "dc": 15,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "4d8",
+                                "type": "bludgeoning"
+                            }
+                        ],
+                        "conditions": [
+                            "prone"
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "slashing"
+            ],
+            "saves_forced": [
+                "dex"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_weapon_attack"
+            ]
+        }
+    }
+]

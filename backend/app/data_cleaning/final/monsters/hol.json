@@ -1,0 +1,544 @@
+[
+    {
+        "id": "apprentice-hol",
+        "kind": "monster",
+        "name": "Apprentice",
+        "source": "HoL",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid"
+        },
+        "ac": [
+            {
+                "value": 10
+            }
+        ],
+        "hp": {
+            "average": 7,
+            "formula": "2d8 - 2"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 8,
+            "dex": 10,
+            "con": 9,
+            "int": 13,
+            "wis": 11,
+            "cha": 12
+        },
+        "saves": {
+            "int": 3
+        },
+        "skills": {
+            "arcana": 3,
+            "history": 3
+        },
+        "passive_perception": 10,
+        "languages": [
+            "any one language (usually Common)"
+        ],
+        "pb_note": "+2",
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "quarterstaff",
+                "name": "Quarterstaff",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +1 to hit, reach 5 ft., one target. Hit: 2 (1d6 - 1) bludgeoning damage, or 3 (1d8 - 1) bludgeoning damage if used with two hands.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 1,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": -1,
+                                "type": "bludgeoning"
+                            },
+                            {
+                                "dice": "1d8",
+                                "bonus": -1,
+                                "type": "bludgeoning",
+                                "condition": "if used with two hands"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "burning-hands-1st-level-spell-2-day",
+                "name": "Burning Hands (1st-Level Spell; 2/Day)",
+                "category": "actions",
+                "text": "You shoot forth a 15-foot cone of fire. Each creature in that area must make a DC 11 Dexterity saving throw. A creature takes 10 (3d6) fire damage on a failed save, or half as much damage on a successful one The fire ignites any flammable objects in the area that aren't being worn or carried.",
+                "action": {
+                    "area": "15-foot cone",
+                    "save": {
+                        "ability": "dex",
+                        "dc": 11,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "3d6",
+                                "type": "fire"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "fire-bolt-cantrip",
+                "name": "Fire Bolt (Cantrip)",
+                "category": "actions",
+                "text": "Ranged Spell Attack: Ranged Spell Attack: +3 to hit, range 120 ft., one target. Hit: 5 (1d10) fire damage. A flammable object hit by this spell ignites if it isn't being worn or carried.",
+                "action": {
+                    "range": "range 120 ft.",
+                    "attack": {
+                        "kind": "spell",
+                        "bonus": 3,
+                        "damage": [
+                            {
+                                "dice": "1d10",
+                                "type": "fire"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "int",
+                "dc": 11,
+                "text": "You cast one of the following wizard spells (spell save DC 11), using Intelligence as the spellcasting ability:",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "minor-illusion-phb"
+                            },
+                            {
+                                "spell": "fire-bolt-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 2,
+                        "per": "day",
+                        "spells": [
+                            {
+                                "spell": "grease-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 2,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "burning-hands-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "quarterstaff-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "fire"
+            ],
+            "conditions_inflicted": [
+                "prone"
+            ],
+            "saves_forced": [
+                "dex"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_weapon",
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "any_choose"
+            ],
+            "spellcasting": [
+                "wizard"
+            ]
+        }
+    },
+    {
+        "id": "disciple-hol",
+        "kind": "monster",
+        "name": "Disciple",
+        "source": "HoL",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid"
+        },
+        "ac": [
+            {
+                "value": 11,
+                "from": [
+                    "shield"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 9,
+            "formula": "2d8"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 12,
+            "dex": 9,
+            "con": 10,
+            "int": 11,
+            "wis": 13,
+            "cha": 9
+        },
+        "saves": {
+            "wis": 3
+        },
+        "skills": {
+            "perception": 3,
+            "religion": 2
+        },
+        "passive_perception": 13,
+        "languages": [
+            "any one language (usually Common)"
+        ],
+        "pb_note": "+2",
+        "initiative": {
+            "bonus": -1
+        },
+        "features": [
+            {
+                "id": "mace",
+                "name": "Mace",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: 4 (1d6 + 1) bludgeoning damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 3,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 1,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "sacred-flame-cantrip",
+                "name": "Sacred Flame (Cantrip)",
+                "category": "actions",
+                "text": "You target one creature you can see within 60 feet of you. The target must succeed on a DC 11 Dexterity saving throw or take 4 (1d8) radiant damage. The target gains no benefit from cover for this saving throw.",
+                "action": {
+                    "save": {
+                        "ability": "dex",
+                        "dc": 11,
+                        "on_success": "none",
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "type": "radiant"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "wis",
+                "dc": 11,
+                "text": "You cast one the following cleric spells (spell save DC 11), using Wisdom as the spellcasting ability:",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "guidance-phb"
+                            },
+                            {
+                                "spell": "sacred-flame-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 2,
+                        "per": "day",
+                        "spells": [
+                            {
+                                "spell": "cure-wounds-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "mace-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "radiant"
+            ],
+            "saves_forced": [
+                "dex"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "any_choose"
+            ],
+            "spellcasting": [
+                "cleric"
+            ]
+        }
+    },
+    {
+        "id": "sneak-hol",
+        "kind": "monster",
+        "name": "Sneak",
+        "source": "HoL",
+        "edition": "classic",
+        "size": [
+            "small"
+        ],
+        "creature_type": {
+            "type": "humanoid"
+        },
+        "ac": [
+            {
+                "value": 13,
+                "from": [
+                    "shield"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 9,
+            "formula": "2d6 + 2"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 8,
+            "dex": 13,
+            "con": 12,
+            "int": 11,
+            "wis": 12,
+            "cha": 9
+        },
+        "saves": {
+            "dex": 3
+        },
+        "skills": {
+            "sleight_of_hand": 3,
+            "stealth": 3
+        },
+        "passive_perception": 11,
+        "languages": [
+            "any one language (usually Common)"
+        ],
+        "pb_note": "+2",
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "dagger",
+                "name": "Dagger",
+                "category": "actions",
+                "text": "Melee or Ranged Weapon Attack: +3 to hit, reach 5 ft. or range 20/60 ft., one target. Hit: 3 (1d4 + 1) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft. or range 20/60 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 3,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 1,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "disengage",
+                "name": "Disengage",
+                "category": "bonus_actions",
+                "text": "You take the Disengage action."
+            }
+        ],
+        "items": [
+            {
+                "item": "dagger-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack",
+                "ranged_weapon_attack",
+                "thrown_weapon"
+            ],
+            "languages": [
+                "common",
+                "any_choose"
+            ]
+        }
+    },
+    {
+        "id": "squire-hol",
+        "kind": "monster",
+        "name": "Squire",
+        "source": "HoL",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid"
+        },
+        "ac": [
+            {
+                "value": 12,
+                "from": [
+                    "shield"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 11,
+            "formula": "2d8 + 2"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 13,
+            "dex": 10,
+            "con": 12,
+            "int": 8,
+            "wis": 11,
+            "cha": 9
+        },
+        "saves": {
+            "str": 3
+        },
+        "skills": {
+            "athletics": 3
+        },
+        "passive_perception": 10,
+        "languages": [
+            "any one language (usually Common)"
+        ],
+        "pb_note": "+2",
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "longsword",
+                "name": "Longsword",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: 5 (1d8 + 1) slashing damage, or 6 (1d10 + 1) slashing damage if used with two hands.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 3,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 1,
+                                "type": "slashing"
+                            },
+                            {
+                                "dice": "1d10",
+                                "bonus": 1,
+                                "type": "slashing",
+                                "condition": "if used with two hands"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "shove",
+                "name": "Shove",
+                "category": "bonus_actions",
+                "text": "While wielding a shield, you try to shove one creature within 5 feet of you."
+            }
+        ],
+        "items": [
+            {
+                "item": "longsword-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "slashing"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "any_choose"
+            ]
+        }
+    }
+]

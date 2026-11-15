@@ -1,0 +1,213 @@
+[
+    {
+        "id": "pech-ditlcot",
+        "kind": "monster",
+        "name": "Pech",
+        "source": "DitLCoT",
+        "edition": "classic",
+        "tags": [
+            "Magic Resistance",
+            "Sunlight Sensitivity"
+        ],
+        "size": [
+            "small"
+        ],
+        "creature_type": {
+            "type": "elemental"
+        },
+        "alignment": [
+            "neutral good"
+        ],
+        "alignment_prefix": "typically",
+        "ac": [
+            {
+                "value": 17,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 82,
+            "formula": "11d6 + 44"
+        },
+        "speed": {
+            "walk": 30,
+            "burrow": 20
+        },
+        "abilities": {
+            "str": 19,
+            "dex": 11,
+            "con": 18,
+            "int": 11,
+            "wis": 14,
+            "cha": 10
+        },
+        "saves": {
+            "con": 6,
+            "wis": 4
+        },
+        "skills": {
+            "athletics": 6,
+            "perception": 4,
+            "survival": 4
+        },
+        "senses": {
+            "darkvision": 120,
+            "tremorsense": 120
+        },
+        "passive_perception": 14,
+        "defenses": {
+            "condition_immune": {
+                "types": [
+                    "petrified"
+                ]
+            }
+        },
+        "languages": [
+            "Common",
+            "Terran"
+        ],
+        "cr": {
+            "cr": "4",
+            "xp": 1100,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The pech has advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "sunlight-sensitivity",
+                "name": "Sunlight Sensitivity",
+                "category": "traits",
+                "text": "While in sunlight, the pech has disadvantage on attack rolls."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The pech makes two Fortified Pickaxe attacks. If it hits a Large or smaller creature with both attacks, the target must succeed on a DC 14 Strength saving throw or have the prone condition.",
+                "action": {
+                    "save": {
+                        "ability": "str",
+                        "dc": 14,
+                        "on_success": "none",
+                        "conditions": [
+                            "prone"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "fortified-pickaxe",
+                "name": "Fortified Pickaxe",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 11 (2d6 + 4) force damage. If the target is a Construct or an object, the attack is automatically a critical hit.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 4,
+                                "type": "force"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Communal Spellcasting (2/Day)",
+                "ability": "wis",
+                "dc": 12,
+                "text": "The pech works with three or more pechs to cast spells, requiring no spell components and using Wisdom as the spellcasting ability (save DC 12). If at least three other pechs are within 30 feet of it, the pech can cast Wall of Stone. If at least seven other pechs are within 30 feet of it, it can cast Greater Restoration. Each other pech involved in casting the spell can't have the incapacitated condition and must have at least one use of Communal Spellcasting remaining, which it must immediately expend to participate (no action required).",
+                "display_as": "actions",
+                "hidden": [
+                    "daily"
+                ],
+                "groups": [
+                    {
+                        "uses": 2,
+                        "per": "day",
+                        "spells": [
+                            {
+                                "spell": "wall-of-stone-phb"
+                            },
+                            {
+                                "spell": "greater-restoration-phb"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Stone Shape (3/Day)",
+                "ability": "wis",
+                "text": "The pech casts Stone Shape, requiring no spell components and using Wisdom as the spellcasting ability.",
+                "display_as": "actions",
+                "hidden": [
+                    "daily"
+                ],
+                "groups": [
+                    {
+                        "uses": 3,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "stone-shape-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "force"
+            ],
+            "conditions_inflicted": [
+                "prone"
+            ],
+            "saves_forced": [
+                "str",
+                "dex"
+            ],
+            "senses": [
+                "superior_darkvision",
+                "tremorsense"
+            ],
+            "movement": [
+                "burrow"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "magic_resistance",
+                "sunlight_sensitivity"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "terran"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    }
+]

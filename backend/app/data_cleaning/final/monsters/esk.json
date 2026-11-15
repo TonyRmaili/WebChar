@@ -1,0 +1,479 @@
+[
+    {
+        "id": "expert-esk",
+        "kind": "monster",
+        "name": "Expert",
+        "source": "ESK",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid"
+        },
+        "ac": [
+            {
+                "value": 14,
+                "from": [
+                    "studded leather"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 11,
+            "formula": "2d8 + 2"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 10,
+            "dex": 15,
+            "con": 12,
+            "int": 13,
+            "wis": 10,
+            "cha": 14
+        },
+        "saves": {
+            "dex": 4
+        },
+        "skills": {
+            "acrobatics": 4,
+            "performance": 4,
+            "persuasion": 4,
+            "sleight_of_hand": 4,
+            "stealth": 4
+        },
+        "passive_perception": 10,
+        "languages": [
+            "Common",
+            "plus one of your choice"
+        ],
+        "level": 1,
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "helpful",
+                "name": "Helpful",
+                "category": "traits",
+                "text": "The expert can take the Help action as a bonus action."
+            },
+            {
+                "id": "tools",
+                "name": "Tools",
+                "category": "traits",
+                "text": "The expert has thieves' tools and a musical instrument."
+            },
+            {
+                "id": "shortsword",
+                "name": "Shortsword",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 5 (1d6 + 2) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 2,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "dagger",
+                "name": "Dagger",
+                "category": "actions",
+                "text": "Melee or Ranged Weapon Attack: +4 to hit, reach 5 ft. or range 20/60 ft., one target. Hit: 4 (1d4 + 2) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft. or range 20/60 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 2,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "shortbow",
+                "name": "Shortbow",
+                "category": "actions",
+                "text": "Ranged Weapon Attack: +4 to hit, range 80/320 ft., one target. Hit: 5 (1d6 + 2) piercing damage.",
+                "action": {
+                    "range": "range 80/320 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 2,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "items": [
+            {
+                "item": "dagger-phb",
+                "qty": 1,
+                "attacks": true
+            },
+            {
+                "item": "shortbow-phb",
+                "qty": 1,
+                "attacks": true
+            },
+            {
+                "item": "shortsword-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack",
+                "ranged_weapon",
+                "ranged_weapon_attack",
+                "thrown_weapon"
+            ],
+            "languages": [
+                "common"
+            ]
+        }
+    },
+    {
+        "id": "spellcaster-esk",
+        "kind": "monster",
+        "name": "Spellcaster",
+        "source": "ESK",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid"
+        },
+        "ac": [
+            {
+                "value": 12,
+                "from": [
+                    "leather armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 9,
+            "formula": "2d8"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 10,
+            "dex": 12,
+            "con": 10,
+            "int": 15,
+            "wis": 14,
+            "cha": 13
+        },
+        "saves": {
+            "wis": 4
+        },
+        "skills": {
+            "arcana": 4,
+            "investigation": 4,
+            "religion": 4
+        },
+        "passive_perception": 12,
+        "languages": [
+            "Common",
+            "plus one of your choice"
+        ],
+        "level": 1,
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "magical-role",
+                "name": "Magical Role",
+                "category": "traits",
+                "text": "Choose a role for the spellcaster: healer or mage. Your choice determines which Spellcasting trait to use below."
+            },
+            {
+                "id": "quarterstaff",
+                "name": "Quarterstaff",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +2 to hit, reach 5 ft., one target. Hit: 3 (1d6) bludgeoning damage, or 4 (1d8) bludgeoning damage if used with two hands.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 2,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "type": "bludgeoning"
+                            },
+                            {
+                                "dice": "1d8",
+                                "type": "bludgeoning",
+                                "condition": "if used with two hands"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting (Healer)",
+                "ability": "wis",
+                "dc": 12,
+                "attack": 4,
+                "text": "The spellcaster's spellcasting ability is Wisdom (spell save DC 12, +4 to hit with spell attacks). The spellcaster has following cleric spells prepared:",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "level": 0,
+                        "spells": [
+                            {
+                                "spell": "guidance-phb"
+                            },
+                            {
+                                "spell": "sacred-flame-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 1,
+                        "slots": 2,
+                        "spells": [
+                            {
+                                "spell": "cure-wounds-phb"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Spellcasting (Mage)",
+                "ability": "int",
+                "dc": 12,
+                "attack": 4,
+                "text": "The spellcaster's spellcasting ability is Intelligence (spell save DC 12, +4 to hit with spell attacks). The spellcaster has following wizard spells prepared:",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "level": 0,
+                        "spells": [
+                            {
+                                "spell": "fire-bolt-phb"
+                            },
+                            {
+                                "spell": "light-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 1,
+                        "slots": 2,
+                        "spells": [
+                            {
+                                "spell": "sleep-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "quarterstaff-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "fire",
+                "radiant"
+            ],
+            "saves_forced": [
+                "dex"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "common"
+            ],
+            "spellcasting": [
+                "cleric",
+                "wizard"
+            ]
+        }
+    },
+    {
+        "id": "warrior-esk",
+        "kind": "monster",
+        "name": "Warrior",
+        "source": "ESK",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid"
+        },
+        "ac": [
+            {
+                "value": 16,
+                "from": [
+                    "chain shirt",
+                    "shield"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 13,
+            "formula": "2d8 + 4"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 15,
+            "dex": 13,
+            "con": 14,
+            "int": 10,
+            "wis": 12,
+            "cha": 10
+        },
+        "saves": {
+            "con": 4
+        },
+        "skills": {
+            "athletics": 4,
+            "perception": 3,
+            "survival": 3
+        },
+        "passive_perception": 13,
+        "languages": [
+            "Common",
+            "plus one of your choice"
+        ],
+        "level": 1,
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "martial-role",
+                "name": "Martial Role",
+                "category": "traits",
+                "text": "The warrior has one of the following traits of your choice:\n\n- **Attacker.** The warrior gains a +2 bonus to attack rolls.\n- **Defender.** The warrior gains the Protection reaction below."
+            },
+            {
+                "id": "longsword",
+                "name": "Longsword",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 6 (1d8 + 2) slashing damage, or 7 (1d10 + 2) slashing damage if used with two hands.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 2,
+                                "type": "slashing"
+                            },
+                            {
+                                "dice": "1d10",
+                                "bonus": 2,
+                                "type": "slashing",
+                                "condition": "if used with two hands"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "longbow",
+                "name": "Longbow",
+                "category": "actions",
+                "text": "Ranged Weapon Attack: +3 to hit, range 150/600 ft., one target. Hit: 5 (1d8 + 1) piercing damage.",
+                "action": {
+                    "range": "range 150/600 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 3,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 1,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "protection-defender-only",
+                "name": "Protection (Defender Only)",
+                "category": "reactions",
+                "text": "The warrior imposes disadvantage on the attack roll of a creature within 5 feet of it whose target isn't the warrior. The warrior must be able to see the attacker."
+            }
+        ],
+        "items": [
+            {
+                "item": "longbow-phb",
+                "qty": 1,
+                "attacks": true
+            },
+            {
+                "item": "longsword-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing",
+                "slashing"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack",
+                "ranged_weapon",
+                "ranged_weapon_attack"
+            ],
+            "languages": [
+                "common"
+            ]
+        }
+    }
+]

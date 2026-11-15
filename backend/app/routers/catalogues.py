@@ -31,6 +31,10 @@ def _load_or_empty(path: str) -> list:
         return []
 
 
+    
+    
+
+
 #---------------------- Classes -----------------------
 @router.get("/classes")
 def get_classes():

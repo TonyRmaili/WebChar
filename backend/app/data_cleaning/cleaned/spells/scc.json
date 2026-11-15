@@ -1,0 +1,249 @@
+[
+    {
+        "id": "borrowed-knowledge-scc",
+        "kind": "spell",
+        "name": "Borrowed Knowledge",
+        "source": "SCC",
+        "edition": "classic",
+        "text": "You draw on knowledge from spirits of the past. Choose one skill in which you lack proficiency. For the spell's duration, you have proficiency in the chosen skill. The spell ends early if you cast it again.",
+        "level": 2,
+        "school": "divination",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "self"
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": {
+                "text": "a book worth at least 25 gp",
+                "cost": {
+                    "gp": 25
+                },
+                "consumed": false
+            }
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "hour",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "bard-phb",
+            "cleric-phb",
+            "warlock-phb",
+            "wizard-phb",
+            "bard-xphb",
+            "cleric-xphb",
+            "warlock-xphb",
+            "wizard-xphb"
+        ]
+    },
+    {
+        "id": "kinetic-jaunt-scc",
+        "kind": "spell",
+        "name": "Kinetic Jaunt",
+        "source": "SCC",
+        "edition": "classic",
+        "text": "You magically empower your movement with dance-like steps, giving yourself the following benefits for the duration.\n\n- Your walking speed increases by 10 feet.\n- You don't provoke opportunity attacks.\n- You can move through the space of another creature, and it doesn't count as difficult terrain. If you end your turn in another creature's space, you are shunted to the last unoccupied space you occupied, and you take 1d8 force damage.",
+        "level": 2,
+        "school": "transmutation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "bonus_action"
+            }
+        ],
+        "range": {
+            "type": "self"
+        },
+        "components": {
+            "v": false,
+            "s": true
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "minute",
+                "concentration": true
+            }
+        ],
+        "classes": [
+            "bard-phb",
+            "sorcerer-phb",
+            "wizard-phb",
+            "artificer-tce",
+            "bard-xphb",
+            "sorcerer-xphb",
+            "wizard-xphb",
+            "artificer-efa"
+        ],
+        "filters": {
+            "damage": [
+                "force"
+            ]
+        }
+    },
+    {
+        "id": "silvery-barbs-scc",
+        "kind": "spell",
+        "name": "Silvery Barbs",
+        "source": "SCC",
+        "edition": "classic",
+        "text": "You magically distract the triggering creature and turn its momentary uncertainty into encouragement for another creature. The triggering creature must reroll the d20 and use the lower roll.\n\nYou can then choose a different creature you can see within range (you can choose yourself). The chosen creature has advantage on the next attack roll, ability check, or saving throw it makes within 1 minute. A creature can be empowered by only one use of this spell at a time.",
+        "level": 1,
+        "school": "enchantment",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "reaction",
+                "trigger": "which you take when a creature you can see within 60 feet of yourself succeeds on an attack roll, an ability check, or a saving throw"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 60
+        },
+        "components": {
+            "v": true,
+            "s": false
+        },
+        "duration": [
+            {
+                "type": "instant",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "bard-phb",
+            "sorcerer-phb",
+            "wizard-phb",
+            "bard-xphb",
+            "sorcerer-xphb",
+            "wizard-xphb"
+        ],
+        "filters": {
+            "area": [
+                "single_target"
+            ],
+            "tags": [
+                "grants_advantage",
+                "requires_sight"
+            ]
+        }
+    },
+    {
+        "id": "vortex-warp-scc",
+        "kind": "spell",
+        "name": "Vortex Warp",
+        "source": "SCC",
+        "edition": "classic",
+        "text": "You magically twist space around another creature you can see within range. The target must succeed on a Constitution saving throw (the target can choose to fail), or the target is teleported to an unoccupied space of your choice that you can see within range. The chosen space must be on a surface or in a liquid that can support the target without the target having to squeeze.\n\n**At Higher Levels.** When you cast this spell using a spell slot of 3rd level or higher, the range of the spell increases by 30 feet for each slot level above 2nd.",
+        "level": 2,
+        "school": "conjuration",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 90
+        },
+        "components": {
+            "v": true,
+            "s": true
+        },
+        "duration": [
+            {
+                "type": "instant",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "sorcerer-phb",
+            "wizard-phb",
+            "artificer-tce",
+            "sorcerer-xphb",
+            "wizard-xphb",
+            "artificer-efa"
+        ],
+        "filters": {
+            "saves": [
+                "con"
+            ],
+            "tags": [
+                "requires_sight",
+                "teleportation"
+            ]
+        }
+    },
+    {
+        "id": "wither-and-bloom-scc",
+        "kind": "spell",
+        "name": "Wither and Bloom",
+        "source": "SCC",
+        "edition": "classic",
+        "reprinted_as": [
+            "wither-and-bloom-au"
+        ],
+        "text": "You invoke both death and life upon a 10-foot-radius sphere centered on a point within range. Each creature of your choice in that area must make a Constitution saving throw, taking 2d6 necrotic damage on a failed save, or half as much damage on a successful one. Nonmagical vegetation in that area withers.\n\nIn addition, one creature of your choice in that area can spend and roll one of its unspent Hit Dice and regain a number of hit points equal to the roll plus your spellcasting ability modifier.\n\n**At Higher Levels.** When you cast this spell using a spell slot of 3rd level or higher, the damage increases by 1d6 for each slot above the 2nd, and the number of Hit Dice that can be spent and added to the healing roll increases by one for each slot above 2nd.",
+        "level": 2,
+        "school": "necromancy",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 60
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "a withered vine twisted into a loop"
+        },
+        "duration": [
+            {
+                "type": "instant",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "druid-phb",
+            "sorcerer-phb",
+            "wizard-phb",
+            "druid-xphb",
+            "sorcerer-xphb",
+            "wizard-xphb"
+        ],
+        "filters": {
+            "damage": [
+                "necrotic"
+            ],
+            "saves": [
+                "con"
+            ],
+            "tags": [
+                "healing"
+            ]
+        }
+    }
+]

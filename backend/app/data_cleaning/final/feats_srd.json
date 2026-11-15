@@ -1,0 +1,918 @@
+[
+    {
+        "id": "ability-score-improvement-xphb",
+        "kind": "feat",
+        "name": "Ability Score Improvement",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Ability Score Improvement"
+        },
+        "text": "Increase one ability score of your choice by 2, or increase two ability scores of your choice by 1. This feat can't increase an ability score above 20.\n\n**Repeatable.** You can take this feat more than once.",
+        "category": "general",
+        "repeatable": true,
+        "prerequisites": [
+            {
+                "level": 4
+            }
+        ],
+        "choices": [
+            {
+                "type": "ability",
+                "id": "ability",
+                "label": "Ability Scores",
+                "from": [
+                    "str",
+                    "dex",
+                    "con",
+                    "int",
+                    "wis",
+                    "cha"
+                ],
+                "bonus_sets": [
+                    [
+                        2
+                    ],
+                    [
+                        1,
+                        1
+                    ]
+                ]
+            }
+        ],
+        "features": [],
+        "grants": {}
+    },
+    {
+        "id": "alert-xphb",
+        "kind": "feat",
+        "name": "Alert",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Alert"
+        },
+        "text": "You gain the following benefits.\n\n**Initiative Proficiency.** When you roll Initiative, you can add your Proficiency Bonus to the roll.\n\n**Initiative Swap.** Immediately after you roll Initiative, you can swap your Initiative with the Initiative of one willing ally in the same combat. You can't make this swap if you or the ally has the Incapacitated condition.",
+        "category": "origin",
+        "repeatable": false,
+        "features": [
+            {
+                "id": "initiative-proficiency",
+                "name": "Initiative Proficiency",
+                "level": 1,
+                "category": "traits",
+                "modifiers": [
+                    {
+                        "target": "initiative",
+                        "add": "pb"
+                    }
+                ]
+            },
+            {
+                "id": "initiative-swap",
+                "name": "Initiative Swap",
+                "level": 1,
+                "category": "traits"
+            }
+        ],
+        "grants": {}
+    },
+    {
+        "id": "archery-xphb",
+        "kind": "feat",
+        "name": "Archery",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Archery"
+        },
+        "text": "You gain a +2 bonus to attack rolls you make with Ranged weapons.",
+        "category": "fighting_style",
+        "repeatable": false,
+        "prerequisites": [
+            {
+                "feature": [
+                    "fighting_style"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "archery",
+                "name": "Archery",
+                "level": 1,
+                "category": "traits"
+            }
+        ],
+        "grants": {}
+    },
+    {
+        "id": "boon-of-combat-prowess-xphb",
+        "kind": "feat",
+        "name": "Boon of Combat Prowess",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Boon of Combat Prowess"
+        },
+        "text": "You gain the following benefits.\n\n**Peerless Aim.** When you miss with an attack roll, you can hit instead. Once you use this benefit, you can't use it again until the start of your next turn.",
+        "category": "epic_boon",
+        "repeatable": false,
+        "prerequisites": [
+            {
+                "level": 19
+            }
+        ],
+        "choices": [
+            {
+                "type": "ability",
+                "id": "ability",
+                "label": "Ability Scores",
+                "from": [
+                    "str",
+                    "dex",
+                    "con",
+                    "int",
+                    "wis",
+                    "cha"
+                ],
+                "bonus_sets": [
+                    [
+                        1
+                    ]
+                ],
+                "max": 30
+            }
+        ],
+        "features": [
+            {
+                "id": "peerless-aim",
+                "name": "Peerless Aim",
+                "level": 1,
+                "category": "traits"
+            }
+        ],
+        "grants": {}
+    },
+    {
+        "id": "boon-of-dimensional-travel-xphb",
+        "kind": "feat",
+        "name": "Boon of Dimensional Travel",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Boon of Dimensional Travel"
+        },
+        "text": "You gain the following benefits.\n\n**Blink Steps.** Immediately after you take the Attack action or the Magic action, you can teleport up to 30 feet to an unoccupied space you can see.",
+        "category": "epic_boon",
+        "repeatable": false,
+        "prerequisites": [
+            {
+                "level": 19
+            }
+        ],
+        "choices": [
+            {
+                "type": "ability",
+                "id": "ability",
+                "label": "Ability Scores",
+                "from": [
+                    "str",
+                    "dex",
+                    "con",
+                    "int",
+                    "wis",
+                    "cha"
+                ],
+                "bonus_sets": [
+                    [
+                        1
+                    ]
+                ],
+                "max": 30
+            }
+        ],
+        "features": [
+            {
+                "id": "blink-steps",
+                "name": "Blink Steps",
+                "level": 1,
+                "category": "traits",
+                "action": {
+                    "range": "30 feet"
+                }
+            }
+        ],
+        "grants": {}
+    },
+    {
+        "id": "boon-of-fate-xphb",
+        "kind": "feat",
+        "name": "Boon of Fate",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Boon of Fate"
+        },
+        "text": "You gain the following benefits.\n\n**Improve Fate.** When you or another creature within 60 feet of you succeeds on or fails a D20 Test, you can roll 2d4 and apply the total rolled as a bonus or penalty to the d20 roll. Once you use this benefit, you can't use it again until you roll Initiative or finish a Short or Long Rest.",
+        "category": "epic_boon",
+        "repeatable": false,
+        "prerequisites": [
+            {
+                "level": 19
+            }
+        ],
+        "choices": [
+            {
+                "type": "ability",
+                "id": "ability",
+                "label": "Ability Scores",
+                "from": [
+                    "str",
+                    "dex",
+                    "con",
+                    "int",
+                    "wis",
+                    "cha"
+                ],
+                "bonus_sets": [
+                    [
+                        1
+                    ]
+                ],
+                "max": 30
+            }
+        ],
+        "features": [
+            {
+                "id": "improve-fate",
+                "name": "Improve Fate",
+                "level": 1,
+                "category": "traits",
+                "uses": {
+                    "max": 1,
+                    "reset": "short"
+                }
+            }
+        ],
+        "grants": {}
+    },
+    {
+        "id": "boon-of-irresistible-offense-xphb",
+        "kind": "feat",
+        "name": "Boon of Irresistible Offense",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Boon of Irresistible Offense"
+        },
+        "text": "You gain the following benefits.\n\n**Overcome Defenses.** The Bludgeoning, Piercing, and Slashing damage you deal always ignores Resistance.\n\n**Overwhelming Strike.** When you roll a 20 on the d20 for an attack roll, you can deal extra damage to the target equal to the ability score increased by this feat. The extra damage's type is the same as the attack's type.",
+        "category": "epic_boon",
+        "repeatable": false,
+        "prerequisites": [
+            {
+                "level": 19
+            }
+        ],
+        "choices": [
+            {
+                "type": "ability",
+                "id": "ability",
+                "label": "Ability Scores",
+                "from": [
+                    "str",
+                    "dex"
+                ],
+                "bonus_sets": [
+                    [
+                        1
+                    ]
+                ],
+                "max": 30
+            }
+        ],
+        "features": [
+            {
+                "id": "overcome-defenses",
+                "name": "Overcome Defenses",
+                "level": 1,
+                "category": "traits"
+            },
+            {
+                "id": "overwhelming-strike",
+                "name": "Overwhelming Strike",
+                "level": 1,
+                "category": "traits"
+            }
+        ],
+        "grants": {}
+    },
+    {
+        "id": "boon-of-spell-recall-xphb",
+        "kind": "feat",
+        "name": "Boon of Spell Recall",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Boon of Spell Recall"
+        },
+        "text": "You gain the following benefits.\n\n**Free Casting.** Whenever you cast a spell with a level 1-4 spell slot, roll 1d4. If the number you roll is the same as the slot's level, the slot isn't expended.",
+        "category": "epic_boon",
+        "repeatable": false,
+        "prerequisites": [
+            {
+                "level": 19,
+                "spellcasting": true
+            }
+        ],
+        "choices": [
+            {
+                "type": "ability",
+                "id": "ability",
+                "label": "Ability Scores",
+                "from": [
+                    "int",
+                    "wis",
+                    "cha"
+                ],
+                "bonus_sets": [
+                    [
+                        1
+                    ]
+                ],
+                "max": 30
+            }
+        ],
+        "features": [
+            {
+                "id": "free-casting",
+                "name": "Free Casting",
+                "level": 1,
+                "category": "traits"
+            }
+        ],
+        "grants": {}
+    },
+    {
+        "id": "boon-of-the-night-spirit-xphb",
+        "kind": "feat",
+        "name": "Boon of the Night Spirit",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Boon of the Night Spirit"
+        },
+        "text": "You gain the following benefits.\n\n**Merge with Shadows.** While within Dim Light or Darkness, you can give yourself the Invisible condition as a Bonus Action. The condition ends on you immediately after you take an action, a Bonus Action, or a Reaction.\n\n**Shadowy Form.** While within Dim Light or Darkness, you have Resistance to all damage except Psychic and Radiant.",
+        "category": "epic_boon",
+        "repeatable": false,
+        "prerequisites": [
+            {
+                "level": 19
+            }
+        ],
+        "choices": [
+            {
+                "type": "ability",
+                "id": "ability",
+                "label": "Ability Scores",
+                "from": [
+                    "str",
+                    "dex",
+                    "con",
+                    "int",
+                    "wis",
+                    "cha"
+                ],
+                "bonus_sets": [
+                    [
+                        1
+                    ]
+                ],
+                "max": 30
+            }
+        ],
+        "features": [
+            {
+                "id": "merge-with-shadows",
+                "name": "Merge with Shadows",
+                "level": 1,
+                "category": "bonus_actions"
+            },
+            {
+                "id": "shadowy-form",
+                "name": "Shadowy Form",
+                "level": 1,
+                "category": "traits"
+            }
+        ],
+        "grants": {}
+    },
+    {
+        "id": "boon-of-truesight-xphb",
+        "kind": "feat",
+        "name": "Boon of Truesight",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Boon of Truesight"
+        },
+        "text": "You gain the following benefits.\n\n**Truesight.** You have Truesight with a range of 60 feet.",
+        "category": "epic_boon",
+        "repeatable": false,
+        "prerequisites": [
+            {
+                "level": 19
+            }
+        ],
+        "grants": {
+            "senses": {
+                "truesight": 60
+            }
+        },
+        "choices": [
+            {
+                "type": "ability",
+                "id": "ability",
+                "label": "Ability Scores",
+                "from": [
+                    "str",
+                    "dex",
+                    "con",
+                    "int",
+                    "wis",
+                    "cha"
+                ],
+                "bonus_sets": [
+                    [
+                        1
+                    ]
+                ],
+                "max": 30
+            }
+        ],
+        "features": []
+    },
+    {
+        "id": "defense-xphb",
+        "kind": "feat",
+        "name": "Defense",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Defense"
+        },
+        "text": "While you're wearing Light, Medium, or Heavy armor, you gain a +1 bonus to Armor Class.",
+        "category": "fighting_style",
+        "repeatable": false,
+        "prerequisites": [
+            {
+                "feature": [
+                    "fighting_style"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "defense",
+                "name": "Defense",
+                "level": 1,
+                "category": "traits",
+                "modifiers": [
+                    {
+                        "target": "ac",
+                        "add": 1,
+                        "requires": [
+                            "armor"
+                        ]
+                    }
+                ]
+            }
+        ],
+        "grants": {}
+    },
+    {
+        "id": "grappler-phb",
+        "kind": "feat",
+        "name": "Grappler",
+        "source": "PHB",
+        "edition": "classic",
+        "srd": {
+            "5.1": "Grappler"
+        },
+        "reprinted_as": [
+            "grappler-xphb"
+        ],
+        "text": "You've developed the skills necessary to hold your own in close-quarters grappling. You gain the following benefits:\n\n- You have advantage on attack rolls against a creature you are grappling.\n- You can use your action to try to pin a creature grappled by you. To do so, make another grapple check. If you succeed, you and the creature are both restrained until the grapple ends.",
+        "repeatable": false,
+        "prerequisites": [
+            {
+                "ability": [
+                    {
+                        "str": 13
+                    }
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "grappler",
+                "name": "Grappler",
+                "level": 1,
+                "category": "actions"
+            }
+        ],
+        "grants": {}
+    },
+    {
+        "id": "grappler-xphb",
+        "kind": "feat",
+        "name": "Grappler",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Grappler"
+        },
+        "text": "You gain the following benefits.\n\n**Punch and Grab.** When you hit a creature with an Unarmed Strike as part of the Attack action on your turn, you can use both the Damage and the Grapple option. You can use this benefit only once per turn.\n\n**Attack Advantage.** You have Advantage on attack rolls against a creature Grappled by you.\n\n**Fast Wrestler.** You don't have to spend extra movement to move a creature Grappled by you if the creature is your size or smaller.",
+        "category": "general",
+        "repeatable": false,
+        "prerequisites": [
+            {
+                "level": 4,
+                "ability": [
+                    {
+                        "str": 13
+                    }
+                ]
+            },
+            {
+                "level": 4,
+                "ability": [
+                    {
+                        "dex": 13
+                    }
+                ]
+            }
+        ],
+        "choices": [
+            {
+                "type": "ability",
+                "id": "ability",
+                "label": "Ability Scores",
+                "from": [
+                    "str",
+                    "dex"
+                ],
+                "bonus_sets": [
+                    [
+                        1
+                    ]
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "punch-and-grab",
+                "name": "Punch and Grab",
+                "level": 1,
+                "category": "traits"
+            },
+            {
+                "id": "attack-advantage",
+                "name": "Attack Advantage",
+                "level": 1,
+                "category": "traits"
+            },
+            {
+                "id": "fast-wrestler",
+                "name": "Fast Wrestler",
+                "level": 1,
+                "category": "traits"
+            }
+        ],
+        "grants": {}
+    },
+    {
+        "id": "great-weapon-fighting-xphb",
+        "kind": "feat",
+        "name": "Great Weapon Fighting",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Great Weapon Fighting"
+        },
+        "text": "When you roll damage for an attack you make with a Melee weapon that you are holding with two hands, you can treat any 1 or 2 on a damage die as a 3. The weapon must have the Two-Handed or Versatile property to gain this benefit.",
+        "category": "fighting_style",
+        "repeatable": false,
+        "prerequisites": [
+            {
+                "feature": [
+                    "fighting_style"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "great-weapon-fighting",
+                "name": "Great Weapon Fighting",
+                "level": 1,
+                "category": "traits"
+            }
+        ],
+        "grants": {}
+    },
+    {
+        "id": "magic-initiate-xphb",
+        "kind": "feat",
+        "name": "Magic Initiate",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Magic Initiate"
+        },
+        "text": "You gain the following benefits.\n\n**Spell Change.** Whenever you gain a new level, you can replace one of the spells you chose for this feat with a different spell of the same level from the chosen spell list.\n\n**Repeatable.** You can take this feat more than once, but you must choose a different spell list each time.",
+        "category": "origin",
+        "repeatable": true,
+        "options": [
+            {
+                "id": "magic-initiate-cleric-xphb",
+                "kind": "feat_option",
+                "name": "Cleric",
+                "source": "XPHB",
+                "edition": "one",
+                "srd": {
+                    "5.2": "Cleric"
+                },
+                "text": "**Two Cantrips.** You learn two cantrips of your choice from the Cleric spell list. Intelligence, Wisdom, or Charisma is your spellcasting ability for this feat's spells (choose when you select this feat).\n\n**Level 1 Spell.** Choose a level 1 spell from the Cleric spell list. You always have that spell prepared. You can cast it once without a spell slot, and you regain the ability to cast it in that way when you finish a Long Rest. You can also cast the spell using any spell slots you have.",
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "spell_ability",
+                        "label": "Spellcasting Ability",
+                        "grant": "spell_ability",
+                        "count": 1,
+                        "from": [
+                            "int",
+                            "wis",
+                            "cha"
+                        ]
+                    },
+                    {
+                        "type": "pool",
+                        "id": "spells",
+                        "label": "Spells",
+                        "grant": "spells",
+                        "count": 2,
+                        "from": {
+                            "spell_level": 0,
+                            "class": "cleric"
+                        },
+                        "how": "known",
+                        "at": 1,
+                        "ability": {
+                            "choice": "spell_ability"
+                        }
+                    },
+                    {
+                        "type": "pool",
+                        "id": "spells_2",
+                        "label": "Spells",
+                        "grant": "spells",
+                        "count": 1,
+                        "from": {
+                            "spell_level": 1,
+                            "class": "cleric"
+                        },
+                        "how": "prepared",
+                        "at": 1,
+                        "uses": {
+                            "max": 1,
+                            "reset": "long"
+                        },
+                        "ability": {
+                            "choice": "spell_ability"
+                        }
+                    }
+                ],
+                "features": [],
+                "grants": {}
+            },
+            {
+                "id": "magic-initiate-druid-xphb",
+                "kind": "feat_option",
+                "name": "Druid",
+                "source": "XPHB",
+                "edition": "one",
+                "srd": {
+                    "5.2": "Druid"
+                },
+                "text": "**Two Cantrips.** You learn two cantrips of your choice from the Druid spell list. Intelligence, Wisdom, or Charisma is your spellcasting ability for this feat's spells (choose when you select this feat).\n\n**Level 1 Spell.** Choose a level 1 spell from the Druid spell list. You always have that spell prepared. You can cast it once without a spell slot, and you regain the ability to cast it in that way when you finish a Long Rest. You can also cast the spell using any spell slots you have.",
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "spell_ability",
+                        "label": "Spellcasting Ability",
+                        "grant": "spell_ability",
+                        "count": 1,
+                        "from": [
+                            "int",
+                            "wis",
+                            "cha"
+                        ]
+                    },
+                    {
+                        "type": "pool",
+                        "id": "spells",
+                        "label": "Spells",
+                        "grant": "spells",
+                        "count": 2,
+                        "from": {
+                            "spell_level": 0,
+                            "class": "druid"
+                        },
+                        "how": "known",
+                        "at": 1,
+                        "ability": {
+                            "choice": "spell_ability"
+                        }
+                    },
+                    {
+                        "type": "pool",
+                        "id": "spells_2",
+                        "label": "Spells",
+                        "grant": "spells",
+                        "count": 1,
+                        "from": {
+                            "spell_level": 1,
+                            "class": "druid"
+                        },
+                        "how": "prepared",
+                        "at": 1,
+                        "uses": {
+                            "max": 1,
+                            "reset": "long"
+                        },
+                        "ability": {
+                            "choice": "spell_ability"
+                        }
+                    }
+                ],
+                "features": [],
+                "grants": {}
+            },
+            {
+                "id": "magic-initiate-wizard-xphb",
+                "kind": "feat_option",
+                "name": "Wizard",
+                "source": "XPHB",
+                "edition": "one",
+                "srd": {
+                    "5.2": "Wizard"
+                },
+                "text": "**Two Cantrips.** You learn two cantrips of your choice from the Wizard spell list. Intelligence, Wisdom, or Charisma is your spellcasting ability for this feat's spells (choose when you select this feat).\n\n**Level 1 Spell.** Choose a level 1 spell from the Wizard spell list. You always have that spell prepared. You can cast it once without a spell slot, and you regain the ability to cast it in that way when you finish a Long Rest. You can also cast the spell using any spell slots you have.",
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "spell_ability",
+                        "label": "Spellcasting Ability",
+                        "grant": "spell_ability",
+                        "count": 1,
+                        "from": [
+                            "int",
+                            "wis",
+                            "cha"
+                        ]
+                    },
+                    {
+                        "type": "pool",
+                        "id": "spells",
+                        "label": "Spells",
+                        "grant": "spells",
+                        "count": 2,
+                        "from": {
+                            "spell_level": 0,
+                            "class": "wizard"
+                        },
+                        "how": "known",
+                        "at": 1,
+                        "ability": {
+                            "choice": "spell_ability"
+                        }
+                    },
+                    {
+                        "type": "pool",
+                        "id": "spells_2",
+                        "label": "Spells",
+                        "grant": "spells",
+                        "count": 1,
+                        "from": {
+                            "spell_level": 1,
+                            "class": "wizard"
+                        },
+                        "how": "prepared",
+                        "at": 1,
+                        "uses": {
+                            "max": 1,
+                            "reset": "long"
+                        },
+                        "ability": {
+                            "choice": "spell_ability"
+                        }
+                    }
+                ],
+                "features": [],
+                "grants": {}
+            }
+        ],
+        "features": [
+            {
+                "id": "spell-change",
+                "name": "Spell Change",
+                "level": 1,
+                "category": "traits"
+            }
+        ],
+        "grants": {}
+    },
+    {
+        "id": "savage-attacker-xphb",
+        "kind": "feat",
+        "name": "Savage Attacker",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Savage Attacker"
+        },
+        "text": "You've trained to deal particularly damaging strikes. Once per turn when you hit a target with a weapon, you can roll the weapon's damage dice twice and use either roll against the target.",
+        "category": "origin",
+        "repeatable": false,
+        "features": [
+            {
+                "id": "savage-attacker",
+                "name": "Savage Attacker",
+                "level": 1,
+                "category": "traits"
+            }
+        ],
+        "grants": {}
+    },
+    {
+        "id": "skilled-xphb",
+        "kind": "feat",
+        "name": "Skilled",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Skilled"
+        },
+        "text": "You gain proficiency in any combination of three skills or tools of your choice.\n\n**Repeatable.** You can take this feat more than once.",
+        "category": "origin",
+        "repeatable": true,
+        "choices": [
+            {
+                "type": "pool",
+                "id": "skills_or_tools",
+                "label": "Skills or Tools",
+                "grant": [
+                    "skills",
+                    "tools"
+                ],
+                "count": 3,
+                "from": [
+                    "all_skills",
+                    "all_tools"
+                ]
+            }
+        ],
+        "features": [],
+        "grants": {}
+    },
+    {
+        "id": "two-weapon-fighting-xphb",
+        "kind": "feat",
+        "name": "Two-Weapon Fighting",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Two-Weapon Fighting"
+        },
+        "text": "When you make an extra attack as a result of using a weapon that has the Light property, you can add your ability modifier to the damage of that attack if you aren't already adding it to the damage.",
+        "category": "fighting_style",
+        "repeatable": false,
+        "prerequisites": [
+            {
+                "feature": [
+                    "fighting_style"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "two-weapon-fighting",
+                "name": "Two-Weapon Fighting",
+                "level": 1,
+                "category": "traits"
+            }
+        ],
+        "grants": {}
+    }
+]

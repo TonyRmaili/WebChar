@@ -1,0 +1,1602 @@
+[
+    {
+        "id": "doric-hat-tg",
+        "kind": "monster",
+        "name": "Doric",
+        "source": "HAT-TG",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "druid"
+            ]
+        },
+        "alignment": [
+            "neutral good"
+        ],
+        "ac": [
+            {
+                "value": 14,
+                "from": [
+                    "leather armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 104,
+            "formula": "16d8 + 32"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 12,
+            "dex": 16,
+            "con": 14,
+            "int": 16,
+            "wis": 19,
+            "cha": 10
+        },
+        "saves": {
+            "int": 6,
+            "wis": 7
+        },
+        "skills": {
+            "insight": 7,
+            "nature": 6,
+            "perception": 7,
+            "survival": 7
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 17,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "fire"
+                ]
+            }
+        },
+        "languages": [
+            "Common",
+            "Druidic",
+            "Elvish",
+            "Infernal",
+            "Sylvan"
+        ],
+        "cr": {
+            "cr": "5",
+            "xp": 1800,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Doric makes two Shaped Claw or Sling attacks. She can replace one attack with a use of Spellcasting."
+            },
+            {
+                "id": "shaped-claw",
+                "name": "Shaped Claw",
+                "category": "actions",
+                "text": "Melee Spell Attack: +7 to hit, reach 5 ft., one target. Hit: 8 (1d8 + 4) slashing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "spell",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 4,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "sling",
+                "name": "Sling",
+                "category": "actions",
+                "text": "Ranged Weapon Attack: +6 to hit, range 30/120 ft., one target. Hit: 8 (2d4 + 3) bludgeoning damage.",
+                "action": {
+                    "range": "range 30/120 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "2d4",
+                                "bonus": 3,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "change-shape",
+                "name": "Change Shape",
+                "category": "bonus_actions",
+                "text": "Doric magically transforms into a Beast with a challenge rating of 3 or less or into an owlbear (see the Monster Manual).\n\nDoric can remain in that form for up to 2 hours. She can choose whether her equipment falls to the ground, melds with her new form, or is worn by the new form. Doric reverts to her true form if she is incapacitated or dies. She can revert to her true form using a bonus action.\n\nWhile Doric is transformed, her stat block is replaced by the stat block of that form, except she keeps her current hit points, her hit point maximum, this bonus action, her alignment, and her Intelligence, Wisdom, and Charisma scores.",
+                "uses": {
+                    "max": 5,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "fiery-rebuke",
+                "name": "Fiery Rebuke",
+                "category": "reactions",
+                "text": "When Doric is damaged by a creature that she can see within 60 feet of herself, she magically engulfs the creature in flames. The creature must make a DC 15 Dexterity saving throw, taking 16 (3d10) fire damage on failed save, or half as much damage on a successful one.",
+                "uses": {
+                    "max": 3,
+                    "reset": "long"
+                },
+                "action": {
+                    "save": {
+                        "ability": "dex",
+                        "dc": 15,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "3d10",
+                                "type": "fire"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "wis",
+                "dc": 15,
+                "text": "Doric casts one of the following spells, using Wisdom as the spellcasting ability (spell save DC 15):",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "animal-messenger-phb"
+                            },
+                            {
+                                "spell": "beast-sense-phb"
+                            },
+                            {
+                                "spell": "speak-with-animals-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 2,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "cure-wounds-phb"
+                            },
+                            {
+                                "spell": "entangle-phb"
+                            },
+                            {
+                                "spell": "faerie-fire-phb"
+                            },
+                            {
+                                "spell": "thunderwave-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "sling-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "flags": {
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "fire",
+                "slashing",
+                "thunder"
+            ],
+            "conditions_inflicted": [
+                "restrained"
+            ],
+            "saves_forced": [
+                "dex",
+                "con",
+                "str"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "actions": [
+                "multiattack",
+                "shapechanger"
+            ],
+            "misc": [
+                "ranged_weapon",
+                "ranged_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "druidic",
+                "elvish",
+                "infernal",
+                "sylvan"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "edgin-darvis-hat-tg",
+        "kind": "monster",
+        "name": "Edgin Darvis",
+        "source": "HAT-TG",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "bard"
+            ]
+        },
+        "alignment": [
+            "chaotic good"
+        ],
+        "ac": [
+            {
+                "value": 14,
+                "from": [
+                    "leather armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 110,
+            "formula": "17d8 + 34"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 14,
+            "dex": 16,
+            "con": 14,
+            "int": 14,
+            "wis": 16,
+            "cha": 18
+        },
+        "saves": {
+            "dex": 6,
+            "cha": 7
+        },
+        "skills": {
+            "deception": 7,
+            "performance": 10,
+            "persuasion": 10,
+            "sleight_of_hand": 6
+        },
+        "passive_perception": 13,
+        "languages": [
+            "Common"
+        ],
+        "cr": {
+            "cr": "5",
+            "xp": 1800,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Edgin makes two Reinforced Lute or Shortsword attacks."
+            },
+            {
+                "id": "reinforced-lute",
+                "name": "Reinforced Lute",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 6 (1d8 + 2) bludgeoning damage plus 11 (2d10) thunder damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 2,
+                                "type": "bludgeoning"
+                            },
+                            {
+                                "dice": "2d10",
+                                "type": "thunder"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "shortsword",
+                "name": "Shortsword",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 6 (1d6 + 3) piercing damage plus 11 (2d10) thunder damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 3,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "2d10",
+                                "type": "thunder"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "disorienting-words",
+                "name": "Disorienting Words",
+                "category": "actions",
+                "text": "Edgin magically taunts up to three creatures he can see within 60 feet of himself. Each creature must succeed on a DC 15 Wisdom saving throw or take 10 (3d6) psychic damage and have disadvantage on the next attack roll it makes before the start of Edgin's next turn.",
+                "action": {
+                    "save": {
+                        "ability": "wis",
+                        "dc": 15,
+                        "on_success": "none",
+                        "damage": [
+                            {
+                                "dice": "3d6",
+                                "type": "psychic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "inspiring-words",
+                "name": "Inspiring Words",
+                "category": "reactions",
+                "text": "When a creature Edgin can see within 60 feet of himself fails an ability check, an attack roll, or a saving throw, Edgin grants the creature magical encouragement. The creature can roll a d8 and add the number rolled to the total, potentially turning the failure into a success.",
+                "uses": {
+                    "max": 3,
+                    "reset": "long"
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "cha",
+                "dc": 15,
+                "text": "Edgin casts one of the following spells, using Charisma as the spellcasting ability (spell save DC 15):",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "friends-phb"
+                            },
+                            {
+                                "spell": "message-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "spells": [
+                            {
+                                "spell": "suggestion-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 3,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "charm-person-phb"
+                            },
+                            {
+                                "spell": "disguise-self-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "shortsword-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "flags": {
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "piercing",
+                "thunder",
+                "psychic"
+            ],
+            "conditions_inflicted": [
+                "charmed"
+            ],
+            "saves_forced": [
+                "wis"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "common"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "forge-fitzwilliam-hat-tg",
+        "kind": "monster",
+        "name": "Forge Fitzwilliam",
+        "source": "HAT-TG",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid"
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "ac": [
+            {
+                "value": 17,
+                "from": [
+                    "disarming charm"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 110,
+            "formula": "20d8 + 20"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 11,
+            "dex": 14,
+            "con": 13,
+            "int": 15,
+            "wis": 17,
+            "cha": 20
+        },
+        "saves": {
+            "dex": 5,
+            "int": 5
+        },
+        "skills": {
+            "acrobatics": 5,
+            "deception": 11,
+            "investigation": 8,
+            "persuasion": 11,
+            "sleight_of_hand": 5,
+            "stealth": 8
+        },
+        "passive_perception": 13,
+        "languages": [
+            "Common",
+            "Thieves' cant"
+        ],
+        "cr": {
+            "cr": "8",
+            "xp": 3900,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "disarming-charm",
+                "name": "Disarming Charm",
+                "category": "traits",
+                "text": "While Forge isn't wearing armor, his AC includes his Charisma modifier."
+            },
+            {
+                "id": "double-cross",
+                "name": "Double-Cross",
+                "category": "traits",
+                "text": "If Forge hits a creature friendly to him with an attack roll, the attack is automatically a critical hit."
+            },
+            {
+                "id": "evasion",
+                "name": "Evasion",
+                "category": "traits",
+                "text": "If Forge is subjected to an effect that allows him to make a Dexterity saving throw to take only half damage, he takes no damage if he succeeds on the saving throw, and only half damage if he fails, provided he isn't incapacitated."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Forge makes two Dagger attacks, two Heavy Crossbow attacks, or one of each."
+            },
+            {
+                "id": "dagger",
+                "name": "Dagger",
+                "category": "actions",
+                "text": "Melee or Ranged Weapon Attack: +5 to hit, reach 5 ft. or range 20/60 ft., one target. Hit: 4 (1d4 + 2) piercing damage plus 24 (7d6) poison damage, and the target is poisoned until the end of its next turn.",
+                "action": {
+                    "range": "reach 5 ft. or range 20/60 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 2,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "7d6",
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "heavy-crossbow",
+                "name": "Heavy Crossbow",
+                "category": "actions",
+                "text": "Ranged Weapon Attack: +5 to hit, range 100/400 ft., one target. Hit: 7 (1d10 + 2) piercing damage plus 24 (7d6) poison damage. Hit or Miss: If the target is a creature, it has disadvantage on the next attack roll it makes before the start of Forge's next turn.",
+                "action": {
+                    "range": "range 100/400 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d10",
+                                "bonus": 2,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "7d6",
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "cunning",
+                "name": "Cunning",
+                "category": "bonus_actions",
+                "text": "Forge takes the Dash, Disengage, or Hide action, or he gives himself advantage on the next attack roll he makes before the end of this turn."
+            },
+            {
+                "id": "uncanny-dodge",
+                "name": "Uncanny Dodge",
+                "category": "reactions",
+                "text": "Forge halves the damage he takes from an attack that hits him. He must be able to see the attacker."
+            }
+        ],
+        "items": [
+            {
+                "item": "dagger-phb",
+                "qty": 1,
+                "attacks": true
+            },
+            {
+                "item": "heavy-crossbow-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "flags": {
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "poison",
+                "piercing"
+            ],
+            "conditions_inflicted": [
+                "poisoned"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack",
+                "ranged_weapon",
+                "ranged_weapon_attack",
+                "thrown_weapon"
+            ],
+            "languages": [
+                "common",
+                "thieves_cant"
+            ]
+        }
+    },
+    {
+        "id": "holga-kilgore-hat-tg",
+        "kind": "monster",
+        "name": "Holga Kilgore",
+        "source": "HAT-TG",
+        "edition": "classic",
+        "tags": [
+            "Reckless"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid"
+        },
+        "alignment": [
+            "chaotic good"
+        ],
+        "ac": [
+            {
+                "value": 15,
+                "from": [
+                    "Unarmored Defense"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 120,
+            "formula": "16d8 + 48"
+        },
+        "speed": {
+            "walk": 40
+        },
+        "abilities": {
+            "str": 19,
+            "dex": 14,
+            "con": 16,
+            "int": 11,
+            "wis": 16,
+            "cha": 13
+        },
+        "saves": {
+            "str": 7,
+            "con": 6
+        },
+        "skills": {
+            "athletics": 7,
+            "intimidation": 4,
+            "nature": 3,
+            "survival": 6
+        },
+        "passive_perception": 13,
+        "defenses": {
+            "resist": {
+                "conditional": [
+                    {
+                        "types": [
+                            "lightning"
+                        ],
+                        "note": "(granted by darksteel greataxe)"
+                    }
+                ]
+            }
+        },
+        "languages": [
+            "Common",
+            "Halfling"
+        ],
+        "cr": {
+            "cr": "5",
+            "xp": 1800,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "reckless",
+                "name": "Reckless",
+                "category": "traits",
+                "text": "At the start of her turn, Holga can gain advantage on melee weapon attack rolls during that turn, but attack rolls against her have advantage until the start of her next turn."
+            },
+            {
+                "id": "special-equipment",
+                "name": "Special Equipment",
+                "category": "traits",
+                "text": "Holga carries a darksteel greataxe, a magic weapon that grants her resistance to lightning damage while she carries it (included above)."
+            },
+            {
+                "id": "unarmored-defense",
+                "name": "Unarmored Defense",
+                "category": "traits",
+                "text": "While Holga isn't wearing armor, her AC includes her Constitution modifier."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Holga makes three Darksteel Greataxe or Improvised Weapon attacks, in any combination."
+            },
+            {
+                "id": "darksteel-greataxe",
+                "name": "Darksteel Greataxe",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 10 (1d12 + 4) slashing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "1d12",
+                                "bonus": 4,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "improvised-weapon",
+                "name": "Improvised Weapon",
+                "category": "actions",
+                "text": "Melee or Ranged Weapon Attack: +7 to hit, reach 5 ft., or range 20/60 ft., one target. Hit: 7 (1d6 + 4) bludgeoning damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 4,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "wrestle",
+                "name": "Wrestle",
+                "category": "bonus_actions",
+                "text": "Holga shoves a creature within 5 feet of herself. That creature must succeed on a DC 15 Strength saving throw or be moved 5 feet into an unoccupied space of Holga's choice.",
+                "action": {
+                    "save": {
+                        "ability": "str",
+                        "dc": 15,
+                        "on_success": "none"
+                    }
+                }
+            }
+        ],
+        "flags": {
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "slashing"
+            ],
+            "saves_forced": [
+                "str"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "reckless"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack",
+                "ranged_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "halfling"
+            ]
+        }
+    },
+    {
+        "id": "simon-aumar-hat-tg",
+        "kind": "monster",
+        "name": "Simon Aumar",
+        "source": "HAT-TG",
+        "edition": "classic",
+        "tags": [
+            "Fey Ancestry"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "sorcerer"
+            ]
+        },
+        "alignment": [
+            "chaotic good"
+        ],
+        "ac": [
+            {
+                "value": 12
+            }
+        ],
+        "hp": {
+            "average": 99,
+            "formula": "18d8 + 18"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 8,
+            "dex": 14,
+            "con": 13,
+            "int": 16,
+            "wis": 12,
+            "cha": 17
+        },
+        "saves": {
+            "con": 4,
+            "cha": 6
+        },
+        "skills": {
+            "arcana": 6,
+            "deception": 6,
+            "history": 6,
+            "religion": 6,
+            "survival": 4
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 11,
+        "languages": [
+            "Common",
+            "Draconic",
+            "Elvish"
+        ],
+        "cr": {
+            "cr": "5",
+            "xp": 1800,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "fey-ancestry",
+                "name": "Fey Ancestry",
+                "category": "traits",
+                "text": "Simon has advantage on saving throws he makes to avoid or end the charmed condition on himself, and magic can't put him to sleep."
+            },
+            {
+                "id": "special-equipment",
+                "name": "Special Equipment",
+                "category": "traits",
+                "text": "Simon carries a bag of holding, two pairs of sending stones, and a deathly token (see Spellcasting)."
+            },
+            {
+                "id": "wild-magic",
+                "name": "Wild Magic",
+                "category": "traits",
+                "text": "When Simon takes 20 or more damage from a single source or takes damage from a critical hit, he must roll on the Wild Magic Surge table in the Player's Handbook."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Simon makes three Quarterstaff or Chaos Bolt attacks. He can replace one attack with one use of Spellcasting."
+            },
+            {
+                "id": "quarterstaff",
+                "name": "Quarterstaff",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +2 to hit, reach 5 ft., one target. Hit: 2 (1d6 - 1) bludgeoning damage, or 3 (1d8 - 1) bludgeoning damage if used with two hands, plus 11 (2d10) force damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 2,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": -1,
+                                "type": "bludgeoning"
+                            },
+                            {
+                                "dice": "1d8",
+                                "bonus": -1,
+                                "type": "bludgeoning",
+                                "condition": "if used with two hands"
+                            },
+                            {
+                                "dice": "2d10",
+                                "type": "force"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "chaos-bolt",
+                "name": "Chaos Bolt",
+                "category": "actions",
+                "text": "Ranged Spell Attack: +6 to hit, range 60 ft., one target. Hit: 14 (2d10 + 3) damage of a random type determined by rolling a d8: 1, acid; 2, cold; 3, fire; 4, force; 5, lightning; 6, poison; 7, psychic; 8, thunder.",
+                "action": {
+                    "range": "range 60 ft.",
+                    "attack": {
+                        "kind": "spell",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "2d10",
+                                "bonus": 3,
+                                "type": "weapon"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "sheltering-shield",
+                "name": "Sheltering Shield",
+                "category": "reactions",
+                "text": "When Simon or another creature he can see within 10 feet of himself would take damage, he conjures a shimmering, 10-foot-radius sphere of magical force centered on himself. Creatures inside the sphere have resistance to the damage that triggered this reaction.",
+                "uses": {
+                    "max": 3,
+                    "reset": "long"
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "cha",
+                "dc": 14,
+                "text": "Roll a d6. On a roll of 1, Simon must roll on the Wild Magic Surge table in the Player's Handbook. On a roll of 2 or higher, Simon casts one of the following spells, using Charisma as the spellcasting ability (spell save DC 14):",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "mage-hand-phb"
+                            },
+                            {
+                                "spell": "minor-illusion-phb"
+                            },
+                            {
+                                "spell": "prestidigitation-phb"
+                            },
+                            {
+                                "spell": "speak-with-dead-phb",
+                                "note": "(Simon must be holding his deathly token to cast this spell)"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 2,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "fog-cloud-phb"
+                            },
+                            {
+                                "spell": "mage-armor-phb"
+                            },
+                            {
+                                "spell": "magic-missile-phb"
+                            },
+                            {
+                                "spell": "spider-climb-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "bigbys-hand-phb"
+                            },
+                            {
+                                "spell": "major-image-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "quarterstaff-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "flags": {
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "force"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "fey_ancestry"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_weapon",
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "draconic",
+                "elvish"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "sofina-hat-tg",
+        "kind": "monster",
+        "name": "Sofina",
+        "source": "HAT-TG",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "wizard"
+            ]
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "ac": [
+            {
+                "value": 14
+            }
+        ],
+        "hp": {
+            "average": 161,
+            "formula": "19d8 + 76"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 12,
+            "dex": 14,
+            "con": 18,
+            "int": 20,
+            "wis": 14,
+            "cha": 8
+        },
+        "saves": {
+            "int": 10,
+            "wis": 7
+        },
+        "skills": {
+            "arcana": 10,
+            "history": 10,
+            "insight": 7
+        },
+        "passive_perception": 12,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "necrotic"
+                ]
+            }
+        },
+        "languages": [
+            "Abyssal",
+            "Common",
+            "Draconic",
+            "Infernal",
+            "Thayan"
+        ],
+        "cr": {
+            "cr": "15",
+            "xp": 13000,
+            "pb": 5
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "special-equipment",
+                "name": "Special Equipment",
+                "category": "traits",
+                "text": "Sofina wears a magic robe that grants her a +2 bonus to AC and a +1 bonus to saving throws (included above)."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Sofina makes three Necrotic Strike attacks."
+            },
+            {
+                "id": "necrotic-strike",
+                "name": "Necrotic Strike",
+                "category": "actions",
+                "text": "Melee or Ranged Spell Attack: +10 to hit, reach 5 ft. or range 120 ft., one target. Hit: 32 (5d10 + 5) necrotic damage.",
+                "action": {
+                    "range": "reach 5 ft. or range 120 ft.",
+                    "attack": {
+                        "kind": "spell",
+                        "bonus": 10,
+                        "damage": [
+                            {
+                                "dice": "5d10",
+                                "bonus": 5,
+                                "type": "necrotic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "swarm-of-meteors",
+                "name": "Swarm of Meteors",
+                "category": "actions",
+                "text": "Sofina magically calls down a meteor swarm that detonates in four 40-foot-radius spheres, each one centered on a point she can see within 1 mile of herself. These spheres can overlap. Each creature in one or more of these spheres must make a DC 18 Dexterity saving throw, taking 35 (10d6) fire damage and 35 (10d6) bludgeoning damage on a failed saving throw, or half as much damage on a successful one. A creature in multiple spheres takes this damage only once.",
+                "uses": {
+                    "max": 1,
+                    "reset": "long"
+                },
+                "action": {
+                    "area": "40-foot sphere",
+                    "save": {
+                        "ability": "dex",
+                        "dc": 18,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "10d6",
+                                "type": "fire"
+                            },
+                            {
+                                "dice": "10d6",
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "summon-wraith",
+                "name": "Summon Wraith",
+                "category": "bonus_actions",
+                "text": "Sofina magically summons the spirit of a Thayan assassin, which appears as a wraith (see the Monster Manual). The summoned wraith appears in an unoccupied space within 60 feet of Sofina, whom it obeys. The summoned wraith takes its turn immediately after Sofina. It lasts for 1 hour, until it or Sofina dies, or until Sofina dismisses it as a bonus action.",
+                "uses": {
+                    "max": 1,
+                    "reset": "long"
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "int",
+                "dc": 18,
+                "text": "Sofina casts one of the following spells, using Intelligence as the spellcasting ability (spell save DC 18):",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "mage-hand-phb"
+                            },
+                            {
+                                "spell": "message-phb"
+                            },
+                            {
+                                "spell": "prestidigitation-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 2,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "bestow-curse-phb"
+                            },
+                            {
+                                "spell": "bigbys-hand-phb"
+                            },
+                            {
+                                "spell": "dimension-door-phb"
+                            },
+                            {
+                                "spell": "mage-armor-phb"
+                            },
+                            {
+                                "spell": "otilukes-resilient-sphere-phb"
+                            },
+                            {
+                                "spell": "thunderwave-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "evards-black-tentacles-phb"
+                            },
+                            {
+                                "spell": "finger-of-death-phb"
+                            },
+                            {
+                                "spell": "time-stop-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "flags": {
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "fire",
+                "necrotic",
+                "force",
+                "thunder"
+            ],
+            "conditions_inflicted": [
+                "restrained"
+            ],
+            "saves_forced": [
+                "dex",
+                "con",
+                "wis"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "area_of_effect"
+            ],
+            "languages": [
+                "abyssal",
+                "common",
+                "draconic",
+                "infernal",
+                "other"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "xenk-yendar-hat-tg",
+        "kind": "monster",
+        "name": "Xenk Yendar",
+        "source": "HAT-TG",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "paladin"
+            ]
+        },
+        "alignment": [
+            "lawful good"
+        ],
+        "ac": [
+            {
+                "value": 15,
+                "from": [
+                    "half plate"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 157,
+            "formula": "21d8 + 63"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 19,
+            "dex": 11,
+            "con": 16,
+            "int": 14,
+            "wis": 16,
+            "cha": 17
+        },
+        "saves": {
+            "str": 8,
+            "cha": 7
+        },
+        "skills": {
+            "athletics": 8,
+            "history": 6,
+            "insight": 7,
+            "survival": 7
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 13,
+        "defenses": {
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "frightened",
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "Common",
+            "Thayan",
+            "Undercommon"
+        ],
+        "cr": {
+            "cr": "10",
+            "xp": 5900,
+            "pb": 4
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "aura-of-protection",
+                "name": "Aura of Protection",
+                "category": "traits",
+                "text": "Xenk and his allies within 10 feet of him have advantage on saving throws."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Xenk makes three Daggersword attacks and uses Daggersword Flourish. He can replace Daggersword Flourish with Cleansing Touch if it's available."
+            },
+            {
+                "id": "daggersword",
+                "name": "Daggersword",
+                "category": "actions",
+                "text": "Choose the attack that corresponds to the daggersword's current form (see Daggersword Shift below):"
+            },
+            {
+                "id": "longsword",
+                "name": "Longsword",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +8 to hit, reach 5 ft., one target. Hit: 8 (1d8 + 4) slashing damage, or 9 (1d10 + 4) slashing damage if used with two hands, plus 6 (1d12) radiant damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 8,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 4,
+                                "type": "slashing"
+                            },
+                            {
+                                "dice": "1d10",
+                                "bonus": 4,
+                                "type": "slashing",
+                                "condition": "if used with two hands"
+                            },
+                            {
+                                "dice": "1d12",
+                                "type": "radiant"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "shortsword-and-dagger",
+                "name": "Shortsword and Dagger",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +8 to hit, reach 5 ft., one target. Hit: 7 (1d6 + 4) piercing damage plus 6 (1d12) radiant damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 8,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 4,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "1d12",
+                                "type": "radiant"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "daggersword-flourish",
+                "name": "Daggersword Flourish",
+                "category": "actions",
+                "text": "Choose the option that corresponds to the daggersword's current form (see Daggersword Shift below):"
+            },
+            {
+                "id": "longsword-2",
+                "name": "Longsword",
+                "category": "actions",
+                "text": "Xenk magically detaches the longsword's blade from its hilt, launching the blade at a creature he can see within 30 feet of himself. The target must make a DC 16 Dexterity saving throw. On a failed save, the target is impaled by the blade, taking 14 (3d6 + 4) piercing damage, and is knocked prone. At the end of the current turn, the blade magically reattaches to its hilt.",
+                "action": {
+                    "save": {
+                        "ability": "dex",
+                        "dc": 16,
+                        "on_success": "none",
+                        "damage": [
+                            {
+                                "dice": "3d6",
+                                "bonus": 4,
+                                "type": "piercing"
+                            }
+                        ],
+                        "conditions": [
+                            "prone"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "shortsword-and-dagger-2",
+                "name": "Shortsword and Dagger",
+                "category": "actions",
+                "text": "Xenk lashes out with both weapons. Each creature of his choice within 10 feet of him must make a DC 16 Dexterity throw. On a failed save, the creature takes 7 (2d6) piercing damage and has disadvantage on attack rolls until the start of Xenk's next turn. On a successful save, the creature takes half as much damage and suffers no other effect.",
+                "action": {
+                    "damage": [
+                        {
+                            "dice": "2d6",
+                            "type": "piercing"
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "cleansing-touch",
+                "name": "Cleansing Touch",
+                "category": "actions",
+                "text": "Xenk touches a creature within 5 feet of himself. The target magically regains 27 (6d8) hit points and gains the benefit of a Lesser Restoration spell.",
+                "uses": {
+                    "max": 1,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "daggersword-shift",
+                "name": "Daggersword Shift",
+                "category": "bonus_actions",
+                "text": "Xenk changes the form of his daggersword, choosing one of the following forms: a longsword, or a shortsword in one hand and a dagger in the other."
+            }
+        ],
+        "items": [
+            {
+                "item": "longsword-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "flags": {
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "piercing",
+                "radiant",
+                "slashing"
+            ],
+            "conditions_inflicted": [
+                "prone"
+            ],
+            "saves_forced": [
+                "dex"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "other",
+                "undercommon"
+            ]
+        }
+    }
+]

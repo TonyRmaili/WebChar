@@ -1,0 +1,232 @@
+[
+    {
+        "id": "chimeric-fox-nrh-avitw",
+        "kind": "monster",
+        "name": "Chimeric Fox",
+        "source": "NRH-AVitW",
+        "edition": "classic",
+        "tags": [
+            "Keen Senses"
+        ],
+        "size": [
+            "tiny"
+        ],
+        "creature_type": {
+            "type": "beast"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 13
+            }
+        ],
+        "hp": {
+            "average": 2,
+            "formula": "1d4"
+        },
+        "speed": {
+            "walk": 30,
+            "burrow": 5
+        },
+        "abilities": {
+            "str": 2,
+            "dex": 16,
+            "con": 11,
+            "int": 3,
+            "wis": 12,
+            "cha": 6
+        },
+        "skills": {
+            "perception": 3,
+            "stealth": 5
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 13,
+        "cr": {
+            "cr": "0",
+            "xp": 10,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "chimeric-creation",
+                "name": "Chimeric Creation",
+                "category": "traits",
+                "text": "The fox has fur that changes color to match its surroundings, giving it advantage on Dexterity (Stealth) checks."
+            },
+            {
+                "id": "keen-hearing",
+                "name": "Keen Hearing",
+                "category": "traits",
+                "text": "The fox has advantage on Wisdom (Perception) checks that rely on hearing."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +5 to hit, reach 5 ft., one creature. Hit: 1 piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "bonus": 1,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "flags": {
+            "familiar": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "piercing"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "movement": [
+                "burrow"
+            ],
+            "traits": [
+                "keen_senses"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ]
+        }
+    },
+    {
+        "id": "scarlet-sentinel-nrh-avitw",
+        "kind": "monster",
+        "name": "Scarlet Sentinel",
+        "source": "NRH-AVitW",
+        "edition": "classic",
+        "tags": [
+            "Immutable Form",
+            "Magic Resistance",
+            "Magic Weapons"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "construct"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 8
+            }
+        ],
+        "hp": {
+            "average": 39,
+            "formula": "6d8 + 12"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 15,
+            "dex": 6,
+            "con": 14,
+            "int": 1,
+            "wis": 6,
+            "cha": 1
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 8,
+        "defenses": {
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "exhaustion",
+                    "frightened",
+                    "paralyzed",
+                    "petrified",
+                    "poisoned"
+                ]
+            }
+        },
+        "cr": {
+            "cr": "1",
+            "xp": 200,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": -2
+        },
+        "features": [
+            {
+                "id": "immutable-form",
+                "name": "Immutable Form",
+                "category": "traits",
+                "text": "The Scarlet Sentinel is immune to any spell or effect that would alter its form."
+            },
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The Scarlet Sentinel has advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "magic-weapons",
+                "name": "Magic Weapons",
+                "category": "traits",
+                "text": "The Scarlet Sentinel's weapon attacks are magical."
+            },
+            {
+                "id": "slam",
+                "name": "Slam",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 11 (2d8 + 2) bludgeoning damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "2d8",
+                                "bonus": 2,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "traits": [
+                "immutable_form",
+                "magic_resistance",
+                "magic_weapons"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ]
+        }
+    }
+]

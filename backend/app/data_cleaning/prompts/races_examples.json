@@ -1,0 +1,275 @@
+[
+ {
+  "why": "Classic race. Size, Darkvision, Combat Training, Tool Proficiency and Languages only state things the app already has: no features. Speed, Dwarven Resilience and Stonecunning are rules to remember: passive traits. The tool is a choice, so it is not in extra_grants.",
+  "input": {
+   "name": "Dwarf",
+   "kind": "race",
+   "edition": "classic",
+   "race": null,
+   "race_blocks": [],
+   "text": "**Size.** Dwarves stand between 4 and 5 feet tall and average about 150 pounds. Your size is Medium.\n\n**Speed.** Your speed is not reduced by wearing heavy armor.\n\n**Darkvision.** Accustomed to life underground, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.\n\n**Dwarven Resilience.** You have advantage on saving throws against poison, and you have resistance against poison damage.\n\n**Dwarven Combat Training.** You have proficiency with the battleaxe, handaxe, light hammer, and warhammer.\n\n**Tool Proficiency.** You gain proficiency with the artisan's tools of your choice: Smith's tools, brewer's supplies, or mason's tools.\n\n**Stonecunning.** Whenever you make an Intelligence (History) check related to the origin of stonework, you are considered proficient in the History skill and add double your proficiency bonus to the check, instead of your normal proficiency bonus.\n\n**Languages.** You can speak, read, and write Common and Dwarvish. Dwarvish is full of hard consonants and guttural sounds, and those characteristics spill over into whatever other language a dwarf might speak."
+  },
+  "output": {
+   "features": [
+    {
+     "name": "Speed",
+     "level": 1,
+     "category": "traits",
+     "uses": null,
+     "action": null,
+     "toggle": null,
+     "modifiers": []
+    },
+    {
+     "name": "Dwarven Resilience",
+     "level": 1,
+     "category": "traits",
+     "uses": null,
+     "action": null,
+     "toggle": null,
+     "modifiers": []
+    },
+    {
+     "name": "Stonecunning",
+     "level": 1,
+     "category": "traits",
+     "uses": null,
+     "action": null,
+     "toggle": null,
+     "modifiers": []
+    }
+   ],
+   "extra_grants": {
+    "skills": [],
+    "saves": [],
+    "tools": [],
+    "languages": [
+     "common",
+     "dwarvish"
+    ],
+    "weapons": [
+     "battleaxe",
+     "handaxe",
+     "light_hammer",
+     "warhammer"
+    ],
+    "armor": [],
+    "resist": [
+     "poison"
+    ],
+    "immune": [],
+    "vulnerable": [],
+    "condition_immune": [],
+    "senses": [
+     {
+      "type": "darkvision",
+      "range": 60
+     }
+    ],
+    "speed": null
+   }
+  }
+ },
+ {
+  "why": "Subrace. An always-on number becomes a modifier with a formula.",
+  "input": {
+   "name": "Hill",
+   "kind": "subrace",
+   "edition": "classic",
+   "race": "Dwarf",
+   "race_blocks": [
+    "Size",
+    "Speed",
+    "Darkvision",
+    "Dwarven Resilience",
+    "Dwarven Combat Training",
+    "Tool Proficiency",
+    "Stonecunning",
+    "Languages"
+   ],
+   "text": "**Dwarven Toughness.** Your hit point maximum increases by 1, and it increases by 1 every time you gain a level."
+  },
+  "output": {
+   "features": [
+    {
+     "name": "Dwarven Toughness",
+     "level": 1,
+     "category": "traits",
+     "uses": null,
+     "action": null,
+     "toggle": null,
+     "modifiers": [
+      {
+       "target": "hp_max",
+       "op": "add",
+       "value": {
+        "value": "level",
+        "steps": []
+       },
+       "requires": []
+      }
+     ]
+    }
+   ],
+   "extra_grants": {
+    "skills": [],
+    "saves": [],
+    "tools": [],
+    "languages": [],
+    "weapons": [],
+    "armor": [],
+    "resist": [],
+    "immune": [],
+    "vulnerable": [],
+    "condition_immune": [],
+    "senses": [],
+    "speed": null
+   }
+  }
+ },
+ {
+  "why": "Subrace with an action that has charges and damage growing by level. Damage Resistance only states a resistance: extra_grants, no feature.",
+  "input": {
+   "name": "Dragonborn (Red)",
+   "kind": "subrace",
+   "edition": "classic",
+   "race": "Dragonborn",
+   "race_blocks": [
+    "Size",
+    "Damage Resistance",
+    "Languages"
+   ],
+   "text": "**Breath Weapon.** You can use your action to exhale destructive energy. Each creature in a 15-foot cone must make a Dexterity saving throw. The DC for this saving throw equals 8 + your Constitution modifier + your proficiency bonus. A creature takes 2d6 fire damage on a failed save, and half as much damage on a successful one. The damage increases to 3d6 at 6th level, 4d6 at 11th level, and 5d6 at 16th level.\n\nAfter you use your breath weapon, you can't use it again until you complete a short or long rest.\n\n**Damage Resistance.** You have resistance to fire damage."
+  },
+  "output": {
+   "features": [
+    {
+     "name": "Breath Weapon",
+     "level": 1,
+     "category": "actions",
+     "uses": {
+      "max": {
+       "value": "1",
+       "steps": []
+      },
+      "reset": "short"
+     },
+     "action": {
+      "range": null,
+      "area": "15-foot cone",
+      "heal": null,
+      "attack": null,
+      "save": {
+       "ability": "dex",
+       "dc": {
+        "value": "8 + con_mod + pb",
+        "steps": []
+       },
+       "on_success": "half",
+       "conditions": [],
+       "damage": [
+        {
+         "dice": {
+          "value": "2d6",
+          "steps": [
+           {
+            "level": 6,
+            "value": "3d6"
+           },
+           {
+            "level": 11,
+            "value": "4d6"
+           },
+           {
+            "level": 16,
+            "value": "5d6"
+           }
+          ]
+         },
+         "bonus": null,
+         "type": "fire",
+         "condition": null,
+         "per_slot": null
+        }
+       ]
+      },
+      "damage": [],
+      "heal_per_slot": null,
+      "temp_hp": null,
+      "temp_hp_per_slot": null
+     },
+     "toggle": null,
+     "modifiers": []
+    }
+   ],
+   "extra_grants": {
+    "skills": [],
+    "saves": [],
+    "tools": [],
+    "languages": [],
+    "weapons": [],
+    "armor": [],
+    "resist": [
+     "fire"
+    ],
+    "immune": [],
+    "vulnerable": [],
+    "condition_immune": [],
+    "senses": [],
+    "speed": null
+   }
+  }
+ },
+ {
+  "why": "2024 race. Keen Senses is a choice of skills: no feature and not in extra_grants.",
+  "input": {
+   "name": "Elf",
+   "kind": "race",
+   "edition": "one",
+   "race": null,
+   "race_blocks": [],
+   "text": "**Darkvision.** You have Darkvision with a range of 60 feet.\n\n**Fey Ancestry.** You have Advantage on saving throws you make to avoid or end the Charmed condition.\n\n**Keen Senses.** You have proficiency in the Insight, Perception, or Survival skill.\n\n**Trance.** You don't need to sleep, and magic can't put you to sleep. You can finish a Long Rest in 4 hours if you spend those hours in a trancelike meditation, during which you retain consciousness."
+  },
+  "output": {
+   "features": [
+    {
+     "name": "Fey Ancestry",
+     "level": 1,
+     "category": "traits",
+     "uses": null,
+     "action": null,
+     "toggle": null,
+     "modifiers": []
+    },
+    {
+     "name": "Trance",
+     "level": 1,
+     "category": "traits",
+     "uses": null,
+     "action": null,
+     "toggle": null,
+     "modifiers": []
+    }
+   ],
+   "extra_grants": {
+    "skills": [],
+    "saves": [],
+    "tools": [],
+    "languages": [],
+    "weapons": [],
+    "armor": [],
+    "resist": [],
+    "immune": [],
+    "vulnerable": [],
+    "condition_immune": [],
+    "senses": [
+     {
+      "type": "darkvision",
+      "range": 60
+     }
+    ],
+    "speed": null
+   }
+  }
+ }
+]

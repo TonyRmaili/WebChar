@@ -1,0 +1,1188 @@
+[
+    {
+        "id": "blade-of-disaster-tce",
+        "kind": "spell",
+        "name": "Blade of Disaster",
+        "source": "TCE",
+        "edition": "classic",
+        "reprinted_as": [
+            "blade-of-disaster-frhof"
+        ],
+        "text": "You create a blade-shaped planar rift about 3 feet long in an unoccupied space you can see within range. The blade lasts for the duration. When you cast this spell, you can make up to two melee spell attacks with the blade, each one against a creature, loose object, or structure within 5 feet of the blade. On a hit, the target takes 4d12 force damage. This attack scores a critical hit if the number on the d20 is 18 or higher. On a critical hit, the blade deals an extra 8d12 force damage (for a total of 12d12 force damage).\n\nAs a bonus action on your turn, you can move the blade up to 30 feet to an unoccupied space you can see and then make up to two melee spell attacks with it again.\n\nThe blade can harmlessly pass through any barrier, including a Wall of Force.",
+        "level": 9,
+        "school": "conjuration",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "bonus_action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 60
+        },
+        "components": {
+            "v": true,
+            "s": true
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "minute",
+                "concentration": true
+            }
+        ],
+        "classes": [
+            "sorcerer-phb",
+            "warlock-phb",
+            "wizard-phb",
+            "sorcerer-xphb",
+            "warlock-xphb",
+            "wizard-xphb"
+        ],
+        "filters": {
+            "damage": [
+                "force"
+            ],
+            "attack": [
+                "melee"
+            ],
+            "area": [
+                "multiple_targets"
+            ],
+            "tags": [
+                "requires_sight",
+                "uses_bonus_action"
+            ]
+        }
+    },
+    {
+        "id": "booming-blade-tce",
+        "kind": "spell",
+        "name": "Booming Blade",
+        "source": "TCE",
+        "edition": "classic",
+        "text": "You brandish the weapon used in the spell's casting and make a melee attack with it against one creature within 5 feet of you. On a hit, the target suffers the weapon attack's normal effects and then becomes sheathed in booming energy until the start of your next turn. If the target willingly moves 5 feet or more before then, the target takes 1d8 thunder damage, and the spell ends.\n\nThis spell's damage increases when you reach certain levels. At 5th level, the melee attack deals an extra 1d8 thunder damage to the target on a hit, and the damage the target takes for moving increases to 2d8. Both damage rolls increase by 1d8 at 11th level (2d8 and 3d8) and again at 17th level (3d8 and 4d8).",
+        "level": 0,
+        "school": "evocation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "self",
+            "area": {
+                "shape": "radius",
+                "size": 5,
+                "unit": "feet"
+            }
+        },
+        "components": {
+            "v": false,
+            "s": true,
+            "m": {
+                "text": "a melee weapon worth at least 1 sp",
+                "cost": {
+                    "sp": 1
+                },
+                "consumed": false
+            }
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "round",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "artificer-tce",
+            "sorcerer-phb",
+            "warlock-phb",
+            "wizard-phb",
+            "sorcerer-xphb",
+            "warlock-xphb",
+            "wizard-xphb",
+            "artificer-efa"
+        ],
+        "filters": {
+            "damage": [
+                "thunder"
+            ],
+            "attack": [
+                "melee"
+            ],
+            "area": [
+                "single_target"
+            ],
+            "tags": [
+                "additional_attack_damage",
+                "scaling_effects"
+            ]
+        }
+    },
+    {
+        "id": "dream-of-the-blue-veil-tce",
+        "kind": "spell",
+        "name": "Dream of the Blue Veil",
+        "source": "TCE",
+        "edition": "classic",
+        "text": "You and up to eight willing creatures within range fall unconscious for the spell's duration and experience visions of another world on the Material Plane, such as Oerth, Toril, Krynn, or Eberron. If the spell reaches its full duration, the visions conclude with each of you encountering and pulling back a mysterious blue curtain. The spell then ends with you mentally and physically transported to the world that was in the visions.\n\nTo cast this spell, you must have a magic item that originated on the world you wish to reach, and you must be aware of the world's existence, even if you don't know the world's name. Your destination in the other world is a safe location within 1 mile of where the magic item was created. Alternatively, you can cast the spell if one of the affected creatures was born on the other world, which causes your destination to be a safe location within 1 mile of where that creature was born.\n\nThe spell ends early on a creature if that creature takes any damage, and the creature isn't transported. If you take any damage, the spell ends for you and all the other creatures, with none of you being transported.",
+        "level": 7,
+        "school": "conjuration",
+        "ritual": false,
+        "time": [
+            {
+                "number": 10,
+                "unit": "minute"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 20
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "a magic item or a willing creature from the destination world"
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 6,
+                "unit": "hour",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "bard-phb",
+            "sorcerer-phb",
+            "warlock-phb",
+            "wizard-phb",
+            "bard-xphb",
+            "sorcerer-xphb",
+            "warlock-xphb",
+            "wizard-xphb"
+        ],
+        "filters": {
+            "conditions": [
+                "unconscious"
+            ],
+            "tags": [
+                "plane_shifting",
+                "teleportation",
+                "targets_willing"
+            ]
+        }
+    },
+    {
+        "id": "green-flame-blade-tce",
+        "kind": "spell",
+        "name": "Green-Flame Blade",
+        "source": "TCE",
+        "edition": "classic",
+        "text": "You brandish the weapon used in the spell's casting and make a melee attack with it against one creature within 5 feet of you. On a hit, the target suffers the weapon attack's normal effects, and you can cause green fire to leap from the target to a different creature of your choice that you can see within 5 feet of it. The second creature takes fire damage equal to your spellcasting ability modifier.\n\nThis spell's damage increases when you reach certain levels. At 5th level, the melee attack deals an extra 1d8 fire damage to the target on a hit, and the fire damage to the second creature increases to 1d8 + your spellcasting ability modifier. Both damage rolls increase by 1d8 at 11th level (2d8 and 2d8) and 17th level (3d8 and 3d8).",
+        "level": 0,
+        "school": "evocation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "self",
+            "area": {
+                "shape": "radius",
+                "size": 5,
+                "unit": "feet"
+            }
+        },
+        "components": {
+            "v": false,
+            "s": true,
+            "m": {
+                "text": "a melee weapon worth at least 1 sp",
+                "cost": {
+                    "sp": 1
+                },
+                "consumed": false
+            }
+        },
+        "duration": [
+            {
+                "type": "instant",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "artificer-tce",
+            "sorcerer-phb",
+            "warlock-phb",
+            "wizard-phb",
+            "sorcerer-xphb",
+            "warlock-xphb",
+            "wizard-xphb",
+            "artificer-efa"
+        ],
+        "filters": {
+            "damage": [
+                "fire"
+            ],
+            "attack": [
+                "melee"
+            ],
+            "area": [
+                "multiple_targets",
+                "single_target"
+            ],
+            "tags": [
+                "additional_attack_damage",
+                "scaling_effects",
+                "requires_sight"
+            ]
+        }
+    },
+    {
+        "id": "intellect-fortress-tce",
+        "kind": "spell",
+        "name": "Intellect Fortress",
+        "source": "TCE",
+        "edition": "classic",
+        "text": "For the duration, you or one willing creature you can see within range has resistance to psychic damage, as well as advantage on Intelligence, Wisdom, and Charisma saving throws.\n\n**At Higher Levels.** When you cast this spell using a spell slot of 4th level or higher, you can target one additional creature for each slot level above 3rd. The creatures must be within 30 feet of each other when you target them.",
+        "level": 3,
+        "school": "abjuration",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 30
+        },
+        "components": {
+            "v": true,
+            "s": false
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "hour",
+                "concentration": true
+            }
+        ],
+        "classes": [
+            "artificer-tce",
+            "artificer-efa",
+            "bard-phb",
+            "sorcerer-phb",
+            "warlock-phb",
+            "wizard-phb",
+            "bard-xphb",
+            "sorcerer-xphb",
+            "warlock-xphb",
+            "wizard-xphb"
+        ],
+        "filters": {
+            "gives_resist": [
+                "psychic"
+            ],
+            "tags": [
+                "grants_advantage",
+                "scaling_targets",
+                "requires_sight",
+                "targets_willing"
+            ]
+        }
+    },
+    {
+        "id": "lightning-lure-tce",
+        "kind": "spell",
+        "name": "Lightning Lure",
+        "source": "TCE",
+        "edition": "classic",
+        "text": "You create a lash of lightning energy that strikes at one creature of your choice that you can see within 15 feet of you. The target must succeed on a Strength saving throw or be pulled up to 10 feet in a straight line toward you and then take 1d8 lightning damage if it is within 5 feet of you.\n\nThis spell's damage increases by 1d8 when you reach 5th level (2d8), 11th level (3d8), and 17th level (4d8).",
+        "level": 0,
+        "school": "evocation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "self",
+            "area": {
+                "shape": "radius",
+                "size": 15,
+                "unit": "feet"
+            }
+        },
+        "components": {
+            "v": true,
+            "s": false
+        },
+        "duration": [
+            {
+                "type": "instant",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "artificer-tce",
+            "sorcerer-phb",
+            "warlock-phb",
+            "wizard-phb",
+            "sorcerer-xphb",
+            "warlock-xphb",
+            "wizard-xphb",
+            "artificer-efa"
+        ],
+        "filters": {
+            "damage": [
+                "lightning"
+            ],
+            "saves": [
+                "str"
+            ],
+            "area": [
+                "single_target"
+            ],
+            "tags": [
+                "forced_movement",
+                "scaling_effects",
+                "requires_sight"
+            ]
+        }
+    },
+    {
+        "id": "mind-sliver-tce",
+        "kind": "spell",
+        "name": "Mind Sliver",
+        "source": "TCE",
+        "edition": "classic",
+        "reprinted_as": [
+            "mind-sliver-xphb"
+        ],
+        "text": "You drive a disorienting spike of psychic energy into the mind of one creature you can see within range. The target must succeed on an Intelligence saving throw or take 1d6 psychic damage and subtract 1d4 from the next saving throw it makes before the end of your next turn.\n\nThis spell's damage increases by 1d6 when you reach certain levels: 5th level (2d6), 11th level (3d6), and 17th level (4d6).",
+        "level": 0,
+        "school": "enchantment",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 60
+        },
+        "components": {
+            "v": true,
+            "s": false
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "round",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "sorcerer-phb",
+            "warlock-phb",
+            "wizard-phb"
+        ],
+        "filters": {
+            "damage": [
+                "psychic"
+            ],
+            "saves": [
+                "int"
+            ],
+            "area": [
+                "single_target"
+            ],
+            "tags": [
+                "scaling_effects",
+                "requires_sight"
+            ]
+        }
+    },
+    {
+        "id": "spirit-shroud-tce",
+        "kind": "spell",
+        "name": "Spirit Shroud",
+        "source": "TCE",
+        "edition": "classic",
+        "text": "You call forth spirits of the dead, which flit around you for the spell's duration. The spirits are intangible and invulnerable.\n\nUntil the spell ends, any attack you make deals 1d8 extra damage when you hit a creature within 10 feet of you. This damage is radiant, necrotic, or cold (your choice when you cast the spell). Any creature that takes this damage can't regain hit points until the start of your next turn.\n\nIn addition, any creature of your choice that you can see that starts its turn within 10 feet of you has its speed reduced by 10 feet until the start of your next turn.\n\n**At Higher Levels.** When you cast this spell using a spell slot of 4th level or higher, the damage increases by 1d8 for every two slot levels above 3rd.",
+        "level": 3,
+        "school": "necromancy",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "bonus_action"
+            }
+        ],
+        "range": {
+            "type": "self"
+        },
+        "components": {
+            "v": true,
+            "s": true
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "minute",
+                "concentration": true
+            }
+        ],
+        "classes": [
+            "cleric-phb",
+            "paladin-phb",
+            "warlock-phb",
+            "wizard-phb",
+            "cleric-xphb",
+            "paladin-xphb",
+            "warlock-xphb",
+            "wizard-xphb"
+        ],
+        "filters": {
+            "damage": [
+                "radiant",
+                "necrotic",
+                "cold"
+            ],
+            "tags": [
+                "additional_attack_damage",
+                "requires_sight"
+            ]
+        }
+    },
+    {
+        "id": "summon-aberration-tce",
+        "kind": "spell",
+        "name": "Summon Aberration",
+        "source": "TCE",
+        "edition": "classic",
+        "reprinted_as": [
+            "summon-aberration-xphb"
+        ],
+        "text": "You call forth an aberrant spirit. It manifests in an unoccupied space that you can see within range. This corporeal form uses the Aberrant Spirit stat block. When you cast the spell, choose Beholderkin, Slaad, or Star Spawn. The creature resembles an aberration of that kind, which determines certain traits in its stat block. The creature disappears when it drops to 0 hit points or when the spell ends.\n\nThe creature is an ally to you and your companions. In combat, the creature shares your initiative count, but it takes its turn immediately after yours. It obeys your verbal commands (no action required by you). If you don't issue any, it takes the Dodge action and uses its move to avoid danger.\n\n**At Higher Levels.** When you cast this spell using a spell slot of 5th level or higher, use the higher level wherever the spell's level appears in the stat block.",
+        "level": 4,
+        "school": "conjuration",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 90
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": {
+                "text": "a pickled tentacle and an eyeball in a platinum-inlaid vial worth at least 400 gp",
+                "cost": {
+                    "gp": 400
+                },
+                "consumed": false
+            }
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "hour",
+                "concentration": true
+            }
+        ],
+        "classes": [
+            "warlock-phb",
+            "wizard-phb"
+        ],
+        "filters": {
+            "tags": [
+                "requires_sight",
+                "summons_creature"
+            ]
+        }
+    },
+    {
+        "id": "summon-beast-tce",
+        "kind": "spell",
+        "name": "Summon Beast",
+        "source": "TCE",
+        "edition": "classic",
+        "reprinted_as": [
+            "summon-beast-xphb"
+        ],
+        "text": "You call forth a bestial spirit. It manifests in an unoccupied space that you can see within range. This corporeal form uses the Bestial Spirit stat block. When you cast the spell, choose an environment: Air, Land, or Water. The creature resembles an animal of your choice that is native to the chosen environment, which determines certain traits in its stat block. The creature disappears when it drops to 0 hit points or when the spell ends.\n\nThe creature is an ally to you and your companions. In combat, the creature shares your initiative count, but it takes its turn immediately after yours. It obeys your verbal commands (no action required by you). If you don't issue any, it takes the Dodge action and uses its move to avoid danger.\n\n**At Higher Levels.** When you cast this spell using a spell slot of 3rd level or higher, use the higher level wherever the spell's level appears in the stat block.",
+        "level": 2,
+        "school": "conjuration",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 90
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": {
+                "text": "a feather, tuft of fur, and fish tail inside a gilded acorn worth at least 200 gp",
+                "cost": {
+                    "gp": 200
+                },
+                "consumed": false
+            }
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "hour",
+                "concentration": true
+            }
+        ],
+        "classes": [
+            "druid-phb",
+            "ranger-phb"
+        ],
+        "filters": {
+            "tags": [
+                "requires_sight",
+                "summons_creature"
+            ]
+        }
+    },
+    {
+        "id": "summon-celestial-tce",
+        "kind": "spell",
+        "name": "Summon Celestial",
+        "source": "TCE",
+        "edition": "classic",
+        "reprinted_as": [
+            "summon-celestial-xphb"
+        ],
+        "text": "You call forth a celestial spirit. It manifests in an angelic form in an unoccupied space that you can see within range. This corporeal form uses the Celestial Spirit stat block. When you cast the spell, choose Avenger or Defender. Your choice determines the creature's attack in its stat block. The creature disappears when it drops to 0 hit points or when the spell ends.\n\nThe creature is an ally to you and your companions. In combat, the creature shares your initiative count, but it takes its turn immediately after yours. It obeys your verbal commands (no action required by you). If you don't issue any, it takes the Dodge action and uses its move to avoid danger.\n\n**At Higher Levels.** When you cast this spell using a spell slot of 6th level or higher, use the higher level wherever the spell's level appears in the stat block.",
+        "level": 5,
+        "school": "conjuration",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 90
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": {
+                "text": "a golden reliquary worth at least 500 gp",
+                "cost": {
+                    "gp": 500
+                },
+                "consumed": false
+            }
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "hour",
+                "concentration": true
+            }
+        ],
+        "classes": [
+            "cleric-phb",
+            "paladin-phb"
+        ],
+        "filters": {
+            "tags": [
+                "requires_sight",
+                "summons_creature"
+            ]
+        }
+    },
+    {
+        "id": "summon-construct-tce",
+        "kind": "spell",
+        "name": "Summon Construct",
+        "source": "TCE",
+        "edition": "classic",
+        "reprinted_as": [
+            "summon-construct-xphb"
+        ],
+        "text": "You call forth the spirit of a construct. It manifests in an unoccupied space that you can see within range. This corporeal form uses the Construct Spirit stat block. When you cast the spell, choose a material: Clay, Metal, or Stone. The creature resembles a golem or a modron (your choice) made of the chosen material, which determines certain traits in its stat block. The creature disappears when it drops to 0 hit points or when the spell ends.\n\nThe creature is an ally to you and your companions. In combat, the creature shares your initiative count, but it takes its turn immediately after yours. It obeys your verbal commands (no action required by you). If you don't issue any, it takes the Dodge action and uses its move to avoid danger.\n\n**At Higher Levels.** When you cast this spell using a spell slot of 4th level or higher, use the higher level wherever the spell's level appears in the stat block.",
+        "level": 4,
+        "school": "conjuration",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 90
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": {
+                "text": "an ornate stone and metal lockbox worth at least 400 gp",
+                "cost": {
+                    "gp": 400
+                },
+                "consumed": false
+            }
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "hour",
+                "concentration": true
+            }
+        ],
+        "classes": [
+            "artificer-tce",
+            "artificer-efa",
+            "wizard-phb"
+        ],
+        "filters": {
+            "tags": [
+                "requires_sight",
+                "summons_creature"
+            ]
+        }
+    },
+    {
+        "id": "summon-elemental-tce",
+        "kind": "spell",
+        "name": "Summon Elemental",
+        "source": "TCE",
+        "edition": "classic",
+        "reprinted_as": [
+            "summon-elemental-xphb"
+        ],
+        "text": "You call forth an elemental spirit. It manifests in an unoccupied space that you can see within range. This corporeal form uses the Elemental Spirit stat block. When you cast the spell, choose an element: Air, Earth, Fire, or Water. The creature resembles a bipedal form wreathed in the chosen element, which determines certain traits in its stat block. The creature disappears when it drops to 0 hit points or when the spell ends.\n\nThe creature is an ally to you and your companions. In combat, the creature shares your initiative count, but it takes its turn immediately after yours. It obeys your verbal commands (no action required by you). If you don't issue any, it takes the Dodge action and uses its move to avoid danger.\n\n**At Higher Levels.** When you cast this spell using a spell slot of 5th level or higher, use the higher level wherever the spell's level appears in the stat block.",
+        "level": 4,
+        "school": "conjuration",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 90
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": {
+                "text": "air, a pebble, ash, and water inside a gold-inlaid vial worth at least 400 gp",
+                "cost": {
+                    "gp": 400
+                },
+                "consumed": false
+            }
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "hour",
+                "concentration": true
+            }
+        ],
+        "classes": [
+            "druid-phb",
+            "ranger-phb",
+            "wizard-phb"
+        ],
+        "filters": {
+            "tags": [
+                "requires_sight",
+                "summons_creature"
+            ]
+        }
+    },
+    {
+        "id": "summon-fey-tce",
+        "kind": "spell",
+        "name": "Summon Fey",
+        "source": "TCE",
+        "edition": "classic",
+        "reprinted_as": [
+            "summon-fey-xphb"
+        ],
+        "text": "You call forth a fey spirit. It manifests in an unoccupied space that you can see within range. This corporeal form uses the Fey Spirit stat block. When you cast the spell, choose a mood: Fuming, Mirthful, or Tricksy. The creature resembles a fey creature of your choice marked by the chosen mood, which determines one of the traits in its stat block. The creature disappears when it drops to 0 hit points or when the spell ends.\n\nThe creature is an ally to you and your companions. In combat, the creature shares your initiative count, but it takes its turn immediately after yours. It obeys your verbal commands (no action required by you). If you don't issue any, it takes the Dodge action and uses its move to avoid danger.\n\n**At Higher Levels.** When you cast this spell using a spell slot of 4th level or higher, use the higher level wherever the spell's level appears in the stat block.",
+        "level": 3,
+        "school": "conjuration",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 90
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": {
+                "text": "a gilded flower worth at least 300 gp",
+                "cost": {
+                    "gp": 300
+                },
+                "consumed": false
+            }
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "hour",
+                "concentration": true
+            }
+        ],
+        "classes": [
+            "druid-phb",
+            "ranger-phb",
+            "warlock-phb",
+            "wizard-phb"
+        ],
+        "filters": {
+            "tags": [
+                "requires_sight",
+                "summons_creature"
+            ]
+        }
+    },
+    {
+        "id": "summon-fiend-tce",
+        "kind": "spell",
+        "name": "Summon Fiend",
+        "source": "TCE",
+        "edition": "classic",
+        "reprinted_as": [
+            "summon-fiend-xphb"
+        ],
+        "text": "You call forth a fiendish spirit. It manifests in an unoccupied space that you can see within range. This corporeal form uses the Fiendish Spirit stat block. When you cast the spell, choose Demon, Devil, or Yugoloth. The creature resembles a fiend of the chosen type, which determines certain traits in its stat block. The creature disappears when it drops to 0 hit points or when the spell ends.\n\nThe creature is an ally to you and your companions. In combat, the creature shares your initiative count, but it takes its turn immediately after yours. It obeys your verbal commands (no action required by you). If you don't issue any, it takes the Dodge action and uses its move to avoid danger.\n\n**At Higher Levels.** When you cast this spell using a spell slot of 7th level or higher, use the higher level wherever the spell's level appears in the stat block.",
+        "level": 6,
+        "school": "conjuration",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 90
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": {
+                "text": "humanoid blood inside a ruby vial worth at least 600 gp",
+                "cost": {
+                    "gp": 600
+                },
+                "consumed": false
+            }
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "hour",
+                "concentration": true
+            }
+        ],
+        "classes": [
+            "warlock-phb",
+            "wizard-phb"
+        ],
+        "filters": {
+            "tags": [
+                "requires_sight",
+                "summons_creature"
+            ]
+        }
+    },
+    {
+        "id": "summon-shadowspawn-tce",
+        "kind": "spell",
+        "name": "Summon Shadowspawn",
+        "source": "TCE",
+        "edition": "classic",
+        "text": "You call forth a shadowy spirit. It manifests in an unoccupied space that you can see within range. This corporeal form uses the Shadow Spirit stat block. When you cast the spell, choose an emotion: Fury, Despair, or Fear. The creature resembles a misshapen biped marked by the chosen emotion, which determines certain traits in its stat block. The creature disappears when it drops to 0 hit points or when the spell ends.\n\nThe creature is an ally to you and your companions. In combat, the creature shares your initiative count, but it takes its turn immediately after yours. It obeys your verbal commands (no action required by you). If you don't issue any, it takes the Dodge action and uses its move to avoid danger.\n\n**At Higher Levels.** When you cast this spell using a spell slot of 4th level or higher, use the higher level wherever the spell's level appears in the stat block.",
+        "level": 3,
+        "school": "conjuration",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 90
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": {
+                "text": "tears inside a gem worth at least 300 gp",
+                "cost": {
+                    "gp": 300
+                },
+                "consumed": false
+            }
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "hour",
+                "concentration": true
+            }
+        ],
+        "classes": [
+            "warlock-phb",
+            "wizard-phb",
+            "warlock-xphb",
+            "wizard-xphb"
+        ],
+        "filters": {
+            "tags": [
+                "requires_sight",
+                "summons_creature"
+            ]
+        }
+    },
+    {
+        "id": "summon-undead-tce",
+        "kind": "spell",
+        "name": "Summon Undead",
+        "source": "TCE",
+        "edition": "classic",
+        "reprinted_as": [
+            "summon-undead-xphb"
+        ],
+        "text": "You call forth an undead spirit. It manifests in an unoccupied space that you can see within range. This corporeal form uses the Undead Spirit stat block. When you cast the spell, choose the creature's form: Ghostly, Putrid, or Skeletal. The spirit resembles an undead creature with the chosen form, which determines certain traits in its stat block. The creature disappears when it drops to 0 hit points or when the spell ends.\n\nThe creature is an ally to you and your companions. In combat, the creature shares your initiative count, but it takes its turn immediately after yours. It obeys your verbal commands (no action required by you). If you don't issue any, it takes the Dodge action and uses its move to avoid danger.\n\n**At Higher Levels.** When you cast this spell using a spell slot of 4th level or higher, use the higher level wherever the spell's level appears in the stat block.",
+        "level": 3,
+        "school": "necromancy",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 90
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": {
+                "text": "a gilded skull worth at least 300 gp",
+                "cost": {
+                    "gp": 300
+                },
+                "consumed": false
+            }
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "hour",
+                "concentration": true
+            }
+        ],
+        "classes": [
+            "warlock-phb",
+            "wizard-phb"
+        ],
+        "filters": {
+            "tags": [
+                "requires_sight",
+                "summons_creature"
+            ]
+        }
+    },
+    {
+        "id": "sword-burst-tce",
+        "kind": "spell",
+        "name": "Sword Burst",
+        "source": "TCE",
+        "edition": "classic",
+        "text": "You create a momentary circle of spectral blades that sweep around you. All other creatures within 5 feet of you must succeed on a Dexterity saving throw or take 1d6 force damage.\n\nThis spell's damage increases by 1d6 when you reach 5th level (2d6), 11th level (3d6), and 17th level (4d6).",
+        "level": 0,
+        "school": "conjuration",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "self",
+            "area": {
+                "shape": "radius",
+                "size": 5,
+                "unit": "feet"
+            }
+        },
+        "components": {
+            "v": true,
+            "s": false
+        },
+        "duration": [
+            {
+                "type": "instant",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "artificer-tce",
+            "sorcerer-phb",
+            "warlock-phb",
+            "wizard-phb",
+            "sorcerer-xphb",
+            "warlock-xphb",
+            "wizard-xphb",
+            "artificer-efa"
+        ],
+        "filters": {
+            "damage": [
+                "force"
+            ],
+            "saves": [
+                "dex"
+            ],
+            "area": [
+                "sphere"
+            ],
+            "tags": [
+                "scaling_effects"
+            ]
+        }
+    },
+    {
+        "id": "tashas-caustic-brew-tce",
+        "kind": "spell",
+        "name": "Tasha's Caustic Brew",
+        "source": "TCE",
+        "edition": "classic",
+        "text": "A stream of acid emanates from you in a line 30 feet long and 5 feet wide in a direction you choose. Each creature in the line must succeed on a Dexterity saving throw or be covered in acid for the spell's duration or until a creature uses its action to scrape or wash the acid off itself or another creature. A creature covered in the acid takes 2d4 acid damage at start of each of its turns.\n\n**At Higher Levels.** When you cast this spell using a spell slot of 2nd level or higher, the damage increases by 2d4 for each slot level above 1st.",
+        "level": 1,
+        "school": "evocation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "self",
+            "area": {
+                "shape": "line",
+                "size": 30,
+                "unit": "feet"
+            }
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "a bit of rotten food"
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "minute",
+                "concentration": true
+            }
+        ],
+        "classes": [
+            "artificer-tce",
+            "artificer-efa",
+            "sorcerer-phb",
+            "wizard-phb",
+            "sorcerer-xphb",
+            "wizard-xphb"
+        ],
+        "filters": {
+            "damage": [
+                "acid"
+            ],
+            "saves": [
+                "dex"
+            ]
+        }
+    },
+    {
+        "id": "tashas-mind-whip-tce",
+        "kind": "spell",
+        "name": "Tasha's Mind Whip",
+        "source": "TCE",
+        "edition": "classic",
+        "text": "You psychically lash out at one creature you can see within range. The target must make an Intelligence saving throw. On a failed save, the target takes 3d6 psychic damage, and it can't take a reaction until the end of its next turn. Moreover, on its next turn, it must choose whether it gets a move, an action, or a bonus action; it gets only one of the three. On a successful save, the target takes half as much damage and suffers none of the spell's other effects.\n\n**At Higher Levels.** When you cast this spell using a spell slot of 3rd level or higher, you can target one additional creature for each slot level above 2nd. The creatures must be within 30 feet of each other when you target them.",
+        "level": 2,
+        "school": "enchantment",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 90
+        },
+        "components": {
+            "v": true,
+            "s": false
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "round",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "sorcerer-phb",
+            "wizard-phb",
+            "sorcerer-xphb",
+            "wizard-xphb"
+        ],
+        "filters": {
+            "damage": [
+                "psychic"
+            ],
+            "saves": [
+                "int"
+            ],
+            "area": [
+                "single_target"
+            ],
+            "tags": [
+                "scaling_targets",
+                "requires_sight"
+            ]
+        }
+    },
+    {
+        "id": "tashas-otherworldly-guise-tce",
+        "kind": "spell",
+        "name": "Tasha's Otherworldly Guise",
+        "source": "TCE",
+        "edition": "classic",
+        "text": "Uttering an incantation, you draw on the magic of the Lower Planes or Upper Planes (your choice) to transform yourself. You gain the following benefits until the spell ends:\n\n- You are immune to fire and poison damage (Lower Planes) or radiant and necrotic damage (Upper Planes).\n- You are immune to the poisoned condition (Lower Planes) or the charmed condition (Upper Planes).\n- Spectral wings appear on your back, giving you a flying speed of 40 feet.\n- You have a +2 bonus to AC.\n- All your weapon attacks are magical, and when you make a weapon attack, you can use your spellcasting ability modifier, instead of Strength or Dexterity, for the attack and damage rolls.\n- You can attack twice, instead of once, when you take the Attack action on your turn. You ignore this benefit if you already have a feature, like Extra Attack, that lets you attack more than once when you take the Attack action on your turn.",
+        "level": 6,
+        "school": "transmutation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "bonus_action"
+            }
+        ],
+        "range": {
+            "type": "self"
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": {
+                "text": "an object engraved with a symbol of the Outer Planes, worth at least 500 gp",
+                "cost": {
+                    "gp": 500
+                },
+                "consumed": false
+            }
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "minute",
+                "concentration": true
+            }
+        ],
+        "classes": [
+            "sorcerer-phb",
+            "warlock-phb",
+            "wizard-phb",
+            "sorcerer-xphb",
+            "warlock-xphb",
+            "wizard-xphb"
+        ],
+        "filters": {
+            "gives_immune": [
+                "fire",
+                "poison",
+                "radiant",
+                "necrotic"
+            ],
+            "gives_condition_immune": [
+                "charmed",
+                "poisoned"
+            ],
+            "tags": [
+                "modifies_ac"
+            ]
+        }
+    }
+]

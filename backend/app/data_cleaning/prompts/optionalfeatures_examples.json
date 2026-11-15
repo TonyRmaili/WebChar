@@ -1,0 +1,134 @@
+[
+ {
+  "why": "One plain paragraph, so the feature uses the entry's own name. The bonus only applies to one spell, so it is a passive trait without modifiers (a `damage` modifier would add it to every attack). The level is 1 even though the invocation has a prerequisite.",
+  "input": {
+   "name": "Agonizing Blast",
+   "kind": "optional_feature",
+   "edition": "classic",
+   "race": null,
+   "race_blocks": [],
+   "text": "When you cast Eldritch Blast, add your Charisma modifier to the damage it deals on a hit."
+  },
+  "output": {
+   "features": [
+    {
+     "name": "Agonizing Blast",
+     "level": 1,
+     "category": "traits",
+     "uses": null,
+     "action": null,
+     "toggle": null,
+     "modifiers": []
+    }
+   ],
+   "extra_grants": {
+    "skills": [],
+    "saves": [],
+    "tools": [],
+    "languages": [],
+    "weapons": [],
+    "armor": [],
+    "resist": [],
+    "immune": [],
+    "vulnerable": [],
+    "condition_immune": [],
+    "senses": [],
+    "speed": null
+   }
+  }
+ },
+ {
+  "why": "A rider on a weapon hit, paid with a superiority die. The die is the class's own and grows with the class level, so it is not written as dice; with no other damage, `attack` is null. The DC is the maneuver save DC named by the class, so `dc` is null. The superiority die is a class resource, so `uses` is null. Prone is a condition the target gets.",
+  "input": {
+   "name": "Trip Attack",
+   "kind": "optional_feature",
+   "edition": "classic",
+   "race": null,
+   "race_blocks": [],
+   "text": "When you hit a creature with a weapon attack, you can expend one superiority die to attempt to knock the target down. You add the superiority die to the attack's damage roll, and if the target is Large or smaller, it must make a Strength saving throw. On a failed save, you knock the target prone."
+  },
+  "output": {
+   "features": [
+    {
+     "name": "Trip Attack",
+     "level": 1,
+     "category": "traits",
+     "uses": null,
+     "action": {
+      "range": null,
+      "area": null,
+      "attack": null,
+      "heal": null,
+      "save": {
+       "ability": "str",
+       "dc": null,
+       "on_success": "none",
+       "damage": [],
+       "conditions": [
+        "prone"
+       ]
+      },
+      "damage": [],
+      "heal_per_slot": null,
+      "temp_hp": null,
+      "temp_hp_per_slot": null
+     },
+     "toggle": null,
+     "modifiers": []
+    }
+   ],
+   "extra_grants": {
+    "skills": [],
+    "saves": [],
+    "tools": [],
+    "languages": [],
+    "weapons": [],
+    "armor": [],
+    "resist": [],
+    "immune": [],
+    "vulnerable": [],
+    "condition_immune": [],
+    "senses": [],
+    "speed": null
+   }
+  }
+ },
+ {
+  "why": "A metamagic option: the sorcery point cost is a class resource the app already tracks, so no `uses`. It changes how a spell is cast, which is a rule to remember: a passive trait.",
+  "input": {
+   "name": "Quickened Spell",
+   "kind": "optional_feature",
+   "edition": "classic",
+   "race": null,
+   "race_blocks": [],
+   "text": "When you cast a spell that has a casting time of 1 action, you can spend 2 sorcery points to change the casting time to 1 bonus action for this casting."
+  },
+  "output": {
+   "features": [
+    {
+     "name": "Quickened Spell",
+     "level": 1,
+     "category": "traits",
+     "uses": null,
+     "action": null,
+     "toggle": null,
+     "modifiers": []
+    }
+   ],
+   "extra_grants": {
+    "skills": [],
+    "saves": [],
+    "tools": [],
+    "languages": [],
+    "weapons": [],
+    "armor": [],
+    "resist": [],
+    "immune": [],
+    "vulnerable": [],
+    "condition_immune": [],
+    "senses": [],
+    "speed": null
+   }
+  }
+ }
+]

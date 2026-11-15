@@ -1,0 +1,862 @@
+[
+    {
+        "id": "shaman-wow",
+        "kind": "class",
+        "name": "Shaman",
+        "source": "WoW",
+        "edition": "one",
+        "hit_die": "d12",
+        "hp": {
+            "first": "12 + con_mod",
+            "per_level": "7 + con_mod"
+        },
+        "primary_ability": [
+            [
+                "str"
+            ]
+        ],
+        "saves": [
+            "str",
+            "con"
+        ],
+        "grants": {
+            "weapons": [
+                "simple_weapons",
+                "martial_weapons"
+            ],
+            "armor": [
+                "light",
+                "medium",
+                "shields"
+            ]
+        },
+        "choices": [
+            {
+                "type": "pool",
+                "id": "skills",
+                "label": "Skills",
+                "grant": "skills",
+                "count": 2,
+                "from": [
+                    "animal_handling",
+                    "athletics",
+                    "intimidation",
+                    "nature",
+                    "perception",
+                    "survival"
+                ]
+            },
+            {
+                "type": "bundle",
+                "id": "starting_equipment",
+                "label": "Starting Equipment",
+                "options": [
+                    {
+                        "id": "a",
+                        "label": "Greataxe, 4 Handaxe, Explorer's Pack, 15 GP",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "greataxe-xphb",
+                                    "qty": 1
+                                },
+                                {
+                                    "item": "handaxe-xphb",
+                                    "qty": 4
+                                },
+                                {
+                                    "item": "explorers-pack-xphb",
+                                    "qty": 1
+                                }
+                            ],
+                            "currency": {
+                                "gp": 15
+                            }
+                        }
+                    },
+                    {
+                        "id": "b",
+                        "label": "75 GP",
+                        "grants": {
+                            "currency": {
+                                "gp": 75
+                            }
+                        }
+                    }
+                ]
+            }
+        ],
+        "multiclass": {
+            "requires": [
+                {
+                    "str": 13
+                }
+            ],
+            "grants": {
+                "weapons": [
+                    "martial_weapons"
+                ],
+                "armor": [
+                    "shields"
+                ]
+            }
+        },
+        "subclass": {
+            "title": "Shaman Subclass",
+            "level": 3,
+            "text": "You gain a Shaman subclass of your choice. A subclass is a specialization that grants you features at certain Shaman levels. For the rest of your career, you gain each of your subclass's features that are of your Shaman level or lower."
+        },
+        "columns": [
+            {
+                "id": "rages",
+                "name": "Rages",
+                "values": {
+                    "1": 2,
+                    "3": 3,
+                    "6": 4,
+                    "12": 5,
+                    "17": 6
+                }
+            },
+            {
+                "id": "rage_damage",
+                "name": "Rage Damage",
+                "values": {
+                    "1": 2,
+                    "9": 3,
+                    "16": 4
+                }
+            },
+            {
+                "id": "weapon_mastery",
+                "name": "Weapon Mastery",
+                "values": {
+                    "1": 2,
+                    "4": 3,
+                    "10": 4
+                }
+            }
+        ],
+        "resources": [
+            {
+                "id": "rage",
+                "name": "Rage",
+                "max": {
+                    "1": 2,
+                    "3": 3,
+                    "6": 4,
+                    "12": 5,
+                    "17": 6
+                }
+            }
+        ],
+        "progression": [
+            {
+                "level": 1,
+                "features": [
+                    "barbarian-xphb:rage",
+                    "barbarian-xphb:unarmored-defense",
+                    "barbarian-xphb:weapon-mastery"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "weapon_mastery_1",
+                        "label": "Weapon Mastery",
+                        "grant": "weapon_masteries",
+                        "count": 2,
+                        "from": "proficient_weapons"
+                    }
+                ]
+            },
+            {
+                "level": 2,
+                "features": [
+                    "barbarian-xphb:danger-sense",
+                    "barbarian-xphb:reckless-attack"
+                ]
+            },
+            {
+                "level": 3,
+                "features": [
+                    "shaman-wow:totems"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "shaman_subclass_3",
+                        "label": "Shaman Subclass",
+                        "grant": "subclass",
+                        "count": 1,
+                        "from": "shaman-wow"
+                    }
+                ]
+            },
+            {
+                "level": 4,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "ability_score_improvement_4",
+                        "label": "Ability Score Improvement",
+                        "grant": "feats",
+                        "count": 1,
+                        "from": {
+                            "category": [
+                                "general"
+                            ]
+                        }
+                    },
+                    {
+                        "type": "pool",
+                        "id": "weapon_mastery_4",
+                        "label": "Weapon Mastery",
+                        "grant": "weapon_masteries",
+                        "count": 1,
+                        "from": "proficient_weapons"
+                    }
+                ]
+            },
+            {
+                "level": 5,
+                "features": [
+                    "barbarian-xphb:extra-attack",
+                    "barbarian-xphb:fast-movement"
+                ]
+            },
+            {
+                "level": 6,
+                "subclass_features": true
+            },
+            {
+                "level": 7,
+                "features": [
+                    "barbarian-xphb:feral-instinct",
+                    "barbarian-xphb:instinctive-pounce"
+                ]
+            },
+            {
+                "level": 8,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "ability_score_improvement_8",
+                        "label": "Ability Score Improvement",
+                        "grant": "feats",
+                        "count": 1,
+                        "from": {
+                            "category": [
+                                "general"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 9,
+                "features": [
+                    "barbarian-xphb:brutal-strike"
+                ]
+            },
+            {
+                "level": 10,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "weapon_mastery_10",
+                        "label": "Weapon Mastery",
+                        "grant": "weapon_masteries",
+                        "count": 1,
+                        "from": "proficient_weapons"
+                    }
+                ],
+                "subclass_features": true
+            },
+            {
+                "level": 11,
+                "features": [
+                    "barbarian-xphb:relentless-rage"
+                ]
+            },
+            {
+                "level": 12,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "ability_score_improvement_12",
+                        "label": "Ability Score Improvement",
+                        "grant": "feats",
+                        "count": 1,
+                        "from": {
+                            "category": [
+                                "general"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 13,
+                "features": [
+                    "barbarian-xphb:improved-brutal-strike"
+                ]
+            },
+            {
+                "level": 14,
+                "subclass_features": true
+            },
+            {
+                "level": 15,
+                "features": [
+                    "barbarian-xphb:persistent-rage"
+                ]
+            },
+            {
+                "level": 16,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "ability_score_improvement_16",
+                        "label": "Ability Score Improvement",
+                        "grant": "feats",
+                        "count": 1,
+                        "from": {
+                            "category": [
+                                "general"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 17,
+                "upgrades": [
+                    "barbarian-xphb:improved-brutal-strike"
+                ]
+            },
+            {
+                "level": 18,
+                "features": [
+                    "barbarian-xphb:indomitable-might"
+                ]
+            },
+            {
+                "level": 19,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "epic_boon_19",
+                        "label": "Epic Boon",
+                        "grant": "feats",
+                        "count": 1,
+                        "from": {
+                            "category": [
+                                "epic_boon"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 20,
+                "features": [
+                    "barbarian-xphb:primal-champion"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "barbarian-xphb:rage",
+                "name": "Rage",
+                "level": 1,
+                "source": "XPHB",
+                "text": "You can imbue yourself with a primal power called Rage, a force that grants you extraordinary might and resilience. You can enter it as a Bonus Action if you aren't wearing Heavy armor.\n\nYou can enter your Rage the number of times shown for your Barbarian level in the Rages column of the Barbarian Features table. You regain one expended use when you finish a Short Rest, and you regain all expended uses when you finish a Long Rest.\n\nWhile active, your Rage follows the rules below.\n\n**Damage Resistance.** You have Resistance to Bludgeoning, Piercing, and Slashing damage.\n\n**Rage Damage.** When you make an attack using Strength—with either a weapon or an Unarmed Strike—and deal damage to the target, you gain a bonus to the damage that increases as you gain levels as a Barbarian, as shown in the Rage Damage column of the Barbarian Features table.\n\n**Strength Advantage.** You have Advantage on Strength checks and Strength saving throws.\n\n**No Concentration or Spells.** You can't maintain Concentration, and you can't cast spells.\n\n**Duration.** The Rage lasts until the end of your next turn, and it ends early if you don Heavy armor or have the Incapacitated condition. If your Rage is still active on your next turn, you can extend the Rage for another round by doing one of the following:\n\n- Make an attack roll against an enemy.\n- Force an enemy to make a saving throw.\n- Take a Bonus Action to extend your Rage.\n\nEach time the Rage is extended, it lasts until the end of your next turn. You can maintain a Rage for up to 10 minutes.",
+                "srd": {
+                    "5.2": "Rage"
+                }
+            },
+            {
+                "id": "barbarian-xphb:unarmored-defense",
+                "name": "Unarmored Defense",
+                "level": 1,
+                "source": "XPHB",
+                "text": "While you aren't wearing any armor, your base Armor Class equals 10 plus your Dexterity and Constitution modifiers. You can use a Shield and still gain this benefit.",
+                "srd": {
+                    "5.2": "Unarmored Defense"
+                }
+            },
+            {
+                "id": "barbarian-xphb:weapon-mastery",
+                "name": "Weapon Mastery",
+                "level": 1,
+                "source": "XPHB",
+                "text": "Your training with weapons allows you to use the mastery properties of two kinds of Simple or Martial Melee weapons of your choice, such as Greataxes and Handaxes. Whenever you finish a Long Rest, you can practice weapon drills and change one of those weapon choices.\n\nWhen you reach certain Barbarian levels, you gain the ability to use the mastery properties of more kinds of weapons, as shown in the Weapon Mastery column of the Barbarian Features table.",
+                "srd": {
+                    "5.2": "Weapon Mastery"
+                }
+            },
+            {
+                "id": "barbarian-xphb:danger-sense",
+                "name": "Danger Sense",
+                "level": 2,
+                "source": "XPHB",
+                "text": "You gain an uncanny sense of when things aren't as they should be, giving you an edge when you dodge perils. You have Advantage on Dexterity saving throws unless you have the Incapacitated condition.",
+                "srd": {
+                    "5.2": "Danger Sense"
+                }
+            },
+            {
+                "id": "barbarian-xphb:reckless-attack",
+                "name": "Reckless Attack",
+                "level": 2,
+                "source": "XPHB",
+                "text": "You can throw aside all concern for defense to attack with increased ferocity. When you make your first attack roll on your turn, you can decide to attack recklessly. Doing so gives you Advantage on attack rolls using Strength until the start of your next turn, but attack rolls against you have Advantage during that time.",
+                "srd": {
+                    "5.2": "Reckless Attack"
+                }
+            },
+            {
+                "id": "shaman-wow:totems",
+                "name": "Totems",
+                "level": 3,
+                "text": "This feature replaces the Barbarian's Primal Knowledge feature.\n\nYou can coalesce elemental spirits into a totem that aids you and your allies. As a Bonus Action, you can plant one of the totems below into the ground in an unoccupied space you can see within 10 feet of yourself.\n\nA totem is a Small object that has AC 10 and 1 Hit Point and lasts for 1 minute, until it drops to 0 Hit Points, or until you use this feature again. At the end of each of your turns, the totem pulses with elemental energy that fills a 30-foot Emanation.\n\n**Earthbind Totem.** Each enemy in the Emanation has its Speed reduced by 10 feet until the end of your next turn.\n\n**Primal Knowledge Totem.** Each ally in the Emanation is empowered with nature's focus until the end of your next turn. While empowered in this way, whenever the creature makes an ability check using one of the following skills, the creature can make it as a Strength check even if it normally uses a different ability: Acrobatics, Intimidation, Perception, Stealth, or Survival. After you plant this totem, you can't do so again until you finish a Long Rest. You can also restore your use of this totem by expending one use of your Rage (no action required).\n\n**Tremor Totem.** Each ally in the Emanation has Immunity to the Charmed and Frightened conditions until the end of your next turn. If the creature was already Charmed or Frightened, those conditions are suppressed until the end of its next turn.\n\n**Wind Rush Totem.** Each ally in the Emanation has its Speed increased by 10 feet until the end of your next turn."
+            },
+            {
+                "id": "barbarian-xphb:extra-attack",
+                "name": "Extra Attack",
+                "level": 5,
+                "source": "XPHB",
+                "text": "You can attack twice instead of once whenever you take the Attack action on your turn.",
+                "srd": {
+                    "5.2": "Extra Attack"
+                }
+            },
+            {
+                "id": "barbarian-xphb:fast-movement",
+                "name": "Fast Movement",
+                "level": 5,
+                "source": "XPHB",
+                "text": "Your speed increases by 10 feet while you aren't wearing Heavy armor.",
+                "srd": {
+                    "5.2": "Fast Movement"
+                }
+            },
+            {
+                "id": "barbarian-xphb:feral-instinct",
+                "name": "Feral Instinct",
+                "level": 7,
+                "source": "XPHB",
+                "text": "Your instincts are so honed that you have Advantage on Initiative rolls.",
+                "srd": {
+                    "5.2": "Feral Instinct"
+                }
+            },
+            {
+                "id": "barbarian-xphb:instinctive-pounce",
+                "name": "Instinctive Pounce",
+                "level": 7,
+                "source": "XPHB",
+                "text": "As part of the Bonus Action you take to enter your Rage, you can move up to half your Speed.",
+                "srd": {
+                    "5.2": "Instinctive Pounce"
+                }
+            },
+            {
+                "id": "barbarian-xphb:brutal-strike",
+                "name": "Brutal Strike",
+                "level": 9,
+                "source": "XPHB",
+                "text": "If you use Reckless Attack, you can forgo any Advantage on one Strength-based attack roll of your choice on your turn. The chosen attack roll mustn't have Disadvantage. If the chosen attack roll hits, the target takes an extra 1d10 damage of the same type dealt by the weapon or Unarmed Strike, and you can cause one Brutal Strike effect of your choice. You have the following effect options.\n\n**Forceful Blow.** The target is pushed 15 feet straight away from you. You can then move up to half your Speed straight toward the target without provoking Opportunity Attacks.\n\n**Hamstring Blow.** The target's Speed is reduced by 15 feet until the start of your next turn. A target can be affected by only one Hamstring Blow at a time—the most recent one.",
+                "srd": {
+                    "5.2": "Brutal Strike"
+                }
+            },
+            {
+                "id": "barbarian-xphb:relentless-rage",
+                "name": "Relentless Rage",
+                "level": 11,
+                "source": "XPHB",
+                "text": "Your Rage can keep you fighting despite grievous wounds. If you drop to 0 Hit Points while your Rage is active and don't die outright, you can make a DC 10 Constitution saving throw. If you succeed, your Hit Points instead change to a number equal to twice your Barbarian level.\n\nEach time you use this feature after the first, the DC increases by 5. When you finish a Short or Long Rest, the DC resets to 10.",
+                "srd": {
+                    "5.2": "Relentless Rage"
+                }
+            },
+            {
+                "id": "barbarian-xphb:improved-brutal-strike",
+                "name": "Improved Brutal Strike",
+                "level": 13,
+                "source": "XPHB",
+                "text": "You have honed new ways to attack furiously. The following effects are now among your Brutal Strike options.\n\n**Staggering Blow.** The target has Disadvantage on the next saving throw it makes, and it can't make Opportunity Attacks until the start of your next turn.\n\n**Sundering Blow.** Before the start of your next turn, the next attack roll made by another creature against the target gains a +5 bonus to the roll. An attack roll can gain only one Sundering Blow bonus.\n\n**Improved Brutal Strike.** The extra damage of your Brutal Strike increases to 2d10. In addition, you can use two different Brutal Strike effects whenever you use your Brutal Strike feature.",
+                "srd": {
+                    "5.2": "Improved Brutal Strike"
+                }
+            },
+            {
+                "id": "barbarian-xphb:persistent-rage",
+                "name": "Persistent Rage",
+                "level": 15,
+                "source": "XPHB",
+                "text": "When you roll Initiative, you can regain all expended uses of Rage. After you regain uses of Rage in this way, you can't do so again until you finish a Long Rest.\n\nIn addition, your Rage is so fierce that it now lasts for 10 minutes without you needing to do anything to extend it from round to round. Your Rage ends early if you have the Unconscious condition (not just the Incapacitated condition) or don Heavy armor.",
+                "srd": {
+                    "5.2": "Persistent Rage"
+                }
+            },
+            {
+                "id": "barbarian-xphb:indomitable-might",
+                "name": "Indomitable Might",
+                "level": 18,
+                "source": "XPHB",
+                "text": "If your total for a Strength check or Strength saving throw is less than your Strength score, you can use that score in place of the total.",
+                "srd": {
+                    "5.2": "Indomitable Might"
+                }
+            },
+            {
+                "id": "barbarian-xphb:primal-champion",
+                "name": "Primal Champion",
+                "level": 20,
+                "source": "XPHB",
+                "text": "You embody primal power. Your Strength and Constitution scores increase by 4, to a maximum of 25.",
+                "srd": {
+                    "5.2": "Primal Champion"
+                }
+            }
+        ]
+    },
+    {
+        "id": "shaman-wow:berserker-wow",
+        "kind": "subclass",
+        "name": "Path of the Berserker",
+        "source": "WoW",
+        "edition": "one",
+        "text": "*Channel Rage into Violent Fury*\n\nBarbarians who walk the Path of the Berserker direct their Rage primarily toward violence. Their path is one of untrammeled fury, and they thrill in the chaos of battle as they allow their Rage to seize and empower them.",
+        "class_id": "shaman-wow",
+        "short_name": "Berserker",
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "barbarian-xphb:berserker-xphb:frenzy"
+                ]
+            },
+            {
+                "level": 6,
+                "features": [
+                    "barbarian-xphb:berserker-xphb:mindless-rage"
+                ]
+            },
+            {
+                "level": 10,
+                "features": [
+                    "barbarian-xphb:berserker-xphb:retaliation"
+                ]
+            },
+            {
+                "level": 14,
+                "features": [
+                    "barbarian-xphb:berserker-xphb:intimidating-presence"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "barbarian-xphb:berserker-xphb:frenzy",
+                "name": "Frenzy",
+                "level": 3,
+                "source": "XPHB",
+                "text": "If you use Reckless Attack while your Rage is active, you deal extra damage to the first target you hit on your turn with a Strength-based attack. To determine the extra damage, roll a number of d6s equal to your Rage Damage bonus, and add them together. The damage has the same type as the weapon or Unarmed Strike used for the attack.",
+                "srd": {
+                    "5.2": "Frenzy"
+                }
+            },
+            {
+                "id": "barbarian-xphb:berserker-xphb:mindless-rage",
+                "name": "Mindless Rage",
+                "level": 6,
+                "source": "XPHB",
+                "text": "You have Immunity to the Charmed and Frightened conditions while your Rage is active. If you're Charmed or Frightened when you enter your Rage, the condition ends on you.",
+                "srd": {
+                    "5.2": "Mindless Rage"
+                }
+            },
+            {
+                "id": "barbarian-xphb:berserker-xphb:retaliation",
+                "name": "Retaliation",
+                "level": 10,
+                "source": "XPHB",
+                "text": "When you take damage from a creature that is within 5 feet of you, you can take a Reaction to make one melee attack against that creature, using a weapon or an Unarmed Strike.",
+                "srd": {
+                    "5.2": "Retaliation"
+                }
+            },
+            {
+                "id": "barbarian-xphb:berserker-xphb:intimidating-presence",
+                "name": "Intimidating Presence",
+                "level": 14,
+                "source": "XPHB",
+                "text": "As a Bonus Action, you can strike terror into others with your menacing presence and primal power. When you do so, each creature of your choice in a 30-foot Emanation originating from you must make a Wisdom saving throw (DC 8 plus your Strength modifier and Proficiency Bonus). On a failed save, a creature has the Frightened condition for 1 minute. At the end of each of the Frightened creature's turns, the creature repeats the save, ending the effect on itself on a success.\n\nOnce you use this feature, you can't use it again until you finish a Long Rest unless you expend a use of your Rage (no action required) to restore your use of it.",
+                "srd": {
+                    "5.2": "Intimidating Presence"
+                }
+            }
+        ]
+    },
+    {
+        "id": "shaman-wow:elements-wow",
+        "kind": "subclass",
+        "name": "Path of the Elements",
+        "source": "WoW",
+        "edition": "one",
+        "text": "*Wield the Fury of the Elements*\n\nBarbarians who follow the Path of the Elements learn to harness their Rage into a storm of flames, frost, and lightning. When in their Rage, these Barbarians tap into the elemental forces of nature to create powerful magical effects.",
+        "class_id": "shaman-wow",
+        "short_name": "Elements",
+        "grants": {
+            "spells": [
+                {
+                    "spell": "elementalism-xphb",
+                    "how": "known",
+                    "at": 6,
+                    "ability": "wis"
+                },
+                {
+                    "spell": "daylight-xphb",
+                    "how": "prepared",
+                    "at": 6,
+                    "uses": {
+                        "resource": "rage",
+                        "cost": 1
+                    },
+                    "ability": "wis"
+                },
+                {
+                    "spell": "water-walk-xphb",
+                    "how": "prepared",
+                    "at": 6,
+                    "uses": {
+                        "resource": "rage",
+                        "cost": 1
+                    },
+                    "ability": "wis"
+                },
+                {
+                    "spell": "wind-wall-xphb",
+                    "how": "prepared",
+                    "at": 6,
+                    "uses": {
+                        "resource": "rage",
+                        "cost": 1
+                    },
+                    "ability": "wis"
+                }
+            ]
+        },
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "barbarian-xphb:elements-wow:raging-elements"
+                ]
+            },
+            {
+                "level": 6,
+                "features": [
+                    "barbarian-xphb:elements-wow:echo-of-the-elements"
+                ]
+            },
+            {
+                "level": 10,
+                "features": [
+                    "barbarian-xphb:elements-wow:primordial-bond"
+                ]
+            },
+            {
+                "level": 14,
+                "features": [
+                    "barbarian-xphb:elements-wow:elemental-overload"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "barbarian-xphb:elements-wow:raging-elements",
+                "name": "Raging Elements",
+                "level": 3,
+                "text": "Whenever you activate your Rage, you can take one of the following Raging Elements options of your choice as part of that Bonus Action. While your rage is active, you can take a Bonus Action to use that option again or a different option.\n\nIf a Raging Elements option requires a saving throw, the DC equals 8 plus your Constitution modifier and Proficiency Bonus.\n\n**Icefury.** When this effect is activated, roll a number of d8s equal to your Rage Damage bonus, and add them together. You hurl frigid ice at one creature within 30 feet of yourself. Make either a melee spell attack (if the target is within 5 feet) or a ranged spell attack, using Constitution as your spellcasting ability. On a hit, the attack deals Cold damage equal to the number rolled, and the next time the target takes Fire damage before the end of your next turn, it takes an extra 1d10 Fire damage.\n\n**Lava Burst.** When this effect is activated, roll a number of d4s equal to your Rage Damage bonus, and add them together. You then hurl molten lava at one creature you can see within 30 feet. The target makes a Dexterity saving throw. On a failed save, the target takes Fire damage equal to the number rolled, and the next time the target takes Lightning damage until the end of your next turn, it takes an extra 1d8 Lightning damage. On a successful save, the target takes half as much damage only.\n\n**Lightning Bolt.** When this effect is activated, roll a number of d6s equal to your Rage Damage bonus, and add them together. You can then hurl a bolt of lightning at one other creature you can see within 30 feet. The target makes a Dexterity saving throw. On a failed save, the target takes Lightning damage equal to the roll's total, and the next time the target takes Cold damage until the end of your next turn, it takes an extra 1d6 Cold damage. On a successful save, the target takes half as much damage only."
+            },
+            {
+                "id": "barbarian-xphb:elements-wow:echo-of-the-elements",
+                "name": "Echo of the Elements",
+                "level": 6,
+                "text": "You tap into the tranquility of the elements. You know the Elementalism cantrip. In addition, you can expend a use of your Rage to cast Daylight, Water Walk, or Wind Wall. Wisdom is your spellcasting ability for these spells.",
+                "consumes": {
+                    "resource": "rage",
+                    "amount": 1
+                }
+            },
+            {
+                "id": "barbarian-xphb:elements-wow:primordial-bond",
+                "name": "Primordial Bond",
+                "level": 10,
+                "text": "While your Rage is active, you have Resistance to Cold, Fire, and Lightning damage."
+            },
+            {
+                "id": "barbarian-xphb:elements-wow:elemental-overload",
+                "name": "Elemental Overload",
+                "level": 14,
+                "text": "The power of the storm you channel grows mightier, lashing out at your foes. Your Raging Elements options gain the following effects.\n\n**Icefury.** Whether or not you hit the target with this option, the target subtracts half the number rolled (round down) from the next damage roll it makes before the start of your next turn.\n\n**Lava Burst.** Whether or not the target fails its saving throw against this option, the target and each enemy within 10 feet of it start burning.\n\n**Lightning Bolt.** Whether or not the target fails its saving throw against this option, a bolt of lightning leaps from the target to another target of your choice that you can see within 30 feet of the first target. The new target makes a Dexterity saving throw, taking Lightning damage equal to the roll's total on a failed save or half as much damage on a successful one."
+            }
+        ]
+    },
+    {
+        "id": "shaman-wow:spiritual-guardian-wow",
+        "kind": "subclass",
+        "name": "Path of the Spiritual Guardian",
+        "source": "WoW",
+        "edition": "one",
+        "text": "*Call on the Spirits for Combat Aid*\n\nBarbarians who walk the Path of the Spiritual Guardian call on spirits—whether bestial spirits of nature, spirits of departed ancestors, or spirits of raw elemental power—to guide and protect them. When these Barbarians rage, they contact the realm of the spirits and call on them for aid.",
+        "class_id": "shaman-wow",
+        "short_name": "Spiritual Guardian",
+        "grants": {
+            "spells": [
+                {
+                    "spell": "augury-xphb",
+                    "how": "prepared",
+                    "at": 10,
+                    "uses": {
+                        "max": 1,
+                        "reset": "short"
+                    },
+                    "ability": "wis"
+                },
+                {
+                    "spell": "clairvoyance-xphb",
+                    "how": "prepared",
+                    "at": 10,
+                    "uses": {
+                        "max": 1,
+                        "reset": "short"
+                    },
+                    "ability": "wis"
+                }
+            ]
+        },
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "barbarian-xphb:spiritual-guardian-wow:spiritual-protectors"
+                ]
+            },
+            {
+                "level": 6,
+                "features": [
+                    "barbarian-xphb:spiritual-guardian-wow:spirit-shield"
+                ]
+            },
+            {
+                "level": 10,
+                "features": [
+                    "barbarian-xphb:spiritual-guardian-wow:consult-the-spirits"
+                ]
+            },
+            {
+                "level": 14,
+                "features": [
+                    "barbarian-xphb:spiritual-guardian-wow:spirits-fury"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "barbarian-xphb:spiritual-guardian-wow:spiritual-protectors",
+                "name": "Spiritual Protectors",
+                "level": 3,
+                "text": "Your Rage summons spectral warriors to your aid. While your Rage is active, when you hit a creature with a weapon or an Unarmed Strike, that creature becomes a target of the spirits, which cause one of the following effects of your choice.\n\n**Distract.** Until the start of your next turn, the target has Disadvantage on attack rolls against targets other than you or another Barbarian who has this feature.\n\n**Hinder.** You can activate the Slow mastery property in addition to a different mastery property you're using with that weapon.\n\n**Strike.** The target takes an extra 1d4 damage, which can be Cold, Fire, or Lightning damage (your choice)."
+            },
+            {
+                "id": "barbarian-xphb:spiritual-guardian-wow:spirit-shield",
+                "name": "Spirit Shield",
+                "level": 6,
+                "text": "Your guardian spirits can provide supernatural protection to those you defend. While your Rage is active, when another creature you can see within 30 feet of you takes damage, you can take a Reaction to reduce that damage. To determine the amount the damage is reduced by, roll a number of d6s equal to your Rage Damage bonus, and add them together."
+            },
+            {
+                "id": "barbarian-xphb:spiritual-guardian-wow:consult-the-spirits",
+                "name": "Consult the Spirits",
+                "level": 10,
+                "text": "You gain the ability to consult with your guardian spirits. When you do so, you cast the Augury or Clairvoyance spell without expending a spell slot or needing Material components. Rather than creating a spherical sensor, this use of Clairvoyance invisibly summons one of your guardian spirits to the chosen location. Wisdom is your spellcasting ability for these spells.\n\nAfter you cast either spell in this way, you can't use this feature again until you finish a Short or Long Rest."
+            },
+            {
+                "id": "barbarian-xphb:spiritual-guardian-wow:spirits-fury",
+                "name": "Spirits' Fury",
+                "level": 14,
+                "text": "Your spirits hasten your attacks. When you make an attack roll with a Melee weapon as part of the Attack action and roll 18–20 on the d20, you can make one additional attack roll with the same weapon as part of that action. Once you use this feature, you can't do so again until the start of your next turn."
+            }
+        ]
+    },
+    {
+        "id": "shaman-wow:world-tree-wow",
+        "kind": "subclass",
+        "name": "Path of the World Tree",
+        "source": "WoW",
+        "edition": "one",
+        "text": "*Trace the Roots and Branches of the Multiverse*\n\nBarbarians who follow the Path of the World Tree connect with the cosmic tree Yggdrasil through their Rage. This tree grows among the Outer Planes, connecting them to each other and the Material Plane. These Barbarians draw on the tree's magic for vitality and as a means of dimensional travel.",
+        "class_id": "shaman-wow",
+        "short_name": "World Tree",
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "barbarian-xphb:world-tree-xphb:vitality-of-the-tree"
+                ]
+            },
+            {
+                "level": 6,
+                "features": [
+                    "barbarian-xphb:world-tree-xphb:branches-of-the-tree"
+                ]
+            },
+            {
+                "level": 10,
+                "features": [
+                    "barbarian-xphb:world-tree-xphb:battering-roots"
+                ]
+            },
+            {
+                "level": 14,
+                "features": [
+                    "barbarian-xphb:world-tree-xphb:travel-along-the-tree"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "barbarian-xphb:world-tree-xphb:vitality-of-the-tree",
+                "name": "Vitality of the Tree",
+                "level": 3,
+                "source": "XPHB",
+                "text": "Your Rage taps into the life force of the World Tree. You gain the following benefits.\n\n**Vitality Surge.** When you activate your Rage, you gain a number of Temporary Hit Points equal to your Barbarian level.\n\n**Life-Giving Force.** At the start of each of your turns while your Rage is active, you can choose another creature within 10 feet of yourself to gain Temporary Hit Points. To determine the number of Temporary Hit Points, roll a number of d6s equal to your Rage Damage bonus, and add them together. If any of these Temporary Hit Points remain when your Rage ends, they vanish."
+            },
+            {
+                "id": "barbarian-xphb:world-tree-xphb:branches-of-the-tree",
+                "name": "Branches of the Tree",
+                "level": 6,
+                "source": "XPHB",
+                "text": "Whenever a creature you can see starts its turn within 30 feet of you while your Rage is active, you can take a Reaction to summon spectral branches of the World Tree around it. The target must succeed on a Strength saving throw (DC 8 plus your Strength modifier and Proficiency Bonus) or be teleported to an unoccupied space you can see within 5 feet of yourself or in the nearest unoccupied space you can see. After the target teleports, you can reduce its Speed to 0 until the end of the current turn."
+            },
+            {
+                "id": "barbarian-xphb:world-tree-xphb:battering-roots",
+                "name": "Battering Roots",
+                "level": 10,
+                "source": "XPHB",
+                "text": "During your turn, your reach is 10 feet greater with any Melee weapon that has the Heavy or Versatile property, as tendrils of the World Tree extend from you. When you hit with such a weapon on your turn, you can activate the Push or Topple mastery property in addition to a different mastery property you're using with that weapon."
+            },
+            {
+                "id": "barbarian-xphb:world-tree-xphb:travel-along-the-tree",
+                "name": "Travel Along the Tree",
+                "level": 14,
+                "source": "XPHB",
+                "text": "When you activate your Rage and as a Bonus Action while your Rage is active, you can teleport up to 60 feet to an unoccupied space you can see.\n\nIn addition, once per Rage, you can increase the range of that teleport to 150 feet. When you do so, you can also bring up to six willing creatures who are within 10 feet of you. Each creature teleports to an unoccupied space of your choice within 10 feet of your destination space."
+            }
+        ]
+    }
+]

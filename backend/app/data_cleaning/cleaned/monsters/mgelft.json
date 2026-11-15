@@ -1,0 +1,976 @@
+[
+    {
+        "id": "dankwood-duergar-mgelft",
+        "kind": "monster",
+        "name": "Dankwood Duergar",
+        "source": "MGELFT",
+        "edition": "classic",
+        "tags": [
+            "Sunlight Sensitivity"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "dwarf"
+            ]
+        },
+        "alignment": [
+            "lawful grumpy"
+        ],
+        "ac": [
+            {
+                "value": 18,
+                "from": [
+                    "Plate Mail"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 26,
+            "formula": "4d8 + 8"
+        },
+        "speed": {
+            "walk": 25
+        },
+        "abilities": {
+            "str": 16,
+            "dex": 11,
+            "con": 14,
+            "int": 11,
+            "wis": 10,
+            "cha": 9
+        },
+        "senses": {
+            "darkvision": 120
+        },
+        "passive_perception": 10,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "poison"
+                ]
+            }
+        },
+        "languages": [
+            "Dwarvish",
+            "Undercommon"
+        ],
+        "cr": {
+            "cr": "2",
+            "xp": 450,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "duergar-resilience",
+                "name": "Duergar Resilience",
+                "category": "traits",
+                "text": "The Dankwood duergar has advantage on saving throws against poison, spells, and illusions, as well as to resist being charmed or paralyzed."
+            },
+            {
+                "id": "sunlight-sensitivity",
+                "name": "Sunlight Sensitivity",
+                "category": "traits",
+                "text": "While in sunlight, the Dankwood duergar has disadvantage on attack rolls, as well as on Wisdom (Perception) checks that rely on sight."
+            },
+            {
+                "id": "verbal-jab",
+                "name": "Verbal Jab",
+                "category": "actions",
+                "text": "The duergar unleashes a string of insults laced with subtle enchantments at a creature they can see within 60 feet. If the creature can hear them (it doesn't need to understand them), it must succeed on a DC 12 Wisdom saving throw or take 1d4 psychic damage and have disadvantage on the next attack roll it makes before the end of its next turn.",
+                "action": {
+                    "save": {
+                        "ability": "wis",
+                        "dc": 12,
+                        "on_success": "none",
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "type": "psychic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "haymaker",
+                "name": "Haymaker",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 9 (1d6 + 6) bludgeoning damage. If the duergar is enlarged, increase their damage to 10 (2d6 + 3) bludgeoning damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 6,
+                                "type": "bludgeoning"
+                            },
+                            {
+                                "dice": "2d6",
+                                "bonus": 3,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning"
+            ],
+            "saves_forced": [
+                "wis"
+            ],
+            "senses": [
+                "superior_darkvision"
+            ],
+            "traits": [
+                "sunlight_sensitivity"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "dwarvish",
+                "undercommon"
+            ]
+        }
+    },
+    {
+        "id": "dankwood-grung-mgelft",
+        "kind": "monster",
+        "name": "Dankwood Grung",
+        "source": "MGELFT",
+        "edition": "classic",
+        "tags": [
+            "Amphibious"
+        ],
+        "size": [
+            "small"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "grung"
+            ]
+        },
+        "alignment": [
+            "lawful grumpy"
+        ],
+        "ac": [
+            {
+                "value": 13
+            }
+        ],
+        "hp": {
+            "average": 27,
+            "formula": "5d6 + 10"
+        },
+        "speed": {
+            "walk": 25,
+            "climb": 25
+        },
+        "abilities": {
+            "str": 7,
+            "dex": 16,
+            "con": 15,
+            "int": 10,
+            "wis": 11,
+            "cha": 15
+        },
+        "saves": {
+            "dex": 5
+        },
+        "skills": {
+            "athletics": 2,
+            "intimidation": 4,
+            "perception": 2,
+            "stealth": 5
+        },
+        "passive_perception": 12,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "Grung"
+        ],
+        "cr": {
+            "cr": "1",
+            "xp": 200,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "amphibious",
+                "name": "Amphibious",
+                "category": "traits",
+                "text": "The grung can breathe air and water."
+            },
+            {
+                "id": "poisonous-skin",
+                "name": "Poisonous Skin",
+                "category": "traits",
+                "text": "Any creature that grapples the grung or otherwise comes into direct contact with the grung's skin must succeed on a DC 12 Constitution saving throw or become poisoned for 1 minute. A poisoned creature no longer in direct contact with the grung can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.",
+                "action": {
+                    "save": {
+                        "ability": "con",
+                        "dc": 12,
+                        "on_success": "none",
+                        "conditions": [
+                            "poisoned"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "standing-leap",
+                "name": "Standing Leap",
+                "category": "traits",
+                "text": "The grung's long jump is up to 25 feet and its high jump is up to 15 feet, with or without a running start."
+            },
+            {
+                "id": "grumpy-grung-growl",
+                "name": "Grumpy Grung Growl",
+                "category": "actions",
+                "text": "A ferocious gurgling issues from the throat of the Dankwood grung, warning those within 15 feet that they are indeed grumpy. Creatures in that area must succeed at a DC 12 Charisma saving throw or be frightened until the end of their next turn.",
+                "action": {
+                    "save": {
+                        "ability": "cha",
+                        "dc": 12,
+                        "on_success": "none",
+                        "conditions": [
+                            "frightened"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "dagger",
+                "name": "Dagger",
+                "category": "actions",
+                "text": "Melee or Ranged Weapon Attack: +0 to hit, reach 5 ft. or range 20/60 ft., one target. Hit: 3 (1d4 + 1) piercing damage in melee, or 3 (1d4 + 1) piercing damage at range. Target must succeed on a DC 12 Constitution saving throw or take 5 (2d4) poison damage.",
+                "action": {
+                    "range": "reach 5 ft. or range 20/60 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 0,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 1,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "1d4",
+                                "bonus": 1,
+                                "type": "piercing",
+                                "condition": "instead"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "con",
+                        "dc": 12,
+                        "on_success": "none",
+                        "damage": [
+                            {
+                                "dice": "2d4",
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "items": [
+            {
+                "item": "dagger-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "poison",
+                "piercing"
+            ],
+            "saves_forced": [
+                "cha",
+                "con"
+            ],
+            "movement": [
+                "climb"
+            ],
+            "traits": [
+                "amphibious"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack",
+                "ranged_weapon_attack",
+                "thrown_weapon"
+            ],
+            "languages": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "king-robbit-the-slimy-mgelft",
+        "kind": "monster",
+        "name": "King Robbit the Slimy",
+        "source": "MGELFT",
+        "edition": "classic",
+        "tags": [
+            "Amphibious"
+        ],
+        "size": [
+            "small"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "grung"
+            ]
+        },
+        "alignment": [
+            "lawful grumpy"
+        ],
+        "ac": [
+            {
+                "value": 13
+            }
+        ],
+        "hp": {
+            "average": 27,
+            "formula": "5d6 + 10"
+        },
+        "speed": {
+            "walk": 25,
+            "climb": 25
+        },
+        "abilities": {
+            "str": 7,
+            "dex": 16,
+            "con": 15,
+            "int": 10,
+            "wis": 11,
+            "cha": 15
+        },
+        "saves": {
+            "dex": 5
+        },
+        "skills": {
+            "athletics": 2,
+            "intimidation": 4,
+            "perception": 2,
+            "stealth": 5
+        },
+        "passive_perception": 12,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "Grung"
+        ],
+        "cr": {
+            "cr": "2",
+            "xp": 450,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "amphibious",
+                "name": "Amphibious",
+                "category": "traits",
+                "text": "The grung can breathe air and water."
+            },
+            {
+                "id": "poisonous-skin",
+                "name": "Poisonous Skin",
+                "category": "traits",
+                "text": "Any creature that grapples the grung or otherwise comes into direct contact with the grung's skin must succeed on a DC 12 Constitution saving throw or become poisoned for 1 minute. A poisoned creature no longer in direct contact with the grung can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.",
+                "action": {
+                    "save": {
+                        "ability": "con",
+                        "dc": 12,
+                        "on_success": "none",
+                        "conditions": [
+                            "poisoned"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "standing-leap",
+                "name": "Standing Leap",
+                "category": "traits",
+                "text": "The grung's long jump is up to 25 feet and its high jump is up to 15 feet, with or without a running start."
+            },
+            {
+                "id": "grumpy-grung-growl",
+                "name": "Grumpy Grung Growl",
+                "category": "actions",
+                "text": "A ferocious gurgling issues from the throat of the Dankwood grung, warning those within 15 feet that they are indeed grumpy. Creatures in that area must succeed at a DC 12 Charisma saving throw or be frightened until the end of their next turn.",
+                "action": {
+                    "save": {
+                        "ability": "cha",
+                        "dc": 12,
+                        "on_success": "none",
+                        "conditions": [
+                            "frightened"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "dagger",
+                "name": "Dagger",
+                "category": "actions",
+                "text": "Melee or Ranged Weapon Attack: +0 to hit, reach 5 ft. or range 20/60 ft., one target. Hit: 3 (1d4 + 1) piercing damage in melee, or 3 (1d4 + 1) piercing damage at range. Target must succeed on a DC 12 Constitution saving throw or take 5 (2d4) poison damage.",
+                "action": {
+                    "range": "reach 5 ft. or range 20/60 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 0,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 1,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "1d4",
+                                "bonus": 1,
+                                "type": "piercing",
+                                "condition": "instead"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "con",
+                        "dc": 12,
+                        "on_success": "none",
+                        "damage": [
+                            {
+                                "dice": "2d4",
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "shortbow",
+                "name": "Shortbow",
+                "category": "actions",
+                "text": "Ranged Weapon Attack: +5 to hit, range 80/320 ft., one target. Hit: 9 (1d6 + 6) piercing damage. Target must succeed on a DC 12 Constitution saving throw or take 5 (2d4) poison damage.",
+                "action": {
+                    "range": "range 80/320 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 6,
+                                "type": "piercing"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "con",
+                        "dc": 12,
+                        "on_success": "none",
+                        "damage": [
+                            {
+                                "dice": "2d4",
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "items": [
+            {
+                "item": "dagger-phb",
+                "qty": 1,
+                "attacks": true
+            },
+            {
+                "item": "shortbow-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "poison",
+                "piercing"
+            ],
+            "saves_forced": [
+                "cha",
+                "con"
+            ],
+            "movement": [
+                "climb"
+            ],
+            "traits": [
+                "amphibious"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack",
+                "ranged_weapon",
+                "ranged_weapon_attack",
+                "thrown_weapon"
+            ],
+            "languages": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "sludge-hag-mgelft",
+        "kind": "monster",
+        "name": "Sludge Hag",
+        "source": "MGELFT",
+        "edition": "classic",
+        "tags": [
+            "Amorphous",
+            "Amphibious"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "fey"
+        },
+        "alignment": [
+            "neutral oozy"
+        ],
+        "ac": [
+            {
+                "value": 17,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 82,
+            "formula": "11d8 + 33"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 18,
+            "dex": 12,
+            "con": 16,
+            "int": 13,
+            "wis": 14,
+            "cha": 14
+        },
+        "skills": {
+            "arcana": 3,
+            "deception": 4,
+            "perception": 4,
+            "stealth": 3
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 14,
+        "languages": [
+            "Common",
+            "Draconic",
+            "Sylvan"
+        ],
+        "cr": {
+            "cr": "3",
+            "xp": 700,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "amorphous",
+                "name": "Amorphous",
+                "category": "traits",
+                "text": "The sludge hag can move through a space as narrow as 1 inch wide without squeezing."
+            },
+            {
+                "id": "amphibious",
+                "name": "Amphibious",
+                "category": "traits",
+                "text": "The sludge hag can breathe air and water."
+            },
+            {
+                "id": "false-appearance",
+                "name": "False Appearance",
+                "category": "actions",
+                "text": "The sludge hag collapses into a oily pool of sludge. While motionless, the sludge hag is indistinguishable from any other oily pool of oozy drippiness."
+            },
+            {
+                "id": "sludge-slap",
+                "name": "Sludge Slap",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 12 (1d8 + 8) bludgeoning damage, plus 4 (1d8) acid damage. Sludge Slap does both bludgeoning and acid damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 8,
+                                "type": "bludgeoning"
+                            },
+                            {
+                                "dice": "1d8",
+                                "type": "acid"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Innate Spellcasting",
+                "footer": "The hag's innate spellcasting ability is Charisma (spell save DC 12). She can innately cast the following spells, requiring no material components.",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "acid-splash-phb"
+                            },
+                            {
+                                "spell": "dancing-lights-phb"
+                            },
+                            {
+                                "spell": "minor-illusion-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "acid",
+                "bludgeoning"
+            ],
+            "saves_forced": [
+                "dex"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "traits": [
+                "amorphous",
+                "amphibious"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "draconic",
+                "sylvan"
+            ],
+            "spellcasting": [
+                "innate"
+            ]
+        }
+    },
+    {
+        "id": "spiderfrog-mgelft",
+        "kind": "monster",
+        "name": "Spiderfrog",
+        "source": "MGELFT",
+        "edition": "classic",
+        "tags": [
+            "Amphibious",
+            "Spider Climb"
+        ],
+        "size": [
+            "small"
+        ],
+        "creature_type": {
+            "type": "beast"
+        },
+        "alignment": [
+            "chaotic sticky"
+        ],
+        "ac": [
+            {
+                "value": 13
+            }
+        ],
+        "hp": {
+            "average": 13,
+            "formula": "2d8 + 4"
+        },
+        "speed": {
+            "walk": 30,
+            "climb": 30
+        },
+        "abilities": {
+            "str": 10,
+            "dex": 16,
+            "con": 14,
+            "int": 3,
+            "wis": 12,
+            "cha": 4
+        },
+        "skills": {
+            "perception": 3,
+            "stealth": 7
+        },
+        "senses": {
+            "darkvision": 60,
+            "blindsight": 10
+        },
+        "passive_perception": 13,
+        "cr": {
+            "cr": "1/4",
+            "xp": 50,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "amphibious",
+                "name": "Amphibious",
+                "category": "traits",
+                "text": "The spiderfrog can breathe air and water."
+            },
+            {
+                "id": "spider-climb",
+                "name": "Spider Climb",
+                "category": "traits",
+                "text": "The spiderfrog can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check."
+            },
+            {
+                "id": "standing-leap",
+                "name": "Standing Leap",
+                "category": "traits",
+                "text": "Spiderfrog's long jump is up to 20 feet and its high jump is up to 10 feet, with or without a running start."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +2 to hit, reach 5 ft., one target. Hit: 4 (1d6 + 1) piercing damage. Target is grappled (escape DC 11). Until this grapple ends, the target is restrained, and spiderfrog can't bite another target.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 2,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 1,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing"
+            ],
+            "conditions_inflicted": [
+                "grappled",
+                "restrained"
+            ],
+            "senses": [
+                "blindsight",
+                "darkvision"
+            ],
+            "movement": [
+                "climb"
+            ],
+            "traits": [
+                "amphibious",
+                "spider_climb"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ]
+        }
+    },
+    {
+        "id": "yeti-tyke-mgelft",
+        "kind": "monster",
+        "name": "Yeti Tyke",
+        "source": "MGELFT",
+        "edition": "classic",
+        "tags": [
+            "Camouflage",
+            "Keen Senses"
+        ],
+        "size": [
+            "small"
+        ],
+        "creature_type": {
+            "type": "monstrosity"
+        },
+        "alignment": [
+            "chaotic silly"
+        ],
+        "ac": [
+            {
+                "value": 11,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 9,
+            "formula": "2d6 + 2"
+        },
+        "speed": {
+            "walk": 20,
+            "climb": 20
+        },
+        "abilities": {
+            "str": 10,
+            "dex": 11,
+            "con": 12,
+            "int": 6,
+            "wis": 8,
+            "cha": 5
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 9,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "cold"
+                ]
+            }
+        },
+        "languages": [
+            "understands Yeti but can't speak"
+        ],
+        "cr": {
+            "cr": "1/8",
+            "xp": 25,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "keen-smell",
+                "name": "Keen Smell",
+                "category": "traits",
+                "text": "The yeti tyke has advantage on Wisdom (Perception) checks that rely on smell."
+            },
+            {
+                "id": "snow-camouflage",
+                "name": "Snow Camouflage",
+                "category": "traits",
+                "text": "The yeti tyke has advantage on Dexterity (Stealth) checks made to hide in snowy terrain."
+            },
+            {
+                "id": "claw",
+                "name": "Claw",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +2 to hit, reach 5 ft., one target. Hit: 3 (1d4 + 1) slashing damage, plus 2 (1d4) cold damage. Claw does both slashing and cold damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 2,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 1,
+                                "type": "slashing"
+                            },
+                            {
+                                "dice": "1d4",
+                                "type": "cold"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "cold",
+                "slashing"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "movement": [
+                "climb"
+            ],
+            "traits": [
+                "camouflage",
+                "keen_senses"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "cant_speak",
+                "other"
+            ]
+        }
+    }
+]

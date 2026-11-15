@@ -1,0 +1,1523 @@
+[
+    {
+        "id": "warlock-xphb",
+        "kind": "class",
+        "name": "Warlock",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Warlock"
+        },
+        "hit_die": "d8",
+        "hp": {
+            "first": "8 + con_mod",
+            "per_level": "5 + con_mod"
+        },
+        "primary_ability": [
+            [
+                "cha"
+            ]
+        ],
+        "saves": [
+            "wis",
+            "cha"
+        ],
+        "grants": {
+            "weapons": [
+                "simple_weapons"
+            ],
+            "armor": [
+                "light"
+            ],
+            "spells": [
+                {
+                    "spell": "contact-other-plane-xphb",
+                    "how": "prepared",
+                    "at": 9
+                }
+            ]
+        },
+        "choices": [
+            {
+                "type": "pool",
+                "id": "skills",
+                "label": "Skills",
+                "grant": "skills",
+                "count": 2,
+                "from": [
+                    "arcana",
+                    "deception",
+                    "history",
+                    "intimidation",
+                    "investigation",
+                    "nature",
+                    "religion"
+                ]
+            },
+            {
+                "type": "bundle",
+                "id": "starting_equipment",
+                "label": "Starting Equipment",
+                "options": [
+                    {
+                        "id": "a",
+                        "label": "Leather Armor, Sickle, 2 Dagger, Orb, Book, Scholar's Pack, 15 GP",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "leather-armor-xphb",
+                                    "qty": 1
+                                },
+                                {
+                                    "item": "sickle-xphb",
+                                    "qty": 1
+                                },
+                                {
+                                    "item": "dagger-xphb",
+                                    "qty": 2
+                                },
+                                {
+                                    "item": "orb-xphb",
+                                    "qty": 1
+                                },
+                                {
+                                    "item": "book-xphb",
+                                    "qty": 1
+                                },
+                                {
+                                    "item": "scholars-pack-xphb",
+                                    "qty": 1
+                                }
+                            ],
+                            "currency": {
+                                "gp": 15
+                            }
+                        }
+                    },
+                    {
+                        "id": "b",
+                        "label": "100 GP",
+                        "grants": {
+                            "currency": {
+                                "gp": 100
+                            }
+                        }
+                    }
+                ]
+            }
+        ],
+        "multiclass": {
+            "requires": [
+                {
+                    "cha": 13
+                }
+            ],
+            "grants": {
+                "armor": [
+                    "light"
+                ]
+            }
+        },
+        "subclass": {
+            "title": "Warlock Subclass",
+            "level": 3,
+            "text": "You gain a Warlock subclass of your choice. A subclass is a specialization that grants you features at certain Warlock levels. For the rest of your career, you gain each of your subclass's features that are of your Warlock level or lower."
+        },
+        "columns": [
+            {
+                "id": "invocations",
+                "name": "Invocations",
+                "values": {
+                    "1": 1,
+                    "2": 3,
+                    "5": 5,
+                    "7": 6,
+                    "9": 7,
+                    "12": 8,
+                    "15": 9,
+                    "18": 10
+                }
+            }
+        ],
+        "spellcasting": {
+            "ability": "cha",
+            "progression": "pact",
+            "list": "warlock-xphb",
+            "cantrips": {
+                "1": 2,
+                "4": 3,
+                "10": 4
+            },
+            "prepared": {
+                "1": 2,
+                "2": 3,
+                "3": 4,
+                "4": 5,
+                "5": 6,
+                "6": 7,
+                "7": 8,
+                "8": 9,
+                "9": 10,
+                "11": 11,
+                "13": 12,
+                "15": 13,
+                "17": 14,
+                "19": 15
+            },
+            "change": "level",
+            "pact": {
+                "slots": {
+                    "1": 1,
+                    "2": 2,
+                    "11": 3,
+                    "17": 4
+                },
+                "level": {
+                    "1": 1,
+                    "3": 2,
+                    "5": 3,
+                    "7": 4,
+                    "9": 5
+                }
+            },
+            "arcanum": {
+                "11": 6,
+                "13": 7,
+                "15": 8,
+                "17": 9
+            }
+        },
+        "progression": [
+            {
+                "level": 1,
+                "features": [
+                    "warlock-xphb:eldritch-invocations",
+                    "warlock-xphb:pact-magic",
+                    "warlock-xphb:eldritch-invocation-options"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "eldritch_invocations_1",
+                        "label": "Eldritch Invocations",
+                        "grant": "optional_features",
+                        "count": 1,
+                        "from": {
+                            "feature_type": [
+                                "eldritch_invocation"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 2,
+                "features": [
+                    "warlock-xphb:magical-cunning"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "eldritch_invocations_2",
+                        "label": "Eldritch Invocations",
+                        "grant": "optional_features",
+                        "count": 2,
+                        "from": {
+                            "feature_type": [
+                                "eldritch_invocation"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 3,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "warlock_subclass_3",
+                        "label": "Warlock Subclass",
+                        "grant": "subclass",
+                        "count": 1,
+                        "from": "warlock-xphb"
+                    }
+                ]
+            },
+            {
+                "level": 4,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "ability_score_improvement_4",
+                        "label": "Ability Score Improvement",
+                        "grant": "feats",
+                        "count": 1,
+                        "from": {
+                            "category": [
+                                "general"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 5,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "eldritch_invocations_5",
+                        "label": "Eldritch Invocations",
+                        "grant": "optional_features",
+                        "count": 2,
+                        "from": {
+                            "feature_type": [
+                                "eldritch_invocation"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 6,
+                "subclass_features": true
+            },
+            {
+                "level": 7,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "eldritch_invocations_7",
+                        "label": "Eldritch Invocations",
+                        "grant": "optional_features",
+                        "count": 1,
+                        "from": {
+                            "feature_type": [
+                                "eldritch_invocation"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 8,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "ability_score_improvement_8",
+                        "label": "Ability Score Improvement",
+                        "grant": "feats",
+                        "count": 1,
+                        "from": {
+                            "category": [
+                                "general"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 9,
+                "features": [
+                    "warlock-xphb:contact-patron"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "eldritch_invocations_9",
+                        "label": "Eldritch Invocations",
+                        "grant": "optional_features",
+                        "count": 1,
+                        "from": {
+                            "feature_type": [
+                                "eldritch_invocation"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 10,
+                "subclass_features": true
+            },
+            {
+                "level": 11,
+                "features": [
+                    "warlock-xphb:mystic-arcanum"
+                ]
+            },
+            {
+                "level": 12,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "ability_score_improvement_12",
+                        "label": "Ability Score Improvement",
+                        "grant": "feats",
+                        "count": 1,
+                        "from": {
+                            "category": [
+                                "general"
+                            ]
+                        }
+                    },
+                    {
+                        "type": "pool",
+                        "id": "eldritch_invocations_12",
+                        "label": "Eldritch Invocations",
+                        "grant": "optional_features",
+                        "count": 1,
+                        "from": {
+                            "feature_type": [
+                                "eldritch_invocation"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 13,
+                "upgrades": [
+                    "warlock-xphb:mystic-arcanum"
+                ]
+            },
+            {
+                "level": 14,
+                "subclass_features": true
+            },
+            {
+                "level": 15,
+                "upgrades": [
+                    "warlock-xphb:mystic-arcanum"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "eldritch_invocations_15",
+                        "label": "Eldritch Invocations",
+                        "grant": "optional_features",
+                        "count": 1,
+                        "from": {
+                            "feature_type": [
+                                "eldritch_invocation"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 16,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "ability_score_improvement_16",
+                        "label": "Ability Score Improvement",
+                        "grant": "feats",
+                        "count": 1,
+                        "from": {
+                            "category": [
+                                "general"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 17,
+                "upgrades": [
+                    "warlock-xphb:mystic-arcanum"
+                ]
+            },
+            {
+                "level": 18,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "eldritch_invocations_18",
+                        "label": "Eldritch Invocations",
+                        "grant": "optional_features",
+                        "count": 1,
+                        "from": {
+                            "feature_type": [
+                                "eldritch_invocation"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 19,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "epic_boon_19",
+                        "label": "Epic Boon",
+                        "grant": "feats",
+                        "count": 1,
+                        "from": {
+                            "category": [
+                                "epic_boon"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 20,
+                "features": [
+                    "warlock-xphb:eldritch-master"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "warlock-xphb:eldritch-invocations",
+                "name": "Eldritch Invocations",
+                "level": 1,
+                "text": "You have unearthed Eldritch Invocations, pieces of forbidden knowledge that imbue you with an abiding magical ability or other lessons. You gain one invocation of your choice, such as Pact of the Tome. Invocations are described in the \"Eldritch Invocation Options\" section later in this class's description.\n\n**Prerequisites.** If an invocation has a prerequisite, you must meet it to learn that invocation. For example, if an invocation requires you to be a level 5+ Warlock, you can select the invocation once you reach Warlock level 5.\n\n**Replacing and Gaining Invocations.** Whenever you gain a Warlock level, you can replace one of your invocations with another one for which you qualify. You can't replace an invocation if it's a prerequisite for another invocation that you have.\n\nWhen you gain certain Warlock levels, you gain more invocations of your choice, as shown in the Invocations column of the Warlock Features table.\n\nYou can't pick the same invocation more than once unless its description says otherwise.",
+                "srd": {
+                    "5.2": "Eldritch Invocations"
+                }
+            },
+            {
+                "id": "warlock-xphb:pact-magic",
+                "name": "Pact Magic",
+                "level": 1,
+                "text": "Through occult ceremony, you have formed a pact with a mysterious entity to gain magical powers. The entity is a voice in the shadows—its identity unclear—but its boon to you is concrete: the ability to cast spells. See chapter 7 for the rules on spellcasting. The information below details how you use those rules with Warlock spells, which appear in the Warlock spell list later in the class's description.\n\n**Cantrips.** You know two Warlock cantrips of your choice. Eldritch Blast and Prestidigitation are recommended. Whenever you gain a Warlock level, you can replace one of your cantrips from this feature with another Warlock cantrip of your choice.\n\nWhen you reach Warlock levels 4 and 10, you learn another Warlock cantrip of your choice, as shown in the Cantrips column of the Warlock Features table.\n\n**Spell Slots.** The Warlock Features table shows how many spell slots you have to cast your Warlock spells of levels 1–5. The table also shows the level of those slots, all of which are the same level. You regain all expended Pact Magic spell slots when you finish a Short or Long Rest.\n\nFor example, when you're a level 5 Warlock, you have two level 3 spell slots. To cast the level 1 spell Witch Bolt, you must spend one of those slots, and you cast it as a level 3 spell.\n\n**Prepared Spells of Level 1+.** You prepare the list of level 1+ spells that are available for you to cast with this feature. To start, choose two level 1 Warlock spells. Charm Person and Hex are recommended.\n\nThe number of spells on your list increases as you gain Warlock levels, as shown in the Prepared Spells column of the Warlock Features table. Whenever that number increases, choose additional Warlock spells until the number of spells on your list matches the number in the table. The chosen spells must be of a level no higher than what's shown in the table's Slot Level column for your level. When you reach level 6, for example, you learn a new Warlock spell, which can be of levels 1–3.\n\nIf another Warlock feature gives you spells that you always have prepared, those spells don't count against the number of spells you can prepare with this feature, but those spells otherwise count as Warlock spells for you.\n\n**Changing Your Prepared Spells.** Whenever you gain a Warlock level, you can replace one spell on your list with another Warlock spell of an eligible level.\n\n**Spellcasting Ability.** Charisma is the spellcasting ability for your Warlock spells.\n\n**Spellcasting Focus.** You can use an Arcane Focus as a Spellcasting Focus for your Warlock spells.",
+                "srd": {
+                    "5.2": "Pact Magic"
+                }
+            },
+            {
+                "id": "warlock-xphb:eldritch-invocation-options",
+                "name": "Eldritch Invocation Options",
+                "level": 1,
+                "text": "Eldritch Invocation options appear in alphabetical order.\n\n- Agonizing Blast\n- Armor of Shadows\n- Ascendant Step\n- Call of the Void\n- Curse of Corruption\n- Devil's Sight\n- Devouring Blade\n- Eldritch Mind\n- Eldritch Smite\n- Eldritch Spear\n- Expendable Minions\n- Fiendish Vigor\n- Gaze of Two Minds\n- Gift of the Depths\n- Gift of the Protectors\n- Health Funnel\n- Investment of the Chain Master\n- Legion Summoning\n- Lessons of the First Ones\n- Lifedrinker\n- Mask of Many Faces\n- Master Demonologist\n- Master of Myriad Forms\n- Misty Visions\n- One with Shadows\n- Otherworldly Leap\n- Pact of the Blade\n- Pact of the Chain\n- Pact of the Legion\n- Pact of the Tome\n- Repelling Blast\n- Thirsting Blade\n- Visions of Distant Realms\n- Whispers of the Grave\n- Witch Sight",
+                "srd": {
+                    "5.2": "Eldritch Invocation Options"
+                }
+            },
+            {
+                "id": "warlock-xphb:magical-cunning",
+                "name": "Magical Cunning",
+                "level": 2,
+                "text": "You can perform an esoteric rite for 1 minute. At the end of it, you regain expended Pact Magic spell slots but no more than a number equal to half your maximum (round up). Once you use this feature, you can't do so again until you finish a Long Rest.",
+                "srd": {
+                    "5.2": "Magical Cunning"
+                }
+            },
+            {
+                "id": "warlock-xphb:contact-patron",
+                "name": "Contact Patron",
+                "level": 9,
+                "text": "In the past, you usually contacted your patron through intermediaries. Now you can communicate directly; you always have the Contact Other Plane spell prepared. With this feature, you can cast the spell without expending a spell slot to contact your patron, and you automatically succeed on the spell's saving throw.\n\nOnce you cast the spell with this feature, you can't do so in this way again until you finish a Long Rest.",
+                "srd": {
+                    "5.2": "Contact Patron"
+                }
+            },
+            {
+                "id": "warlock-xphb:mystic-arcanum",
+                "name": "Mystic Arcanum",
+                "level": 11,
+                "text": "Your patron grants you a magical secret called an arcanum. Choose one level 6 Warlock spell as this arcanum.\n\nYou can cast your arcanum spell once without expending a spell slot, and you must finish a Long Rest before you can cast it in this way again.\n\nAs shown in the Warlock Features table, you gain another Warlock spell of your choice that can be cast in this way when you reach Warlock levels 13 (level 7 spell), 15 (level 8 spell), and 17 (level 9 spell). You regain all uses of your Mystic Arcanum when you finish a Long Rest.\n\nWhenever you gain a Warlock level, you can replace one of your arcanum spells with another Warlock spell of the same level.\n\n**Mystic Arcanum.** You gain a level 7 Warlock Spell of your choice.\n\n**Mystic Arcanum.** You gain a level 8 Warlock Spell of your choice.\n\n**Mystic Arcanum.** You gain a level 9 Warlock Spell of your choice.",
+                "srd": {
+                    "5.2": "Mystic Arcanum"
+                }
+            },
+            {
+                "id": "warlock-xphb:eldritch-master",
+                "name": "Eldritch Master",
+                "level": 20,
+                "text": "When you use your Magical Cunning feature, you regain all your expended Pact Magic spell slots.",
+                "srd": {
+                    "5.2": "Eldritch Master"
+                }
+            }
+        ]
+    },
+    {
+        "id": "warlock-xphb:archfey-xphb",
+        "kind": "subclass",
+        "name": "Archfey Patron",
+        "source": "XPHB",
+        "edition": "one",
+        "text": "*Bargain with Whimsical Fey*\n\nYour pact draws on the power of the Feywild. When you choose this subclass, you might make a deal with an archfey, such as the Prince of Frost; the Queen of Air and Darkness, ruler of the Gloaming Court; Titania of the Summer Court; or an ancient hag. Or you might call on a spectrum of Fey, weaving a web of favors and debts. Whoever they are, your patron is often inscrutable and whimsical.",
+        "class_id": "warlock-xphb",
+        "short_name": "Archfey",
+        "grants": {
+            "spells": [
+                {
+                    "spell": "calm-emotions-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "faerie-fire-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "misty-step-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "phantasmal-force-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "sleep-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "blink-xphb",
+                    "how": "prepared",
+                    "at": 5
+                },
+                {
+                    "spell": "plant-growth-xphb",
+                    "how": "prepared",
+                    "at": 5
+                },
+                {
+                    "spell": "dominate-beast-xphb",
+                    "how": "prepared",
+                    "at": 7
+                },
+                {
+                    "spell": "greater-invisibility-xphb",
+                    "how": "prepared",
+                    "at": 7
+                },
+                {
+                    "spell": "dominate-person-xphb",
+                    "how": "prepared",
+                    "at": 9
+                },
+                {
+                    "spell": "seeming-xphb",
+                    "how": "prepared",
+                    "at": 9
+                },
+                {
+                    "spell": "misty-step-xphb",
+                    "how": "prepared",
+                    "at": 1,
+                    "uses": {
+                        "max": "max(1, cha_mod)",
+                        "reset": "long"
+                    }
+                }
+            ]
+        },
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "warlock-xphb:archfey-xphb:archfey-spells",
+                    "warlock-xphb:archfey-xphb:steps-of-the-fey"
+                ]
+            },
+            {
+                "level": 6,
+                "features": [
+                    "warlock-xphb:archfey-xphb:misty-escape"
+                ]
+            },
+            {
+                "level": 10,
+                "features": [
+                    "warlock-xphb:archfey-xphb:beguiling-defenses"
+                ]
+            },
+            {
+                "level": 14,
+                "features": [
+                    "warlock-xphb:archfey-xphb:bewitching-magic"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "warlock-xphb:archfey-xphb:archfey-spells",
+                "name": "Archfey Spells",
+                "level": 3,
+                "text": "The magic of your patron ensures you always have certain spells ready; when you reach a Warlock level specified in the Archfey Spells table, you thereafter always have the listed spells prepared.\n\nArchfey Spells\n\nWarlock Level | Spells\n--- | ---\n3 | Calm Emotions, Faerie Fire, Misty Step, Phantasmal Force, Sleep\n5 | Blink, Plant Growth\n7 | Dominate Beast, Greater Invisibility\n9 | Dominate Person, Seeming"
+            },
+            {
+                "id": "warlock-xphb:archfey-xphb:steps-of-the-fey",
+                "name": "Steps of the Fey",
+                "level": 3,
+                "text": "Your patron grants you the ability to move between the boundaries of the planes. You can cast Misty Step without expending a spell slot a number of times equal to your Charisma modifier (minimum of once), and you regain all expended uses when you finish a Long Rest.\n\nIn addition, whenever you cast that spell, you can choose one of the following additional effects.\n\n**Refreshing Step.** Immediately after you teleport, you or one creature you can see within 10 feet of yourself gains 1d10 Temporary Hit Points.\n\n**Taunting Step.** Creatures within 5 feet of the space you left must succeed on a Wisdom saving throw against your spell save DC or have Disadvantage on attack rolls against creatures other than you until the start of your next turn."
+            },
+            {
+                "id": "warlock-xphb:archfey-xphb:misty-escape",
+                "name": "Misty Escape",
+                "level": 6,
+                "text": "You can cast Misty Step as a Reaction in response to taking damage.\n\nIn addition, the following effects are now among your Steps of the Fey options.\n\n**Disappearing Step.** You have the Invisible condition until the start of your next turn or until immediately after you make an attack roll, deal damage, or cast a spell.\n\n**Dreadful Step.** Creatures within 5 feet of the space you left or the space you appear in (your choice) must succeed on a Wisdom saving throw against your spell save DC or take 2d10 Psychic damage."
+            },
+            {
+                "id": "warlock-xphb:archfey-xphb:beguiling-defenses",
+                "name": "Beguiling Defenses",
+                "level": 10,
+                "text": "Your patron teaches you how to guard your mind and body. You are immune to the Charmed condition.\n\nIn addition, immediately after a creature you can see hits you with an attack roll, you can take a Reaction to reduce the damage you take by half (round down), and you can force the attacker to make a Wisdom saving throw against your spell save DC. On a failed save, the attacker takes Psychic damage equal to the damage you take. Once you use this Reaction, you can't use it again until you finish a Long Rest unless you expend a Pact Magic spell slot (no action required) to restore your use of it."
+            },
+            {
+                "id": "warlock-xphb:archfey-xphb:bewitching-magic",
+                "name": "Bewitching Magic",
+                "level": 14,
+                "text": "Your patron grants you the ability to weave your magic with teleportation. Immediately after you cast an Enchantment or Illusion spell using an action and a spell slot, you can cast Misty Step as part of the same action and without expending a spell slot."
+            }
+        ]
+    },
+    {
+        "id": "warlock-xphb:celestial-xphb",
+        "kind": "subclass",
+        "name": "Celestial Patron",
+        "source": "XPHB",
+        "edition": "one",
+        "text": "*Call on the Power of the Heavens*\n\nYour pact draws on the Upper Planes, the realms of everlasting bliss. You might enter an agreement with an empyrean, a couatl, a sphinx, a unicorn, or another heavenly entity. Or you might call on numerous such beings as you pursue goals aligned with theirs. Your pact allows you to experience a hint of the holy light that illuminates the multiverse.",
+        "class_id": "warlock-xphb",
+        "short_name": "Celestial",
+        "grants": {
+            "spells": [
+                {
+                    "spell": "sacred-flame-xphb",
+                    "how": "known",
+                    "at": 1
+                },
+                {
+                    "spell": "light-xphb",
+                    "how": "known",
+                    "at": 1
+                },
+                {
+                    "spell": "aid-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "cure-wounds-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "guiding-bolt-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "lesser-restoration-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "daylight-xphb",
+                    "how": "prepared",
+                    "at": 5
+                },
+                {
+                    "spell": "revivify-xphb",
+                    "how": "prepared",
+                    "at": 5
+                },
+                {
+                    "spell": "guardian-of-faith-xphb",
+                    "how": "prepared",
+                    "at": 7
+                },
+                {
+                    "spell": "wall-of-fire-xphb",
+                    "how": "prepared",
+                    "at": 7
+                },
+                {
+                    "spell": "greater-restoration-xphb",
+                    "how": "prepared",
+                    "at": 9
+                },
+                {
+                    "spell": "summon-celestial-xphb",
+                    "how": "prepared",
+                    "at": 9
+                }
+            ]
+        },
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "warlock-xphb:celestial-xphb:celestial-spells",
+                    "warlock-xphb:celestial-xphb:healing-light"
+                ]
+            },
+            {
+                "level": 6,
+                "features": [
+                    "warlock-xphb:celestial-xphb:radiant-soul"
+                ]
+            },
+            {
+                "level": 10,
+                "features": [
+                    "warlock-xphb:celestial-xphb:celestial-resilience"
+                ]
+            },
+            {
+                "level": 14,
+                "features": [
+                    "warlock-xphb:celestial-xphb:searing-vengeance"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "warlock-xphb:celestial-xphb:celestial-spells",
+                "name": "Celestial Spells",
+                "level": 3,
+                "text": "The magic of your patron ensures you always have certain spells ready; when you reach a Warlock level specified in the Celestial Spells table, you thereafter always have the listed spells prepared.\n\nCelestial Spells\n\nWarlock Level | Spells\n--- | ---\n3 | Aid, Cure Wounds, Guiding Bolt, Lesser Restoration, Light, Sacred Flame\n5 | Daylight, Revivify\n7 | Guardian of Faith, Wall of Fire\n9 | Greater Restoration, Summon Celestial"
+            },
+            {
+                "id": "warlock-xphb:celestial-xphb:healing-light",
+                "name": "Healing Light",
+                "level": 3,
+                "text": "You gain the ability to channel celestial energy to heal wounds. You have a pool of d6s to fuel this healing. The number of dice in the pool equals 1 plus your Warlock level.\n\nAs a Bonus Action, you can heal yourself or one creature you can see within 60 feet of yourself, expending dice from the pool. The maximum number of dice you can expend at once equals your Charisma modifier (minimum of one die). Roll the dice you expend, and restore a number of Hit Points equal to the roll's total. Your pool regains all expended dice when you finish a Long Rest."
+            },
+            {
+                "id": "warlock-xphb:celestial-xphb:radiant-soul",
+                "name": "Radiant Soul",
+                "level": 6,
+                "text": "Your link to your patron allows you to serve as a conduit for radiant energy. You have Resistance to Radiant damage. Once per turn, when a spell you cast deals Radiant or Fire damage, you can add your Charisma modifier to that spell's damage against one of the spell's targets."
+            },
+            {
+                "id": "warlock-xphb:celestial-xphb:celestial-resilience",
+                "name": "Celestial Resilience",
+                "level": 10,
+                "text": "You gain Temporary Hit Points whenever you use your Magical Cunning feature or finish a Short or Long Rest. These Temporary Hit Points equal your Warlock level plus your Charisma modifier. Additionally, choose up to five creatures you can see when you gain the points. Those creatures each gain Temporary Hit Points equal to half your Warlock level plus your Charisma modifier."
+            },
+            {
+                "id": "warlock-xphb:celestial-xphb:searing-vengeance",
+                "name": "Searing Vengeance",
+                "level": 14,
+                "text": "When you or an ally within 60 feet of you is about to make a Death Saving Throw, you can unleash radiant energy to save the creature. The creature regains Hit Points equal to half its Hit Point maximum and can end the Prone condition on itself. Each creature of your choice that is within 30 feet of the creature takes Radiant damage equal to 2d8 plus your Charisma modifier, and each has the Blinded condition until the end of the current turn.\n\nOnce you use this feature, you can't use it again until you finish a Long Rest."
+            }
+        ]
+    },
+    {
+        "id": "warlock-xphb:fiend-xphb",
+        "kind": "subclass",
+        "name": "Fiend Patron",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Fiend Patron"
+        },
+        "text": "*Make a Deal with the Lower Planes*\n\nYour pact draws on the Lower Planes, the realms of perdition. You might forge a bargain with a demon lord such as Demogorgon or Orcus; an archdevil such as Asmodeus; or a pit fiend, balor, yugoloth, or night hag that is especially mighty. That patron's aims are evil—the corruption or destruction of all things, ultimately including you—and your path is defined by the extent to which you strive against those aims.",
+        "class_id": "warlock-xphb",
+        "short_name": "Fiend",
+        "grants": {
+            "spells": [
+                {
+                    "spell": "burning-hands-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "command-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "scorching-ray-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "suggestion-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "fireball-xphb",
+                    "how": "prepared",
+                    "at": 5
+                },
+                {
+                    "spell": "stinking-cloud-xphb",
+                    "how": "prepared",
+                    "at": 5
+                },
+                {
+                    "spell": "fire-shield-xphb",
+                    "how": "prepared",
+                    "at": 7
+                },
+                {
+                    "spell": "wall-of-fire-xphb",
+                    "how": "prepared",
+                    "at": 7
+                },
+                {
+                    "spell": "geas-xphb",
+                    "how": "prepared",
+                    "at": 9
+                },
+                {
+                    "spell": "insect-plague-xphb",
+                    "how": "prepared",
+                    "at": 9
+                }
+            ]
+        },
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "warlock-xphb:fiend-xphb:fiend-spells",
+                    "warlock-xphb:fiend-xphb:dark-ones-blessing"
+                ]
+            },
+            {
+                "level": 6,
+                "features": [
+                    "warlock-xphb:fiend-xphb:dark-ones-own-luck"
+                ]
+            },
+            {
+                "level": 10,
+                "features": [
+                    "warlock-xphb:fiend-xphb:fiendish-resilience"
+                ]
+            },
+            {
+                "level": 14,
+                "features": [
+                    "warlock-xphb:fiend-xphb:hurl-through-hell"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "warlock-xphb:fiend-xphb:fiend-spells",
+                "name": "Fiend Spells",
+                "level": 3,
+                "text": "The magic of your patron ensures you always have certain spells ready; when you reach a Warlock level specified in the Fiend Spells table, you thereafter always have the listed spells prepared.\n\nFiend Spells\n\nWarlock Level | Spells\n--- | ---\n3 | Burning Hands, Command, Scorching Ray, Suggestion\n5 | Fireball, Stinking Cloud\n7 | Fire Shield, Wall of Fire\n9 | Geas, Insect Plague",
+                "srd": {
+                    "5.2": "Fiend Spells"
+                }
+            },
+            {
+                "id": "warlock-xphb:fiend-xphb:dark-ones-blessing",
+                "name": "Dark One's Blessing",
+                "level": 3,
+                "text": "When you reduce an enemy to 0 Hit Points, you gain Temporary Hit Points equal to your Charisma modifier plus your Warlock level (minimum of 1 Temporary Hit Point). You also gain this benefit if someone else reduces an enemy within 10 feet of you to 0 Hit Points.",
+                "srd": {
+                    "5.2": "Dark One's Blessing"
+                }
+            },
+            {
+                "id": "warlock-xphb:fiend-xphb:dark-ones-own-luck",
+                "name": "Dark One's Own Luck",
+                "level": 6,
+                "text": "You can call on your fiendish patron to alter fate in your favor. When you make an ability check or a saving throw, you can use this feature to add 1d10 to your roll. You can do so after seeing the roll but before any of the roll's effects occur.\n\nYou can use this feature a number of times equal to your Charisma modifier (minimum of once), but you can use it no more than once per roll. You regain all expended uses when you finish a Long Rest.",
+                "srd": {
+                    "5.2": "Dark One's Own Luck"
+                }
+            },
+            {
+                "id": "warlock-xphb:fiend-xphb:fiendish-resilience",
+                "name": "Fiendish Resilience",
+                "level": 10,
+                "text": "Choose one damage type, other than Force, whenever you finish a Short or Long Rest. You have Resistance to that damage type until you choose a different one with this feature.",
+                "srd": {
+                    "5.2": "Fiendish Resilience"
+                }
+            },
+            {
+                "id": "warlock-xphb:fiend-xphb:hurl-through-hell",
+                "name": "Hurl Through Hell",
+                "level": 14,
+                "text": "Once per turn when you hit a creature with an attack roll, you can try to instantly transport the target through the Lower Planes. The target must succeed on a Charisma saving throw against your spell save DC, or the target disappears and hurtles through a nightmare landscape. The target takes 8d10 Psychic damage if it isn't a Fiend, and it has the Incapacitated condition until the end of your next turn, when it returns to the space it previously occupied or the nearest unoccupied space.\n\nOnce you use this feature, you can't use it again until you finish a Long Rest unless you expend a Pact Magic spell slot (no action required) to restore your use of it.",
+                "srd": {
+                    "5.2": "Hurl Through Hell"
+                }
+            }
+        ]
+    },
+    {
+        "id": "warlock-xphb:great-old-one-xphb",
+        "kind": "subclass",
+        "name": "Great Old One Patron",
+        "source": "XPHB",
+        "edition": "one",
+        "text": "*Unearth Forbidden Lore of Ineffable Beings*\n\nWhen you choose this subclass, you might bind yourself to an unspeakable being from the Far Realm or an elder god—a being such as Tharizdun, the Chained God; Zargon, the Returner; Hadar, the Dark Hunger; or Great Cthulhu. Or you might invoke several entities without yoking yourself to one. The motives of these beings are incomprehensible, and the Great Old One might be indifferent to your existence. But the secrets you've learned nevertheless allow you to draw strange magic from it.",
+        "class_id": "warlock-xphb",
+        "short_name": "Great Old One",
+        "grants": {
+            "spells": [
+                {
+                    "spell": "detect-thoughts-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "dissonant-whispers-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "phantasmal-force-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "tashas-hideous-laughter-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "clairvoyance-xphb",
+                    "how": "prepared",
+                    "at": 5
+                },
+                {
+                    "spell": "hunger-of-hadar-xphb",
+                    "how": "prepared",
+                    "at": 5
+                },
+                {
+                    "spell": "confusion-xphb",
+                    "how": "prepared",
+                    "at": 7
+                },
+                {
+                    "spell": "summon-aberration-xphb",
+                    "how": "prepared",
+                    "at": 7
+                },
+                {
+                    "spell": "modify-memory-xphb",
+                    "how": "prepared",
+                    "at": 9
+                },
+                {
+                    "spell": "telekinesis-xphb",
+                    "how": "prepared",
+                    "at": 9
+                },
+                {
+                    "spell": "hex-xphb",
+                    "how": "prepared",
+                    "at": 10
+                }
+            ]
+        },
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "warlock-xphb:great-old-one-xphb:great-old-one-spells",
+                    "warlock-xphb:great-old-one-xphb:awakened-mind",
+                    "warlock-xphb:great-old-one-xphb:psychic-spells"
+                ]
+            },
+            {
+                "level": 6,
+                "features": [
+                    "warlock-xphb:great-old-one-xphb:clairvoyant-combatant"
+                ]
+            },
+            {
+                "level": 10,
+                "features": [
+                    "warlock-xphb:great-old-one-xphb:eldritch-hex",
+                    "warlock-xphb:great-old-one-xphb:thought-shield"
+                ]
+            },
+            {
+                "level": 14,
+                "features": [
+                    "warlock-xphb:great-old-one-xphb:create-thrall"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "warlock-xphb:great-old-one-xphb:great-old-one-spells",
+                "name": "Great Old One Spells",
+                "level": 3,
+                "text": "The magic of your patron ensures you always have certain spells ready; when you reach a Warlock level specified in the Great Old One Spells table, you thereafter always have the listed spells prepared.\n\nGreat Old One Spells\n\nWarlock Level | Spells\n--- | ---\n3 | Detect Thoughts, Dissonant Whispers, Phantasmal Force, Tasha's Hideous Laughter\n5 | Clairvoyance, Hunger of Hadar\n7 | Confusion, Summon Aberration\n9 | Modify Memory, Telekinesis"
+            },
+            {
+                "id": "warlock-xphb:great-old-one-xphb:awakened-mind",
+                "name": "Awakened Mind",
+                "level": 3,
+                "text": "You can form a telepathic connection between your mind and the mind of another. As a Bonus Action, choose one creature you can see within 30 feet of yourself. You and the chosen creature can communicate telepathically with each other while the two of you are within a number of miles of each other equal to your Charisma modifier (minimum of 1 mile). To understand each other, you each must mentally use a language the other knows.\n\nThe telepathic connection lasts for a number of minutes equal to your Warlock level. It ends early if you use this feature to connect with a different creature."
+            },
+            {
+                "id": "warlock-xphb:great-old-one-xphb:psychic-spells",
+                "name": "Psychic Spells",
+                "level": 3,
+                "text": "When you cast a Warlock spell that deals damage, you can change its damage type to Psychic. In addition, when you cast a Warlock spell that is an Enchantment or Illusion, you can do so without Verbal or Somatic components."
+            },
+            {
+                "id": "warlock-xphb:great-old-one-xphb:clairvoyant-combatant",
+                "name": "Clairvoyant Combatant",
+                "level": 6,
+                "text": "When you form a telepathic bond with a creature using your Awakened Mind, you can force that creature to make a Wisdom saving throw against your spell save DC. On a failed save, the creature has Disadvantage on attack rolls against you, and you have Advantage on attack rolls against that creature for the duration of the bond.\n\nOnce you use this feature, you can't use it again until you finish a Short or Long Rest unless you expend a Pact Magic spell slot (no action required) to restore your use of it."
+            },
+            {
+                "id": "warlock-xphb:great-old-one-xphb:eldritch-hex",
+                "name": "Eldritch Hex",
+                "level": 10,
+                "text": "Your alien patron grants you a powerful curse. You always have the Hex spell prepared. When you cast Hex and choose an ability, the target also has Disadvantage on saving throws of the chosen ability for the duration of the spell."
+            },
+            {
+                "id": "warlock-xphb:great-old-one-xphb:thought-shield",
+                "name": "Thought Shield",
+                "level": 10,
+                "text": "Your thoughts can't be read by telepathy or other means unless you allow it. You also have Resistance to Psychic damage, and whenever a creature deals Psychic damage to you, that creature takes the same amount of damage that you take."
+            },
+            {
+                "id": "warlock-xphb:great-old-one-xphb:create-thrall",
+                "name": "Create Thrall",
+                "level": 14,
+                "text": "When you cast Summon Aberration, you can modify it so that it doesn't require Concentration. If you do so, the spell's duration becomes 1 minute for that casting, and when summoned, the Aberration has a number of Temporary Hit Points equal to your Warlock level plus your Charisma modifier.\n\nIn addition, the first time each turn the Aberration hits a creature under the effect of your Hex, the Aberration deals extra Psychic damage to the target equal to the bonus damage of that spell."
+            }
+        ]
+    },
+    {
+        "id": "warlock-xphb:undead-rhw",
+        "kind": "subclass",
+        "name": "Undead Patron",
+        "source": "RHW",
+        "edition": "one",
+        "text": "*Defy Death for Profane Power*\n\nYou've made a pact with a creature that defies the cycle of life and death: a powerful lich, a vampire, or another entity of undeath. Having once been mortal, these ancient patrons know firsthand the paths of ambition and the routes past the doors of death. They eagerly share this profane knowledge and other secrets with those who work their will among the living.",
+        "class_id": "warlock-xphb",
+        "short_name": "Undead",
+        "grants": {
+            "spells": [
+                {
+                    "spell": "bane-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "blindness-deafness-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "phantasmal-force-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "ray-of-sickness-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "speak-with-dead-xphb",
+                    "how": "prepared",
+                    "at": 5
+                },
+                {
+                    "spell": "summon-undead-xphb",
+                    "how": "prepared",
+                    "at": 5
+                },
+                {
+                    "spell": "greater-invisibility-xphb",
+                    "how": "prepared",
+                    "at": 7
+                },
+                {
+                    "spell": "phantasmal-killer-xphb",
+                    "how": "prepared",
+                    "at": 7
+                },
+                {
+                    "spell": "antilife-shell-xphb",
+                    "how": "prepared",
+                    "at": 9
+                },
+                {
+                    "spell": "cloudkill-xphb",
+                    "how": "prepared",
+                    "at": 9
+                }
+            ]
+        },
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "warlock-xphb:undead-rhw:form-of-dread",
+                    "warlock-xphb:undead-rhw:undead-spells"
+                ]
+            },
+            {
+                "level": 6,
+                "features": [
+                    "warlock-xphb:undead-rhw:grave-touched"
+                ]
+            },
+            {
+                "level": 10,
+                "features": [
+                    "warlock-xphb:undead-rhw:necrotic-husk"
+                ]
+            },
+            {
+                "level": 14,
+                "features": [
+                    "warlock-xphb:undead-rhw:superior-dread"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "warlock-xphb:undead-rhw:form-of-dread",
+                "name": "Form of Dread",
+                "level": 3,
+                "text": "As a Bonus Action, you transform into an avatar of your patron's dreadful power, gaining the benefits below for 1 minute, until you have the Incapacitated condition, or until you end the form (no action required). You can transform a number of times equal to your Charisma modifier (minimum of once), and you regain all expended uses when you finish a Long Rest.\n\n**Facsimile of Life.** You gain Temporary Hit Points equal to 1d10 plus your Warlock level.\n\n**Fearless Form.** You have Immunity to the Frightened condition. If you are Frightened when you transform, the condition immediately ends for you.\n\n**Frightful Avatar.** Once per turn, when you hit a creature with an attack roll, you can force it to make a Wisdom saving throw against your spell save DC. On a failed save, the target has the Frightened condition until the end of your next turn."
+            },
+            {
+                "id": "warlock-xphb:undead-rhw:undead-spells",
+                "name": "Undead Spells",
+                "level": 3,
+                "text": "The magic of your patron ensures you always have certain spells ready; when you reach a Warlock level specified in the Undead Spells table, you thereafter always have the listed spells prepared.\n\nUndead Spells\n\nWarlock Level | Spells\n--- | ---\n3 | Bane, Blindness/Deafness, Phantasmal Force, Ray of Sickness\n5 | Speak with Dead, Summon Undead\n7 | Greater Invisibility, Phantasmal Killer\n9 | Antilife Shell, Cloudkill"
+            },
+            {
+                "id": "warlock-xphb:undead-rhw:grave-touched",
+                "name": "Grave Touched",
+                "level": 6,
+                "text": "Your patron's powers have a profound effect on your body and magic, granting you the following benefits.\n\n**Arcane Necrosis.** Necrotic damage from your attacks, Warlock spells, and Warlock features ignores Resistance to Necrotic damage. Once per turn when you cast a spell that deals damage, you can change that spell's damage type to Necrotic.\n\n**Dreaded Necrosis.** When you hit a creature with an attack roll and deal Necrotic damage while using your Form of Dread, you can roll one additional damage die when determining the Necrotic damage the target takes. You can use this benefit only once per turn.\n\n**Undead Endurance.** You don't gain Exhaustion levels from dehydration, malnutrition, or suffocation. In addition, you don't need to sleep, and magic can't put you to sleep."
+            },
+            {
+                "id": "warlock-xphb:undead-rhw:necrotic-husk",
+                "name": "Necrotic Husk",
+                "level": 10,
+                "text": "Your connection to undeath saturates your body. You gain the following benefits.\n\n**Necrotic Resilience.** You have Resistance to Necrotic damage. While using your Form of Dread, you have Immunity to Necrotic damage.\n\n**Unholy Resuscitation.** If you drop to 0 Hit Points and don't die outright, you can cause your body to erupt with deathly energy. Each creature of your choice in a 30-foot Emanation originating from you makes a Constitution saving throw against your spell save DC, taking Necrotic damage equal to 2d10 plus your Charisma modifier on a failed save or half as much damage on a successful one. Your Hit Points then change to twice your Warlock level, and you gain 1 Exhaustion level.\n\nOnce you use this benefit, you can't use it again until you finish a Short or Long Rest."
+            },
+            {
+                "id": "warlock-xphb:undead-rhw:superior-dread",
+                "name": "Superior Dread",
+                "level": 14,
+                "text": "Your Form of Dread improves, granting you the following benefits while you are using it.\n\n**Dread Resistance.** You have Resistance to Bludgeoning, Piercing, and Slashing damage.\n\n**Ghostly Flight.** You have a Fly Speed equal to your Speed and can hover. You can move through creatures and objects as if they were Difficult Terrain, but you take 1d10 Force damage if you end your turn inside a creature or an object.\n\n**Profane Casting.** Whenever you cast a Warlock spell from the Conjuration or Necromancy school, you cast it without any Verbal, Somatic, or Material components, except Material components that are costly or consumed."
+            }
+        ]
+    },
+    {
+        "id": "warlock-xphb:vestige-au",
+        "kind": "subclass",
+        "name": "Vestige Patron",
+        "source": "AU",
+        "edition": "one",
+        "text": "*Wield the Remnants of a Dying God's Power*\n\nYour pact draws on the power of a dying god, a being once worshipped by countless followers but now abandoned and forgotten. This dying god, known as a vestige, might have been benevolent, evil, or strange and unknowable, but now it is driven to regain its former power. The vestige needs your help, and it is willing to share its remaining strength with you.",
+        "class_id": "warlock-xphb",
+        "short_name": "Vestige",
+        "choices": [
+            {
+                "type": "bundle",
+                "id": "spells",
+                "label": "Spells",
+                "options": [
+                    {
+                        "id": "life_domain",
+                        "label": "Life Domain",
+                        "grants": {
+                            "spells": [
+                                {
+                                    "spell": "aid-xphb",
+                                    "how": "prepared",
+                                    "at": 3
+                                },
+                                {
+                                    "spell": "bless-xphb",
+                                    "how": "prepared",
+                                    "at": 3
+                                },
+                                {
+                                    "spell": "cure-wounds-xphb",
+                                    "how": "prepared",
+                                    "at": 3
+                                },
+                                {
+                                    "spell": "lesser-restoration-xphb",
+                                    "how": "prepared",
+                                    "at": 3
+                                },
+                                {
+                                    "spell": "mass-healing-word-xphb",
+                                    "how": "prepared",
+                                    "at": 5
+                                },
+                                {
+                                    "spell": "revivify-xphb",
+                                    "how": "prepared",
+                                    "at": 5
+                                },
+                                {
+                                    "spell": "aura-of-life-xphb",
+                                    "how": "prepared",
+                                    "at": 7
+                                },
+                                {
+                                    "spell": "death-ward-xphb",
+                                    "how": "prepared",
+                                    "at": 7
+                                },
+                                {
+                                    "spell": "greater-restoration-xphb",
+                                    "how": "prepared",
+                                    "at": 9
+                                },
+                                {
+                                    "spell": "mass-cure-wounds-xphb",
+                                    "how": "prepared",
+                                    "at": 9
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "id": "light_domain",
+                        "label": "Light Domain",
+                        "grants": {
+                            "spells": [
+                                {
+                                    "spell": "burning-hands-xphb",
+                                    "how": "prepared",
+                                    "at": 3
+                                },
+                                {
+                                    "spell": "faerie-fire-xphb",
+                                    "how": "prepared",
+                                    "at": 3
+                                },
+                                {
+                                    "spell": "scorching-ray-xphb",
+                                    "how": "prepared",
+                                    "at": 3
+                                },
+                                {
+                                    "spell": "see-invisibility-xphb",
+                                    "how": "prepared",
+                                    "at": 3
+                                },
+                                {
+                                    "spell": "daylight-xphb",
+                                    "how": "prepared",
+                                    "at": 5
+                                },
+                                {
+                                    "spell": "fireball-xphb",
+                                    "how": "prepared",
+                                    "at": 5
+                                },
+                                {
+                                    "spell": "arcane-eye-xphb",
+                                    "how": "prepared",
+                                    "at": 7
+                                },
+                                {
+                                    "spell": "wall-of-fire-xphb",
+                                    "how": "prepared",
+                                    "at": 7
+                                },
+                                {
+                                    "spell": "flame-strike-xphb",
+                                    "how": "prepared",
+                                    "at": 9
+                                },
+                                {
+                                    "spell": "scrying-xphb",
+                                    "how": "prepared",
+                                    "at": 9
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "id": "trickery_domain",
+                        "label": "Trickery Domain",
+                        "grants": {
+                            "spells": [
+                                {
+                                    "spell": "charm-person-xphb",
+                                    "how": "prepared",
+                                    "at": 3
+                                },
+                                {
+                                    "spell": "disguise-self-xphb",
+                                    "how": "prepared",
+                                    "at": 3
+                                },
+                                {
+                                    "spell": "invisibility-xphb",
+                                    "how": "prepared",
+                                    "at": 3
+                                },
+                                {
+                                    "spell": "pass-without-trace-xphb",
+                                    "how": "prepared",
+                                    "at": 3
+                                },
+                                {
+                                    "spell": "hypnotic-pattern-xphb",
+                                    "how": "prepared",
+                                    "at": 5
+                                },
+                                {
+                                    "spell": "nondetection-xphb",
+                                    "how": "prepared",
+                                    "at": 5
+                                },
+                                {
+                                    "spell": "confusion-xphb",
+                                    "how": "prepared",
+                                    "at": 7
+                                },
+                                {
+                                    "spell": "dimension-door-xphb",
+                                    "how": "prepared",
+                                    "at": 7
+                                },
+                                {
+                                    "spell": "dominate-person-xphb",
+                                    "how": "prepared",
+                                    "at": 9
+                                },
+                                {
+                                    "spell": "modify-memory-xphb",
+                                    "how": "prepared",
+                                    "at": 9
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "id": "war_domain",
+                        "label": "War Domain",
+                        "grants": {
+                            "spells": [
+                                {
+                                    "spell": "guiding-bolt-xphb",
+                                    "how": "prepared",
+                                    "at": 3
+                                },
+                                {
+                                    "spell": "magic-weapon-xphb",
+                                    "how": "prepared",
+                                    "at": 3
+                                },
+                                {
+                                    "spell": "shield-of-faith-xphb",
+                                    "how": "prepared",
+                                    "at": 3
+                                },
+                                {
+                                    "spell": "spiritual-weapon-xphb",
+                                    "how": "prepared",
+                                    "at": 3
+                                },
+                                {
+                                    "spell": "crusaders-mantle-xphb",
+                                    "how": "prepared",
+                                    "at": 5
+                                },
+                                {
+                                    "spell": "spirit-guardians-xphb",
+                                    "how": "prepared",
+                                    "at": 5
+                                },
+                                {
+                                    "spell": "fire-shield-xphb",
+                                    "how": "prepared",
+                                    "at": 7
+                                },
+                                {
+                                    "spell": "freedom-of-movement-xphb",
+                                    "how": "prepared",
+                                    "at": 7
+                                },
+                                {
+                                    "spell": "hold-monster-xphb",
+                                    "how": "prepared",
+                                    "at": 9
+                                },
+                                {
+                                    "spell": "steel-wind-strike-xphb",
+                                    "how": "prepared",
+                                    "at": 9
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        ],
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "warlock-xphb:vestige-au:vestige-companion",
+                    "warlock-xphb:vestige-au:vestige-spells"
+                ]
+            },
+            {
+                "level": 6,
+                "features": [
+                    "warlock-xphb:vestige-au:vestige-power"
+                ]
+            },
+            {
+                "level": 10,
+                "features": [
+                    "warlock-xphb:vestige-au:vestige-recovery"
+                ]
+            },
+            {
+                "level": 14,
+                "features": [
+                    "warlock-xphb:vestige-au:semblance-of-life"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "warlock-xphb:vestige-au:vestige-companion",
+                "name": "Vestige Companion",
+                "level": 3,
+                "text": "The vestige manifests, drawing strength from your pact. It uses the Vestige Companion stat block and is a Celestial, Fiend, or Undead (choose when you gain this feature). You determine what the vestige looks like, but regardless of its form, the vestige bears features indicating its supernatural origin. For example, you might decide your vestige is an oversize floating skull etched with sigils, a circle of glowing runes, or a constantly shifting abstract shape. The vestige is Friendly to you and your allies and obeys your commands. It vanishes if you die.\n\n**The Vestige in Combat.** In combat, the vestige acts during your turn. It can move and use its Reaction on its own, but the only action it takes is the Dodge action unless you take a Bonus Action to command it to take an action in its stat block or some other action. You can also sacrifice one of your attacks when you take the Attack action to command the vestige to take the Vestige's Strike action. If you have the Incapacitated condition, the vestige acts on its own and isn't limited to the Dodge action.\n\n**Disappearance of the Vestige.** When the vestige drops to 0 Hit Points, it disappears. You can spend 1 minute performing a magical ceremony to manifest the vestige again; it reappears with its maximum Hit Points in an unoccupied space within 5 feet of you. As a Magic action, you can temporarily dismiss the vestige to a pocket dimension. As a Magic action while it is temporarily dismissed, you can cause the vestige to reappear in an unoccupied space within 30 feet of you. Whenever the vestige drops to 0 Hit Points or disappears into the pocket dimension, it leaves behind in its space anything it was wearing or carrying.\n\n**Vestige Companion** (stat block)\n\nWhenever you finish a Long Rest, you can summon the vestige in a new form, which appears in an unoccupied space within 5 feet of you. You choose its appearance and whether it is a Celestial, Fiend, or Undead. If the vestige is already manifested from this feature, its form changes to the new one."
+            },
+            {
+                "id": "warlock-xphb:vestige-au:vestige-spells",
+                "name": "Vestige Spells",
+                "level": 3,
+                "text": "The magic of your Vestige Companion ensures you always have certain spells ready. Select one of the following Cleric domains: Life, Light, Trickery, or War. The Domain Spells of your chosen domain are Warlock spells for you. When you reach a Warlock level equal to a Cleric level listed on the Domain Spells table for the domain you have chosen, you thereafter always have the listed spells prepared.\n\nFor example, if you chose the War Domain for this feature, when you reach Warlock level 3, you would have the Guiding Bolt, Magic Weapon, Shield of Faith, and Spiritual Weapon spells prepared."
+            },
+            {
+                "id": "warlock-xphb:vestige-au:vestige-power",
+                "name": "Vestige Power",
+                "level": 6,
+                "text": "Your Vestige Companion now regains its use of Divine Power whenever you finish a Short or Long Rest or when you use your Magical Cunning feature. In addition, while within 30 feet of your Vestige Companion, you have Resistance to the same damage types as the vestige."
+            },
+            {
+                "id": "warlock-xphb:vestige-au:vestige-recovery",
+                "name": "Vestige Recovery",
+                "level": 10,
+                "text": "When your Vestige Companion would drop to 0 Hit Points, you can take a Reaction and expend a Pact Magic spell slot to instead change its Hit Points to its Hit Point maximum. The vestige then teleports to an unoccupied space you can see within 30 feet of it. Once you use this feature, you can't do so again until you finish a Long Rest."
+            },
+            {
+                "id": "warlock-xphb:vestige-au:semblance-of-life",
+                "name": "Semblance of Life",
+                "level": 14,
+                "text": "Your Vestige Companion continues to grow in strength, and with your assistance, it can briefly adopt a more powerful form. Depending on the vestige's type, you can take a Magic action while the vestige is within 90 feet of you to shape-shift it for 1 hour into one of the following forms: **Celestial Spirit** (Celestial vestige; see the Summon Celestial spell in the Player's Handbook), **Fiendish Spirit** (Fiend vestige; see the Summon Fiend spell in the Player's Handbook), or **Undead Spirit** (Undead vestige; see the Summon Undead spell in the Player's Handbook). The vestige's game statistics are replaced by the spirit's stat block, and the spell's level is equal to half your Warlock level (round down; maximum level 9), but the vestige retains its personality, Divine Power Bonus Action, Hit Points, and Hit Point Dice.\n\nThe vestige gains a number of Temporary Hit Points equal to the Hit Points of the spirit form. These Temporary Hit Points vanish if any remain after 1 hour, and the transformation ends early if it has no Temporary Hit Points left.\n\nOnce you use this feature, you can't do so again until you finish a Long Rest."
+            }
+        ]
+    }
+]

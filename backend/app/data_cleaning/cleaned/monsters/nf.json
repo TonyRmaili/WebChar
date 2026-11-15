@@ -1,0 +1,1278 @@
+[
+    {
+        "id": "caldron-magen-nf",
+        "kind": "monster",
+        "name": "Caldron Magen",
+        "source": "NF",
+        "edition": "one",
+        "tags": [
+            "Magic Resistance"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "construct"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 20
+            }
+        ],
+        "hp": {
+            "average": 67,
+            "formula": "9d8 + 27"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 18,
+            "dex": 13,
+            "con": 16,
+            "int": 10,
+            "wis": 10,
+            "cha": 10
+        },
+        "skills": {
+            "perception": 4
+        },
+        "passive_perception": 14,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "acid",
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "blinded",
+                    "charmed",
+                    "deafened",
+                    "exhaustion",
+                    "frightened",
+                    "paralyzed",
+                    "petrified",
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "understands Common plus two other languages but can't speak"
+        ],
+        "cr": {
+            "cr": "4",
+            "xp": 1100,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "disintegration",
+                "name": "Disintegration",
+                "category": "traits",
+                "text": "If the magen dies, it disintegrates into dust, leaving behind anything it was wearing or carrying."
+            },
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The magen has Advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The magen makes two attacks, using Extended Fist or Acid Spittle in any combination."
+            },
+            {
+                "id": "extended-fist",
+                "name": "Extended Fist",
+                "category": "actions",
+                "text": "Melee Attack Roll: +6, reach 15 ft. Hit: 8 (1d8 + 4) Bludgeoning damage plus 5 (1d10) Acid damage. If the target is a Medium or smaller creature, it has the Grappled condition (escape DC 14) from one of two fists.",
+                "action": {
+                    "range": "reach 15 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 4,
+                                "type": "bludgeoning"
+                            },
+                            {
+                                "dice": "1d10",
+                                "type": "acid"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "acid-spittle",
+                "name": "Acid Spittle",
+                "category": "actions",
+                "text": "Ranged Attack Roll: +6, range 60 ft. Hit: 13 (2d8 + 4) Acid damage.",
+                "action": {
+                    "range": "range 60 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "2d8",
+                                "bonus": 4,
+                                "type": "acid"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "acid",
+                "bludgeoning"
+            ],
+            "conditions_inflicted": [
+                "grappled"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "magic_resistance"
+            ],
+            "misc": [
+                "melee_attack",
+                "ranged_attack",
+                "reach"
+            ],
+            "languages": [
+                "common",
+                "cant_speak",
+                "any_choose"
+            ],
+            "environment": [
+                "any"
+            ],
+            "treasure": [
+                "arcana"
+            ]
+        }
+    },
+    {
+        "id": "eldritch-eddy-nf",
+        "kind": "monster",
+        "name": "Eldritch Eddy",
+        "source": "NF",
+        "edition": "one",
+        "tags": [
+            "Magic Resistance"
+        ],
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "construct"
+        },
+        "alignment": [
+            "chaotic neutral"
+        ],
+        "ac": [
+            {
+                "value": 11
+            }
+        ],
+        "hp": {
+            "average": 144,
+            "formula": "17d10 + 51"
+        },
+        "speed": {
+            "walk": 10,
+            "fly": 40,
+            "hover": true
+        },
+        "abilities": {
+            "str": 10,
+            "dex": 12,
+            "con": 16,
+            "int": 12,
+            "wis": 9,
+            "cha": 17
+        },
+        "saves": {
+            "dex": 4,
+            "int": 4,
+            "cha": 6
+        },
+        "senses": {
+            "blindsight": 60
+        },
+        "passive_perception": 9,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "force"
+                ]
+            },
+            "immune": {
+                "types": [
+                    "fire",
+                    "lightning"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "exhaustion",
+                    "frightened",
+                    "paralyzed",
+                    "petrified",
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "understands Common plus one other language but can't speak"
+        ],
+        "cr": {
+            "cr": "6",
+            "xp": 2300,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The eddy has Advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The eddy makes two attacks, using Searing Swipe or Arcane Bolt in any combination."
+            },
+            {
+                "id": "searing-swipe",
+                "name": "Searing Swipe",
+                "category": "actions",
+                "text": "Melee Attack Roll: +6, reach 10 ft. Hit: 13 (3d6 + 3) Fire or Lightning damage (eddy's choice).",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "3d6",
+                                "bonus": 3,
+                                "type": "chosen",
+                                "type_options": [
+                                    "fire",
+                                    "lightning"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "arcane-bolt",
+                "name": "Arcane Bolt",
+                "category": "actions",
+                "text": "Ranged Attack Roll: +6, range 120 ft. Hit: 14 (2d10 + 3) Force damage.",
+                "action": {
+                    "range": "range 120 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "2d10",
+                                "bonus": 3,
+                                "type": "force"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "eldritch-overload",
+                "name": "Eldritch Overload",
+                "category": "reactions",
+                "text": "Trigger: The eddy takes damage. Response:Strength Saving Throw: DC 14, each creature of the eddy's choice in a 5-foot Emanation originating from the eddy. Failure: 7 (2d6) Force damage, and the target has the Prone condition.",
+                "action": {
+                    "area": "5-foot emanation",
+                    "save": {
+                        "ability": "str",
+                        "dc": 14,
+                        "on_success": "none",
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "type": "force"
+                            }
+                        ],
+                        "conditions": [
+                            "prone"
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "fire",
+                "lightning",
+                "force"
+            ],
+            "conditions_inflicted": [
+                "prone"
+            ],
+            "saves_forced": [
+                "str"
+            ],
+            "senses": [
+                "blindsight"
+            ],
+            "movement": [
+                "fly",
+                "hover"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "magic_resistance"
+            ],
+            "misc": [
+                "melee_attack",
+                "ranged_attack",
+                "reach"
+            ],
+            "languages": [
+                "common",
+                "cant_speak",
+                "any_choose"
+            ],
+            "environment": [
+                "urban"
+            ]
+        }
+    },
+    {
+        "id": "phaerimm-elder-nf",
+        "kind": "monster",
+        "name": "Phaerimm Elder",
+        "source": "NF",
+        "edition": "one",
+        "tags": [
+            "Magic Resistance"
+        ],
+        "size": [
+            "huge"
+        ],
+        "creature_type": {
+            "type": "aberration"
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "ac": [
+            {
+                "value": 17
+            }
+        ],
+        "hp": {
+            "average": 218,
+            "formula": "23d12 + 69"
+        },
+        "speed": {
+            "walk": 30,
+            "fly": 60,
+            "hover": true
+        },
+        "abilities": {
+            "str": 18,
+            "dex": 16,
+            "con": 17,
+            "int": 17,
+            "wis": 16,
+            "cha": 18
+        },
+        "saves": {
+            "con": 8,
+            "int": 8,
+            "wis": 8,
+            "cha": 9
+        },
+        "skills": {
+            "arcana": 13,
+            "insight": 8,
+            "perception": 8
+        },
+        "senses": {
+            "truesight": 120
+        },
+        "passive_perception": 18,
+        "defenses": {
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "frightened"
+                ]
+            }
+        },
+        "languages": [
+            "telepathy 120 ft. understands Common and Deep Speech but can't speak"
+        ],
+        "cr": {
+            "cr": "14",
+            "xp": 11500,
+            "pb": 5
+        },
+        "initiative": {
+            "bonus": 8
+        },
+        "features": [
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The phaerimm has Advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The phaerimm makes three Mind Lash attacks. It can replace one attack with either (A) a Vicious Stinger attack or (B) a use of Spellcasting to cast Command (level 3 version)."
+            },
+            {
+                "id": "mind-lash",
+                "name": "Mind Lash",
+                "category": "actions",
+                "text": "Melee or Ranged Attack Roll: +9, reach 10 ft. or range 120 ft. Hit: 32 (6d8 + 4) Psychic damage.",
+                "action": {
+                    "range": "reach 10 ft. or range 120 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 9,
+                        "damage": [
+                            {
+                                "dice": "6d8",
+                                "bonus": 4,
+                                "type": "psychic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "vicious-stinger",
+                "name": "Vicious Stinger",
+                "category": "actions",
+                "text": "Melee Attack Roll: +9, reach 5 ft. Hit: 11 (2d6 + 4) Piercing damage plus 26 (4d12) Poison damage, and the target's Speed is reduced to 0 feet until the start of the phaerimm's next turn.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 9,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 4,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "4d12",
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "siphon-magic",
+                "name": "Siphon Magic",
+                "category": "actions",
+                "text": "The phaerimm focuses on a magic item it can see within 10 feet. When it does, the phaerimm drains the magic item of any charges. Regardless of whether charges are drained, the phaerimm can cast Clairvoyance, Geas, Major Image, and Mirage Arcane one additional time that day.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                }
+            },
+            {
+                "id": "teleport",
+                "name": "Teleport",
+                "category": "bonus_actions",
+                "text": "The phaerimm teleports up to 30 feet to an unoccupied space it can see."
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "cha",
+                "dc": 17,
+                "text": "The phaerimm casts one of the following spells, requiring no spell components and using Charisma as the spellcasting ability (spell save DC 17):",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "command-xphb",
+                                "note": "(level 3 version)"
+                            },
+                            {
+                                "spell": "detect-magic-xphb"
+                            },
+                            {
+                                "spell": "detect-thoughts-xphb"
+                            },
+                            {
+                                "spell": "mage-hand-xphb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "clairvoyance-xphb"
+                            },
+                            {
+                                "spell": "geas-xphb"
+                            },
+                            {
+                                "spell": "major-image-xphb"
+                            },
+                            {
+                                "spell": "mirage-arcane-xphb"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Protective Magic (3/Day)",
+                "ability": "cha",
+                "text": "The phaerimm casts Counterspell or Shield in response to the spell's trigger, using the same spellcasting ability as Spellcasting.",
+                "display_as": "reactions",
+                "hidden": [
+                    "daily"
+                ],
+                "groups": [
+                    {
+                        "uses": 3,
+                        "per": "day",
+                        "spells": [
+                            {
+                                "spell": "counterspell-xphb"
+                            },
+                            {
+                                "spell": "shield-xphb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "mind-lash-vgm",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "poison",
+                "piercing",
+                "psychic"
+            ],
+            "conditions_inflicted": [
+                "charmed",
+                "prone"
+            ],
+            "saves_forced": [
+                "con",
+                "wis"
+            ],
+            "senses": [
+                "truesight"
+            ],
+            "movement": [
+                "fly",
+                "hover"
+            ],
+            "actions": [
+                "multiattack",
+                "teleport"
+            ],
+            "traits": [
+                "magic_resistance"
+            ],
+            "misc": [
+                "melee_attack",
+                "ranged_attack",
+                "reach"
+            ],
+            "languages": [
+                "common",
+                "cant_speak",
+                "deep_speech",
+                "telepathy"
+            ],
+            "spellcasting": [
+                "other"
+            ],
+            "environment": [
+                "underdark",
+                "urban"
+            ],
+            "treasure": [
+                "arcana",
+                "implements"
+            ]
+        }
+    },
+    {
+        "id": "phaerimm-scout-nf",
+        "kind": "monster",
+        "name": "Phaerimm Scout",
+        "source": "NF",
+        "edition": "one",
+        "tags": [
+            "Magic Resistance"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "aberration"
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "ac": [
+            {
+                "value": 13
+            }
+        ],
+        "hp": {
+            "average": 44,
+            "formula": "8d8 + 8"
+        },
+        "speed": {
+            "walk": 10,
+            "fly": 40
+        },
+        "abilities": {
+            "str": 12,
+            "dex": 13,
+            "con": 12,
+            "int": 15,
+            "wis": 16,
+            "cha": 16
+        },
+        "saves": {
+            "int": 4,
+            "cha": 5
+        },
+        "skills": {
+            "perception": 5
+        },
+        "senses": {
+            "truesight": 60
+        },
+        "passive_perception": 15,
+        "defenses": {
+            "condition_immune": {
+                "types": [
+                    "charmed"
+                ]
+            }
+        },
+        "languages": [
+            "telepathy 120 ft. understands Common and Deep Speech but can't speak"
+        ],
+        "cr": {
+            "cr": "2",
+            "xp": 450,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The phaerimm has Advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The phaerimm makes two attacks, using Stinger or Mindwarp Ray in any combination."
+            },
+            {
+                "id": "stinger",
+                "name": "Stinger",
+                "category": "actions",
+                "text": "Melee Attack Roll: +3, reach 5 ft. Hit: 4 (1d6 + 1) Piercing damage plus 9 (2d8) Poison damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 3,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 1,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "2d8",
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "mindwarp-ray",
+                "name": "Mindwarp Ray",
+                "category": "actions",
+                "text": "Ranged Attack Roll: +5, range 120 ft. Hit: 6 (1d6 + 3) Psychic damage, and the target has the Charmed condition until the start of the phaerimm's next turn.",
+                "action": {
+                    "range": "range 120 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 3,
+                                "type": "psychic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "uncanny-dodge",
+                "name": "Uncanny Dodge",
+                "category": "reactions",
+                "text": "Trigger: The phaerimm is hit by an attack roll. Response: The phaerimm halves the damage (round down) it takes from that attack."
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "cha",
+                "dc": 13,
+                "text": "The phaerimm casts one of the following spells, requiring no spell components and using Charisma as the spellcasting ability (spell save DC 13):",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "detect-magic-xphb"
+                            },
+                            {
+                                "spell": "detect-thoughts-xphb"
+                            },
+                            {
+                                "spell": "mage-hand-xphb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "spells": [
+                            {
+                                "spell": "clairvoyance-xphb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "poison",
+                "piercing",
+                "psychic"
+            ],
+            "conditions_inflicted": [
+                "charmed"
+            ],
+            "saves_forced": [
+                "wis"
+            ],
+            "senses": [
+                "truesight"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "magic_resistance"
+            ],
+            "misc": [
+                "melee_attack",
+                "ranged_attack"
+            ],
+            "languages": [
+                "common",
+                "cant_speak",
+                "deep_speech",
+                "telepathy"
+            ],
+            "spellcasting": [
+                "other"
+            ],
+            "environment": [
+                "underdark",
+                "urban"
+            ],
+            "treasure": [
+                "arcana",
+                "implements"
+            ]
+        }
+    },
+    {
+        "id": "terran-magen-nf",
+        "kind": "monster",
+        "name": "Terran Magen",
+        "source": "NF",
+        "edition": "one",
+        "tags": [
+            "Magic Resistance"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "construct"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 21
+            }
+        ],
+        "hp": {
+            "average": 121,
+            "formula": "22d8 + 22"
+        },
+        "speed": {
+            "walk": 30,
+            "fly": 20,
+            "hover": true
+        },
+        "abilities": {
+            "str": 16,
+            "dex": 10,
+            "con": 12,
+            "int": 10,
+            "wis": 18,
+            "cha": 10
+        },
+        "saves": {
+            "wis": 7
+        },
+        "skills": {
+            "perception": 7
+        },
+        "passive_perception": 17,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "poison",
+                    "thunder"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "blinded",
+                    "charmed",
+                    "deafened",
+                    "exhaustion",
+                    "frightened",
+                    "paralyzed",
+                    "petrified",
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "understands Common plus two other languages but can't speak"
+        ],
+        "cr": {
+            "cr": "8",
+            "xp": 3900,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "disintegration",
+                "name": "Disintegration",
+                "category": "traits",
+                "text": "If the magen dies, it disintegrates into dust, leaving behind anything it was wearing or carrying."
+            },
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The magen has Advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The magen makes two attacks, using Hammer Fist or Thunderous Boom in any combination."
+            },
+            {
+                "id": "hammer-fist",
+                "name": "Hammer Fist",
+                "category": "actions",
+                "text": "Melee Attack Roll: +6, reach 5 ft. Hit: 16 (3d8 + 3) Bludgeoning damage plus 13 (3d8) Force damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "3d8",
+                                "bonus": 3,
+                                "type": "bludgeoning"
+                            },
+                            {
+                                "dice": "3d8",
+                                "type": "force"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "thunderous-boom",
+                "name": "Thunderous Boom",
+                "category": "actions",
+                "text": "Ranged Attack Roll: +7, range 60 ft. Hit: 28 (8d6) Thunder damage.",
+                "action": {
+                    "range": "range 60 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "8d6",
+                                "type": "thunder"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "wis",
+                "dc": 15,
+                "text": "The magen casts one of the following spells, requiring no Material components and using Wisdom as the spellcasting ability (spell save DC 15):",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "mage-hand-xphb"
+                            },
+                            {
+                                "spell": "mending-xphb"
+                            },
+                            {
+                                "spell": "prestidigitation-xphb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "disintegrate-xphb"
+                            },
+                            {
+                                "spell": "move-earth-xphb"
+                            },
+                            {
+                                "spell": "stone-shape-xphb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "force",
+                "thunder"
+            ],
+            "saves_forced": [
+                "dex"
+            ],
+            "movement": [
+                "fly",
+                "hover"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "magic_resistance"
+            ],
+            "misc": [
+                "melee_attack",
+                "ranged_attack"
+            ],
+            "languages": [
+                "common",
+                "cant_speak",
+                "any_choose"
+            ],
+            "spellcasting": [
+                "other"
+            ],
+            "environment": [
+                "any"
+            ],
+            "treasure": [
+                "arcana"
+            ]
+        }
+    },
+    {
+        "id": "virvos-magen-nf",
+        "kind": "monster",
+        "name": "Virvos Magen",
+        "source": "NF",
+        "edition": "one",
+        "tags": [
+            "Magic Resistance"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "construct"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 21
+            }
+        ],
+        "hp": {
+            "average": 110,
+            "formula": "17d8 + 34"
+        },
+        "speed": {
+            "walk": 30,
+            "fly": 20,
+            "hover": true
+        },
+        "abilities": {
+            "str": 12,
+            "dex": 10,
+            "con": 14,
+            "int": 10,
+            "wis": 10,
+            "cha": 16
+        },
+        "skills": {
+            "perception": 6
+        },
+        "passive_perception": 16,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "poison",
+                    "psychic"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "blinded",
+                    "charmed",
+                    "deafened",
+                    "exhaustion",
+                    "frightened",
+                    "paralyzed",
+                    "petrified",
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "understands Common plus two other languages but can't speak"
+        ],
+        "cr": {
+            "cr": "6",
+            "xp": 2300,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "disintegration",
+                "name": "Disintegration",
+                "category": "traits",
+                "text": "If the magen dies, it disintegrates into dust, leaving behind anything it was wearing or carrying."
+            },
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The magen has Advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The magen makes two Psychic Blast attacks."
+            },
+            {
+                "id": "psychic-blast",
+                "name": "Psychic Blast",
+                "category": "actions",
+                "text": "Melee or Ranged Attack Roll: +6, reach 5 ft. or range 60 ft. Hit: 21 (6d6) Psychic damage.",
+                "action": {
+                    "range": "reach 5 ft. or range 60 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "6d6",
+                                "type": "psychic"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "cha",
+                "dc": 14,
+                "text": "The magen casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save DC 14):",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "dancing-lights-xphb"
+                            },
+                            {
+                                "spell": "minor-illusion-xphb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "hypnotic-pattern-xphb"
+                            },
+                            {
+                                "spell": "major-image-xphb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "psychic"
+            ],
+            "conditions_inflicted": [
+                "charmed",
+                "incapacitated"
+            ],
+            "saves_forced": [
+                "wis"
+            ],
+            "movement": [
+                "fly",
+                "hover"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "magic_resistance"
+            ],
+            "misc": [
+                "melee_attack",
+                "ranged_attack"
+            ],
+            "languages": [
+                "common",
+                "cant_speak",
+                "any_choose"
+            ],
+            "spellcasting": [
+                "other"
+            ],
+            "environment": [
+                "any"
+            ],
+            "treasure": [
+                "arcana"
+            ]
+        }
+    }
+]

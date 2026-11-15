@@ -1,0 +1,5597 @@
+[
+    {
+        "id": "animated-tile-chimera-rot",
+        "kind": "monster",
+        "name": "Animated Tile Chimera",
+        "source": "RoT",
+        "edition": "classic",
+        "tags": [
+            "Rejuvenation"
+        ],
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "monstrosity"
+        },
+        "alignment": [
+            "chaotic evil"
+        ],
+        "ac": [
+            {
+                "value": 14,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 114,
+            "formula": "12d10 + 48"
+        },
+        "speed": {
+            "walk": 30,
+            "fly": 60
+        },
+        "abilities": {
+            "str": 19,
+            "dex": 11,
+            "con": 19,
+            "int": 3,
+            "wis": 14,
+            "cha": 10
+        },
+        "skills": {
+            "perception": 8
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 18,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "piercing"
+                ]
+            },
+            "immune": {
+                "types": [
+                    "poison",
+                    "psychic"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "frightened",
+                    "paralyzed",
+                    "petrified",
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "understands Draconic but can't speak"
+        ],
+        "cr": {
+            "cr": "6",
+            "xp": 2300,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "rejuvenation",
+                "name": "Rejuvenation",
+                "category": "traits",
+                "text": "If destroyed, the tile creature regains all its hit points and becomes active again in 24 hours unless at least half its tiles are collected and kept separate from the rest of the creature's tiles."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The chimera makes three attacks: one with its bite, one with its horns, and one with its claws. When its fire breath is available, it can use the breath in place of its bite or horns."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 11 (2d6 + 4) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 4,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "horns",
+                "name": "Horns",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 10 (1d12 + 4) bludgeoning damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "1d12",
+                                "bonus": 4,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "claws",
+                "name": "Claws",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 11 (2d6 + 4) slashing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 4,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "fire-breath",
+                "name": "Fire Breath",
+                "category": "actions",
+                "text": "The dragon head exhales fire in a 15-foot cone. Each creature in that area must make a DC 15 Dexterity saving throw, taking 31 (7d8) fire damage on a failed save, or half as much damage on a successful one.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "area": "15-foot cone",
+                    "save": {
+                        "ability": "dex",
+                        "dc": 15,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "7d8",
+                                "type": "fire"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "narrow-dodge",
+                "name": "Narrow Dodge",
+                "category": "reactions",
+                "text": "When targeted by a melee attack, the tile creature can take a reaction to turn its narrowest aspect toward the attacker. The attacker has disadvantage on the attack roll."
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "fire",
+                "piercing",
+                "slashing"
+            ],
+            "saves_forced": [
+                "dex"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "actions": [
+                "breath_weapon",
+                "multiattack"
+            ],
+            "traits": [
+                "rejuvenation"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "cant_speak",
+                "draconic"
+            ],
+            "environment": [
+                "underdark",
+                "mountain",
+                "grassland",
+                "hill"
+            ]
+        }
+    },
+    {
+        "id": "aquatic-troll-rot",
+        "kind": "monster",
+        "name": "Aquatic Troll",
+        "source": "RoT",
+        "edition": "classic",
+        "tags": [
+            "Keen Senses",
+            "Regeneration",
+            "Water Breathing"
+        ],
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "giant"
+        },
+        "alignment": [
+            "chaotic evil"
+        ],
+        "ac": [
+            {
+                "value": 15,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 84,
+            "formula": "8d10 + 40"
+        },
+        "speed": {
+            "walk": 30,
+            "swim": 30
+        },
+        "abilities": {
+            "str": 18,
+            "dex": 13,
+            "con": 20,
+            "int": 7,
+            "wis": 9,
+            "cha": 7
+        },
+        "skills": {
+            "perception": 2
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 12,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "cold"
+                ]
+            }
+        },
+        "languages": [
+            "Giant"
+        ],
+        "cr": {
+            "cr": "5",
+            "xp": 1800,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "keen-smell",
+                "name": "Keen Smell",
+                "category": "traits",
+                "text": "The troll has advantage on Wisdom (Perception) checks that rely on smell."
+            },
+            {
+                "id": "regeneration",
+                "name": "Regeneration",
+                "category": "traits",
+                "text": "The troll regains 10 hit points at the start of its turn. If the troll takes acid or fire damage, this trait doesn't function at the start of the troll's next turn. The troll dies only if it starts its turn with 0 hit points and doesn't regenerate."
+            },
+            {
+                "id": "water-breathing",
+                "name": "Water Breathing",
+                "category": "traits",
+                "text": "The troll can breathe underwater."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The troll makes three attacks: one with its bite and two with its claws."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 7 (1d6 + 4) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 4,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "claw",
+                "name": "Claw",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 11 (2d6 + 4) slashing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 4,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "variants": [
+            {
+                "id": "loathsome-limbs",
+                "name": "Loathsome Limbs",
+                "text": "Some trolls have the following trait\n\n**Loathsome Limbs.** Whenever the troll takes at least 15 slashing damage at one time, roll a d20 to determine what else happens to it:\n\n- **1–10.** Nothing else happens.\n- **11–14.** One leg is severed from the troll if it has any legs left.\n- **15–18.** One arm is severed from the troll if it has any arms left.\n- **19–20.** The troll is decapitated, but the troll dies only if it can't regenerate. If it dies, so does the severed head.\n\nIf the troll finishes a short or long rest without reattaching a severed limb or head, the part regrows. At that point, the severed part dies. Until then, a severed part acts on the troll's initiative and has its own action and movement. A severed part has AC 13, 10 hit points, and the troll's Regeneration trait.\n\nA **severed leg** is unable to attack and has a speed of 5 feet.\n\nA **severed arm** has a speed of 5 feet and can make one claw attack on its turn, with disadvantage on the attack roll unless the troll can see the arm and its target. Each time the troll loses an arm, it loses a claw attack.\n\nIf its head is severed, the troll loses its bite attack and its body is blinded unless the head can see it. The **severed head** has a speed of 0 feet and the troll's Keen Smell trait. It can make a bite attack but only against a target in its space.\n\nThe troll's speed is halved if it's missing a leg. If it loses both legs, it falls prone. If it has both arms, it can crawl. With only one arm, it can still crawl, but its speed is halved. With no arms or legs, its speed is 0, and it can't benefit from bonuses to speed.",
+                "version": "troll-loathsome-limbs-rot"
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing",
+                "slashing"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "movement": [
+                "swim"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "keen_senses",
+                "regeneration",
+                "water_breathing"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "giant"
+            ],
+            "environment": [
+                "underdark",
+                "mountain",
+                "forest",
+                "swamp",
+                "hill",
+                "arctic"
+            ]
+        }
+    },
+    {
+        "id": "troll-loathsome-limbs-rot",
+        "kind": "monster",
+        "name": "Troll (Loathsome Limbs)",
+        "source": "RoT",
+        "edition": "classic",
+        "tags": [
+            "Keen Senses",
+            "Regeneration",
+            "Water Breathing"
+        ],
+        "version_of": "aquatic-troll-rot",
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "giant"
+        },
+        "alignment": [
+            "chaotic evil"
+        ],
+        "ac": [
+            {
+                "value": 15,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 84,
+            "formula": "8d10 + 40"
+        },
+        "speed": {
+            "walk": 30,
+            "swim": 30
+        },
+        "abilities": {
+            "str": 18,
+            "dex": 13,
+            "con": 20,
+            "int": 7,
+            "wis": 9,
+            "cha": 7
+        },
+        "skills": {
+            "perception": 2
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 12,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "cold"
+                ]
+            }
+        },
+        "languages": [
+            "Giant"
+        ],
+        "cr": {
+            "cr": "5",
+            "xp": 1800,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "keen-smell",
+                "name": "Keen Smell",
+                "category": "traits",
+                "text": "The troll has advantage on Wisdom (Perception) checks that rely on smell."
+            },
+            {
+                "id": "regeneration",
+                "name": "Regeneration",
+                "category": "traits",
+                "text": "The troll regains 10 hit points at the start of its turn. If the troll takes acid or fire damage, this trait doesn't function at the start of the troll's next turn. The troll dies only if it starts its turn with 0 hit points and doesn't regenerate."
+            },
+            {
+                "id": "water-breathing",
+                "name": "Water Breathing",
+                "category": "traits",
+                "text": "The troll can breathe underwater."
+            },
+            {
+                "id": "loathsome-limbs",
+                "name": "Loathsome Limbs",
+                "category": "traits",
+                "text": "Whenever the troll takes at least 15 slashing damage at one time, roll a d20 to determine what else happens to it:\n\n- **1–10.** Nothing else happens.\n- **11–14.** One leg is severed from the troll if it has any legs left.\n- **15–18.** One arm is severed from the troll if it has any arms left.\n- **19–20.** The troll is decapitated, but the troll dies only if it can't regenerate. If it dies, so does the severed head.\n\nIf the troll finishes a short or long rest without reattaching a severed limb or head, the part regrows. At that point, the severed part dies. Until then, a severed part acts on the troll's initiative and has its own action and movement. A severed part has AC 13, 10 hit points, and the troll's Regeneration trait.\n\nA **severed leg** is unable to attack and has a speed of 5 feet.\n\nA **severed arm** has a speed of 5 feet and can make one claw attack on its turn, with disadvantage on the attack roll unless the troll can see the arm and its target. Each time the troll loses an arm, it loses a claw attack.\n\nIf its head is severed, the troll loses its bite attack and its body is blinded unless the head can see it. The **severed head** has a speed of 0 feet and the troll's Keen Smell trait. It can make a bite attack but only against a target in its space.\n\nThe troll's speed is halved if it's missing a leg. If it loses both legs, it falls prone. If it has both arms, it can crawl. With only one arm, it can still crawl, but its speed is halved. With no arms or legs, its speed is 0, and it can't benefit from bonuses to speed.",
+                "action": {
+                    "damage": [
+                        {
+                            "bonus": 15,
+                            "type": "slashing"
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The troll makes three attacks: one with its bite and two with its claws."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 7 (1d6 + 4) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 4,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "claw",
+                "name": "Claw",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 11 (2d6 + 4) slashing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 4,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing",
+                "slashing"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "movement": [
+                "swim"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "keen_senses",
+                "regeneration",
+                "water_breathing"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "giant"
+            ],
+            "environment": [
+                "underdark",
+                "mountain",
+                "forest",
+                "swamp",
+                "hill",
+                "arctic"
+            ]
+        }
+    },
+    {
+        "id": "carnivorous-flower-rot",
+        "kind": "monster",
+        "name": "Carnivorous Flower",
+        "source": "RoT",
+        "edition": "classic",
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "plant"
+        },
+        "alignment": [
+            "neutral"
+        ],
+        "ac": [
+            {
+                "value": 14,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 114,
+            "formula": "12d10 + 48"
+        },
+        "speed": {
+            "walk": 0
+        },
+        "abilities": {
+            "str": 16,
+            "dex": 11,
+            "con": 19,
+            "int": 6,
+            "wis": 13,
+            "cha": 6
+        },
+        "saves": {
+            "con": 7
+        },
+        "senses": {
+            "darkvision": 120
+        },
+        "passive_perception": 11,
+        "languages": [
+            "Otyugh"
+        ],
+        "cr": {
+            "cr": "5",
+            "xp": 1800,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "limited-telepathy",
+                "name": "Limited Telepathy",
+                "category": "traits",
+                "text": "The plant can magically transmit simple messages and images to any creature within 120 feet of it that can understand a language. This form of telepathy doesn't allow the receiving creature to telepathically respond."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The plant makes three attacks: one with its bite and two with its tentacles."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 12 (2d8 + 3) piercing damage. If the target is a creature, it must succeed on a DC 15 Constitution saving throw against disease or become poisoned until the disease is cured. Every 24 hours that elapse, the target must repeat the saving throw, reducing its hit point maximum by 5 (1d10) on a failure. The disease is cured on a success. The target dies if the disease reduces its hit point maximum to 0. This reduction to the target's hit point maximum lasts until the disease is cured.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "2d8",
+                                "bonus": 3,
+                                "type": "piercing"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "con",
+                        "dc": 15,
+                        "on_success": "none",
+                        "conditions": [
+                            "poisoned"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "tentacle",
+                "name": "Tentacle",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +6 to hit, reach 10 ft., one target. Hit: 7 (1d8 + 3) bludgeoning damage plus 4 (1d8) piercing damage. If the target is Medium or smaller, it is grappled (escape DC 13) and restrained until the grapple ends. The plant has two tentacles, each of which can grapple one target.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 3,
+                                "type": "bludgeoning"
+                            },
+                            {
+                                "dice": "1d8",
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "tentacle-slam",
+                "name": "Tentacle Slam",
+                "category": "actions",
+                "text": "The plant slams creatures grappled by it into each other or a solid surface. Each creature must succeed on a DC 14 Constitution saving throw or take 10 (2d6 + 3) bludgeoning damage and be stunned until the end of the plant's next turn. On a successful save, the target takes half the bludgeoning damage and isn't stunned.",
+                "action": {
+                    "save": {
+                        "ability": "con",
+                        "dc": 14,
+                        "on_success": "none",
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 3,
+                                "type": "bludgeoning"
+                            }
+                        ],
+                        "conditions": [
+                            "stunned"
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "piercing"
+            ],
+            "conditions_inflicted": [
+                "grappled",
+                "poisoned",
+                "restrained",
+                "stunned"
+            ],
+            "saves_forced": [
+                "con"
+            ],
+            "senses": [
+                "superior_darkvision"
+            ],
+            "actions": [
+                "multiattack",
+                "tentacles"
+            ],
+            "misc": [
+                "disease",
+                "melee_weapon_attack",
+                "reach"
+            ],
+            "languages": [
+                "other"
+            ],
+            "environment": [
+                "underdark"
+            ]
+        }
+    },
+    {
+        "id": "diderius-rot",
+        "kind": "monster",
+        "name": "Diderius",
+        "source": "RoT",
+        "edition": "classic",
+        "tags": [
+            "Magic Resistance",
+            "Rejuvenation"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "undead"
+        },
+        "alignment": [
+            "lawful evil"
+        ],
+        "ac": [
+            {
+                "value": 17,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 97,
+            "formula": "13d8 + 39"
+        },
+        "speed": {
+            "walk": 20
+        },
+        "abilities": {
+            "str": 18,
+            "dex": 10,
+            "con": 17,
+            "int": 18,
+            "wis": 18,
+            "cha": 16
+        },
+        "saves": {
+            "con": 8,
+            "int": 5,
+            "wis": 9,
+            "cha": 8
+        },
+        "skills": {
+            "history": 5,
+            "religion": 5
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 14,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "necrotic",
+                    "poison"
+                ],
+                "conditional": [
+                    {
+                        "types": [
+                            "bludgeoning",
+                            "piercing",
+                            "slashing"
+                        ],
+                        "note": "from nonmagical attacks"
+                    }
+                ]
+            },
+            "vulnerable": {
+                "types": [
+                    "fire"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "exhaustion",
+                    "frightened",
+                    "paralyzed",
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "the languages it knew in life"
+        ],
+        "cr": {
+            "cr": "15",
+            "xp": 13000,
+            "pb": 5,
+            "lair": "16",
+            "xp_lair": 15000
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "Diderius has advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "rejuvenation",
+                "name": "Rejuvenation",
+                "category": "traits",
+                "text": "A destroyed mummy lord gains a new body in 24 hours if its heart is intact, regaining all its hit points and becoming active again. The new body appears within 5 feet of Diderius's heart."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The mummy can use its Dreadful Glare and makes one attack with its rotting fist."
+            },
+            {
+                "id": "rotting-fist",
+                "name": "Rotting Fist",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +9 to hit, reach 5 ft., one target. Hit: 14 (3d6 + 4) bludgeoning damage plus 21 (6d6) necrotic damage. If the target is a creature, it must succeed on a DC 16 Constitution saving throw or be cursed with mummy rot. The cursed target can't regain hit points, and its hit point maximum decreases by 10 (3d6) for every 24 hours that elapse. If the curse reduces the target's hit point maximum to 0, the target dies, and its body turns to dust. The curse lasts until removed by the Remove Curse spell or other magic.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 9,
+                        "damage": [
+                            {
+                                "dice": "3d6",
+                                "bonus": 4,
+                                "type": "bludgeoning"
+                            },
+                            {
+                                "dice": "6d6",
+                                "type": "necrotic"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "con",
+                        "dc": 16,
+                        "on_success": "none"
+                    }
+                }
+            },
+            {
+                "id": "dreadful-glare",
+                "name": "Dreadful Glare",
+                "category": "actions",
+                "text": "Diderius targets one creature it can see within 60 feet of it. If the target can see Diderius, it must succeed on a DC 16 Wisdom saving throw against this magic or become frightened until the end of the mummy's next turn. If the target fails the saving throw by 5 or more, it is also paralyzed for the same duration. A target that succeeds on the saving throw is immune to the Dreadful Glare of all mummies and mummy lords for the next 24 hours.",
+                "action": {
+                    "save": {
+                        "ability": "wis",
+                        "dc": 16,
+                        "on_success": "none",
+                        "conditions": [
+                            "frightened",
+                            "paralyzed"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "attack",
+                "name": "Attack",
+                "category": "legendary_actions",
+                "text": "Diderius makes one attack with its rotting fist or uses its Dreadful Glare."
+            },
+            {
+                "id": "blinding-dust",
+                "name": "Blinding Dust",
+                "category": "legendary_actions",
+                "text": "Blinding dust and sand swirls magically around Diderius. Each creature within 5 feet of Diderius must succeed on a DC 16 Constitution saving throw or be blinded until the end of the creature's next turn.",
+                "action": {
+                    "save": {
+                        "ability": "con",
+                        "dc": 16,
+                        "on_success": "none",
+                        "conditions": [
+                            "blinded"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "blasphemous-word",
+                "name": "Blasphemous Word",
+                "category": "legendary_actions",
+                "text": "Diderius utters a blasphemous word. Each non-undead creature within 10 feet of Diderius that can hear the magical utterance must succeed on a DC 16 Constitution saving throw or be stunned until the end of Diderius's next turn.",
+                "cost": 2,
+                "action": {
+                    "save": {
+                        "ability": "con",
+                        "dc": 16,
+                        "on_success": "none",
+                        "conditions": [
+                            "stunned"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "channel-negative-energy",
+                "name": "Channel Negative Energy",
+                "category": "legendary_actions",
+                "text": "Diderius magically unleashes negative energy. Creatures within 60 feet of Diderius, including ones behind barriers and around corners, can't regain hit points until the end of Diderius's next turn.",
+                "cost": 2
+            },
+            {
+                "id": "whirlwind-of-sand",
+                "name": "Whirlwind of Sand",
+                "category": "legendary_actions",
+                "text": "Diderius magically transforms into a whirlwind of sand, moves up to 60 feet, and reverts to its normal form. While in whirlwind form, Diderius is immune to all damage, and it can't be grappled, petrified, knocked prone, restrained, or stunned. Equipment worn or carried by Diderius remain in its possession.",
+                "cost": 2
+            },
+            {
+                "id": "lair-actions",
+                "name": "Lair Actions",
+                "category": "lair_actions",
+                "text": "On initiative count 20 (losing initiative ties), the mummy lord takes a lair action to cause one of the following effects; the mummy lord can't use the same effect two rounds in a row:\n\n- Each undead creature in the lair can pinpoint the location of each living creature within 120 feet of it until initiative count 20 on the next round.\n- Each undead in the lair has advantage on saving throws against effects that turn undead until initiative count 20 on the next round.\n- Until initiative count 20 on the next round, any non-undead creature that tries to cast a spell of 4th level or lower in the mummy lord's lair is wracked with pain. The creature can choose another action, but if it tries to cast the spell, it must make a DC 16 Constitution saving throw. On a failed save, it takes 1d6 necrotic damage per level of the spell, and the spell has no effect and is wasted."
+            },
+            {
+                "id": "regional-effects",
+                "name": "Regional Effects",
+                "category": "regional_effects",
+                "text": "A mummy lord's temple or tomb is warped in any of the following ways by the creature's dark presence:\n\n- Food instantly molders and water instantly evaporates when brought into the lair. Other non magical drinks are spoiled - wine turning to vinegar, for instance.\n- Divination spells cast within the lair by creatures other than the mummy lord have a 25 percent chance to provide misleading results, as determined by the DM. If a Divination spell already has a chance to fail or become unreliable when cast multiple times, that chance increases by 25 percent.\n- A creature that takes treasure from the lair is cursed until the treasure is returned. The cursed target has disadvantage on all saving throws. The curse lasts until removed by a Remove Curse spell or other magic.\n\nIf the mummy lord is destroyed, these regional effects end immediately."
+            }
+        ],
+        "legendary_actions": {
+            "uses": 3
+        },
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "int",
+                "dc": 17,
+                "attack": 9,
+                "text": "Diderius is a 10th-level spellcaster. His spellcasting ability is Intelligence (spell save DC 17, +9 to hit with spell attacks). He has the following wizard spells prepared:",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "level": 0,
+                        "spells": [
+                            {
+                                "spell": "minor-illusion-phb"
+                            },
+                            {
+                                "spell": "ray-of-frost-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 1,
+                        "slots": 4,
+                        "spells": [
+                            {
+                                "spell": "charm-person-phb"
+                            },
+                            {
+                                "spell": "detect-magic-phb"
+                            },
+                            {
+                                "spell": "shield-phb"
+                            },
+                            {
+                                "spell": "thunderwave-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 2,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "cloud-of-daggers-phb"
+                            },
+                            {
+                                "spell": "hold-person-phb"
+                            },
+                            {
+                                "spell": "see-invisibility-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 3,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "animate-dead-phb"
+                            },
+                            {
+                                "spell": "dispel-magic-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 4,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "fire-shield-phb"
+                            },
+                            {
+                                "spell": "greater-invisibility-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 5,
+                        "slots": 2,
+                        "spells": [
+                            {
+                                "spell": "cloudkill-phb"
+                            },
+                            {
+                                "spell": "wall-of-stone-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "necrotic",
+                "force",
+                "piercing",
+                "radiant"
+            ],
+            "conditions_inflicted": [
+                "blinded",
+                "frightened",
+                "paralyzed",
+                "stunned",
+                "deafened",
+                "poisoned",
+                "prone"
+            ],
+            "saves_forced": [
+                "con",
+                "wis",
+                "dex"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "magic_resistance",
+                "rejuvenation"
+            ],
+            "misc": [
+                "area_of_effect",
+                "curse",
+                "hit_point_reduction",
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "known_in_life"
+            ],
+            "spellcasting": [
+                "cleric"
+            ],
+            "environment": [
+                "desert"
+            ]
+        }
+    },
+    {
+        "id": "dragonfang-rot",
+        "kind": "monster",
+        "name": "Dragonfang",
+        "source": "RoT",
+        "edition": "classic",
+        "tags": [
+            "Pack Tactics"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "human"
+            ]
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "ac": [
+            {
+                "value": 15,
+                "from": [
+                    "studded leather"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 78,
+            "formula": "12d8 + 24"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 11,
+            "dex": 16,
+            "con": 14,
+            "int": 12,
+            "wis": 12,
+            "cha": 14
+        },
+        "saves": {
+            "wis": 4
+        },
+        "skills": {
+            "deception": 5,
+            "stealth": 6
+        },
+        "passive_perception": 11,
+        "defenses": {
+            "resist": {
+                "conditional": [
+                    {
+                        "types": [
+                            "acid",
+                            "cold",
+                            "fire",
+                            "lightning",
+                            "poison"
+                        ],
+                        "note": "one of the following:"
+                    }
+                ]
+            }
+        },
+        "languages": [
+            "Common",
+            "Draconic",
+            "Infernal"
+        ],
+        "cr": {
+            "cr": "5",
+            "xp": 1800,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "dragon-fanatic",
+                "name": "Dragon Fanatic",
+                "category": "traits",
+                "text": "The dragonfang has advantage on saving throws against being charmed or frightened. While the dragonfang can see a dragon or higher-ranking Cult of the Dragon cultist friendly to it, the dragonfang ignores the effects of being charmed or frightened."
+            },
+            {
+                "id": "fanatic-advantage",
+                "name": "Fanatic Advantage",
+                "category": "traits",
+                "text": "Once per turn, if the dragonfang makes a weapon attack with advantage on the attack roll and hits, the target takes an extra 10 (3d6) damage.",
+                "action": {
+                    "attack": {
+                        "kind": "any",
+                        "damage": [
+                            {
+                                "dice": "3d6",
+                                "type": "weapon"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "limited-flight",
+                "name": "Limited Flight",
+                "category": "traits",
+                "text": "The dragonfang can use a bonus action to gain a flying speed of 30 feet until the end of its turn."
+            },
+            {
+                "id": "pack-tactics",
+                "name": "Pack Tactics",
+                "category": "traits",
+                "text": "The dragonfang has advantage on an attack roll against a creature if at least one of the dragonfang's allies is within 5 feet of the creature and the ally isn't incapacitated."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The Dragonfang attacks twice with its shortsword."
+            },
+            {
+                "id": "shortsword",
+                "name": "Shortsword",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 6 (1d6 + 3) piercing damage plus 7 (2d6) damage of the type to which the dragonfang has resistance.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 3,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "2d6",
+                                "type": "chosen"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "orb-of-dragons-breath",
+                "name": "Orb of Dragon's Breath",
+                "category": "actions",
+                "text": "Ranged Spell Attack: +5 to hit, range 50 ft., one target. Hit: 22 (5d8) damage of the type to which the dragonfang has damage resistance.",
+                "uses": {
+                    "max": 2,
+                    "reset": "long"
+                },
+                "action": {
+                    "range": "range 50 ft.",
+                    "attack": {
+                        "kind": "spell",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "5d8",
+                                "type": "chosen"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "items": [
+            {
+                "item": "shortsword-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing"
+            ],
+            "actions": [
+                "breath_weapon",
+                "multiattack"
+            ],
+            "traits": [
+                "pack_tactics"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "draconic",
+                "infernal"
+            ]
+        }
+    },
+    {
+        "id": "dragonsoul-rot",
+        "kind": "monster",
+        "name": "Dragonsoul",
+        "source": "RoT",
+        "edition": "classic",
+        "tags": [
+            "Pack Tactics"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "human"
+            ]
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "ac": [
+            {
+                "value": 16,
+                "from": [
+                    "studded leather"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 110,
+            "formula": "17d8 + 34"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 11,
+            "dex": 18,
+            "con": 14,
+            "int": 13,
+            "wis": 12,
+            "cha": 16
+        },
+        "saves": {
+            "wis": 4
+        },
+        "skills": {
+            "deception": 6,
+            "stealth": 7
+        },
+        "passive_perception": 11,
+        "defenses": {
+            "resist": {
+                "conditional": [
+                    {
+                        "types": [
+                            "acid",
+                            "cold",
+                            "fire",
+                            "lightning",
+                            "poison"
+                        ],
+                        "note": "one of the following:"
+                    }
+                ]
+            }
+        },
+        "languages": [
+            "Common",
+            "Draconic",
+            "Infernal"
+        ],
+        "cr": {
+            "cr": "7",
+            "xp": 2900,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 4
+        },
+        "features": [
+            {
+                "id": "dragon-fanatic",
+                "name": "Dragon Fanatic",
+                "category": "traits",
+                "text": "The dragonsoul has advantage on saving throws against being charmed or frightened. While the dragonsoul can see a dragon or higher-ranking Cult of the Dragon cultist friendly to it, the dragonsoul ignores the effects of being charmed or frightened."
+            },
+            {
+                "id": "fanatic-advantage",
+                "name": "Fanatic Advantage",
+                "category": "traits",
+                "text": "Once per turn, if the dragonsoul makes a weapon attack with advantage on the attack roll and hits, the target takes an extra 10 (3d6) damage.",
+                "action": {
+                    "attack": {
+                        "kind": "any",
+                        "damage": [
+                            {
+                                "dice": "3d6",
+                                "type": "weapon"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "limited-flight",
+                "name": "Limited Flight",
+                "category": "traits",
+                "text": "The dragonsoul can use a bonus action to gain a flying speed of 30 feet until the end of its turn."
+            },
+            {
+                "id": "pack-tactics",
+                "name": "Pack Tactics",
+                "category": "traits",
+                "text": "The dragonsoul has advantage on an attack roll against a creature if at least one of the dragonsoul's allies is within 5 feet of the creature and the ally isn't incapacitated."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The Dragonsoul attacks twice with its shortsword."
+            },
+            {
+                "id": "shortsword",
+                "name": "Shortsword",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 6 (1d6 + 3) piercing damage plus 10 (3d6) damage of the type to which the dragonsoul has resistance.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 3,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "3d6",
+                                "type": "chosen"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "orb-of-dragons-breath",
+                "name": "Orb of Dragon's Breath",
+                "category": "actions",
+                "text": "Ranged Spell Attack: +7 to hit, range 90 ft., one target. Hit: 27 (6d8) damage of the type to which the dragonsoul has damage resistance.",
+                "uses": {
+                    "max": 3,
+                    "reset": "long"
+                },
+                "action": {
+                    "range": "range 90 ft.",
+                    "attack": {
+                        "kind": "spell",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "6d8",
+                                "type": "chosen"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "items": [
+            {
+                "item": "shortsword-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing"
+            ],
+            "actions": [
+                "breath_weapon",
+                "multiattack"
+            ],
+            "traits": [
+                "pack_tactics"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "draconic",
+                "infernal"
+            ]
+        }
+    },
+    {
+        "id": "galvan-rot",
+        "kind": "monster",
+        "name": "Galvan",
+        "source": "RoT",
+        "edition": "classic",
+        "tags": [
+            "Legendary Resistances",
+            "Pack Tactics"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "human"
+            ]
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "ac": [
+            {
+                "value": 16,
+                "from": [
+                    "studded leather"
+                ]
+            },
+            {
+                "value": 17,
+                "condition": "with the Blue Dragon Mask"
+            }
+        ],
+        "hp": {
+            "average": 110,
+            "formula": "17d8 + 34"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 11,
+            "dex": 18,
+            "con": 14,
+            "int": 13,
+            "wis": 12,
+            "cha": 16
+        },
+        "saves": {
+            "wis": 4
+        },
+        "skills": {
+            "deception": 6,
+            "stealth": 7
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 11,
+        "defenses": {
+            "resist": {
+                "conditional": [
+                    {
+                        "types": [
+                            "acid",
+                            "cold",
+                            "fire",
+                            "lightning",
+                            "poison"
+                        ],
+                        "note": "one of the following:"
+                    }
+                ]
+            },
+            "immune": {
+                "types": [
+                    "lightning"
+                ]
+            }
+        },
+        "languages": [
+            "Common",
+            "Draconic",
+            "Infernal"
+        ],
+        "cr": {
+            "cr": "7",
+            "xp": 2900,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 4
+        },
+        "features": [
+            {
+                "id": "5etools-note",
+                "name": "5etools Note",
+                "category": "traits",
+                "text": "While Galvan is not presented in an encounter in The Rise of Tiamat, the dragonsoul stat block has been provided here for ease of use, with optional alterations for the Blue Dragon Mask."
+            },
+            {
+                "id": "special-equipment",
+                "name": "Special Equipment",
+                "category": "traits",
+                "text": "Galvan has the Blue Dragon Mask."
+            },
+            {
+                "id": "draconic-majesty",
+                "name": "Draconic Majesty",
+                "category": "traits",
+                "text": "While wearing no armor and wearing the Blue Dragon Mask, Galvan adds his Charisma bonus to his AC (included)."
+            },
+            {
+                "id": "lingering-shock",
+                "name": "Lingering Shock",
+                "category": "traits",
+                "text": "If Galvan deals lightning damage to a creature while wearing the Blue Dragon Mask, that creature can't take reactions until its next turn."
+            },
+            {
+                "id": "legendary-resistance",
+                "name": "Legendary Resistance",
+                "category": "traits",
+                "text": "If Galvan fails a saving throw while wearing the Blue Dragon Mask, he can choose to succeed instead.",
+                "uses": {
+                    "max": 1,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "dragon-fanatic",
+                "name": "Dragon Fanatic",
+                "category": "traits",
+                "text": "Galvan has advantage on saving throws against being charmed or frightened. While Galvan can see a dragon or higher-ranking Cult of the Dragon cultist friendly to it, Galvan ignores the effects of being charmed or frightened."
+            },
+            {
+                "id": "fanatic-advantage",
+                "name": "Fanatic Advantage",
+                "category": "traits",
+                "text": "Once per turn, if Galvan makes a weapon attack with advantage on the attack roll and hits, the target takes an extra 10 (3d6) damage.",
+                "action": {
+                    "attack": {
+                        "kind": "any",
+                        "damage": [
+                            {
+                                "dice": "3d6",
+                                "type": "weapon"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "limited-flight",
+                "name": "Limited Flight",
+                "category": "traits",
+                "text": "Galvan can use a bonus action to gain a flying speed of 30 feet until the end of its turn."
+            },
+            {
+                "id": "pack-tactics",
+                "name": "Pack Tactics",
+                "category": "traits",
+                "text": "Galvan has advantage on an attack roll against a creature if at least one of Galvan's allies is within 5 feet of the creature and the ally isn't incapacitated."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Galvan attacks twice with its shortsword."
+            },
+            {
+                "id": "shortsword",
+                "name": "Shortsword",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 6 (1d6 + 3) piercing damage plus 10 (3d6) damage of the type to which Galvan has resistance.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 3,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "3d6",
+                                "type": "chosen"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "orb-of-dragons-breath",
+                "name": "Orb of Dragon's Breath",
+                "category": "actions",
+                "text": "Ranged Spell Attack: +7 to hit, range 90 ft., one target. Hit: 27 (6d8) damage of the type to which Galvan has damage resistance.",
+                "uses": {
+                    "max": 3,
+                    "reset": "long"
+                },
+                "action": {
+                    "range": "range 90 ft.",
+                    "attack": {
+                        "kind": "spell",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "6d8",
+                                "type": "chosen"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "items": [
+            {
+                "item": "shortsword-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "piercing"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "actions": [
+                "breath_weapon",
+                "multiattack"
+            ],
+            "traits": [
+                "legendary_resistances",
+                "pack_tactics"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "draconic",
+                "infernal"
+            ]
+        }
+    },
+    {
+        "id": "half-blue-dragon-gladiator-rot",
+        "kind": "monster",
+        "name": "Half-Blue Dragon Gladiator",
+        "source": "RoT",
+        "edition": "classic",
+        "tags": [
+            "Brute"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "any race"
+            ]
+        },
+        "alignment": [
+            "any alignment"
+        ],
+        "ac": [
+            {
+                "value": 16,
+                "from": [
+                    "studded leather",
+                    "shield"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 112,
+            "formula": "15d8 + 45"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 18,
+            "dex": 15,
+            "con": 16,
+            "int": 10,
+            "wis": 12,
+            "cha": 15
+        },
+        "saves": {
+            "str": 7,
+            "dex": 5,
+            "con": 6
+        },
+        "skills": {
+            "athletics": 10,
+            "intimidation": 5
+        },
+        "senses": {
+            "darkvision": 60,
+            "blindsight": 10
+        },
+        "passive_perception": 11,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "lightning"
+                ]
+            }
+        },
+        "languages": [
+            "any one language (usually Common)",
+            "Draconic"
+        ],
+        "cr": {
+            "cr": "5",
+            "xp": 1800,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "brave",
+                "name": "Brave",
+                "category": "traits",
+                "text": "The half-dragon has advantage on saving throws against being frightened."
+            },
+            {
+                "id": "brute",
+                "name": "Brute",
+                "category": "traits",
+                "text": "A melee weapon deals one extra die of its damage when the half-dragon hits with it (included in the attack)."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The half-dragon makes three melee attacks or two ranged attacks."
+            },
+            {
+                "id": "spear",
+                "name": "Spear",
+                "category": "actions",
+                "text": "Melee or Ranged Weapon Attack: +7 to hit, reach 5 ft. and range 20/60 ft., one target. Hit: 11 (2d6 + 4) piercing damage, or 13 (2d8 + 4) piercing damage if used with two hands to make a melee attack.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 4,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "2d8",
+                                "bonus": 4,
+                                "type": "piercing",
+                                "condition": "if used with two hands to make a melee attack"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "shield-bash",
+                "name": "Shield Bash",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +7 to hit, reach 5 ft., one creature. Hit: 9 (2d4 + 4) bludgeoning damage. If the target is a Medium or smaller creature, it must succeed on a DC 15 Strength saving throw or be knocked prone.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "2d4",
+                                "bonus": 4,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "str",
+                        "dc": 15,
+                        "on_success": "none",
+                        "conditions": [
+                            "prone"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "lightning-breath",
+                "name": "Lightning Breath",
+                "category": "actions",
+                "text": "The half-dragon exhales lightning in a 30-foot line that is 5 feet wide. Each creature in that line must make a DC 12 Dexterity saving throw, taking 22 (4d10) lightning damage on a failed save, or half as much damage on a successful one.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "area": "30-foot line",
+                    "save": {
+                        "ability": "dex",
+                        "dc": 12,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "4d10",
+                                "type": "lightning"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "parry",
+                "name": "Parry",
+                "category": "reactions",
+                "text": "The half-dragon adds 3 to its AC against one melee attack that would hit it. To do so, the half-dragon must see the attacker and be wielding a melee weapon."
+            }
+        ],
+        "items": [
+            {
+                "item": "spear-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "lightning",
+                "piercing"
+            ],
+            "conditions_inflicted": [
+                "prone"
+            ],
+            "saves_forced": [
+                "str"
+            ],
+            "senses": [
+                "blindsight",
+                "darkvision"
+            ],
+            "actions": [
+                "breath_weapon",
+                "multiattack",
+                "parry"
+            ],
+            "traits": [
+                "brute"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_weapon_attack",
+                "ranged_weapon_attack",
+                "thrown_weapon"
+            ],
+            "languages": [
+                "common",
+                "draconic",
+                "any_choose"
+            ],
+            "environment": [
+                "urban"
+            ]
+        }
+    },
+    {
+        "id": "half-green-dragon-assassin-rot",
+        "kind": "monster",
+        "name": "Half-Green Dragon Assassin",
+        "source": "RoT",
+        "edition": "classic",
+        "tags": [
+            "Sneak Attack"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "any race"
+            ]
+        },
+        "alignment": [
+            "any non-good alignment"
+        ],
+        "ac": [
+            {
+                "value": 15,
+                "from": [
+                    "studded leather"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 78,
+            "formula": "12d8 + 24"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 11,
+            "dex": 16,
+            "con": 14,
+            "int": 13,
+            "wis": 11,
+            "cha": 10
+        },
+        "saves": {
+            "dex": 6,
+            "int": 4
+        },
+        "skills": {
+            "acrobatics": 6,
+            "deception": 3,
+            "perception": 3,
+            "stealth": 9
+        },
+        "senses": {
+            "darkvision": 60,
+            "blindsight": 10
+        },
+        "passive_perception": 13,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "poison"
+                ]
+            }
+        },
+        "languages": [
+            "Thieves' cant plus any two languages",
+            "Draconic"
+        ],
+        "cr": {
+            "cr": "8",
+            "xp": 3900,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "assassinate",
+                "name": "Assassinate",
+                "category": "traits",
+                "text": "During its first turn, the half-dragon has advantage on attack rolls against any creature that hasn't taken a turn. Any hit the half-dragon scores against a surprised creature is a critical hit."
+            },
+            {
+                "id": "evasion",
+                "name": "Evasion",
+                "category": "traits",
+                "text": "If the half-dragon is subjected to an effect that allows it to make a Dexterity saving throw to take only half damage, the half-dragon instead takes no damage if it succeeds on the saving throw, and only half damage if it fails."
+            },
+            {
+                "id": "sneak-attack",
+                "name": "Sneak Attack",
+                "category": "traits",
+                "text": "The half-dragon deals an extra 14 (4d6) damage when it hits a target with a weapon attack and has advantage on the attack roll, or when the target is within 5 feet of an ally of the half-dragon that isn't incapacitated and the half-dragon doesn't have disadvantage on the attack roll.",
+                "uses": {
+                    "max": 1,
+                    "reset": "turn"
+                },
+                "action": {
+                    "attack": {
+                        "kind": "any",
+                        "damage": [
+                            {
+                                "dice": "4d6",
+                                "type": "weapon",
+                                "condition": "when it hits a target with a weapon attack and has advantage on the attack roll, or when the target is within 5 feet of an ally of the half-dragon that isn't incapacitated and the half-dragon doesn't have disadvantage on the attack roll"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The half-dragon makes two shortsword attacks."
+            },
+            {
+                "id": "shortsword",
+                "name": "Shortsword",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 6 (1d6 + 3) piercing damage, and the target must make a DC 15 Constitution saving throw, taking 24 (7d6) poison damage on a failed save, or half as much damage on a successful one.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 3,
+                                "type": "piercing"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "con",
+                        "dc": 15,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "7d6",
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "light-crossbow",
+                "name": "Light Crossbow",
+                "category": "actions",
+                "text": "Ranged Weapon Attack: +6 to hit, range 80/320 ft., one target. Hit: 7 (1d8 + 3) piercing damage, and the target must make a DC 15 Constitution saving throw, taking 24 (7d6) poison damage on a failed save, or half as much damage on a successful one.",
+                "action": {
+                    "range": "range 80/320 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 3,
+                                "type": "piercing"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "con",
+                        "dc": 15,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "7d6",
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "poison-breath",
+                "name": "Poison Breath",
+                "category": "actions",
+                "text": "The half-dragon exhales poisonous gas in a 15-foot cone. Each creature in that area must make a DC 11 Constitution saving throw, taking 21 (6d6) poison damage on a failed save, or half as much damage on a successful one.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "area": "15-foot cone",
+                    "save": {
+                        "ability": "con",
+                        "dc": 11,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "6d6",
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "items": [
+            {
+                "item": "light-crossbow-phb",
+                "qty": 1,
+                "attacks": true
+            },
+            {
+                "item": "shortsword-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "poison",
+                "piercing"
+            ],
+            "saves_forced": [
+                "con"
+            ],
+            "senses": [
+                "blindsight",
+                "darkvision"
+            ],
+            "actions": [
+                "breath_weapon",
+                "multiattack"
+            ],
+            "traits": [
+                "sneak_attack"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_weapon_attack",
+                "ranged_weapon",
+                "ranged_weapon_attack"
+            ],
+            "languages": [
+                "draconic",
+                "thieves_cant",
+                "any_choose"
+            ],
+            "environment": [
+                "urban"
+            ]
+        }
+    },
+    {
+        "id": "half-red-dragon-gladiator-rot",
+        "kind": "monster",
+        "name": "Half-Red Dragon Gladiator",
+        "source": "RoT",
+        "edition": "classic",
+        "tags": [
+            "Brute"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "any race"
+            ]
+        },
+        "alignment": [
+            "any alignment"
+        ],
+        "ac": [
+            {
+                "value": 16,
+                "from": [
+                    "studded leather",
+                    "shield"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 112,
+            "formula": "15d8 + 45"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 18,
+            "dex": 15,
+            "con": 16,
+            "int": 10,
+            "wis": 12,
+            "cha": 15
+        },
+        "saves": {
+            "str": 7,
+            "dex": 5,
+            "con": 6
+        },
+        "skills": {
+            "athletics": 10,
+            "intimidation": 5
+        },
+        "senses": {
+            "darkvision": 60,
+            "blindsight": 10
+        },
+        "passive_perception": 11,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "fire"
+                ]
+            }
+        },
+        "languages": [
+            "any one language (usually Common)",
+            "Draconic"
+        ],
+        "cr": {
+            "cr": "5",
+            "xp": 1800,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "brave",
+                "name": "Brave",
+                "category": "traits",
+                "text": "The half-dragon has advantage on saving throws against being frightened."
+            },
+            {
+                "id": "brute",
+                "name": "Brute",
+                "category": "traits",
+                "text": "A melee weapon deals one extra die of its damage when the half-dragon hits with it (included in the attack)."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The half-dragon makes three melee attacks or two ranged attacks."
+            },
+            {
+                "id": "spear",
+                "name": "Spear",
+                "category": "actions",
+                "text": "Melee or Ranged Weapon Attack: +7 to hit, reach 5 ft. and range 20/60 ft., one target. Hit: 11 (2d6 + 4) piercing damage, or 13 (2d8 + 4) piercing damage if used with two hands to make a melee attack.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 4,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "2d8",
+                                "bonus": 4,
+                                "type": "piercing",
+                                "condition": "if used with two hands to make a melee attack"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "shield-bash",
+                "name": "Shield Bash",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +7 to hit, reach 5 ft., one creature. Hit: 9 (2d4 + 4) bludgeoning damage. If the target is a Medium or smaller creature, it must succeed on a DC 15 Strength saving throw or be knocked prone.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "2d4",
+                                "bonus": 4,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "str",
+                        "dc": 15,
+                        "on_success": "none",
+                        "conditions": [
+                            "prone"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "fire-breath",
+                "name": "Fire Breath",
+                "category": "actions",
+                "text": "The half-dragon exhales fire in a 15-foot cone. Each creature in that area must make a DC 13 Dexterity saving throw, taking 24 (7d6) fire damage on a failed save, or half as much damage on a successful one.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "area": "15-foot cone",
+                    "save": {
+                        "ability": "dex",
+                        "dc": 13,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "7d6",
+                                "type": "fire"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "parry",
+                "name": "Parry",
+                "category": "reactions",
+                "text": "The half-dragon adds 3 to its AC against one melee attack that would hit it. To do so, the half-dragon must see the attacker and be wielding a melee weapon."
+            }
+        ],
+        "items": [
+            {
+                "item": "spear-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "fire",
+                "piercing"
+            ],
+            "conditions_inflicted": [
+                "prone"
+            ],
+            "saves_forced": [
+                "str"
+            ],
+            "senses": [
+                "blindsight",
+                "darkvision"
+            ],
+            "actions": [
+                "breath_weapon",
+                "multiattack",
+                "parry"
+            ],
+            "traits": [
+                "brute"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_weapon_attack",
+                "ranged_weapon_attack",
+                "thrown_weapon"
+            ],
+            "languages": [
+                "common",
+                "draconic",
+                "any_choose"
+            ],
+            "environment": [
+                "urban"
+            ]
+        }
+    },
+    {
+        "id": "ice-toad-rot",
+        "kind": "monster",
+        "name": "Ice Toad",
+        "source": "RoT",
+        "edition": "classic",
+        "tags": [
+            "Amphibious"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "monstrosity"
+        },
+        "alignment": [
+            "neutral"
+        ],
+        "ac": [
+            {
+                "value": 12,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 32,
+            "formula": "5d8 + 10"
+        },
+        "speed": {
+            "walk": 30,
+            "swim": 30
+        },
+        "abilities": {
+            "str": 13,
+            "dex": 10,
+            "con": 14,
+            "int": 8,
+            "wis": 10,
+            "cha": 6
+        },
+        "skills": {
+            "perception": 2
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 12,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "cold"
+                ]
+            }
+        },
+        "languages": [
+            "Ice Toad"
+        ],
+        "cr": {
+            "cr": "1",
+            "xp": 200,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "amphibious",
+                "name": "Amphibious",
+                "category": "traits",
+                "text": "The toad can breathe air or water."
+            },
+            {
+                "id": "cold-aura",
+                "name": "Cold Aura",
+                "category": "traits",
+                "text": "Any creature that starts its turn within 5 feet of the toad takes 3 (1d6) cold damage.",
+                "action": {
+                    "damage": [
+                        {
+                            "dice": "1d6",
+                            "type": "cold"
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "standing-leap",
+                "name": "Standing Leap",
+                "category": "traits",
+                "text": "The toad's long jump is up to 20 feet and its high jump is up to 10 feet, with or without a running start."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: 4 (1d8) cold damage. If the target is a Medium or smaller creature it is grappled (escape DC 11). Until this grapple ends, the toad can't bite another target.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 3,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "type": "cold"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "cold"
+            ],
+            "conditions_inflicted": [
+                "grappled"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "movement": [
+                "swim"
+            ],
+            "traits": [
+                "amphibious"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "ice-troll-rot",
+        "kind": "monster",
+        "name": "Ice Troll",
+        "source": "RoT",
+        "edition": "classic",
+        "tags": [
+            "Keen Senses",
+            "Regeneration"
+        ],
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "giant"
+        },
+        "alignment": [
+            "chaotic evil"
+        ],
+        "ac": [
+            {
+                "value": 15,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 84,
+            "formula": "8d10 + 40"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 18,
+            "dex": 13,
+            "con": 20,
+            "int": 7,
+            "wis": 9,
+            "cha": 7
+        },
+        "skills": {
+            "perception": 2
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 12,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "cold"
+                ]
+            }
+        },
+        "languages": [
+            "Giant"
+        ],
+        "cr": {
+            "cr": "5",
+            "xp": 1800,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "keen-smell",
+                "name": "Keen Smell",
+                "category": "traits",
+                "text": "The troll has advantage on Wisdom (Perception) checks that rely on smell."
+            },
+            {
+                "id": "regeneration",
+                "name": "Regeneration",
+                "category": "traits",
+                "text": "The troll regains 10 hit points at the start of its turn. If the troll takes acid or fire damage, this trait doesn't function at the start of the troll's next turn. The troll dies only if it starts its turn with 0 hit points and doesn't regenerate."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The troll makes three attacks: one with its bite and two with its claws."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 7 (1d6 + 4) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 4,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "claw",
+                "name": "Claw",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 11 (2d6 + 4) slashing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 4,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "variants": [
+            {
+                "id": "loathsome-limbs",
+                "name": "Loathsome Limbs",
+                "text": "Some trolls have the following trait\n\n**Loathsome Limbs.** Whenever the troll takes at least 15 slashing damage at one time, roll a d20 to determine what else happens to it:\n\n- **1–10.** Nothing else happens.\n- **11–14.** One leg is severed from the troll if it has any legs left.\n- **15–18.** One arm is severed from the troll if it has any arms left.\n- **19–20.** The troll is decapitated, but the troll dies only if it can't regenerate. If it dies, so does the severed head.\n\nIf the troll finishes a short or long rest without reattaching a severed limb or head, the part regrows. At that point, the severed part dies. Until then, a severed part acts on the troll's initiative and has its own action and movement. A severed part has AC 13, 10 hit points, and the troll's Regeneration trait.\n\nA **severed leg** is unable to attack and has a speed of 5 feet.\n\nA **severed arm** has a speed of 5 feet and can make one claw attack on its turn, with disadvantage on the attack roll unless the troll can see the arm and its target. Each time the troll loses an arm, it loses a claw attack.\n\nIf its head is severed, the troll loses its bite attack and its body is blinded unless the head can see it. The **severed head** has a speed of 0 feet and the troll's Keen Smell trait. It can make a bite attack but only against a target in its space.\n\nThe troll's speed is halved if it's missing a leg. If it loses both legs, it falls prone. If it has both arms, it can crawl. With only one arm, it can still crawl, but its speed is halved. With no arms or legs, its speed is 0, and it can't benefit from bonuses to speed.",
+                "version": "troll-loathsome-limbs-rot"
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing",
+                "slashing"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "keen_senses",
+                "regeneration"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "giant"
+            ],
+            "environment": [
+                "underdark",
+                "mountain",
+                "forest",
+                "swamp",
+                "hill",
+                "arctic"
+            ]
+        }
+    },
+    {
+        "id": "iskander-rot",
+        "kind": "monster",
+        "name": "Iskander",
+        "source": "RoT",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "human"
+            ]
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "ac": [
+            {
+                "value": 12
+            },
+            {
+                "value": 15,
+                "condition": "with Mage Armor"
+            }
+        ],
+        "hp": {
+            "average": 40,
+            "formula": "9d8"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 9,
+            "dex": 14,
+            "con": 11,
+            "int": 17,
+            "wis": 12,
+            "cha": 11
+        },
+        "saves": {
+            "int": 6,
+            "wis": 4
+        },
+        "skills": {
+            "arcana": 6,
+            "history": 6
+        },
+        "passive_perception": 11,
+        "languages": [
+            "any four languages"
+        ],
+        "cr": {
+            "cr": "6",
+            "xp": 2300,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "5etools-note",
+                "name": "5etools Note",
+                "category": "traits",
+                "text": "Iskander is presented in The Rise of Tiamat as a neutral evil male human wizard. The mage stat block has been provided here for ease of use."
+            },
+            {
+                "id": "dagger",
+                "name": "Dagger",
+                "category": "actions",
+                "text": "Melee or Ranged Weapon Attack: +5 to hit, reach 5 ft. or range 20/60 ft., one target. Hit: 4 (1d4 + 2) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft. or range 20/60 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 2,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "int",
+                "dc": 14,
+                "attack": 6,
+                "text": "The mage is a 9th-level spellcaster. Its spellcasting ability is Intelligence (spell save DC 14, +6 to hit with spell attacks). The mage has the following wizard spells prepared:",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "level": 0,
+                        "spells": [
+                            {
+                                "spell": "fire-bolt-phb"
+                            },
+                            {
+                                "spell": "light-phb"
+                            },
+                            {
+                                "spell": "mage-hand-phb"
+                            },
+                            {
+                                "spell": "prestidigitation-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 1,
+                        "slots": 4,
+                        "spells": [
+                            {
+                                "spell": "detect-magic-phb"
+                            },
+                            {
+                                "spell": "mage-armor-phb"
+                            },
+                            {
+                                "spell": "magic-missile-phb"
+                            },
+                            {
+                                "spell": "shield-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 2,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "misty-step-phb"
+                            },
+                            {
+                                "spell": "suggestion-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 3,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "counterspell-phb"
+                            },
+                            {
+                                "spell": "fireball-phb"
+                            },
+                            {
+                                "spell": "fly-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 4,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "greater-invisibility-phb"
+                            },
+                            {
+                                "spell": "ice-storm-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 5,
+                        "slots": 1,
+                        "spells": [
+                            {
+                                "spell": "cone-of-cold-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "dagger-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "variants": [
+            {
+                "id": "familiars",
+                "name": "Familiars",
+                "text": "Any spellcaster that can cast the Find Familiar spell (such as an archmage or mage) is likely to have a familiar. The familiar can be one of the creatures described in the spell (see the Player's Handbook) or some other Tiny monster, such as a crawling claw, imp, pseudodragon, or quasit."
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "piercing",
+                "bludgeoning",
+                "cold",
+                "fire",
+                "force"
+            ],
+            "saves_forced": [
+                "con",
+                "dex",
+                "wis"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack",
+                "ranged_weapon_attack",
+                "thrown_weapon"
+            ],
+            "languages": [
+                "any_choose"
+            ],
+            "spellcasting": [
+                "wizard"
+            ],
+            "environment": [
+                "urban"
+            ]
+        }
+    },
+    {
+        "id": "maccath-the-crimson-rot",
+        "kind": "monster",
+        "name": "Maccath the Crimson",
+        "source": "RoT",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "tiefling"
+            ]
+        },
+        "alignment": [
+            "any alignment"
+        ],
+        "ac": [
+            {
+                "value": 12
+            },
+            {
+                "value": 15,
+                "condition": "with Mage Armor"
+            }
+        ],
+        "hp": {
+            "average": 40,
+            "formula": "9d8"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 9,
+            "dex": 14,
+            "con": 11,
+            "int": 17,
+            "wis": 12,
+            "cha": 11
+        },
+        "saves": {
+            "int": 6,
+            "wis": 4
+        },
+        "skills": {
+            "arcana": 6,
+            "history": 6
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 11,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "fire"
+                ]
+            }
+        },
+        "languages": [
+            "any four languages",
+            "Infernal"
+        ],
+        "cr": {
+            "cr": "6",
+            "xp": 2300,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "5etools-note",
+                "name": "5etools Note",
+                "category": "traits",
+                "text": "Maccath the Crimson is presented in The Rise of Tiamat as a female tiefling sorcerer and member of the Arcane Brotherhood. The mage stat block, modified with tiefling racial traits, has been provided here for ease of use."
+            },
+            {
+                "id": "dagger",
+                "name": "Dagger",
+                "category": "actions",
+                "text": "Melee or Ranged Weapon Attack: +5 to hit, reach 5 ft. or range 20/60 ft., one target. Hit: 4 (1d4 + 2) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft. or range 20/60 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 2,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "int",
+                "dc": 14,
+                "attack": 6,
+                "text": "The mage is a 9th-level spellcaster. Its spellcasting ability is Intelligence (spell save DC 14, +6 to hit with spell attacks). The mage has the following wizard spells prepared:",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "level": 0,
+                        "spells": [
+                            {
+                                "spell": "fire-bolt-phb"
+                            },
+                            {
+                                "spell": "light-phb"
+                            },
+                            {
+                                "spell": "mage-hand-phb"
+                            },
+                            {
+                                "spell": "prestidigitation-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 1,
+                        "slots": 4,
+                        "spells": [
+                            {
+                                "spell": "detect-magic-phb"
+                            },
+                            {
+                                "spell": "mage-armor-phb"
+                            },
+                            {
+                                "spell": "magic-missile-phb"
+                            },
+                            {
+                                "spell": "shield-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 2,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "misty-step-phb"
+                            },
+                            {
+                                "spell": "suggestion-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 3,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "counterspell-phb"
+                            },
+                            {
+                                "spell": "fireball-phb"
+                            },
+                            {
+                                "spell": "fly-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 4,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "greater-invisibility-phb"
+                            },
+                            {
+                                "spell": "ice-storm-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 5,
+                        "slots": 1,
+                        "spells": [
+                            {
+                                "spell": "cone-of-cold-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "dagger-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "variants": [
+            {
+                "id": "familiars",
+                "name": "Familiars",
+                "text": "Any spellcaster that can cast the Find Familiar spell (such as an archmage or mage) is likely to have a familiar. The familiar can be one of the creatures described in the spell (see the Player's Handbook) or some other Tiny monster, such as a crawling claw, imp, pseudodragon, or quasit."
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "piercing",
+                "bludgeoning",
+                "cold",
+                "fire",
+                "force"
+            ],
+            "saves_forced": [
+                "con",
+                "dex",
+                "wis"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack",
+                "ranged_weapon_attack",
+                "thrown_weapon"
+            ],
+            "languages": [
+                "infernal",
+                "any_choose"
+            ],
+            "spellcasting": [
+                "wizard"
+            ],
+            "environment": [
+                "urban"
+            ]
+        }
+    },
+    {
+        "id": "marfulb-rot",
+        "kind": "monster",
+        "name": "Marfulb",
+        "source": "RoT",
+        "edition": "classic",
+        "tags": [
+            "Amphibious"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "monstrosity"
+        },
+        "alignment": [
+            "neutral"
+        ],
+        "ac": [
+            {
+                "value": 12,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 32,
+            "formula": "5d8 + 10"
+        },
+        "speed": {
+            "walk": 30,
+            "swim": 30
+        },
+        "abilities": {
+            "str": 13,
+            "dex": 10,
+            "con": 14,
+            "int": 13,
+            "wis": 10,
+            "cha": 6
+        },
+        "skills": {
+            "perception": 2
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 12,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "cold"
+                ]
+            }
+        },
+        "languages": [
+            "Ice Toad"
+        ],
+        "cr": {
+            "cr": "1",
+            "xp": 200,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "amphibious",
+                "name": "Amphibious",
+                "category": "traits",
+                "text": "The toad can breathe air or water."
+            },
+            {
+                "id": "cold-aura",
+                "name": "Cold Aura",
+                "category": "traits",
+                "text": "Any creature that starts its turn within 5 feet of the toad takes 3 (1d6) cold damage.",
+                "action": {
+                    "damage": [
+                        {
+                            "dice": "1d6",
+                            "type": "cold"
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "standing-leap",
+                "name": "Standing Leap",
+                "category": "traits",
+                "text": "The toad's long jump is up to 20 feet and its high jump is up to 10 feet, with or without a running start."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: 4 (1d8) cold damage. If the target is a Medium or smaller creature it is grappled (escape DC 11). Until this grapple ends, the toad can't bite another target.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 3,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "type": "cold"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "cold"
+            ],
+            "conditions_inflicted": [
+                "grappled"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "movement": [
+                "swim"
+            ],
+            "traits": [
+                "amphibious"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "mend-nets-rot",
+        "kind": "monster",
+        "name": "Mend-nets",
+        "source": "RoT",
+        "edition": "classic",
+        "tags": [
+            "Pack Tactics"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "human"
+            ]
+        },
+        "alignment": [
+            "any alignment"
+        ],
+        "ac": [
+            {
+                "value": 12,
+                "from": [
+                    "hide armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 11,
+            "formula": "2d8 + 2"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 13,
+            "dex": 11,
+            "con": 12,
+            "int": 8,
+            "wis": 11,
+            "cha": 8
+        },
+        "passive_perception": 10,
+        "languages": [
+            "any one language"
+        ],
+        "cr": {
+            "cr": "1/8",
+            "xp": 25,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "pack-tactics",
+                "name": "Pack Tactics",
+                "category": "traits",
+                "text": "The warrior has advantage on an attack roll against a creature if at least one of the warrior's allies is within 5 feet of the creature and the ally isn't incapacitated."
+            },
+            {
+                "id": "spear",
+                "name": "Spear",
+                "category": "actions",
+                "text": "Melee or Ranged Weapon Attack: +3 to hit, reach 5 ft. or range 20/60 ft., one target. Hit: 4 (1d6 + 1) piercing damage, or 5 (1d8 + 1) piercing damage if used with two hands to make a melee attack.",
+                "action": {
+                    "range": "reach 5 ft. or range 20/60 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 3,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 1,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "1d8",
+                                "bonus": 1,
+                                "type": "piercing",
+                                "condition": "if used with two hands to make a melee attack"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "items": [
+            {
+                "item": "spear-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "piercing"
+            ],
+            "traits": [
+                "pack_tactics"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack",
+                "ranged_weapon_attack",
+                "thrown_weapon"
+            ],
+            "languages": [
+                "any_choose"
+            ],
+            "environment": [
+                "coastal",
+                "mountain",
+                "grassland",
+                "hill",
+                "arctic",
+                "forest",
+                "swamp",
+                "underdark",
+                "desert"
+            ]
+        }
+    },
+    {
+        "id": "naergoth-bladelord-rot",
+        "kind": "monster",
+        "name": "Naergoth Bladelord",
+        "source": "RoT",
+        "edition": "classic",
+        "tags": [
+            "Sunlight Sensitivity"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "undead"
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "ac": [
+            {
+                "value": 18,
+                "from": [
+                    "plate armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 135,
+            "formula": "18d8 + 54"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 20,
+            "dex": 12,
+            "con": 16,
+            "int": 12,
+            "wis": 14,
+            "cha": 16
+        },
+        "saves": {
+            "dex": 5,
+            "wis": 6
+        },
+        "skills": {
+            "perception": 6,
+            "stealth": 5
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 16,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "necrotic"
+                ],
+                "conditional": [
+                    {
+                        "types": [
+                            "bludgeoning",
+                            "piercing",
+                            "slashing"
+                        ],
+                        "note": "from nonmagical attacks that aren't silvered"
+                    }
+                ]
+            },
+            "immune": {
+                "types": [
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "exhaustion",
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "Common",
+            "Draconic"
+        ],
+        "cr": {
+            "cr": "11",
+            "xp": 7200,
+            "pb": 4
+        },
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "sunlight-sensitivity",
+                "name": "Sunlight Sensitivity",
+                "category": "traits",
+                "text": "While in sunlight, Naergoth has disadvantage on attack rolls, as well as on Wisdom (Perception) checks that rely on sight."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Naergoth makes three attacks, either with his longsword or longbow. He can use Life Drain in place of one longsword attack."
+            },
+            {
+                "id": "life-drain",
+                "name": "Life Drain",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +9 to hit, reach 5 ft., one target. Hit: 20 (5d6 + 3) necrotic damage. The target must succeed on a DC 15 Constitution saving throw or its hit point maximum is reduced by an amount equal to the damage taken. This reduction lasts until the target finishes a long rest. The target dies if this effect reduces its hit point maximum to 0.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 9,
+                        "damage": [
+                            {
+                                "dice": "5d6",
+                                "bonus": 3,
+                                "type": "necrotic"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "con",
+                        "dc": 15,
+                        "on_success": "none"
+                    }
+                }
+            },
+            {
+                "id": "longsword",
+                "name": "Longsword",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +9 to hit, reach 5 ft., one target. Hit: 9 (1d8 + 5) slashing damage, or 10 (1d10 + 5) if used with two hands, plus 10 (3d6) necrotic damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 9,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 5,
+                                "type": "slashing"
+                            },
+                            {
+                                "dice": "3d6",
+                                "type": "necrotic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "longbow",
+                "name": "Longbow",
+                "category": "actions",
+                "text": "Ranged Weapon Attack: +5 to hit, range 150/600 ft., one target. Hit: 5 (1d8 + 1) piercing damage plus 10 (3d6) necrotic damage.",
+                "action": {
+                    "range": "range 150/600 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 1,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "3d6",
+                                "type": "necrotic"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "items": [
+            {
+                "item": "longbow-phb",
+                "qty": 1,
+                "attacks": true
+            },
+            {
+                "item": "longsword-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "necrotic",
+                "piercing",
+                "slashing"
+            ],
+            "saves_forced": [
+                "con"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "sunlight_sensitivity"
+            ],
+            "misc": [
+                "hit_point_reduction",
+                "melee_weapon",
+                "melee_weapon_attack",
+                "ranged_weapon",
+                "ranged_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "draconic"
+            ]
+        }
+    },
+    {
+        "id": "neronvain-rot",
+        "kind": "monster",
+        "name": "Neronvain",
+        "source": "RoT",
+        "edition": "classic",
+        "tags": [
+            "Fey Ancestry"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "elf"
+            ]
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "ac": [
+            {
+                "value": 17
+            }
+        ],
+        "hp": {
+            "average": 117,
+            "formula": "18d8 + 36"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 8,
+            "dex": 17,
+            "con": 15,
+            "int": 16,
+            "wis": 13,
+            "cha": 18
+        },
+        "saves": {
+            "con": 5,
+            "wis": 4
+        },
+        "skills": {
+            "arcana": 6,
+            "perception": 4
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 15,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "frightened",
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "Common",
+            "Draconic",
+            "Elvish",
+            "Infernal"
+        ],
+        "cr": {
+            "cr": "9",
+            "xp": 5000,
+            "pb": 4
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "draconic-majesty",
+                "name": "Draconic Majesty",
+                "category": "traits",
+                "text": "Neronvain adds his Charisma bonus to his AC (included)."
+            },
+            {
+                "id": "fey-ancestry",
+                "name": "Fey Ancestry",
+                "category": "traits",
+                "text": "Magic can't put Neronvain to sleep."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Neronvain makes two attacks, either with his shortsword or Eldritch Arrow."
+            },
+            {
+                "id": "shortsword",
+                "name": "Shortsword",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 6 (1d6 + 3) piercing damage plus 13 (3d8) poison damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 3,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "3d8",
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "eldritch-arrow",
+                "name": "Eldritch Arrow",
+                "category": "actions",
+                "text": "Ranged Spell Attack: +7 to hit, range 120 ft., one target. Hit: 11 (2d10) force damage plus 9 (2d8) poison damage.",
+                "action": {
+                    "range": "range 120 ft.",
+                    "attack": {
+                        "kind": "spell",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "2d10",
+                                "type": "force"
+                            },
+                            {
+                                "dice": "2d8",
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "poisonous-cloud",
+                "name": "Poisonous Cloud",
+                "category": "actions",
+                "text": "Poison gas fills a 20-foot-radius sphere centered on a point Neronvain can see within 50 feet of him. The gas spreads around corners and remains until the start of Neronvain's next turn. Each creature that starts its turn in the gas must succeed on a DC 16 Constitution saving throw or be poisoned for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.",
+                "uses": {
+                    "max": 2,
+                    "reset": "long"
+                },
+                "action": {
+                    "area": "20-foot sphere",
+                    "save": {
+                        "ability": "con",
+                        "dc": 16,
+                        "on_success": "none",
+                        "conditions": [
+                            "poisoned"
+                        ]
+                    }
+                }
+            }
+        ],
+        "items": [
+            {
+                "item": "shortsword-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "poison",
+                "force",
+                "piercing"
+            ],
+            "conditions_inflicted": [
+                "poisoned"
+            ],
+            "saves_forced": [
+                "con"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "fey_ancestry"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_weapon",
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "draconic",
+                "elvish",
+                "infernal"
+            ]
+        }
+    },
+    {
+        "id": "paper-whirlwind-rot",
+        "kind": "monster",
+        "name": "Paper Whirlwind",
+        "source": "RoT",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "construct",
+            "swarm_of": "tiny"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 12
+            }
+        ],
+        "hp": {
+            "average": 24,
+            "formula": "7d8 - 7"
+        },
+        "speed": {
+            "walk": 10,
+            "fly": 50
+        },
+        "abilities": {
+            "str": 6,
+            "dex": 14,
+            "con": 8,
+            "int": 3,
+            "wis": 12,
+            "cha": 6
+        },
+        "skills": {
+            "perception": 5
+        },
+        "passive_perception": 15,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "bludgeoning",
+                    "piercing",
+                    "slashing"
+                ]
+            },
+            "vulnerable": {
+                "types": [
+                    "fire"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "frightened",
+                    "grappled",
+                    "paralyzed",
+                    "petrified",
+                    "prone",
+                    "restrained",
+                    "stunned"
+                ]
+            }
+        },
+        "cr": {
+            "cr": "1/4",
+            "xp": 50,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "swarm",
+                "name": "Swarm",
+                "category": "traits",
+                "text": "The swarm can occupy another creature's space and vice versa, and the swarm can move through any opening large enough for a Tiny raven. The swarm can't regain hit points or gain temporary hit points."
+            },
+            {
+                "id": "beaks",
+                "name": "Beaks",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target in the swarm's space. Hit: 7 (2d6) piercing damage, or 3 (1d6) piercing damage if the swarm has half of its hit points or fewer.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "1d6",
+                                "type": "piercing",
+                                "condition": "if the swarm has half of its hit points or fewer"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "environment": [
+                "forest",
+                "swamp",
+                "hill",
+                "urban"
+            ]
+        }
+    },
+    {
+        "id": "red-wizard-rot",
+        "kind": "monster",
+        "name": "Red Wizard",
+        "source": "RoT",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "any race"
+            ]
+        },
+        "alignment": [
+            "any alignment"
+        ],
+        "ac": [
+            {
+                "value": 12
+            },
+            {
+                "value": 15,
+                "condition": "with Mage Armor"
+            }
+        ],
+        "hp": {
+            "average": 40,
+            "formula": "9d8"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 9,
+            "dex": 14,
+            "con": 11,
+            "int": 17,
+            "wis": 12,
+            "cha": 11
+        },
+        "saves": {
+            "int": 6,
+            "wis": 4
+        },
+        "skills": {
+            "arcana": 6,
+            "history": 6
+        },
+        "passive_perception": 11,
+        "languages": [
+            "any four languages"
+        ],
+        "cr": {
+            "cr": "6",
+            "xp": 2300,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "dagger",
+                "name": "Dagger",
+                "category": "actions",
+                "text": "Melee or Ranged Weapon Attack: +5 to hit, reach 5 ft. or range 20/60 ft., one target. Hit: 4 (1d4 + 2) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft. or range 20/60 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 2,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "int",
+                "dc": 14,
+                "attack": 6,
+                "text": "The mage is a 9th-level spellcaster. Its spellcasting ability is Intelligence (spell save DC 14, +6 to hit with spell attacks). The mage has the following wizard spells prepared:",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "level": 0,
+                        "spells": [
+                            {
+                                "spell": "fire-bolt-phb"
+                            },
+                            {
+                                "spell": "light-phb"
+                            },
+                            {
+                                "spell": "mage-hand-phb"
+                            },
+                            {
+                                "spell": "prestidigitation-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 1,
+                        "slots": 4,
+                        "spells": [
+                            {
+                                "spell": "detect-magic-phb"
+                            },
+                            {
+                                "spell": "mage-armor-phb"
+                            },
+                            {
+                                "spell": "magic-missile-phb"
+                            },
+                            {
+                                "spell": "shield-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 2,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "misty-step-phb"
+                            },
+                            {
+                                "spell": "suggestion-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 3,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "counterspell-phb"
+                            },
+                            {
+                                "spell": "fireball-phb"
+                            },
+                            {
+                                "spell": "fly-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 4,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "greater-invisibility-phb"
+                            },
+                            {
+                                "spell": "ice-storm-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 5,
+                        "slots": 1,
+                        "spells": [
+                            {
+                                "spell": "cone-of-cold-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "dagger-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "variants": [
+            {
+                "id": "familiars",
+                "name": "Familiars",
+                "text": "Any spellcaster that can cast the Find Familiar spell (such as an archmage or mage) is likely to have a familiar. The familiar can be one of the creatures described in the spell (see the Player's Handbook) or some other Tiny monster, such as a crawling claw, imp, pseudodragon, or quasit."
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing",
+                "bludgeoning",
+                "cold",
+                "fire",
+                "force"
+            ],
+            "saves_forced": [
+                "con",
+                "dex",
+                "wis"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack",
+                "ranged_weapon_attack",
+                "thrown_weapon"
+            ],
+            "languages": [
+                "any_choose"
+            ],
+            "spellcasting": [
+                "wizard"
+            ],
+            "environment": [
+                "urban"
+            ]
+        }
+    },
+    {
+        "id": "severin-rot",
+        "kind": "monster",
+        "name": "Severin",
+        "source": "RoT",
+        "edition": "classic",
+        "tags": [
+            "Legendary Resistances"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "human"
+            ]
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "ac": [
+            {
+                "value": 16
+            }
+        ],
+        "hp": {
+            "average": 150,
+            "formula": "20d8 + 60"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 10,
+            "dex": 13,
+            "con": 16,
+            "int": 17,
+            "wis": 12,
+            "cha": 20
+        },
+        "saves": {
+            "dex": 5,
+            "wis": 5
+        },
+        "skills": {
+            "arcana": 7,
+            "religion": 7
+        },
+        "senses": {
+            "notes": "While wearing the Mask of the Dragon Queen: darkvision 60 ft."
+        },
+        "passive_perception": 11,
+        "defenses": {
+            "resist": {
+                "conditional": [
+                    {
+                        "types": [
+                            "acid",
+                            "cold",
+                            "lightning",
+                            "poison",
+                            "bludgeoning",
+                            "piercing",
+                            "slashing"
+                        ],
+                        "note": "While wearing the mask of the Dragon Queen:"
+                    }
+                ]
+            },
+            "immune": {
+                "conditional": [
+                    {
+                        "types": [
+                            "fire"
+                        ],
+                        "note": "While wearing the mask of the Dragon Queen:"
+                    }
+                ]
+            },
+            "condition_immune": {
+                "conditional": [
+                    {
+                        "types": [
+                            "charmed",
+                            "frightened",
+                            "poisoned"
+                        ],
+                        "note": "While wearing the mask of the Dragon Queen:"
+                    }
+                ]
+            }
+        },
+        "languages": [
+            "Common",
+            "Draconic",
+            "Infernal"
+        ],
+        "cr": {
+            "cr": "11",
+            "xp": 7200,
+            "pb": 4
+        },
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "special-equipment",
+                "name": "Special Equipment",
+                "category": "traits",
+                "text": "Severin has the Mask of the Dragon Queen."
+            },
+            {
+                "id": "draconic-majesty",
+                "name": "Draconic Majesty",
+                "category": "traits",
+                "text": "Severin adds his Charisma bonus to his AC (included)."
+            },
+            {
+                "id": "ignite-enemy",
+                "name": "Ignite Enemy",
+                "category": "traits",
+                "text": "If Severin deals fire damage to a creature while wearing the Mask of the Dragon Queen, the target catches fire. At the start of each of its turns, the burning target takes 5 (1d10) fire damage. A creature within reach of the fire can use an action to extinguish it.",
+                "action": {
+                    "damage": [
+                        {
+                            "dice": "1d10",
+                            "type": "fire"
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "legendary-resistance",
+                "name": "Legendary Resistance",
+                "category": "traits",
+                "text": "While wearing the Mask of the Dragon Queen, if Severin fails a saving throw, he can choose to succeed instead.",
+                "uses": {
+                    "max": 5,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "burning-touch",
+                "name": "Burning Touch",
+                "category": "actions",
+                "text": "Melee Spell Attack: +9 to hit, reach 5 ft., one target. Hit: 18 (4d8) fire damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "spell",
+                        "bonus": 9,
+                        "damage": [
+                            {
+                                "dice": "4d8",
+                                "type": "fire"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "flaming-orb",
+                "name": "Flaming Orb",
+                "category": "actions",
+                "text": "Ranged Spell Attack: +9 to hit, range 90 ft., one target. Hit: 40 (9d8) fire damage.",
+                "action": {
+                    "range": "range 90 ft.",
+                    "attack": {
+                        "kind": "spell",
+                        "bonus": 9,
+                        "damage": [
+                            {
+                                "dice": "9d8",
+                                "type": "fire"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "scorching-burst",
+                "name": "Scorching Burst",
+                "category": "actions",
+                "text": "Severin chooses a point he can see within 60 feet of him. Each creature within 5 feet of that point must make a DC 17 Dexterity saving throw, taking 18 (4d8) fire damage on a failed save, or half as much damage on a successful one.",
+                "action": {
+                    "save": {
+                        "ability": "dex",
+                        "dc": 17,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "4d8",
+                                "type": "fire"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "attack",
+                "name": "Attack",
+                "category": "legendary_actions",
+                "text": "Severin makes one attack."
+            },
+            {
+                "id": "fiery-teleport",
+                "name": "Fiery Teleport",
+                "category": "legendary_actions",
+                "text": "Severin, along with any objects he is wearing or carrying, teleports up to 60 feet to an unoccupied space he can see. Each creature within 5 feet of Severin before he teleports takes 5 (1d10) fire damage.",
+                "cost": 2,
+                "action": {
+                    "damage": [
+                        {
+                            "dice": "1d10",
+                            "type": "fire"
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "hellish-chains",
+                "name": "Hellish Chains",
+                "category": "legendary_actions",
+                "text": "Severin targets one creature he can see within 30 feet of him. The target is wrapped in magical chains of fire and restrained. The restrained target takes 21 (6d6) fire damage at the start of each of its turns. At the end of its turns, the target can make a DC 17 Strength saving throw, ending the effect on itself on a success.",
+                "cost": 3,
+                "action": {
+                    "save": {
+                        "ability": "str",
+                        "dc": 17,
+                        "on_success": "none"
+                    },
+                    "damage": [
+                        {
+                            "dice": "6d6",
+                            "type": "fire"
+                        }
+                    ]
+                }
+            }
+        ],
+        "section_notes": {
+            "legendary_actions": "If Severin is wearing the Mask of the Dragon Queen, he can take 3 legendary actions, choosing from the options listed. Only one legendary action option can be used at a time and only at the end of another creature's turn. Severin regains spent legendary actions at the start of his turn."
+        },
+        "legendary_actions": {
+            "uses": 3
+        },
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "fire"
+            ],
+            "conditions_inflicted": [
+                "restrained"
+            ],
+            "saves_forced": [
+                "dex",
+                "str"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "traits": [
+                "legendary_resistances"
+            ],
+            "misc": [
+                "area_of_effect"
+            ],
+            "languages": [
+                "common",
+                "draconic",
+                "infernal"
+            ]
+        }
+    },
+    {
+        "id": "sled-dog-rot",
+        "kind": "monster",
+        "name": "Sled Dog",
+        "source": "RoT",
+        "edition": "classic",
+        "tags": [
+            "Keen Senses",
+            "Pack Tactics"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "beast"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 13,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 11,
+            "formula": "2d8 + 2"
+        },
+        "speed": {
+            "walk": 40
+        },
+        "abilities": {
+            "str": 12,
+            "dex": 15,
+            "con": 12,
+            "int": 3,
+            "wis": 12,
+            "cha": 6
+        },
+        "skills": {
+            "perception": 3,
+            "stealth": 4
+        },
+        "passive_perception": 13,
+        "cr": {
+            "cr": "1/4",
+            "xp": 50,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "keen-hearing-and-smell",
+                "name": "Keen Hearing and Smell",
+                "category": "traits",
+                "text": "The dog has advantage on Wisdom (Perception) checks that rely on hearing or smell."
+            },
+            {
+                "id": "pack-tactics",
+                "name": "Pack Tactics",
+                "category": "traits",
+                "text": "The dog has advantage on an attack roll against a creature if at least one of the dog's allies is within 5 feet of the creature and the ally isn't incapacitated."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 7 (2d4 + 2) piercing damage. If the target is a creature, it must succeed on a DC 11 Strength saving throw or be knocked prone.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "2d4",
+                                "bonus": 2,
+                                "type": "piercing"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "str",
+                        "dc": 11,
+                        "on_success": "none",
+                        "conditions": [
+                            "prone"
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing"
+            ],
+            "conditions_inflicted": [
+                "prone"
+            ],
+            "saves_forced": [
+                "str"
+            ],
+            "traits": [
+                "keen_senses",
+                "pack_tactics"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "environment": [
+                "grassland",
+                "forest",
+                "hill"
+            ]
+        }
+    },
+    {
+        "id": "snake-horror-rot",
+        "kind": "monster",
+        "name": "Snake Horror",
+        "source": "RoT",
+        "edition": "classic",
+        "tags": [
+            "Magic Resistance",
+            "Spell Immunity"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "construct"
+        },
+        "alignment": [
+            "neutral"
+        ],
+        "ac": [
+            {
+                "value": 20,
+                "from": [
+                    "plate armor",
+                    "shield"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 60,
+            "formula": "8d8 + 24"
+        },
+        "speed": {
+            "walk": 30,
+            "fly": 30
+        },
+        "abilities": {
+            "str": 18,
+            "dex": 13,
+            "con": 16,
+            "int": 10,
+            "wis": 10,
+            "cha": 10
+        },
+        "skills": {
+            "perception": 4
+        },
+        "senses": {
+            "blindsight": 60,
+            "notes": "blindsight (blind beyond this radius)"
+        },
+        "passive_perception": 14,
+        "defenses": {
+            "resist": {
+                "conditional": [
+                    {
+                        "types": [
+                            "bludgeoning",
+                            "piercing",
+                            "slashing"
+                        ],
+                        "note": "from nonmagical attacks that aren't adamantine"
+                    }
+                ]
+            },
+            "immune": {
+                "types": [
+                    "force",
+                    "necrotic",
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "blinded",
+                    "charmed",
+                    "deafened",
+                    "frightened",
+                    "paralyzed",
+                    "petrified",
+                    "poisoned",
+                    "stunned"
+                ]
+            }
+        },
+        "languages": [
+            "understands the languages of its creator but can't speak"
+        ],
+        "cr": {
+            "cr": "4",
+            "xp": 1100,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The snake horror has advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "spell-immunity",
+                "name": "Spell Immunity",
+                "category": "traits",
+                "text": "The snake horror is immune to three spells chosen by its creator. Typical immunities include Fireball, Heat Metal, and Lightning Bolt."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The snake horror makes two longsword attacks."
+            },
+            {
+                "id": "longsword",
+                "name": "Longsword",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 8 (1d8 + 4) slashing damage, or 9 (1d10 + 4) slashing damage if used with two hands, and the target must make a DC 12 Constitution saving throw, taking 9 (2d8) poison damage on a failed save, or half as much damage on a successful one.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 4,
+                                "type": "slashing"
+                            },
+                            {
+                                "dice": "1d10",
+                                "bonus": 4,
+                                "type": "slashing",
+                                "condition": "if used with two hands, and the target must make a"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "con",
+                        "dc": 12,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "2d8",
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "items": [
+            {
+                "item": "longsword-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "poison",
+                "slashing"
+            ],
+            "senses": [
+                "blindsight"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "magic_resistance",
+                "spell_immunity"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "cant_speak"
+            ]
+        }
+    },
+    {
+        "id": "tiamat-rot",
+        "kind": "monster",
+        "name": "Tiamat",
+        "source": "RoT",
+        "edition": "classic",
+        "tags": [
+            "Legendary Resistances",
+            "Magic Weapons",
+            "Regeneration"
+        ],
+        "size": [
+            "gargantuan"
+        ],
+        "creature_type": {
+            "type": "fiend"
+        },
+        "alignment": [
+            "chaotic evil"
+        ],
+        "ac": [
+            {
+                "value": 25,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 615,
+            "formula": "30d20 + 300"
+        },
+        "speed": {
+            "walk": 60,
+            "fly": 120
+        },
+        "abilities": {
+            "str": 30,
+            "dex": 10,
+            "con": 30,
+            "int": 26,
+            "wis": 26,
+            "cha": 28
+        },
+        "saves": {
+            "str": 19,
+            "dex": 9,
+            "wis": 17
+        },
+        "skills": {
+            "arcana": 17,
+            "perception": 26,
+            "religion": 17
+        },
+        "senses": {
+            "darkvision": 240,
+            "truesight": 120
+        },
+        "passive_perception": 36,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "acid",
+                    "cold",
+                    "fire",
+                    "lightning",
+                    "poison"
+                ],
+                "conditional": [
+                    {
+                        "types": [
+                            "bludgeoning",
+                            "piercing",
+                            "slashing"
+                        ],
+                        "note": "from nonmagical attacks"
+                    }
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "blinded",
+                    "charmed",
+                    "deafened",
+                    "frightened",
+                    "poisoned",
+                    "stunned"
+                ]
+            }
+        },
+        "languages": [
+            "Common",
+            "Draconic",
+            "Infernal"
+        ],
+        "cr": {
+            "cr": "30",
+            "xp": 155000,
+            "pb": 9
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "discorporation",
+                "name": "Discorporation",
+                "category": "traits",
+                "text": "When Tiamat drops to 0 hit points or dies, her body is destroyed but her essence travels back to her domain in the Nine Hells, and she is unable to take physical form for a time."
+            },
+            {
+                "id": "legendary-resistance",
+                "name": "Legendary Resistance",
+                "category": "traits",
+                "text": "If Tiamat fails a saving throw, she can choose to succeed instead.",
+                "uses": {
+                    "max": 5,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "limited-magic-immunity",
+                "name": "Limited Magic Immunity",
+                "category": "traits",
+                "text": "Unless she wishes to be affected, Tiamat is immune to spells of 6th level or lower. She has advantage on saving throws against all other spells and magical effects."
+            },
+            {
+                "id": "magic-weapons",
+                "name": "Magic Weapons",
+                "category": "traits",
+                "text": "Tiamat's weapon attacks are magical."
+            },
+            {
+                "id": "multiple-heads",
+                "name": "Multiple Heads",
+                "category": "traits",
+                "text": "Tiamat can take one reaction per turn, rather than only one per round. She also has advantage on saving throws against being knocked unconscious. If she fails a saving throw against an effect that would stun a creature, one of her unspent legendary actions is spent."
+            },
+            {
+                "id": "regeneration",
+                "name": "Regeneration",
+                "category": "traits",
+                "text": "Tiamat regains 30 hit points at the start of her turn."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Tiamat can use her Frightful Presence. She then makes three attacks: two with her claws and one with her tail."
+            },
+            {
+                "id": "claw",
+                "name": "Claw",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +19 to hit, reach 15 ft., one target. Hit: 24 (4d6 + 10) slashing damage.",
+                "action": {
+                    "range": "reach 15 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 19,
+                        "damage": [
+                            {
+                                "dice": "4d6",
+                                "bonus": 10,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "tail",
+                "name": "Tail",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +19 to hit, reach 25 ft., one target. Hit: 28 (4d8 + 10) piercing damage.",
+                "action": {
+                    "range": "reach 25 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 19,
+                        "damage": [
+                            {
+                                "dice": "4d8",
+                                "bonus": 10,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "frightful-presence",
+                "name": "Frightful Presence",
+                "category": "actions",
+                "text": "Each creature of Tiamat's choice that is within 240 feet of Tiamat and aware of her must succeed on a DC 26 Wisdom saving throw or become frightened for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. If a creature's saving throw is successful or the effect ends for it, the creature is immune to Tiamat's Frightful Presence for the next 24 hours.",
+                "action": {
+                    "save": {
+                        "ability": "wis",
+                        "dc": 26,
+                        "on_success": "none",
+                        "conditions": [
+                            "frightened"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "legendary_actions",
+                "text": "Melee Weapon Attack: +19 to hit, reach 20 ft., one target. Hit: 32 (4d10 + 10) slashing damage plus 14 (4d6) acid damage (black dragon head), lightning damage (blue dragon head), poison damage (green dragon head), fire damage (red dragon head), or cold damage (white dragon head).",
+                "action": {
+                    "range": "reach 20 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 19,
+                        "damage": [
+                            {
+                                "dice": "4d10",
+                                "bonus": 10,
+                                "type": "slashing"
+                            },
+                            {
+                                "dice": "4d6",
+                                "type": "acid"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "black-dragon-head-acid-breath",
+                "name": "Black Dragon Head: Acid Breath",
+                "category": "legendary_actions",
+                "text": "Tiamat breathes acid in a 120-foot line that is 10 feet wide. Each creature in that line must make a DC 27 Dexterity saving throw, taking 67 (15d8) acid damage on a failed save, or half as much damage on a successful one.",
+                "cost": 2,
+                "action": {
+                    "area": "120-foot line",
+                    "save": {
+                        "ability": "dex",
+                        "dc": 27,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "15d8",
+                                "type": "acid"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "blue-dragon-head-lightning-breath",
+                "name": "Blue Dragon Head: Lightning Breath",
+                "category": "legendary_actions",
+                "text": "Tiamat breathes lightning in a 120-foot line that is 10 feet wide. Each creature in that line must make a DC 27 Dexterity saving throw, taking 88 (16d10) lightning damage on a failed save, or half as much damage on a successful one.",
+                "cost": 2,
+                "action": {
+                    "area": "120-foot line",
+                    "save": {
+                        "ability": "dex",
+                        "dc": 27,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "16d10",
+                                "type": "lightning"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "green-dragon-head-poison-breath",
+                "name": "Green Dragon Head: Poison Breath",
+                "category": "legendary_actions",
+                "text": "Tiamat breathes poisonous gas in a 90-foot cone. Each creature in that area must make a DC 27 Constitution saving throw, taking 77 (22d6) poison damage on a failed save, or half as much damage on a successful one.",
+                "cost": 2,
+                "action": {
+                    "area": "90-foot cone",
+                    "save": {
+                        "ability": "con",
+                        "dc": 27,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "22d6",
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "red-dragon-head-fire-breath",
+                "name": "Red Dragon Head: Fire Breath",
+                "category": "legendary_actions",
+                "text": "Tiamat breathes fire in a 90-foot cone. Each creature in that area must make a DC 27 Dexterity saving throw, taking 91 (26d6) fire damage on a failed save, or half as much damage on a successful one.",
+                "cost": 2,
+                "action": {
+                    "area": "90-foot cone",
+                    "save": {
+                        "ability": "dex",
+                        "dc": 27,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "26d6",
+                                "type": "fire"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "white-dragon-head-cold-breath",
+                "name": "White Dragon Head: Cold Breath",
+                "category": "legendary_actions",
+                "text": "Tiamat breathes an icy blast in a 90-foot cone. Each creature in that area must make a DC 27 Dexterity saving throw, taking 72 (16d8) cold damage on a failed save, or half as much damage on a successful one.",
+                "cost": 2,
+                "action": {
+                    "area": "90-foot cone",
+                    "save": {
+                        "ability": "dex",
+                        "dc": 27,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "16d8",
+                                "type": "cold"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "section_notes": {
+            "legendary_actions": "Tiamat can take 5 legendary actions, choosing from the options below. Only one legendary action can be used at a time and only at the end of another creature's turn. Tiamat regains spent legendary actions at the start of its turn.\n\nTiamat's legendary action options are associated with her five dragon heads (a bite and a breath weapon for each). Once Tiamat chooses a legendary action option for one of her heads, she can't choose another one associated with that head until the start of her next turn."
+        },
+        "legendary_actions": {
+            "uses": 5
+        },
+        "spellcasting": [
+            {
+                "name": "Innate Spellcasting",
+                "ability": "cha",
+                "dc": 26,
+                "text": "Tiamat can innately cast the following spell, her spellcasting ability is Charisma (spell save DC 26):",
+                "groups": [
+                    {
+                        "uses": 3,
+                        "per": "day",
+                        "spells": [
+                            {
+                                "spell": "divine-word-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "acid",
+                "cold",
+                "fire",
+                "poison",
+                "lightning",
+                "piercing",
+                "slashing"
+            ],
+            "conditions_inflicted": [
+                "frightened",
+                "blinded",
+                "deafened",
+                "stunned"
+            ],
+            "saves_forced": [
+                "con",
+                "dex",
+                "wis",
+                "cha"
+            ],
+            "senses": [
+                "superior_darkvision",
+                "truesight"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "actions": [
+                "frightful_presence",
+                "multiattack"
+            ],
+            "traits": [
+                "legendary_resistances",
+                "magic_weapons",
+                "regeneration"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_weapon_attack",
+                "reach"
+            ],
+            "languages": [
+                "common",
+                "draconic",
+                "infernal"
+            ],
+            "spellcasting": [
+                "innate"
+            ]
+        }
+    },
+    {
+        "id": "varram-rot",
+        "kind": "monster",
+        "name": "Varram",
+        "source": "RoT",
+        "edition": "classic",
+        "tags": [
+            "Pack Tactics"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "dwarf"
+            ]
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "ac": [
+            {
+                "value": 16,
+                "from": [
+                    "studded leather"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 110,
+            "formula": "17d8 + 34"
+        },
+        "speed": {
+            "walk": 25
+        },
+        "abilities": {
+            "str": 11,
+            "dex": 18,
+            "con": 14,
+            "int": 13,
+            "wis": 12,
+            "cha": 16
+        },
+        "saves": {
+            "wis": 4
+        },
+        "skills": {
+            "deception": 6,
+            "stealth": 7
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 11,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "poison"
+                ],
+                "conditional": [
+                    {
+                        "types": [
+                            "acid",
+                            "cold",
+                            "fire",
+                            "lightning",
+                            "poison"
+                        ],
+                        "note": "one of the following:"
+                    }
+                ]
+            }
+        },
+        "languages": [
+            "Common",
+            "Draconic",
+            "Infernal",
+            "Dwarvish"
+        ],
+        "cr": {
+            "cr": "7",
+            "xp": 2900,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 4
+        },
+        "features": [
+            {
+                "id": "5etools-note",
+                "name": "5etools Note",
+                "category": "traits",
+                "text": "Varram is presented in The Rise of Tiamat as a male dwarf. The dragonsoul stat block, modified with dwarf racial traits, has been provided here for ease of use."
+            },
+            {
+                "id": "dragon-fanatic",
+                "name": "Dragon Fanatic",
+                "category": "traits",
+                "text": "Varram has advantage on saving throws against being charmed or frightened. While Varram can see a dragon or higher-ranking Cult of the Dragon cultist friendly to it, Varram ignores the effects of being charmed or frightened."
+            },
+            {
+                "id": "fanatic-advantage",
+                "name": "Fanatic Advantage",
+                "category": "traits",
+                "text": "Once per turn, if Varram makes a weapon attack with advantage on the attack roll and hits, the target takes an extra 10 (3d6) damage.",
+                "action": {
+                    "attack": {
+                        "kind": "any",
+                        "damage": [
+                            {
+                                "dice": "3d6",
+                                "type": "weapon"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "limited-flight",
+                "name": "Limited Flight",
+                "category": "traits",
+                "text": "Varram can use a bonus action to gain a flying speed of 30 feet until the end of its turn."
+            },
+            {
+                "id": "pack-tactics",
+                "name": "Pack Tactics",
+                "category": "traits",
+                "text": "Varram has advantage on an attack roll against a creature if at least one of Varram's allies is within 5 feet of the creature and the ally isn't incapacitated."
+            },
+            {
+                "id": "dwarven-resilience",
+                "name": "Dwarven Resilience",
+                "category": "traits",
+                "text": "<$title_short_name$> has advantage on saving throws against poison, and has resistance against poison damage."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Varram attacks twice with its shortsword."
+            },
+            {
+                "id": "shortsword",
+                "name": "Shortsword",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 6 (1d6 + 3) piercing damage plus 10 (3d6) damage of the type to which Varram has resistance.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 3,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "3d6",
+                                "type": "chosen"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "orb-of-dragons-breath",
+                "name": "Orb of Dragon's Breath",
+                "category": "actions",
+                "text": "Ranged Spell Attack: +7 to hit, range 90 ft., one target. Hit: 27 (6d8) damage of the type to which Varram has damage resistance.",
+                "uses": {
+                    "max": 3,
+                    "reset": "long"
+                },
+                "action": {
+                    "range": "range 90 ft.",
+                    "attack": {
+                        "kind": "spell",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "6d8",
+                                "type": "chosen"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "items": [
+            {
+                "item": "shortsword-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "piercing"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "actions": [
+                "breath_weapon",
+                "multiattack"
+            ],
+            "traits": [
+                "pack_tactics"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "dwarvish",
+                "draconic",
+                "infernal"
+            ]
+        }
+    }
+]

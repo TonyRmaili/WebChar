@@ -1,0 +1,560 @@
+[
+    {
+        "id": "acolyte-phb",
+        "kind": "background",
+        "name": "Acolyte",
+        "source": "PHB",
+        "edition": "classic",
+        "srd": {
+            "5.1": "Acolyte"
+        },
+        "reprinted_as": [
+            "acolyte-xphb"
+        ],
+        "grants": {
+            "skills": [
+                "insight",
+                "religion"
+            ],
+            "items": [
+                {
+                    "item": "holy-symbol-phb",
+                    "name": "holy symbol (a gift to you when you entered the priesthood)",
+                    "qty": 1
+                },
+                {
+                    "name": "sticks of incense",
+                    "qty": 5
+                },
+                {
+                    "name": "vestments",
+                    "qty": 1
+                },
+                {
+                    "item": "common-clothes-phb",
+                    "qty": 1
+                },
+                {
+                    "item": "pouch-phb",
+                    "qty": 1,
+                    "contains": {
+                        "gp": 15
+                    }
+                }
+            ]
+        },
+        "choices": [
+            {
+                "type": "pool",
+                "id": "languages",
+                "label": "Languages",
+                "grant": "languages",
+                "count": 2,
+                "from": "standard_languages"
+            },
+            {
+                "type": "bundle",
+                "id": "starting_equipment",
+                "label": "Starting Equipment",
+                "options": [
+                    {
+                        "id": "a",
+                        "label": "Prayer Book",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "book-phb",
+                                    "name": "prayer book",
+                                    "qty": 1
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "id": "b",
+                        "label": "Prayer Wheel",
+                        "grants": {
+                            "items": [
+                                {
+                                    "name": "prayer wheel",
+                                    "qty": 1
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        ],
+        "text": "- **Skill Proficiencies.** Insight, Religion\n- **Languages.** Two of your choice\n- **Equipment.** A holy symbol (a gift to you when you entered the priesthood), a prayer book or prayer wheel, 5 sticks of incense, vestments, a set of common clothes, and a belt pouch containing 15 gp\n\n**Shelter of the Faithful.** As an acolyte, you command the respect of those who share your faith, and you can perform the religious ceremonies of your deity. You and your adventuring companions can expect to receive free healing and care at a temple, shrine, or other established presence of your faith, though you must provide any material components needed for spells. Those who share your religion will support you (but only you) at a modest lifestyle.\n\nYou might also have ties to a specific temple dedicated to your chosen deity or pantheon, and you have a residence there. This could be the temple where you used to serve, if you remain on good terms with it, or a temple where you have found a new home. While near your temple, you can call upon the priests for assistance, provided the assistance you ask for is not hazardous and you remain in good standing with your temple.",
+        "features": [
+            {
+                "id": "shelter-of-the-faithful",
+                "name": "Shelter of the Faithful",
+                "level": 1,
+                "category": "traits"
+            }
+        ]
+    },
+    {
+        "id": "acolyte-xphb",
+        "kind": "background",
+        "name": "Acolyte",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Acolyte"
+        },
+        "grants": {
+            "skills": [
+                "insight",
+                "religion"
+            ],
+            "tools": [
+                "calligraphers_supplies"
+            ],
+            "feats": [
+                {
+                    "feat": "magic-initiate-xphb",
+                    "option": "cleric"
+                }
+            ]
+        },
+        "choices": [
+            {
+                "type": "ability",
+                "id": "ability",
+                "label": "Ability Scores",
+                "from": [
+                    "int",
+                    "wis",
+                    "cha"
+                ],
+                "bonus_sets": [
+                    [
+                        2,
+                        1
+                    ],
+                    [
+                        1,
+                        1,
+                        1
+                    ]
+                ]
+            },
+            {
+                "type": "bundle",
+                "id": "starting_equipment",
+                "label": "Starting Equipment",
+                "options": [
+                    {
+                        "id": "a",
+                        "label": "Book (Prayers), Calligrapher's Supplies, Holy Symbol, 10 Parchment, Robe, 8 GP",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "book-xphb",
+                                    "name": "Book (Prayers)",
+                                    "qty": 1
+                                },
+                                {
+                                    "item": "calligraphers-supplies-xphb",
+                                    "qty": 1
+                                },
+                                {
+                                    "item": "holy-symbol-xphb",
+                                    "qty": 1
+                                },
+                                {
+                                    "item": "parchment-xphb",
+                                    "qty": 10
+                                },
+                                {
+                                    "item": "robe-xphb",
+                                    "qty": 1
+                                }
+                            ],
+                            "currency": {
+                                "gp": 8
+                            }
+                        }
+                    },
+                    {
+                        "id": "b",
+                        "label": "50 GP",
+                        "grants": {
+                            "currency": {
+                                "gp": 50
+                            }
+                        }
+                    }
+                ]
+            }
+        ],
+        "text": "- **Ability Scores.** Intelligence, Wisdom, Charisma\n- **Feat.** Magic Initiate (Cleric)\n- **Skill Proficiencies.** Insight, Religion\n- **Tool Proficiency.** Calligrapher's Supplies\n- **Equipment.** Choose A or B: (A) Calligrapher's Supplies, Book (prayers), Holy Symbol, Parchment (10 sheets), Robe, 8 GP; or (B) 50 GP",
+        "features": []
+    },
+    {
+        "id": "criminal-phb",
+        "kind": "background",
+        "name": "Criminal",
+        "source": "PHB",
+        "edition": "classic",
+        "reprinted_as": [
+            "criminal-xphb"
+        ],
+        "grants": {
+            "skills": [
+                "deception",
+                "stealth"
+            ],
+            "tools": [
+                "thieves_tools"
+            ],
+            "items": [
+                {
+                    "item": "crowbar-phb",
+                    "qty": 1
+                },
+                {
+                    "item": "common-clothes-phb",
+                    "name": "dark common clothes including a hood",
+                    "qty": 1
+                },
+                {
+                    "item": "pouch-phb",
+                    "qty": 1,
+                    "contains": {
+                        "gp": 15
+                    }
+                }
+            ]
+        },
+        "choices": [
+            {
+                "type": "pool",
+                "id": "tools",
+                "label": "Tools",
+                "grant": "tools",
+                "count": 1,
+                "from": "gaming_sets"
+            }
+        ],
+        "text": "- **Skill Proficiencies.** Deception, Stealth\n- **Tool Proficiencies.** One type of gaming set, thieves' tools\n- **Equipment.** A crowbar, a set of dark common clothes including a hood, and a belt pouch containing 15 gp\n\n**Criminal Contact.** You have a reliable and trustworthy contact who acts as your liaison to a network of other criminals. You know how to get messages to and from your contact, even over great distances; specifically, you know the local messengers, corrupt caravan masters, and seedy sailors who can deliver messages for you.\n\n**Specialty.** There are many kinds of criminals, and within a thieves' guild or similar criminal organization, individual members have particular specialties. Even criminals who operate outside of such organizations have strong preferences for certain kinds of crimes over others. Choose the role you played in your criminal life, or roll on the table below.\n\nd8 | Specialty\n--- | ---\n1 | Blackmailer\n2 | Burglar\n3 | Enforcer\n4 | Fence\n5 | Highway robber\n6 | Hired killer\n7 | Pickpocket\n8 | Smuggler",
+        "features": [
+            {
+                "id": "criminal-contact",
+                "name": "Criminal Contact",
+                "level": 1,
+                "category": "traits"
+            }
+        ]
+    },
+    {
+        "id": "criminal-xphb",
+        "kind": "background",
+        "name": "Criminal",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Criminal"
+        },
+        "grants": {
+            "skills": [
+                "sleight_of_hand",
+                "stealth"
+            ],
+            "tools": [
+                "thieves_tools"
+            ],
+            "feats": [
+                {
+                    "feat": "alert-xphb"
+                }
+            ]
+        },
+        "choices": [
+            {
+                "type": "ability",
+                "id": "ability",
+                "label": "Ability Scores",
+                "from": [
+                    "dex",
+                    "con",
+                    "int"
+                ],
+                "bonus_sets": [
+                    [
+                        2,
+                        1
+                    ],
+                    [
+                        1,
+                        1,
+                        1
+                    ]
+                ]
+            },
+            {
+                "type": "bundle",
+                "id": "starting_equipment",
+                "label": "Starting Equipment",
+                "options": [
+                    {
+                        "id": "a",
+                        "label": "2 Dagger, Thieves' Tools, Crowbar, 2 Pouch, Traveler's Clothes, 16 GP",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "dagger-xphb",
+                                    "qty": 2
+                                },
+                                {
+                                    "item": "thieves-tools-xphb",
+                                    "qty": 1
+                                },
+                                {
+                                    "item": "crowbar-xphb",
+                                    "qty": 1
+                                },
+                                {
+                                    "item": "pouch-xphb",
+                                    "qty": 2
+                                },
+                                {
+                                    "item": "travelers-clothes-xphb",
+                                    "qty": 1
+                                }
+                            ],
+                            "currency": {
+                                "gp": 16
+                            }
+                        }
+                    },
+                    {
+                        "id": "b",
+                        "label": "50 GP",
+                        "grants": {
+                            "currency": {
+                                "gp": 50
+                            }
+                        }
+                    }
+                ]
+            }
+        ],
+        "text": "- **Ability Scores.** Dexterity, Constitution, Intelligence\n- **Feat.** Alert\n- **Skill Proficiencies.** Sleight of Hand, Stealth\n- **Tool Proficiency.** Thieves' Tools\n- **Equipment.** Choose A or B: (A) 2 Daggers, Thieves' Tools, Crowbar, 2 Pouches, Traveler's Clothes, 16 GP; or (B) 50 GP",
+        "features": []
+    },
+    {
+        "id": "sage-xphb",
+        "kind": "background",
+        "name": "Sage",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Sage"
+        },
+        "grants": {
+            "skills": [
+                "arcana",
+                "history"
+            ],
+            "tools": [
+                "calligraphers_supplies"
+            ],
+            "feats": [
+                {
+                    "feat": "magic-initiate-xphb",
+                    "option": "wizard"
+                }
+            ]
+        },
+        "choices": [
+            {
+                "type": "ability",
+                "id": "ability",
+                "label": "Ability Scores",
+                "from": [
+                    "con",
+                    "int",
+                    "wis"
+                ],
+                "bonus_sets": [
+                    [
+                        2,
+                        1
+                    ],
+                    [
+                        1,
+                        1,
+                        1
+                    ]
+                ]
+            },
+            {
+                "type": "bundle",
+                "id": "starting_equipment",
+                "label": "Starting Equipment",
+                "options": [
+                    {
+                        "id": "a",
+                        "label": "Quarterstaff, Calligrapher's Supplies, Book, 8 Parchment, Robe, 8 GP",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "quarterstaff-xphb",
+                                    "qty": 1
+                                },
+                                {
+                                    "item": "calligraphers-supplies-xphb",
+                                    "qty": 1
+                                },
+                                {
+                                    "item": "book-xphb",
+                                    "qty": 1
+                                },
+                                {
+                                    "item": "parchment-xphb",
+                                    "qty": 8
+                                },
+                                {
+                                    "item": "robe-xphb",
+                                    "qty": 1
+                                }
+                            ],
+                            "currency": {
+                                "gp": 8
+                            }
+                        }
+                    },
+                    {
+                        "id": "b",
+                        "label": "50 GP",
+                        "grants": {
+                            "currency": {
+                                "gp": 50
+                            }
+                        }
+                    }
+                ]
+            }
+        ],
+        "text": "- **Ability Scores.** Constitution, Intelligence, Wisdom\n- **Feat.** Magic Initiate (Wizard)\n- **Skill Proficiencies.** Arcana, History\n- **Tool Proficiency.** Calligrapher's Supplies\n- **Equipment.** Choose A or B: (A) Quarterstaff, Calligrapher's Supplies, Book (history), Parchment (8 sheets), Robe, 8 GP; or (B) 50 GP",
+        "features": []
+    },
+    {
+        "id": "soldier-xphb",
+        "kind": "background",
+        "name": "Soldier",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Soldier"
+        },
+        "grants": {
+            "skills": [
+                "athletics",
+                "intimidation"
+            ],
+            "feats": [
+                {
+                    "feat": "savage-attacker-xphb"
+                }
+            ]
+        },
+        "choices": [
+            {
+                "type": "ability",
+                "id": "ability",
+                "label": "Ability Scores",
+                "from": [
+                    "str",
+                    "dex",
+                    "con"
+                ],
+                "bonus_sets": [
+                    [
+                        2,
+                        1
+                    ],
+                    [
+                        1,
+                        1,
+                        1
+                    ]
+                ]
+            },
+            {
+                "type": "pool",
+                "id": "tools",
+                "label": "Tools",
+                "grant": "tools",
+                "count": 1,
+                "from": "gaming_sets"
+            },
+            {
+                "type": "bundle",
+                "id": "starting_equipment",
+                "label": "Starting Equipment",
+                "options": [
+                    {
+                        "id": "a",
+                        "label": "Spear, Shortbow, Arrows (20), Gaming Sets, Healer's Kit, Quiver, Traveler's Clothes, 14 GP",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "spear-xphb",
+                                    "qty": 1
+                                },
+                                {
+                                    "item": "shortbow-xphb",
+                                    "qty": 1
+                                },
+                                {
+                                    "item": "arrows-20-xphb",
+                                    "qty": 1
+                                },
+                                {
+                                    "item": "healers-kit-xphb",
+                                    "qty": 1
+                                },
+                                {
+                                    "item": "quiver-xphb",
+                                    "qty": 1
+                                },
+                                {
+                                    "item": "travelers-clothes-xphb",
+                                    "qty": 1
+                                }
+                            ],
+                            "currency": {
+                                "gp": 14
+                            }
+                        },
+                        "choices": [
+                            {
+                                "type": "pool",
+                                "id": "items",
+                                "label": "Gaming Sets",
+                                "grant": "items",
+                                "count": 1,
+                                "from": "gaming_sets"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "b",
+                        "label": "50 GP",
+                        "grants": {
+                            "currency": {
+                                "gp": 50
+                            }
+                        }
+                    }
+                ]
+            }
+        ],
+        "text": "- **Ability Scores.** Strength, Dexterity, Constitution\n- **Feat.** Savage Attacker\n- **Skill Proficiencies.** Athletics, Intimidation\n- **Tool Proficiency.** Choose one kind of Gaming Set\n- **Equipment.** Choose A or B: (A) Spear, Shortbow, 20 Arrows, Gaming Set (same as above), Healer's Kit, Quiver, Traveler's Clothes, 14 GP; or (B) 50 GP",
+        "features": []
+    }
+]

@@ -1,0 +1,733 @@
+[
+    {
+        "id": "decapus-ttp",
+        "kind": "monster",
+        "name": "Decapus",
+        "source": "TTP",
+        "edition": "classic",
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "monstrosity"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 14,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 75,
+            "formula": "10d10 + 20"
+        },
+        "speed": {
+            "walk": 15,
+            "climb": 30
+        },
+        "abilities": {
+            "str": 15,
+            "dex": 14,
+            "con": 14,
+            "int": 4,
+            "wis": 10,
+            "cha": 7
+        },
+        "skills": {
+            "athletics": 4,
+            "perception": 2,
+            "stealth": 4
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 12,
+        "cr": {
+            "cr": "4",
+            "xp": 1100,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The decapus makes two attacks: one with its bite and one with its tentacles."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +4 to hit, reach 5 ft., one creature grappled by the decapus. Hit: 7 (2d4 + 2) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "2d4",
+                                "bonus": 2,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "tentacles",
+                "name": "Tentacles",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +4 to hit, reach 10 ft., one target. Hit: 24 (9d4 + 2) bludgeoning damage or 14 (5d4 + 2) bludgeoning damage if the decapus is grappling a creature other than the target or if the decapus is on the ground or floor. The target is also grappled (escape DC 14) unless the decapus is already grappling a creature. Until this grapple ends, the target is restrained.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "9d4",
+                                "bonus": 2,
+                                "type": "bludgeoning"
+                            },
+                            {
+                                "dice": "5d4",
+                                "bonus": 2,
+                                "type": "bludgeoning",
+                                "condition": "if the decapus is grappling a creature other than the target or if the decapus is on the ground or flo"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "piercing"
+            ],
+            "conditions_inflicted": [
+                "grappled",
+                "restrained"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "movement": [
+                "climb"
+            ],
+            "actions": [
+                "multiattack",
+                "tentacles"
+            ],
+            "misc": [
+                "melee_weapon_attack",
+                "reach"
+            ]
+        }
+    },
+    {
+        "id": "geonid-ttp",
+        "kind": "monster",
+        "name": "Geonid",
+        "source": "TTP",
+        "edition": "classic",
+        "size": [
+            "small"
+        ],
+        "creature_type": {
+            "type": "elemental"
+        },
+        "alignment": [
+            "neutral"
+        ],
+        "ac": [
+            {
+                "value": 17,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 26,
+            "formula": "4d6 + 12"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 12,
+            "dex": 10,
+            "con": 16,
+            "int": 9,
+            "wis": 14,
+            "cha": 11
+        },
+        "skills": {
+            "perception": 4,
+            "stealth": 2
+        },
+        "senses": {
+            "darkvision": 60,
+            "tremorsense": 30
+        },
+        "passive_perception": 14,
+        "cr": {
+            "cr": "1/4",
+            "xp": 50,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "boulder-guise",
+                "name": "Boulder Guise",
+                "category": "traits",
+                "text": "While fully withdrawn into its shell, the geonid can't see and is indistinguishable from a small boulder"
+            },
+            {
+                "id": "club",
+                "name": "Club",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: 3 (1d4 + 1) bludgeoning damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 3,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 1,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "stone-tell",
+                "name": "Stone Tell",
+                "category": "actions",
+                "text": "The geonid touches a stone object or surface and knows what types of creatures have been within 10 feet of that stone in the past 24 hours. The geonid can also determine the number of creatures of each type, but not their identities."
+            }
+        ],
+        "items": [
+            {
+                "item": "club-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning"
+            ],
+            "senses": [
+                "darkvision",
+                "tremorsense"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack"
+            ]
+        }
+    },
+    {
+        "id": "giant-slug-ttp",
+        "kind": "monster",
+        "name": "Giant Slug",
+        "source": "TTP",
+        "edition": "classic",
+        "tags": [
+            "Keen Senses",
+            "Spider Climb"
+        ],
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "monstrosity"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 13,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 66,
+            "formula": "6d10 + 18"
+        },
+        "speed": {
+            "walk": 10,
+            "climb": 10
+        },
+        "abilities": {
+            "str": 14,
+            "dex": 13,
+            "con": 16,
+            "int": 1,
+            "wis": 12,
+            "cha": 5
+        },
+        "skills": {
+            "perception": 3
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 13,
+        "languages": [
+            "Abyssal",
+            "Aquan",
+            "Common"
+        ],
+        "cr": {
+            "cr": "3",
+            "xp": 700,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "keen-smell",
+                "name": "Keen Smell",
+                "category": "traits",
+                "text": "The slug has advantage on Wisdom (Perception) checks that rely on smell."
+            },
+            {
+                "id": "spider-climb",
+                "name": "Spider Climb",
+                "category": "traits",
+                "text": "The slug can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The slug makes two attacks: one with its tentacles and one with its bite."
+            },
+            {
+                "id": "tentacles",
+                "name": "Tentacles",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +8 to hit, reach 10 ft., one creature. Hit: 4 (1d4 + 2) poison damage, and the target must succeed on a DC 13 Constitution saving throw or be poisoned for 1 minute. Until this poison ends, the target is paralyzed. The target can repeat the saving throw at the end of each of its turns, ending the poison on itself on a success.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 8,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 2,
+                                "type": "poison"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "con",
+                        "dc": 13,
+                        "on_success": "none",
+                        "conditions": [
+                            "paralyzed",
+                            "poisoned"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 7 (2d4 + 2) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "2d4",
+                                "bonus": 2,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "animate-tentacle",
+                "name": "Animate Tentacle",
+                "category": "reactions",
+                "text": "When the slug takes damage in this cave (Shrine of Umberlee), it can use its reaction to animate one of the tentacles of the kraken statue and cause it to   make a melee weapon attack (+3 to hit) against one creature within 20 feet of the statue that the slug can see. The tentacle deals 8 (1d8 + 4) bludgeoning damage on a hit.",
+                "action": {
+                    "damage": [
+                        {
+                            "dice": "1d8",
+                            "bonus": 4,
+                            "type": "bludgeoning"
+                        }
+                    ]
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Innate Spellcasting",
+                "ability": "wis",
+                "dc": 11,
+                "attack": 3,
+                "text": "The slug's innate spellcasting ability is Wisdom (spell save DC 11, +3 to hit with spell attacks). It can innately cast the following spells, requiring no material components:",
+                "groups": [
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "guiding-bolt-phb"
+                            },
+                            {
+                                "spell": "sanctuary-phb"
+                            },
+                            {
+                                "spell": "spiritual-weapon-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "poison",
+                "piercing",
+                "force",
+                "radiant"
+            ],
+            "conditions_inflicted": [
+                "paralyzed",
+                "poisoned"
+            ],
+            "saves_forced": [
+                "con",
+                "wis"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "movement": [
+                "climb"
+            ],
+            "actions": [
+                "multiattack",
+                "tentacles"
+            ],
+            "traits": [
+                "keen_senses",
+                "spider_climb"
+            ],
+            "misc": [
+                "melee_weapon_attack",
+                "reach"
+            ],
+            "languages": [
+                "abyssal",
+                "aquan",
+                "common"
+            ],
+            "spellcasting": [
+                "innate"
+            ]
+        }
+    },
+    {
+        "id": "topi-ttp",
+        "kind": "monster",
+        "name": "Topi",
+        "source": "TTP",
+        "edition": "classic",
+        "tags": [
+            "Turn Resistance",
+            "Undead Fortitude"
+        ],
+        "size": [
+            "small"
+        ],
+        "creature_type": {
+            "type": "undead"
+        },
+        "alignment": [
+            "chaotic evil"
+        ],
+        "ac": [
+            {
+                "value": 13,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 13,
+            "formula": "3d6 + 3"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 7,
+            "dex": 15,
+            "con": 12,
+            "int": 6,
+            "wis": 10,
+            "cha": 5
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 10,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "bludgeoning"
+                ]
+            },
+            "immune": {
+                "types": [
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "understands the languages it knew in life but can't speak"
+        ],
+        "cr": {
+            "cr": "1/2",
+            "xp": 100,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "turn-resistance",
+                "name": "Turn Resistance",
+                "category": "traits",
+                "text": "The topi has advantage on saving throws against any effect that turns undead."
+            },
+            {
+                "id": "undead-fortitude",
+                "name": "Undead Fortitude",
+                "category": "traits",
+                "text": "If damage reduces the topi to 0 hit points, it must make a Constitution saving throw with a DC of 5+the damage taken, unless the damage is radiant or from a critical hit. On a success, the topi drops to 1 hit point instead."
+            },
+            {
+                "id": "venomous-claws",
+                "name": "Venomous Claws",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 4 (1d4 + 2) slashing damage plus 2 (1d4) poison damage, and the target must succeed on a DC 11 Constitution saving throw or be poisoned until the end of the target's next turn.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 2,
+                                "type": "slashing"
+                            },
+                            {
+                                "dice": "1d4",
+                                "type": "poison"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "con",
+                        "dc": 11,
+                        "on_success": "none",
+                        "conditions": [
+                            "poisoned"
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "poison",
+                "slashing"
+            ],
+            "conditions_inflicted": [
+                "poisoned"
+            ],
+            "saves_forced": [
+                "con"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "traits": [
+                "turn_resistance",
+                "undead_fortitude"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "cant_speak",
+                "known_in_life"
+            ]
+        }
+    },
+    {
+        "id": "two-headed-plesiosaurus-ttp",
+        "kind": "monster",
+        "name": "Two-Headed Plesiosaurus",
+        "source": "TTP",
+        "edition": "classic",
+        "tags": [
+            "Hold Breath"
+        ],
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "beast"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 13,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 100,
+            "formula": "8d10 + 24"
+        },
+        "speed": {
+            "walk": 20,
+            "swim": 40
+        },
+        "abilities": {
+            "str": 18,
+            "dex": 15,
+            "con": 16,
+            "int": 2,
+            "wis": 12,
+            "cha": 5
+        },
+        "skills": {
+            "perception": 3,
+            "stealth": 4
+        },
+        "passive_perception": 13,
+        "cr": {
+            "cr": "4",
+            "xp": 1100,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "two-heads",
+                "name": "Two Heads",
+                "category": "traits",
+                "text": "The two-headed plesiosaurus has advantage on Wisdom (Perception) checks and on saving throws against being blinded, charmed, deafened, frightened, stunned, and knocked unconscious."
+            },
+            {
+                "id": "hold-breath",
+                "name": "Hold Breath",
+                "category": "traits",
+                "text": "The plesiosaurus can hold its breath for 1 hour."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The two-headed plesiosaurus makes two bite attacks."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +6 to hit, reach 10 ft., one target. Hit: 14 (3d6 + 4) piercing damage.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "3d6",
+                                "bonus": 4,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing"
+            ],
+            "movement": [
+                "swim"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "hold_breath"
+            ],
+            "misc": [
+                "melee_weapon_attack",
+                "reach"
+            ],
+            "environment": [
+                "underwater",
+                "coastal"
+            ],
+            "groups": [
+                "Dinosaurs"
+            ]
+        }
+    }
+]

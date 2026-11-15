@@ -1,0 +1,3045 @@
+[
+    {
+        "id": "brain-in-a-jar-llk",
+        "kind": "monster",
+        "name": "Brain in a Jar",
+        "source": "LLK",
+        "edition": "classic",
+        "tags": [
+            "Magic Resistance"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "undead"
+        },
+        "alignment": [
+            "any alignment"
+        ],
+        "ac": [
+            {
+                "value": 11,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 58,
+            "formula": "9d8 + 18"
+        },
+        "speed": {
+            "walk": 0
+        },
+        "abilities": {
+            "str": 1,
+            "dex": 1,
+            "con": 15,
+            "int": 19,
+            "wis": 10,
+            "cha": 15
+        },
+        "saves": {
+            "int": 7,
+            "cha": 5
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 10,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "necrotic",
+                    "poison",
+                    "psychic"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "exhaustion",
+                    "frightened"
+                ]
+            }
+        },
+        "cr": {
+            "cr": "6",
+            "xp": 2300,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": -5
+        },
+        "features": [
+            {
+                "id": "detect-sentience",
+                "name": "Detect Sentience",
+                "category": "traits",
+                "text": "The brain in a jar can sense the presence and location of any creature within 300 feet of it that has an Intelligence of 3 or higher, regardless of interposing barriers, unless the creature is protected by a Mind Blank spell."
+            },
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The brain in a jar has advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "mind-blast",
+                "name": "Mind Blast",
+                "category": "actions",
+                "text": "The brain in a jar magically emits psychic energy in a 60-foot cone. Each creature in that area must succeed on a DC 15 Intelligence saving throw or take 13 (2d8 + 4) psychic damage and be stunned for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "area": "60-foot cone",
+                    "save": {
+                        "ability": "int",
+                        "dc": 15,
+                        "on_success": "none",
+                        "damage": [
+                            {
+                                "dice": "2d8",
+                                "bonus": 4,
+                                "type": "psychic"
+                            }
+                        ],
+                        "conditions": [
+                            "stunned"
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Innate Spellcasting (Psionics)",
+                "ability": "int",
+                "dc": 15,
+                "text": "The brain in a jar's innate spellcasting ability is Intelligence (spell save DC 15). It can innately cast the following spells, requiring no components:",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "detect-thoughts-phb"
+                            },
+                            {
+                                "spell": "mage-hand-phb"
+                            },
+                            {
+                                "spell": "zone-of-truth-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 3,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "charm-person-phb"
+                            },
+                            {
+                                "spell": "command-phb"
+                            },
+                            {
+                                "spell": "hold-person-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "compulsion-phb"
+                            },
+                            {
+                                "spell": "hold-monster-phb"
+                            },
+                            {
+                                "spell": "sleep-phb",
+                                "note": "(cast at 3rd level)"
+                            },
+                            {
+                                "spell": "tashas-hideous-laughter-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "psychic"
+            ],
+            "conditions_inflicted": [
+                "stunned",
+                "charmed",
+                "incapacitated",
+                "paralyzed",
+                "prone",
+                "unconscious"
+            ],
+            "saves_forced": [
+                "int",
+                "cha",
+                "wis"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "traits": [
+                "magic_resistance"
+            ],
+            "misc": [
+                "area_of_effect"
+            ],
+            "spellcasting": [
+                "innate",
+                "psionics"
+            ]
+        }
+    },
+    {
+        "id": "clockwork-kraken-llk",
+        "kind": "monster",
+        "name": "Clockwork Kraken",
+        "source": "LLK",
+        "edition": "classic",
+        "tags": [
+            "Magic Resistance"
+        ],
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "construct"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 17,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 142,
+            "formula": "15d10 + 60"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 20,
+            "dex": 12,
+            "con": 18,
+            "int": 3,
+            "wis": 11,
+            "cha": 1
+        },
+        "senses": {
+            "darkvision": 120
+        },
+        "passive_perception": 10,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "fire"
+                ],
+                "conditional": [
+                    {
+                        "types": [
+                            "bludgeoning",
+                            "piercing",
+                            "slashing"
+                        ],
+                        "note": "from nonmagical attacks"
+                    }
+                ]
+            },
+            "immune": {
+                "types": [
+                    "poison",
+                    "psychic"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "exhaustion",
+                    "frightened",
+                    "paralyzed",
+                    "petrified",
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "understands the languages of its creator but can't speak"
+        ],
+        "cr": {
+            "cr": "10",
+            "xp": 5900,
+            "pb": 4
+        },
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The clockwork kraken has advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "independent-tentacles",
+                "name": "Independent Tentacles",
+                "category": "traits",
+                "text": "The clockwork kraken has eight tentacles, each of which is treated as a Medium creature, moves independently on the construct's turn, and has a flying speed of 40 feet. The clockwork kraken's senses operate through its tentacles as well as its main body. Each tentacle can be attacked independently, with damage dealt to tentacles applied to the clockwork kraken's hit point total. A tentacle is destroyed if it takes more than 20 damage.\n\nReducing the construct to three or fewer tentacles reduces its attacks accordingly. A clockwork kraken can regrow any destroyed tentacles at the end of a long rest."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The clockwork kraken makes four tentacle slam attacks."
+            },
+            {
+                "id": "tentacle-slam",
+                "name": "Tentacle Slam",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +9 to hit, reach 5 ft., one target. Hit: 12 (2d6 + 5) bludgeoning damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 9,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 5,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning"
+            ],
+            "senses": [
+                "superior_darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "magic_resistance"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "cant_speak"
+            ]
+        }
+    },
+    {
+        "id": "ctenmiir-the-vampire-llk",
+        "kind": "monster",
+        "name": "Ctenmiir the Vampire",
+        "source": "LLK",
+        "edition": "classic",
+        "tags": [
+            "Legendary Resistances",
+            "Regeneration",
+            "Shapechanger",
+            "Spider Climb",
+            "Sunlight Sensitivity"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "undead",
+            "tags": [
+                "shapechanger"
+            ]
+        },
+        "alignment": [
+            "lawful evil"
+        ],
+        "ac": [
+            {
+                "value": 16,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 144,
+            "formula": "17d8 + 68"
+        },
+        "speed": {
+            "walk": 30,
+            "climb": 10
+        },
+        "abilities": {
+            "str": 18,
+            "dex": 18,
+            "con": 18,
+            "int": 17,
+            "wis": 15,
+            "cha": 18
+        },
+        "saves": {
+            "dex": 9,
+            "wis": 7,
+            "cha": 9
+        },
+        "skills": {
+            "perception": 7,
+            "stealth": 9
+        },
+        "senses": {
+            "darkvision": 120
+        },
+        "passive_perception": 17,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "necrotic"
+                ],
+                "conditional": [
+                    {
+                        "types": [
+                            "bludgeoning",
+                            "piercing",
+                            "slashing"
+                        ],
+                        "note": "from nonmagical attacks"
+                    }
+                ]
+            }
+        },
+        "languages": [
+            "the languages it knew in life"
+        ],
+        "cr": {
+            "cr": "13",
+            "xp": 10000,
+            "pb": 5
+        },
+        "initiative": {
+            "bonus": 4
+        },
+        "features": [
+            {
+                "id": "coffin-imprisonment",
+                "name": "Coffin Imprisonment",
+                "category": "traits",
+                "text": "Ctenmiir is imprisoned within a magical iron coffin mounted atop animated golem legs. Ctenmiir's coffin has a speed of 30 feet and a climbing speed of 10 feet, and protects Ctenmiir from sunlight even as it prevents him from escaping his servitude."
+            },
+            {
+                "id": "shapechanger",
+                "name": "Shapechanger",
+                "category": "traits",
+                "text": "If Ctenmiir isn't in sunlight or running water, it can use its action to polymorph into a Tiny bat or a Medium cloud of mist, or back into its true form.\n\nWhile in bat form, Ctenmiir can't speak, its walking speed is 5 feet, and it has a flying speed of 30 feet. Its statistics, other than its size and speed, are unchanged. Anything it is wearing transforms with it, but nothing it is carrying does. It reverts to its true form if it dies.\n\nWhile in mist form, Ctenmiir can't take any actions, speak, or manipulate objects. It is weightless, has a flying speed of 20 feet, can hover, and can enter a hostile creature's space and stop there. In addition, if air can pass through a space, the mist can do so without squeezing, and it can't pass through water. It has advantage on Strength, Dexterity, and Constitution saving throws, and it is immune to all nonmagical damage, except the damage it takes from sunlight."
+            },
+            {
+                "id": "legendary-resistance",
+                "name": "Legendary Resistance",
+                "category": "traits",
+                "text": "If Ctenmiir fails a saving throw, it can choose to succeed instead.",
+                "uses": {
+                    "max": 3,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "misty-escape",
+                "name": "Misty Escape",
+                "category": "traits",
+                "text": "When it drops to 0 hit points outside its resting place, Ctenmiir transforms into a cloud of mist (as in the Shapechanger trait) instead of falling unconscious, provided that it isn't in sunlight or running water. If it can't transform, it is destroyed.\n\nWhile it has 0 hit points in mist form, it can't revert to its vampire form, and it must reach its resting place within 2 hours or be destroyed. Once in its resting place, it reverts to its vampire form. It is then paralyzed until it regains at least 1 hit point. After spending 1 hour in its resting place with 0 hit points, it regains 1 hit point."
+            },
+            {
+                "id": "regeneration",
+                "name": "Regeneration",
+                "category": "traits",
+                "text": "Ctenmiir regains 20 hit points at the start of its turn if it has at least 1 hit point and isn't in sunlight or running water. If Ctenmiir takes radiant damage or damage from holy water, this trait doesn't function at the start of Ctenmiir's next turn."
+            },
+            {
+                "id": "spider-climb",
+                "name": "Spider Climb",
+                "category": "traits",
+                "text": "Ctenmiir can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check."
+            },
+            {
+                "id": "vampire-weaknesses",
+                "name": "Vampire Weaknesses",
+                "category": "traits",
+                "text": "Ctenmiir has the following flaws:\n\n- **Forbiddance.** Ctenmiir can't enter a residence without an invitation from one of the occupants.\n- **Harmed by Running Water.** Ctenmiir takes 20 acid damage if it ends its turn in running water.\n- **Stake to the Heart.** If a piercing weapon made of wood is driven into Ctenmiir's heart while Ctenmiir is incapacitated in its resting place, Ctenmiir is paralyzed until the stake is removed.\n- **Sunlight Hypersensitivity.** Ctenmiir takes 20 radiant damage when it starts its turn in sunlight. While in sunlight, it has disadvantage on attack rolls and ability checks."
+            },
+            {
+                "id": "multiattack-vampire-form-only",
+                "name": "Multiattack (Vampire Form Only)",
+                "category": "actions",
+                "text": "Ctenmiir makes two attacks, only one of which can be a bite attack."
+            },
+            {
+                "id": "unarmed-strike-vampire-form-only",
+                "name": "Unarmed Strike (Vampire Form Only)",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +9 to hit, reach 5 ft., one creature. Hit: 8 (1d8 + 4) bludgeoning damage. Instead of dealing damage, Ctenmiir can grapple the target (escape DC 18).",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 9,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 4,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "bite-bat-or-vampire-form-only",
+                "name": "Bite (Bat or Vampire Form Only)",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +9 to hit, reach 5 ft., one willing creature, or a creature that is grappled by Ctenmiir, incapacitated, or restrained. Hit: 7 (1d6 + 4) piercing damage plus 10 (3d6) necrotic damage. The target's hit point maximum is reduced by an amount equal to the necrotic damage taken, and Ctenmiir regains hit points equal to that amount. The reduction lasts until the target finishes a long rest. The target dies if this effect reduces its hit point maximum to 0. A humanoid slain in this way and then buried in the ground rises the following night as a vampire spawn under Ctenmiir's control.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 9,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 4,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "3d6",
+                                "type": "necrotic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "charm",
+                "name": "Charm",
+                "category": "actions",
+                "text": "Ctenmiir targets one humanoid it can see within 30 feet of it. If the target can see Ctenmiir, the target must succeed on a DC 17 Wisdom saving throw against this magic or be charmed by Ctenmiir. The charmed target regards Ctenmiir as a trusted friend to be heeded and protected. Although the target isn't under Ctenmiir's control, it takes Ctenmiir's requests or actions in the most favorable way it can, and it is a willing target for Ctenmiir's bite attack.\n\nEach time Ctenmiir or Ctenmiir's companions do anything harmful to the target, it can repeat the saving throw, ending the effect on itself on a success. Otherwise, the effect lasts 24 hours or until Ctenmiir is destroyed, is on a different plane of existence than the target, or takes a bonus action to end the effect.",
+                "action": {
+                    "save": {
+                        "ability": "wis",
+                        "dc": 17,
+                        "on_success": "none",
+                        "conditions": [
+                            "charmed"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "children-of-the-night",
+                "name": "Children of the Night",
+                "category": "actions",
+                "text": "Ctenmiir magically calls 2d4 swarms of bats or rats, provided that the sun isn't up. While outdoors, Ctenmiir can call 3d6 wolves instead. The called creatures arrive in 1d4 rounds, acting as allies of Ctenmiir and obeying its spoken commands. The beasts remain for 1 hour, until Ctenmiir dies, or until Ctenmiir dismisses them as a bonus action.",
+                "uses": {
+                    "max": 1,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "move",
+                "name": "Move",
+                "category": "legendary_actions",
+                "text": "Ctenmiir moves up to its speed without provoking opportunity attacks."
+            },
+            {
+                "id": "unarmed-strike",
+                "name": "Unarmed Strike",
+                "category": "legendary_actions",
+                "text": "Ctenmiir makes one unarmed strike."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "legendary_actions",
+                "text": "Ctenmiir makes one bite attack.",
+                "cost": 2
+            },
+            {
+                "id": "regional-effects",
+                "name": "Regional Effects",
+                "category": "regional_effects",
+                "text": "The region surrounding a vampire's lair is warped by the creature's unnatural presence, creating any of the following effects:\n\n- There's a noticeable increase in the populations of bats, rats, and wolves in the region.\n- Plants within 500 feet of the lair wither, and their stems and branches become twisted and thorny.\n- Shadows cast within 500 feet of the lair seem abnormally gaunt and sometimes move as though alive.\n- A creeping fog clings to the ground within 500 feet of the vampire's lair. The fog occasionally takes eerie forms, such as grasping claws and writhing serpents.\n\nIf the vampire is destroyed, these effects end after 2d6 days."
+            }
+        ],
+        "legendary_actions": {
+            "uses": 3
+        },
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "necrotic",
+                "piercing"
+            ],
+            "conditions_inflicted": [
+                "charmed"
+            ],
+            "saves_forced": [
+                "wis"
+            ],
+            "senses": [
+                "superior_darkvision"
+            ],
+            "movement": [
+                "climb"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "legendary_resistances",
+                "regeneration",
+                "shapechanger",
+                "spider_climb",
+                "sunlight_sensitivity"
+            ],
+            "misc": [
+                "hit_point_reduction",
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "known_in_life"
+            ],
+            "environment": [
+                "urban"
+            ]
+        }
+    },
+    {
+        "id": "east-wind-llk",
+        "kind": "monster",
+        "name": "East Wind",
+        "source": "LLK",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "any race"
+            ]
+        },
+        "alignment": [
+            "any alignment"
+        ],
+        "ac": [
+            {
+                "value": 16
+            }
+        ],
+        "hp": {
+            "average": 60,
+            "formula": "11d8 + 11"
+        },
+        "speed": {
+            "walk": 40
+        },
+        "abilities": {
+            "str": 11,
+            "dex": 17,
+            "con": 13,
+            "int": 11,
+            "wis": 16,
+            "cha": 10
+        },
+        "skills": {
+            "acrobatics": 5,
+            "insight": 5,
+            "stealth": 5
+        },
+        "passive_perception": 13,
+        "languages": [
+            "any one language (usually Common)"
+        ],
+        "cr": {
+            "cr": "3",
+            "xp": 700,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "special-equipment",
+                "name": "Special Equipment",
+                "category": "traits",
+                "text": "East Wind is armed with a longsword that is a polymorph blade."
+            },
+            {
+                "id": "unarmored-defense",
+                "name": "Unarmored Defense",
+                "category": "traits",
+                "text": "While East Wind is wearing no armor and wielding no shield, its AC includes its Wisdom modifier."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "East Wind makes three unarmed strikes or three dart attacks."
+            },
+            {
+                "id": "unarmed-strike",
+                "name": "Unarmed Strike",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 7 (1d8 + 3) bludgeoning damage. If the target is a creature, East Wind can choose one of the following additional effects:\n\n- The target must succeed on a DC 13 Strength saving throw or drop one item it is holding (adept's choice).\n- The target must succeed on a DC 13 Dexterity saving throw or be knocked prone.\n- The target must succeed on a DC 13 Constitution saving throw or be stunned until the end of East Wind's next turn.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 3,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "dart",
+                "name": "Dart",
+                "category": "actions",
+                "text": "Ranged Weapon Attack: +5 to hit, range 20/60 ft., one target. Hit: 5 (1d4 + 3) piercing damage.",
+                "action": {
+                    "range": "range 20/60 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 3,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "polymorph-blade",
+                "name": "Polymorph Blade",
+                "category": "actions",
+                "text": "Melee or Ranged Weapon Attack: +5 to hit, reach 5 ft., one creature. Hit: 7 (1d8 + 3) piercing damage. If East Wind rolls a 20 on the attack roll, the target must succeed on a DC 15 Wisdom saving throw or suffer the effects of a Polymorph spell.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 3,
+                                "type": "piercing"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "wis",
+                        "dc": 15,
+                        "on_success": "none"
+                    }
+                }
+            },
+            {
+                "id": "deflect-missile",
+                "name": "Deflect Missile",
+                "category": "reactions",
+                "text": "In response to being hit by a ranged weapon attack, East Wind deflects the missile. The damage it takes from the attack is reduced by 1d10 + 3. If the damage is reduced to 0, East Wind catches the missile if it's small enough to hold in one hand and East Wind has a hand free."
+            }
+        ],
+        "items": [
+            {
+                "item": "dart-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "piercing"
+            ],
+            "conditions_inflicted": [
+                "prone",
+                "stunned"
+            ],
+            "saves_forced": [
+                "con",
+                "dex",
+                "str"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "melee_weapon_attack",
+                "ranged_weapon_attack",
+                "thrown_weapon"
+            ],
+            "languages": [
+                "common",
+                "any_choose"
+            ],
+            "environment": [
+                "urban"
+            ]
+        }
+    },
+    {
+        "id": "elder-monastery-of-the-distressed-body-monk-llk",
+        "kind": "monster",
+        "name": "Elder Monastery of the Distressed Body Monk",
+        "source": "LLK",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "any race"
+            ]
+        },
+        "alignment": [
+            "any non-good alignment"
+        ],
+        "ac": [
+            {
+                "value": 13,
+                "from": [
+                    "leather armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 33,
+            "formula": "6d8 + 6"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 11,
+            "dex": 14,
+            "con": 12,
+            "int": 10,
+            "wis": 13,
+            "cha": 14
+        },
+        "skills": {
+            "deception": 4,
+            "persuasion": 4,
+            "religion": 2
+        },
+        "passive_perception": 11,
+        "languages": [
+            "any one language (usually Common)"
+        ],
+        "cr": {
+            "cr": "2",
+            "xp": 450,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "dark-devotion",
+                "name": "Dark Devotion",
+                "category": "traits",
+                "text": "The monk has advantage on saving throws against being charmed or frightened."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The monk makes two melee attacks."
+            },
+            {
+                "id": "force-pike",
+                "name": "Force Pike",
+                "category": "actions",
+                "text": "Melee or Ranged Weapon Attack: +4 to hit, reach 5 ft. or range 40/100 ft., one creature. Hit: 7 (1d10 + 2) force damage. The attack has disadvantage against any target with polished metal armor or shield, and has its ranged halved when firing through smoke or fog.",
+                "action": {
+                    "range": "reach 5 ft. or range 40/100 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d10",
+                                "bonus": 2,
+                                "type": "force"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "wis",
+                "dc": 11,
+                "attack": 3,
+                "text": "The monk is a 4th-level spellcaster. Its spellcasting ability is Wisdom (spell save DC 11, +3 to hit with spell attacks). The monk has the following cleric spells prepared:",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "level": 0,
+                        "spells": [
+                            {
+                                "spell": "light-phb"
+                            },
+                            {
+                                "spell": "sacred-flame-phb"
+                            },
+                            {
+                                "spell": "thaumaturgy-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 1,
+                        "slots": 4,
+                        "spells": [
+                            {
+                                "spell": "command-phb"
+                            },
+                            {
+                                "spell": "inflict-wounds-phb"
+                            },
+                            {
+                                "spell": "shield-of-faith-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 2,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "hold-person-phb"
+                            },
+                            {
+                                "spell": "spiritual-weapon-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "dagger-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing",
+                "necrotic",
+                "force",
+                "radiant"
+            ],
+            "conditions_inflicted": [
+                "paralyzed",
+                "prone"
+            ],
+            "saves_forced": [
+                "dex",
+                "wis"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack",
+                "ranged_weapon_attack",
+                "thrown_weapon"
+            ],
+            "languages": [
+                "common",
+                "any_choose"
+            ],
+            "spellcasting": [
+                "cleric"
+            ],
+            "environment": [
+                "urban"
+            ]
+        }
+    },
+    {
+        "id": "garret-levistusson-llk",
+        "kind": "monster",
+        "name": "Garret Levistusson",
+        "source": "LLK",
+        "edition": "classic",
+        "tags": [
+            "Sneak Attack"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid"
+        },
+        "alignment": [
+            "chaotic neutral"
+        ],
+        "ac": [
+            {
+                "value": 14,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 44,
+            "formula": "8d8 + 8"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 11,
+            "dex": 14,
+            "con": 12,
+            "int": 11,
+            "wis": 12,
+            "cha": 17
+        },
+        "skills": {
+            "deception": 7,
+            "investigation": 4,
+            "performance": 5,
+            "persuasion": 5
+        },
+        "passive_perception": 11,
+        "languages": [
+            "Abyssal",
+            "Common",
+            "Infernal",
+            "Thieves' cant"
+        ],
+        "cr": {
+            "cr": "2",
+            "xp": 450,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "special-equipment",
+                "name": "Special Equipment",
+                "category": "traits",
+                "text": "Garret wears a Ring of Warmth (included in his statistics) and wields a Gambler's Blade longsword."
+            },
+            {
+                "id": "bardic-inspiration",
+                "name": "Bardic Inspiration",
+                "category": "traits",
+                "text": "As a bonus action, Garret can give one chosen creature (other than him) a d6 inspiration die. The chosen creature must be within 60 feet of Garret and able to hear him. Once within the next 10 minutes, the creature can roll the die and add the number rolled to one ability check, attack roll, or saving throw it makes. The creature can use the inspiration die after the roll is made but before the DM says whether it succeeds or fails. Once the inspiration die is rolled, it is lost. A creature can have only one inspiration die at a time.",
+                "uses": {
+                    "max": 3,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "cunning-action",
+                "name": "Cunning Action",
+                "category": "traits",
+                "text": "On each of his turns, Garret can use a bonus action to take the Dash, Disengage, or Hide action."
+            },
+            {
+                "id": "sneak-attack",
+                "name": "Sneak Attack",
+                "category": "traits",
+                "text": "Garret deals an extra 7 (2d6) damage when he hits a target with a weapon attack and has advantage on the attack roll, or when the target is within 5 feet of an ally of Garret that isn't incapacitated and Garret doesn't have disadvantage on the attack roll.",
+                "uses": {
+                    "max": 1,
+                    "reset": "turn"
+                },
+                "action": {
+                    "attack": {
+                        "kind": "any",
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "type": "weapon",
+                                "condition": "when he hits a target with a weapon attack and has advantage on the attack roll, or when the target is within 5 feet of an ally of Garret that isn't incapacitated and Garret doesn't have disadvantage on the attack roll"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "shortsword",
+                "name": "Shortsword",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 5 (1d6 + 2) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 2,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "cha",
+                "dc": 13,
+                "attack": 5,
+                "text": "Garret is a 2nd-level spellcaster. His spellcasting ability is Charisma (spell save DC 13, +5 to hit with spell attacks). He has the following bard spells prepared:",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "level": 0,
+                        "spells": [
+                            {
+                                "spell": "blade-ward-phb"
+                            },
+                            {
+                                "spell": "vicious-mockery-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 1,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "charm-person-phb"
+                            },
+                            {
+                                "spell": "detect-magic-phb"
+                            },
+                            {
+                                "spell": "disguise-self-phb"
+                            },
+                            {
+                                "spell": "identify-phb"
+                            },
+                            {
+                                "spell": "tashas-hideous-laughter-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "shortsword-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "piercing",
+                "psychic"
+            ],
+            "conditions_inflicted": [
+                "incapacitated",
+                "charmed",
+                "prone"
+            ],
+            "saves_forced": [
+                "wis"
+            ],
+            "traits": [
+                "sneak_attack"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "abyssal",
+                "common",
+                "infernal",
+                "thieves_cant"
+            ],
+            "spellcasting": [
+                "bard"
+            ]
+        }
+    },
+    {
+        "id": "gearbox-llk",
+        "kind": "monster",
+        "name": "Gearbox",
+        "source": "LLK",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "construct"
+        },
+        "alignment": [
+            "lawful neutral"
+        ],
+        "ac": [
+            {
+                "value": 15,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 5,
+            "formula": "1d8 + 1"
+        },
+        "speed": {
+            "walk": 30,
+            "fly": 30
+        },
+        "abilities": {
+            "str": 10,
+            "dex": 13,
+            "con": 12,
+            "int": 4,
+            "wis": 10,
+            "cha": 5
+        },
+        "senses": {
+            "truesight": 120
+        },
+        "passive_perception": 10,
+        "languages": [
+            "Modron"
+        ],
+        "cr": {
+            "cr": "1/8",
+            "xp": 25,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "unique-programming",
+                "name": "Unique Programming",
+                "category": "traits",
+                "text": "Gearbox's unique programming allows the modron to function as an Orb of Direction and an Orb of Time, to cast the Light cantrip at will, and to grant other characters advantage on Dexterity checks made with thieves' tools and on ability checks made to identify or operate mechanical or laboratory equipment."
+            },
+            {
+                "id": "axiomatic-mind",
+                "name": "Axiomatic Mind",
+                "category": "traits",
+                "text": "Gearbox can't be compelled to act in a manner contrary to its nature or its instructions."
+            },
+            {
+                "id": "disintegration",
+                "name": "Disintegration",
+                "category": "traits",
+                "text": "If Gearbox dies, its body disintegrates into dust, leaving behind its weapons and anything else it was carrying."
+            },
+            {
+                "id": "dagger",
+                "name": "Dagger",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: 3 (1d4 + 1) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 3,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 1,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "javelin",
+                "name": "Javelin",
+                "category": "actions",
+                "text": "Melee or Ranged Weapon Attack: +2 to hit, reach 5 ft. or range 30/120 ft., one target. Hit: 3 (1d6) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft. or range 30/120 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 2,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "text": "Gearbox can cast the Light cantrip at will.",
+                "hidden": [
+                    "spells"
+                ],
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "level": 0,
+                        "spells": [
+                            {
+                                "spell": "light-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "dagger-phb",
+                "qty": 1,
+                "attacks": true
+            },
+            {
+                "item": "javelin-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "variants": [
+            {
+                "id": "rogue-modrons",
+                "name": "Rogue Modrons",
+                "text": "A modron unit sometimes becomes defective, either through natural decay or exposure to chaotic forces. Rogue modrons don't act in accordance with Primus's wishes and directives, breaking laws, disobeying orders, and even engaging in violence. Other modrons hunt down such rogues.\n\nA rogue modron loses the Axiomatic Mind trait and can have any alignment other than lawful neutral. Otherwise, it has the same statistics as a regular modron of its rank."
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "piercing"
+            ],
+            "saves_forced": [
+                "dex"
+            ],
+            "senses": [
+                "truesight"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack",
+                "ranged_weapon_attack",
+                "thrown_weapon"
+            ],
+            "languages": [
+                "other"
+            ],
+            "spellcasting": [
+                "other"
+            ],
+            "groups": [
+                "Modrons"
+            ]
+        }
+    },
+    {
+        "id": "gloine-nathair-nathair-llk",
+        "kind": "monster",
+        "name": "Gloine Nathair-Nathair",
+        "source": "LLK",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "undead"
+        },
+        "alignment": [
+            "lawful evil"
+        ],
+        "ac": [
+            {
+                "value": 15,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 127,
+            "formula": "17d8 + 51"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 10,
+            "dex": 15,
+            "con": 16,
+            "int": 12,
+            "wis": 13,
+            "cha": 15
+        },
+        "skills": {
+            "deception": 5,
+            "insight": 4,
+            "perception": 4,
+            "stealth": 5
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 14,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "poison",
+                    "necrotic"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "exhaustion",
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "Common"
+        ],
+        "cr": {
+            "cr": "6",
+            "xp": 2300,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "petrifying-gaze",
+                "name": "Petrifying Gaze",
+                "category": "traits",
+                "text": "When a creature that can see Gloine's eyes starts its turn within 30 feet of Gloine, Gloine can force it to make a DC 14 Constitution saving throw if Gloine isn't incapacitated and can see the creature. If the saving throw fails by 5 or more, the creature is instantly petrified. Otherwise, a creature that fails the save begins to turn to glass and is restrained. The restrained creature must repeat the saving throw at the end of its next turn, becoming petrified on a failure or ending the effect on a success. The petrification lasts until the creature is freed by the Greater Restoration spell or other magic.\n\nUnless surprised, a creature can avert its eyes to avoid the saving throw at the start of its turn. If the creature does so, it can't see Gloine until the start of its next turn, when it can avert its eyes again. If the creature looks at Gloine in the meantime, it must immediately make the save.\n\nIf Gloine sees itself reflected on a polished surface within 30 feet of it and in an area of bright light, Gloine is, due to its curse, affected by its own gaze.",
+                "action": {
+                    "save": {
+                        "ability": "con",
+                        "dc": 14,
+                        "on_success": "none",
+                        "conditions": [
+                            "incapacitated",
+                            "petrified",
+                            "restrained"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Gloine makes either three melee attacks—one with its snake hair and two with its shortsword—or two ranged attacks with its longbow."
+            },
+            {
+                "id": "snake-hair",
+                "name": "Snake Hair",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +5 to hit, reach 5 ft., one creature. Hit: 4 (1d4 + 2) piercing damage plus 14 (4d6) poison damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 2,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "4d6",
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "shortsword",
+                "name": "Shortsword",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 5 (1d6 + 2) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 2,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "longbow",
+                "name": "Longbow",
+                "category": "actions",
+                "text": "Ranged Weapon Attack: +5 to hit, range 150/600 ft., one target. Hit: 6 (1d8 + 2) piercing damage plus 7 (2d6) poison damage.",
+                "action": {
+                    "range": "range 150/600 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 2,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "2d6",
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "items": [
+            {
+                "item": "longbow-phb",
+                "qty": 1,
+                "attacks": true
+            },
+            {
+                "item": "shortsword-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "poison",
+                "piercing"
+            ],
+            "conditions_inflicted": [
+                "petrified",
+                "restrained"
+            ],
+            "saves_forced": [
+                "con"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack",
+                "ranged_weapon",
+                "ranged_weapon_attack"
+            ],
+            "languages": [
+                "common"
+            ],
+            "environment": [
+                "desert"
+            ]
+        }
+    },
+    {
+        "id": "mary-greymalkin-llk",
+        "kind": "monster",
+        "name": "Mary Greymalkin",
+        "source": "LLK",
+        "edition": "classic",
+        "tags": [
+            "Fey Ancestry"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid"
+        },
+        "alignment": [
+            "neutral"
+        ],
+        "ac": [
+            {
+                "value": 12,
+                "from": [
+                    "Bracers of Defense",
+                    "Ring of Protection"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 45,
+            "formula": "7d8 + 14"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 10,
+            "dex": 12,
+            "con": 10,
+            "int": 14,
+            "wis": 14,
+            "cha": 15
+        },
+        "saves": {
+            "wis": 4,
+            "cha": 4
+        },
+        "skills": {
+            "arcana": 4,
+            "medicine": 4,
+            "nature": 4,
+            "religion": 4
+        },
+        "passive_perception": 12,
+        "languages": [
+            "Abyssal",
+            "Celestial",
+            "Common",
+            "Elvish",
+            "Infernal",
+            "Sylvan"
+        ],
+        "cr": {
+            "cr": "2",
+            "xp": 450,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "special-equipment",
+                "name": "Special Equipment",
+                "category": "traits",
+                "text": "Mary wears Bracers of Defense and a Ring of Protection, and carries a Deck of Several Things"
+            },
+            {
+                "id": "fey-presence-recharges-after-a-short-rest",
+                "name": "Fey Presence (Recharges after a Short Rest)",
+                "category": "traits",
+                "text": "Mary can cause each creature within 10 feet of her to succeed on a DC 12 Wisdom saving throw or become charmed or frightened by her (Mary's choice) until the end of her next turn.",
+                "action": {
+                    "save": {
+                        "ability": "wis",
+                        "dc": 12,
+                        "on_success": "none",
+                        "conditions": [
+                            "charmed",
+                            "frightened"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "fey-ancestry",
+                "name": "Fey Ancestry",
+                "category": "traits",
+                "text": "Mary has advantage on saving throws against being charmed, and magic can't put her to sleep."
+            },
+            {
+                "id": "quarterstaff",
+                "name": "Quarterstaff",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +2 to hit, reach 5 ft., one target. Hit: 3 (1d6) bludgeoning damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 2,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "cha",
+                "dc": 12,
+                "attack": 4,
+                "text": "Mary is a 5th-level spellcaster. Her spellcasting ability is Charisma (spell save DC 12, +4 to hit with spell attacks). She regains her expended spell slots when she finishes a short or long rest. She knows the following warlock spells:",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "level": 0,
+                        "spells": [
+                            {
+                                "spell": "chill-touch-phb"
+                            },
+                            {
+                                "spell": "eldritch-blast-phb"
+                            },
+                            {
+                                "spell": "mage-hand-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 3,
+                        "slots": 3,
+                        "lower": 1,
+                        "spells": [
+                            {
+                                "spell": "darkness-phb"
+                            },
+                            {
+                                "spell": "hex-phb"
+                            },
+                            {
+                                "spell": "hypnotic-pattern-phb"
+                            },
+                            {
+                                "spell": "misty-step-phb"
+                            },
+                            {
+                                "spell": "phantasmal-force-phb"
+                            },
+                            {
+                                "spell": "unseen-servant-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "quarterstaff-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "necrotic",
+                "force",
+                "psychic"
+            ],
+            "conditions_inflicted": [
+                "charmed",
+                "frightened",
+                "incapacitated"
+            ],
+            "saves_forced": [
+                "wis",
+                "int"
+            ],
+            "traits": [
+                "fey_ancestry"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_weapon",
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "abyssal",
+                "common",
+                "celestial",
+                "elvish",
+                "infernal",
+                "sylvan"
+            ],
+            "spellcasting": [
+                "warlock"
+            ]
+        }
+    },
+    {
+        "id": "monastery-of-the-distressed-body-grand-master-llk",
+        "kind": "monster",
+        "name": "Monastery of the Distressed Body Grand Master",
+        "source": "LLK",
+        "edition": "classic",
+        "tags": [
+            "Devil's Sight",
+            "Magic Resistance"
+        ],
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "fiend",
+            "tags": [
+                "grand master"
+            ]
+        },
+        "alignment": [
+            "lawful evil"
+        ],
+        "ac": [
+            {
+                "value": 19,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 142,
+            "formula": "15d10 + 60"
+        },
+        "speed": {
+            "walk": 40,
+            "fly": 40
+        },
+        "abilities": {
+            "str": 18,
+            "dex": 16,
+            "con": 18,
+            "int": 13,
+            "wis": 14,
+            "cha": 16
+        },
+        "saves": {
+            "int": 5,
+            "wis": 6,
+            "cha": 7
+        },
+        "skills": {
+            "deception": 7,
+            "insight": 6
+        },
+        "senses": {
+            "darkvision": 120
+        },
+        "passive_perception": 12,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "cold"
+                ],
+                "conditional": [
+                    {
+                        "types": [
+                            "bludgeoning",
+                            "piercing",
+                            "slashing"
+                        ],
+                        "note": "from nonmagical attacks that aren't silvered"
+                    }
+                ]
+            },
+            "immune": {
+                "types": [
+                    "fire",
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "Infernal",
+            "telepathy 120 ft."
+        ],
+        "cr": {
+            "cr": "9",
+            "xp": 5000,
+            "pb": 4
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "vorpal-claws",
+                "name": "Vorpal Claws",
+                "category": "traits",
+                "text": "Shards of a vorpal sword once broken against the Grand Master replace its claws. A successful DC 12 Intelligence (Arcana) or Wisdom (Perception) check identifies them as such. When the Grand Master rolls a 20 on an attack roll with a claw, the target is decapitated. (At your option, the attack can instead deal an extra 6d8 slashing damage.) A target is immune to this effect if it is immune to slashing damage, has legendary actions, doesn't have or need a head, or if you decide that the target is too large for its head to be cut off by the Grand Master's claws. If removed, the shards lose their magical powers.",
+                "action": {
+                    "attack": {
+                        "kind": "any",
+                        "damage": [
+                            {
+                                "dice": "6d8",
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "teleportation-bracelets",
+                "name": "Teleportation Bracelets",
+                "category": "traits",
+                "text": "Local teleportation-field bracelets encircle the Grand Master's arms and tail. These devices allow the Grand Master to make its claw and sting attacks remotely, though still on the Grand Master's turn and using its actions."
+            },
+            {
+                "id": "devils-sight",
+                "name": "Devil's Sight",
+                "category": "traits",
+                "text": "Magical darkness doesn't impede the Grand Master's darkvision."
+            },
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The Grand Master has advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The Grand Master makes three attacks: two with its claws and one with its sting."
+            },
+            {
+                "id": "claw",
+                "name": "Claw",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +8 to hit, reach 10 ft., one target. Hit: 8 (1d8 + 4) slashing damage.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 8,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 4,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "sting",
+                "name": "Sting",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +8 to hit, reach 10 ft., one target. Hit: 13 (2d8 + 4) piercing damage plus 17 (5d6) poison damage, and the target must succeed on a DC 14 Constitution saving throw or become poisoned for 1 minute. The target can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 8,
+                        "damage": [
+                            {
+                                "dice": "2d8",
+                                "bonus": 4,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "5d6",
+                                "type": "poison"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "con",
+                        "dc": 14,
+                        "on_success": "none",
+                        "conditions": [
+                            "poisoned"
+                        ]
+                    }
+                }
+            }
+        ],
+        "variants": [
+            {
+                "id": "bone-devil-polearm",
+                "name": "Bone Devil Polearm",
+                "text": "Some bone Grand Masters have the following action options.\n\n**Multiattack.** The Grand Master makes two attacks: one with its hooked polearm and one with its sting.\n\n**Hooked Polearm.** Melee Weapon Attack: +8 to hit, reach 10 ft., one target. Hit: 17 (2d12 + 4) piercing damage. If the target is a Huge or smaller creature, it is grappled (escape DC 14). Until this grapple ends, the Grand Master can't use its polearm on another target.",
+                "version": "bone-devil-polearm-llk"
+            },
+            {
+                "id": "summon-devil-1-day",
+                "name": "Summon Devil (1/Day)",
+                "text": "The Grand Master chooses what to summon and attempts a magical summoning.\n\nA bone Grand Master has a 40 percent chance of summoning 2d6 spined devils or one bone Grand Master.\n\nA summoned Grand Master appears in an unoccupied space within 60 feet of its summoner, acts as an ally of its summoner, and can't summon other Grand Masters. It remains for 1 minute, until it or its summoner dies, or until its summoner dismisses it as an action.",
+                "version": "bone-devil-summoner-llk"
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "poison",
+                "piercing",
+                "slashing"
+            ],
+            "conditions_inflicted": [
+                "grappled",
+                "poisoned"
+            ],
+            "saves_forced": [
+                "con"
+            ],
+            "senses": [
+                "superior_darkvision"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "devils_sight",
+                "magic_resistance"
+            ],
+            "misc": [
+                "melee_weapon_attack",
+                "reach"
+            ],
+            "languages": [
+                "infernal",
+                "telepathy"
+            ]
+        }
+    },
+    {
+        "id": "bone-devil-polearm-llk",
+        "kind": "monster",
+        "name": "Bone Devil (Polearm)",
+        "source": "LLK",
+        "edition": "classic",
+        "tags": [
+            "Devil's Sight",
+            "Magic Resistance"
+        ],
+        "version_of": "monastery-of-the-distressed-body-grand-master-llk",
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "fiend",
+            "tags": [
+                "grand master"
+            ]
+        },
+        "alignment": [
+            "lawful evil"
+        ],
+        "ac": [
+            {
+                "value": 19,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 142,
+            "formula": "15d10 + 60"
+        },
+        "speed": {
+            "walk": 40,
+            "fly": 40
+        },
+        "abilities": {
+            "str": 18,
+            "dex": 16,
+            "con": 18,
+            "int": 13,
+            "wis": 14,
+            "cha": 16
+        },
+        "saves": {
+            "int": 5,
+            "wis": 6,
+            "cha": 7
+        },
+        "skills": {
+            "deception": 7,
+            "insight": 6
+        },
+        "senses": {
+            "darkvision": 120
+        },
+        "passive_perception": 12,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "cold"
+                ],
+                "conditional": [
+                    {
+                        "types": [
+                            "bludgeoning",
+                            "piercing",
+                            "slashing"
+                        ],
+                        "note": "from nonmagical attacks that aren't silvered"
+                    }
+                ]
+            },
+            "immune": {
+                "types": [
+                    "fire",
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "Infernal",
+            "telepathy 120 ft."
+        ],
+        "cr": {
+            "cr": "9",
+            "xp": 5000,
+            "pb": 4
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "vorpal-claws",
+                "name": "Vorpal Claws",
+                "category": "traits",
+                "text": "Shards of a vorpal sword once broken against the Grand Master replace its claws. A successful DC 12 Intelligence (Arcana) or Wisdom (Perception) check identifies them as such. When the Grand Master rolls a 20 on an attack roll with a claw, the target is decapitated. (At your option, the attack can instead deal an extra 6d8 slashing damage.) A target is immune to this effect if it is immune to slashing damage, has legendary actions, doesn't have or need a head, or if you decide that the target is too large for its head to be cut off by the Grand Master's claws. If removed, the shards lose their magical powers.",
+                "action": {
+                    "attack": {
+                        "kind": "any",
+                        "damage": [
+                            {
+                                "dice": "6d8",
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "teleportation-bracelets",
+                "name": "Teleportation Bracelets",
+                "category": "traits",
+                "text": "Local teleportation-field bracelets encircle the Grand Master's arms and tail. These devices allow the Grand Master to make its claw and sting attacks remotely, though still on the Grand Master's turn and using its actions."
+            },
+            {
+                "id": "devils-sight",
+                "name": "Devil's Sight",
+                "category": "traits",
+                "text": "Magical darkness doesn't impede the Grand Master's darkvision."
+            },
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The Grand Master has advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The Grand Master makes three attacks: two with its claws and one with its sting."
+            },
+            {
+                "id": "claw",
+                "name": "Claw",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +8 to hit, reach 10 ft., one target. Hit: 8 (1d8 + 4) slashing damage.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 8,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 4,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "sting",
+                "name": "Sting",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +8 to hit, reach 10 ft., one target. Hit: 13 (2d8 + 4) piercing damage plus 17 (5d6) poison damage, and the target must succeed on a DC 14 Constitution saving throw or become poisoned for 1 minute. The target can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 8,
+                        "damage": [
+                            {
+                                "dice": "2d8",
+                                "bonus": 4,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "5d6",
+                                "type": "poison"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "con",
+                        "dc": 14,
+                        "on_success": "none",
+                        "conditions": [
+                            "poisoned"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "multiattack-2",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The Grand Master makes two attacks: one with its hooked polearm and one with its sting."
+            },
+            {
+                "id": "hooked-polearm",
+                "name": "Hooked Polearm",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +8 to hit, reach 10 ft., one target. Hit: 17 (2d12 + 4) piercing damage. If the target is a Huge or smaller creature, it is grappled (escape DC 14). Until this grapple ends, the Grand Master can't use its polearm on another target.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 8,
+                        "damage": [
+                            {
+                                "dice": "2d12",
+                                "bonus": 4,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "poison",
+                "piercing",
+                "slashing"
+            ],
+            "conditions_inflicted": [
+                "grappled",
+                "poisoned"
+            ],
+            "saves_forced": [
+                "con"
+            ],
+            "senses": [
+                "superior_darkvision"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "devils_sight",
+                "magic_resistance"
+            ],
+            "misc": [
+                "melee_weapon_attack",
+                "reach"
+            ],
+            "languages": [
+                "infernal",
+                "telepathy"
+            ]
+        }
+    },
+    {
+        "id": "bone-devil-summoner-llk",
+        "kind": "monster",
+        "name": "Bone Devil (Summoner)",
+        "source": "LLK",
+        "edition": "classic",
+        "tags": [
+            "Devil's Sight",
+            "Magic Resistance"
+        ],
+        "version_of": "monastery-of-the-distressed-body-grand-master-llk",
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "fiend",
+            "tags": [
+                "grand master"
+            ]
+        },
+        "alignment": [
+            "lawful evil"
+        ],
+        "ac": [
+            {
+                "value": 19,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 142,
+            "formula": "15d10 + 60"
+        },
+        "speed": {
+            "walk": 40,
+            "fly": 40
+        },
+        "abilities": {
+            "str": 18,
+            "dex": 16,
+            "con": 18,
+            "int": 13,
+            "wis": 14,
+            "cha": 16
+        },
+        "saves": {
+            "int": 5,
+            "wis": 6,
+            "cha": 7
+        },
+        "skills": {
+            "deception": 7,
+            "insight": 6
+        },
+        "senses": {
+            "darkvision": 120
+        },
+        "passive_perception": 12,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "cold"
+                ],
+                "conditional": [
+                    {
+                        "types": [
+                            "bludgeoning",
+                            "piercing",
+                            "slashing"
+                        ],
+                        "note": "from nonmagical attacks that aren't silvered"
+                    }
+                ]
+            },
+            "immune": {
+                "types": [
+                    "fire",
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "Infernal",
+            "telepathy 120 ft."
+        ],
+        "cr": {
+            "cr": "9",
+            "xp": 5000,
+            "pb": 4
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "vorpal-claws",
+                "name": "Vorpal Claws",
+                "category": "traits",
+                "text": "Shards of a vorpal sword once broken against the Grand Master replace its claws. A successful DC 12 Intelligence (Arcana) or Wisdom (Perception) check identifies them as such. When the Grand Master rolls a 20 on an attack roll with a claw, the target is decapitated. (At your option, the attack can instead deal an extra 6d8 slashing damage.) A target is immune to this effect if it is immune to slashing damage, has legendary actions, doesn't have or need a head, or if you decide that the target is too large for its head to be cut off by the Grand Master's claws. If removed, the shards lose their magical powers.",
+                "action": {
+                    "attack": {
+                        "kind": "any",
+                        "damage": [
+                            {
+                                "dice": "6d8",
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "teleportation-bracelets",
+                "name": "Teleportation Bracelets",
+                "category": "traits",
+                "text": "Local teleportation-field bracelets encircle the Grand Master's arms and tail. These devices allow the Grand Master to make its claw and sting attacks remotely, though still on the Grand Master's turn and using its actions."
+            },
+            {
+                "id": "devils-sight",
+                "name": "Devil's Sight",
+                "category": "traits",
+                "text": "Magical darkness doesn't impede the Grand Master's darkvision."
+            },
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The Grand Master has advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The Grand Master makes three attacks: two with its claws and one with its sting."
+            },
+            {
+                "id": "claw",
+                "name": "Claw",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +8 to hit, reach 10 ft., one target. Hit: 8 (1d8 + 4) slashing damage.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 8,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 4,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "sting",
+                "name": "Sting",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +8 to hit, reach 10 ft., one target. Hit: 13 (2d8 + 4) piercing damage plus 17 (5d6) poison damage, and the target must succeed on a DC 14 Constitution saving throw or become poisoned for 1 minute. The target can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 8,
+                        "damage": [
+                            {
+                                "dice": "2d8",
+                                "bonus": 4,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "5d6",
+                                "type": "poison"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "con",
+                        "dc": 14,
+                        "on_success": "none",
+                        "conditions": [
+                            "poisoned"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "summon-devil",
+                "name": "Summon Devil",
+                "category": "actions",
+                "text": "The Grand Master chooses what to summon and attempts a magical summoning.\n\nA bone Grand Master has a 40 percent chance of summoning 2d6 spined devils or one bone Grand Master.\n\nA summoned Grand Master appears in an unoccupied space within 60 feet of its summoner, acts as an ally of its summoner, and can't summon other Grand Masters. It remains for 1 minute, until it or its summoner dies, or until its summoner dismisses it as an action.",
+                "uses": {
+                    "max": 1,
+                    "reset": "long"
+                }
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "poison",
+                "piercing",
+                "slashing"
+            ],
+            "conditions_inflicted": [
+                "grappled",
+                "poisoned"
+            ],
+            "saves_forced": [
+                "con"
+            ],
+            "senses": [
+                "superior_darkvision"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "devils_sight",
+                "magic_resistance"
+            ],
+            "misc": [
+                "melee_weapon_attack",
+                "reach"
+            ],
+            "languages": [
+                "infernal",
+                "telepathy"
+            ]
+        }
+    },
+    {
+        "id": "monastery-of-the-distressed-body-monk-llk",
+        "kind": "monster",
+        "name": "Monastery of the Distressed Body Monk",
+        "source": "LLK",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "any race"
+            ]
+        },
+        "alignment": [
+            "any non-good alignment"
+        ],
+        "ac": [
+            {
+                "value": 12,
+                "from": [
+                    "leather armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 9,
+            "formula": "2d8"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 11,
+            "dex": 12,
+            "con": 10,
+            "int": 10,
+            "wis": 11,
+            "cha": 10
+        },
+        "skills": {
+            "deception": 2,
+            "religion": 2
+        },
+        "passive_perception": 10,
+        "languages": [
+            "any one language (usually Common)"
+        ],
+        "cr": {
+            "cr": "1/8",
+            "xp": 25,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "dark-devotion",
+                "name": "Dark Devotion",
+                "category": "traits",
+                "text": "The monk has advantage on saving throws against being charmed or frightened."
+            },
+            {
+                "id": "hooked-polearm",
+                "name": "Hooked Polearm",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: 4 (1d6 + 1) piercing damage. If the target is a Medium or smaller creature, it is grappled (escape DC 10). Until this grapple ends, the monk cannot use its polearm on another target.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 3,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 1,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "items": [
+            {
+                "item": "scimitar-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "slashing"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "common",
+                "any_choose"
+            ],
+            "environment": [
+                "urban"
+            ]
+        }
+    },
+    {
+        "id": "ooze-folk-llk",
+        "kind": "monster",
+        "name": "Ooze-Folk",
+        "source": "LLK",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "ooze"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 10,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 19,
+            "formula": "2d8 + 10"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 14,
+            "dex": 3,
+            "con": 20,
+            "int": 1,
+            "wis": 6,
+            "cha": 1
+        },
+        "senses": {
+            "blindsight": 60
+        },
+        "passive_perception": 8,
+        "defenses": {
+            "condition_immune": {
+                "types": [
+                    "blinded",
+                    "charmed",
+                    "deafened",
+                    "exhaustion",
+                    "frightened",
+                    "prone"
+                ]
+            }
+        },
+        "cr": {
+            "cr": "1/2",
+            "xp": 100,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": -4
+        },
+        "features": [
+            {
+                "id": "transparent",
+                "name": "Transparent",
+                "category": "traits",
+                "text": "Even when an ooze-folk is in plain sight, it takes a DC 12 Wisdom (Perception) check to spot an ooze-folk that has neither moved nor attacked. A creature that tries to enter the ooze-folk's space while unaware of the ooze-folk is surprised by the ooze-folk."
+            },
+            {
+                "id": "fragile-bones",
+                "name": "Fragile Bones",
+                "category": "traits",
+                "text": "For each 5 damage it takes, the ooze-folk's walking speed is reduced by 5 feet."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The ooze folk makes one glass longsword attack and one pseudopod attack."
+            },
+            {
+                "id": "glass-longsword",
+                "name": "Glass Longsword",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +4 to hit, reach 5 ft., one creature. Hit: 6 (1d8 + 2) slashing damage. If a 1 is rolled on an attack roll with a glass longsword, it shatters and can no longer be used.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 2,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "pseudopod",
+                "name": "Pseudopod",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +4 to hit, reach 5 ft., one creature. Hit: 5 (1d6 + 2) acid damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 2,
+                                "type": "acid"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "acid",
+                "slashing"
+            ],
+            "senses": [
+                "blindsight"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack"
+            ]
+        }
+    },
+    {
+        "id": "west-wind-llk",
+        "kind": "monster",
+        "name": "West Wind",
+        "source": "LLK",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "any race"
+            ]
+        },
+        "alignment": [
+            "any alignment"
+        ],
+        "ac": [
+            {
+                "value": 16
+            }
+        ],
+        "hp": {
+            "average": 60,
+            "formula": "11d8 + 11"
+        },
+        "speed": {
+            "walk": 40
+        },
+        "abilities": {
+            "str": 11,
+            "dex": 17,
+            "con": 13,
+            "int": 11,
+            "wis": 16,
+            "cha": 10
+        },
+        "skills": {
+            "acrobatics": 5,
+            "insight": 5,
+            "stealth": 5
+        },
+        "passive_perception": 13,
+        "languages": [
+            "any one language (usually Common)"
+        ],
+        "cr": {
+            "cr": "3",
+            "xp": 700,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "special-equipment",
+                "name": "Special Equipment",
+                "category": "traits",
+                "text": "West Wind is armed with a longsword that is a blade of the medusa."
+            },
+            {
+                "id": "unarmored-defense",
+                "name": "Unarmored Defense",
+                "category": "traits",
+                "text": "While West Wind is wearing no armor and wielding no shield, its AC includes its Wisdom modifier."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "West Wind makes three unarmed strikes or three dart attacks."
+            },
+            {
+                "id": "unarmed-strike",
+                "name": "Unarmed Strike",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 7 (1d8 + 3) bludgeoning damage. If the target is a creature, West Wind can choose one of the following additional effects:\n\n- The target must succeed on a DC 13 Strength saving throw or drop one item it is holding (adept's choice).\n- The target must succeed on a DC 13 Dexterity saving throw or be knocked prone.\n- The target must succeed on a DC 13 Constitution saving throw or be stunned until the end of West Wind's next turn.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 3,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "dart",
+                "name": "Dart",
+                "category": "actions",
+                "text": "Ranged Weapon Attack: +5 to hit, range 20/60 ft., one target. Hit: 5 (1d4 + 3) piercing damage.",
+                "action": {
+                    "range": "range 20/60 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 3,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "blade-of-the-medusa",
+                "name": "Blade of the Medusa",
+                "category": "actions",
+                "text": "Melee or Ranged Weapon Attack: +5 to hit, reach 5 ft., one creature. Hit: 7 (1d8 + 3) piercing damage. If West Wind rolls a 20 on the attack roll, the target must succeed on a DC 15 Constitution saving throw or suffer the effects of a Flesh to Stone spell.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 3,
+                                "type": "piercing"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "con",
+                        "dc": 15,
+                        "on_success": "none"
+                    }
+                }
+            },
+            {
+                "id": "deflect-missile",
+                "name": "Deflect Missile",
+                "category": "reactions",
+                "text": "In response to being hit by a ranged weapon attack, West Wind deflects the missile. The damage it takes from the attack is reduced by 1d10 + 3. If the damage is reduced to 0, West Wind catches the missile if it's small enough to hold in one hand and West Wind has a hand free."
+            }
+        ],
+        "items": [
+            {
+                "item": "dart-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "piercing"
+            ],
+            "conditions_inflicted": [
+                "prone",
+                "stunned"
+            ],
+            "saves_forced": [
+                "con",
+                "dex",
+                "str"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "melee_weapon_attack",
+                "ranged_weapon_attack",
+                "thrown_weapon"
+            ],
+            "languages": [
+                "common",
+                "any_choose"
+            ],
+            "environment": [
+                "urban"
+            ]
+        }
+    }
+]

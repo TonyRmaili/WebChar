@@ -1,0 +1,337 @@
+[
+    {
+        "id": "bag-of-holding-xdmg",
+        "kind": "item",
+        "name": "Bag of Holding",
+        "source": "XDMG",
+        "edition": "one",
+        "srd": {
+            "5.2": "Bag of Holding"
+        },
+        "text": "This bag has an interior space considerably larger than its outside dimensions—roughly 2 feet square and 4 feet deep on the inside. The bag can hold up to 500 pounds, not exceeding a volume of 64 cubic feet. The bag weighs 5 pounds, regardless of its contents. Retrieving an item from the bag requires a Utilize action.\n\nIf the bag is overloaded, pierced, or torn, it is destroyed, and its contents are scattered in the Astral Plane. If the bag is turned inside out, its contents spill forth unharmed, but the bag must be put right before it can be used again. The bag holds enough air for 10 minutes of breathing, divided by the number of breathing creatures inside.\n\nPlacing a Bag of Holding inside an extradimensional space created by a Heward's Handy Haversack, Portable Hole, or similar item instantly destroys both items and opens a gate to the Astral Plane. The gate originates where the one item was placed inside the other. Any creature within a 10-foot-radius Sphere centered on the gate is sucked through it to a random location on the Astral Plane. The gate then closes. The gate is one-way and can't be reopened.",
+        "item_types": [
+            "wondrous_item"
+        ],
+        "rarity": "uncommon",
+        "weight": 5,
+        "item_tags": [
+            "artificer_replicable"
+        ],
+        "extra": {
+            "container": {
+                "weight": [
+                    500
+                ],
+                "weightless": true
+            }
+        },
+        "features": [
+            {
+                "id": "bag-of-holding",
+                "name": "Bag of Holding",
+                "level": 1,
+                "category": "actions"
+            }
+        ],
+        "grants": {}
+    },
+    {
+        "id": "boots-of-speed-xdmg",
+        "kind": "item",
+        "name": "Boots of Speed",
+        "source": "XDMG",
+        "edition": "one",
+        "srd": {
+            "5.2": "Boots of Speed"
+        },
+        "text": "While you wear these boots, you can take a Bonus Action to click the boots' heels together. If you do, the boots double your Speed, and any creature that makes an Opportunity Attack against you has Disadvantage on the attack roll. If you click your heels together again, you end the effect.\n\nWhen you've used the boots' property for a total of 10 minutes, the magic ceases to function for you until you finish a Long Rest.",
+        "item_types": [
+            "wondrous_item"
+        ],
+        "rarity": "rare",
+        "attunement": {
+            "required": true
+        },
+        "item_tags": [
+            "artificer_replicable"
+        ],
+        "features": [
+            {
+                "id": "boots-of-speed",
+                "name": "Boots of Speed",
+                "level": 1,
+                "category": "bonus_actions",
+                "toggle": true
+            }
+        ],
+        "grants": {}
+    },
+    {
+        "id": "dagger-of-venom-xdmg",
+        "kind": "item",
+        "name": "Dagger of Venom",
+        "source": "XDMG",
+        "edition": "one",
+        "srd": {
+            "5.2": "Dagger of Venom"
+        },
+        "text": "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.\n\nYou can take a Bonus Action to magically coat the blade with poison. The poison remains for 1 minute or until an attack using this weapon hits a creature. That creature must succeed on a DC 15 Constitution saving throw or take 2d10 Poison damage and have the Poisoned condition for 1 minute. The weapon can't be used this way again until the next dawn.",
+        "item_types": [
+            "melee_weapon"
+        ],
+        "rarity": "rare",
+        "weight": 1,
+        "weapon": {
+            "category": "simple",
+            "kind": "melee",
+            "damage": {
+                "dice": "1d4",
+                "type": "piercing"
+            },
+            "range": {
+                "normal": 20,
+                "long": 60
+            },
+            "properties": [
+                "finesse",
+                "light",
+                "thrown"
+            ],
+            "mastery": [
+                "nick"
+            ],
+            "bonus": {
+                "attack": 1,
+                "damage": 1
+            }
+        },
+        "item_tags": [
+            "weapon",
+            "dagger",
+            "artificer_replicable"
+        ],
+        "base_item": "dagger-xphb",
+        "features": [
+            {
+                "id": "dagger-of-venom",
+                "name": "Dagger of Venom",
+                "level": 1,
+                "category": "bonus_actions",
+                "uses": {
+                    "max": 1,
+                    "reset": "dawn"
+                },
+                "action": {
+                    "attack": {
+                        "kind": "melee"
+                    },
+                    "save": {
+                        "ability": "con",
+                        "dc": 15,
+                        "on_success": "none",
+                        "damage": [
+                            {
+                                "dice": "2d10",
+                                "type": "poison"
+                            }
+                        ],
+                        "conditions": [
+                            "poisoned"
+                        ]
+                    }
+                },
+                "toggle": {
+                    "uses_charge": true
+                }
+            }
+        ],
+        "grants": {}
+    },
+    {
+        "id": "necklace-of-fireballs-xdmg",
+        "kind": "item",
+        "name": "Necklace of Fireballs",
+        "source": "XDMG",
+        "edition": "one",
+        "srd": {
+            "5.2": "Necklace of Fireballs"
+        },
+        "text": "This necklace has 1d6 + 3 beads hanging from it. You can take a Magic action to detach a bead and throw it up to 60 feet away. When it reaches the end of its trajectory, the bead detonates as a level 3 Fireball (save DC 15).\n\nYou can hurl multiple beads, or even the whole necklace, at one time. When you do so, increase the damage of the Fireball by 1d6 for each bead after the first (maximum 12d6).",
+        "item_types": [
+            "wondrous_item"
+        ],
+        "rarity": "rare",
+        "weight": 1,
+        "grants": {
+            "spells": [
+                {
+                    "spell": "fireball-xphb",
+                    "how": "item",
+                    "uses": {
+                        "max": 9,
+                        "reset": "never"
+                    }
+                }
+            ]
+        },
+        "item_tags": [
+            "consumable"
+        ],
+        "features": [
+            {
+                "id": "necklace-of-fireballs",
+                "name": "Necklace of Fireballs",
+                "level": 1,
+                "category": "actions",
+                "action": {
+                    "range": "60 ft.",
+                    "save": {
+                        "ability": "dex",
+                        "dc": 15,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "8d6",
+                                "type": "fire"
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "id": "sun-blade-xdmg",
+        "kind": "item",
+        "name": "Sun Blade",
+        "source": "XDMG",
+        "edition": "one",
+        "srd": {
+            "5.2": "Sun Blade"
+        },
+        "text": "This item appears to be a sword hilt.\n\n**Blade of Radiance.** While grasping the hilt, you can take a Bonus Action to cause a blade of pure radiance to spring into existence or make the blade disappear. While the blade exists, this magic weapon functions as a Longsword with Finesse. If you are proficient with Longswords or Shortswords, you are proficient with the Sun Blade.\n\nYou gain a +2 bonus to attack rolls and damage rolls made with this weapon, which deals Radiant damage instead of Slashing damage. When you hit an Undead with it, that target takes an extra 1d8 Radiant damage.\n\n**Sunlight.** The sword's luminous blade emits Bright Light in a 15-foot radius and Dim Light for an additional 15 feet. The light is sunlight. While the blade persists, you can take a Magic action to expand or reduce its radius of Bright Light and Dim Light by 5 feet each, to a maximum of 30 feet each or a minimum of 10 feet each.",
+        "item_types": [
+            "melee_weapon"
+        ],
+        "rarity": "rare",
+        "weight": 3,
+        "weapon": {
+            "category": "martial",
+            "kind": "melee",
+            "damage": {
+                "dice": "1d8",
+                "type": "radiant"
+            },
+            "versatile": "1d10",
+            "properties": [
+                "finesse",
+                "versatile"
+            ],
+            "mastery": [
+                "sap"
+            ],
+            "bonus": {
+                "attack": 2,
+                "damage": 2
+            }
+        },
+        "attunement": {
+            "required": true
+        },
+        "light": [
+            {
+                "bright": 15,
+                "dim": 30
+            }
+        ],
+        "item_tags": [
+            "weapon",
+            "sword"
+        ],
+        "base_item": "longsword-xphb",
+        "features": [
+            {
+                "id": "blade-of-radiance",
+                "name": "Blade of Radiance",
+                "level": 1,
+                "category": "bonus_actions",
+                "action": {
+                    "attack": {
+                        "kind": "melee",
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "type": "radiant",
+                                "condition": "extra against Undead"
+                            }
+                        ]
+                    }
+                },
+                "toggle": true
+            },
+            {
+                "id": "sunlight",
+                "name": "Sunlight",
+                "level": 1,
+                "category": "actions"
+            }
+        ],
+        "grants": {}
+    },
+    {
+        "id": "frost-brand-xdmg",
+        "kind": "item_variant",
+        "name": "Frost Brand",
+        "source": "XDMG",
+        "edition": "one",
+        "srd": {
+            "5.2": "Frost Brand"
+        },
+        "text": "When you hit with an attack roll using this magic weapon, the target takes an extra 1d6 Cold damage. In addition, while you hold the weapon, you have Resistance to Fire damage.\n\nIn freezing temperatures, the weapon sheds Bright Light in a 10-foot radius and Dim Light for an additional 10 feet.\n\nWhen you draw this weapon, you can extinguish all nonmagical flames within 30 feet of yourself. Once used, this property can't be used again for 1 hour.",
+        "rarity": "very rare",
+        "attunement": {
+            "required": true
+        },
+        "light": [
+            {
+                "bright": 10,
+                "dim": 20
+            }
+        ],
+        "applies_to": [
+            "glaive-xphb",
+            "greatsword-xphb",
+            "longsword-xphb",
+            "rapier-xphb",
+            "scimitar-xphb",
+            "shortsword-xphb"
+        ],
+        "name_format": "Frost Brand {base}",
+        "features": [
+            {
+                "id": "frost-brand",
+                "name": "Frost Brand",
+                "level": 1,
+                "category": "traits",
+                "action": {
+                    "attack": {
+                        "kind": "any",
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "type": "cold"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "grants": {
+            "defenses": {
+                "resist": [
+                    "fire"
+                ]
+            }
+        }
+    }
+]

@@ -1,0 +1,3054 @@
+[
+    {
+        "id": "apotheosis-wow",
+        "kind": "spell",
+        "name": "Apotheosis",
+        "source": "WoW",
+        "edition": "one",
+        "text": "You transform into a spectral, angelic form that grants you the following benefits.\n\n**Angelic Wings.** You have a Fly Speed of 90 feet.\n\n**Spectral Form.** You have Resistance to Bludgeoning, Piercing, Radiant, and Slashing damage.\n\n**Holy Empowerment.** Whenever you cast a spell using a spell slot that restores Hit Points to one or more creatures or deals Radiant damage, determine the spell's effects as if you had used a spell slot 2 levels higher than the spell slot you used to cast it (maximum of level 9).",
+        "level": 9,
+        "school": "transmutation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "bonus_action"
+            }
+        ],
+        "range": {
+            "type": "self"
+        },
+        "components": {
+            "v": true,
+            "s": false
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "minute",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "cleric-xphb"
+        ],
+        "filters": {
+            "gives_resist": [
+                "bludgeoning",
+                "piercing",
+                "radiant",
+                "slashing"
+            ],
+            "tags": [
+                "healing"
+            ]
+        }
+    },
+    {
+        "id": "arcane-pulse-wow",
+        "kind": "spell",
+        "name": "Arcane Pulse",
+        "source": "WoW",
+        "edition": "one",
+        "text": "You create a pulse of arcane energy in a 10-foot Emanation originating from yourself. Each creature of your choice within this area makes a Constitution saving throw. On a failed save, it takes 1d8 Force damage, and its Speed is reduced by 10 feet (to a minimum of 0 feet) until the end of your next turn.",
+        "level": 0,
+        "school": "evocation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "self",
+            "area": {
+                "shape": "emanation",
+                "size": 10,
+                "unit": "feet"
+            }
+        },
+        "components": {
+            "v": true,
+            "s": true
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "round",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "wizard-xphb"
+        ],
+        "filters": {
+            "damage": [
+                "force"
+            ],
+            "saves": [
+                "con"
+            ]
+        }
+    },
+    {
+        "id": "azure-strike-wow",
+        "kind": "spell",
+        "name": "Azure Strike",
+        "source": "WoW",
+        "edition": "one",
+        "text": "You fire rays of arcane and frigid energy at up to two targets within range that are within 30 feet of each other. Make a ranged spell attack for each target. On a hit, the target takes 2d6 Force damage, and its Speed is reduced by 10 feet until the end of its next turn.\n\n**Using a Higher-Level Spell Slot.** The damage increases by 1d6 for each spell slot level above 1.",
+        "level": 1,
+        "school": "evocation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 60
+        },
+        "components": {
+            "v": true,
+            "s": true
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "round",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "sorcerer-xphb"
+        ],
+        "filters": {
+            "damage": [
+                "force"
+            ],
+            "attack": [
+                "ranged"
+            ]
+        }
+    },
+    {
+        "id": "azure-sweep-wow",
+        "kind": "spell",
+        "name": "Azure Sweep",
+        "source": "WoW",
+        "edition": "one",
+        "text": "Pure magic sweeps out from you in a 30-foot Emanation. Creatures of your choice in the Emanation make a Constitution saving throw. On a failed save, a creature takes 7d8 Force damage, and its Speed is reduced by 20 feet for the duration. On a successful save, the target takes half as much damage only.",
+        "level": 6,
+        "school": "evocation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "self",
+            "area": {
+                "shape": "emanation",
+                "size": 30,
+                "unit": "feet"
+            }
+        },
+        "components": {
+            "v": true,
+            "s": true
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "minute",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "sorcerer-xphb"
+        ],
+        "filters": {
+            "damage": [
+                "force"
+            ],
+            "saves": [
+                "con"
+            ]
+        }
+    },
+    {
+        "id": "blistering-scales-wow",
+        "kind": "spell",
+        "name": "Blistering Scales",
+        "source": "WoW",
+        "edition": "one",
+        "text": "Choose a willing creature you can see within range. Five explosive scales form on the target, granting it a +1 bonus to AC for the duration. If a creature hits the target with a melee attack roll before the spell ends, a scale explodes, and the attacking creature takes 1d8 Fire damage. The spell ends early if the target has no explosive scales.\n\n**Using a Higher-Level Spell Slot.** The number of explosive scales that form on the target increases by one for each spell slot level above 3.",
+        "level": 3,
+        "school": "transmutation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "bonus_action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 30
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "a scale of a Dragon"
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "minute",
+                "concentration": true
+            }
+        ],
+        "classes": [
+            "sorcerer-xphb"
+        ],
+        "filters": {
+            "damage": [
+                "fire"
+            ],
+            "tags": [
+                "modifies_ac",
+                "requires_sight",
+                "targets_willing"
+            ]
+        }
+    },
+    {
+        "id": "bonestorm-wow",
+        "kind": "spell",
+        "name": "Bonestorm",
+        "source": "WoW",
+        "edition": "one",
+        "text": "You conjure a whirl of battering bone and gore around yourself. You regain 4d6 Hit Points, and each creature in a 10-foot Emanation originating from you makes a Constitution saving throw. A target takes 4d8 Necrotic damage on a failed save or half as much damage on a successful one.",
+        "level": 5,
+        "school": "abjuration",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "self",
+            "area": {
+                "shape": "emanation",
+                "size": 10,
+                "unit": "feet"
+            }
+        },
+        "components": {
+            "v": true,
+            "s": false
+        },
+        "duration": [
+            {
+                "type": "instant",
+                "concentration": false
+            }
+        ],
+        "filters": {
+            "damage": [
+                "necrotic"
+            ],
+            "saves": [
+                "con"
+            ],
+            "tags": [
+                "healing"
+            ]
+        }
+    },
+    {
+        "id": "breath-of-eons-wow",
+        "kind": "spell",
+        "name": "Breath of Eons",
+        "source": "WoW",
+        "edition": "one",
+        "text": "You draw on the magic of the bronze dragonflight. For the duration, you gain the following benefits.\n\n**Temporal Wounds.** When you move within 5 feet of a creature, you can curse it until the start of your next turn. While a creature is cursed, the next time it takes damage, it takes an extra 1d10 Force damage, and the curse ends. A creature can be cursed this way only once per turn.\n\n**Wings.** You sprout spectral wings from your back if you don't already have wings. You have a Fly Speed of 60 feet and can hover. In addition, your movement doesn't provoke Opportunity Attacks.",
+        "level": 4,
+        "school": "abjuration",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "self"
+        },
+        "components": {
+            "v": true,
+            "s": true
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "minute",
+                "concentration": true
+            }
+        ],
+        "classes": [
+            "sorcerer-xphb"
+        ],
+        "filters": {
+            "damage": [
+                "force"
+            ]
+        }
+    },
+    {
+        "id": "chains-of-ice-wow",
+        "kind": "spell",
+        "name": "Chains of Ice",
+        "source": "WoW",
+        "edition": "one",
+        "text": "You create chains of ice around a creature you can see within range. The target makes a Dexterity saving throw. On a failed save, the target takes 1d10 Cold damage, and its Speed is halved until the end of its next turn. On a successful save, the target takes half as much damage only.\n\n**Using a Higher-Level Spell Slot.** The damage increases by 1d10 for each spell slot level above 1.",
+        "level": 1,
+        "school": "evocation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 30
+        },
+        "components": {
+            "v": true,
+            "s": false
+        },
+        "duration": [
+            {
+                "type": "instant",
+                "concentration": false
+            }
+        ],
+        "filters": {
+            "damage": [
+                "cold"
+            ],
+            "saves": [
+                "dex"
+            ],
+            "tags": [
+                "requires_sight"
+            ]
+        }
+    },
+    {
+        "id": "chaos-nova-wow",
+        "kind": "spell",
+        "name": "Chaos Nova",
+        "source": "WoW",
+        "edition": "one",
+        "text": "Chaos energy bursts out in a 20-foot Emanation originating from you. Each creature of your choice in the Emanation takes 2d6 Force damage and must succeed on a Wisdom saving throw or have the Stunned condition until the end of your next turn.",
+        "level": 4,
+        "school": "evocation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "self",
+            "area": {
+                "shape": "emanation",
+                "size": 20,
+                "unit": "feet"
+            }
+        },
+        "components": {
+            "v": true,
+            "s": false
+        },
+        "duration": [
+            {
+                "type": "instant",
+                "concentration": false
+            }
+        ],
+        "filters": {
+            "damage": [
+                "force"
+            ],
+            "conditions": [
+                "stunned"
+            ],
+            "saves": [
+                "wis"
+            ]
+        }
+    },
+    {
+        "id": "collapsing-star-wow",
+        "kind": "spell",
+        "name": "Collapsing Star",
+        "source": "WoW",
+        "edition": "one",
+        "text": "You channel Void energy into a cataclysmic blast that fills a 20-foot-radius Sphere centered on a point you can see within range. Each creature of your choice within the Sphere makes a Constitution saving throw, taking 4d12 Force damage on a failed save or half as much damage on a successful one.",
+        "level": 4,
+        "school": "evocation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 60
+        },
+        "components": {
+            "v": true,
+            "s": false
+        },
+        "duration": [
+            {
+                "type": "instant",
+                "concentration": false
+            }
+        ],
+        "filters": {
+            "damage": [
+                "force"
+            ],
+            "saves": [
+                "con"
+            ],
+            "tags": [
+                "requires_sight"
+            ]
+        }
+    },
+    {
+        "id": "combustion-wow",
+        "kind": "spell",
+        "name": "Combustion",
+        "source": "WoW",
+        "edition": "one",
+        "text": "You engulf yourself in flames for the duration, shedding Bright Light in a 20-foot radius and Dim Light for an additional 10 feet. These flames grant you Immunity to Fire damage. While they last, you have Advantage on spell attack rolls.\n\nAt the end of each of your turns, each creature of your choice in a 5-foot Emanation originating from you takes 3d8 Fire damage.",
+        "level": 6,
+        "school": "evocation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "self",
+            "area": {
+                "shape": "emanation",
+                "size": 5,
+                "unit": "feet"
+            }
+        },
+        "components": {
+            "v": true,
+            "s": true
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "minute",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "wizard-xphb"
+        ],
+        "filters": {
+            "damage": [
+                "fire"
+            ],
+            "gives_immune": [
+                "fire"
+            ],
+            "tags": [
+                "grants_advantage",
+                "creates_light"
+            ]
+        }
+    },
+    {
+        "id": "consecration-wow",
+        "kind": "spell",
+        "name": "Consecration",
+        "source": "WoW",
+        "edition": "one",
+        "text": "You consecrate the area in a 15-foot Emanation originating from you. Creatures of your choice that start their turn in the Emanation take 1d8 Radiant damage. The Emanation is Difficult Terrain for Fiends and Undead.",
+        "level": 2,
+        "school": "evocation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "self",
+            "area": {
+                "shape": "emanation",
+                "size": 15,
+                "unit": "feet"
+            }
+        },
+        "components": {
+            "v": true,
+            "s": false
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "minute",
+                "concentration": true
+            }
+        ],
+        "classes": [
+            "paladin-xphb"
+        ],
+        "filters": {
+            "damage": [
+                "radiant"
+            ],
+            "tags": [
+                "difficult_terrain"
+            ]
+        }
+    },
+    {
+        "id": "consume-soul-wow",
+        "kind": "spell",
+        "name": "Consume Soul",
+        "source": "WoW",
+        "edition": "one",
+        "text": "You drain the essence from a creature within range, which makes a Constitution saving throw. On a failed save, it takes 4d4 Force damage, and you gain Temporary Hit Points equal to half the Force damage dealt. On a successful save, it takes half as much damage only.\n\n**Using a Higher-Level Spell Slot.** The damage increases by 1d4 for each spell slot level above 1.",
+        "level": 1,
+        "school": "necromancy",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 60
+        },
+        "components": {
+            "v": true,
+            "s": false
+        },
+        "duration": [
+            {
+                "type": "instant",
+                "concentration": false
+            }
+        ],
+        "filters": {
+            "damage": [
+                "force"
+            ],
+            "saves": [
+                "con"
+            ],
+            "tags": [
+                "grants_temp_hp"
+            ]
+        }
+    },
+    {
+        "id": "curse-of-agony-wow",
+        "kind": "spell",
+        "name": "Curse of Agony",
+        "source": "WoW",
+        "edition": "one",
+        "text": "You curse one creature within range with excruciating pain. The target makes a Constitution saving throw; the spell's damage starts at 1d4 Psychic damage. On a failed save, the target takes the spell's damage, and the spell's damage die increases: from 1d4 to 1d6, 1d6 to 1d8, 1d8 to 1d10, or 1d10 to 1d12 (the maximum). On a successful save, the target takes the spell's damage, and the effect ends. The target repeats the save at the end of each of its turns.",
+        "level": 2,
+        "school": "necromancy",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 30
+        },
+        "components": {
+            "v": true,
+            "s": true
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "minute",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "warlock-xphb"
+        ],
+        "filters": {
+            "damage": [
+                "psychic"
+            ],
+            "saves": [
+                "con"
+            ]
+        }
+    },
+    {
+        "id": "death-and-decay-wow",
+        "kind": "spell",
+        "name": "Death and Decay",
+        "source": "WoW",
+        "edition": "one",
+        "text": "Corruption ripples out in a 20-foot-radius Sphere from a point on the ground you can see within range. Each creature in that area makes a Wisdom saving throw. On a failed save, a target takes 2d6 Necrotic damage and is cursed until the end of your next turn. If you deal damage to a cursed target with an attack roll, the target takes an extra 1d6 Necrotic damage. On a successful save, the target takes half as much damage only.",
+        "level": 2,
+        "school": "necromancy",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 60
+        },
+        "components": {
+            "v": true,
+            "s": false
+        },
+        "duration": [
+            {
+                "type": "instant",
+                "concentration": false
+            }
+        ],
+        "filters": {
+            "damage": [
+                "necrotic"
+            ],
+            "saves": [
+                "wis"
+            ],
+            "tags": [
+                "requires_sight"
+            ]
+        }
+    },
+    {
+        "id": "death-grip-wow",
+        "kind": "spell",
+        "name": "Death Grip",
+        "source": "WoW",
+        "edition": "one",
+        "text": "You harness runic energies to bind a foe to you. One creature you can see within range must succeed on a Strength saving throw or be pulled straight toward you to the nearest unoccupied space within 5 feet of you.",
+        "level": 1,
+        "school": "abjuration",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "bonus_action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 30
+        },
+        "components": {
+            "v": true,
+            "s": false
+        },
+        "duration": [
+            {
+                "type": "instant",
+                "concentration": false
+            }
+        ],
+        "filters": {
+            "saves": [
+                "str"
+            ],
+            "tags": [
+                "forced_movement",
+                "requires_sight"
+            ]
+        }
+    },
+    {
+        "id": "demon-spikes-wow",
+        "kind": "spell",
+        "name": "Demon Spikes",
+        "source": "WoW",
+        "edition": "one",
+        "text": "You surge with fel power and sprout hard, jagged spikes. You gain a +2 bonus to AC for the duration, and when a creature within 5 feet of you hits you with a melee attack roll, it takes 10 Piercing damage.",
+        "level": 3,
+        "school": "transmutation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "bonus_action"
+            }
+        ],
+        "range": {
+            "type": "self"
+        },
+        "components": {
+            "v": true,
+            "s": false
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "minute",
+                "concentration": false
+            }
+        ],
+        "filters": {
+            "damage": [
+                "piercing"
+            ],
+            "tags": [
+                "modifies_ac"
+            ]
+        }
+    },
+    {
+        "id": "divine-shield-wow",
+        "kind": "spell",
+        "name": "Divine Shield",
+        "source": "WoW",
+        "edition": "one",
+        "text": "You have Immunity to all damage until the start of your next turn, including the triggering damage. For the duration, your Speed can't be reduced, any current reductions to your Speed are suspended, and no effect can move you against your will.",
+        "level": 4,
+        "school": "abjuration",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "reaction",
+                "trigger": "which you take when you take damage"
+            }
+        ],
+        "range": {
+            "type": "self"
+        },
+        "components": {
+            "v": true,
+            "s": false
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "round",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "paladin-xphb"
+        ],
+        "filters": {
+            "gives_immune": [
+                "acid",
+                "bludgeoning",
+                "cold",
+                "fire",
+                "force",
+                "lightning",
+                "necrotic",
+                "piercing",
+                "poison",
+                "psychic",
+                "radiant",
+                "slashing",
+                "thunder"
+            ]
+        }
+    },
+    {
+        "id": "dream-breath-wow",
+        "kind": "spell",
+        "name": "Dream Breath",
+        "source": "WoW",
+        "edition": "one",
+        "text": "You exhale verdant healing magic. Each creature of your choice in a 15-foot Cone regains 2d6 Hit Points.\n\n**Using a Higher-Level Spell Slot.** The healing increases by 2d6 for each spell slot level above 2.",
+        "level": 2,
+        "school": "abjuration",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "self",
+            "area": {
+                "shape": "cone",
+                "size": 15,
+                "unit": "feet"
+            }
+        },
+        "components": {
+            "v": true,
+            "s": true
+        },
+        "duration": [
+            {
+                "type": "instant",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "sorcerer-xphb"
+        ],
+        "filters": {
+            "tags": [
+                "healing"
+            ]
+        }
+    },
+    {
+        "id": "dream-flight-wow",
+        "kind": "spell",
+        "name": "Dream Flight",
+        "source": "WoW",
+        "edition": "one",
+        "text": "You draw on the magic of the green dragonflight. For the duration, you gain the following benefits.\n\n**Healing Presence.** When you move within 5 feet of a creature, you can restore 5d4 Hit Points to that creature. A creature can regain these Hit Points only once per turn.\n\n**Wings.** You sprout spectral wings from your back if you don't already have wings. You have a Fly Speed of 60 feet and can hover. In addition, your movement doesn't provoke Opportunity Attacks.",
+        "level": 5,
+        "school": "abjuration",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "self"
+        },
+        "components": {
+            "v": true,
+            "s": true
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "minute",
+                "concentration": true
+            }
+        ],
+        "classes": [
+            "sorcerer-xphb"
+        ],
+        "filters": {
+            "tags": [
+                "healing"
+            ]
+        }
+    },
+    {
+        "id": "ebon-might-wow",
+        "kind": "spell",
+        "name": "Ebon Might",
+        "source": "WoW",
+        "edition": "one",
+        "text": "As you invoke the black dragonflight, draconic might erupts from you. Each creature of your choice in a 10-foot Emanation originating from you is empowered until the end of your next turn. While a creature is empowered, when it hits a target with an attack roll, the attack deals an extra 1d4 Force damage.",
+        "level": 1,
+        "school": "transmutation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "self",
+            "area": {
+                "shape": "emanation",
+                "size": 10,
+                "unit": "feet"
+            }
+        },
+        "components": {
+            "v": true,
+            "s": true
+        },
+        "duration": [
+            {
+                "type": "instant",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "sorcerer-xphb"
+        ],
+        "filters": {
+            "damage": [
+                "force"
+            ],
+            "tags": [
+                "additional_attack_damage"
+            ]
+        }
+    },
+    {
+        "id": "emberstorm-wow",
+        "kind": "spell",
+        "name": "Emberstorm",
+        "source": "WoW",
+        "edition": "one",
+        "text": "White-hot embers fill a 20-foot-radius Sphere centered on a point you choose within range. Each creature in the Sphere makes a Constitution saving throw, taking 6d8 Fire damage on a failed save or half as much damage on a successful one.\n\nCreatures and flammable objects in the Sphere that aren't being worn or carried start burning, taking 1d8 Fire damage at the start of each of their turns instead of the normal burning damage.\n\n**Using a Higher-Level Spell Slot.** The damage increases by 1d8 for each spell slot level above 4.",
+        "level": 4,
+        "school": "evocation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 60
+        },
+        "components": {
+            "v": true,
+            "s": true
+        },
+        "duration": [
+            {
+                "type": "instant",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "sorcerer-xphb"
+        ],
+        "filters": {
+            "damage": [
+                "fire"
+            ],
+            "saves": [
+                "con"
+            ],
+            "tags": [
+                "ignites_objects",
+                "affects_objects"
+            ]
+        }
+    },
+    {
+        "id": "emerald-blossom-wow",
+        "kind": "spell",
+        "name": "Emerald Blossom",
+        "source": "WoW",
+        "edition": "one",
+        "text": "You conjure a spectral bulb that sprouts from the ground in an unoccupied space that you can see within range. The bulb lasts for the duration.\n\nThe bulb emits healing magic in a 10-foot Emanation at the end of each of your turns. Allies of your choice in the Emanation regain 5 Hit Points. The bulb vanishes when it restores a total of 20 Hit Points.\n\n**Using a Higher-Level Spell Slot.** The total Hit Points the bulb can restore increases by 5 for each spell slot level above 3.",
+        "level": 3,
+        "school": "conjuration",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "bonus_action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 60
+        },
+        "components": {
+            "v": true,
+            "s": true
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "minute",
+                "concentration": true
+            }
+        ],
+        "classes": [
+            "sorcerer-xphb"
+        ],
+        "filters": {
+            "tags": [
+                "healing",
+                "requires_sight"
+            ]
+        }
+    },
+    {
+        "id": "entropic-embrace-wow",
+        "kind": "spell",
+        "name": "Entropic Embrace",
+        "source": "WoW",
+        "edition": "one",
+        "text": "You are empowered by the essence of the Void for the duration, becoming swathed in shadow and taking on a dark-blue or purple appearance. While this effect lasts, you gain the following benefits.\n\n**Preternatural Calm.** You automatically succeed on Constitution saving throws to maintain Concentration.\n\n**Shadow Shroud.** You are shrouded in shadow, making your space Lightly Obscured.\n\n**Touch of the Void.** Once on each of your turns, you can deal an extra 1d4 Necrotic damage to one creature when you deal damage to it, or you can restore an extra 1d4 Hit Points to one creature when you heal it.\n\n**Using a Higher-Level Spell Slot.** The extra damage or healing from the Touch of the Void effect increases by 1d4 for each spell slot level above 1.",
+        "level": 1,
+        "school": "necromancy",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "reaction",
+                "trigger": "which you take when you make a D20 Test with Advantage or Disadvantage and roll the same number on both dice"
+            }
+        ],
+        "range": {
+            "type": "self"
+        },
+        "components": {
+            "v": true,
+            "s": false
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "minute",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "warlock-xphb"
+        ],
+        "filters": {
+            "damage": [
+                "necrotic"
+            ],
+            "tags": [
+                "healing",
+                "obscures_vision"
+            ]
+        }
+    },
+    {
+        "id": "eruption-wow",
+        "kind": "spell",
+        "name": "Eruption",
+        "source": "WoW",
+        "edition": "one",
+        "text": "The ground in a 20-foot-radius Sphere centered on a point within range erupts with flames. Each creature in the Sphere makes a Dexterity saving throw, taking 3d8 Fire damage on a failed save or half as much damage on a successful one.\n\nThe cracks turn the ground in the Sphere into Difficult Terrain until the end of your next turn, at which point they close.\n\n**Using a Higher-Level Spell Slot.** The damage increases by 1d8 for each spell slot level above 2.",
+        "level": 2,
+        "school": "evocation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 60
+        },
+        "components": {
+            "v": true,
+            "s": true
+        },
+        "duration": [
+            {
+                "type": "instant",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "sorcerer-xphb"
+        ],
+        "filters": {
+            "damage": [
+                "fire"
+            ],
+            "saves": [
+                "dex"
+            ],
+            "tags": [
+                "difficult_terrain"
+            ]
+        }
+    },
+    {
+        "id": "explosive-trap-wow",
+        "kind": "spell",
+        "name": "Explosive Trap",
+        "source": "WoW",
+        "edition": "one",
+        "text": "An Invisible, intangible trap appears on the ground at a point you choose within range. The first time a creature comes within 5 feet of the trap, the trap explodes in a fiery burst that fills a 20-foot-radius Sphere centered on the trap. The spell ends, and each creature within the Sphere makes a Dexterity saving throw. On a failed save, a creature takes 8d6 Fire damage and, if it is Huge or smaller, is pushed 20 feet straight away from the trap's location.",
+        "level": 5,
+        "school": "evocation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 60
+        },
+        "components": {
+            "v": false,
+            "s": true
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "minute",
+                "concentration": true
+            }
+        ],
+        "classes": [
+            "ranger-xphb"
+        ],
+        "filters": {
+            "damage": [
+                "fire"
+            ],
+            "saves": [
+                "dex"
+            ],
+            "tags": [
+                "forced_movement"
+            ]
+        }
+    },
+    {
+        "id": "eye-beam-wow",
+        "kind": "spell",
+        "name": "Eye Beam",
+        "source": "WoW",
+        "edition": "one",
+        "text": "You concentrate your magic into your eyes. When you cast the spell, and as a Magic action on your subsequent turns for the duration, you can unleash a burst of fel magic. Each creature in a 15-foot Cone makes a Dexterity saving throw, taking 3d6 Force damage on a failed save or half as much damage on a successful one.\n\n**Using a Higher-Level Spell Slot.** The damage increases by 1d6 for each spell slot level above 1.",
+        "level": 2,
+        "school": "evocation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "self",
+            "area": {
+                "shape": "cone",
+                "size": 15,
+                "unit": "feet"
+            }
+        },
+        "components": {
+            "v": true,
+            "s": false
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "minute",
+                "concentration": true
+            }
+        ],
+        "filters": {
+            "damage": [
+                "force"
+            ],
+            "saves": [
+                "dex"
+            ]
+        }
+    },
+    {
+        "id": "fel-rush-wow",
+        "kind": "spell",
+        "name": "Fel Rush",
+        "source": "WoW",
+        "edition": "one",
+        "text": "Fiery fel magic surrounds you and grants you explosive speed. Until the end of your turn, your Speed increases by 30 feet, and your movement doesn't provoke Opportunity Attacks.\n\nWhen you move within 5 feet of a creature or an object that isn't being worn or carried, it makes a Dexterity saving throw, taking 2d6 Fire damage on a failed save or half as much damage on a successful one. A creature or object can take this damage only once per turn.\n\n**Using a Higher-Level Spell Slot.** The damage increases by 1d6 for each spell slot level above 1.",
+        "level": 1,
+        "school": "transmutation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "self"
+        },
+        "components": {
+            "v": true,
+            "s": false
+        },
+        "duration": [
+            {
+                "type": "instant",
+                "concentration": false
+            }
+        ],
+        "filters": {
+            "damage": [
+                "fire"
+            ],
+            "saves": [
+                "dex"
+            ],
+            "tags": [
+                "affects_objects"
+            ]
+        }
+    },
+    {
+        "id": "feral-prowl-wow",
+        "kind": "spell",
+        "name": "Feral Prowl",
+        "source": "WoW",
+        "edition": "one",
+        "text": "You shape-shift as if you had used Wild Shape, but you don't expend a use of your Wild Shape. You have the Invisible condition until the spell ends. The spell ends early immediately after you make an attack roll, deal damage, cast a spell, or revert to your natural form.",
+        "level": 2,
+        "school": "transmutation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "bonus_action"
+            }
+        ],
+        "range": {
+            "type": "self"
+        },
+        "components": {
+            "v": true,
+            "s": false
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "minute",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "druid-xphb"
+        ],
+        "filters": {
+            "conditions": [
+                "invisible"
+            ]
+        }
+    },
+    {
+        "id": "fiery-brand-wow",
+        "kind": "spell",
+        "name": "Fiery Brand",
+        "source": "WoW",
+        "edition": "one",
+        "text": "You magically place a fiery demonic symbol on a creature within range, which makes a Wisdom saving throw. On a failed save, the creature takes 3d10 Fire damage and is cursed. While it remains cursed, you have Resistance to all damage it deals. On a successful save, it takes half as much damage only.\n\nA cursed creature repeats the save at the end of each of its turns, ending the spell on a success.",
+        "level": 2,
+        "school": "evocation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 30
+        },
+        "components": {
+            "v": true,
+            "s": false
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "minute",
+                "concentration": false
+            }
+        ],
+        "filters": {
+            "damage": [
+                "fire"
+            ],
+            "saves": [
+                "wis"
+            ],
+            "gives_resist": [
+                "acid",
+                "bludgeoning",
+                "cold",
+                "fire",
+                "force",
+                "lightning",
+                "necrotic",
+                "piercing",
+                "poison",
+                "psychic",
+                "radiant",
+                "slashing",
+                "thunder"
+            ]
+        }
+    },
+    {
+        "id": "flurry-wow",
+        "kind": "spell",
+        "name": "Flurry",
+        "source": "WoW",
+        "edition": "one",
+        "text": "You hurl three shards of ice at one target within range or at several. Make a ranged spell attack for each shard. On a hit, the target takes 3d6 Cold damage. On a Critical Hit, the target has the Restrained condition until the end of your next turn.\n\n**Using a Higher-Level Spell Slot.** You create one additional shard of ice for each spell slot level above 3.",
+        "level": 3,
+        "school": "evocation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 120
+        },
+        "components": {
+            "v": true,
+            "s": true
+        },
+        "duration": [
+            {
+                "type": "instant",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "wizard-xphb"
+        ],
+        "filters": {
+            "damage": [
+                "cold"
+            ],
+            "conditions": [
+                "restrained"
+            ],
+            "attack": [
+                "ranged"
+            ]
+        }
+    },
+    {
+        "id": "freezing-trap-wow",
+        "kind": "spell",
+        "name": "Freezing Trap",
+        "source": "WoW",
+        "edition": "one",
+        "text": "An Invisible, intangible trap appears on the ground at a point you choose within range. The first time a creature comes within 5 feet of the trap, the trap explodes in a burst of frost, the spell ends, and the triggering creature makes a Constitution saving throw. On a failed save, the target has the Restrained condition for 1 minute. If the creature takes any damage, the Restrained condition from the trap ends.",
+        "level": 1,
+        "school": "evocation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 60
+        },
+        "components": {
+            "v": false,
+            "s": true
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "minute",
+                "concentration": true
+            }
+        ],
+        "classes": [
+            "ranger-xphb"
+        ],
+        "filters": {
+            "conditions": [
+                "restrained"
+            ],
+            "saves": [
+                "con"
+            ]
+        }
+    },
+    {
+        "id": "frost-nova-wow",
+        "kind": "spell",
+        "name": "Frost Nova",
+        "source": "WoW",
+        "edition": "one",
+        "text": "You unleash a burst of frost, creating a 15-foot Emanation originating from you. Each creature of your choice in the Emanation makes a Constitution saving throw. On a failed save, a creature takes 2d6 Cold damage, and it has the Restrained condition until the end of your next turn. On a successful save, the creature takes half as much damage only.\n\n**Using a Higher-Level Spell Slot.** The damage increases by 1d6 for each spell slot level above 1.",
+        "level": 1,
+        "school": "evocation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "self",
+            "area": {
+                "shape": "emanation",
+                "size": 15,
+                "unit": "feet"
+            }
+        },
+        "components": {
+            "v": true,
+            "s": true
+        },
+        "duration": [
+            {
+                "type": "instant",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "wizard-xphb"
+        ],
+        "filters": {
+            "damage": [
+                "cold"
+            ],
+            "conditions": [
+                "restrained"
+            ],
+            "saves": [
+                "con"
+            ]
+        }
+    },
+    {
+        "id": "frostscythe-wow",
+        "kind": "spell",
+        "name": "Frostscythe",
+        "source": "WoW",
+        "edition": "one",
+        "text": "Sweeping your weapon before you, you unleash a blast of icy cold. Each creature in a 20-foot Cone makes a Constitution saving throw. On a failed save, a creature takes 3d8 Cold damage, and its Speed is reduced by 10 feet for 1 minute. On a successful save, a creature takes half as much damage only.\n\n**Using a Higher-Level Spell Slot.** The damage increases by 1d8 for each spell slot level above 2.",
+        "level": 2,
+        "school": "evocation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "self",
+            "area": {
+                "shape": "cone",
+                "size": 20,
+                "unit": "feet"
+            }
+        },
+        "components": {
+            "v": true,
+            "s": false
+        },
+        "duration": [
+            {
+                "type": "instant",
+                "concentration": false
+            }
+        ],
+        "filters": {
+            "damage": [
+                "cold"
+            ],
+            "saves": [
+                "con"
+            ]
+        }
+    },
+    {
+        "id": "guided-prayer-wow",
+        "kind": "spell",
+        "name": "Guided Prayer",
+        "source": "WoW",
+        "edition": "one",
+        "text": "You regain Hit Points equal to 8d4 plus your spellcasting ability modifier. You have Advantage on the next attack roll you make before the end of your next turn.",
+        "level": 3,
+        "school": "evocation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "reaction",
+                "trigger": "which you take when you become Bloodied or take damage while you are Bloodied"
+            }
+        ],
+        "range": {
+            "type": "self"
+        },
+        "components": {
+            "v": true,
+            "s": false
+        },
+        "duration": [
+            {
+                "type": "instant",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "paladin-xphb"
+        ],
+        "filters": {
+            "tags": [
+                "grants_advantage",
+                "healing"
+            ]
+        }
+    },
+    {
+        "id": "hand-of-guldan-wow",
+        "kind": "spell",
+        "name": "Hand of Gul'dan",
+        "source": "WoW",
+        "edition": "one",
+        "text": "A demonic meteor hurtles from you to a point you choose within range and then erupts. Each creature in a 20-foot-radius Sphere centered on that point makes a Dexterity saving throw, taking 2d8 Fire damage plus 2d8 Necrotic damage on a failed save or half as much damage on a successful one.\n\nDemonic spirits resembling fel imps flit about the Sphere for the duration. A creature that enters the Sphere or ends its turn there makes a Dexterity saving throw, taking 1d8 Fire damage plus 1d8 Necrotic damage on a failed save or half as much damage on a successful one. A creature can be affected by this spell only once per turn.",
+        "level": 3,
+        "school": "conjuration",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 120
+        },
+        "components": {
+            "v": true,
+            "s": true
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "minute",
+                "concentration": true
+            }
+        ],
+        "classes": [
+            "warlock-xphb"
+        ],
+        "filters": {
+            "damage": [
+                "fire",
+                "necrotic"
+            ],
+            "saves": [
+                "dex"
+            ]
+        }
+    },
+    {
+        "id": "holy-nova-wow",
+        "kind": "spell",
+        "name": "Holy Nova",
+        "source": "WoW",
+        "edition": "one",
+        "text": "An explosion of holy light surrounds you in a 30-foot Emanation, harming your enemies and healing your allies. Each creature of your choice in the Emanation makes a Constitution saving throw, taking 5d6 Radiant damage on a failed save or half as much damage on a successful one. Each other creature in the Emanation regains 3d6 Hit Points.\n\n**Using a Higher-Level Spell Slot.** The damage and healing each increase by 1d6 for each spell slot level above 4.",
+        "level": 4,
+        "school": "evocation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "self",
+            "area": {
+                "shape": "emanation",
+                "size": 30,
+                "unit": "feet"
+            }
+        },
+        "components": {
+            "v": true,
+            "s": false
+        },
+        "duration": [
+            {
+                "type": "instant",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "cleric-xphb"
+        ],
+        "filters": {
+            "damage": [
+                "radiant"
+            ],
+            "saves": [
+                "con"
+            ],
+            "tags": [
+                "healing"
+            ]
+        }
+    },
+    {
+        "id": "infernal-strike-wow",
+        "kind": "spell",
+        "name": "Infernal Strike",
+        "source": "WoW",
+        "edition": "one",
+        "text": "You jump through the air without provoking Opportunity Attacks and land in an unoccupied space within 30 feet. Each creature in a 10-foot Emanation originating from you makes a Dexterity saving throw. On a failed save, a creature takes 2d6 Fire damage and has Disadvantage on attack rolls against creatures other than you until the start of your next turn. On a successful save, it takes half as much damage only.\n\n**Using a Higher-Level Spell Slot.** The damage increases by 1d6 for each spell slot level above 1.",
+        "level": 1,
+        "school": "evocation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "self",
+            "area": {
+                "shape": "emanation",
+                "size": 10,
+                "unit": "feet"
+            }
+        },
+        "components": {
+            "v": true,
+            "s": false
+        },
+        "duration": [
+            {
+                "type": "instant",
+                "concentration": false
+            }
+        ],
+        "filters": {
+            "damage": [
+                "fire"
+            ],
+            "saves": [
+                "dex"
+            ]
+        }
+    },
+    {
+        "id": "innervate-wow",
+        "kind": "spell",
+        "name": "Innervate",
+        "source": "WoW",
+        "edition": "one",
+        "text": "A creature of your choice within range gains a level 4 spell slot. The spell slot vanishes after it is expended or the target finishes a Long Rest. It can use this spell slot to cast any spell it has prepared.\n\nIn addition, you regain one expended use of Wild Shape.",
+        "level": 5,
+        "school": "transmutation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 30
+        },
+        "components": {
+            "v": true,
+            "s": false
+        },
+        "duration": [
+            {
+                "type": "instant",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "druid-xphb"
+        ]
+    },
+    {
+        "id": "lay-waste-wow",
+        "kind": "spell",
+        "name": "Lay Waste",
+        "source": "WoW",
+        "edition": "one",
+        "text": "You draw a deep breath and spew molten cinders along a 120-foot-long, 10-foot-wide Line originating from you in a direction you choose. Each creature in the Line makes a Dexterity saving throw, taking 12d6 Fire damage on a failed save or half as much damage on a successful one.\n\nYou then teleport to an unoccupied space within 5 feet of the end of the Line.",
+        "level": 7,
+        "school": "evocation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "self",
+            "area": {
+                "shape": "line",
+                "size": 120,
+                "unit": "feet"
+            }
+        },
+        "components": {
+            "v": true,
+            "s": false
+        },
+        "duration": [
+            {
+                "type": "instant",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "sorcerer-xphb"
+        ],
+        "filters": {
+            "damage": [
+                "fire"
+            ],
+            "saves": [
+                "dex"
+            ]
+        }
+    },
+    {
+        "id": "leeching-strike-wow",
+        "kind": "spell",
+        "name": "Leeching Strike",
+        "source": "WoW",
+        "edition": "one",
+        "text": "The target hit by the strike takes an extra 3d8 Necrotic damage from the attack, and you regain 3d4 Hit Points.\n\n**Using a Higher-Level Spell Slot.** The damage increases by 1d8, and the Hit Points you regain increase by 1d4, for each spell slot level above 3.",
+        "level": 3,
+        "school": "necromancy",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "bonus_action",
+                "trigger": "which you take immediately after hitting a target with a Melee weapon or an Unarmed Strike"
+            }
+        ],
+        "range": {
+            "type": "self"
+        },
+        "components": {
+            "v": true,
+            "s": false
+        },
+        "duration": [
+            {
+                "type": "instant",
+                "concentration": false
+            }
+        ],
+        "filters": {
+            "damage": [
+                "necrotic"
+            ],
+            "tags": [
+                "healing"
+            ]
+        }
+    },
+    {
+        "id": "living-flame-wow",
+        "kind": "spell",
+        "name": "Living Flame",
+        "source": "WoW",
+        "edition": "one",
+        "text": "Flickering flames hurtle toward a creature you choose within range. Choose one of these options:\n\n- **Healing Flames.** The target regains 2d6 Hit Points.\n- **Searing Flames.** Make a ranged attack roll against the target. On a hit, the target takes 2d8 Fire damage.\n\n**Using a Higher-Level Spell Slot.** For every two spell slot levels above 1, you can choose an additional target (two targets with a level 3 or 4 slot, three targets with a level 5 or 6 slot, four targets with a level 7 or 8 slot, and five targets with a level 9 slot). You choose the flames' effect separately for each target.",
+        "level": 1,
+        "school": "evocation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 60
+        },
+        "components": {
+            "v": true,
+            "s": false
+        },
+        "duration": [
+            {
+                "type": "instant",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "sorcerer-xphb"
+        ],
+        "filters": {
+            "damage": [
+                "fire"
+            ],
+            "tags": [
+                "healing"
+            ]
+        }
+    },
+    {
+        "id": "mass-polymorph-wow",
+        "kind": "spell",
+        "name": "Mass Polymorph",
+        "source": "WoW",
+        "edition": "one",
+        "text": "You attempt to transform any number of creatures in a 30-foot Emanation originating from you into identical Beasts. Each creature in the Emanation must succeed on a Wisdom saving throw or shapeshift into a Beast form for the duration. A creature that isn't a Beast, a Giant, a Humanoid, or a Monstrosity automatically succeeds on its saving throw.\n\nThe new form can be any Beast you choose that has a Challenge Rating of 0 (Goat is recommended). Each target's game statistics are replaced by the stat block of the chosen Beast, but the target retains its alignment, personality, creature type, Hit Points, and Hit Point Dice.\n\nEach target gains a number of Temporary Hit Points equal to the Hit Points of the Beast form. The spell ends early on the target if it has no Temporary Hit Points left.\n\nThe targets are limited in the actions they can perform by the anatomy of their new form, and they can't speak or cast spells.\n\nEach target's gear melds into the new form. The creature can't use or otherwise benefit from any of that equipment.",
+        "level": 9,
+        "school": "transmutation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "self",
+            "area": {
+                "shape": "emanation",
+                "size": 30,
+                "unit": "feet"
+            }
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "a caterpillar cocoon"
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "hour",
+                "concentration": true
+            }
+        ],
+        "classes": [
+            "wizard-xphb"
+        ],
+        "filters": {
+            "saves": [
+                "wis"
+            ],
+            "tags": [
+                "grants_temp_hp"
+            ]
+        }
+    },
+    {
+        "id": "metamorphosis-wow",
+        "kind": "spell",
+        "name": "Metamorphosis",
+        "source": "WoW",
+        "edition": "one",
+        "text": "Uttering an incantation, you draw on fel or Void magic to transform yourself, taking on demonic features. You gain one of the following benefits of your choice until the spell ends:\n\n- **Devourer.** When you roll damage for a spell, weapon, or feature that deals Force damage, you can treat any 1 or 2 on a damage die as a 3.\n- **Havoc.** Whenever you hit a creature with an attack roll using a Melee weapon, the target takes an extra 1d6 Fire damage.\n- **Vengeance.** You have a +2 bonus to AC, and your Hit Point maximum and your current Hit Points increase by 5 for the spell's duration.",
+        "level": 3,
+        "school": "transmutation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "bonus_action"
+            }
+        ],
+        "range": {
+            "type": "self"
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": {
+                "text": "one soul fragment, which the spell consumes",
+                "consumed": true
+            }
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "minute",
+                "concentration": false
+            }
+        ],
+        "filters": {
+            "damage": [
+                "fire"
+            ],
+            "tags": [
+                "modifies_ac"
+            ]
+        }
+    },
+    {
+        "id": "moonfire-wow",
+        "kind": "spell",
+        "name": "Moonfire",
+        "source": "WoW",
+        "edition": "one",
+        "text": "A beam of lunar light burns a creature you can see within range. The target makes a Dexterity saving throw. On a failed save, it takes 2d8 Radiant damage, sheds Dim Light in a 10-foot radius, and can't benefit from the Invisible condition until the end of its next turn. At the end of its next turn, it takes an extra 1d8 Radiant damage, and the spell ends. On a successful save, it takes half the initial damage only.\n\n**Using a Higher-Level Spell Slot.** Both the initial and the later damage increase by 1d8 for each spell slot level above 1.",
+        "level": 1,
+        "school": "evocation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "bonus_action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 60
+        },
+        "components": {
+            "v": true,
+            "s": false
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "round",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "druid-xphb"
+        ],
+        "filters": {
+            "damage": [
+                "radiant"
+            ],
+            "saves": [
+                "dex"
+            ],
+            "tags": [
+                "creates_light",
+                "requires_sight"
+            ]
+        }
+    },
+    {
+        "id": "prayer-of-mending-wow",
+        "kind": "spell",
+        "name": "Prayer of Mending",
+        "source": "WoW",
+        "edition": "one",
+        "text": "You place a holy ward on one willing creature in range. The next time that creature takes damage, the ward activates, and the creature regains Hit Points equal to 1d8 plus your spellcasting ability modifier. The ward then jumps to another ally of your choice within 30 feet of the warded creature, with the same effect. If no ally is in range, the spell ends, and it ends after the ward has healed five times.\n\n**Using a Higher-Level Spell Slot.** The spell can heal one additional time for each spell slot level above 3.",
+        "level": 3,
+        "school": "abjuration",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 60
+        },
+        "components": {
+            "v": true,
+            "s": false,
+            "m": "a pinch of powdered silver"
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "minute",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "cleric-xphb"
+        ],
+        "filters": {
+            "tags": [
+                "healing",
+                "targets_willing"
+            ]
+        }
+    },
+    {
+        "id": "psychic-horror-wow",
+        "kind": "spell",
+        "name": "Psychic Horror",
+        "source": "WoW",
+        "edition": "one",
+        "text": "A creature within range is overwhelmed with mental visions of the Void and makes a Wisdom saving throw. On a failed save, the target takes 2d10 Psychic damage and has the Frightened condition for 1 minute. A Frightened creature also has the Stunned condition until the end of your next turn. At the end of each of its turns, the target repeats the save, ending the effect on itself on a success. On a successful save, the creature takes half as much damage only.\n\n**Using a Higher-Level Spell Slot.** The damage increases by 1d10 for each spell slot level above 4.",
+        "level": 4,
+        "school": "enchantment",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 30
+        },
+        "components": {
+            "v": true,
+            "s": false,
+            "m": "a drop of ink"
+        },
+        "duration": [
+            {
+                "type": "instant",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "cleric-xphb"
+        ],
+        "filters": {
+            "damage": [
+                "psychic"
+            ],
+            "conditions": [
+                "frightened",
+                "stunned"
+            ],
+            "saves": [
+                "wis"
+            ]
+        }
+    },
+    {
+        "id": "rain-of-fire-wow",
+        "kind": "spell",
+        "name": "Rain of Fire",
+        "source": "WoW",
+        "edition": "one",
+        "text": "Hellfire rains down in a 20-foot-radius, 40-foot-high Cylinder centered on a point within range. Until the spell ends, you can take a Magic action on later turns to move the Cylinder up to 60 feet.\n\nWhen the Cylinder appears, each creature in it makes a Dexterity saving throw, taking 3d8 Fire damage on a failed save or half as much damage on a successful one. A creature also makes this save when the spell's area moves into its space and when it enters the spell's area or ends its turn there. A creature makes this save only once per turn.\n\nYou have Advantage on spell attack rolls against a creature in the Cylinder, and you deal an extra 1d6 Necrotic damage to the target if you hit.\n\n**Using a Higher-Level Spell Slot.** The Fire damage increases by 1d8 for each spell slot level above 3.",
+        "level": 3,
+        "school": "evocation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 120
+        },
+        "components": {
+            "v": true,
+            "s": true
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "minute",
+                "concentration": true
+            }
+        ],
+        "classes": [
+            "warlock-xphb"
+        ],
+        "filters": {
+            "damage": [
+                "fire",
+                "necrotic"
+            ],
+            "saves": [
+                "dex"
+            ],
+            "tags": [
+                "grants_advantage",
+                "uses_action"
+            ]
+        }
+    },
+    {
+        "id": "regrowth-wow",
+        "kind": "spell",
+        "name": "Regrowth",
+        "source": "WoW",
+        "edition": "one",
+        "text": "One creature you can see within range regains 3d8 Hit Points. For the duration, the target regains 1d8 Hit Points at the start of each of your turns. The spell ends early once it restores at least 24 Hit Points.",
+        "level": 3,
+        "school": "abjuration",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 120
+        },
+        "components": {
+            "v": true,
+            "s": false
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "minute",
+                "concentration": true
+            }
+        ],
+        "classes": [
+            "druid-xphb"
+        ],
+        "filters": {
+            "tags": [
+                "healing",
+                "requires_sight"
+            ]
+        }
+    },
+    {
+        "id": "remorseless-winter-wow",
+        "kind": "spell",
+        "name": "Remorseless Winter",
+        "source": "WoW",
+        "edition": "one",
+        "text": "You drain the warmth from nearby creatures. Each creature of your choice in a 30-foot Emanation originating from you makes a Constitution saving throw, taking 6d6 Cold damage on a failed save or half as much damage on a successful one. Whether or not a creature succeeds on its saving throw, its Speed is reduced to 10 feet until the end of its next turn as clinging frost hinders its movement.\n\n**Using a Higher-Level Spell Slot.** The damage increases by 1d6 for each spell slot level above 3.",
+        "level": 3,
+        "school": "evocation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "self",
+            "area": {
+                "shape": "emanation",
+                "size": 30,
+                "unit": "feet"
+            }
+        },
+        "components": {
+            "v": true,
+            "s": false
+        },
+        "duration": [
+            {
+                "type": "instant",
+                "concentration": false
+            }
+        ],
+        "filters": {
+            "damage": [
+                "cold"
+            ],
+            "saves": [
+                "con"
+            ]
+        }
+    },
+    {
+        "id": "rescue-wow",
+        "kind": "spell",
+        "name": "Rescue",
+        "source": "WoW",
+        "edition": "one",
+        "text": "You teleport to an unoccupied space you can see within range. One willing creature within 60 feet of the space you left also teleports to an unoccupied space within 5 feet of your destination space.",
+        "level": 5,
+        "school": "conjuration",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "bonus_action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 120
+        },
+        "components": {
+            "v": true,
+            "s": false
+        },
+        "duration": [
+            {
+                "type": "instant",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "sorcerer-xphb"
+        ],
+        "filters": {
+            "tags": [
+                "requires_sight",
+                "teleportation",
+                "targets_willing"
+            ]
+        }
+    },
+    {
+        "id": "roar-of-ursoc-wow",
+        "kind": "spell",
+        "name": "Roar of Ursoc",
+        "source": "WoW",
+        "edition": "one",
+        "text": "You shape-shift as if you had used Wild Shape, but you don't expend a use of your Wild Shape. Until the start of your next turn, any creature that starts its turn within 5 feet of you has Disadvantage on attack rolls against any creature other than you.",
+        "level": 2,
+        "school": "transmutation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "bonus_action"
+            }
+        ],
+        "range": {
+            "type": "self"
+        },
+        "components": {
+            "v": true,
+            "s": false
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "round",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "druid-xphb"
+        ]
+    },
+    {
+        "id": "rune-strike-wow",
+        "kind": "spell",
+        "name": "Rune Strike",
+        "source": "WoW",
+        "edition": "one",
+        "text": "The target takes an extra 2d8 Necrotic damage. The damage increases by 1d8 if the target is a Celestial.\n\n**Using a Higher-Level Spell Slot.** The damage increases by 1d8 for each spell slot level above 1.",
+        "level": 1,
+        "school": "evocation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "bonus_action",
+                "trigger": "which you take immediately after hitting a target with a Melee weapon or an Unarmed Strike"
+            }
+        ],
+        "range": {
+            "type": "self"
+        },
+        "components": {
+            "v": true,
+            "s": false
+        },
+        "duration": [
+            {
+                "type": "instant",
+                "concentration": false
+            }
+        ],
+        "filters": {
+            "damage": [
+                "necrotic"
+            ]
+        }
+    },
+    {
+        "id": "scourge-strike-wow",
+        "kind": "spell",
+        "name": "Scourge Strike",
+        "source": "WoW",
+        "edition": "one",
+        "text": "The target takes an extra 2d6 Necrotic damage from the attack, and it must succeed on a Constitution saving throw or have the Poisoned condition until the spell ends. At the end of each of its turns, the Poisoned target repeats the save, ending the spell on itself on a success.\n\n**Using a Higher-Level Spell Slot.** The damage increases by 1d6 for each spell slot level above 1.",
+        "level": 1,
+        "school": "necromancy",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "bonus_action",
+                "trigger": "which you take immediately after hitting a target with a Melee weapon or an Unarmed Strike"
+            }
+        ],
+        "range": {
+            "type": "self"
+        },
+        "components": {
+            "v": true,
+            "s": false
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "minute",
+                "concentration": false
+            }
+        ],
+        "filters": {
+            "damage": [
+                "necrotic"
+            ],
+            "conditions": [
+                "poisoned"
+            ],
+            "saves": [
+                "con"
+            ]
+        }
+    },
+    {
+        "id": "serpent-sting-wow",
+        "kind": "spell",
+        "name": "Serpent Sting",
+        "source": "WoW",
+        "edition": "one",
+        "text": "The target takes an extra 4d6 Poison damage from the attack, and the target has the Poisoned condition until the spell ends. At the end of each of its turns, the Poisoned target makes a Constitution saving throw. On a failed save, the creature takes 2d6 Poison damage. On a successful save, the spell ends.",
+        "level": 3,
+        "school": "necromancy",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "bonus_action",
+                "trigger": "which you take immediately after hitting a creature with a weapon"
+            }
+        ],
+        "range": {
+            "type": "self"
+        },
+        "components": {
+            "v": true,
+            "s": false
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "minute",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "ranger-xphb"
+        ],
+        "filters": {
+            "damage": [
+                "poison"
+            ],
+            "conditions": [
+                "poisoned"
+            ],
+            "saves": [
+                "con"
+            ]
+        }
+    },
+    {
+        "id": "shadow-word-pain-wow",
+        "kind": "spell",
+        "name": "Shadow Word: Pain",
+        "source": "WoW",
+        "edition": "one",
+        "text": "Speaking a word of Void power, you cause one creature in range to suffer agonizing pain. The target makes a Wisdom saving throw. On a failed save, the target takes Psychic damage equal to 1d10 plus your spellcasting ability modifier and is cursed for the duration. On a successful save, it takes half as much damage only.\n\nUntil the curse ends, the target takes 1d10 Psychic damage at the start of each of its turns. It repeats the save at the end of each of its turns, ending the curse on a success.\n\n**Using a Higher-Level Spell Slot.** The spell's initial damage increases by 1d10 for each spell slot level above 1.",
+        "level": 1,
+        "school": "necromancy",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 60
+        },
+        "components": {
+            "v": true,
+            "s": false
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "minute",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "cleric-xphb"
+        ],
+        "filters": {
+            "damage": [
+                "psychic"
+            ],
+            "saves": [
+                "wis"
+            ]
+        }
+    },
+    {
+        "id": "shattering-star-wow",
+        "kind": "spell",
+        "name": "Shattering Star",
+        "source": "WoW",
+        "edition": "one",
+        "text": "You exhale a bolt of concentrated power at a creature within range. Make a ranged spell attack against the target. On a hit, the target takes 10d8 Force damage, and it takes a -2 penalty to AC until the start of your next turn as clinging frost makes the target's exterior brittle.\n\n**Using a Higher-Level Spell Slot.** The damage increases by 1d8 for each spell slot level above 5.",
+        "level": 5,
+        "school": "evocation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 90
+        },
+        "components": {
+            "v": true,
+            "s": true
+        },
+        "duration": [
+            {
+                "type": "instant",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "sorcerer-xphb"
+        ],
+        "filters": {
+            "damage": [
+                "force"
+            ],
+            "attack": [
+                "ranged"
+            ],
+            "tags": [
+                "modifies_ac"
+            ]
+        }
+    },
+    {
+        "id": "sigil-of-chains-wow",
+        "kind": "spell",
+        "name": "Sigil of Chains",
+        "source": "WoW",
+        "edition": "one",
+        "text": "A sigil appears at a point on the ground you can see within range, then erupts in a 20-foot-radius Sphere. Each creature in the Sphere makes a Dexterity saving throw. On a failed save, a creature takes 5d6 Force damage, is pulled up to 10 feet straight toward the sigil, and has the Restrained condition until the end of your next turn. On a successful save, the creature takes half as much damage, and its Speed is reduced by 10 feet until the end of your next turn.",
+        "level": 5,
+        "school": "conjuration",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 90
+        },
+        "components": {
+            "v": true,
+            "s": false
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "round",
+                "concentration": false
+            }
+        ],
+        "filters": {
+            "damage": [
+                "force"
+            ],
+            "conditions": [
+                "restrained"
+            ],
+            "saves": [
+                "dex"
+            ],
+            "tags": [
+                "forced_movement",
+                "requires_sight"
+            ]
+        }
+    },
+    {
+        "id": "sigil-of-flame-wow",
+        "kind": "spell",
+        "name": "Sigil of Flame",
+        "source": "WoW",
+        "edition": "one",
+        "text": "You inscribe a sigil in the air that then appears on a creature you can see within range. The target makes a Constitution saving throw, taking 2d8 Fire damage on a failed save or half as much damage on a successful one. Whether or not the target fails its saving throw, it radiates heat in a 10-foot Emanation originating from itself until the end of its next turn. At the start of the target's next turn, the target and each creature in the Emanation must succeed on a Constitution saving throw or take 1d8 Fire damage.\n\n**Using a Higher-Level Spell Slot.** The damage (both initial and later) increases by 1d8 for each spell slot level above 2.",
+        "level": 2,
+        "school": "evocation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 90
+        },
+        "components": {
+            "v": true,
+            "s": false
+        },
+        "duration": [
+            {
+                "type": "instant",
+                "concentration": false
+            }
+        ],
+        "filters": {
+            "damage": [
+                "fire"
+            ],
+            "saves": [
+                "con"
+            ],
+            "tags": [
+                "requires_sight"
+            ]
+        }
+    },
+    {
+        "id": "soul-reap-wow",
+        "kind": "spell",
+        "name": "Soul Reap",
+        "source": "WoW",
+        "edition": "one",
+        "text": "You cut a hole in the fabric of reality, sending a bolt of cosmic matter toward a creature in range. Make a ranged spell attack against the target, which gains no benefit from Half Cover or Three-Quarters Cover. On a hit, you deal 6d6 Force damage. If you roll a 6 on a d6 for this spell, you can roll another d6 and add it to the damage. When you cast this spell, the maximum number of these d6s you can add to the spell's damage equals your spellcasting ability modifier.\n\n**Using a Higher-Level Spell Slot.** The damage increases by 1d6 for each spell slot level above 3.",
+        "level": 3,
+        "school": "necromancy",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 60
+        },
+        "components": {
+            "v": true,
+            "s": true
+        },
+        "duration": [
+            {
+                "type": "instant",
+                "concentration": false
+            }
+        ],
+        "filters": {
+            "damage": [
+                "force"
+            ],
+            "attack": [
+                "ranged"
+            ]
+        }
+    },
+    {
+        "id": "starfall-wow",
+        "kind": "spell",
+        "name": "Starfall",
+        "source": "WoW",
+        "edition": "one",
+        "text": "You call down falling stars on creatures in a 30-foot-radius, 40-foot-high Cylinder within range. Each creature in the Cylinder makes a Dexterity saving throw, taking 7d8 Radiant damage on a failed save or half as much damage on a successful one.\n\nUntil the start of your next turn, a creature that enters the Cylinder for the first time on a turn or ends its turn there takes Radiant damage equal to your Druid level. A creature takes this damage only once per turn.",
+        "level": 4,
+        "school": "evocation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 120
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "a pinch of stardust"
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "round",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "druid-xphb"
+        ],
+        "filters": {
+            "damage": [
+                "radiant"
+            ],
+            "saves": [
+                "dex"
+            ]
+        }
+    },
+    {
+        "id": "throw-glaive-wow",
+        "kind": "spell",
+        "name": "Throw Glaive",
+        "source": "WoW",
+        "edition": "one",
+        "text": "You create a demonic warglaive and hurl it at a creature or object in range. Make a ranged spell attack against the target. On a hit, the target takes 1d8 Slashing damage plus 1d8 Fire damage, and the glaive ricochets to a different target of your choice within 30 feet of the target. Make new attack and damage rolls against the new target.\n\n**Using a Higher-Level Spell Slot.** The Fire damage increases by 1d8 for each spell slot level above 1. The glaive ricochets a maximum number of times equal to the level of the slot expended; a creature can be targeted only once by each casting of this spell.",
+        "level": 1,
+        "school": "evocation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 60
+        },
+        "components": {
+            "v": true,
+            "s": true
+        },
+        "duration": [
+            {
+                "type": "instant",
+                "concentration": false
+            }
+        ],
+        "filters": {
+            "damage": [
+                "fire",
+                "slashing"
+            ],
+            "attack": [
+                "ranged"
+            ],
+            "tags": [
+                "affects_objects"
+            ]
+        }
+    },
+    {
+        "id": "time-dilation-wow",
+        "kind": "spell",
+        "name": "Time Dilation",
+        "source": "WoW",
+        "edition": "one",
+        "text": "The target reduces the damage taken by 4d8. At the end of each of the target's turns, the target loses 1d8 Hit Points until it has lost a total of 4d8 Hit Points (roll these 4d8 separately from the damage reduction).",
+        "level": 4,
+        "school": "abjuration",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "reaction",
+                "trigger": "which you take in response to you or a creature you can see within 60 feet of you taking damage"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 60
+        },
+        "components": {
+            "v": true,
+            "s": true
+        },
+        "duration": [
+            {
+                "type": "instant",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "sorcerer-xphb"
+        ],
+        "filters": {
+            "tags": [
+                "requires_sight"
+            ]
+        }
+    },
+    {
+        "id": "tranquility-wow",
+        "kind": "spell",
+        "name": "Tranquility",
+        "source": "WoW",
+        "edition": "one",
+        "text": "Nature's power flows around you in a 60-foot Emanation for the duration. Creatures of your choice in the Emanation have Resistance to Bludgeoning, Piercing, and Slashing damage. As a Bonus Action, you can cause each ally in the Emanation to regain Hit Points equal to 2d8 plus your spellcasting ability modifier.\n\n**Using a Higher-Level Spell Slot.** Creatures regain 1d8 additional Hit Points for each spell slot level above 6.",
+        "level": 6,
+        "school": "abjuration",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "self",
+            "area": {
+                "shape": "emanation",
+                "size": 60,
+                "unit": "feet"
+            }
+        },
+        "components": {
+            "v": true,
+            "s": false
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "minute",
+                "concentration": true
+            }
+        ],
+        "classes": [
+            "druid-xphb"
+        ],
+        "filters": {
+            "gives_resist": [
+                "bludgeoning",
+                "piercing",
+                "slashing"
+            ],
+            "tags": [
+                "healing",
+                "uses_action",
+                "uses_bonus_action"
+            ]
+        }
+    },
+    {
+        "id": "tree-of-life-wow",
+        "kind": "spell",
+        "name": "Tree of Life",
+        "source": "WoW",
+        "edition": "one",
+        "text": "You shape-shift into a Tree of Life form that resembles a treant. In this form, you gain the following benefits.\n\n**Tree Form.** You become Large. Your Speed becomes 10 feet and can't be reduced, and Difficult Terrain doesn't cost you extra movement.\n\n**Bark Skin.** You gain a +2 bonus to Armor Class and 10 Temporary Hit Points.\n\n**Condition Immunity.** You gain Immunity to the Paralyzed and Restrained conditions. You can't be shape-shifted against your will.\n\n**Source of Life.** When a spell you cast with a spell slot restores Hit Points to a creature, that creature regains an additional 1d8 Hit Points on the turn you cast the spell.\n\n**Spells Enhanced.** The spell save DC of your Druid spells increases by 1, and you have Advantage on the attack rolls of Druid spells you cast.",
+        "level": 8,
+        "school": "transmutation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "bonus_action"
+            }
+        ],
+        "range": {
+            "type": "self"
+        },
+        "components": {
+            "v": true,
+            "s": true
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "minute",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "druid-xphb"
+        ],
+        "filters": {
+            "tags": [
+                "grants_advantage",
+                "healing",
+                "grants_temp_hp"
+            ]
+        }
+    },
+    {
+        "id": "upheaval-wow",
+        "kind": "spell",
+        "name": "Upheaval",
+        "source": "WoW",
+        "edition": "one",
+        "text": "Fiery stones erupt, filling a 20-foot-radius, 10-foot tall Cylinder originating from a point on the ground you can see within range. Each creature in the Cylinder makes a Dexterity saving throw. On a failed save, a creature takes 1d12 Bludgeoning damage plus 3d8 Fire damage and is pushed vertically to the top of the cylinder, at which point the creature falls. On a successful save, a creature takes half as much damage only.\n\nSmoldering stones turn the ground in the Cylinder into Difficult Terrain until the end of your next turn.\n\n**Using a Higher-Level Spell Slot.** The Bludgeoning damage increases by 1d12 for each spell slot level above 4.",
+        "level": 4,
+        "school": "evocation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 90
+        },
+        "components": {
+            "v": true,
+            "s": true
+        },
+        "duration": [
+            {
+                "type": "instant",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "sorcerer-xphb"
+        ],
+        "filters": {
+            "damage": [
+                "bludgeoning",
+                "fire"
+            ],
+            "saves": [
+                "dex"
+            ],
+            "tags": [
+                "difficult_terrain",
+                "requires_sight"
+            ]
+        }
+    },
+    {
+        "id": "vampiric-blood-wow",
+        "kind": "spell",
+        "name": "Vampiric Blood",
+        "source": "WoW",
+        "edition": "one",
+        "text": "For the duration, your Hit Point maximum increases by 10. In addition, whenever you regain Hit Points, you regain an extra 1d6 Hit Points.\n\n**Using a Higher-Level Spell Slot.** The additional healing increases by 1d6 for each spell slot level above 1.",
+        "level": 1,
+        "school": "necromancy",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "self"
+        },
+        "components": {
+            "v": true,
+            "s": false
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "minute",
+                "concentration": true
+            }
+        ],
+        "filters": {
+            "tags": [
+                "healing"
+            ]
+        }
+    },
+    {
+        "id": "void-eruption-wow",
+        "kind": "spell",
+        "name": "Void Eruption",
+        "source": "WoW",
+        "edition": "one",
+        "text": "Shadowy Void energy erupts in a 20-foot-radius Sphere centered on a point you choose within range. Each creature in the Sphere makes a Constitution saving throw, taking 5d6 Necrotic damage on a failed save or half as much damage on a successful one. At the same time, you take on a form of Void that grants you the following benefits for the duration.\n\n**Void Bolt.** As a Bonus Action on your turn, you can hurl a bolt of Void energy at a creature within 60 feet of yourself. Make a ranged spell attack; on a hit, the target takes Necrotic damage equal to 2d6 plus your spellcasting ability modifier.\n\n**Void Stealth.** While you are in an area of Dim Light or Darkness, you have the Invisible condition.",
+        "level": 5,
+        "school": "necromancy",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "bonus_action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 120
+        },
+        "components": {
+            "v": true,
+            "s": false
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "minute",
+                "concentration": true
+            }
+        ],
+        "classes": [
+            "cleric-xphb"
+        ],
+        "filters": {
+            "damage": [
+                "necrotic"
+            ],
+            "saves": [
+                "con"
+            ],
+            "attack": [
+                "ranged"
+            ],
+            "tags": [
+                "uses_bonus_action"
+            ]
+        }
+    },
+    {
+        "id": "wrath-wow",
+        "kind": "spell",
+        "name": "Wrath",
+        "source": "WoW",
+        "edition": "one",
+        "text": "You hurl a ball of energy at a target within range. Make a ranged spell attack against the target. On a hit, the target takes 1d8 Lightning damage, and its Speed is reduced by 10 feet until the end of your next turn.\n\n**Cantrip Upgrade.** The damage increases by 1d8 when you reach levels 5 (2d8), 11 (3d8), and 17 (4d8).",
+        "level": 0,
+        "school": "evocation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 60
+        },
+        "components": {
+            "v": true,
+            "s": true
+        },
+        "duration": [
+            {
+                "type": "instant",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "druid-xphb"
+        ],
+        "filters": {
+            "damage": [
+                "lightning"
+            ],
+            "attack": [
+                "ranged"
+            ],
+            "tags": [
+                "scaling_effects"
+            ]
+        }
+    }
+]

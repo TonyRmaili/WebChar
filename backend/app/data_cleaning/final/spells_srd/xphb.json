@@ -1,0 +1,1462 @@
+[
+    {
+        "id": "acid-splash-xphb",
+        "kind": "spell",
+        "name": "Acid Splash",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Acid Splash"
+        },
+        "text": "You create an acidic bubble at a point within range, where it explodes in a 5-foot-radius Sphere. Each creature in that Sphere must succeed on a Dexterity saving throw or take 1d6 Acid damage.\n\n**Cantrip Upgrade.** The damage increases by 1d6 when you reach levels 5 (2d6), 11 (3d6), and 17 (4d6).",
+        "level": 0,
+        "school": "evocation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 60
+        },
+        "components": {
+            "v": true,
+            "s": true
+        },
+        "duration": [
+            {
+                "type": "instant",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "sorcerer-xphb",
+            "wizard-xphb",
+            "artificer-efa"
+        ],
+        "filters": {
+            "damage": [
+                "acid"
+            ],
+            "saves": [
+                "dex"
+            ],
+            "area": [
+                "multiple_targets"
+            ],
+            "tags": [
+                "scaling_effects"
+            ]
+        },
+        "features": [
+            {
+                "id": "acid-splash",
+                "name": "Acid Splash",
+                "level": 1,
+                "category": "actions",
+                "action": {
+                    "area": "5-foot-radius sphere",
+                    "save": {
+                        "ability": "dex",
+                        "dc": "8 + pb + spell_mod",
+                        "on_success": "none",
+                        "damage": [
+                            {
+                                "dice": {
+                                    "1": "1d6",
+                                    "5": "2d6",
+                                    "11": "3d6",
+                                    "17": "4d6"
+                                },
+                                "type": "acid"
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "id": "aid-xphb",
+        "kind": "spell",
+        "name": "Aid",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Aid"
+        },
+        "text": "Choose up to three creatures within range. Each target's Hit Point maximum and current Hit Points increase by 5 for the duration.\n\n**Using a Higher-Level Spell Slot.** Each target's Hit Points increase by 5 for each spell slot level above 2.",
+        "level": 2,
+        "school": "abjuration",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 30
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "a strip of white cloth"
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 8,
+                "unit": "hour",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "bard-xphb",
+            "cleric-xphb",
+            "druid-xphb",
+            "ranger-xphb",
+            "paladin-xphb",
+            "artificer-efa",
+            "death-knight-wow",
+            "demon-hunter-wow"
+        ],
+        "filters": {
+            "area": [
+                "multiple_targets"
+            ],
+            "tags": [
+                "healing"
+            ]
+        },
+        "features": [
+            {
+                "id": "aid",
+                "name": "Aid",
+                "level": 1,
+                "category": "actions",
+                "toggle": {
+                    "modifiers": [
+                        {
+                            "target": "hp_max",
+                            "add": 5
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    {
+        "id": "alarm-xphb",
+        "kind": "spell",
+        "name": "Alarm",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Alarm"
+        },
+        "text": "You set an alarm against intrusion. Choose a door, a window, or an area within range that is no larger than a 20-foot Cube. Until the spell ends, an alarm alerts you whenever a creature touches or enters the warded area. When you cast the spell, you can designate creatures that won't set off the alarm. You also choose whether the alarm is audible or mental:\n\n- **Audible Alarm.** The alarm produces the sound of a handbell for 10 seconds within 60 feet of the warded area.\n- **Mental Alarm.** You are alerted by a mental ping if you are within 1 mile of the warded area. This ping awakens you if you're asleep.",
+        "level": 1,
+        "school": "abjuration",
+        "ritual": true,
+        "time": [
+            {
+                "number": 1,
+                "unit": "minute"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 30
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "a bell and silver wire"
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 8,
+                "unit": "hour",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "ranger-xphb",
+            "wizard-xphb",
+            "artificer-efa",
+            "demon-hunter-wow"
+        ],
+        "filters": {
+            "area": [
+                "cube"
+            ]
+        },
+        "features": []
+    },
+    {
+        "id": "alter-self-xphb",
+        "kind": "spell",
+        "name": "Alter Self",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Alter Self"
+        },
+        "text": "You alter your physical form. Choose one of the following options. Its effects last for the duration, during which you can take a Magic action to replace the option you chose with a different one.\n\n**Aquatic Adaptation.** You sprout gills and grow webs between your fingers. You can breathe underwater and gain a Swim Speed equal to your Speed.\n\n**Change Appearance.** You alter your appearance. You decide what you look like, including your height, weight, facial features, sound of your voice, hair length, coloration, and other distinguishing characteristics. You can make yourself appear as a member of another species, though none of your statistics change. You can't appear as a creature of a different size, and your basic shape stays the same; if you're bipedal, you can't use this spell to become quadrupedal, for instance. For the duration, you can take a Magic action to change your appearance in this way again.\n\n**Natural Weapons.** You grow claws (Slashing), fangs (Piercing), horns (Piercing), or hooves (Bludgeoning). When you use your Unarmed Strike to deal damage with that new growth, it deals 1d6 damage of the type in parentheses instead of dealing the normal damage for your Unarmed Strike, and you use your spellcasting ability modifier for the attack and damage rolls rather than using Strength.",
+        "level": 2,
+        "school": "transmutation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "self"
+        },
+        "components": {
+            "v": true,
+            "s": true
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "hour",
+                "concentration": true
+            }
+        ],
+        "classes": [
+            "sorcerer-xphb",
+            "wizard-xphb",
+            "artificer-efa"
+        ],
+        "filters": {
+            "damage": [
+                "bludgeoning",
+                "piercing",
+                "slashing"
+            ],
+            "tags": [
+                "uses_action"
+            ]
+        },
+        "features": [
+            {
+                "id": "aquatic-adaptation",
+                "name": "Aquatic Adaptation",
+                "level": 1,
+                "category": "actions",
+                "toggle": {
+                    "grants": {
+                        "speed": {
+                            "swim": "walk"
+                        }
+                    }
+                }
+            },
+            {
+                "id": "natural-weapons",
+                "name": "Natural Weapons",
+                "level": 1,
+                "category": "actions",
+                "action": {
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": "pb + spell_mod",
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": "spell_mod",
+                                "type": "slashing",
+                                "condition": "claws"
+                            },
+                            {
+                                "dice": "1d6",
+                                "bonus": "spell_mod",
+                                "type": "piercing",
+                                "condition": "fangs or horns"
+                            },
+                            {
+                                "dice": "1d6",
+                                "bonus": "spell_mod",
+                                "type": "bludgeoning",
+                                "condition": "hooves"
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "id": "animal-friendship-xphb",
+        "kind": "spell",
+        "name": "Animal Friendship",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Animal Friendship"
+        },
+        "text": "Target a Beast that you can see within range. The target must succeed on a Wisdom saving throw or have the Charmed condition for the duration. If you or one of your allies deals damage to the target, the spell ends.\n\n**Using a Higher-Level Spell Slot.** You can target one additional Beast for each spell slot level above 1.",
+        "level": 1,
+        "school": "enchantment",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 30
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "a morsel of food"
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 24,
+                "unit": "hour",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "bard-xphb",
+            "druid-xphb",
+            "ranger-xphb",
+            "demon-hunter-wow"
+        ],
+        "filters": {
+            "conditions": [
+                "charmed"
+            ],
+            "saves": [
+                "wis"
+            ],
+            "area": [
+                "single_target"
+            ],
+            "creature_types": [
+                "beast"
+            ],
+            "tags": [
+                "scaling_targets",
+                "requires_sight"
+            ]
+        },
+        "features": [
+            {
+                "id": "animal-friendship",
+                "name": "Animal Friendship",
+                "level": 1,
+                "category": "actions",
+                "action": {
+                    "save": {
+                        "ability": "wis",
+                        "dc": "8 + pb + spell_mod",
+                        "on_success": "none",
+                        "conditions": [
+                            "charmed"
+                        ]
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "id": "bane-xphb",
+        "kind": "spell",
+        "name": "Bane",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Bane"
+        },
+        "text": "Up to three creatures of your choice that you can see within range must each make a Charisma saving throw. Whenever a target that fails this save makes an attack roll or a saving throw before the spell ends, the target must subtract 1d4 from the attack roll or save.\n\n**Using a Higher-Level Spell Slot.** You can target one additional creature for each spell slot level above 1.",
+        "level": 1,
+        "school": "enchantment",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 30
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "a drop of blood"
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "minute",
+                "concentration": true
+            }
+        ],
+        "classes": [
+            "bard-xphb",
+            "cleric-xphb",
+            "warlock-xphb"
+        ],
+        "filters": {
+            "saves": [
+                "cha"
+            ],
+            "area": [
+                "multiple_targets"
+            ],
+            "tags": [
+                "scaling_targets",
+                "requires_sight"
+            ]
+        },
+        "features": [
+            {
+                "id": "bane",
+                "name": "Bane",
+                "level": 1,
+                "category": "actions",
+                "action": {
+                    "save": {
+                        "ability": "cha",
+                        "dc": "8 + pb + spell_mod",
+                        "on_success": "none"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "id": "bigbys-hand-xphb",
+        "kind": "spell",
+        "name": "Arcane Hand",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Arcane Hand"
+        },
+        "aliases": [
+            "Bigby's Hand"
+        ],
+        "text": "You create a Large hand of shimmering magical energy in an unoccupied space that you can see within range. The hand lasts for the duration, and it moves at your command, mimicking the movements of your own hand.\n\nThe hand is an object that has AC 20 and Hit Points equal to your Hit Point maximum. If it drops to 0 Hit Points, the spell ends. The hand doesn't occupy its space.\n\nWhen you cast the spell and as a Bonus Action on your later turns, you can move the hand up to 60 feet and then cause one of the following effects:\n\n- **Clenched Fist.** The hand strikes a target within 5 feet of it. Make a melee spell attack. On a hit, the target takes 5d8 Force damage.\n- **Forceful Hand.** The hand attempts to push a Huge or smaller creature within 5 feet of it. The target must succeed on a Strength saving throw, or the hand pushes the target up to 5 feet plus a number of feet equal to five times your spellcasting ability modifier. The hand moves with the target, remaining within 5 feet of it.\n- **Grasping Hand.** The hand attempts to grapple a Huge or smaller creature within 5 feet of it. The target must succeed on a Dexterity saving throw, or the target has the Grappled condition, with an escape DC equal to your spell save DC. While the hand grapples the target, you can take a Bonus Action to cause the hand to crush it, dealing Bludgeoning damage to the target equal to 4d6 plus your spellcasting ability modifier.\n- **Interposing Hand.** The hand grants you Half Cover against attacks and other effects that originate from its space or that pass through it. In addition, its space counts as Difficult Terrain for your enemies.\n\n**Using a Higher-Level Spell Slot.** The damage of the Clenched Fist increases by 2d8 and the damage of the Grasping Hand increases by 2d6 for each spell slot level above 5.",
+        "level": 5,
+        "school": "evocation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 120
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "an eggshell and a glove"
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "minute",
+                "concentration": true
+            }
+        ],
+        "classes": [
+            "sorcerer-xphb",
+            "wizard-xphb",
+            "artificer-efa"
+        ],
+        "filters": {
+            "damage": [
+                "bludgeoning",
+                "force"
+            ],
+            "conditions": [
+                "grappled"
+            ],
+            "saves": [
+                "dex",
+                "str"
+            ],
+            "attack": [
+                "melee"
+            ],
+            "tags": [
+                "difficult_terrain",
+                "forced_movement",
+                "affects_objects",
+                "requires_sight",
+                "uses_action",
+                "uses_bonus_action"
+            ]
+        },
+        "features": [
+            {
+                "id": "clenched-fist",
+                "name": "Clenched Fist",
+                "level": 1,
+                "category": "bonus_actions",
+                "action": {
+                    "range": "5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": "pb + spell_mod",
+                        "damage": [
+                            {
+                                "dice": "5d8",
+                                "type": "force",
+                                "per_slot": "2d8"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "forceful-hand",
+                "name": "Forceful Hand",
+                "level": 1,
+                "category": "bonus_actions",
+                "action": {
+                    "range": "5 ft.",
+                    "save": {
+                        "ability": "str",
+                        "dc": "8 + pb + spell_mod",
+                        "on_success": "none"
+                    }
+                }
+            },
+            {
+                "id": "grasping-hand",
+                "name": "Grasping Hand",
+                "level": 1,
+                "category": "bonus_actions",
+                "action": {
+                    "range": "5 ft.",
+                    "damage": [
+                        {
+                            "dice": "4d6",
+                            "bonus": "spell_mod",
+                            "type": "bludgeoning",
+                            "per_slot": "2d6"
+                        }
+                    ],
+                    "save": {
+                        "ability": "dex",
+                        "dc": "8 + pb + spell_mod",
+                        "on_success": "none",
+                        "conditions": [
+                            "grappled"
+                        ]
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "id": "bless-xphb",
+        "kind": "spell",
+        "name": "Bless",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Bless"
+        },
+        "text": "You bless up to three creatures within range. Whenever a target makes an attack roll or a saving throw before the spell ends, the target adds 1d4 to the attack roll or save.\n\n**Using a Higher-Level Spell Slot.** You can target one additional creature for each spell slot level above 1.",
+        "level": 1,
+        "school": "enchantment",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 30
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": {
+                "text": "a Holy Symbol worth 5+ GP",
+                "cost": {
+                    "gp": 5
+                },
+                "consumed": false
+            }
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "minute",
+                "concentration": true
+            }
+        ],
+        "classes": [
+            "cleric-xphb",
+            "paladin-xphb",
+            "death-knight-wow"
+        ],
+        "filters": {
+            "area": [
+                "multiple_targets"
+            ],
+            "tags": [
+                "scaling_targets"
+            ]
+        },
+        "features": [
+            {
+                "id": "bless",
+                "name": "Bless",
+                "level": 1,
+                "category": "actions",
+                "toggle": {
+                    "modifiers": [
+                        {
+                            "target": "attack",
+                            "add": "1d4"
+                        },
+                        {
+                            "target": "save.str",
+                            "add": "1d4"
+                        },
+                        {
+                            "target": "save.dex",
+                            "add": "1d4"
+                        },
+                        {
+                            "target": "save.con",
+                            "add": "1d4"
+                        },
+                        {
+                            "target": "save.int",
+                            "add": "1d4"
+                        },
+                        {
+                            "target": "save.wis",
+                            "add": "1d4"
+                        },
+                        {
+                            "target": "save.cha",
+                            "add": "1d4"
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    {
+        "id": "command-xphb",
+        "kind": "spell",
+        "name": "Command",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Command"
+        },
+        "text": "You speak a one-word command to a creature you can see within range. The target must succeed on a Wisdom saving throw or follow the command on its next turn. Choose the command from these options:\n\n- **Approach.** The target moves toward you by the shortest and most direct route, ending its turn if it moves within 5 feet of you.\n- **Drop.** The target drops whatever it is holding and then ends its turn.\n- **Flee.** The target spends its turn moving away from you by the fastest available means.\n- **Grovel.** The target has the Prone condition and then ends its turn.\n- **Halt.** On its turn, the target doesn't move and takes no action or Bonus Action.\n\n**Using a Higher-Level Spell Slot.** You can affect one additional creature for each spell slot level above 1.",
+        "level": 1,
+        "school": "enchantment",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 60
+        },
+        "components": {
+            "v": true,
+            "s": false
+        },
+        "duration": [
+            {
+                "type": "instant",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "bard-xphb",
+            "cleric-xphb",
+            "paladin-xphb",
+            "death-knight-wow"
+        ],
+        "filters": {
+            "conditions": [
+                "prone"
+            ],
+            "saves": [
+                "wis"
+            ],
+            "area": [
+                "single_target"
+            ],
+            "tags": [
+                "scaling_targets",
+                "requires_sight"
+            ]
+        },
+        "features": [
+            {
+                "id": "command",
+                "name": "Command",
+                "level": 1,
+                "category": "actions",
+                "action": {
+                    "save": {
+                        "ability": "wis",
+                        "dc": "8 + pb + spell_mod",
+                        "on_success": "none",
+                        "conditions": [
+                            "prone"
+                        ]
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "id": "cure-wounds-xphb",
+        "kind": "spell",
+        "name": "Cure Wounds",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Cure Wounds"
+        },
+        "text": "A creature you touch regains a number of Hit Points equal to 2d8 plus your spellcasting ability modifier.\n\n**Using a Higher-Level Spell Slot.** The healing increases by 2d8 for each spell slot level above 1.",
+        "level": 1,
+        "school": "abjuration",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "touch"
+        },
+        "components": {
+            "v": true,
+            "s": true
+        },
+        "duration": [
+            {
+                "type": "instant",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "bard-xphb",
+            "cleric-xphb",
+            "druid-xphb",
+            "ranger-xphb",
+            "paladin-xphb",
+            "artificer-efa",
+            "death-knight-wow",
+            "demon-hunter-wow"
+        ],
+        "filters": {
+            "area": [
+                "single_target"
+            ],
+            "tags": [
+                "healing"
+            ]
+        },
+        "features": [
+            {
+                "id": "cure-wounds",
+                "name": "Cure Wounds",
+                "level": 1,
+                "category": "actions",
+                "action": {
+                    "range": "touch",
+                    "heal": "2d8 + spell_mod",
+                    "heal_per_slot": "2d8"
+                }
+            }
+        ]
+    },
+    {
+        "id": "fireball-xphb",
+        "kind": "spell",
+        "name": "Fireball",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Fireball"
+        },
+        "text": "A bright streak flashes from you to a point you choose within range and then blossoms with a low roar into a fiery explosion. Each creature in a 20-foot-radius Sphere centered on that point makes a Dexterity saving throw, taking 8d6 Fire damage on a failed save or half as much damage on a successful one.\n\nFlammable objects in the area that aren't being worn or carried start burning.\n\n**Using a Higher-Level Spell Slot.** The damage increases by 1d6 for each spell slot level above 3.",
+        "level": 3,
+        "school": "evocation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 150
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "a ball of bat guano and sulfur"
+        },
+        "duration": [
+            {
+                "type": "instant",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "sorcerer-xphb",
+            "wizard-xphb"
+        ],
+        "filters": {
+            "damage": [
+                "fire"
+            ],
+            "saves": [
+                "dex"
+            ],
+            "area": [
+                "sphere"
+            ],
+            "tags": [
+                "ignites_objects",
+                "affects_objects"
+            ]
+        },
+        "features": [
+            {
+                "id": "fireball",
+                "name": "Fireball",
+                "level": 1,
+                "category": "actions",
+                "action": {
+                    "range": "150 ft.",
+                    "area": "20-foot-radius sphere",
+                    "save": {
+                        "ability": "dex",
+                        "dc": "8 + pb + spell_mod",
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "8d6",
+                                "type": "fire",
+                                "per_slot": "1d6"
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "id": "heroism-xphb",
+        "kind": "spell",
+        "name": "Heroism",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Heroism"
+        },
+        "text": "A willing creature you touch is imbued with bravery. Until the spell ends, the creature is immune to the Frightened condition and gains Temporary Hit Points equal to your spellcasting ability modifier at the start of each of its turns.\n\n**Using a Higher-Level Spell Slot.** You can target one additional creature for each spell slot level above 1.",
+        "level": 1,
+        "school": "enchantment",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "touch"
+        },
+        "components": {
+            "v": true,
+            "s": true
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "minute",
+                "concentration": true
+            }
+        ],
+        "classes": [
+            "bard-xphb",
+            "paladin-xphb",
+            "death-knight-wow"
+        ],
+        "filters": {
+            "area": [
+                "single_target"
+            ],
+            "gives_condition_immune": [
+                "frightened"
+            ],
+            "tags": [
+                "scaling_targets",
+                "grants_temp_hp",
+                "targets_willing"
+            ]
+        },
+        "features": [
+            {
+                "id": "heroism",
+                "name": "Heroism",
+                "level": 1,
+                "category": "actions",
+                "action": {
+                    "range": "touch",
+                    "temp_hp": "spell_mod"
+                },
+                "toggle": {
+                    "grants": {
+                        "defenses": {
+                            "condition_immune": [
+                                "frightened"
+                            ]
+                        }
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "id": "hex-xphb",
+        "kind": "spell",
+        "name": "Hex",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Hex"
+        },
+        "text": "You place a curse on a creature that you can see within range. Until the spell ends, you deal an extra 1d6 Necrotic damage to the target whenever you hit it with an attack roll. Also, choose one ability when you cast the spell. The target has Disadvantage on ability checks made with the chosen ability.\n\nIf the target drops to 0 Hit Points before this spell ends, you can take a Bonus Action on a later turn to curse a new creature.\n\n**Using a Higher-Level Spell Slot.** Your Concentration can last longer with a spell slot of level 2 (up to 4 hours), 3-4 (up to 8 hours), or 5+ (24 hours).",
+        "level": 1,
+        "school": "enchantment",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "bonus_action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 90
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "the petrified eye of a newt"
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "hour",
+                "concentration": true
+            }
+        ],
+        "classes": [
+            "warlock-xphb"
+        ],
+        "filters": {
+            "damage": [
+                "necrotic"
+            ],
+            "area": [
+                "single_target"
+            ],
+            "tags": [
+                "additional_attack_damage",
+                "requires_sight",
+                "uses_action",
+                "uses_bonus_action"
+            ]
+        },
+        "features": [
+            {
+                "id": "hex",
+                "name": "Hex",
+                "level": 1,
+                "category": "bonus_actions",
+                "action": {
+                    "attack": {
+                        "kind": "any",
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "type": "necrotic"
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "id": "hold-person-xphb",
+        "kind": "spell",
+        "name": "Hold Person",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Hold Person"
+        },
+        "text": "Choose a Humanoid that you can see within range. The target must succeed on a Wisdom saving throw or have the Paralyzed condition for the duration. At the end of each of its turns, the target repeats the save, ending the spell on itself on a success.\n\n**Using a Higher-Level Spell Slot.** You can target one additional Humanoid for each spell slot level above 2.",
+        "level": 2,
+        "school": "enchantment",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 60
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "a straight piece of iron"
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "minute",
+                "concentration": true
+            }
+        ],
+        "classes": [
+            "bard-xphb",
+            "cleric-xphb",
+            "druid-xphb",
+            "sorcerer-xphb",
+            "warlock-xphb",
+            "wizard-xphb"
+        ],
+        "filters": {
+            "conditions": [
+                "paralyzed"
+            ],
+            "saves": [
+                "wis"
+            ],
+            "area": [
+                "single_target"
+            ],
+            "creature_types": [
+                "humanoid"
+            ],
+            "tags": [
+                "scaling_targets",
+                "requires_sight"
+            ]
+        },
+        "features": [
+            {
+                "id": "hold-person",
+                "name": "Hold Person",
+                "level": 1,
+                "category": "actions",
+                "action": {
+                    "save": {
+                        "ability": "wis",
+                        "dc": "8 + pb + spell_mod",
+                        "on_success": "none",
+                        "conditions": [
+                            "paralyzed"
+                        ]
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "id": "mage-armor-xphb",
+        "kind": "spell",
+        "name": "Mage Armor",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Mage Armor"
+        },
+        "text": "You touch a willing creature who isn't wearing armor. Until the spell ends, the target's base AC becomes 13 plus its Dexterity modifier. The spell ends early if the target dons armor.",
+        "level": 1,
+        "school": "abjuration",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "touch"
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "a piece of cured leather"
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 8,
+                "unit": "hour",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "sorcerer-xphb",
+            "wizard-xphb"
+        ],
+        "filters": {
+            "area": [
+                "single_target"
+            ],
+            "tags": [
+                "modifies_ac",
+                "targets_willing"
+            ]
+        },
+        "features": [
+            {
+                "id": "mage-armor",
+                "name": "Mage Armor",
+                "level": 1,
+                "category": "actions",
+                "toggle": {
+                    "modifiers": [
+                        {
+                            "target": "ac",
+                            "base": "13 + dex_mod",
+                            "requires": [
+                                "no_armor"
+                            ]
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    {
+        "id": "magic-missile-xphb",
+        "kind": "spell",
+        "name": "Magic Missile",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Magic Missile"
+        },
+        "text": "You create three glowing darts of magical force. Each dart strikes a creature of your choice that you can see within range. A dart deals 1d4 + 1 Force damage to its target. The darts all strike simultaneously, and you can direct them to hit one creature or several.\n\n**Using a Higher-Level Spell Slot.** The spell creates one more dart for each spell slot level above 1.",
+        "level": 1,
+        "school": "evocation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 120
+        },
+        "components": {
+            "v": true,
+            "s": true
+        },
+        "duration": [
+            {
+                "type": "instant",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "sorcerer-xphb",
+            "wizard-xphb"
+        ],
+        "filters": {
+            "damage": [
+                "force"
+            ],
+            "area": [
+                "multiple_targets",
+                "single_target"
+            ],
+            "tags": [
+                "requires_sight"
+            ]
+        },
+        "features": [
+            {
+                "id": "magic-missile",
+                "name": "Magic Missile",
+                "level": 1,
+                "category": "actions",
+                "action": {
+                    "damage": [
+                        {
+                            "dice": "1d4",
+                            "bonus": 1,
+                            "type": "force"
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    {
+        "id": "shield-xphb",
+        "kind": "spell",
+        "name": "Shield",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Shield"
+        },
+        "text": "An imperceptible barrier of magical force protects you. Until the start of your next turn, you have a +5 bonus to AC, including against the triggering attack, and you take no damage from Magic Missile.",
+        "level": 1,
+        "school": "abjuration",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "reaction",
+                "trigger": "which you take when you are hit by an attack roll or targeted by the Magic Missile spell"
+            }
+        ],
+        "range": {
+            "type": "self"
+        },
+        "components": {
+            "v": true,
+            "s": true
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "round",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "sorcerer-xphb",
+            "wizard-xphb"
+        ],
+        "filters": {
+            "tags": [
+                "modifies_ac"
+            ]
+        },
+        "features": [
+            {
+                "id": "shield",
+                "name": "Shield",
+                "level": 1,
+                "category": "reactions",
+                "toggle": {
+                    "modifiers": [
+                        {
+                            "target": "ac",
+                            "add": 5
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    {
+        "id": "shillelagh-xphb",
+        "kind": "spell",
+        "name": "Shillelagh",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Shillelagh"
+        },
+        "text": "A Club or Quarterstaff you are holding is imbued with nature's power. For the duration, you can use your spellcasting ability instead of Strength for the attack and damage rolls of melee attacks using that weapon, and the weapon's damage die becomes a d8. If the attack deals damage, it can be Force damage or the weapon's normal damage type (your choice).\n\nThe spell ends early if you cast it again or if you let go of the weapon.\n\n**Cantrip Upgrade.** The damage die changes when you reach levels 5 (d10), 11 (d12), and 17 (2d6).",
+        "level": 0,
+        "school": "transmutation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "bonus_action"
+            }
+        ],
+        "range": {
+            "type": "self"
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "mistletoe"
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "minute",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "druid-xphb"
+        ],
+        "filters": {
+            "damage": [
+                "force"
+            ],
+            "tags": [
+                "additional_attack_damage",
+                "scaling_effects"
+            ]
+        },
+        "features": [
+            {
+                "id": "shillelagh",
+                "name": "Shillelagh",
+                "level": 1,
+                "category": "bonus_actions",
+                "action": {
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": "pb + spell_mod",
+                        "damage": [
+                            {
+                                "dice": {
+                                    "1": "1d8",
+                                    "5": "1d10",
+                                    "11": "1d12",
+                                    "17": "2d6"
+                                },
+                                "bonus": "spell_mod",
+                                "type": "weapon"
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "id": "spiritual-weapon-xphb",
+        "kind": "spell",
+        "name": "Spiritual Weapon",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Spiritual Weapon"
+        },
+        "text": "You create a floating, spectral force that resembles a weapon of your choice and lasts for the duration. The force appears within range in a space of your choice, and you can immediately make one melee spell attack against one creature within 5 feet of the force. On a hit, the target takes Force damage equal to 1d8 plus your spellcasting ability modifier.\n\nAs a Bonus Action on your later turns, you can move the force up to 20 feet and repeat the attack against a creature within 5 feet of it.\n\n**Using a Higher-Level Spell Slot.** The damage increases by 1d8 for every slot level above 2.",
+        "level": 2,
+        "school": "evocation",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "bonus_action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 60
+        },
+        "components": {
+            "v": true,
+            "s": true
+        },
+        "duration": [
+            {
+                "type": "timed",
+                "amount": 1,
+                "unit": "minute",
+                "concentration": true
+            }
+        ],
+        "classes": [
+            "cleric-xphb"
+        ],
+        "filters": {
+            "damage": [
+                "force"
+            ],
+            "attack": [
+                "melee"
+            ],
+            "area": [
+                "single_target"
+            ],
+            "tags": [
+                "uses_bonus_action"
+            ]
+        },
+        "features": [
+            {
+                "id": "spiritual-weapon",
+                "name": "Spiritual Weapon",
+                "level": 1,
+                "category": "bonus_actions",
+                "action": {
+                    "range": "5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": "pb + spell_mod",
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": "spell_mod",
+                                "type": "force",
+                                "per_slot": "1d8"
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+]

@@ -1,0 +1,21 @@
+{
+  "_about": "Fixes for mistakes in the 5etools data. Key: \"Name|SOURCE\". Value: _mod edits (same modes as _copy). Applied by the resolver before anything else; a patch that stops fitting is reported.",
+  "Strike of the Giants|BGG": {
+    "_why": "The save DC and uses rules sit inside the Storm Strike block, so every other giant option loses them. Move them out so they belong to the whole feat.",
+    "entries": {
+      "mode": "replaceArr",
+      "replace": "Storm Strike",
+      "items": [
+        {
+          "type": "entries",
+          "name": "Storm Strike",
+          "entries": [
+            "The target takes an extra {@damage 1d6} lightning damage. If the target is a creature, it must succeed on a Constitution saving throw, or it has disadvantage on attack rolls until the start of your next turn."
+          ]
+        },
+        "The saving throw DC for these effects equals 8 + your proficiency bonus + your Strength or Constitution modifier.",
+        "You can use this feat a number of times equal to your proficiency bonus, and you regain all expended uses when you finish a long rest."
+      ]
+    }
+  }
+}

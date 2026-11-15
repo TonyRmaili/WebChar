@@ -1,0 +1,187 @@
+[
+    {
+        "id": "acidic-mist-apparition-gotsf",
+        "kind": "monster",
+        "name": "Acidic Mist Apparition",
+        "source": "GotSF",
+        "edition": "classic",
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "apparition"
+        },
+        "alignment": [
+            "neutral"
+        ],
+        "ac": [
+            {
+                "value": 15
+            }
+        ],
+        "hp": {
+            "average": 90,
+            "formula": "12d10 + 24"
+        },
+        "speed": {
+            "fly": 90,
+            "hover": true
+        },
+        "abilities": {
+            "str": 14,
+            "dex": 20,
+            "con": 14,
+            "int": 6,
+            "wis": 10,
+            "cha": 6
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 10,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "lightning",
+                    "thunder"
+                ],
+                "conditional": [
+                    {
+                        "types": [
+                            "bludgeoning",
+                            "piercing",
+                            "slashing"
+                        ],
+                        "note": "from nonmagical attacks"
+                    }
+                ]
+            },
+            "immune": {
+                "types": [
+                    "acid",
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "exhaustion",
+                    "grappled",
+                    "paralyzed",
+                    "petrified",
+                    "poisoned",
+                    "prone",
+                    "restrained",
+                    "unconscious"
+                ]
+            }
+        },
+        "languages": [
+            "Auran"
+        ],
+        "cr": {
+            "cr": "5",
+            "xp": 1800,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 5
+        },
+        "features": [
+            {
+                "id": "air-form",
+                "name": "Air Form",
+                "category": "traits",
+                "text": "The apparition can enter a hostile creature's space and stop there. It can move through a space as narrow as 1 inch wide without squeezing."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The apparition makes two slam attacks."
+            },
+            {
+                "id": "slam",
+                "name": "Slam",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +8 to hit, reach 5 ft., one target. Hit: 14 (2d8 + 5) acid damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 8,
+                        "damage": [
+                            {
+                                "dice": "2d8",
+                                "bonus": 5,
+                                "type": "acid"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "whirlwind",
+                "name": "Whirlwind",
+                "category": "actions",
+                "text": "Each creature in the apparition's space must make a DC 13 Strength saving throw. On a failure, a target takes 15 (3d8 + 2) bludgeoning damage and is flung up 20 feet away from the apparition in a random direction and knocked prone. If a thrown target strikes an object, such as a wall or floor, the target takes 3 (1d6) bludgeoning damage for every 10 feet it was thrown. If the target is thrown at another creature, that creature must succeed on a DC 13 Dexterity saving throw or take the same damage and be knocked prone.\n\nIf the saving throw is successful, the target takes half the bludgeoning damage and isn't flung away or knocked prone.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 4
+                },
+                "action": {
+                    "save": {
+                        "ability": "str",
+                        "dc": 13,
+                        "on_success": "none",
+                        "damage": [
+                            {
+                                "dice": "3d8",
+                                "bonus": 2,
+                                "type": "bludgeoning"
+                            },
+                            {
+                                "dice": "1d6",
+                                "type": "bludgeoning"
+                            }
+                        ],
+                        "conditions": [
+                            "prone"
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning"
+            ],
+            "conditions_inflicted": [
+                "prone"
+            ],
+            "saves_forced": [
+                "str"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "movement": [
+                "fly",
+                "hover"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "auran"
+            ],
+            "environment": [
+                "mountain",
+                "desert"
+            ]
+        }
+    }
+]

@@ -1,0 +1,1169 @@
+[
+    {
+        "id": "expert-slw",
+        "kind": "monster",
+        "name": "Expert",
+        "source": "SLW",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid"
+        },
+        "ac": [
+            {
+                "value": 15,
+                "from": [
+                    "studded leather"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 44,
+            "formula": "8d8 + 8"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 10,
+            "dex": 16,
+            "con": 12,
+            "int": 14,
+            "wis": 10,
+            "cha": 14
+        },
+        "saves": {
+            "dex": 6
+        },
+        "skills": {
+            "acrobatics": 9,
+            "performance": 5,
+            "persuasion": 5,
+            "sleight_of_hand": 6,
+            "stealth": 9
+        },
+        "passive_perception": 10,
+        "languages": [
+            "Common",
+            "plus one of your choice"
+        ],
+        "level": 7,
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "helpful",
+                "name": "Helpful",
+                "category": "traits",
+                "text": "The expert can take the Help action as a bonus action, and the creature who receives the help gains a 1d6 bonus to the d20 roll. If that roll is an attack roll, the creature can forgo adding the bonus to it, and then if the attack hits, the creature can add the bonus to the attack's damage roll against one target."
+            },
+            {
+                "id": "tools",
+                "name": "Tools",
+                "category": "traits",
+                "text": "The expert has thieves' tools and a musical instrument."
+            },
+            {
+                "id": "extra-attack",
+                "name": "Extra Attack",
+                "category": "actions",
+                "text": "The expert can attack twice, instead of once, whenever it takes the Attack action on its turn."
+            },
+            {
+                "id": "shortsword",
+                "name": "Shortsword",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 6 (1d6 + 3) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 3,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "dagger",
+                "name": "Dagger",
+                "category": "actions",
+                "text": "Melee or Ranged Weapon Attack: +6 to hit, reach 5 ft. or range 20/60 ft., one target. Hit: 5 (1d4 + 3) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft. or range 20/60 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 3,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "shortbow",
+                "name": "Shortbow",
+                "category": "actions",
+                "text": "Ranged Weapon Attack: +6 to hit, range 80/320 ft., one target. Hit: 6 (1d6 + 3) piercing damage.",
+                "action": {
+                    "range": "range 80/320 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 3,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "items": [
+            {
+                "item": "dagger-phb",
+                "qty": 1,
+                "attacks": true
+            },
+            {
+                "item": "shortbow-phb",
+                "qty": 1,
+                "attacks": true
+            },
+            {
+                "item": "shortsword-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack",
+                "ranged_weapon",
+                "ranged_weapon_attack",
+                "thrown_weapon"
+            ],
+            "languages": [
+                "common"
+            ]
+        }
+    },
+    {
+        "id": "skull-flier-slw",
+        "kind": "monster",
+        "name": "Skull Flier",
+        "source": "SLW",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "construct"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 16,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 24,
+            "formula": "3d8"
+        },
+        "speed": {
+            "walk": 10,
+            "fly": 50
+        },
+        "abilities": {
+            "str": 10,
+            "dex": 14,
+            "con": 10,
+            "int": 1,
+            "wis": 10,
+            "cha": 3
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 10,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "poison",
+                    "psychic"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "frightened",
+                    "paralyzed",
+                    "petrified",
+                    "poisoned"
+                ]
+            }
+        },
+        "cr": {
+            "cr": "1/2",
+            "xp": 100,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "sting",
+                "name": "Sting",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +4 to hit, reach 5 ft., one creature. Hit: 5 (1d6 + 2) piercing damage, and the target must make a DC 11 Constitution saving throw, taking 10 (3d6) poison damage on a failed save, or half as much damage on a successful one. If the poison damage reduces the target to 0 hit points, the target is stable but poisoned for 1 hour, even after regaining hit points, and is paralyzed while poisoned in this way.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 2,
+                                "type": "piercing"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "con",
+                        "dc": 11,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "3d6",
+                                "type": "poison"
+                            }
+                        ],
+                        "conditions": [
+                            "paralyzed",
+                            "poisoned"
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "poison",
+                "piercing"
+            ],
+            "conditions_inflicted": [
+                "paralyzed",
+                "poisoned"
+            ],
+            "saves_forced": [
+                "con"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ]
+        }
+    },
+    {
+        "id": "spellcaster-healer-slw",
+        "kind": "monster",
+        "name": "Spellcaster (Healer)",
+        "source": "SLW",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "healer"
+            ]
+        },
+        "ac": [
+            {
+                "value": 13,
+                "from": [
+                    "studded leather"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 36,
+            "formula": "8d8"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 10,
+            "dex": 12,
+            "con": 10,
+            "int": 15,
+            "wis": 16,
+            "cha": 13
+        },
+        "saves": {
+            "wis": 6
+        },
+        "skills": {
+            "arcana": 5,
+            "investigation": 5,
+            "religion": 5
+        },
+        "passive_perception": 13,
+        "languages": [
+            "Common",
+            "plus one of your choice"
+        ],
+        "level": 7,
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "potent-cantrip",
+                "name": "Potent Cantrip",
+                "category": "traits",
+                "text": "The spellcaster can add its spellcasting ability modifier to the damage it deals with any cantrip."
+            },
+            {
+                "id": "quarterstaff",
+                "name": "Quarterstaff",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: 3 (1d6) bludgeoning damage, or 4 (1d8) bludgeoning damage if used with two hands.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 3,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "type": "bludgeoning"
+                            },
+                            {
+                                "dice": "1d8",
+                                "type": "bludgeoning",
+                                "condition": "if used with two hands"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting (Healer)",
+                "ability": "wis",
+                "dc": 14,
+                "attack": 6,
+                "text": "The spellcaster's spellcasting ability is Wisdom (spell save DC 14, +6 to hit with spell attacks). The spellcaster has following cleric spells prepared:",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "level": 0,
+                        "spells": [
+                            {
+                                "spell": "guidance-phb"
+                            },
+                            {
+                                "spell": "light-phb"
+                            },
+                            {
+                                "spell": "resistance-phb"
+                            },
+                            {
+                                "spell": "sacred-flame-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 1,
+                        "slots": 4,
+                        "spells": [
+                            {
+                                "spell": "bless-phb"
+                            },
+                            {
+                                "spell": "cure-wounds-phb"
+                            },
+                            {
+                                "spell": "shield-of-faith-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 2,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "aid-phb"
+                            },
+                            {
+                                "spell": "lesser-restoration-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 3,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "protection-from-energy-phb"
+                            },
+                            {
+                                "spell": "revivify-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 4,
+                        "slots": 1,
+                        "spells": [
+                            {
+                                "spell": "death-ward-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "quarterstaff-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "radiant"
+            ],
+            "saves_forced": [
+                "dex"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "common"
+            ],
+            "spellcasting": [
+                "cleric"
+            ]
+        }
+    },
+    {
+        "id": "spellcaster-mage-slw",
+        "kind": "monster",
+        "name": "Spellcaster (Mage)",
+        "source": "SLW",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "mage"
+            ]
+        },
+        "ac": [
+            {
+                "value": 13,
+                "from": [
+                    "studded leather"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 36,
+            "formula": "8d8"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 10,
+            "dex": 12,
+            "con": 10,
+            "int": 16,
+            "wis": 14,
+            "cha": 13
+        },
+        "saves": {
+            "wis": 5
+        },
+        "skills": {
+            "arcana": 6,
+            "investigation": 6,
+            "religion": 6
+        },
+        "passive_perception": 12,
+        "languages": [
+            "Common",
+            "plus one of your choice"
+        ],
+        "level": 7,
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "potent-cantrip",
+                "name": "Potent Cantrip",
+                "category": "traits",
+                "text": "The spellcaster can add its spellcasting ability modifier to the damage it deals with any cantrip."
+            },
+            {
+                "id": "quarterstaff",
+                "name": "Quarterstaff",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: 3 (1d6) bludgeoning damage, or 4 (1d8) bludgeoning damage if used with two hands.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 3,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "type": "bludgeoning"
+                            },
+                            {
+                                "dice": "1d8",
+                                "type": "bludgeoning",
+                                "condition": "if used with two hands"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting (Mage)",
+                "ability": "int",
+                "dc": 14,
+                "attack": 6,
+                "text": "The spellcaster's spellcasting ability is Intelligence (spell save DC 14, +6 to hit with spell attacks). The spellcaster has following wizard spells prepared:",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "level": 0,
+                        "spells": [
+                            {
+                                "spell": "fire-bolt-phb"
+                            },
+                            {
+                                "spell": "light-phb"
+                            },
+                            {
+                                "spell": "mage-hand-phb"
+                            },
+                            {
+                                "spell": "minor-illusion-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 1,
+                        "slots": 4,
+                        "spells": [
+                            {
+                                "spell": "burning-hands-phb"
+                            },
+                            {
+                                "spell": "shield-phb"
+                            },
+                            {
+                                "spell": "sleep-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 2,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "flaming-sphere-phb"
+                            },
+                            {
+                                "spell": "invisibility-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 3,
+                        "slots": 3,
+                        "spells": [
+                            {
+                                "spell": "fireball-phb"
+                            },
+                            {
+                                "spell": "fly-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "level": 4,
+                        "slots": 1,
+                        "spells": [
+                            {
+                                "spell": "wall-of-fire-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "quarterstaff-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "fire"
+            ],
+            "saves_forced": [
+                "dex"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "common"
+            ],
+            "spellcasting": [
+                "wizard"
+            ]
+        }
+    },
+    {
+        "id": "statue-of-talos-slw",
+        "kind": "monster",
+        "name": "Statue of Talos",
+        "source": "SLW",
+        "edition": "classic",
+        "tags": [
+            "False Appearance"
+        ],
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "elemental"
+        },
+        "alignment": [
+            "chaotic evil"
+        ],
+        "ac": [
+            {
+                "value": 17,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 147,
+            "formula": "14d10 + 70"
+        },
+        "speed": {
+            "walk": 30,
+            "fly": 60
+        },
+        "abilities": {
+            "str": 19,
+            "dex": 11,
+            "con": 20,
+            "int": 6,
+            "wis": 11,
+            "cha": 9
+        },
+        "saves": {
+            "wis": 4
+        },
+        "skills": {
+            "perception": 4
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 14,
+        "defenses": {
+            "resist": {
+                "conditional": [
+                    {
+                        "types": [
+                            "bludgeoning",
+                            "piercing",
+                            "slashing"
+                        ],
+                        "note": "from nonmagical attacks that aren't adamantine"
+                    }
+                ]
+            },
+            "immune": {
+                "types": [
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "exhaustion",
+                    "petrified",
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "Terran"
+        ],
+        "cr": {
+            "cr": "10",
+            "xp": 5900,
+            "pb": 4
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "false-appearance",
+                "name": "False Appearance",
+                "category": "traits",
+                "text": "While the statue remains motionless, it is indistinguishable from an inanimate statue."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The statue makes five attacks: one with its headbutt and four with its lightning bolt blades."
+            },
+            {
+                "id": "headbutt",
+                "name": "Headbutt",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +8 to hit, reach 5 ft., one target. Hit: 11 (2d6 + 4) piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 8,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 4,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "lightning-bolt-blades",
+                "name": "Lightning Bolt Blades",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +8 to hit, reach 5 ft., one target. Hit: 9 (2d4 + 4) slashing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 8,
+                        "damage": [
+                            {
+                                "dice": "2d4",
+                                "bonus": 4,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing",
+                "slashing"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "false_appearance"
+            ],
+            "misc": [
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "terran"
+            ]
+        }
+    },
+    {
+        "id": "tooth-n-claw-slw",
+        "kind": "monster",
+        "name": "Tooth-N-Claw",
+        "source": "SLW",
+        "edition": "classic",
+        "tags": [
+            "Keen Senses",
+            "Pack Tactics"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "fiend"
+        },
+        "alignment": [
+            "lawful evil"
+        ],
+        "ac": [
+            {
+                "value": 15,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 45,
+            "formula": "7d8 + 14"
+        },
+        "speed": {
+            "walk": 50
+        },
+        "abilities": {
+            "str": 17,
+            "dex": 12,
+            "con": 14,
+            "int": 6,
+            "wis": 13,
+            "cha": 6
+        },
+        "skills": {
+            "perception": 5
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 15,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "cold"
+                ]
+            }
+        },
+        "languages": [
+            "understands Infernal but can't speak it"
+        ],
+        "cr": {
+            "cr": "3",
+            "xp": 700,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "keen-hearing-and-smell",
+                "name": "Keen Hearing and Smell",
+                "category": "traits",
+                "text": "Tooth-N-Claw has advantage on Wisdom (Perception) checks that rely on hearing or smell."
+            },
+            {
+                "id": "pack-tactics",
+                "name": "Pack Tactics",
+                "category": "traits",
+                "text": "Tooth-N-Claw has advantage on an attack roll against a creature if at least one of its allies is within 5 feet of the creature and the ally isn't incapacitated."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 7 (1d8 + 3) piercing damage plus 7 (2d6) cold damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 3,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "2d6",
+                                "type": "cold"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "freezing-breath",
+                "name": "Freezing Breath",
+                "category": "actions",
+                "text": "Tooth-N-Claw exhales an icy blast in a 15-foot cone. Each creature in that area must make a DC 12 Dexterity saving throw, taking 21 (6d6) cold damage on a failed save, or half as much damage on a successful one.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "area": "15-foot cone",
+                    "save": {
+                        "ability": "dex",
+                        "dc": 12,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "6d6",
+                                "type": "cold"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "cold",
+                "piercing"
+            ],
+            "saves_forced": [
+                "dex"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "actions": [
+                "breath_weapon"
+            ],
+            "traits": [
+                "keen_senses",
+                "pack_tactics"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_weapon_attack"
+            ],
+            "languages": [
+                "cant_speak",
+                "infernal"
+            ]
+        }
+    },
+    {
+        "id": "warrior-slw",
+        "kind": "monster",
+        "name": "Warrior",
+        "source": "SLW",
+        "edition": "classic",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid"
+        },
+        "ac": [
+            {
+                "value": 20,
+                "from": [
+                    "plate armor",
+                    "shield"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 52,
+            "formula": "8d8 + 16"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 16,
+            "dex": 14,
+            "con": 14,
+            "int": 10,
+            "wis": 12,
+            "cha": 10
+        },
+        "saves": {
+            "con": 5
+        },
+        "skills": {
+            "athletics": 6,
+            "perception": 4,
+            "survival": 4
+        },
+        "passive_perception": 14,
+        "languages": [
+            "Common",
+            "plus one of your choice"
+        ],
+        "level": 7,
+        "initiative": {
+            "bonus": 2,
+            "advantage": true
+        },
+        "features": [
+            {
+                "id": "battle-readiness",
+                "name": "Battle Readiness",
+                "category": "traits",
+                "text": "The warrior has advantage on initiative rolls."
+            },
+            {
+                "id": "improved-critical",
+                "name": "Improved Critical",
+                "category": "traits",
+                "text": "The warrior's attack rolls score a critical hit on a roll of 19 or 20 on the d20."
+            },
+            {
+                "id": "martial-role",
+                "name": "Martial Role",
+                "category": "traits",
+                "text": "The warrior has one of the following traits of your choice:\n\n- **Attacker.** The warrior gains a +2 bonus to attack rolls.\n- **Defender.** The warrior gains the Protection reaction below."
+            },
+            {
+                "id": "extra-attack",
+                "name": "Extra Attack",
+                "category": "actions",
+                "text": "The warrior can attack twice, instead of once, whenever it takes the Attack action on its turn."
+            },
+            {
+                "id": "longsword",
+                "name": "Longsword",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 7 (1d8 + 3) slashing damage, or 8 (1d10 + 3) slashing damage if used with two hands.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 3,
+                                "type": "slashing"
+                            },
+                            {
+                                "dice": "1d10",
+                                "bonus": 3,
+                                "type": "slashing",
+                                "condition": "if used with two hands"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "longbow",
+                "name": "Longbow",
+                "category": "actions",
+                "text": "Ranged Weapon Attack: +5 to hit, range 150/600 ft., one target. Hit: 6 (1d8 + 2) piercing damage.",
+                "action": {
+                    "range": "range 150/600 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 2,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "protection-defender-only",
+                "name": "Protection (Defender Only)",
+                "category": "reactions",
+                "text": "The warrior imposes disadvantage on the attack roll of a creature within 5 feet of it whose target isn't the warrior. The warrior must be able to see the attacker."
+            }
+        ],
+        "items": [
+            {
+                "item": "longbow-phb",
+                "qty": 1,
+                "attacks": true
+            },
+            {
+                "item": "longsword-phb",
+                "qty": 1,
+                "attacks": true
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing",
+                "slashing"
+            ],
+            "misc": [
+                "melee_weapon",
+                "melee_weapon_attack",
+                "ranged_weapon",
+                "ranged_weapon_attack"
+            ],
+            "languages": [
+                "common"
+            ]
+        }
+    }
+]

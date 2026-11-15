@@ -1,0 +1,1571 @@
+[
+    {
+        "id": "rogue-phb",
+        "kind": "class",
+        "name": "Rogue",
+        "source": "PHB",
+        "edition": "classic",
+        "srd": {
+            "5.1": "Rogue"
+        },
+        "reprinted_as": [
+            "rogue-xphb"
+        ],
+        "hit_die": "d8",
+        "hp": {
+            "first": "8 + con_mod",
+            "per_level": "5 + con_mod"
+        },
+        "saves": [
+            "dex",
+            "int"
+        ],
+        "grants": {
+            "tools": [
+                "thieves_tools"
+            ],
+            "weapons": [
+                "simple_weapons",
+                "hand_crossbow",
+                "longsword",
+                "rapier",
+                "shortsword"
+            ],
+            "armor": [
+                "light"
+            ],
+            "items": [
+                {
+                    "item": "leather-armor-phb",
+                    "qty": 1
+                },
+                {
+                    "item": "dagger-phb",
+                    "qty": 2
+                },
+                {
+                    "item": "thieves-tools-phb",
+                    "qty": 1
+                }
+            ]
+        },
+        "choices": [
+            {
+                "type": "pool",
+                "id": "skills",
+                "label": "Skills",
+                "grant": "skills",
+                "count": 4,
+                "from": [
+                    "acrobatics",
+                    "athletics",
+                    "deception",
+                    "insight",
+                    "intimidation",
+                    "investigation",
+                    "perception",
+                    "performance",
+                    "persuasion",
+                    "sleight_of_hand",
+                    "stealth"
+                ]
+            },
+            {
+                "type": "bundle",
+                "id": "starting_equipment",
+                "label": "Starting Equipment",
+                "options": [
+                    {
+                        "id": "a",
+                        "label": "Rapier",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "rapier-phb",
+                                    "qty": 1
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "id": "b",
+                        "label": "Shortsword",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "shortsword-phb",
+                                    "qty": 1
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "type": "bundle",
+                "id": "starting_equipment_2",
+                "label": "Starting Equipment",
+                "options": [
+                    {
+                        "id": "a",
+                        "label": "Shortbow, Arrows (20)",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "shortbow-phb",
+                                    "qty": 1
+                                },
+                                {
+                                    "item": "arrows-20-phb",
+                                    "qty": 1
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "id": "b",
+                        "label": "Shortsword",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "shortsword-phb",
+                                    "qty": 1
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "type": "bundle",
+                "id": "starting_equipment_3",
+                "label": "Starting Equipment",
+                "options": [
+                    {
+                        "id": "a",
+                        "label": "Burglar's Pack",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "burglars-pack-phb",
+                                    "qty": 1
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "id": "b",
+                        "label": "Dungeoneer's Pack",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "dungeoneers-pack-phb",
+                                    "qty": 1
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "id": "c",
+                        "label": "Explorer's Pack",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "explorers-pack-phb",
+                                    "qty": 1
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        ],
+        "starting_gold": "4d4 × 10",
+        "multiclass": {
+            "requires": [
+                {
+                    "dex": 13
+                }
+            ],
+            "grants": {
+                "tools": [
+                    "thieves_tools"
+                ],
+                "armor": [
+                    "light"
+                ]
+            },
+            "choices": [
+                {
+                    "type": "pool",
+                    "id": "skills",
+                    "label": "Skills",
+                    "grant": "skills",
+                    "count": 1,
+                    "from": [
+                        "acrobatics",
+                        "athletics",
+                        "deception",
+                        "insight",
+                        "intimidation",
+                        "investigation",
+                        "perception",
+                        "performance",
+                        "persuasion",
+                        "sleight_of_hand",
+                        "stealth"
+                    ]
+                }
+            ]
+        },
+        "subclass": {
+            "title": "Roguish Archetype",
+            "level": 3,
+            "text": "At 3rd level, you choose an archetype that you emulate in the exercise of your rogue abilities from the list of available archetypes. Your archetype choice grants you features at 3rd level and then again at 9th, 13th, and 17th level."
+        },
+        "columns": [
+            {
+                "id": "sneak_attack",
+                "name": "Sneak Attack",
+                "values": {
+                    "1": "1d6",
+                    "3": "2d6",
+                    "5": "3d6",
+                    "7": "4d6",
+                    "9": "5d6",
+                    "11": "6d6",
+                    "13": "7d6",
+                    "15": "8d6",
+                    "17": "9d6",
+                    "19": "10d6"
+                }
+            }
+        ],
+        "progression": [
+            {
+                "level": 1,
+                "features": [
+                    "rogue-phb:expertise",
+                    "rogue-phb:sneak-attack",
+                    "rogue-phb:thieves-cant"
+                ]
+            },
+            {
+                "level": 2,
+                "features": [
+                    "rogue-phb:cunning-action"
+                ]
+            },
+            {
+                "level": 3,
+                "features": [
+                    "rogue-phb:steady-aim"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "roguish_archetype_3",
+                        "label": "Roguish Archetype",
+                        "grant": "subclass",
+                        "count": 1,
+                        "from": "rogue-phb"
+                    }
+                ]
+            },
+            {
+                "level": 4,
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_4",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_4",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_4",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 5,
+                "features": [
+                    "rogue-phb:uncanny-dodge"
+                ]
+            },
+            {
+                "level": 6,
+                "upgrades": [
+                    "rogue-phb:expertise"
+                ]
+            },
+            {
+                "level": 7,
+                "features": [
+                    "rogue-phb:evasion"
+                ]
+            },
+            {
+                "level": 8,
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_8",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_8",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_8",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 9,
+                "subclass_features": true
+            },
+            {
+                "level": 10,
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_10",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_10",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_10",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 11,
+                "features": [
+                    "rogue-phb:reliable-talent"
+                ]
+            },
+            {
+                "level": 12,
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_12",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_12",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_12",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 13,
+                "subclass_features": true
+            },
+            {
+                "level": 14,
+                "features": [
+                    "rogue-phb:blindsense"
+                ]
+            },
+            {
+                "level": 15,
+                "features": [
+                    "rogue-phb:slippery-mind"
+                ]
+            },
+            {
+                "level": 16,
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_16",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_16",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_16",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 17,
+                "subclass_features": true
+            },
+            {
+                "level": 18,
+                "features": [
+                    "rogue-phb:elusive"
+                ]
+            },
+            {
+                "level": 19,
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_19",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_19",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_19",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 20,
+                "features": [
+                    "rogue-phb:stroke-of-luck"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "rogue-phb:expertise",
+                "name": "Expertise",
+                "level": 1,
+                "text": "At 1st level, choose two of your skill proficiencies, or one of your skill proficiencies and your proficiency with thieves' tools. Your proficiency bonus is doubled for any ability check you make that uses either of the chosen proficiencies.\n\nAt 6th level, you can choose two more of your proficiencies (in skills or with thieves' tools) to gain this benefit.\n\n**Expertise.** At 6th level, you can choose two more of your proficiencies (in skills or with thieves' tools) to gain the benefit of Expertise.",
+                "srd": {
+                    "5.1": "Expertise"
+                }
+            },
+            {
+                "id": "rogue-phb:sneak-attack",
+                "name": "Sneak Attack",
+                "level": 1,
+                "text": "Beginning at 1st level, you know how to strike subtly and exploit a foe's distraction. Once per turn, you can deal an extra 1d6 damage to one creature you hit with an attack if you have advantage on the attack roll. The attack must use a finesse or a ranged weapon.\n\nYou don't need advantage on the attack roll if another enemy of the target is within 5 feet of it, that enemy isn't incapacitated, and you don't have disadvantage on the attack roll.\n\nThe amount of the extra damage increases as you gain levels in this class, as shown in the Sneak Attack column of the Rogue table.",
+                "srd": {
+                    "5.1": "Sneak Attack"
+                }
+            },
+            {
+                "id": "rogue-phb:thieves-cant",
+                "name": "Thieves' Cant",
+                "level": 1,
+                "text": "During your rogue training you learned thieves' cant, a secret mix of dialect, jargon, and code that allows you to hide messages in seemingly normal conversation. Only another creature that knows thieves' cant understands such messages. It takes four times longer to convey such a message than it does to speak the same idea plainly.\n\nIn addition, you understand a set of secret signs and symbols used to convey short, simple messages, such as whether an area is dangerous or the territory of a thieves' guild, whether loot is nearby, or whether the people in an area are easy marks or will provide a safe house for thieves on the run.",
+                "srd": {
+                    "5.1": "Thieves' Cant"
+                }
+            },
+            {
+                "id": "rogue-phb:cunning-action",
+                "name": "Cunning Action",
+                "level": 2,
+                "text": "Starting at 2nd level, your quick thinking and agility allow you to move and act quickly. You can take a bonus action on each of your turns in combat. This action can be used only to take the Dash, Disengage, or Hide action.",
+                "srd": {
+                    "5.1": "Cunning Action"
+                }
+            },
+            {
+                "id": "rogue-phb:steady-aim",
+                "name": "Steady Aim",
+                "level": 3,
+                "source": "TCE",
+                "text": "*3rd-level rogue optional feature*\n\nAs a bonus action, you give yourself advantage on your next attack roll on the current turn. You can use this bonus action only if you haven't moved during this turn, and after you use the bonus action, your speed is 0 until the end of the current turn.",
+                "optional": true
+            },
+            {
+                "id": "rogue-phb:uncanny-dodge",
+                "name": "Uncanny Dodge",
+                "level": 5,
+                "text": "Starting at 5th level, when an attacker that you can see hits you with an attack, you can use your reaction to halve the attack's damage against you.",
+                "srd": {
+                    "5.1": "Uncanny Dodge"
+                }
+            },
+            {
+                "id": "rogue-phb:evasion",
+                "name": "Evasion",
+                "level": 7,
+                "text": "Beginning at 7th level, you can nimbly dodge out of the way of certain area effects, such as a red dragon's fiery breath or an Ice Storm spell. When you are subjected to an effect that allows you to make a Dexterity saving throw to take only half damage, you instead take no damage if you succeed on the saving throw, and only half damage if you fail.",
+                "srd": {
+                    "5.1": "Evasion"
+                }
+            },
+            {
+                "id": "rogue-phb:reliable-talent",
+                "name": "Reliable Talent",
+                "level": 11,
+                "text": "By 11th level, you have refined your chosen skills until they approach perfection. Whenever you make an ability check that lets you add your proficiency bonus, you can treat a d20 roll of 9 or lower as a 10.",
+                "srd": {
+                    "5.1": "Reliable Talent"
+                }
+            },
+            {
+                "id": "rogue-phb:blindsense",
+                "name": "Blindsense",
+                "level": 14,
+                "text": "Starting at 14th level, if you are able to hear, you are aware of the location of any hidden or invisible creature within 10 feet of you.",
+                "srd": {
+                    "5.1": "Blindsense"
+                }
+            },
+            {
+                "id": "rogue-phb:slippery-mind",
+                "name": "Slippery Mind",
+                "level": 15,
+                "text": "By 15th level, you have acquired greater mental strength. You gain proficiency in Wisdom saving throws.",
+                "srd": {
+                    "5.1": "Slippery Mind"
+                }
+            },
+            {
+                "id": "rogue-phb:elusive",
+                "name": "Elusive",
+                "level": 18,
+                "text": "Beginning at 18th level, you are so evasive that attackers rarely gain the upper hand against you. No attack roll has advantage against you while you aren't incapacitated.",
+                "srd": {
+                    "5.1": "Elusive"
+                }
+            },
+            {
+                "id": "rogue-phb:stroke-of-luck",
+                "name": "Stroke of Luck",
+                "level": 20,
+                "text": "At 20th level, you have an uncanny knack for succeeding when you need to. If your attack misses a target within range, you can turn the miss into a hit. Alternatively, if you fail an ability check, you can treat the d20 roll as a 20.\n\nOnce you use this feature, you can't use it again until you finish a short or long rest.",
+                "srd": {
+                    "5.1": "Stroke of Luck"
+                }
+            }
+        ]
+    },
+    {
+        "id": "rogue-phb:arcane-trickster-phb",
+        "kind": "subclass",
+        "name": "Arcane Trickster",
+        "source": "PHB",
+        "edition": "classic",
+        "reprinted_as": [
+            "rogue-xphb:arcane-trickster-xphb"
+        ],
+        "text": "Some rogues enhance their fine-honed skills of stealth and agility with magic, learning tricks of enchantment and illusion. These rogues include pickpockets and burglars, but also pranksters, mischief-makers, and a significant number of adventurers.",
+        "class_id": "rogue-phb",
+        "short_name": "Arcane Trickster",
+        "grants": {
+            "spells": [
+                {
+                    "spell": "mage-hand-phb",
+                    "how": "known",
+                    "at": 3
+                }
+            ],
+            "spell_lists": [
+                {
+                    "filter": {
+                        "spell_level": 0,
+                        "class": "wizard"
+                    },
+                    "at": 3
+                },
+                {
+                    "filter": {
+                        "spell_level": 1,
+                        "class": "wizard"
+                    },
+                    "at": 3
+                },
+                {
+                    "filter": {
+                        "spell_level": 2,
+                        "class": "wizard"
+                    },
+                    "at": 7
+                },
+                {
+                    "filter": {
+                        "spell_level": 3,
+                        "class": "wizard"
+                    },
+                    "at": 13
+                },
+                {
+                    "filter": {
+                        "spell_level": 4,
+                        "class": "wizard"
+                    },
+                    "at": 19
+                }
+            ]
+        },
+        "spellcasting": {
+            "ability": "int",
+            "progression": "third",
+            "cantrips": {
+                "3": 2,
+                "10": 3
+            },
+            "known": {
+                "3": 3,
+                "4": 4,
+                "7": 5,
+                "8": 6,
+                "10": 7,
+                "11": 8,
+                "13": 9,
+                "14": 10,
+                "16": 11,
+                "19": 12,
+                "20": 13
+            },
+            "slots": {
+                "3": [
+                    2
+                ],
+                "4": [
+                    3
+                ],
+                "7": [
+                    4,
+                    2
+                ],
+                "10": [
+                    4,
+                    3
+                ],
+                "13": [
+                    4,
+                    3,
+                    2
+                ],
+                "16": [
+                    4,
+                    3,
+                    3
+                ],
+                "19": [
+                    4,
+                    3,
+                    3,
+                    1
+                ]
+            }
+        },
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "rogue-phb:arcane-trickster-phb:spellcasting",
+                    "rogue-phb:arcane-trickster-phb:mage-hand-legerdemain"
+                ]
+            },
+            {
+                "level": 9,
+                "features": [
+                    "rogue-phb:arcane-trickster-phb:magical-ambush"
+                ]
+            },
+            {
+                "level": 13,
+                "features": [
+                    "rogue-phb:arcane-trickster-phb:versatile-trickster"
+                ]
+            },
+            {
+                "level": 17,
+                "features": [
+                    "rogue-phb:arcane-trickster-phb:spell-thief"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "rogue-phb:arcane-trickster-phb:spellcasting",
+                "name": "Spellcasting",
+                "level": 3,
+                "text": "When you reach 3rd level, you gain the ability to cast spells. See chapter 10 for the general rules of spellcasting and chapter 11 for the wizard spell list.\n\n**Cantrips.** You learn three cantrips: Mage Hand and two other cantrips of your choice from the wizard spell list. You learn another wizard cantrip of your choice at 10th level.\n\n**Spell Slots.** The Arcane Trickster Spellcasting table shows how many spell slots you have to cast your wizard spells of 1st level and higher. To cast one of these spells, you must expend a slot of the spell's level or higher. You regain all expended spell slots when you finish a long rest.\n\nFor example, if you know the 1st-level spell Charm Person and have a 1st-level and a 2nd-level spell slot available, you can cast Charm Person using either slot.\n\n**Spells Known of 1st-Level and Higher.** You know three 1st-level wizard spells of your choice, two of which you must choose from the enchantment and illusion spells on the wizard spell list.\n\nThe Spells Known column of the Arcane Trickster Spellcasting table shows when you learn more wizard spells of 1st level or higher. Each of these spells must be an enchantment or illusion spell of your choice, and must be of a level for which you have spell slots. For instance, when you reach 7th level in this class, you can learn one new spell of 1st or 2nd level.\n\nThe spells you learn at 8th, 14th, and 20th level can come from any school of magic.\n\nWhenever you gain a level in this class, you can replace one of the wizard spells you know with another spell of your choice from the wizard spell list. The new spell must be of a level for which you have spell slots, and it must be an enchantment or illusion spell, unless you're replacing the spell you gained at 3rd, 8th, 14th, or 20th level from any school of magic.\n\n**Spellcasting Ability.** Intelligence is your spellcasting ability for your wizard spells, since you learn your spells through dedicated study and memorization. You use your Intelligence whenever a spell refers to your spellcasting ability. In addition, you use your Intelligence modifier when setting the saving throw DC for a wizard spell you cast and when making an attack roll with one.\n\n**Spell save DC** = 8 + your proficiency bonus + your Intelligence modifier\n\n**Spell attack modifier** = your proficiency bonus + your Intelligence modifier"
+            },
+            {
+                "id": "rogue-phb:arcane-trickster-phb:mage-hand-legerdemain",
+                "name": "Mage Hand Legerdemain",
+                "level": 3,
+                "text": "Starting at 3rd level, when you cast Mage Hand, you can make the spectral hand invisible, and you can perform the following additional tasks with it:\n\n- You can stow one object the hand is holding in a container worn or carried by another creature.\n- You can retrieve an object in a container worn or carried by another creature.\n- You can use thieves' tools to pick locks and disarm traps at range.\n\nYou can perform one of these tasks without being noticed by a creature if you succeed on a Dexterity (Sleight of Hand) check contested by the creature's Wisdom (Perception) check.\n\nIn addition, you can use the bonus action granted by your Cunning Action to control the hand."
+            },
+            {
+                "id": "rogue-phb:arcane-trickster-phb:magical-ambush",
+                "name": "Magical Ambush",
+                "level": 9,
+                "text": "Starting at 9th level, if you are hidden from a creature when you cast a spell on it, the creature has disadvantage on any saving throw it makes against the spell this turn."
+            },
+            {
+                "id": "rogue-phb:arcane-trickster-phb:versatile-trickster",
+                "name": "Versatile Trickster",
+                "level": 13,
+                "text": "At 13th level, you gain the ability to distract targets with your Mage Hand. As a bonus action on your turn, you can designate a creature within 5 feet of the spectral hand created by the spell. Doing so gives you advantage on attack rolls against that creature until the end of the turn."
+            },
+            {
+                "id": "rogue-phb:arcane-trickster-phb:spell-thief",
+                "name": "Spell Thief",
+                "level": 17,
+                "text": "At 17th level, you gain the ability to magically steal the knowledge of how to cast a spell from another spellcaster.\n\nImmediately after a creature casts a spell that targets you or includes you in its area of effect, you can use your reaction to force the creature to make a saving throw with its spellcasting ability modifier. The DC equals your spell save DC. On a failed save, you negate the spell's effect against you, and you steal the knowledge of the spell if it is at least 1st level and of a level you can cast (it doesn't need to be a wizard spell). For the next 8 hours, you know the spell and can cast it using your spell slots. The creature can't cast that spell until the 8 hours have passed.\n\nOnce you use this feature, you can't use it again until you finish a long rest."
+            }
+        ]
+    },
+    {
+        "id": "rogue-phb:assassin-phb",
+        "kind": "subclass",
+        "name": "Assassin",
+        "source": "PHB",
+        "edition": "classic",
+        "reprinted_as": [
+            "rogue-xphb:assassin-xphb"
+        ],
+        "text": "You focus your training on the grim art of death. Those who adhere to this archetype are diverse—hired killers, spies, bounty hunters, and even specially anointed priests trained to exterminate the enemies of their deity. Stealth, poison, and disguise help you eliminate your foes with deadly efficiency.\n\nYour archetype grants you features at 3rd level and then again at 9th, 13th, and 17th level.",
+        "class_id": "rogue-phb",
+        "short_name": "Assassin",
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "rogue-phb:assassin-phb:assassinate",
+                    "rogue-phb:assassin-phb:bonus-proficiencies"
+                ]
+            },
+            {
+                "level": 9,
+                "features": [
+                    "rogue-phb:assassin-phb:infiltration-expertise"
+                ]
+            },
+            {
+                "level": 13,
+                "features": [
+                    "rogue-phb:assassin-phb:impostor"
+                ]
+            },
+            {
+                "level": 17,
+                "features": [
+                    "rogue-phb:assassin-phb:death-strike"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "rogue-phb:assassin-phb:assassinate",
+                "name": "Assassinate",
+                "level": 3,
+                "text": "Starting at 3rd level, you are at your deadliest when you get the drop on your enemies. You have advantage on attack rolls against any creature that hasn't taken a turn in the combat yet. In addition, any hit you score against a creature that is surprised is a critical hit."
+            },
+            {
+                "id": "rogue-phb:assassin-phb:bonus-proficiencies",
+                "name": "Bonus Proficiencies",
+                "level": 3,
+                "text": "When you choose this archetype at 3rd level, you gain proficiency with the disguise kit and the poisoner's kit."
+            },
+            {
+                "id": "rogue-phb:assassin-phb:infiltration-expertise",
+                "name": "Infiltration Expertise",
+                "level": 9,
+                "text": "Starting at 9th level, you can unfailingly create false identities for yourself. You must spend seven days and 25 gp to establish the history, profession, and affiliations for an identity. You can't establish an identity that belongs to someone else. For example, you might acquire appropriate clothing, letters of introduction, and official-looking certification to establish yourself as a member of a trading house from a remote city so you can insinuate yourself into the company of other wealthy merchants.\n\nThereafter, if you adopt the new identity as a disguise, other creatures believe you to be that person until given an obvious reason not to."
+            },
+            {
+                "id": "rogue-phb:assassin-phb:impostor",
+                "name": "Impostor",
+                "level": 13,
+                "text": "At 13th level, you gain the ability to unerringly mimic another person's speech, writing, and behavior. You must spend at least three hours studying these three components of the person's behavior, listening to speech, examining handwriting, and observing mannerism.\n\nYour ruse is indiscernible to the casual observer. If a wary creature suspects something is amiss, you have advantage on any Charisma (Deception) check you make to avoid detection."
+            },
+            {
+                "id": "rogue-phb:assassin-phb:death-strike",
+                "name": "Death Strike",
+                "level": 17,
+                "text": "Starting at 17th level, you become a master of instant death. When you attack and hit a creature that is surprised, it must make a Constitution saving throw (DC 8 + your Dexterity modifier + your proficiency bonus). On a failed save, double the damage of your attack against the creature."
+            }
+        ]
+    },
+    {
+        "id": "rogue-phb:thief-phb",
+        "kind": "subclass",
+        "name": "Thief",
+        "source": "PHB",
+        "edition": "classic",
+        "srd": {
+            "5.1": "Thief"
+        },
+        "reprinted_as": [
+            "rogue-xphb:thief-xphb"
+        ],
+        "text": "You hone your skills in the larcenous arts. Burglars, bandits, cutpurses, and other criminals typically follow this archetype, but so do rogues who prefer to think of themselves as professional treasure seekers, explorers, delvers, and investigators. In addition to improving your agility and stealth, you learn skills useful for delving into ancient ruins, reading unfamiliar languages, and using magic items you normally couldn't employ.",
+        "class_id": "rogue-phb",
+        "short_name": "Thief",
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "rogue-phb:thief-phb:fast-hands",
+                    "rogue-phb:thief-phb:second-story-work"
+                ]
+            },
+            {
+                "level": 9,
+                "features": [
+                    "rogue-phb:thief-phb:supreme-sneak"
+                ]
+            },
+            {
+                "level": 13,
+                "features": [
+                    "rogue-phb:thief-phb:use-magic-device"
+                ]
+            },
+            {
+                "level": 17,
+                "features": [
+                    "rogue-phb:thief-phb:thiefs-reflexes"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "rogue-phb:thief-phb:fast-hands",
+                "name": "Fast Hands",
+                "level": 3,
+                "text": "Starting at 3rd level, you can use the bonus action granted by your Cunning Action to make a Dexterity (Sleight of Hand) check, use your thieves' tools to disarm a trap or open a lock, or take the Use an Object action.",
+                "srd": {
+                    "5.1": "Fast Hands"
+                }
+            },
+            {
+                "id": "rogue-phb:thief-phb:second-story-work",
+                "name": "Second-Story Work",
+                "level": 3,
+                "text": "When you choose this archetype at 3rd level, you gain the ability to climb faster than normal; climbing no longer costs you extra movement.\n\nIn addition, when you make a running jump, the distance you cover increases by a number of feet equal to your Dexterity modifier.",
+                "srd": {
+                    "5.1": "Second-Story Work"
+                }
+            },
+            {
+                "id": "rogue-phb:thief-phb:supreme-sneak",
+                "name": "Supreme Sneak",
+                "level": 9,
+                "text": "Starting at 9th level, you have advantage on a Dexterity (Stealth) check if you move no more than half your speed on the same turn.",
+                "srd": {
+                    "5.1": "Supreme Sneak"
+                }
+            },
+            {
+                "id": "rogue-phb:thief-phb:use-magic-device",
+                "name": "Use Magic Device",
+                "level": 13,
+                "text": "By 13th level, you have learned enough about the workings of magic that you can improvise the use of items even when they are not intended for you. You ignore all class, race, and level requirements on the use of magic items.",
+                "srd": {
+                    "5.1": "Use Magic Device"
+                }
+            },
+            {
+                "id": "rogue-phb:thief-phb:thiefs-reflexes",
+                "name": "Thief's Reflexes",
+                "level": 17,
+                "text": "When you reach 17th level, you have become adept at laying ambushes and quickly escaping danger. You can take two turns during the first round of any combat. You take your first turn at your normal initiative and your second turn at your initiative minus 10. You can't use this feature when you are surprised.",
+                "srd": {
+                    "5.1": "Thief's Reflexes"
+                }
+            }
+        ]
+    },
+    {
+        "id": "rogue-phb:inquisitive-xge",
+        "kind": "subclass",
+        "name": "Inquisitive",
+        "source": "XGE",
+        "edition": "classic",
+        "text": "As an archetypal Inquisitive, you excel at rooting out secrets and unraveling mysteries. You rely on your sharp eye for detail, but also on your finely honed ability to read the words and deeds of other creatures to determine their true intent. You excel at defeating creatures that hide among and prey upon ordinary folk, and your mastery of lore and your keen deductions make you well equipped to expose and end hidden evils.",
+        "class_id": "rogue-phb",
+        "short_name": "Inquisitive",
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "rogue-phb:inquisitive-xge:ear-for-deceit",
+                    "rogue-phb:inquisitive-xge:eye-for-detail",
+                    "rogue-phb:inquisitive-xge:insightful-fighting"
+                ]
+            },
+            {
+                "level": 9,
+                "features": [
+                    "rogue-phb:inquisitive-xge:steady-eye"
+                ]
+            },
+            {
+                "level": 13,
+                "features": [
+                    "rogue-phb:inquisitive-xge:unerring-eye"
+                ]
+            },
+            {
+                "level": 17,
+                "features": [
+                    "rogue-phb:inquisitive-xge:eye-for-weakness"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "rogue-phb:inquisitive-xge:ear-for-deceit",
+                "name": "Ear for Deceit",
+                "level": 3,
+                "text": "When you choose this archetype at 3rd level, you develop a talent for picking out lies. Whenever you make a Wisdom (Insight) check to determine whether a creature is lying, treat a roll of 7 or lower on the d20 as an 8."
+            },
+            {
+                "id": "rogue-phb:inquisitive-xge:eye-for-detail",
+                "name": "Eye for Detail",
+                "level": 3,
+                "text": "Starting at 3rd level, you can use a bonus action to make a Wisdom (Perception) check to spot a hidden creature or object or to make an Intelligence (Investigation) check to uncover or decipher clues."
+            },
+            {
+                "id": "rogue-phb:inquisitive-xge:insightful-fighting",
+                "name": "Insightful Fighting",
+                "level": 3,
+                "text": "At 3rd level, you gain the ability to decipher an opponent's tactics and develop a counter to them. As a bonus action, you can make a Wisdom (Insight) check against a creature you can see that isn't incapacitated, contested by the target's Charisma (Deception) check. If you succeed, you can use your Sneak Attack against that target even if you don't have advantage on the attack roll, but not if you have disadvantage on it.\n\nThis benefit lasts for 1 minute or until you successfully use this feature against a different target."
+            },
+            {
+                "id": "rogue-phb:inquisitive-xge:steady-eye",
+                "name": "Steady Eye",
+                "level": 9,
+                "text": "Starting at 9th level, you have advantage on any Wisdom (Perception) or Intelligence (Investigation) check if you move no more than half your speed on the same turn."
+            },
+            {
+                "id": "rogue-phb:inquisitive-xge:unerring-eye",
+                "name": "Unerring Eye",
+                "level": 13,
+                "text": "Beginning at 13th level, your senses are almost impossible to foil. As an action, you sense the presence of illusions, shapechangers not in their original form, and other magic designed to deceive the senses within 30 feet of you, provided you aren't blinded or deafened. You sense that an effect is attempting to trick you, but you gain no insight into what is hidden or into its true nature.\n\nYou can use this feature a number of times equal to your Wisdom modifier (minimum of once), and you regain all expended uses of it when you finish a long rest."
+            },
+            {
+                "id": "rogue-phb:inquisitive-xge:eye-for-weakness",
+                "name": "Eye for Weakness",
+                "level": 17,
+                "text": "At 17th level, you learn to exploit a creature's weaknesses by carefully studying its tactics and movement. While your Insightful Fighting feature applies to a creature, your Sneak Attack damage against that creature increases by 3d6."
+            }
+        ]
+    },
+    {
+        "id": "rogue-phb:mastermind-xge",
+        "kind": "subclass",
+        "name": "Mastermind",
+        "source": "XGE",
+        "edition": "classic",
+        "text": "Your focus is on people and on the influence and secrets they have. Many spies, courtiers, and schemers follow this archetype, leading lives of intrigue. Words are your weapons as often as knives or poison, and secrets and favors are some of your favorite treasures.",
+        "class_id": "rogue-phb",
+        "short_name": "Mastermind",
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "rogue-phb:mastermind-xge:master-of-intrigue",
+                    "rogue-phb:mastermind-xge:master-of-tactics"
+                ]
+            },
+            {
+                "level": 9,
+                "features": [
+                    "rogue-phb:mastermind-xge:insightful-manipulator"
+                ]
+            },
+            {
+                "level": 13,
+                "features": [
+                    "rogue-phb:mastermind-xge:misdirection"
+                ]
+            },
+            {
+                "level": 17,
+                "features": [
+                    "rogue-phb:mastermind-xge:soul-of-deceit"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "rogue-phb:mastermind-xge:master-of-intrigue",
+                "name": "Master of Intrigue",
+                "level": 3,
+                "text": "When you choose this archetype at 3rd level, you gain proficiency with the disguise kit, the forgery kit, and one gaming set of your choice. You also learn two languages of your choice.\n\nAdditionally, you can unerringly mimic the speech patterns and accent of a creature that you hear speak for at least 1 minute, enabling you to pass yourself off as a native speaker of a particular land, provided that you know the language."
+            },
+            {
+                "id": "rogue-phb:mastermind-xge:master-of-tactics",
+                "name": "Master of Tactics",
+                "level": 3,
+                "text": "Starting at 3rd level, you can use the Help action as a bonus action. Additionally, when you use the Help action to aid an ally in attacking a creature, the target of that attack can be within 30 feet of you, rather than within 5 feet of you, if the target can see or hear you."
+            },
+            {
+                "id": "rogue-phb:mastermind-xge:insightful-manipulator",
+                "name": "Insightful Manipulator",
+                "level": 9,
+                "text": "Starting at 9th level, if you spend at least 1 minute observing or interacting with another creature outside combat, you can learn certain information about its capabilities compared to your own. The DM tells you if the creature is your equal, superior, or inferior in regard to two of the following characteristics of your choice:\n\n- Intelligence score\n- Wisdom score\n- Charisma score\n- Class levels (if any)\n\nAt the DM's option, you might also realize you know a piece of the creature's history or one of its personality traits, if it has any."
+            },
+            {
+                "id": "rogue-phb:mastermind-xge:misdirection",
+                "name": "Misdirection",
+                "level": 13,
+                "text": "Beginning at 13th level, you can sometimes cause another creature to suffer an attack meant for you. When you are targeted by an attack while a creature within 5 feet of you is granting you cover against that attack, you can use your reaction to have the attack target that creature instead of you."
+            },
+            {
+                "id": "rogue-phb:mastermind-xge:soul-of-deceit",
+                "name": "Soul of Deceit",
+                "level": 17,
+                "text": "Starting at 17th level, your thoughts can't be read by telepathy or other means, unless you allow it. You can present false thoughts by succeeding on a Charisma (Deception) check contested by the mind reader's Wisdom (Insight) check.\n\nAdditionally, no matter what you say, magic that would determine if you are telling the truth indicates you are being truthful if you so choose, and you can't be compelled to tell the truth by magic."
+            }
+        ]
+    },
+    {
+        "id": "rogue-phb:scout-xge",
+        "kind": "subclass",
+        "name": "Scout",
+        "source": "XGE",
+        "edition": "classic",
+        "text": "You are skilled in stealth and surviving far from the streets of a city, allowing you to scout ahead of your companions during expeditions. Rogues who embrace this archetype are at home in the wilderness and among barbarians and rangers, and many Scouts serve as the eyes and ears of war bands. Ambusher, spy, bounty hunter—these are just a few of the roles that Scouts assume as they range the world.",
+        "class_id": "rogue-phb",
+        "short_name": "Scout",
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "rogue-phb:scout-xge:skirmisher",
+                    "rogue-phb:scout-xge:survivalist"
+                ]
+            },
+            {
+                "level": 9,
+                "features": [
+                    "rogue-phb:scout-xge:superior-mobility"
+                ]
+            },
+            {
+                "level": 13,
+                "features": [
+                    "rogue-phb:scout-xge:ambush-master"
+                ]
+            },
+            {
+                "level": 17,
+                "features": [
+                    "rogue-phb:scout-xge:sudden-strike"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "rogue-phb:scout-xge:skirmisher",
+                "name": "Skirmisher",
+                "level": 3,
+                "text": "Starting at 3rd level, you are difficult to pin down during a fight. You can move up to half your speed as a reaction when an enemy ends its turn within 5 feet of you. This movement doesn't provoke opportunity attacks."
+            },
+            {
+                "id": "rogue-phb:scout-xge:survivalist",
+                "name": "Survivalist",
+                "level": 3,
+                "text": "When you choose this archetype at 3rd level, you gain proficiency in the Nature and Survival skills if you don't already have it. Your proficiency bonus is doubled for any ability check you make that uses either of those proficiencies."
+            },
+            {
+                "id": "rogue-phb:scout-xge:superior-mobility",
+                "name": "Superior Mobility",
+                "level": 9,
+                "text": "At 9th level, your walking speed increases by 10 feet. If you have a climbing or swimming speed, this increase applies to that speed as well."
+            },
+            {
+                "id": "rogue-phb:scout-xge:ambush-master",
+                "name": "Ambush Master",
+                "level": 13,
+                "text": "Starting at 13th level, you excel at leading ambushes and acting first in a fight.\n\nYou have advantage on initiative rolls. In addition, the first creature you hit during the first round of a combat becomes easier for you and others to strike; attack rolls against that target have advantage until the start of your next turn."
+            },
+            {
+                "id": "rogue-phb:scout-xge:sudden-strike",
+                "name": "Sudden Strike",
+                "level": 17,
+                "text": "Starting at 17th level, you can strike with deadly speed. If you take the Attack action on your turn, you can make one additional attack as a bonus action. This attack can benefit from your Sneak Attack even if you have already used it this turn, but you can't use your Sneak Attack against the same target more than once in a turn."
+            }
+        ]
+    },
+    {
+        "id": "rogue-phb:swashbuckler-xge",
+        "kind": "subclass",
+        "name": "Swashbuckler",
+        "source": "XGE",
+        "edition": "classic",
+        "reprinted_as": [
+            "rogue-xphb:swashbuckler-wow"
+        ],
+        "text": "You focus your training on the art of the blade, relying on speed, elegance, and charm in equal parts. While some warriors are brutes clad in heavy armor, your method of fighting looks almost like a performance. Duelists and pirates typically belong to this archetype.\n\nA Swashbuckler excels in single combat, and can fight with two weapons while safely darting away from an opponent.",
+        "class_id": "rogue-phb",
+        "short_name": "Swashbuckler",
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "rogue-phb:swashbuckler-xge:fancy-footwork",
+                    "rogue-phb:swashbuckler-xge:rakish-audacity"
+                ]
+            },
+            {
+                "level": 9,
+                "features": [
+                    "rogue-phb:swashbuckler-xge:panache"
+                ]
+            },
+            {
+                "level": 13,
+                "features": [
+                    "rogue-phb:swashbuckler-xge:elegant-maneuver"
+                ]
+            },
+            {
+                "level": 17,
+                "features": [
+                    "rogue-phb:swashbuckler-xge:master-duelist"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "rogue-phb:swashbuckler-xge:fancy-footwork",
+                "name": "Fancy Footwork",
+                "level": 3,
+                "text": "When you choose this archetype at 3rd level, you learn how to land a strike and then slip away without reprisal. During your turn, if you make a melee attack against a creature, that creature can't make opportunity attacks against you for the rest of your turn."
+            },
+            {
+                "id": "rogue-phb:swashbuckler-xge:rakish-audacity",
+                "name": "Rakish Audacity",
+                "level": 3,
+                "text": "Starting at 3rd level, your confidence propels you into battle. You can give yourself a bonus to your initiative rolls equal to your Charisma modifier.\n\nYou also gain an additional way to use your Sneak Attack; you don't need advantage on your attack roll to use Sneak Attack against a creature if you are within 5 feet of it, no other creatures are within 5 feet of you, and you don't have disadvantage on the attack roll. All the other rules for Sneak Attack still apply to you."
+            },
+            {
+                "id": "rogue-phb:swashbuckler-xge:panache",
+                "name": "Panache",
+                "level": 9,
+                "text": "At 9th level, your charm becomes extraordinarily beguiling. As an action, you can make a Charisma (Persuasion) check contested by a creature's Wisdom (Insight) check. The creature must be able to hear you, and the two of you must share a language.\n\nIf you succeed on the check and the creature is hostile to you, it has disadvantage on attack rolls against targets other than you and can't make opportunity attacks against targets other than you. This effect lasts for 1 minute, until one of your companions attacks the target or affects it with a spell, or until you and the target are more than 60 feet apart.\n\nIf you succeed on the check and the creature isn't hostile to you, it is charmed by you for 1 minute. While charmed, it regards you as a friendly acquaintance. This effect ends immediately if you or your companions do anything harmful to it."
+            },
+            {
+                "id": "rogue-phb:swashbuckler-xge:elegant-maneuver",
+                "name": "Elegant Maneuver",
+                "level": 13,
+                "text": "Starting at 13th level, you can use a bonus action on your turn to gain advantage on the next Dexterity (Acrobatics) or Strength (Athletics) check you make during the same turn."
+            },
+            {
+                "id": "rogue-phb:swashbuckler-xge:master-duelist",
+                "name": "Master Duelist",
+                "level": 17,
+                "text": "Beginning at 17th level, your mastery of the blade lets you turn failure into success in combat. If you miss with an attack roll, you can roll it again with advantage. Once you do so, you can't use this feature again until you finish a short or long rest."
+            }
+        ]
+    },
+    {
+        "id": "rogue-phb:phantom-tce",
+        "kind": "subclass",
+        "name": "Phantom",
+        "source": "TCE",
+        "edition": "classic",
+        "reprinted_as": [
+            "rogue-xphb:phantom-rhw"
+        ],
+        "text": "Many rogues walk a fine line between life and death, risking their own lives and taking the lives of others. While adventuring on that line, some rogues discover a mystical connection to death itself. These rogues take knowledge from the dead and become immersed in negative energy, eventually becoming like ghosts. Thieves' guilds value them as highly effective information gatherers and spies.\n\nMany shadar-kai of the Shadowfell are masters of these macabre techniques, and some are willing to teach this path. In places like Thay in the Forgotten Realms and Karrnath in Eberron, where many necromancers practice their craft, a Phantom can become a wizard's confidant and right hand. In temples of gods of death, the Phantom might work as an agent to track down those who try to cheat death and to recover knowledge that might otherwise be lost to the grave.\n\nHow did you discover this grim power? Did you sleep in a graveyard and awaken to your new abilities? Or did you cultivate them in a temple or thieves' guild dedicated to a deity of death?",
+        "class_id": "rogue-phb",
+        "short_name": "Phantom",
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "rogue-phb:phantom-tce:whispers-of-the-dead",
+                    "rogue-phb:phantom-tce:wails-from-the-grave"
+                ]
+            },
+            {
+                "level": 9,
+                "features": [
+                    "rogue-phb:phantom-tce:tokens-of-the-departed"
+                ]
+            },
+            {
+                "level": 13,
+                "features": [
+                    "rogue-phb:phantom-tce:ghost-walk"
+                ]
+            },
+            {
+                "level": 17,
+                "features": [
+                    "rogue-phb:phantom-tce:deaths-friend"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "rogue-phb:phantom-tce:whispers-of-the-dead",
+                "name": "Whispers of the Dead",
+                "level": 3,
+                "text": "*3rd-level Phantom feature*\n\nEchoes of those who have died cling to you. Whenever you finish a short or long rest, you can choose one skill or tool proficiency that you lack and gain it, as a ghostly presence shares its knowledge with you. You lose this proficiency when you use this feature to choose a different proficiency that you lack."
+            },
+            {
+                "id": "rogue-phb:phantom-tce:wails-from-the-grave",
+                "name": "Wails from the Grave",
+                "level": 3,
+                "text": "*3rd-level Phantom feature*\n\nAs you nudge someone closer to the grave, you can channel the power of death to harm someone else as well. Immediately after you deal your Sneak Attack damage to a creature on your turn, you can target a second creature that you can see within 30 feet of the first creature. Roll half the number of Sneak Attack dice for your level (round up), and the second creature takes necrotic damage equal to the roll's total, as wails of the dead sound around them for a moment.\n\nYou can use this feature a number of times equal to your proficiency bonus, and you regain all expended uses when you finish a long rest."
+            },
+            {
+                "id": "rogue-phb:phantom-tce:tokens-of-the-departed",
+                "name": "Tokens of the Departed",
+                "level": 9,
+                "text": "*9th-level Phantom feature*\n\nWhen a life ends in your presence, you're able to snatch a token from the departing soul, a sliver of its life essence that takes physical form: as a reaction when a creature you can see dies within 30 feet of you, you can open your free hand and cause a Tiny trinket to appear there, a soul trinket. The DM determines the trinket's form or has you roll on the Trinkets table in the *Player's Handbook* to generate it. You can have a maximum number of soul trinkets equal to your proficiency bonus, and you can't create one while at your maximum.\n\nYou can use soul trinkets in the following ways:\n\n- While a soul trinket is on your person, you have advantage on death saving throws and Constitution saving throws, for your vitality is enhanced by the life essence within the object.\n- When you deal Sneak Attack damage on your turn, you can destroy one of your soul trinkets that's on your person and then immediately use Wails from the Grave, without expending a use of that feature.\n- As an action, you can destroy one of your soul trinkets, no matter where it's located. When you do so, you can ask the spirit associated with the trinket one question. The spirit appears to you and answers in a language it knew in life. It's under no obligation to be truthful, and it answers as concisely as possible, eager to be free. The spirit knows only what it knew in life, as determined by the DM."
+            },
+            {
+                "id": "rogue-phb:phantom-tce:ghost-walk",
+                "name": "Ghost Walk",
+                "level": 13,
+                "text": "*13th-level Phantom feature*\n\nYou can phase partially into the realm of the dead, becoming like a ghost. As a bonus action, you assume a spectral form. While in this form, you have a flying speed of 10 feet, you can hover, and attack rolls have disadvantage against you. You can also move through creatures and objects as if they were difficult terrain, but you take 1d10 force damage if you end your turn inside a creature or an object.\n\nYou stay in this form for 10 minutes or until you end it as a bonus action. To use this feature again, you must finish a long rest or destroy one of your soul trinkets as part of the bonus action you use to activate Ghost Walk."
+            },
+            {
+                "id": "rogue-phb:phantom-tce:deaths-friend",
+                "name": "Death's Friend",
+                "level": 17,
+                "text": "*17th-level Phantom feature*\n\nYour association with death has become so close that you gain the following benefits:\n\n- When you use your Wails from the Grave, you can deal the necrotic damage to both the first and the second creature.\n- At the end of a long rest, a soul trinket appears in your hand if you don't have any soul trinkets, as the spirits of the dead are drawn to you."
+            }
+        ]
+    },
+    {
+        "id": "rogue-phb:soulknife-tce",
+        "kind": "subclass",
+        "name": "Soulknife",
+        "source": "TCE",
+        "edition": "classic",
+        "reprinted_as": [
+            "rogue-xphb:soulknife-xphb"
+        ],
+        "text": "Most assassins strike with physical weapons, and many burglars and spies use thieves' tools to infiltrate secure locations. In contrast, a Soulknife strikes and infiltrates with the mind, cutting through barriers both physical and psychic. These rogues discover psionic power within themselves and channel it to do their roguish work. They find easy employment as members of thieves' guilds, though they are often mistrusted by rogues who are leery of anyone using strange mind powers to conduct their business. Most governments would also be happy to employ a Soulknife as a spy.\n\nAmid the trees of ancient forests on the Material Plane and in the Feywild, some wood elves walk the path of the Soulknife, serving as silent, lethal guardians of their woods. In the endless war among the gith, a githzerai is encouraged to become a Soulknife when stealth is required against the githyanki foe.\n\nAs a Soulknife, your psionic abilities might have haunted you since you were a child, only revealing their full potential as you experienced the stress of adventure. Or you might have sought out a reclusive order of psychic adepts and spent years learning how to manifest your power.",
+        "class_id": "rogue-phb",
+        "short_name": "Soulknife",
+        "resources": [
+            {
+                "id": "psionic_energy_dice",
+                "name": "Psionic Energy Die"
+            }
+        ],
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "rogue-phb:soulknife-tce:psionic-power",
+                    "rogue-phb:soulknife-tce:psychic-blades"
+                ]
+            },
+            {
+                "level": 9,
+                "features": [
+                    "rogue-phb:soulknife-tce:soul-blades"
+                ]
+            },
+            {
+                "level": 13,
+                "features": [
+                    "rogue-phb:soulknife-tce:psychic-veil"
+                ]
+            },
+            {
+                "level": 17,
+                "features": [
+                    "rogue-phb:soulknife-tce:rend-mind"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "rogue-phb:soulknife-tce:psionic-power",
+                "name": "Psionic Power",
+                "level": 3,
+                "text": "*3rd-level Soulknife feature*\n\nYou harbor a wellspring of psionic energy within yourself. This energy is represented by your Psionic Energy dice, which are each a d6. You have a number of these dice equal to twice your proficiency bonus, and they fuel various psionic powers you have, which are detailed below.\n\nSome of your powers expend the Psionic Energy die they use, as specified in a power's description, and you can't use a power if it requires you to use a die when your dice are all expended. You regain all your expended Psionic Energy dice when you finish a long rest. In addition, as a bonus action, you can regain one expended Psionic Energy die, but you can't do so again until you finish a short or long rest.\n\nWhen you reach certain levels in this class, the size of your Psionic Energy dice increases: at 5th level (d8), 11th level (d10), and 17th level (d12).\n\nThe powers below use your Psionic Energy dice."
+            },
+            {
+                "id": "rogue-phb:soulknife-tce:psi-bolstered-knack",
+                "name": "Psi-Bolstered Knack",
+                "level": 3,
+                "text": "When your non-psionic training fails you, your psionic power can help: if you fail an ability check using a skill or tool with which you have proficiency, you can roll one Psionic Energy die and add the number rolled to the check, potentially turning failure into success. You expend the die only if the roll succeeds.",
+                "parent": "rogue-phb:soulknife-tce:psionic-power",
+                "consumes": {
+                    "resource": "psionic_energy_dice",
+                    "amount": 1
+                }
+            },
+            {
+                "id": "rogue-phb:soulknife-tce:psychic-whispers",
+                "name": "Psychic Whispers",
+                "level": 3,
+                "text": "You can establish telepathic communication between yourself and others-perfect for quiet infiltration. As an action, choose one or more creatures you can see, up to a number of creatures equal to your proficiency bonus, and then roll one Psionic Energy die. For a number of hours equal to the number rolled, the chosen creatures can speak telepathically with you, and you can speak telepathically with them. To send or receive a message (no action required), you and the other creature must be within 1 mile of each other. A creature can't use this telepathy if it can't speak any languages, and a creature can end the telepathic connection at any time (no action required). You and the creature don't need to speak a common language to understand each other.\n\nThe first time you use this power after each long rest, you don't expend the Psionic Energy die. All other times you use the power, you expend the die.",
+                "parent": "rogue-phb:soulknife-tce:psionic-power"
+            },
+            {
+                "id": "rogue-phb:soulknife-tce:psychic-blades",
+                "name": "Psychic Blades",
+                "level": 3,
+                "text": "*3rd-level Soulknife feature*\n\nYou can manifest your psionic power as shimmering blades of psychic energy. Whenever you take the Attack action, you can manifest a psychic blade from your free hand and make the attack with that blade. This magic blade is a simple melee weapon with the finesse and thrown properties. It has a normal range of 60 feet and no long range, and on a hit, it deals psychic damage equal to 1d6 plus the ability modifier you used for the attack roll. The blade vanishes immediately after it hits or misses its target, and it leaves no mark on its target if it deals damage.\n\nAfter you attack with the blade, you can make a melee or ranged weapon attack with a second psychic blade as a bonus action on the same turn, provided your other hand is free to create it. The damage die of this bonus attack is 1d4, instead of 1d6."
+            },
+            {
+                "id": "rogue-phb:soulknife-tce:soul-blades",
+                "name": "Soul Blades",
+                "level": 9,
+                "text": "*9th-level Soulknife feature*\n\nYour Psychic Blades are now an expression of your psi-suffused soul, giving you these powers that use your Psionic Energy dice:"
+            },
+            {
+                "id": "rogue-phb:soulknife-tce:homing-strikes",
+                "name": "Homing Strikes",
+                "level": 9,
+                "text": "If you make an attack roll with your Psychic Blades and miss the target, you can roll one Psionic Energy die and add the number rolled to the attack roll. If this causes the attack to hit, you expend the Psionic Energy die.",
+                "parent": "rogue-phb:soulknife-tce:soul-blades"
+            },
+            {
+                "id": "rogue-phb:soulknife-tce:psychic-teleportation",
+                "name": "Psychic Teleportation",
+                "level": 9,
+                "text": "As a bonus action, you manifest one of your Psychic Blades, expend one Psionic Energy die and roll it, and throw the blade at an unoccupied space you can see, up to a number of feet away equal to 10 times the number rolled. You then teleport to that space, and the blade vanishes.",
+                "parent": "rogue-phb:soulknife-tce:soul-blades"
+            },
+            {
+                "id": "rogue-phb:soulknife-tce:psychic-veil",
+                "name": "Psychic Veil",
+                "level": 13,
+                "text": "*13th-level Soulknife feature*\n\nYou can weave a veil of psychic static to mask yourself. As an action, you can magically become invisible, along with anything you are wearing or carrying, for 1 hour or until you dismiss this effect (no action required). This invisibility ends early immediately after you deal damage to a creature or you force a creature to make a saving throw.\n\nOnce you use this feature, you can't do so again until you finish a long rest, unless you expend a Psionic Energy die to use this feature again."
+            },
+            {
+                "id": "rogue-phb:soulknife-tce:rend-mind",
+                "name": "Rend Mind",
+                "level": 17,
+                "text": "*17th-level Soulknife feature*\n\nYou can sweep your Psychic Blades directly through a creature's mind. When you use your Psychic Blades to deal Sneak Attack damage to a creature, you can force that target to make a Wisdom saving throw (DC equal to 8 + your proficiency bonus + your Dexterity modifier). If the save fails, the target is stunned for 1 minute. The stunned target can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.\n\nOnce you use this feature, you can't do so again until you finish a long rest, unless you expend three Psionic Energy dice to use it again."
+            }
+        ]
+    }
+]

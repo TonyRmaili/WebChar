@@ -1,0 +1,2265 @@
+{
+    "monster": [
+        {
+            "name": "Clockwork Behir",
+            "source": "OoW",
+            "referenceSources": [
+                "BMT",
+                "CM",
+                "DitLCoT",
+                "EGW",
+                "JttRC",
+                "KftGV",
+                "OotA",
+                "OoW",
+                "PaBTSO",
+                "QftIS",
+                "TftYP",
+                "TftYP-DiT",
+                "ToFW",
+                "VEoR",
+                "WDMM"
+            ],
+            "size": [
+                "H"
+            ],
+            "type": "construct",
+            "alignment": [
+                "N",
+                "E"
+            ],
+            "ac": [
+                {
+                    "ac": 17,
+                    "from": [
+                        "natural armor"
+                    ]
+                }
+            ],
+            "hp": {
+                "average": 168,
+                "formula": "16d12 + 64"
+            },
+            "speed": {
+                "walk": 50,
+                "climb": 40
+            },
+            "str": 23,
+            "dex": 16,
+            "con": 18,
+            "int": 7,
+            "wis": 14,
+            "cha": 12,
+            "skill": {
+                "perception": "+6",
+                "stealth": "+7"
+            },
+            "senses": [
+                "darkvision 90 ft."
+            ],
+            "passive": 16,
+            "immune": [
+                "poison",
+                "psychic"
+            ],
+            "languages": [
+                "Draconic"
+            ],
+            "cr": "11",
+            "action": [
+                {
+                    "name": "Multiattack",
+                    "entries": [
+                        "The behir makes two attacks: one with its bite and one to constrict."
+                    ]
+                },
+                {
+                    "name": "Bite",
+                    "entries": [
+                        "{@atk mw} {@hit 10} to hit, reach 10 ft., one target. {@h}22 ({@damage 3d10 + 6}) piercing damage."
+                    ]
+                },
+                {
+                    "name": "Constrict",
+                    "entries": [
+                        "{@atk mw} {@hit 10} to hit, reach 5 ft., one Large or smaller creature. {@h}17 ({@damage 2d10 + 6}) bludgeoning damage plus 17 ({@damage 2d10 + 6}) slashing damage. The target is {@condition grappled} (escape {@dc 16}) if the behir isn't already constricting a creature, and the target is {@condition restrained} until this grapple ends."
+                    ]
+                },
+                {
+                    "name": "Lightning Breath {@recharge 5}",
+                    "entries": [
+                        "The behir exhales a line of lightning that is 20 feet long and 5 feet wide. Each creature in that line must make a {@dc 16} Dexterity saving throw, taking 66 ({@damage 12d10}) lightning damage on a failed save, or half as much damage on a successful one."
+                    ]
+                },
+                {
+                    "name": "Swallow",
+                    "entries": [
+                        "The behir makes one bite attack against a Medium or smaller target it is grappling. If the attack hits, the target is also swallowed, and the grapple ends. While swallowed, the target is {@condition blinded} and {@condition restrained}, it has {@quickref Cover||3||total cover} against attacks and other effects outside the behir, and it takes 21 ({@damage 6d6}) acid damage at the start of each of the behir's turns. A behir can have only one creature swallowed at a time.",
+                        "If the behir takes 30 damage or more on a single turn from the swallowed creature, the behir must succeed on a {@dc 14} Constitution saving throw at the end of that turn or regurgitate the creature, which falls {@condition prone} in a space within 10 feet of the behir. If the behir dies, a swallowed creature is no longer {@condition restrained} by it and can escape from the corpse by using 15 feet of movement, exiting {@condition prone}."
+                    ]
+                }
+            ],
+            "environment": [
+                "underdark"
+            ],
+            "soundClip": {
+                "type": "internal",
+                "path": "bestiary/behir.opus"
+            },
+            "senseTags": [
+                "D"
+            ],
+            "actionTags": [
+                "Breath Weapon",
+                "Multiattack",
+                "Swallow"
+            ],
+            "languageTags": [
+                "DR"
+            ],
+            "damageTags": [
+                "A",
+                "B",
+                "L",
+                "P",
+                "S"
+            ],
+            "miscTags": [
+                "MW",
+                "RCH"
+            ],
+            "conditionInflict": [
+                "blinded",
+                "grappled",
+                "restrained"
+            ],
+            "savingThrowForced": [
+                "constitution",
+                "dexterity"
+            ],
+            "_file": "bestiary/bestiary-oow.json",
+            "page": 173,
+            "conditionImmune": [
+                "charmed",
+                "exhaustion",
+                "frightened",
+                "paralyzed",
+                "petrified",
+                "poisoned"
+            ],
+            "hasToken": true,
+            "hasFluffImages": true
+        },
+        {
+            "name": "Dagdra Deepforge",
+            "source": "OoW",
+            "referenceSources": [
+                "BGDIA",
+                "BMT",
+                "CM",
+                "CoA",
+                "CoS",
+                "CRCotN",
+                "DC",
+                "DIP",
+                "DSotDQ",
+                "EGW",
+                "ERLW",
+                "GoS",
+                "HotDQ",
+                "IDRotF",
+                "JttRC",
+                "MOT",
+                "OotA",
+                "OoW",
+                "PotA",
+                "PSI",
+                "QftIS",
+                "SatO",
+                "SDW",
+                "SKT",
+                "SLW",
+                "TCE",
+                "TftYP",
+                "TftYP-DiT",
+                "TftYP-TFoF",
+                "TftYP-TSC",
+                "ToA",
+                "ToFW",
+                "US",
+                "VEoR",
+                "WDH",
+                "WDMM",
+                "XMtS"
+            ],
+            "size": [
+                "M"
+            ],
+            "type": {
+                "type": "humanoid",
+                "tags": [
+                    {
+                        "tag": "dwarf",
+                        "prefix": "Mountain",
+                        "prefixHidden": true
+                    }
+                ]
+            },
+            "alignment": [
+                "N",
+                "G"
+            ],
+            "ac": [
+                {
+                    "ac": 15,
+                    "from": [
+                        "{@item half plate armor|phb}"
+                    ]
+                }
+            ],
+            "hp": {
+                "average": 27,
+                "formula": "5d8 + 5"
+            },
+            "speed": {
+                "walk": 25
+            },
+            "str": 10,
+            "dex": 10,
+            "con": 12,
+            "int": 13,
+            "wis": 16,
+            "cha": 13,
+            "skill": {
+                "medicine": "+7",
+                "persuasion": "+3",
+                "religion": "+5"
+            },
+            "passive": 13,
+            "languages": [
+                "any two languages",
+                "Dwarvish"
+            ],
+            "cr": "2",
+            "spellcasting": [
+                {
+                    "name": "Spellcasting",
+                    "type": "spellcasting",
+                    "headerEntries": [
+                        "Dagdra is a 5th-level spellcaster. Its spellcasting ability is Wisdom (spell save {@dc 13}, {@hit 5} to hit with spell attacks). Dagdra has the following cleric spells prepared:"
+                    ],
+                    "spells": {
+                        "0": {
+                            "spells": [
+                                "{@spell light}",
+                                "{@spell sacred flame}",
+                                "{@spell thaumaturgy}"
+                            ]
+                        },
+                        "1": {
+                            "slots": 4,
+                            "spells": [
+                                "{@spell cure wounds}",
+                                "{@spell guiding bolt}",
+                                "{@spell sanctuary}"
+                            ]
+                        },
+                        "2": {
+                            "slots": 3,
+                            "spells": [
+                                "{@spell lesser restoration}",
+                                "{@spell spiritual weapon}"
+                            ]
+                        },
+                        "3": {
+                            "slots": 2,
+                            "spells": [
+                                "{@spell dispel magic}",
+                                "{@spell spirit guardians}"
+                            ]
+                        }
+                    },
+                    "ability": "wis"
+                }
+            ],
+            "trait": [
+                {
+                    "name": "Divine Eminence",
+                    "entries": [
+                        "As a bonus action, Dagdra can expend a spell slot to cause its melee weapon attacks to magically deal an extra 10 ({@damage 3d6}) radiant damage to a target on a hit. This benefit lasts until the end of the turn. If Dagdra expends a spell slot of 2nd level or higher, the extra damage increases by {@damage 1d6} for each level above 1st."
+                    ]
+                },
+                {
+                    "name": "Dwarven Resilience",
+                    "entries": [
+                        "<$title_short_name$> has advantage on saving throws against poison, and has resistance against poison damage."
+                    ]
+                }
+            ],
+            "action": [
+                {
+                    "name": "Mace",
+                    "entries": [
+                        "{@atk mw} {@hit 2} to hit, reach 5 ft., one target. {@h}3 ({@damage 1d6}) bludgeoning damage."
+                    ]
+                },
+                {
+                    "name": "Scroll Service (1/Day)",
+                    "entries": [
+                        "As an action, Dagdra draws a {@item spell scroll} from her {@item documancy satchel|AI}. The scroll contains a spell of up to 3rd level of Dagdra's choice. Only Dagdra can use the scroll, which vanishes after 1 minute."
+                    ]
+                }
+            ],
+            "environment": [
+                "urban"
+            ],
+            "soundClip": {
+                "type": "internal",
+                "path": "bestiary/priest.opus"
+            },
+            "attachedItems": [
+                "mace|phb"
+            ],
+            "languageTags": [
+                "D",
+                "X"
+            ],
+            "damageTags": [
+                "B",
+                "R"
+            ],
+            "damageTagsSpell": [
+                "N",
+                "O",
+                "R"
+            ],
+            "spellcastingTags": [
+                "CC"
+            ],
+            "miscTags": [
+                "MLW",
+                "MW"
+            ],
+            "savingThrowForcedSpell": [
+                "dexterity",
+                "wisdom"
+            ],
+            "_file": "bestiary/bestiary-oow.json",
+            "isNpc": true,
+            "isNamedCreature": true,
+            "page": 145,
+            "hasToken": true,
+            "hasFluff": true,
+            "hasFluffImages": true,
+            "resist": [
+                "poison"
+            ],
+            "senses": [
+                "darkvision 60 ft."
+            ]
+        },
+        {
+            "name": "Devil Dog",
+            "source": "OoW",
+            "referenceSources": [
+                "BGDIA",
+                "CM",
+                "CoS",
+                "CRCotN",
+                "DSotDQ",
+                "EFR",
+                "EGW",
+                "ERLW",
+                "GoS",
+                "HotDQ",
+                "IDRotF",
+                "JttRC",
+                "MOT",
+                "OotA",
+                "OoW",
+                "PaBTSO",
+                "PotA",
+                "PSI",
+                "QftIS",
+                "SjA",
+                "SKT",
+                "TftYP-TFoF",
+                "TftYP-TSC",
+                "ToA",
+                "ToR",
+                "WDH"
+            ],
+            "size": [
+                "M"
+            ],
+            "type": {
+                "type": "humanoid",
+                "tags": [
+                    "tiefling"
+                ]
+            },
+            "alignment": [
+                "C",
+                "E"
+            ],
+            "ac": [
+                10
+            ],
+            "hp": {
+                "average": 9,
+                "formula": "2d8"
+            },
+            "speed": {
+                "walk": 30
+            },
+            "str": 10,
+            "dex": 10,
+            "con": 10,
+            "int": 10,
+            "wis": 14,
+            "cha": 11,
+            "skill": {
+                "medicine": "+4",
+                "religion": "+2"
+            },
+            "passive": 12,
+            "languages": [
+                "any one language (usually Common)",
+                "Infernal"
+            ],
+            "cr": "1/4",
+            "spellcasting": [
+                {
+                    "name": "Spellcasting",
+                    "type": "spellcasting",
+                    "headerEntries": [
+                        "Devil Dog is a 1st-level spellcaster. Its spellcasting ability is Wisdom (spell save {@dc 12}, {@hit 4} to hit with spell attacks). Devil Dog has the following cleric spells prepared:"
+                    ],
+                    "spells": {
+                        "0": {
+                            "spells": [
+                                "{@spell light}",
+                                "{@spell sacred flame}",
+                                "{@spell thaumaturgy}"
+                            ]
+                        },
+                        "1": {
+                            "slots": 3,
+                            "spells": [
+                                "{@spell bless}",
+                                "{@spell cure wounds}",
+                                "{@spell sanctuary}"
+                            ]
+                        }
+                    },
+                    "ability": "wis"
+                }
+            ],
+            "action": [
+                {
+                    "name": "Club",
+                    "entries": [
+                        "{@atk mw} {@hit 2} to hit, reach 5 ft., one target. {@h}2 ({@damage 1d4}) bludgeoning damage."
+                    ]
+                }
+            ],
+            "environment": [
+                "urban"
+            ],
+            "soundClip": {
+                "type": "internal",
+                "path": "bestiary/acolyte.opus"
+            },
+            "attachedItems": [
+                "club|phb"
+            ],
+            "languageTags": [
+                "C",
+                "I",
+                "X"
+            ],
+            "damageTags": [
+                "B"
+            ],
+            "damageTagsSpell": [
+                "F",
+                "R"
+            ],
+            "spellcastingTags": [
+                "CC"
+            ],
+            "miscTags": [
+                "MLW",
+                "MW"
+            ],
+            "savingThrowForcedSpell": [
+                "dexterity",
+                "wisdom"
+            ],
+            "_file": "bestiary/bestiary-oow.json",
+            "shortName": true,
+            "isNpc": true,
+            "isNamedCreature": true,
+            "page": 85,
+            "tokenCustom": true,
+            "hasToken": true,
+            "resist": [
+                "fire"
+            ],
+            "senses": [
+                "darkvision 60 ft."
+            ]
+        },
+        {
+            "name": "Enormous Tentacle",
+            "source": "OoW",
+            "referenceSources": [
+                "DIP",
+                "EGW",
+                "GoS",
+                "OoW",
+                "PaBTSO",
+                "QftIS",
+                "SLW",
+                "TftYP-THSoT",
+                "ToA",
+                "US",
+                "WBtW"
+            ],
+            "size": [
+                "H"
+            ],
+            "type": "beast",
+            "alignment": [
+                "U"
+            ],
+            "ac": [
+                12
+            ],
+            "hp": {
+                "average": 60,
+                "formula": "8d12 + 8"
+            },
+            "speed": {
+                "walk": 30,
+                "swim": 30
+            },
+            "str": 19,
+            "dex": 14,
+            "con": 12,
+            "int": 1,
+            "wis": 10,
+            "cha": 3,
+            "skill": {
+                "perception": "+2"
+            },
+            "senses": [
+                "blindsight 10 ft."
+            ],
+            "passive": 12,
+            "cr": "2",
+            "action": [
+                {
+                    "name": "Constrict",
+                    "entries": [
+                        "{@atk mw} {@hit 6} to hit, reach 35 ft., one creature. {@h}13 ({@damage 2d8 + 4}) bludgeoning damage, and the target is {@condition grappled} (escape {@dc 16}). Until this grapple ends, the creature is {@condition restrained}, and the tentacle can't constrict another target."
+                    ]
+                }
+            ],
+            "environment": [
+                "underwater",
+                "underdark",
+                "forest",
+                "swamp",
+                "desert"
+            ],
+            "soundClip": {
+                "type": "internal",
+                "path": "bestiary/giant-constrictor-tentacle.opus"
+            },
+            "senseTags": [
+                "B"
+            ],
+            "damageTags": [
+                "B"
+            ],
+            "miscTags": [
+                "MW",
+                "RCH"
+            ],
+            "conditionInflict": [
+                "grappled",
+                "restrained"
+            ],
+            "_file": "bestiary/bestiary-oow.json",
+            "page": 94,
+            "trait": [
+                {
+                    "name": "Reach",
+                    "entries": [
+                        "The tentacle can reach anywhere in the room."
+                    ]
+                }
+            ],
+            "hasToken": true,
+            "hasFluffImages": true
+        },
+        {
+            "name": "Gildha Duhn",
+            "source": "OoW",
+            "referenceSources": [
+                "BGDIA",
+                "CM",
+                "CoS",
+                "CRCotN",
+                "DSotDQ",
+                "EFR",
+                "EGW",
+                "ERLW",
+                "GoS",
+                "HotDQ",
+                "IDRotF",
+                "JttRC",
+                "MOT",
+                "OotA",
+                "OoW",
+                "PaBTSO",
+                "PotA",
+                "PSI",
+                "QftIS",
+                "SjA",
+                "SKT",
+                "TftYP-TFoF",
+                "TftYP-TSC",
+                "ToA",
+                "ToR",
+                "WDH"
+            ],
+            "size": [
+                "M"
+            ],
+            "type": {
+                "type": "humanoid",
+                "tags": [
+                    "half-orc"
+                ]
+            },
+            "alignment": [
+                "A"
+            ],
+            "ac": [
+                10
+            ],
+            "hp": {
+                "average": 9,
+                "formula": "2d8"
+            },
+            "speed": {
+                "walk": 30
+            },
+            "str": 10,
+            "dex": 10,
+            "con": 10,
+            "int": 10,
+            "wis": 14,
+            "cha": 11,
+            "skill": {
+                "medicine": "+4",
+                "religion": "+2",
+                "intimidation": "+2"
+            },
+            "passive": 12,
+            "languages": [
+                "any one language (usually Common)",
+                "Orc"
+            ],
+            "cr": "1/4",
+            "spellcasting": [
+                {
+                    "name": "Spellcasting",
+                    "type": "spellcasting",
+                    "headerEntries": [
+                        "Gildha is a 1st-level spellcaster. Its spellcasting ability is Wisdom (spell save {@dc 12}, {@hit 4} to hit with spell attacks). Gildha has the following cleric spells prepared:"
+                    ],
+                    "spells": {
+                        "0": {
+                            "spells": [
+                                "{@spell light}",
+                                "{@spell sacred flame}",
+                                "{@spell thaumaturgy}"
+                            ]
+                        },
+                        "1": {
+                            "slots": 3,
+                            "spells": [
+                                "{@spell bless}",
+                                "{@spell cure wounds}",
+                                "{@spell sanctuary}"
+                            ]
+                        }
+                    },
+                    "ability": "wis"
+                }
+            ],
+            "action": [
+                {
+                    "name": "Club",
+                    "entries": [
+                        "{@atk mw} {@hit 2} to hit, reach 5 ft., one target. {@h}2 ({@damage 1d4}) bludgeoning damage."
+                    ]
+                }
+            ],
+            "environment": [
+                "urban"
+            ],
+            "soundClip": {
+                "type": "internal",
+                "path": "bestiary/acolyte.opus"
+            },
+            "attachedItems": [
+                "club|phb"
+            ],
+            "languageTags": [
+                "C",
+                "O",
+                "X"
+            ],
+            "damageTags": [
+                "B"
+            ],
+            "damageTagsSpell": [
+                "R"
+            ],
+            "spellcastingTags": [
+                "CC"
+            ],
+            "miscTags": [
+                "MLW",
+                "MW"
+            ],
+            "savingThrowForcedSpell": [
+                "dexterity",
+                "wisdom"
+            ],
+            "_file": "bestiary/bestiary-oow.json",
+            "isNpc": true,
+            "isNamedCreature": true,
+            "page": 110,
+            "hasToken": true,
+            "hasFluffImages": true,
+            "trait": [
+                {
+                    "name": "Relentless Endurance",
+                    "entries": [
+                        "When reduced to 0 hit points, <$title_short_name$> drops to 1 hit point instead (but can't do this again until they finish a long rest)."
+                    ]
+                }
+            ],
+            "senses": [
+                "darkvision 60 ft."
+            ]
+        },
+        {
+            "name": "Grunka",
+            "source": "OoW",
+            "referenceSources": [
+                "BGDIA",
+                "DSotDQ",
+                "EGW",
+                "ERLW",
+                "GoS",
+                "HotDQ",
+                "LMoP",
+                "OoW",
+                "PaBTSO",
+                "PotA",
+                "QftIS",
+                "RMBRE",
+                "SKT",
+                "TftYP",
+                "TftYP-TSC",
+                "US",
+                "WBtW",
+                "WDMM"
+            ],
+            "size": [
+                "M"
+            ],
+            "type": {
+                "type": "humanoid",
+                "tags": [
+                    "goblinoid"
+                ]
+            },
+            "alignment": [
+                "L",
+                "E"
+            ],
+            "ac": [
+                {
+                    "ac": 18,
+                    "from": [
+                        "{@item chain mail|phb}",
+                        "{@item shield|phb}"
+                    ]
+                }
+            ],
+            "hp": {
+                "average": 11,
+                "formula": "2d8 + 2"
+            },
+            "speed": {
+                "walk": 30
+            },
+            "str": 13,
+            "dex": 12,
+            "con": 12,
+            "int": 10,
+            "wis": 10,
+            "cha": 9,
+            "senses": [
+                "darkvision 60 ft."
+            ],
+            "passive": 10,
+            "languages": [
+                "Common",
+                "Goblin"
+            ],
+            "cr": "1/2",
+            "trait": [
+                {
+                    "name": "Martial Advantage",
+                    "entries": [
+                        "Once per turn, Grunka can deal an extra 7 ({@damage 2d6}) damage to a creature it hits with a weapon attack if that creature is within 5 feet of an ally of Grunka that isn't {@condition incapacitated}."
+                    ]
+                }
+            ],
+            "action": [
+                {
+                    "name": "Longsword",
+                    "entries": [
+                        "{@atk mw} {@hit 3} to hit, reach 5 ft., one target. {@h}5 ({@damage 1d8 + 1}) slashing damage, or 6 ({@damage 1d10 + 1}) slashing damage if used with two hands."
+                    ]
+                },
+                {
+                    "name": "Longbow",
+                    "entries": [
+                        "{@atk rw} {@hit 3} to hit, range 150/600 ft., one target. {@h}5 ({@damage 1d8 + 1}) piercing damage."
+                    ]
+                },
+                {
+                    "name": "Acid Spray Gun {@recharge 5}",
+                    "entries": [
+                        "Grunka sprays acid in a 10-foot cone. Each creature in the area must make a {@dc 10} Dexterity saving throw, taking 7 ({@damage 2d6}) acid damage on a failed save, or half as much damage on a successful one.",
+                        "The spray gun has a tank that can be filled with ten standard vials of acid mixed with water, allowing it to be used five times."
+                    ]
+                }
+            ],
+            "environment": [
+                "underdark",
+                "grassland",
+                "forest",
+                "hill",
+                "desert"
+            ],
+            "soundClip": {
+                "type": "internal",
+                "path": "bestiary/hobgoblin.opus"
+            },
+            "attachedItems": [
+                "longbow|phb",
+                "longsword|phb"
+            ],
+            "senseTags": [
+                "D"
+            ],
+            "languageTags": [
+                "C",
+                "GO"
+            ],
+            "damageTags": [
+                "A",
+                "P",
+                "S"
+            ],
+            "miscTags": [
+                "AOE",
+                "MW",
+                "RNG",
+                "RW"
+            ],
+            "_file": "bestiary/bestiary-oow.json",
+            "isNpc": true,
+            "isNamedCreature": true,
+            "page": 115,
+            "hasToken": true,
+            "hasFluffImages": true
+        },
+        {
+            "name": "Jelayne",
+            "source": "OoW",
+            "referenceSources": [
+                "AATM",
+                "BGDIA",
+                "BMT",
+                "CoS",
+                "CRCotN",
+                "DC",
+                "DIP",
+                "DSotDQ",
+                "GoS",
+                "HftT",
+                "IMR",
+                "JttRC",
+                "KftGV",
+                "LLK",
+                "LMoP",
+                "LRDT",
+                "NRH-ASS",
+                "NRH-AT",
+                "OotA",
+                "OoW",
+                "PaBTSO",
+                "PotA",
+                "QftIS",
+                "RMBRE",
+                "RtG",
+                "SatO",
+                "SDW",
+                "SKT",
+                "TCE",
+                "TftYP",
+                "TftYP-DiT",
+                "TftYP-TFoF",
+                "TftYP-TSC",
+                "ToA",
+                "ToFW",
+                "VEoR",
+                "WBtW",
+                "WDH",
+                "WDMM",
+                "XMtS"
+            ],
+            "size": [
+                "M"
+            ],
+            "type": "undead",
+            "alignment": [
+                "L",
+                "E"
+            ],
+            "ac": [
+                {
+                    "ac": 13,
+                    "from": [
+                        "armor scraps"
+                    ]
+                }
+            ],
+            "hp": {
+                "average": 13,
+                "formula": "2d8 + 4"
+            },
+            "speed": {
+                "walk": 30
+            },
+            "str": 10,
+            "dex": 14,
+            "con": 15,
+            "int": 14,
+            "wis": 8,
+            "cha": 14,
+            "senses": [
+                "darkvision 60 ft."
+            ],
+            "passive": 9,
+            "immune": [
+                "poison"
+            ],
+            "vulnerable": [
+                "bludgeoning"
+            ],
+            "conditionImmune": [
+                "exhaustion",
+                "poisoned"
+            ],
+            "languages": [
+                "Common"
+            ],
+            "cr": "1/4",
+            "action": [
+                {
+                    "name": "Shortsword",
+                    "entries": [
+                        "{@atk mw} {@hit 4} to hit, reach 5 ft., one target. {@h}5 ({@damage 1d6 + 2}) piercing damage."
+                    ]
+                },
+                {
+                    "name": "Shortbow",
+                    "entries": [
+                        "{@atk rw} {@hit 4} to hit, range 80/320 ft., one target. {@h}5 ({@damage 1d6 + 2}) piercing damage."
+                    ]
+                }
+            ],
+            "environment": [
+                "urban"
+            ],
+            "soundClip": {
+                "type": "internal",
+                "path": "bestiary/skeleton.opus"
+            },
+            "attachedItems": [
+                "shortbow|phb",
+                "shortsword|phb"
+            ],
+            "senseTags": [
+                "D"
+            ],
+            "languageTags": [
+                "C"
+            ],
+            "damageTags": [
+                "P"
+            ],
+            "miscTags": [
+                "MLW",
+                "MW",
+                "RNG",
+                "RW"
+            ],
+            "_file": "bestiary/bestiary-oow.json",
+            "isNpc": true,
+            "isNamedCreature": true,
+            "page": 84,
+            "tokenCustom": true,
+            "hasToken": true
+        },
+        {
+            "name": "Mechachimera",
+            "source": "OoW",
+            "referenceSources": [
+                "BGDIA",
+                "OoW",
+                "PotA",
+                "QftIS",
+                "RoT",
+                "SCC-HfMT",
+                "SDW",
+                "SKT",
+                "TftYP",
+                "TftYP-AtG",
+                "WDMM"
+            ],
+            "size": [
+                "L"
+            ],
+            "type": "construct",
+            "alignment": [
+                "C",
+                "E"
+            ],
+            "ac": [
+                {
+                    "ac": 14,
+                    "from": [
+                        "natural armor"
+                    ]
+                }
+            ],
+            "hp": {
+                "average": 114,
+                "formula": "12d10 + 48"
+            },
+            "speed": {
+                "walk": 30,
+                "fly": 60
+            },
+            "str": 19,
+            "dex": 11,
+            "con": 19,
+            "int": 3,
+            "wis": 14,
+            "cha": 10,
+            "skill": {
+                "perception": "+8"
+            },
+            "senses": [
+                "darkvision 60 ft."
+            ],
+            "passive": 18,
+            "languages": [
+                "understands Draconic but can't speak"
+            ],
+            "cr": "6",
+            "action": [
+                {
+                    "name": "Multiattack",
+                    "entries": [
+                        "The chimera makes three attacks: one with its bite, one with its horns, and one with its claws. When its fire breath is available, it can use the breath in place of its bite or horns."
+                    ]
+                },
+                {
+                    "name": "Bite",
+                    "entries": [
+                        "{@atk mw} {@hit 7} to hit, reach 5 ft., one target. {@h}11 ({@damage 2d6 + 4}) piercing damage."
+                    ]
+                },
+                {
+                    "name": "Horns",
+                    "entries": [
+                        "{@atk mw} {@hit 7} to hit, reach 5 ft., one target. {@h}10 ({@damage 1d12 + 4}) bludgeoning damage."
+                    ]
+                },
+                {
+                    "name": "Claws",
+                    "entries": [
+                        "{@atk mw} {@hit 7} to hit, reach 5 ft., one target. {@h}11 ({@damage 2d6 + 4}) slashing damage."
+                    ]
+                },
+                {
+                    "name": "Fire Breath {@recharge 5}",
+                    "entries": [
+                        "The dragon head exhales fire in a 15-foot cone. Each creature in that area must make a {@dc 15} Dexterity saving throw, taking 31 ({@damage 7d8}) fire damage on a failed save, or half as much damage on a successful one."
+                    ]
+                }
+            ],
+            "environment": [
+                "underdark",
+                "mountain",
+                "grassland",
+                "hill"
+            ],
+            "soundClip": {
+                "type": "internal",
+                "path": "bestiary/chimera.opus"
+            },
+            "senseTags": [
+                "D"
+            ],
+            "actionTags": [
+                "Breath Weapon",
+                "Multiattack"
+            ],
+            "languageTags": [
+                "CS",
+                "DR"
+            ],
+            "damageTags": [
+                "B",
+                "F",
+                "P",
+                "S"
+            ],
+            "miscTags": [
+                "AOE",
+                "MW"
+            ],
+            "savingThrowForced": [
+                "dexterity"
+            ],
+            "_file": "bestiary/bestiary-oow.json",
+            "page": 134,
+            "immune": [
+                "poison",
+                "psychic"
+            ],
+            "tokenCustom": true,
+            "hasToken": true
+        },
+        {
+            "name": "Onyx",
+            "source": "OoW",
+            "referenceSources": [
+                "CM",
+                "CoS",
+                "HotDQ",
+                "IDRotF",
+                "IMR",
+                "JttRC",
+                "OoW",
+                "SKT",
+                "TCE",
+                "ToA",
+                "WBtW",
+                "WDH"
+            ],
+            "size": [
+                "H"
+            ],
+            "type": "beast",
+            "alignment": [
+                "U"
+            ],
+            "ac": [
+                12
+            ],
+            "hp": {
+                "average": 2,
+                "formula": "1d4"
+            },
+            "speed": {
+                "walk": 400,
+                "climb": 200
+            },
+            "str": 3,
+            "dex": 15,
+            "con": 10,
+            "int": 3,
+            "wis": 12,
+            "cha": 7,
+            "skill": {
+                "perception": "+3",
+                "stealth": "+4"
+            },
+            "passive": 13,
+            "cr": "0",
+            "trait": [
+                {
+                    "name": "Keen Smell",
+                    "entries": [
+                        "The cat has advantage on Wisdom ({@skill Perception}) checks that rely on smell."
+                    ]
+                },
+                {
+                    "name": "Relative Size",
+                    "entries": [
+                        "Any damage Onyx would take is reduced to 0. She has advantage on ability checks and saving throws."
+                    ]
+                },
+                {
+                    "name": "Dealing with Onyx",
+                    "entries": [
+                        "Onyx cannot be overcome or killed by combat. Any weapon attack against her that hits AC 12 makes contact but deals no lasting damage. However, if the attack would deal 10 or more damage, Onyx has disadvantage on attack rolls until the end of her next turn. If Onyx would take 10 or more damage from spells or other effects, it yields the same result. Spells that impose conditions function normally against Onyx, but those conditions end automatically at the end of the cat's next turn."
+                    ]
+                }
+            ],
+            "action": [
+                {
+                    "name": "Claws",
+                    "entries": [
+                        "{@atk mw} {@hit 7} to hit, reach 20 ft., one target. {@h}11 ({@damage 2d10}) slashing damage."
+                    ]
+                }
+            ],
+            "environment": [
+                "grassland",
+                "forest",
+                "urban",
+                "desert"
+            ],
+            "familiar": true,
+            "soundClip": {
+                "type": "internal",
+                "path": "bestiary/cat.opus"
+            },
+            "traitTags": [
+                "Keen Senses"
+            ],
+            "damageTags": [
+                "S"
+            ],
+            "miscTags": [
+                "MW"
+            ],
+            "_file": "bestiary/bestiary-oow.json",
+            "isNpc": true,
+            "isNamedCreature": true,
+            "page": 186,
+            "hasToken": true,
+            "hasFluff": true,
+            "hasFluffImages": true
+        },
+        {
+            "name": "Replica Duodrone",
+            "group": [
+                "Modrons"
+            ],
+            "source": "OoW",
+            "referenceSources": [
+                "KftGV",
+                "OotA",
+                "OoW",
+                "QftIS",
+                "SCC-CK",
+                "ToFW"
+            ],
+            "size": [
+                "M"
+            ],
+            "type": "construct",
+            "alignment": [
+                "L",
+                "N"
+            ],
+            "ac": [
+                {
+                    "ac": 15,
+                    "from": [
+                        "natural armor"
+                    ]
+                }
+            ],
+            "hp": {
+                "average": 11,
+                "formula": "2d8 + 2"
+            },
+            "speed": {
+                "walk": 30
+            },
+            "str": 11,
+            "dex": 13,
+            "con": 12,
+            "int": 6,
+            "wis": 10,
+            "cha": 7,
+            "senses": [
+                "darkvision 60 ft."
+            ],
+            "passive": 10,
+            "languages": [
+                "Modron",
+                "can understand Common but speaks only preprogrammed responses"
+            ],
+            "cr": "1/4",
+            "trait": [
+                {
+                    "name": "Axiomatic Mind",
+                    "entries": [
+                        "The duodrone can't be compelled to act in a manner contrary to its nature or its instructions."
+                    ]
+                },
+                {
+                    "name": "Dismantlable",
+                    "entries": [
+                        "If the replica duodrone dies, its body falls into a pile of parts (gears, plates, screws, and wires), leaving behind its weapons and anything else it was carrying."
+                    ]
+                }
+            ],
+            "action": [
+                {
+                    "name": "Multiattack",
+                    "entries": [
+                        "The duodrone makes two fist attacks or two javelin attacks."
+                    ]
+                },
+                {
+                    "name": "Fist",
+                    "entries": [
+                        "{@atk mw} {@hit 2} to hit, reach 5 ft., one target. {@h}2 ({@damage 1d4}) bludgeoning damage."
+                    ]
+                },
+                {
+                    "name": "Javelin",
+                    "entries": [
+                        "{@atk mw,rw} {@hit 3} to hit, reach 5 ft. or range 30/120 ft., one target. {@h}4 ({@damage 1d6 + 1}) piercing damage."
+                    ]
+                }
+            ],
+            "variant": [
+                {
+                    "type": "variant",
+                    "name": "Rogue Modrons",
+                    "entries": [
+                        "A modron unit sometimes becomes defective, either through natural decay or exposure to chaotic forces. Rogue modrons don't act in accordance with Primus's wishes and directives, breaking laws, disobeying orders, and even engaging in violence. Other modrons hunt down such rogues.",
+                        "A rogue modron loses the Axiomatic Mind trait and can have any alignment other than lawful neutral. Otherwise, it has the same statistics as a regular modron of its rank."
+                    ]
+                }
+            ],
+            "soundClip": {
+                "type": "internal",
+                "path": "bestiary/duodrone.opus"
+            },
+            "attachedItems": [
+                "javelin|phb"
+            ],
+            "senseTags": [
+                "U"
+            ],
+            "actionTags": [
+                "Multiattack"
+            ],
+            "languageTags": [
+                "C",
+                "OTH"
+            ],
+            "damageTags": [
+                "B",
+                "P"
+            ],
+            "miscTags": [
+                "MLW",
+                "MW",
+                "RW",
+                "THW"
+            ],
+            "_file": "bestiary/bestiary-oow.json",
+            "page": 132,
+            "tokenCustom": true,
+            "hasToken": true
+        },
+        {
+            "name": "Replica Monodrone",
+            "group": [
+                "Modrons"
+            ],
+            "source": "OoW",
+            "referenceSources": [
+                "BGDIA",
+                "CM",
+                "KftGV",
+                "LLK",
+                "OotA",
+                "OoW",
+                "SatO",
+                "ToA",
+                "ToFW"
+            ],
+            "size": [
+                "M"
+            ],
+            "type": "construct",
+            "alignment": [
+                "L",
+                "N"
+            ],
+            "ac": [
+                {
+                    "ac": 15,
+                    "from": [
+                        "natural armor"
+                    ]
+                }
+            ],
+            "hp": {
+                "average": 5,
+                "formula": "1d8 + 1"
+            },
+            "speed": {
+                "walk": 30
+            },
+            "str": 10,
+            "dex": 13,
+            "con": 12,
+            "int": 4,
+            "wis": 10,
+            "cha": 5,
+            "senses": [
+                "darkvision 60 ft."
+            ],
+            "passive": 10,
+            "languages": [
+                "Modron",
+                "can understand Common but speaks only preprogrammed responses"
+            ],
+            "cr": "1/8",
+            "trait": [
+                {
+                    "name": "Axiomatic Mind",
+                    "entries": [
+                        "The monodrone can't be compelled to act in a manner contrary to its nature or its instructions."
+                    ]
+                },
+                {
+                    "name": "Dismantlable",
+                    "entries": [
+                        "If the replica monodrone dies, its body falls into a pile of parts (gears, plates, screws, and wires), leaving behind its weapons and anything else it was carrying."
+                    ]
+                }
+            ],
+            "action": [
+                {
+                    "name": "Dagger",
+                    "entries": [
+                        "{@atk mw} {@hit 3} to hit, reach 5 ft., one target. {@h}3 ({@damage 1d4 + 1}) piercing damage."
+                    ]
+                },
+                {
+                    "name": "Javelin",
+                    "entries": [
+                        "{@atk mw,rw} {@hit 2} to hit, reach 5 ft. or range 30/120 ft., one target. {@h}3 ({@damage 1d6}) piercing damage."
+                    ]
+                }
+            ],
+            "variant": [
+                {
+                    "type": "variant",
+                    "name": "Rogue Modrons",
+                    "entries": [
+                        "A modron unit sometimes becomes defective, either through natural decay or exposure to chaotic forces. Rogue modrons don't act in accordance with Primus's wishes and directives, breaking laws, disobeying orders, and even engaging in violence. Other modrons hunt down such rogues.",
+                        "A rogue modron loses the Axiomatic Mind trait and can have any alignment other than lawful neutral. Otherwise, it has the same statistics as a regular modron of its rank."
+                    ]
+                }
+            ],
+            "soundClip": {
+                "type": "internal",
+                "path": "bestiary/monodrone.opus"
+            },
+            "attachedItems": [
+                "dagger|phb",
+                "javelin|phb"
+            ],
+            "senseTags": [
+                "U"
+            ],
+            "languageTags": [
+                "C",
+                "OTH"
+            ],
+            "damageTags": [
+                "P"
+            ],
+            "miscTags": [
+                "MLW",
+                "MW",
+                "RW",
+                "THW"
+            ],
+            "_file": "bestiary/bestiary-oow.json",
+            "page": 132,
+            "tokenCustom": true,
+            "hasToken": true
+        },
+        {
+            "name": "Replica Pentadrone",
+            "group": [
+                "Modrons"
+            ],
+            "source": "OoW",
+            "referenceSources": [
+                "CoA",
+                "KftGV",
+                "OoW",
+                "SatO",
+                "ToA",
+                "ToFW"
+            ],
+            "size": [
+                "L"
+            ],
+            "type": "construct",
+            "alignment": [
+                "L",
+                "N"
+            ],
+            "ac": [
+                {
+                    "ac": 16,
+                    "from": [
+                        "natural armor"
+                    ]
+                }
+            ],
+            "hp": {
+                "average": 32,
+                "formula": "5d10 + 5"
+            },
+            "speed": {
+                "walk": 40
+            },
+            "str": 15,
+            "dex": 14,
+            "con": 12,
+            "int": 10,
+            "wis": 10,
+            "cha": 13,
+            "skill": {
+                "perception": "+4"
+            },
+            "senses": [
+                "darkvision 60 ft."
+            ],
+            "passive": 14,
+            "languages": [
+                "Modron",
+                "can understand Common but speaks only preprogrammed responses"
+            ],
+            "cr": "2",
+            "trait": [
+                {
+                    "name": "Axiomatic Mind",
+                    "entries": [
+                        "The pentadrone can't be compelled to act in a manner contrary to its nature or its instructions."
+                    ]
+                },
+                {
+                    "name": "Dismantlable",
+                    "entries": [
+                        "If the replica pentadrone dies, its body falls into a pile of parts (gears, plates, screws, and wires), leaving behind its weapons and anything else it was carrying."
+                    ]
+                }
+            ],
+            "action": [
+                {
+                    "name": "Multiattack",
+                    "entries": [
+                        "The pentadrone makes five arm attacks."
+                    ]
+                },
+                {
+                    "name": "Arm",
+                    "entries": [
+                        "{@atk mw} {@hit 4} to hit, reach 5 ft., one target. {@h}5 ({@damage 1d6 + 2}) bludgeoning damage."
+                    ]
+                },
+                {
+                    "name": "Paralysis Gas {@recharge 5}",
+                    "entries": [
+                        "The pentadrone exhales a 30-foot cone of gas. Each creature in that area must succeed on a {@dc 11} Constitution saving throw or be {@condition paralyzed} for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success."
+                    ]
+                }
+            ],
+            "variant": [
+                {
+                    "type": "variant",
+                    "name": "Rogue Modrons",
+                    "entries": [
+                        "A modron unit sometimes becomes defective, either through natural decay or exposure to chaotic forces. Rogue modrons don't act in accordance with Primus's wishes and directives, breaking laws, disobeying orders, and even engaging in violence. Other modrons hunt down such rogues.",
+                        "A rogue modron loses the Axiomatic Mind trait and can have any alignment other than lawful neutral. Otherwise, it has the same statistics as a regular modron of its rank."
+                    ]
+                }
+            ],
+            "soundClip": {
+                "type": "internal",
+                "path": "bestiary/pentadrone.opus"
+            },
+            "senseTags": [
+                "U"
+            ],
+            "actionTags": [
+                "Multiattack"
+            ],
+            "languageTags": [
+                "C",
+                "OTH"
+            ],
+            "damageTags": [
+                "B"
+            ],
+            "miscTags": [
+                "AOE",
+                "MW"
+            ],
+            "conditionInflict": [
+                "paralyzed"
+            ],
+            "savingThrowForced": [
+                "constitution"
+            ],
+            "_file": "bestiary/bestiary-oow.json",
+            "page": 132,
+            "tokenCustom": true,
+            "hasToken": true
+        },
+        {
+            "name": "Replica Quadrone",
+            "group": [
+                "Modrons"
+            ],
+            "source": "OoW",
+            "referenceSources": [
+                "CoA",
+                "KftGV",
+                "OoW",
+                "SatO",
+                "SCC-CK",
+                "ToA",
+                "ToFW",
+                "WDMM"
+            ],
+            "size": [
+                "M"
+            ],
+            "type": "construct",
+            "alignment": [
+                "L",
+                "N"
+            ],
+            "ac": [
+                {
+                    "ac": 16,
+                    "from": [
+                        "natural armor"
+                    ]
+                }
+            ],
+            "hp": {
+                "average": 22,
+                "formula": "4d8 + 4"
+            },
+            "speed": {
+                "walk": 30
+            },
+            "str": 12,
+            "dex": 14,
+            "con": 12,
+            "int": 10,
+            "wis": 10,
+            "cha": 11,
+            "skill": {
+                "perception": "+2"
+            },
+            "senses": [
+                "darkvision 60 ft."
+            ],
+            "passive": 12,
+            "languages": [
+                "Modron",
+                "can understand Common but speaks only preprogrammed responses"
+            ],
+            "cr": "1",
+            "trait": [
+                {
+                    "name": "Axiomatic Mind",
+                    "entries": [
+                        "The quadrone can't be compelled to act in a manner contrary to its nature or its instructions."
+                    ]
+                },
+                {
+                    "name": "Dismantlable",
+                    "entries": [
+                        "If the replica quadrone dies, its body falls into a pile of parts (gears, plates, screws, and wires), leaving behind its weapons and anything else it was carrying."
+                    ]
+                }
+            ],
+            "action": [
+                {
+                    "name": "Multiattack",
+                    "entries": [
+                        "The quadrone makes two fist attacks or four shortbow attacks."
+                    ]
+                },
+                {
+                    "name": "Fist",
+                    "entries": [
+                        "{@atk mw} {@hit 3} to hit, reach 5 ft., one target. {@h}3 ({@damage 1d4 + 1}) bludgeoning damage."
+                    ]
+                },
+                {
+                    "name": "Shortbow",
+                    "entries": [
+                        "{@atk rw} {@hit 4} to hit, range 80/320 ft., one target. {@h}5 ({@damage 1d6 + 2}) piercing damage."
+                    ]
+                }
+            ],
+            "variant": [
+                {
+                    "type": "variant",
+                    "name": "Rogue Modrons",
+                    "entries": [
+                        "A modron unit sometimes becomes defective, either through natural decay or exposure to chaotic forces. Rogue modrons don't act in accordance with Primus's wishes and directives, breaking laws, disobeying orders, and even engaging in violence. Other modrons hunt down such rogues.",
+                        "A rogue modron loses the Axiomatic Mind trait and can have any alignment other than lawful neutral. Otherwise, it has the same statistics as a regular modron of its rank."
+                    ]
+                }
+            ],
+            "soundClip": {
+                "type": "internal",
+                "path": "bestiary/quadrone.opus"
+            },
+            "attachedItems": [
+                "shortbow|phb"
+            ],
+            "senseTags": [
+                "U"
+            ],
+            "actionTags": [
+                "Multiattack"
+            ],
+            "languageTags": [
+                "C",
+                "OTH"
+            ],
+            "damageTags": [
+                "B",
+                "P"
+            ],
+            "miscTags": [
+                "MW",
+                "RNG",
+                "RW"
+            ],
+            "_file": "bestiary/bestiary-oow.json",
+            "page": 132,
+            "tokenCustom": true,
+            "hasToken": true
+        },
+        {
+            "name": "Replica Tridrone",
+            "group": [
+                "Modrons"
+            ],
+            "source": "OoW",
+            "referenceSources": [
+                "BMT",
+                "CoA",
+                "KftGV",
+                "OotA",
+                "OoW",
+                "QftIS"
+            ],
+            "size": [
+                "M"
+            ],
+            "type": "construct",
+            "alignment": [
+                "L",
+                "N"
+            ],
+            "ac": [
+                {
+                    "ac": 15,
+                    "from": [
+                        "natural armor"
+                    ]
+                }
+            ],
+            "hp": {
+                "average": 16,
+                "formula": "3d8 + 3"
+            },
+            "speed": {
+                "walk": 30
+            },
+            "str": 12,
+            "dex": 13,
+            "con": 12,
+            "int": 9,
+            "wis": 10,
+            "cha": 9,
+            "senses": [
+                "darkvision 60 ft."
+            ],
+            "passive": 10,
+            "languages": [
+                "Modron",
+                "can understand Common but speaks only preprogrammed responses"
+            ],
+            "cr": "1/2",
+            "trait": [
+                {
+                    "name": "Axiomatic Mind",
+                    "entries": [
+                        "The tridrone can't be compelled to act in a manner contrary to its nature or its instructions."
+                    ]
+                },
+                {
+                    "name": "Dismantlable",
+                    "entries": [
+                        "If the replica tridrone dies, its body falls into a pile of parts (gears, plates, screws, and wires), leaving behind its weapons and anything else it was carrying."
+                    ]
+                }
+            ],
+            "action": [
+                {
+                    "name": "Multiattack",
+                    "entries": [
+                        "The tridrone makes three fist attacks or three javelin attacks."
+                    ]
+                },
+                {
+                    "name": "Fist",
+                    "entries": [
+                        "{@atk mw} {@hit 3} to hit, reach 5 ft., one target. {@h}3 ({@damage 1d4 + 1}) bludgeoning damage."
+                    ]
+                },
+                {
+                    "name": "Javelin",
+                    "entries": [
+                        "{@atk mw,rw} {@hit 3} to hit, reach 5 ft. or range 30/120 ft., one target. {@h}4 ({@damage 1d6 + 1}) piercing damage."
+                    ]
+                }
+            ],
+            "variant": [
+                {
+                    "type": "variant",
+                    "name": "Rogue Modrons",
+                    "entries": [
+                        "A modron unit sometimes becomes defective, either through natural decay or exposure to chaotic forces. Rogue modrons don't act in accordance with Primus's wishes and directives, breaking laws, disobeying orders, and even engaging in violence. Other modrons hunt down such rogues.",
+                        "A rogue modron loses the Axiomatic Mind trait and can have any alignment other than lawful neutral. Otherwise, it has the same statistics as a regular modron of its rank."
+                    ]
+                }
+            ],
+            "soundClip": {
+                "type": "internal",
+                "path": "bestiary/tridrone.opus"
+            },
+            "attachedItems": [
+                "javelin|phb"
+            ],
+            "senseTags": [
+                "U"
+            ],
+            "actionTags": [
+                "Multiattack"
+            ],
+            "languageTags": [
+                "C",
+                "OTH"
+            ],
+            "damageTags": [
+                "B",
+                "P"
+            ],
+            "miscTags": [
+                "MLW",
+                "MW",
+                "RW",
+                "THW"
+            ],
+            "_file": "bestiary/bestiary-oow.json",
+            "page": 132,
+            "tokenCustom": true,
+            "hasToken": true
+        },
+        {
+            "name": "Stomping Foot",
+            "source": "OoW",
+            "referenceSources": [
+                "BGDIA",
+                "BMT",
+                "CM",
+                "CoS",
+                "IDRotF",
+                "JttRC",
+                "KftGV",
+                "LoX",
+                "OotA",
+                "OoW",
+                "PotA",
+                "RtG",
+                "SCC-ARiR",
+                "ToA",
+                "WDH"
+            ],
+            "size": [
+                "T"
+            ],
+            "type": "undead",
+            "alignment": [
+                "N",
+                "E"
+            ],
+            "ac": [
+                12
+            ],
+            "hp": {
+                "average": 2,
+                "formula": "1d4"
+            },
+            "speed": {
+                "walk": 30
+            },
+            "str": 13,
+            "dex": 14,
+            "con": 11,
+            "int": 5,
+            "wis": 10,
+            "cha": 4,
+            "senses": [
+                "blindsight 30 ft. (blind beyond this radius)"
+            ],
+            "passive": 10,
+            "immune": [
+                "poison"
+            ],
+            "conditionImmune": [
+                "charmed",
+                "exhaustion",
+                "poisoned"
+            ],
+            "languages": [
+                "understands Common but can't speak"
+            ],
+            "cr": "0",
+            "trait": [
+                {
+                    "name": "Turn Immunity",
+                    "entries": [
+                        "The foot is immune to effects that turn undead."
+                    ]
+                }
+            ],
+            "action": [
+                {
+                    "name": "Stomp",
+                    "entries": [
+                        "{@atk mw} {@hit 3} to hit, reach 5 ft., one target. {@h}3 ({@damage 1d4 + 1}) bludgeoning damage."
+                    ]
+                }
+            ],
+            "soundClip": {
+                "type": "internal",
+                "path": "bestiary/crawling-foot.opus"
+            },
+            "traitTags": [
+                "Turn Immunity"
+            ],
+            "senseTags": [
+                "B"
+            ],
+            "languageTags": [
+                "C",
+                "CS"
+            ],
+            "damageTags": [
+                "B"
+            ],
+            "miscTags": [
+                "MW"
+            ],
+            "_file": "bestiary/bestiary-oow.json",
+            "page": 92,
+            "tokenCustom": true,
+            "hasToken": true
+        },
+        {
+            "name": "Two Dry Cloaks",
+            "source": "OoW",
+            "referenceSources": [
+                "AitFR-ISF",
+                "AZfyT",
+                "BGDIA",
+                "BMT",
+                "CM",
+                "CoA",
+                "CoS",
+                "CRCotN",
+                "DIP",
+                "EFR",
+                "EGW",
+                "ERLW",
+                "GoS",
+                "HotDQ",
+                "IDRotF",
+                "IMR",
+                "JttRC",
+                "KftGV",
+                "MOT",
+                "OotA",
+                "OoW",
+                "PotA",
+                "QftIS",
+                "SatO",
+                "SKT",
+                "SLW",
+                "TftYP-DiT",
+                "ToA",
+                "ToFW",
+                "WBtW",
+                "WDH",
+                "WDMM"
+            ],
+            "size": [
+                "M"
+            ],
+            "type": {
+                "type": "humanoid",
+                "tags": [
+                    "tabaxi"
+                ]
+            },
+            "alignment": [
+                "A"
+            ],
+            "ac": [
+                12
+            ],
+            "hp": {
+                "average": 27,
+                "formula": "6d8"
+            },
+            "speed": {
+                "walk": 30
+            },
+            "str": 10,
+            "dex": 15,
+            "con": 10,
+            "int": 12,
+            "wis": 14,
+            "cha": 16,
+            "skill": {
+                "deception": "+5",
+                "insight": "+4",
+                "investigation": "+5",
+                "perception": "+6",
+                "persuasion": "+5",
+                "sleight of hand": "+4",
+                "stealth": "+4"
+            },
+            "passive": 16,
+            "languages": [
+                "any two languages"
+            ],
+            "cr": "1",
+            "trait": [
+                {
+                    "name": "Cunning Action",
+                    "entries": [
+                        "On each of its turns, Two Dry Cloaks can use a bonus action to take the {@action Dash}, {@action Disengage}, or {@action Hide} action."
+                    ]
+                },
+                {
+                    "name": "Sneak Attack (1/Turn)",
+                    "entries": [
+                        "Two Dry Cloaks deals an extra 7 ({@damage 2d6}) damage when it hits a target with a weapon attack and has advantage on the attack roll, or when the target is within 5 feet of an ally of Two Dry Cloaks that isn't {@condition incapacitated} and Two Dry Cloaks doesn't have disadvantage on the attack roll."
+                    ]
+                },
+                {
+                    "name": "Feline Agility",
+                    "entries": [
+                        "When <$short_name$> moves on its turn in combat, they can double their speed until the end of the turn. Once they uses this ability, <$title_short_name$> can't use it again until they moves 0 feet on one of their turns."
+                    ]
+                }
+            ],
+            "action": [
+                {
+                    "name": "Multiattack",
+                    "entries": [
+                        "Two Dry Cloaks makes two melee attacks."
+                    ]
+                },
+                {
+                    "name": "Shortsword",
+                    "entries": [
+                        "{@atk mw} {@hit 4} to hit, reach 5 ft., one target. {@h}5 ({@damage 1d6 + 2}) piercing damage."
+                    ]
+                },
+                {
+                    "name": "Hand Crossbow",
+                    "entries": [
+                        "{@atk rw} {@hit 4} to hit, range 30/120 ft., one target. {@h}5 ({@damage 1d6 + 2}) piercing damage."
+                    ]
+                },
+                {
+                    "name": "Claws",
+                    "entries": [
+                        "{@atk mw} {@hit <$to_hit__str$>} to hit, reach 5 ft., one target. {@h}<$damage_avg__2.5+str$> ({@damage 1d4<$damage_mod__str$>}) slashing damage."
+                    ]
+                }
+            ],
+            "environment": [
+                "urban"
+            ],
+            "soundClip": {
+                "type": "internal",
+                "path": "bestiary/spy.opus"
+            },
+            "attachedItems": [
+                "hand crossbow|phb",
+                "shortsword|phb"
+            ],
+            "traitTags": [
+                "Sneak Attack"
+            ],
+            "actionTags": [
+                "Multiattack"
+            ],
+            "languageTags": [
+                "X"
+            ],
+            "damageTags": [
+                "P",
+                "S"
+            ],
+            "miscTags": [
+                "MLW",
+                "MW",
+                "RNG",
+                "RW"
+            ],
+            "_file": "bestiary/bestiary-oow.json",
+            "shortName": true,
+            "isNpc": true,
+            "isNamedCreature": true,
+            "page": 162,
+            "hasToken": true,
+            "hasFluff": true,
+            "hasFluffImages": true,
+            "senses": [
+                "darkvision 60 ft."
+            ]
+        },
+        {
+            "name": "Undead Cockatrice",
+            "source": "OoW",
+            "referenceSources": [
+                "BGDIA",
+                "ERLW",
+                "MOT",
+                "OoW",
+                "SCC-CK",
+                "TftYP",
+                "TftYP-DiT",
+                "WBtW"
+            ],
+            "size": [
+                "S"
+            ],
+            "type": "undead",
+            "alignment": [
+                "U"
+            ],
+            "ac": [
+                11
+            ],
+            "hp": {
+                "average": 27,
+                "formula": "6d6 + 6"
+            },
+            "speed": {
+                "walk": 20,
+                "fly": 40
+            },
+            "str": 6,
+            "dex": 12,
+            "con": 12,
+            "int": 2,
+            "wis": 13,
+            "cha": 5,
+            "senses": [
+                "darkvision 60 ft."
+            ],
+            "passive": 11,
+            "cr": "1/2",
+            "action": [
+                {
+                    "name": "Bite",
+                    "entries": [
+                        "{@atk mw} {@hit 3} to hit, reach 5 ft., one creature. {@h}3 ({@damage 1d4 + 1}) piercing damage, and the target must succeed on a {@dc 11} Constitution saving throw against being magically {@condition petrified}. On a failed save, the creature begins to turn to stone and is {@condition restrained}. It must repeat the saving throw at the end of its next turn. On a success, the effect ends. On a failure, the creature is {@condition petrified} for 24 hours."
+                    ]
+                }
+            ],
+            "environment": [
+                "grassland"
+            ],
+            "soundClip": {
+                "type": "internal",
+                "path": "bestiary/cockatrice.opus"
+            },
+            "senseTags": [
+                "D"
+            ],
+            "damageTags": [
+                "P"
+            ],
+            "miscTags": [
+                "MW"
+            ],
+            "conditionInflict": [
+                "petrified",
+                "restrained"
+            ],
+            "savingThrowForced": [
+                "constitution"
+            ],
+            "_file": "bestiary/bestiary-oow.json",
+            "page": 114,
+            "immune": [
+                "poison"
+            ],
+            "conditionImmune": [
+                "poisoned"
+            ],
+            "hasToken": true
+        }
+    ]
+}

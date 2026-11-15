@@ -1,0 +1,402 @@
+[
+ {
+  "why": "A cantrip with an attack. Its damage grows at character levels 5, 11 and 17, so it uses steps. The Cantrip Upgrade block is no feature.",
+  "input": {
+   "name": "Fire Bolt",
+   "kind": "spell",
+   "edition": "one",
+   "race": null,
+   "race_blocks": [],
+   "spell_level": 0,
+   "casting_time": "1 action",
+   "text": "You hurl a mote of fire at a creature or an object within range. Make a ranged spell attack against the target. On a hit, the target takes 1d10 Fire damage. A flammable object hit by this spell starts burning if it isn't being worn or carried.\n\n**Cantrip Upgrade.** The damage increases by 1d10 when you reach levels 5 (2d10), 11 (3d10), and 17 (4d10)."
+  },
+  "output": {
+   "features": [
+    {
+     "name": "Fire Bolt",
+     "level": 1,
+     "category": "actions",
+     "uses": null,
+     "action": {
+      "range": "120 ft.",
+      "area": null,
+      "attack": {
+       "kind": "ranged",
+       "bonus": {
+        "value": "pb + spell_mod",
+        "steps": []
+       },
+       "damage": [
+        {
+         "dice": {
+          "value": "1d10",
+          "steps": [
+           {
+            "level": 5,
+            "value": "2d10"
+           },
+           {
+            "level": 11,
+            "value": "3d10"
+           },
+           {
+            "level": 17,
+            "value": "4d10"
+           }
+          ]
+         },
+         "bonus": null,
+         "type": "fire",
+         "condition": null,
+         "per_slot": null
+        }
+       ]
+      },
+      "save": null,
+      "damage": [],
+      "heal": null,
+      "heal_per_slot": null,
+      "temp_hp": null,
+      "temp_hp_per_slot": null
+     },
+     "toggle": null,
+     "modifiers": []
+    }
+   ],
+   "extra_grants": {
+    "skills": [],
+    "saves": [],
+    "tools": [],
+    "languages": [],
+    "weapons": [],
+    "armor": [],
+    "resist": [],
+    "immune": [],
+    "vulnerable": [],
+    "condition_immune": [],
+    "senses": [],
+    "speed": null
+   }
+  }
+ },
+ {
+  "why": "A save for half damage in an area. The higher-level text adds 1d6 per slot level above 3: that is per_slot on the damage part.",
+  "input": {
+   "name": "Fireball",
+   "kind": "spell",
+   "edition": "one",
+   "race": null,
+   "race_blocks": [],
+   "spell_level": 3,
+   "casting_time": "1 action",
+   "text": "A bright streak flashes from you to a point you choose within range and then blossoms with a low roar into a fiery explosion. Each creature in a 20-foot-radius Sphere centered on that point makes a Dexterity saving throw, taking 8d6 Fire damage on a failed save or half as much damage on a successful one.\n\nFlammable objects in the area that aren't being worn or carried start burning.\n\n**Using a Higher-Level Spell Slot.** The damage increases by 1d6 for each spell slot level above 3."
+  },
+  "output": {
+   "features": [
+    {
+     "name": "Fireball",
+     "level": 1,
+     "category": "actions",
+     "uses": null,
+     "action": {
+      "range": "150 ft.",
+      "area": "20-foot-radius sphere",
+      "attack": null,
+      "save": {
+       "ability": "dex",
+       "dc": {
+        "value": "8 + pb + spell_mod",
+        "steps": []
+       },
+       "on_success": "half",
+       "damage": [
+        {
+         "dice": {
+          "value": "8d6",
+          "steps": []
+         },
+         "bonus": null,
+         "type": "fire",
+         "condition": null,
+         "per_slot": "1d6"
+        }
+       ],
+       "conditions": []
+      },
+      "damage": [],
+      "heal": null,
+      "heal_per_slot": null,
+      "temp_hp": null,
+      "temp_hp_per_slot": null
+     },
+     "toggle": null,
+     "modifiers": []
+    }
+   ],
+   "extra_grants": {
+    "skills": [],
+    "saves": [],
+    "tools": [],
+    "languages": [],
+    "weapons": [],
+    "armor": [],
+    "resist": [],
+    "immune": [],
+    "vulnerable": [],
+    "condition_immune": [],
+    "senses": [],
+    "speed": null
+   }
+  }
+ },
+ {
+  "why": "The SRD name is used (the book calls it Bigby's Hand). The spell's numbers are in its named options, so each option with numbers is a feature, in bonus_actions because they are used as a Bonus Action. The cast itself and Interposing Hand have no numbers: no feature. The crush deals damage with no roll, so it goes in action.damage. Each damage part gets the per_slot its higher-level text names.",
+  "input": {
+   "name": "Arcane Hand",
+   "kind": "spell",
+   "edition": "one",
+   "race": null,
+   "race_blocks": [],
+   "spell_level": 5,
+   "casting_time": "1 action",
+   "text": "You create a Large hand of shimmering magical energy in an unoccupied space that you can see within range. The hand lasts for the duration, and it moves at your command, mimicking the movements of your own hand.\n\nThe hand is an object that has AC 20 and Hit Points equal to your Hit Point maximum. If it drops to 0 Hit Points, the spell ends. The hand doesn't occupy its space.\n\nWhen you cast the spell and as a Bonus Action on your later turns, you can move the hand up to 60 feet and then cause one of the following effects:\n\n- **Clenched Fist.** The hand strikes a target within 5 feet of it. Make a melee spell attack. On a hit, the target takes 5d8 Force damage.\n- **Forceful Hand.** The hand attempts to push a Huge or smaller creature within 5 feet of it. The target must succeed on a Strength saving throw, or the hand pushes the target up to 5 feet plus a number of feet equal to five times your spellcasting ability modifier. The hand moves with the target, remaining within 5 feet of it.\n- **Grasping Hand.** The hand attempts to grapple a Huge or smaller creature within 5 feet of it. The target must succeed on a Dexterity saving throw, or the target has the Grappled condition, with an escape DC equal to your spell save DC. While the hand grapples the target, you can take a Bonus Action to cause the hand to crush it, dealing Bludgeoning damage to the target equal to 4d6 plus your spellcasting ability modifier.\n- **Interposing Hand.** The hand grants you Half Cover against attacks and other effects that originate from its space or that pass through it. In addition, its space counts as Difficult Terrain for your enemies.\n\n**Using a Higher-Level Spell Slot.** The damage of the Clenched Fist increases by 2d8 and the damage of the Grasping Hand increases by 2d6 for each spell slot level above 5."
+  },
+  "output": {
+   "features": [
+    {
+     "name": "Clenched Fist",
+     "level": 1,
+     "category": "bonus_actions",
+     "uses": null,
+     "action": {
+      "range": "5 ft.",
+      "area": null,
+      "attack": {
+       "kind": "melee",
+       "bonus": {
+        "value": "pb + spell_mod",
+        "steps": []
+       },
+       "damage": [
+        {
+         "dice": {
+          "value": "5d8",
+          "steps": []
+         },
+         "bonus": null,
+         "type": "force",
+         "condition": null,
+         "per_slot": "2d8"
+        }
+       ]
+      },
+      "save": null,
+      "damage": [],
+      "heal": null,
+      "heal_per_slot": null,
+      "temp_hp": null,
+      "temp_hp_per_slot": null
+     },
+     "toggle": null,
+     "modifiers": []
+    },
+    {
+     "name": "Forceful Hand",
+     "level": 1,
+     "category": "bonus_actions",
+     "uses": null,
+     "action": {
+      "range": "5 ft.",
+      "area": null,
+      "attack": null,
+      "save": {
+       "ability": "str",
+       "dc": {
+        "value": "8 + pb + spell_mod",
+        "steps": []
+       },
+       "on_success": "none",
+       "damage": [],
+       "conditions": []
+      },
+      "damage": [],
+      "heal": null,
+      "heal_per_slot": null,
+      "temp_hp": null,
+      "temp_hp_per_slot": null
+     },
+     "toggle": null,
+     "modifiers": []
+    },
+    {
+     "name": "Grasping Hand",
+     "level": 1,
+     "category": "bonus_actions",
+     "uses": null,
+     "action": {
+      "range": "5 ft.",
+      "area": null,
+      "attack": null,
+      "save": {
+       "ability": "dex",
+       "dc": {
+        "value": "8 + pb + spell_mod",
+        "steps": []
+       },
+       "on_success": "none",
+       "damage": [],
+       "conditions": [
+        "grappled"
+       ]
+      },
+      "damage": [
+       {
+        "dice": {
+         "value": "4d6",
+         "steps": []
+        },
+        "bonus": {
+         "value": "spell_mod",
+         "steps": []
+        },
+        "type": "bludgeoning",
+        "condition": null,
+        "per_slot": "2d6"
+       }
+      ],
+      "heal": null,
+      "heal_per_slot": null,
+      "temp_hp": null,
+      "temp_hp_per_slot": null
+     },
+     "toggle": null,
+     "modifiers": []
+    }
+   ],
+   "extra_grants": {
+    "skills": [],
+    "saves": [],
+    "tools": [],
+    "languages": [],
+    "weapons": [],
+    "armor": [],
+    "resist": [],
+    "immune": [],
+    "vulnerable": [],
+    "condition_immune": [],
+    "senses": [],
+    "speed": null
+   }
+  }
+ },
+ {
+  "why": "A buff: a toggle the player switches on while the spell lasts. Its AC rule is a modifier (base AC, only without armor). No uses, no action numbers.",
+  "input": {
+   "name": "Mage Armor",
+   "kind": "spell",
+   "edition": "one",
+   "race": null,
+   "race_blocks": [],
+   "spell_level": 1,
+   "casting_time": "1 action",
+   "text": "You touch a willing creature who isn't wearing armor. Until the spell ends, the target's base AC becomes 13 plus its Dexterity modifier. The spell ends early if the target dons armor."
+  },
+  "output": {
+   "features": [
+    {
+     "name": "Mage Armor",
+     "level": 1,
+     "category": "actions",
+     "uses": null,
+     "action": null,
+     "toggle": {
+      "uses_charge": false,
+      "grants": null,
+      "modifiers": [
+       {
+        "target": "ac",
+        "op": "base",
+        "value": {
+         "value": "13 + dex_mod",
+         "steps": []
+        },
+        "requires": [
+         "no_armor"
+        ]
+       }
+      ]
+     },
+     "modifiers": []
+    }
+   ],
+   "extra_grants": {
+    "skills": [],
+    "saves": [],
+    "tools": [],
+    "languages": [],
+    "weapons": [],
+    "armor": [],
+    "resist": [],
+    "immune": [],
+    "vulnerable": [],
+    "condition_immune": [],
+    "senses": [],
+    "speed": null
+   }
+  }
+ },
+ {
+  "why": "Healing that grows with the slot: heal plus heal_per_slot.",
+  "input": {
+   "name": "Cure Wounds",
+   "kind": "spell",
+   "edition": "one",
+   "race": null,
+   "race_blocks": [],
+   "spell_level": 1,
+   "casting_time": "1 action",
+   "text": "A creature you touch regains a number of Hit Points equal to 2d8 plus your spellcasting ability modifier.\n\n**Using a Higher-Level Spell Slot.** The healing increases by 2d8 for each spell slot level above 1."
+  },
+  "output": {
+   "features": [
+    {
+     "name": "Cure Wounds",
+     "level": 1,
+     "category": "actions",
+     "uses": null,
+     "action": {
+      "range": "touch",
+      "area": null,
+      "attack": null,
+      "save": null,
+      "damage": [],
+      "heal": {
+       "value": "2d8 + spell_mod",
+       "steps": []
+      },
+      "heal_per_slot": "2d8",
+      "temp_hp": null,
+      "temp_hp_per_slot": null
+     },
+     "toggle": null,
+     "modifiers": []
+    }
+   ],
+   "extra_grants": {
+    "skills": [],
+    "saves": [],
+    "tools": [],
+    "languages": [],
+    "weapons": [],
+    "armor": [],
+    "resist": [],
+    "immune": [],
+    "vulnerable": [],
+    "condition_immune": [],
+    "senses": [],
+    "speed": null
+   }
+  }
+ }
+]

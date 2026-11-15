@@ -1,0 +1,4381 @@
+[
+    {
+        "id": "ankheg-wtthc",
+        "kind": "monster",
+        "name": "Ankheg",
+        "source": "WttHC",
+        "edition": "one",
+        "tags": [
+            "Tunneler"
+        ],
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "monstrosity"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 14
+            }
+        ],
+        "hp": {
+            "average": 45,
+            "formula": "6d10 + 12"
+        },
+        "speed": {
+            "walk": 30,
+            "burrow": 10
+        },
+        "abilities": {
+            "str": 17,
+            "dex": 11,
+            "con": 14,
+            "int": 1,
+            "wis": 13,
+            "cha": 6
+        },
+        "senses": {
+            "darkvision": 60,
+            "tremorsense": 60
+        },
+        "passive_perception": 11,
+        "cr": {
+            "cr": "2",
+            "xp": 450,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "tunneler",
+                "name": "Tunneler",
+                "category": "traits",
+                "text": "The ankheg can burrow through solid rock at half its Burrow Speed and leaves a 10-foot-diameter tunnel in its wake."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Attack Roll: +5 (with Advantage if the target is Grappled by the ankheg), reach 5 ft. Hit: 10 (2d6 + 3) Slashing damage plus 3 (1d6) Acid damage. If the target is a Large or smaller creature, it has the Grappled condition (escape DC 13).",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 3,
+                                "type": "slashing"
+                            },
+                            {
+                                "dice": "1d6",
+                                "type": "acid"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "acid-spray",
+                "name": "Acid Spray",
+                "category": "actions",
+                "text": "Dexterity Saving Throw: DC 12, each creature in a 30-foot-long, 5-foot-wide Line. Failure: 14 (4d6) Acid damage. Success: Half damage.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 6
+                },
+                "action": {
+                    "area": "5-foot line",
+                    "save": {
+                        "ability": "dex",
+                        "dc": 12,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "4d6",
+                                "type": "acid"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "acid",
+                "slashing"
+            ],
+            "conditions_inflicted": [
+                "grappled"
+            ],
+            "saves_forced": [
+                "dex"
+            ],
+            "senses": [
+                "darkvision",
+                "tremorsense"
+            ],
+            "movement": [
+                "burrow"
+            ],
+            "traits": [
+                "tunneler"
+            ],
+            "misc": [
+                "melee_attack"
+            ],
+            "environment": [
+                "forest",
+                "grassland"
+            ]
+        }
+    },
+    {
+        "id": "barbed-devil-wtthc",
+        "kind": "monster",
+        "name": "Barbed Devil",
+        "source": "WttHC",
+        "edition": "one",
+        "tags": [
+            "Devil's Sight",
+            "Magic Resistance"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "fiend",
+            "tags": [
+                "devil"
+            ]
+        },
+        "alignment": [
+            "lawful evil"
+        ],
+        "ac": [
+            {
+                "value": 15
+            }
+        ],
+        "hp": {
+            "average": 110,
+            "formula": "13d8 + 52"
+        },
+        "speed": {
+            "walk": 30,
+            "climb": 30
+        },
+        "abilities": {
+            "str": 16,
+            "dex": 17,
+            "con": 18,
+            "int": 12,
+            "wis": 14,
+            "cha": 14
+        },
+        "saves": {
+            "str": 6,
+            "con": 7,
+            "wis": 5,
+            "cha": 5
+        },
+        "skills": {
+            "deception": 5,
+            "insight": 5,
+            "perception": 8
+        },
+        "senses": {
+            "darkvision": 120,
+            "notes": "darkvision (unimpeded by magical Darkness)"
+        },
+        "passive_perception": 18,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "cold"
+                ]
+            },
+            "immune": {
+                "types": [
+                    "fire",
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "Infernal; telepathy 120 ft."
+        ],
+        "cr": {
+            "cr": "5",
+            "xp": 1800,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "barbed-hide",
+                "name": "Barbed Hide",
+                "category": "traits",
+                "text": "At the start of each of its turns, the devil deals 5 (1d10) Piercing damage to any creature it is grappling or any creature grappling it.",
+                "action": {
+                    "damage": [
+                        {
+                            "dice": "1d10",
+                            "type": "piercing",
+                            "condition": "to any creature it is grappling or any creature grappling it"
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "diabolical-restoration",
+                "name": "Diabolical Restoration",
+                "category": "traits",
+                "text": "If the devil dies outside the Nine Hells, its body disappears in sulfurous smoke, and it gains a new body instantly, reviving with all its Hit Points somewhere in the Nine Hells."
+            },
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The devil has Advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The devil makes one Claws attack and one Tail attack, or it makes two Hurl Flame attacks."
+            },
+            {
+                "id": "claws",
+                "name": "Claws",
+                "category": "actions",
+                "text": "Melee Attack Roll: +6, reach 5 ft. Hit: 10 (2d6 + 3) Piercing damage. If the target is a Large or smaller creature, it has the Grappled condition (escape DC 13) from both claws.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 3,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "tail",
+                "name": "Tail",
+                "category": "actions",
+                "text": "Melee Attack Roll: +6, reach 10 ft. Hit: 14 (2d10 + 3) Slashing damage.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "2d10",
+                                "bonus": 3,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "hurl-flame",
+                "name": "Hurl Flame",
+                "category": "actions",
+                "text": "Ranged Attack Roll: +5, range 150 ft. Hit: 17 (5d6) Fire damage. If the target is a flammable object that isn't being worn or carried, it starts burning.",
+                "action": {
+                    "range": "range 150 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "5d6",
+                                "type": "fire"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "fire",
+                "piercing",
+                "slashing"
+            ],
+            "conditions_inflicted": [
+                "grappled"
+            ],
+            "senses": [
+                "superior_darkvision"
+            ],
+            "movement": [
+                "climb"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "devils_sight",
+                "magic_resistance"
+            ],
+            "misc": [
+                "melee_attack",
+                "ranged_attack",
+                "reach"
+            ],
+            "languages": [
+                "infernal",
+                "telepathy"
+            ],
+            "environment": [
+                "nine hells"
+            ],
+            "treasure": [
+                "any"
+            ],
+            "groups": [
+                "Devils"
+            ]
+        }
+    },
+    {
+        "id": "bearded-devil-wtthc",
+        "kind": "monster",
+        "name": "Bearded Devil",
+        "source": "WttHC",
+        "edition": "one",
+        "tags": [
+            "Devil's Sight",
+            "Magic Resistance"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "fiend",
+            "tags": [
+                "devil"
+            ]
+        },
+        "alignment": [
+            "lawful evil"
+        ],
+        "ac": [
+            {
+                "value": 13
+            }
+        ],
+        "hp": {
+            "average": 58,
+            "formula": "9d8 + 18"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 16,
+            "dex": 15,
+            "con": 15,
+            "int": 9,
+            "wis": 11,
+            "cha": 14
+        },
+        "saves": {
+            "str": 5,
+            "con": 4,
+            "cha": 4
+        },
+        "senses": {
+            "darkvision": 120,
+            "notes": "darkvision (unimpeded by magical Darkness)"
+        },
+        "passive_perception": 10,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "cold"
+                ]
+            },
+            "immune": {
+                "types": [
+                    "fire",
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "frightened",
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "Infernal; telepathy 120 ft."
+        ],
+        "cr": {
+            "cr": "3",
+            "xp": 700,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The devil has Advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The devil makes one Beard attack and one Infernal Glaive attack."
+            },
+            {
+                "id": "beard",
+                "name": "Beard",
+                "category": "actions",
+                "text": "Melee Attack Roll: +5, reach 5 ft. Hit: 7 (1d8 + 3) Piercing damage, and the target has the Poisoned condition until the start of the devil's next turn. Until this poison ends, the target can't regain Hit Points.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 3,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "infernal-glaive",
+                "name": "Infernal Glaive",
+                "category": "actions",
+                "text": "Melee Attack Roll: +5, reach 10 ft. Hit: 8 (1d10 + 3) Slashing damage. If the target is a creature and doesn't already have an infernal wound, it is subjected to the following effect. Constitution Saving Throw: DC 12. Failure: The target receives an infernal wound. While wounded, the target loses 5 (1d10) Hit Points at the start of each of its turns. The wound closes after 1 minute, after a spell restores Hit Points to the target, or after the target or a creature within 5 feet of it takes an action to stanch the wound, doing so by succeeding on a DC 12 Wisdom (Medicine) check.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d10",
+                                "bonus": 3,
+                                "type": "slashing"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "con",
+                        "dc": 12,
+                        "on_success": "none"
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing",
+                "slashing"
+            ],
+            "conditions_inflicted": [
+                "poisoned"
+            ],
+            "saves_forced": [
+                "con"
+            ],
+            "senses": [
+                "superior_darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "devils_sight",
+                "magic_resistance"
+            ],
+            "misc": [
+                "melee_attack",
+                "melee_weapon",
+                "reach"
+            ],
+            "languages": [
+                "infernal",
+                "telepathy"
+            ],
+            "environment": [
+                "nine hells"
+            ],
+            "treasure": [
+                "armaments"
+            ],
+            "groups": [
+                "Devils"
+            ]
+        }
+    },
+    {
+        "id": "commoner-wtthc",
+        "kind": "monster",
+        "name": "Commoner",
+        "source": "WttHC",
+        "edition": "one",
+        "size": [
+            "small",
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid"
+        },
+        "alignment": [
+            "neutral"
+        ],
+        "ac": [
+            {
+                "value": 10
+            }
+        ],
+        "hp": {
+            "average": 4,
+            "formula": "1d8"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 10,
+            "dex": 10,
+            "con": 10,
+            "int": 10,
+            "wis": 10,
+            "cha": 10
+        },
+        "passive_perception": 10,
+        "languages": [
+            "Common"
+        ],
+        "cr": {
+            "cr": "0",
+            "xp": 10,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "training",
+                "name": "Training",
+                "category": "traits",
+                "text": "The commoner has proficiency in one skill of the DM's choice and has Advantage whenever it makes an ability check using that skill."
+            },
+            {
+                "id": "club",
+                "name": "Club",
+                "category": "actions",
+                "text": "Melee Attack Roll: +2, reach 5 ft. Hit: 2 (1d4) Bludgeoning damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 2,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "items": [
+            {
+                "item": "club-xphb",
+                "qty": 1
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning"
+            ],
+            "misc": [
+                "melee_attack",
+                "melee_weapon"
+            ],
+            "languages": [
+                "common"
+            ],
+            "environment": [
+                "any"
+            ],
+            "treasure": [
+                "individual"
+            ]
+        }
+    },
+    {
+        "id": "corrupted-rat-wtthc",
+        "kind": "monster",
+        "name": "Corrupted Rat",
+        "source": "WttHC",
+        "edition": "one",
+        "tags": [
+            "Death Burst"
+        ],
+        "size": [
+            "tiny"
+        ],
+        "creature_type": {
+            "type": "monstrosity"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 10
+            }
+        ],
+        "hp": {
+            "average": 1,
+            "formula": "1d4 - 1"
+        },
+        "speed": {
+            "walk": 20,
+            "climb": 20
+        },
+        "abilities": {
+            "str": 2,
+            "dex": 11,
+            "con": 9,
+            "int": 2,
+            "wis": 11,
+            "cha": 4
+        },
+        "skills": {
+            "perception": 2,
+            "stealth": 2
+        },
+        "senses": {
+            "darkvision": 30
+        },
+        "passive_perception": 11,
+        "cr": {
+            "cr": "0",
+            "xp": 10,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "agile",
+                "name": "Agile",
+                "category": "traits",
+                "text": "The rat doesn't provoke Opportunity Attacks when it moves out of an enemy's reach."
+            },
+            {
+                "id": "death-burst",
+                "name": "Death Burst",
+                "category": "traits",
+                "text": "The rat explodes when it dies. Constitution Saving Throw: DC 9, each creature in a 5-foot Emanation originating from the rat. Failure: 1 Acid damage.",
+                "action": {
+                    "area": "5-foot emanation",
+                    "save": {
+                        "ability": "con",
+                        "dc": 9,
+                        "on_success": "none",
+                        "damage": [
+                            {
+                                "bonus": 1,
+                                "type": "acid"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Attack Roll: +2, reach 5 ft. Hit: 1 Piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 2,
+                        "damage": [
+                            {
+                                "bonus": 1,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "acid",
+                "piercing"
+            ],
+            "saves_forced": [
+                "con"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "movement": [
+                "climb"
+            ],
+            "traits": [
+                "death_burst"
+            ],
+            "misc": [
+                "melee_attack"
+            ]
+        }
+    },
+    {
+        "id": "cultist-of-demogorgon-wtthc",
+        "kind": "monster",
+        "name": "Cultist of Demogorgon",
+        "source": "WttHC",
+        "edition": "one",
+        "size": [
+            "small",
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid"
+        },
+        "alignment": [
+            "chaotic evil"
+        ],
+        "ac": [
+            {
+                "value": 12
+            }
+        ],
+        "hp": {
+            "average": 9,
+            "formula": "2d8"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 11,
+            "dex": 14,
+            "con": 10,
+            "int": 10,
+            "wis": 11,
+            "cha": 10
+        },
+        "saves": {
+            "wis": 2
+        },
+        "skills": {
+            "deception": 2,
+            "religion": 2
+        },
+        "passive_perception": 10,
+        "languages": [
+            "Common"
+        ],
+        "cr": {
+            "cr": "1/8",
+            "xp": 25,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "ritual-sickle",
+                "name": "Ritual Sickle",
+                "category": "actions",
+                "text": "Melee Attack Roll: +4, reach 5 ft. Hit: 1d4 + 2 Slashing damage plus 1 Necrotic damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 2,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "necrotic"
+            ],
+            "misc": [
+                "melee_attack",
+                "melee_weapon"
+            ],
+            "languages": [
+                "common"
+            ]
+        }
+    },
+    {
+        "id": "dardew-wtthc",
+        "kind": "monster",
+        "name": "Dardew",
+        "source": "WttHC",
+        "edition": "one",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "fiend"
+        },
+        "alignment": [
+            "chaotic neutral"
+        ],
+        "ac": [
+            {
+                "value": 19
+            }
+        ],
+        "hp": {
+            "average": 105,
+            "formula": "14d8 + 42"
+        },
+        "speed": {
+            "walk": 30,
+            "fly": 60
+        },
+        "abilities": {
+            "str": 18,
+            "dex": 18,
+            "con": 16,
+            "int": 14,
+            "wis": 12,
+            "cha": 16
+        },
+        "saves": {
+            "int": 5,
+            "cha": 6
+        },
+        "skills": {
+            "deception": 6,
+            "perception": 4,
+            "performance": 9
+        },
+        "senses": {
+            "darkvision": 120
+        },
+        "passive_perception": 14,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "cold",
+                    "fire",
+                    "lightning",
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "Abyssal",
+            "Common",
+            "Infernal"
+        ],
+        "cr": {
+            "cr": "5",
+            "xp": 1800,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 4
+        },
+        "features": [
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Dardew makes two attacks, using Fiery Claw or Power Chord in any combination."
+            },
+            {
+                "id": "fiery-claw",
+                "name": "Fiery Claw",
+                "category": "actions",
+                "text": "Melee Attack Roll: +7, reach 5 ft. Hit: 8 (1d8 + 4) Slashing damage plus 7 (2d6) Fire damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 4,
+                                "type": "slashing"
+                            },
+                            {
+                                "dice": "2d6",
+                                "type": "fire"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "power-chord",
+                "name": "Power Chord",
+                "category": "actions",
+                "text": "Constitution Saving Throw: DC 14, one creature Dardew can see within 120 ft. Failure: 13 (3d6 + 3) Thunder damage.",
+                "action": {
+                    "save": {
+                        "ability": "con",
+                        "dc": 14,
+                        "on_success": "none",
+                        "damage": [
+                            {
+                                "dice": "3d6",
+                                "bonus": 3,
+                                "type": "thunder"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "silver-tongue",
+                "name": "Silver Tongue",
+                "category": "bonus_actions",
+                "text": "Charisma Saving Throw: DC 14, one creature Dardew can see within 60 feet. Failure: The creature has the Charmed condition until the start of Dardew's next turn.",
+                "action": {
+                    "save": {
+                        "ability": "cha",
+                        "dc": 14,
+                        "on_success": "none",
+                        "conditions": [
+                            "charmed"
+                        ]
+                    }
+                }
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "fire",
+                "slashing",
+                "thunder"
+            ],
+            "conditions_inflicted": [
+                "charmed"
+            ],
+            "saves_forced": [
+                "cha",
+                "con"
+            ],
+            "senses": [
+                "superior_darkvision"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "melee_attack"
+            ],
+            "languages": [
+                "abyssal",
+                "common",
+                "infernal"
+            ]
+        }
+    },
+    {
+        "id": "demobat-wtthc",
+        "kind": "monster",
+        "name": "Demobat",
+        "source": "WttHC",
+        "edition": "one",
+        "size": [
+            "tiny"
+        ],
+        "creature_type": {
+            "type": "fiend",
+            "tags": [
+                "demon"
+            ]
+        },
+        "alignment": [
+            "chaotic evil"
+        ],
+        "ac": [
+            {
+                "value": 13
+            }
+        ],
+        "hp": {
+            "average": 21,
+            "formula": "6d4 + 6"
+        },
+        "speed": {
+            "walk": 10,
+            "fly": 40
+        },
+        "abilities": {
+            "str": 4,
+            "dex": 16,
+            "con": 12,
+            "int": 2,
+            "wis": 10,
+            "cha": 6
+        },
+        "senses": {
+            "blindsight": 60
+        },
+        "passive_perception": 10,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "cold",
+                    "lightning"
+                ]
+            },
+            "immune": {
+                "types": [
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "poisoned"
+                ]
+            }
+        },
+        "cr": {
+            "cr": "1/2",
+            "xp": 100,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Attack Roll: +5 (with Advantage if the target is Grappled by a Demobat), reach 5 ft. Hit: 10 (2d6 + 3) Piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 3,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "tentacles",
+                "name": "Tentacles",
+                "category": "actions",
+                "text": "Melee Attack Roll: +5, reach 5 ft. Hit: 7 (1d8 + 3) Slashing damage. If the target is a Medium or smaller creature, the target has the Grappled condition (escape DC 13) from all four tentacles.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 3,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing",
+                "slashing"
+            ],
+            "conditions_inflicted": [
+                "grappled"
+            ],
+            "senses": [
+                "blindsight"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "actions": [
+                "tentacles"
+            ],
+            "misc": [
+                "melee_attack"
+            ]
+        }
+    },
+    {
+        "id": "demodog-wtthc",
+        "kind": "monster",
+        "name": "Demodog",
+        "source": "WttHC",
+        "edition": "one",
+        "tags": [
+            "Pack Tactics"
+        ],
+        "size": [
+            "small"
+        ],
+        "creature_type": {
+            "type": "fiend",
+            "tags": [
+                "demon"
+            ]
+        },
+        "alignment": [
+            "chaotic evil"
+        ],
+        "ac": [
+            {
+                "value": 14
+            }
+        ],
+        "hp": {
+            "average": 27,
+            "formula": "6d6 + 6"
+        },
+        "speed": {
+            "walk": 50
+        },
+        "abilities": {
+            "str": 16,
+            "dex": 15,
+            "con": 12,
+            "int": 6,
+            "wis": 12,
+            "cha": 6
+        },
+        "skills": {
+            "stealth": 4
+        },
+        "senses": {
+            "blindsight": 60
+        },
+        "passive_perception": 11,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "cold",
+                    "lightning"
+                ]
+            },
+            "immune": {
+                "types": [
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "poisoned"
+                ]
+            }
+        },
+        "cr": {
+            "cr": "1",
+            "xp": 200,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "pack-tactics",
+                "name": "Pack Tactics",
+                "category": "traits",
+                "text": "The demodog has Advantage on an attack roll against a creature if at least one of the demodog's allies is within 5 feet of the creature and the ally doesn't have the Incapacitated condition."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Attack Roll: +5, reach 5 ft. Hit: 8 (1d10 + 3) Piercing damage. If the target is a Medium or smaller creature, it has the Prone condition.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d10",
+                                "bonus": 3,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing"
+            ],
+            "conditions_inflicted": [
+                "prone"
+            ],
+            "senses": [
+                "blindsight"
+            ],
+            "traits": [
+                "pack_tactics"
+            ],
+            "misc": [
+                "melee_attack"
+            ]
+        }
+    },
+    {
+        "id": "demodragon-wtthc",
+        "kind": "monster",
+        "name": "Demodragon",
+        "source": "WttHC",
+        "edition": "one",
+        "tags": [
+            "Regeneration"
+        ],
+        "size": [
+            "huge"
+        ],
+        "creature_type": {
+            "type": "fiend",
+            "tags": [
+                "demon"
+            ]
+        },
+        "ac": [
+            {
+                "value": 16
+            }
+        ],
+        "hp": {
+            "average": 102,
+            "formula": "12d12 + 24"
+        },
+        "speed": {
+            "walk": 40,
+            "fly": 60
+        },
+        "abilities": {
+            "str": 19,
+            "dex": 10,
+            "con": 15,
+            "int": 8,
+            "wis": 12,
+            "cha": 10
+        },
+        "saves": {
+            "con": 5,
+            "wis": 4
+        },
+        "senses": {
+            "blindsight": 120
+        },
+        "passive_perception": 11,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "acid",
+                    "cold",
+                    "lightning"
+                ]
+            },
+            "immune": {
+                "types": [
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "frightened",
+                    "poisoned"
+                ]
+            }
+        },
+        "cr": {
+            "cr": "5",
+            "xp": 1800,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "baleful-presence",
+                "name": "Baleful Presence",
+                "category": "traits",
+                "text": "Sources of light in a 120-foot Emanation originating from the demodragon flicker wildly. Nonmagical sources of Bright Light in that area instead shed Dim Light."
+            },
+            {
+                "id": "regeneration",
+                "name": "Regeneration",
+                "category": "traits",
+                "text": "The demodragon regains 10 Hit Points at the start of each of its turns if it has at least 1 Hit Point"
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The demodragon makes two Bite attacks."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Attack Roll: +7, reach 10 ft. Hit: 11 (2d6 + 4) Piercing damage plus 4 (1d8) Acid damage.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 4,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "1d8",
+                                "type": "acid"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "acid-breath",
+                "name": "Acid Breath",
+                "category": "actions",
+                "text": "Dexterity Saving Throw: DC 13, each creature in a 30-foot-long, 5-foot-wide Line. Failure: 22 (4d10) Acid damage. Success: Half damage.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "area": "5-foot line",
+                    "save": {
+                        "ability": "dex",
+                        "dc": 13,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "4d10",
+                                "type": "acid"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "acid",
+                "piercing"
+            ],
+            "saves_forced": [
+                "dex"
+            ],
+            "senses": [
+                "blindsight"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "actions": [
+                "breath_weapon",
+                "multiattack"
+            ],
+            "traits": [
+                "regeneration"
+            ],
+            "misc": [
+                "melee_attack",
+                "reach"
+            ]
+        }
+    },
+    {
+        "id": "demogorgon-spawn-wtthc",
+        "kind": "monster",
+        "name": "Demogorgon Spawn",
+        "source": "WttHC",
+        "edition": "one",
+        "tags": [
+            "Regeneration"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "fiend",
+            "tags": [
+                "demon"
+            ]
+        },
+        "alignment": [
+            "chaotic evil"
+        ],
+        "ac": [
+            {
+                "value": 15
+            }
+        ],
+        "hp": {
+            "average": 44,
+            "formula": "8d8 + 8"
+        },
+        "speed": {
+            "walk": 40
+        },
+        "abilities": {
+            "str": 17,
+            "dex": 15,
+            "con": 13,
+            "int": 8,
+            "wis": 12,
+            "cha": 7
+        },
+        "skills": {
+            "perception": 3,
+            "stealth": 4
+        },
+        "senses": {
+            "blindsight": 60
+        },
+        "passive_perception": 13,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "cold",
+                    "lightning"
+                ]
+            },
+            "immune": {
+                "types": [
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "frightened",
+                    "poisoned"
+                ]
+            }
+        },
+        "cr": {
+            "cr": "2",
+            "xp": 450,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "baleful-presence",
+                "name": "Baleful Presence",
+                "category": "traits",
+                "text": "Sources of light in a 60-foot Emanation originating from the spawn flicker wildly. Nonmagical sources of Bright Light in that area instead shed Dim Light."
+            },
+            {
+                "id": "regeneration",
+                "name": "Regeneration",
+                "category": "traits",
+                "text": "The spawn regains 5 Hit Points at the start of each of its turns if it has at least 1 Hit Point."
+            },
+            {
+                "id": "running-leap",
+                "name": "Running Leap",
+                "category": "traits",
+                "text": "With a 10-foot running start, the spawn can Long Jump up to 30 feet."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The spawn makes two Claw attacks."
+            },
+            {
+                "id": "claw",
+                "name": "Claw",
+                "category": "actions",
+                "text": "Melee Attack Roll: +5, reach 10 ft. Hit: 6 (1d6 + 3) Slashing damage.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 3,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Attack Roll: +5, reach 5 ft. Hit: 5 (1d4 + 3) Piercing damage. If the target is a Medium or smaller creature, it has the Grappled condition (escape DC 13). While Grappled, the target has the Blinded condition.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 3,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing",
+                "slashing"
+            ],
+            "conditions_inflicted": [
+                "blinded",
+                "grappled"
+            ],
+            "senses": [
+                "blindsight"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "regeneration"
+            ],
+            "misc": [
+                "melee_attack",
+                "reach"
+            ]
+        }
+    },
+    {
+        "id": "dretch-wtthc",
+        "kind": "monster",
+        "name": "Dretch",
+        "source": "WttHC",
+        "edition": "one",
+        "size": [
+            "small"
+        ],
+        "creature_type": {
+            "type": "fiend",
+            "tags": [
+                "demon"
+            ]
+        },
+        "alignment": [
+            "chaotic evil"
+        ],
+        "ac": [
+            {
+                "value": 11
+            }
+        ],
+        "hp": {
+            "average": 18,
+            "formula": "4d6 + 4"
+        },
+        "speed": {
+            "walk": 20
+        },
+        "abilities": {
+            "str": 12,
+            "dex": 11,
+            "con": 12,
+            "int": 5,
+            "wis": 8,
+            "cha": 3
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 9,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "cold",
+                    "fire",
+                    "lightning"
+                ]
+            },
+            "immune": {
+                "types": [
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "Abyssal; telepathy 60 ft. (works only with creatures that understand Abyssal)"
+        ],
+        "cr": {
+            "cr": "1/4",
+            "xp": 50,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "rend",
+                "name": "Rend",
+                "category": "actions",
+                "text": "Melee Attack Roll: +3, reach 5 ft. Hit: 4 (1d6 + 1) Slashing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 3,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 1,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "fetid-cloud",
+                "name": "Fetid Cloud",
+                "category": "actions",
+                "text": "Constitution Saving Throw: DC 11, each creature in a 10-foot Emanation originating from the dretch. Failure: The target has the Poisoned condition until the end of its next turn. While Poisoned, the creature can take either an action or a Bonus Action on its turn, not both, and it can't take Reactions.",
+                "uses": {
+                    "max": 1,
+                    "reset": "long"
+                },
+                "action": {
+                    "area": "10-foot emanation",
+                    "save": {
+                        "ability": "con",
+                        "dc": 11,
+                        "on_success": "none",
+                        "conditions": [
+                            "poisoned"
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "slashing"
+            ],
+            "conditions_inflicted": [
+                "poisoned"
+            ],
+            "saves_forced": [
+                "con"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "misc": [
+                "melee_attack"
+            ],
+            "languages": [
+                "abyssal",
+                "telepathy"
+            ],
+            "environment": [
+                "abyss"
+            ],
+            "groups": [
+                "Demons"
+            ]
+        }
+    },
+    {
+        "id": "flizzlebin-wtthc",
+        "kind": "monster",
+        "name": "Flizzlebin",
+        "source": "WttHC",
+        "edition": "one",
+        "tags": [
+            "Magic Resistance"
+        ],
+        "size": [
+            "small"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "gnome"
+            ]
+        },
+        "alignment": [
+            "chaotic good"
+        ],
+        "ac": [
+            {
+                "value": 12
+            }
+        ],
+        "hp": {
+            "average": 38,
+            "formula": "7d6 + 14"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 8,
+            "dex": 14,
+            "con": 15,
+            "int": 16,
+            "wis": 10,
+            "cha": 12
+        },
+        "skills": {
+            "arcana": 5,
+            "stealth": 4
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 10,
+        "languages": [
+            "Common",
+            "Dwarvish",
+            "Gnomish"
+        ],
+        "cr": {
+            "cr": "1",
+            "xp": 200,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "Flizzlebin has Advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "ventriloquist",
+                "name": "Ventriloquist",
+                "category": "traits",
+                "text": "Flizzlebin can project his voice from anywhere within 1 mile of himself."
+            },
+            {
+                "id": "dazzling-confetti",
+                "name": "Dazzling Confetti",
+                "category": "actions",
+                "text": "Melee or Ranged Attack Roll: +5, reach 5 ft. or range 60 ft. Hit: 10 (2d6 + 3) Radiant damage.",
+                "action": {
+                    "range": "reach 5 ft. or range 60 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 3,
+                                "type": "radiant"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "vanishing-trick",
+                "name": "Vanishing Trick",
+                "category": "actions",
+                "text": "Flizzlebin has the Invisible condition for 10 minutes. This effect ends early immediately after Flizzlebin makes an attack roll, deals damage, or has the Incapacitated condition, or if his hat is removed.",
+                "uses": {
+                    "max": 3,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "distracting-glitter",
+                "name": "Distracting Glitter",
+                "category": "reactions",
+                "text": "Trigger: Flizzlebin is hit by an attack roll. Response: Flizzlebin adds 2 to his AC against that attack, possibly causing it to miss."
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "radiant"
+            ],
+            "conditions_inflicted": [
+                "incapacitated",
+                "invisible"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "traits": [
+                "magic_resistance"
+            ],
+            "misc": [
+                "melee_attack",
+                "ranged_attack"
+            ],
+            "languages": [
+                "common",
+                "dwarvish",
+                "gnomish"
+            ]
+        }
+    },
+    {
+        "id": "giant-corrupted-rat-wtthc",
+        "kind": "monster",
+        "name": "Giant Corrupted Rat",
+        "source": "WttHC",
+        "edition": "one",
+        "tags": [
+            "Death Burst"
+        ],
+        "size": [
+            "small"
+        ],
+        "creature_type": {
+            "type": "monstrosity"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 13
+            }
+        ],
+        "hp": {
+            "average": 18,
+            "formula": "4d6"
+        },
+        "speed": {
+            "walk": 30,
+            "climb": 30
+        },
+        "abilities": {
+            "str": 7,
+            "dex": 16,
+            "con": 12,
+            "int": 2,
+            "wis": 10,
+            "cha": 4
+        },
+        "skills": {
+            "perception": 12,
+            "stealth": 5
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 12,
+        "cr": {
+            "cr": "1/2",
+            "xp": 100,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "death-burst",
+                "name": "Death Burst",
+                "category": "traits",
+                "text": "The rat explodes when it dies. Constitution Saving Throw DC 11, each creature in a 5-foot Emanation originating from the rat. Failure: 5 (2d4) Acid damage. Success: Half damage.",
+                "action": {
+                    "damage": [
+                        {
+                            "dice": "2d4",
+                            "type": "acid"
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Attack Roll: +5, Reach 5 ft. Hit: 6 (1d6 + 3) Piercing damage plus 5 (2d4) Acid damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 3,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "2d4",
+                                "type": "acid"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "acid",
+                "piercing"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "movement": [
+                "climb"
+            ],
+            "traits": [
+                "death_burst"
+            ],
+            "misc": [
+                "melee_attack"
+            ]
+        }
+    },
+    {
+        "id": "giant-spider-wtthc",
+        "kind": "monster",
+        "name": "Giant Spider",
+        "source": "WttHC",
+        "edition": "one",
+        "tags": [
+            "Spider Climb",
+            "Web Walker"
+        ],
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "beast"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 14
+            }
+        ],
+        "hp": {
+            "average": 26,
+            "formula": "4d10 + 4"
+        },
+        "speed": {
+            "walk": 30,
+            "climb": 30
+        },
+        "abilities": {
+            "str": 14,
+            "dex": 16,
+            "con": 12,
+            "int": 2,
+            "wis": 11,
+            "cha": 4
+        },
+        "skills": {
+            "perception": 4,
+            "stealth": 7
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 14,
+        "cr": {
+            "cr": "1",
+            "xp": 200,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "spider-climb",
+                "name": "Spider Climb",
+                "category": "traits",
+                "text": "The spider can climb difficult surfaces, including along ceilings, without needing to make an ability check."
+            },
+            {
+                "id": "web-walker",
+                "name": "Web Walker",
+                "category": "traits",
+                "text": "The spider ignores movement restrictions caused by webs, and it knows the location of any other creature in contact with the same web."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Attack Roll: +5, reach 5 ft. Hit: 7 (1d8 + 3) Piercing damage plus 7 (2d6) Poison damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 3,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "2d6",
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "web",
+                "name": "Web",
+                "category": "actions",
+                "text": "Dexterity Saving Throw: DC 13, one creature the spider can see within 60 feet. Failure: The target has the Restrained condition until the web is destroyed (AC 10; HP 5; Vulnerability to Fire damage; Immunity to Poison and Psychic damage).",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "save": {
+                        "ability": "dex",
+                        "dc": 13,
+                        "on_success": "none",
+                        "conditions": [
+                            "restrained"
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "poison",
+                "piercing"
+            ],
+            "conditions_inflicted": [
+                "restrained"
+            ],
+            "saves_forced": [
+                "dex"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "movement": [
+                "climb"
+            ],
+            "traits": [
+                "spider_climb",
+                "web_walker"
+            ],
+            "misc": [
+                "melee_attack"
+            ],
+            "environment": [
+                "desert",
+                "forest",
+                "swamp",
+                "underdark",
+                "urban"
+            ]
+        }
+    },
+    {
+        "id": "gnoll-warrior-wtthc",
+        "kind": "monster",
+        "name": "Gnoll Warrior",
+        "source": "WttHC",
+        "edition": "one",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "fiend"
+        },
+        "alignment": [
+            "chaotic evil"
+        ],
+        "ac": [
+            {
+                "value": 15
+            }
+        ],
+        "hp": {
+            "average": 27,
+            "formula": "6d8"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 14,
+            "dex": 12,
+            "con": 11,
+            "int": 6,
+            "wis": 10,
+            "cha": 7
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 10,
+        "languages": [
+            "Gnoll"
+        ],
+        "cr": {
+            "cr": "1/2",
+            "xp": 100,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "rend",
+                "name": "Rend",
+                "category": "actions",
+                "text": "Melee Attack Roll: +4, reach 5 ft. Hit: 5 (1d6 + 2) Piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 2,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "bone-bow",
+                "name": "Bone Bow",
+                "category": "actions",
+                "text": "Ranged Attack Roll: +3, range 150/600 ft. Hit: 6 (1d10 + 1) Piercing damage.",
+                "action": {
+                    "range": "range 150/600 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 3,
+                        "damage": [
+                            {
+                                "dice": "1d10",
+                                "bonus": 1,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "rampage",
+                "name": "Rampage",
+                "category": "bonus_actions",
+                "text": "Immediately after dealing damage to a creature that is already Bloodied, the gnoll moves up to half its Speed, and it makes one Rend attack.",
+                "uses": {
+                    "max": 1,
+                    "reset": "long"
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "misc": [
+                "melee_attack",
+                "ranged_attack"
+            ],
+            "languages": [
+                "other"
+            ],
+            "environment": [
+                "desert",
+                "forest",
+                "grassland",
+                "hill"
+            ],
+            "treasure": [
+                "armaments",
+                "individual"
+            ]
+        }
+    },
+    {
+        "id": "goblin-warrior-wtthc",
+        "kind": "monster",
+        "name": "Goblin Warrior",
+        "source": "WttHC",
+        "edition": "one",
+        "size": [
+            "small"
+        ],
+        "creature_type": {
+            "type": "fey",
+            "tags": [
+                "goblinoid"
+            ]
+        },
+        "alignment": [
+            "chaotic neutral"
+        ],
+        "ac": [
+            {
+                "value": 15
+            }
+        ],
+        "hp": {
+            "average": 10,
+            "formula": "3d6"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 8,
+            "dex": 15,
+            "con": 10,
+            "int": 10,
+            "wis": 8,
+            "cha": 8
+        },
+        "skills": {
+            "stealth": 6
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 9,
+        "languages": [
+            "Common",
+            "Goblin"
+        ],
+        "cr": {
+            "cr": "1/4",
+            "xp": 50,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "scimitar",
+                "name": "Scimitar",
+                "category": "actions",
+                "text": "Melee Attack Roll: +4, reach 5 ft. Hit: 5 (1d6 + 2) Slashing damage, plus 2 (1d4) Slashing damage if the attack roll had Advantage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 2,
+                                "type": "slashing"
+                            },
+                            {
+                                "dice": "1d4",
+                                "type": "slashing",
+                                "condition": "if the attack roll had Advantage"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "shortbow",
+                "name": "Shortbow",
+                "category": "actions",
+                "text": "Ranged Attack Roll: +4, range 80/320 ft. Hit: 5 (1d6 + 2) Piercing damage, plus 2 (1d4) Piercing damage if the attack roll had Advantage.",
+                "action": {
+                    "range": "range 80/320 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 2,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "1d4",
+                                "type": "piercing",
+                                "condition": "if the attack roll had Advantage"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "nimble-escape",
+                "name": "Nimble Escape",
+                "category": "bonus_actions",
+                "text": "The goblin takes the Disengage or Hide action."
+            }
+        ],
+        "items": [
+            {
+                "item": "leather-armor-xphb",
+                "qty": 1
+            },
+            {
+                "item": "scimitar-xphb",
+                "qty": 1
+            },
+            {
+                "item": "shield-xphb",
+                "qty": 1
+            },
+            {
+                "item": "shortbow-xphb",
+                "qty": 1
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing",
+                "slashing"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "misc": [
+                "melee_attack",
+                "melee_weapon",
+                "ranged_attack",
+                "ranged_weapon"
+            ],
+            "languages": [
+                "common",
+                "goblin"
+            ],
+            "environment": [
+                "forest",
+                "grassland",
+                "hill",
+                "acheron",
+                "feywild",
+                "underdark"
+            ],
+            "treasure": [
+                "implements",
+                "individual"
+            ],
+            "groups": [
+                "Goblinoids"
+            ]
+        }
+    },
+    {
+        "id": "guard-wtthc",
+        "kind": "monster",
+        "name": "Guard",
+        "source": "WttHC",
+        "edition": "one",
+        "size": [
+            "small",
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid"
+        },
+        "alignment": [
+            "neutral"
+        ],
+        "ac": [
+            {
+                "value": 16
+            }
+        ],
+        "hp": {
+            "average": 11,
+            "formula": "2d8 + 2"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 13,
+            "dex": 12,
+            "con": 12,
+            "int": 10,
+            "wis": 11,
+            "cha": 10
+        },
+        "skills": {
+            "perception": 2
+        },
+        "passive_perception": 12,
+        "languages": [
+            "Common"
+        ],
+        "cr": {
+            "cr": "1/8",
+            "xp": 25,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "spear",
+                "name": "Spear",
+                "category": "actions",
+                "text": "Melee or Ranged Attack Roll: +3, reach 5 ft. or range 20/60 ft. Hit: 4 (1d6 + 1) Piercing damage.",
+                "action": {
+                    "range": "reach 5 ft. or range 20/60 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 3,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 1,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "items": [
+            {
+                "item": "chain-shirt-xphb",
+                "qty": 1
+            },
+            {
+                "item": "shield-xphb",
+                "qty": 1
+            },
+            {
+                "item": "spear-xphb",
+                "qty": 1
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing"
+            ],
+            "misc": [
+                "melee_attack",
+                "melee_weapon",
+                "ranged_attack",
+                "thrown_weapon"
+            ],
+            "languages": [
+                "common"
+            ],
+            "environment": [
+                "any"
+            ],
+            "treasure": [
+                "armaments",
+                "individual"
+            ]
+        }
+    },
+    {
+        "id": "hell-hound-wtthc",
+        "kind": "monster",
+        "name": "Hell Hound",
+        "source": "WttHC",
+        "edition": "one",
+        "tags": [
+            "Pack Tactics"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "fiend"
+        },
+        "alignment": [
+            "lawful evil"
+        ],
+        "ac": [
+            {
+                "value": 15
+            }
+        ],
+        "hp": {
+            "average": 58,
+            "formula": "9d8 + 18"
+        },
+        "speed": {
+            "walk": 50
+        },
+        "abilities": {
+            "str": 17,
+            "dex": 12,
+            "con": 14,
+            "int": 6,
+            "wis": 13,
+            "cha": 6
+        },
+        "skills": {
+            "perception": 5
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 15,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "fire"
+                ]
+            }
+        },
+        "languages": [
+            "understands Infernal but can't speak"
+        ],
+        "cr": {
+            "cr": "3",
+            "xp": 700,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "pack-tactics",
+                "name": "Pack Tactics",
+                "category": "traits",
+                "text": "The hound has Advantage on an attack roll against a creature if at least one of the hound's allies is within 5 feet of the creature and the ally doesn't have the Incapacitated condition."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The hound makes two Bite attacks."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Attack Roll: +5, reach 5 ft. Hit: 7 (1d8 + 3) Piercing damage plus 3 (1d6) Fire damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 3,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "1d6",
+                                "type": "fire"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "fire-breath",
+                "name": "Fire Breath",
+                "category": "actions",
+                "text": "Dexterity Saving Throw: DC 12, each creature in a 15-foot Cone. Failure: 17 (5d6) Fire damage. Success: Half damage.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "area": "15-foot cone",
+                    "save": {
+                        "ability": "dex",
+                        "dc": 12,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "5d6",
+                                "type": "fire"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "fire",
+                "piercing"
+            ],
+            "saves_forced": [
+                "dex"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "actions": [
+                "breath_weapon",
+                "multiattack"
+            ],
+            "traits": [
+                "pack_tactics"
+            ],
+            "misc": [
+                "melee_attack"
+            ],
+            "languages": [
+                "cant_speak",
+                "infernal"
+            ],
+            "environment": [
+                "mountain",
+                "lower",
+                "underdark"
+            ]
+        }
+    },
+    {
+        "id": "imp-trickster-wtthc",
+        "kind": "monster",
+        "name": "Imp Trickster",
+        "source": "WttHC",
+        "edition": "one",
+        "tags": [
+            "Magic Resistance"
+        ],
+        "size": [
+            "tiny"
+        ],
+        "creature_type": {
+            "type": "fiend",
+            "tags": [
+                "devil"
+            ]
+        },
+        "alignment": [
+            "lawful evil"
+        ],
+        "ac": [
+            {
+                "value": 13
+            }
+        ],
+        "hp": {
+            "average": 21,
+            "formula": "6d4"
+        },
+        "speed": {
+            "walk": 20,
+            "fly": 40,
+            "climb": 20
+        },
+        "abilities": {
+            "str": 6,
+            "dex": 17,
+            "con": 13,
+            "int": 11,
+            "wis": 12,
+            "cha": 14
+        },
+        "skills": {
+            "deception": 4,
+            "insight": 3,
+            "stealth": 5
+        },
+        "senses": {
+            "darkvision": 120
+        },
+        "passive_perception": 11,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "cold"
+                ]
+            },
+            "immune": {
+                "types": [
+                    "fire",
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "Common",
+            "Infernal"
+        ],
+        "cr": {
+            "cr": "1",
+            "xp": 200,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The imp has Advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "sting",
+                "name": "Sting",
+                "category": "actions",
+                "text": "Melee Attack Roll: +5, reach 5 ft. Hit: 1d6 + 3 Piercing damage plus 2d6 Poison damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 3,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "2d6",
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "invisibility",
+                "name": "Invisibility",
+                "category": "actions",
+                "text": "The imp has the Invisible condition for 1 minute. This effect ends early immediately after the imp makes an attack roll or deals damage, or if the imp has the Incapacitated condition."
+            },
+            {
+                "id": "shape-shift",
+                "name": "Shape-Shift",
+                "category": "actions",
+                "text": "The imp shape-shifts to resemble a rat (Speed 20 ft.), a raven (20 ft., Fly 60 ft.), or a spider (20 ft., Climb 20 ft.), or it returns to its true form. Its game statistics are the same in each form, except for its Speed. Any equipment it is wearing or carrying isn't transformed."
+            }
+        ],
+        "filters": {
+            "conditions_inflicted": [
+                "incapacitated",
+                "invisible"
+            ],
+            "senses": [
+                "superior_darkvision"
+            ],
+            "movement": [
+                "fly",
+                "climb"
+            ],
+            "traits": [
+                "magic_resistance"
+            ],
+            "misc": [
+                "melee_attack"
+            ],
+            "languages": [
+                "common",
+                "infernal"
+            ]
+        }
+    },
+    {
+        "id": "korex-wtthc",
+        "kind": "monster",
+        "name": "Korex",
+        "source": "WttHC",
+        "edition": "one",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "elf"
+            ]
+        },
+        "alignment": [
+            "chaotic evil"
+        ],
+        "ac": [
+            {
+                "value": 13
+            }
+        ],
+        "hp": {
+            "average": 52,
+            "formula": "8d8"
+        },
+        "speed": {
+            "walk": 40
+        },
+        "abilities": {
+            "str": 13,
+            "dex": 16,
+            "con": 14,
+            "int": 8,
+            "wis": 12,
+            "cha": 15
+        },
+        "skills": {
+            "perception": 3,
+            "performance": 4,
+            "stealth": 5
+        },
+        "senses": {
+            "darkvision": 120
+        },
+        "passive_perception": 13,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "Common",
+            "Elvish"
+        ],
+        "cr": {
+            "cr": "2",
+            "xp": 450,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "sewer-speech",
+                "name": "Sewer Speech",
+                "category": "traits",
+                "text": "Korex can comprehend and verbally communicate with Monstrosities."
+            },
+            {
+                "id": "rancid-knife",
+                "name": "Rancid Knife",
+                "category": "actions",
+                "text": "Melee Attack Roll: +5, reach 5 ft. Hit: 8 (2d4 + 3) Piercing damage plus 7 (2d6) Poison damage, and the target has the Poisoned condition until the start of Korex's next turn.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "2d4",
+                                "bonus": 3,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "2d6",
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "entrancing-pipes",
+                "name": "Entrancing Pipes",
+                "category": "actions",
+                "text": "Wisdom Saving Throw: DC 12, one creature Korex can see within 120 feet. Failure: 14 (4d6) Psychic damage, and the target has the Charmed condition until the start of Korex's next turn. Success: Half damage only.",
+                "action": {
+                    "save": {
+                        "ability": "wis",
+                        "dc": 12,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "4d6",
+                                "type": "psychic"
+                            }
+                        ],
+                        "conditions": [
+                            "charmed"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "skitter",
+                "name": "Skitter",
+                "category": "bonus_actions",
+                "text": "Korex takes the Dash or Disengage action."
+            }
+        ],
+        "items": [
+            {
+                "item": "pipes-of-pestilence-wtthc",
+                "qty": 1
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "poison",
+                "piercing",
+                "psychic"
+            ],
+            "conditions_inflicted": [
+                "charmed",
+                "poisoned"
+            ],
+            "saves_forced": [
+                "wis"
+            ],
+            "senses": [
+                "superior_darkvision"
+            ],
+            "misc": [
+                "melee_attack"
+            ],
+            "languages": [
+                "common",
+                "elvish"
+            ]
+        }
+    },
+    {
+        "id": "medusa-wtthc",
+        "kind": "monster",
+        "name": "Medusa",
+        "source": "WttHC",
+        "edition": "one",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "monstrosity"
+        },
+        "alignment": [
+            "lawful evil"
+        ],
+        "ac": [
+            {
+                "value": 15
+            }
+        ],
+        "hp": {
+            "average": 127,
+            "formula": "17d8 + 51"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 10,
+            "dex": 17,
+            "con": 16,
+            "int": 12,
+            "wis": 13,
+            "cha": 15
+        },
+        "saves": {
+            "wis": 4
+        },
+        "skills": {
+            "deception": 5,
+            "perception": 4,
+            "stealth": 6
+        },
+        "senses": {
+            "darkvision": 150
+        },
+        "passive_perception": 14,
+        "languages": [
+            "Common plus one other language"
+        ],
+        "cr": {
+            "cr": "6",
+            "xp": 2300,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": 6
+        },
+        "features": [
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The medusa makes two Claw attacks and one Snake Hair attack, or it makes three Poison Ray attacks."
+            },
+            {
+                "id": "claw",
+                "name": "Claw",
+                "category": "actions",
+                "text": "Melee Attack Roll: +6, reach 5 ft. Hit: 10 (2d6 + 3) Slashing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 3,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "snake-hair",
+                "name": "Snake Hair",
+                "category": "actions",
+                "text": "Melee Attack Roll: +6, reach 5 ft. Hit: 5 (1d4 + 3) Piercing damage plus 14 (4d6) Poison damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "1d4",
+                                "bonus": 3,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "4d6",
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "poison-ray",
+                "name": "Poison Ray",
+                "category": "actions",
+                "text": "Ranged Attack Roll: +5, range 150 ft. Hit: 11 (2d8 + 2) Poison damage.",
+                "action": {
+                    "range": "range 150 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "2d8",
+                                "bonus": 2,
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "petrifying-gaze",
+                "name": "Petrifying Gaze",
+                "category": "bonus_actions",
+                "text": "Constitution Saving Throw: DC 13, each creature in a 30-foot Cone. If the medusa sees its reflection in the Cone, the medusa must make this save. Failure: The target has the Restrained condition and repeats the save at the end of its next turn if it is still Restrained, ending the effect on itself on a success. Failure: The target has the Petrified condition instead of the Restrained condition.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "area": "30-foot cone",
+                    "save": {
+                        "ability": "con",
+                        "dc": 13,
+                        "on_success": "none",
+                        "conditions": [
+                            "petrified",
+                            "restrained"
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "poison",
+                "piercing",
+                "slashing"
+            ],
+            "conditions_inflicted": [
+                "petrified",
+                "restrained"
+            ],
+            "saves_forced": [
+                "con"
+            ],
+            "senses": [
+                "superior_darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "melee_attack",
+                "ranged_attack"
+            ],
+            "languages": [
+                "common",
+                "any_choose"
+            ],
+            "environment": [
+                "desert"
+            ],
+            "treasure": [
+                "any"
+            ]
+        }
+    },
+    {
+        "id": "myconid-adult-wtthc",
+        "kind": "monster",
+        "name": "Myconid Adult",
+        "source": "WttHC",
+        "edition": "one",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "plant"
+        },
+        "alignment": [
+            "lawful neutral"
+        ],
+        "ac": [
+            {
+                "value": 12
+            }
+        ],
+        "hp": {
+            "average": 16,
+            "formula": "3d8 + 3"
+        },
+        "speed": {
+            "walk": 20
+        },
+        "abilities": {
+            "str": 10,
+            "dex": 10,
+            "con": 12,
+            "int": 10,
+            "wis": 13,
+            "cha": 7
+        },
+        "senses": {
+            "darkvision": 120
+        },
+        "passive_perception": 11,
+        "languages": [
+            "telepathy 240 ft."
+        ],
+        "cr": {
+            "cr": "1/2",
+            "xp": 100,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 0
+        },
+        "features": [
+            {
+                "id": "sun-sickness",
+                "name": "Sun Sickness",
+                "category": "traits",
+                "text": "While in sunlight, the myconid has Disadvantage on D20 Tests. The myconid dies if it spends more than 1 hour in sunlight."
+            },
+            {
+                "id": "slam",
+                "name": "Slam",
+                "category": "actions",
+                "text": "Melee Attack Roll: +2, reach 5 ft. Hit: 4 (1d8) Bludgeoning damage plus 3 (1d6) Poison damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 2,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "type": "bludgeoning"
+                            },
+                            {
+                                "dice": "1d6",
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "pacifying-spores",
+                "name": "Pacifying Spores",
+                "category": "actions",
+                "text": "Constitution Saving Throw: DC 11, one creature the myconid can see within 10 feet. Failure: The target has the Stunned condition and repeats the save at the end of each of its turns, ending the effect on itself on a success. After 1 minute, it succeeds automatically.",
+                "uses": {
+                    "max": 1,
+                    "reset": "long"
+                },
+                "action": {
+                    "save": {
+                        "ability": "con",
+                        "dc": 11,
+                        "on_success": "none",
+                        "conditions": [
+                            "stunned"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "rapport-spores",
+                "name": "Rapport Spores",
+                "category": "actions",
+                "text": "The myconid expels spores in a 30-foot Emanation originating from itself. Creatures in that area with an Intelligence score of 2 or higher that aren't Constructs, Elementals, or Undead gain telepathy with a range of 30 feet for 1 hour."
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "poison"
+            ],
+            "conditions_inflicted": [
+                "stunned"
+            ],
+            "saves_forced": [
+                "con"
+            ],
+            "senses": [
+                "superior_darkvision"
+            ],
+            "misc": [
+                "melee_attack"
+            ],
+            "languages": [
+                "telepathy"
+            ],
+            "environment": [
+                "underdark"
+            ],
+            "treasure": [
+                "any"
+            ]
+        }
+    },
+    {
+        "id": "needle-blight-wtthc",
+        "kind": "monster",
+        "name": "Needle Blight",
+        "source": "WttHC",
+        "edition": "one",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "plant"
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "ac": [
+            {
+                "value": 12
+            }
+        ],
+        "hp": {
+            "average": 16,
+            "formula": "3d8 + 3"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 12,
+            "dex": 12,
+            "con": 13,
+            "int": 4,
+            "wis": 8,
+            "cha": 3
+        },
+        "senses": {
+            "blindsight": 60
+        },
+        "passive_perception": 9,
+        "defenses": {
+            "condition_immune": {
+                "types": [
+                    "deafened"
+                ]
+            }
+        },
+        "languages": [
+            "understands Common but can't speak"
+        ],
+        "cr": {
+            "cr": "1/4",
+            "xp": 50,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 1
+        },
+        "features": [
+            {
+                "id": "claw",
+                "name": "Claw",
+                "category": "actions",
+                "text": "Melee Attack Roll: +3, reach 5 ft. Hit: 6 (2d4 + 1) Slashing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 3,
+                        "damage": [
+                            {
+                                "dice": "2d4",
+                                "bonus": 1,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "needles",
+                "name": "Needles",
+                "category": "actions",
+                "text": "Ranged Attack Roll: +3, range 30/60 ft. Hit: 6 (2d4 + 1) Piercing damage.",
+                "action": {
+                    "range": "range 30/60 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 3,
+                        "damage": [
+                            {
+                                "dice": "2d4",
+                                "bonus": 1,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing",
+                "slashing"
+            ],
+            "senses": [
+                "blindsight"
+            ],
+            "misc": [
+                "melee_attack",
+                "ranged_attack"
+            ],
+            "languages": [
+                "common",
+                "cant_speak"
+            ],
+            "environment": [
+                "forest"
+            ]
+        }
+    },
+    {
+        "id": "rilly-june-wtthc",
+        "kind": "monster",
+        "name": "Rilly June",
+        "source": "WttHC",
+        "edition": "one",
+        "size": [
+            "small"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "halfling"
+            ]
+        },
+        "alignment": [
+            "neutral"
+        ],
+        "ac": [
+            {
+                "value": 12
+            }
+        ],
+        "hp": {
+            "average": 13,
+            "formula": "3d6"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 14,
+            "dex": 14,
+            "con": 13,
+            "int": 10,
+            "wis": 13,
+            "cha": 10
+        },
+        "saves": {
+            "wis": 3
+        },
+        "skills": {
+            "nature": 2,
+            "perception": 3,
+            "survival": 3
+        },
+        "passive_perception": 13,
+        "languages": [
+            "Common",
+            "Halfling"
+        ],
+        "cr": {
+            "cr": "1/2",
+            "xp": 100,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Rilly June makes two Hayfork attacks."
+            },
+            {
+                "id": "hayfork",
+                "name": "Hayfork",
+                "category": "actions",
+                "text": "Melee Attack Roll: +4, reach 5 ft. Hit: 6 (1d8 + 2) Piercing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 2,
+                                "type": "piercing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "gwan-git",
+                "name": "G'wan, Git!",
+                "category": "actions",
+                "text": "Wisdom Saving Throw: DC 11, one creature Rilly June can see within 60 feet. Failure: 10 (3d6) Psychic damage, and the target has the Frightened condition until the end of its next turn. Success: Half damage only.",
+                "uses": {
+                    "max": 1,
+                    "reset": "long"
+                },
+                "action": {
+                    "save": {
+                        "ability": "wis",
+                        "dc": 11,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "3d6",
+                                "type": "psychic"
+                            }
+                        ],
+                        "conditions": [
+                            "frightened"
+                        ]
+                    }
+                }
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "piercing",
+                "psychic"
+            ],
+            "conditions_inflicted": [
+                "frightened"
+            ],
+            "saves_forced": [
+                "wis"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "melee_attack"
+            ],
+            "languages": [
+                "common",
+                "halfling"
+            ]
+        }
+    },
+    {
+        "id": "scarecrow-wtthc",
+        "kind": "monster",
+        "name": "Scarecrow",
+        "source": "WttHC",
+        "edition": "one",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "construct"
+        },
+        "alignment": [
+            "chaotic evil"
+        ],
+        "ac": [
+            {
+                "value": 11
+            }
+        ],
+        "hp": {
+            "average": 27,
+            "formula": "6d8"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 11,
+            "dex": 13,
+            "con": 11,
+            "int": 10,
+            "wis": 10,
+            "cha": 13
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 10,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "poison"
+                ]
+            },
+            "vulnerable": {
+                "types": [
+                    "fire"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "exhaustion",
+                    "frightened",
+                    "paralyzed",
+                    "petrified",
+                    "poisoned",
+                    "unconscious"
+                ]
+            }
+        },
+        "languages": [
+            "Common plus one other language"
+        ],
+        "cr": {
+            "cr": "1",
+            "xp": 200,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "fearsome-claw",
+                "name": "Fearsome Claw",
+                "category": "actions",
+                "text": "Melee Attack Roll: +3, reach 5 ft. Hit: 6 (2d4 + 1) Slashing damage, and the target has the Frightened condition until the end of the scarecrow's next turn.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 3,
+                        "damage": [
+                            {
+                                "dice": "2d4",
+                                "bonus": 1,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "terrifying-glare",
+                "name": "Terrifying Glare",
+                "category": "actions",
+                "text": "Wisdom Saving Throw: DC 11, one creature the scarecrow can see within 30 feet. Failure: The target has the Frightened condition until the end of the scarecrow's next turn. While Frightened, the target has the Paralyzed condition.",
+                "action": {
+                    "save": {
+                        "ability": "wis",
+                        "dc": 11,
+                        "on_success": "none",
+                        "conditions": [
+                            "frightened",
+                            "paralyzed"
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "slashing"
+            ],
+            "conditions_inflicted": [
+                "frightened",
+                "paralyzed"
+            ],
+            "saves_forced": [
+                "wis"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "misc": [
+                "melee_attack"
+            ],
+            "languages": [
+                "common",
+                "any_choose"
+            ],
+            "environment": [
+                "grassland"
+            ]
+        }
+    },
+    {
+        "id": "shadow-wtthc",
+        "kind": "monster",
+        "name": "Shadow",
+        "source": "WttHC",
+        "edition": "one",
+        "tags": [
+            "Amorphous"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "undead"
+        },
+        "alignment": [
+            "chaotic evil"
+        ],
+        "ac": [
+            {
+                "value": 12
+            }
+        ],
+        "hp": {
+            "average": 27,
+            "formula": "5d8 + 5"
+        },
+        "speed": {
+            "walk": 40
+        },
+        "abilities": {
+            "str": 6,
+            "dex": 14,
+            "con": 13,
+            "int": 6,
+            "wis": 10,
+            "cha": 8
+        },
+        "skills": {
+            "stealth": 6
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 10,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "acid",
+                    "cold",
+                    "fire",
+                    "lightning",
+                    "thunder"
+                ]
+            },
+            "immune": {
+                "types": [
+                    "necrotic",
+                    "poison"
+                ]
+            },
+            "vulnerable": {
+                "types": [
+                    "radiant"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "exhaustion",
+                    "frightened",
+                    "grappled",
+                    "paralyzed",
+                    "petrified",
+                    "poisoned",
+                    "prone",
+                    "restrained",
+                    "unconscious"
+                ]
+            }
+        },
+        "cr": {
+            "cr": "1/2",
+            "xp": 100,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "amorphous",
+                "name": "Amorphous",
+                "category": "traits",
+                "text": "The shadow can move through a space as narrow as 1 inch without expending extra movement to do so."
+            },
+            {
+                "id": "sunlight-weakness",
+                "name": "Sunlight Weakness",
+                "category": "traits",
+                "text": "While in sunlight, the shadow has Disadvantage on D20 Tests."
+            },
+            {
+                "id": "draining-swipe",
+                "name": "Draining Swipe",
+                "category": "actions",
+                "text": "Melee Attack Roll: +4, reach 5 ft. Hit: 5 (1d6 + 2) Necrotic damage, and the target's Strength score decreases by 1d4. The target dies if this reduces that score to 0. If a Humanoid is slain by this attack, a Shadow rises from the corpse 1d4 hours later.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d6",
+                                "bonus": 2,
+                                "type": "necrotic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "shadow-stealth",
+                "name": "Shadow Stealth",
+                "category": "bonus_actions",
+                "text": "While in Dim Light or Darkness, the shadow takes the Hide action."
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "necrotic"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "traits": [
+                "amorphous"
+            ],
+            "misc": [
+                "melee_attack"
+            ],
+            "environment": [
+                "shadowfell",
+                "underdark",
+                "urban"
+            ]
+        }
+    },
+    {
+        "id": "shrieker-fungus-wtthc",
+        "kind": "monster",
+        "name": "Shrieker Fungus",
+        "source": "WttHC",
+        "edition": "one",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "plant"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 5
+            }
+        ],
+        "hp": {
+            "average": 13,
+            "formula": "3d8"
+        },
+        "speed": {
+            "walk": 5
+        },
+        "abilities": {
+            "str": 1,
+            "dex": 1,
+            "con": 10,
+            "int": 1,
+            "wis": 3,
+            "cha": 1
+        },
+        "senses": {
+            "blindsight": 30
+        },
+        "passive_perception": 6,
+        "defenses": {
+            "condition_immune": {
+                "types": [
+                    "blinded",
+                    "charmed",
+                    "deafened",
+                    "frightened"
+                ]
+            }
+        },
+        "cr": {
+            "cr": "0",
+            "xp": 0,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": -5
+        },
+        "features": [
+            {
+                "id": "shriek",
+                "name": "Shriek",
+                "category": "reactions",
+                "text": "Trigger: A creature or a source of Bright Light moves within 30 feet of the shrieker. Response: The shrieker emits a shriek audible within 300 feet of itself for 1 minute or until the shrieker dies."
+            }
+        ],
+        "filters": {
+            "senses": [
+                "blindsight"
+            ],
+            "environment": [
+                "underdark"
+            ]
+        }
+    },
+    {
+        "id": "swarm-of-corrupted-rats-wtthc",
+        "kind": "monster",
+        "name": "Swarm of Corrupted Rats",
+        "source": "WttHC",
+        "edition": "one",
+        "tags": [
+            "Death Burst"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "monstrosity",
+            "swarm_of": "tiny"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 12
+            }
+        ],
+        "hp": {
+            "average": 27,
+            "formula": "6d8"
+        },
+        "speed": {
+            "walk": 30,
+            "climb": 30
+        },
+        "abilities": {
+            "str": 9,
+            "dex": 14,
+            "con": 10,
+            "int": 2,
+            "wis": 11,
+            "cha": 4
+        },
+        "saves": {
+            "dex": 4
+        },
+        "senses": {
+            "darkvision": 30
+        },
+        "passive_perception": 10,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "bludgeoning",
+                    "piercing",
+                    "slashing"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "frightened",
+                    "grappled",
+                    "paralyzed",
+                    "petrified",
+                    "prone",
+                    "restrained",
+                    "stunned"
+                ]
+            }
+        },
+        "cr": {
+            "cr": "1",
+            "xp": 200,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 2
+        },
+        "features": [
+            {
+                "id": "death-burst",
+                "name": "Death Burst",
+                "category": "traits",
+                "text": "The rat explodes when it dies. Constitution Saving Throw: DC 10, each creature in a 10-foot Emanation originating from the rat. Failure: 2d4 Acid Damage. Success: Half damage.",
+                "action": {
+                    "area": "10-foot emanation",
+                    "save": {
+                        "ability": "con",
+                        "dc": 10,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "2d4",
+                                "type": "acid"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "swarm",
+                "name": "Swarm",
+                "category": "traits",
+                "text": "The swarm can occupy another creature's space and vice versa, and the swarm can move through any opening large enough for a Tiny rat. The swarm can't regain Hit Points."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Attack Roll: +4, Reach 5 ft. Hit: 6 (2d4 + 2) Piercing damage or 1d4 + 2 Piercing damage if the swarm is Bloodied.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "2d4",
+                                "bonus": 2,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "1d4",
+                                "bonus": 2,
+                                "type": "piercing",
+                                "condition": "if the swarm is Bloodied"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "piercing"
+            ],
+            "saves_forced": [
+                "con"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "movement": [
+                "climb"
+            ],
+            "traits": [
+                "death_burst"
+            ],
+            "misc": [
+                "melee_attack"
+            ]
+        }
+    },
+    {
+        "id": "vine-blight-tangler-wtthc",
+        "kind": "monster",
+        "name": "Vine Blight Tangler",
+        "source": "WttHC",
+        "edition": "one",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "plant"
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "ac": [
+            {
+                "value": 12
+            }
+        ],
+        "hp": {
+            "average": 19,
+            "formula": "3d8"
+        },
+        "speed": {
+            "walk": 20
+        },
+        "abilities": {
+            "str": 15,
+            "dex": 8,
+            "con": 14,
+            "int": 5,
+            "wis": 10,
+            "cha": 3
+        },
+        "skills": {
+            "stealth": 1
+        },
+        "senses": {
+            "blindsight": 60
+        },
+        "passive_perception": 10,
+        "defenses": {
+            "condition_immune": {
+                "types": [
+                    "deafened"
+                ]
+            }
+        },
+        "languages": [
+            "Common"
+        ],
+        "cr": {
+            "cr": "1/2",
+            "xp": 100,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": -1
+        },
+        "features": [
+            {
+                "id": "constricting-vine",
+                "name": "Constricting Vine",
+                "category": "actions",
+                "text": "Melee Attack Roll: +4, reach 10 ft. Hit: 1d10 + 2 Bludgeoning damage. If the target is a Large or smaller creature, it has the Grappled condition (escape DC 12) from one of three vines.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 4,
+                        "damage": [
+                            {
+                                "dice": "1d10",
+                                "bonus": 2,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "entangling-vines",
+                "name": "Entangling Vines",
+                "category": "actions",
+                "text": "Grasping vines momentarily appear on each enemy in a 10-foot-radius Sphere centered on a point of the blight's choice within 60 feet of it. Each target must succeed on a DC 12 Strength saving throw or have the Restrained condition until the start of the blight's next turn.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "area": "10-foot sphere",
+                    "save": {
+                        "ability": "str",
+                        "dc": 12,
+                        "on_success": "none",
+                        "conditions": [
+                            "restrained"
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "conditions_inflicted": [
+                "grappled",
+                "restrained"
+            ],
+            "saves_forced": [
+                "str"
+            ],
+            "senses": [
+                "blindsight"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_attack",
+                "reach"
+            ],
+            "languages": [
+                "common"
+            ]
+        }
+    },
+    {
+        "id": "violet-fungus-wtthc",
+        "kind": "monster",
+        "name": "Violet Fungus",
+        "source": "WttHC",
+        "edition": "one",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "plant"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 5
+            }
+        ],
+        "hp": {
+            "average": 18,
+            "formula": "4d8"
+        },
+        "speed": {
+            "walk": 5
+        },
+        "abilities": {
+            "str": 3,
+            "dex": 1,
+            "con": 10,
+            "int": 1,
+            "wis": 3,
+            "cha": 1
+        },
+        "senses": {
+            "blindsight": 30
+        },
+        "passive_perception": 6,
+        "defenses": {
+            "condition_immune": {
+                "types": [
+                    "blinded",
+                    "charmed",
+                    "deafened",
+                    "frightened"
+                ]
+            }
+        },
+        "cr": {
+            "cr": "1/4",
+            "xp": 50,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": -5
+        },
+        "features": [
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The fungus makes two Rotting Touch attacks."
+            },
+            {
+                "id": "rotting-touch",
+                "name": "Rotting Touch",
+                "category": "actions",
+                "text": "Melee Attack Roll: +2, reach 10 ft. Hit: 4 (1d8) Necrotic damage.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 2,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "type": "necrotic"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "necrotic"
+            ],
+            "senses": [
+                "blindsight"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "melee_attack",
+                "reach"
+            ],
+            "environment": [
+                "underdark"
+            ]
+        }
+    }
+]

@@ -1,0 +1,5585 @@
+[
+    {
+        "id": "blood-queen-lanathel-icc",
+        "kind": "monster",
+        "name": "Blood-Queen Lana'thel",
+        "source": "ICC",
+        "edition": "one",
+        "tags": [
+            "Legendary Resistances",
+            "Sunlight Sensitivity"
+        ],
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "undead",
+            "tags": [
+                "elf",
+                "vampire"
+            ]
+        },
+        "alignment": [
+            "lawful evil"
+        ],
+        "ac": [
+            {
+                "value": 16
+            }
+        ],
+        "hp": {
+            "average": 315,
+            "formula": "30d10 + 150"
+        },
+        "speed": {
+            "walk": 40,
+            "fly": 40,
+            "climb": 40,
+            "hover": true
+        },
+        "abilities": {
+            "str": 22,
+            "dex": 18,
+            "con": 20,
+            "int": 19,
+            "wis": 16,
+            "cha": 23
+        },
+        "saves": {
+            "str": 13,
+            "wis": 10,
+            "cha": 13
+        },
+        "skills": {
+            "arcana": 11,
+            "perception": 17,
+            "stealth": 11
+        },
+        "senses": {
+            "blindsight": 120
+        },
+        "passive_perception": 27,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "cold",
+                    "necrotic"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "exhaustion"
+                ]
+            }
+        },
+        "languages": [
+            "Common (WoW)",
+            "Forsaken",
+            "Orcish",
+            "Thalassian"
+        ],
+        "cr": {
+            "cr": "23",
+            "xp": 50000,
+            "pb": 7
+        },
+        "initiative": {
+            "bonus": 18
+        },
+        "features": [
+            {
+                "id": "legendary-resistance",
+                "name": "Legendary Resistance",
+                "category": "traits",
+                "text": "If Lana'thel fails a saving throw, she can choose to succeed instead.",
+                "uses": {
+                    "max": 4,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "shadow-escape",
+                "name": "Shadow Escape",
+                "category": "traits",
+                "text": "If Lana'thel drops to 0 Hit Points outside her resting place, she teleports into her resting place unless she is in running water or sunlight. If she can't teleport, she is destroyed. Once inside her resting place, she has the Paralyzed condition for 1 hour, after which she regains 1 Hit Point."
+            },
+            {
+                "id": "shroud-of-sorrow",
+                "name": "Shroud of Sorrow",
+                "category": "traits",
+                "text": "At the end of each of Lana'thel's turns, each creature in a 20-foot Emanation originating from her takes 9 (2d8) Psychic damage, provided she doesn't have the Incapacitated condition.",
+                "action": {
+                    "damage": [
+                        {
+                            "dice": "2d8",
+                            "type": "psychic"
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "sunlight-weakness",
+                "name": "Sunlight Weakness",
+                "category": "traits",
+                "text": "Lana'thel takes 20 Radiant damage if she starts her turn in sunlight. While in sunlight, she has Disadvantage on attack rolls and ability checks.",
+                "action": {
+                    "damage": [
+                        {
+                            "bonus": 20,
+                            "type": "radiant"
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Lana'thel makes two attacks, using Bloodthirsty Bite or Twilight Bloodbolt in any combination."
+            },
+            {
+                "id": "bloodthirsty-bite",
+                "name": "Bloodthirsty Bite",
+                "category": "actions",
+                "text": "Melee Attack Roll: +13, reach 10 ft. Hit: 15 (2d8 + 6) Slashing damage plus 9 (2d8) Necrotic damage. The target's Hit Point maximum decreases by an amount equal to the Necrotic damage taken, and Lana'thel regains Hit Points equal to that amount.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 13,
+                        "damage": [
+                            {
+                                "dice": "2d8",
+                                "bonus": 6,
+                                "type": "slashing"
+                            },
+                            {
+                                "dice": "2d8",
+                                "type": "necrotic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "twilight-bloodbolt",
+                "name": "Twilight Bloodbolt",
+                "category": "actions",
+                "text": "Ranged Attack Roll: +13, range 120 ft. Hit: 22 (4d10 + 6) Psychic damage, and the target has the Frightened condition until the end of Lana'thel's next turn.",
+                "action": {
+                    "range": "range 120 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 13,
+                        "damage": [
+                            {
+                                "dice": "4d10",
+                                "bonus": 6,
+                                "type": "psychic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "blood-mirror",
+                "name": "Blood Mirror",
+                "category": "bonus_actions",
+                "text": "Lana'thel curses a creature she can see within 20 feet. Whenever Lana'thel hits another creature with an attack roll and deals damage, the cursed creature takes the same damage. The curse ends when Lana'thel drops to 0 Hit Points.",
+                "uses": {
+                    "max": 1,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "pact-of-the-darkfallen",
+                "name": "Pact of the Darkfallen",
+                "category": "bonus_actions",
+                "text": "Lana'thel curses three creatures she can see within 120 feet. Coruscating beams of necrotic energy link the three creatures. At the start of each cursed creature's turn, it takes 21 (6d6) Necrotic damage. The curse ends when each cursed creature is within 5 feet of both other cursed creatures, or when Lana'thel drops to 0 Hit Points.",
+                "uses": {
+                    "max": 1,
+                    "reset": "long"
+                },
+                "action": {
+                    "damage": [
+                        {
+                            "dice": "6d6",
+                            "type": "necrotic"
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "umbral-strike",
+                "name": "Umbral Strike",
+                "category": "legendary_actions",
+                "text": "Lana'thel moves up to half her Speed, and she makes one Bloodthirsty Bite or Twilight Bloodbolt attack."
+            }
+        ],
+        "legendary_actions": {
+            "uses": 3
+        },
+        "spellcasting": [
+            {
+                "name": "Incite Terror (1/Day, Usable Only While Bloodied)",
+                "ability": "cha",
+                "dc": 21,
+                "text": "Lana'thel moves up to her Fly Speed without provoking Opportunity Attacks; casts Fear, requiring no spell components and using Charisma as the spellcasting ability (spell save DC 21); and makes three Twilight Bloodbolt attacks.",
+                "display_as": "actions",
+                "hidden": [
+                    "daily"
+                ],
+                "groups": [
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "spells": [
+                            {
+                                "spell": "fear-xphb"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Hunger of Hadar (1/Day)",
+                "ability": "cha",
+                "dc": 21,
+                "text": "Lana'thel casts Hunger of Hadar (level 5 version), requiring no spell components or Concentration and using Charisma as the spellcasting ability (spell save DC 21). The spell ends when Lana'thel has the Incapacitated condition.",
+                "display_as": "bonus_actions",
+                "hidden": [
+                    "daily"
+                ],
+                "groups": [
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "spells": [
+                            {
+                                "spell": "hunger-of-hadar-xphb",
+                                "note": "(level 5 version)"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Dominate Prey",
+                "ability": "cha",
+                "dc": 21,
+                "text": "Lana'thel casts Dominate Monster, requiring no spell components and using Charisma as the spellcasting ability (spell save DC 21). Lana'thel can't take this action again until the start of her next turn.",
+                "display_as": "legendary_actions",
+                "hidden": [
+                    "legendary"
+                ],
+                "groups": [
+                    {
+                        "how": "legendary",
+                        "uses": 1,
+                        "spells": [
+                            {
+                                "spell": "dominate-monster-xphb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "necrotic",
+                "slashing",
+                "psychic",
+                "acid",
+                "cold"
+            ],
+            "conditions_inflicted": [
+                "frightened",
+                "blinded",
+                "charmed"
+            ],
+            "saves_forced": [
+                "dex",
+                "wis"
+            ],
+            "senses": [
+                "blindsight"
+            ],
+            "movement": [
+                "fly",
+                "climb",
+                "hover"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "legendary_resistances",
+                "sunlight_sensitivity"
+            ],
+            "misc": [
+                "area_of_effect",
+                "hit_point_reduction",
+                "melee_attack",
+                "ranged_attack",
+                "reach"
+            ],
+            "languages": [
+                "common"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "deathbringer-saurfang-icc",
+        "kind": "monster",
+        "name": "Deathbringer Saurfang",
+        "source": "ICC",
+        "edition": "one",
+        "tags": [
+            "Legendary Resistances",
+            "Magic Resistance"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "undead",
+            "tags": [
+                "death knight"
+            ]
+        },
+        "alignment": [
+            "lawful evil"
+        ],
+        "ac": [
+            {
+                "value": 20
+            }
+        ],
+        "hp": {
+            "average": 266,
+            "formula": "28d8 + 140"
+        },
+        "speed": {
+            "walk": 40
+        },
+        "abilities": {
+            "str": 23,
+            "dex": 11,
+            "con": 20,
+            "int": 12,
+            "wis": 16,
+            "cha": 22
+        },
+        "saves": {
+            "dex": 7,
+            "wis": 10
+        },
+        "senses": {
+            "darkvision": 120
+        },
+        "passive_perception": 13,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "cold",
+                    "necrotic",
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "exhaustion",
+                    "frightened",
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "Common (WoW)",
+            "Forsaken",
+            "Orcish"
+        ],
+        "cr": {
+            "cr": "21",
+            "xp": 33000,
+            "pb": 7
+        },
+        "initiative": {
+            "bonus": 7
+        },
+        "features": [
+            {
+                "id": "legendary-resistance",
+                "name": "Legendary Resistance",
+                "category": "traits",
+                "text": "If Saurfang fails a saving throw, he can choose to succeed instead.",
+                "uses": {
+                    "max": 4,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "Saurfang has Advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Saurfang makes three Bloodrune Blade attacks."
+            },
+            {
+                "id": "bloodrune-blade",
+                "name": "Bloodrune Blade",
+                "category": "actions",
+                "text": "Melee Attack Roll: +13, reach 5 ft. Hit: 13 (2d6 + 6) Slashing damage plus 4 (1d8) Necrotic damage. The first time during his turn that Saurfang hits a creature with this attack, the creature takes an extra 22 (5d8) Necrotic damage, and Saurfang regains 12 (5d4) Hit Points.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 13,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 6,
+                                "type": "slashing"
+                            },
+                            {
+                                "dice": "1d8",
+                                "type": "necrotic"
+                            },
+                            {
+                                "dice": "5d8",
+                                "type": "necrotic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "boiling-blood",
+                "name": "Boiling Blood",
+                "category": "actions",
+                "text": "Constitution Saving Throw: DC 21, one creature Saurfang can see within 120 feet. Failure: 65 (10d12) Necrotic damage, and the target gains 1 Exhaustion level. Success: Half damage only.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "save": {
+                        "ability": "con",
+                        "dc": 21,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "10d12",
+                                "type": "necrotic"
+                            }
+                        ],
+                        "conditions": [
+                            "exhaustion"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "mark-of-the-fallen-champion-1-day-usable-only-while-bloodied",
+                "name": "Mark of the Fallen Champion (1/Day; Usable Only While Bloodied)",
+                "category": "bonus_actions",
+                "text": "Wisdom Saving Throw: DC 21, one creature Saurfang can see within 120 feet. Failure: The target is cursed for 24 hours or until Saurfang dies. While cursed, the target takes 13 (2d12) Necrotic damage whenever Saurfang hits a creature with an attack roll. If the target is reduced to 0 Hit Points while cursed, Saurfang regains 13 (2d12) Hit Points.",
+                "action": {
+                    "save": {
+                        "ability": "wis",
+                        "dc": 21,
+                        "on_success": "none",
+                        "damage": [
+                            {
+                                "dice": "2d12",
+                                "type": "necrotic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "parry",
+                "name": "Parry",
+                "category": "reactions",
+                "text": "Trigger: Saurfang is hit by a melee attack roll while holding a weapon. Response: Saurfang adds 6 to his AC against that attack, possibly causing it to miss."
+            },
+            {
+                "id": "blood-nova",
+                "name": "Blood Nova",
+                "category": "legendary_actions",
+                "text": "Constitution Saving Throw: DC 21, one creature Saurfang can see within 120 feet. Failure: 26 (4d12) Necrotic damage, and each creature in a 30-foot Emanation originating from the target takes the same damage. Success: Half damage only. Failure or Success: Saurfang can't take this action again until the start of his next turn.",
+                "action": {
+                    "area": "30-foot emanation",
+                    "save": {
+                        "ability": "con",
+                        "dc": 21,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "4d12",
+                                "type": "necrotic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "frenzied-strike-usable-only-while-bloodied",
+                "name": "Frenzied Strike (Usable Only While Bloodied)",
+                "category": "legendary_actions",
+                "text": "Saurfang moves up to his Speed and makes two Bloodrune Blade attacks."
+            },
+            {
+                "id": "lunge",
+                "name": "Lunge",
+                "category": "legendary_actions",
+                "text": "Saurfang moves up to half his Speed and makes one Bloodrune Blade attack."
+            }
+        ],
+        "legendary_actions": {
+            "uses": 3
+        },
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "cha",
+                "dc": 21,
+                "text": "Saurfang casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save DC 21):",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "detect-magic-xphb"
+                            },
+                            {
+                                "spell": "phantom-steed-xphb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 2,
+                        "per": "day",
+                        "spells": [
+                            {
+                                "spell": "dispel-magic-xphb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "necrotic",
+                "slashing"
+            ],
+            "conditions_inflicted": [
+                "exhaustion"
+            ],
+            "saves_forced": [
+                "con",
+                "wis"
+            ],
+            "senses": [
+                "superior_darkvision"
+            ],
+            "actions": [
+                "multiattack",
+                "parry"
+            ],
+            "traits": [
+                "legendary_resistances",
+                "magic_resistance"
+            ],
+            "misc": [
+                "area_of_effect",
+                "curse",
+                "melee_attack"
+            ],
+            "languages": [
+                "common"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "deathspeaker-high-priest-icc",
+        "kind": "monster",
+        "name": "Deathspeaker High Priest",
+        "source": "ICC",
+        "edition": "one",
+        "size": [
+            "huge"
+        ],
+        "creature_type": {
+            "type": "undead",
+            "tags": [
+                "cleric",
+                "nerubian"
+            ]
+        },
+        "alignment": [
+            "lawful evil"
+        ],
+        "ac": [
+            {
+                "value": 17
+            }
+        ],
+        "hp": {
+            "average": 180,
+            "formula": "19d12 + 57"
+        },
+        "speed": {
+            "walk": 30,
+            "climb": 30
+        },
+        "abilities": {
+            "str": 12,
+            "dex": 20,
+            "con": 16,
+            "int": 12,
+            "wis": 22,
+            "cha": 10
+        },
+        "saves": {
+            "wis": 10,
+            "cha": 4
+        },
+        "skills": {
+            "perception": 10,
+            "religion": 9
+        },
+        "senses": {
+            "darkvision": 120
+        },
+        "passive_perception": 20,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "necrotic",
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "exhaustion",
+                    "frightened",
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "Common (WoW)",
+            "Forsaken",
+            "Nerubian",
+            "Orcish"
+        ],
+        "cr": {
+            "cr": "10",
+            "xp": 5900,
+            "pb": 4
+        },
+        "initiative": {
+            "bonus": 5
+        },
+        "features": [
+            {
+                "id": "aura-of-darkness",
+                "name": "Aura of Darkness",
+                "category": "traits",
+                "text": "The priest is surrounded by an aura of shadow while it doesn't have the Incapacitated condition. At the end of each of the priest's turns, each creature in a 15-foot Emanation originating from the priest takes 11 (2d10) Psychic damage. The Emanation is Dim Light.",
+                "action": {
+                    "damage": [
+                        {
+                            "dice": "2d10",
+                            "type": "psychic"
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The priest makes two Shadow Blast attacks."
+            },
+            {
+                "id": "shadow-blast",
+                "name": "Shadow Blast",
+                "category": "actions",
+                "text": "Melee or Ranged Attack Roll: +10, reach 10 ft. or range 120 ft. Hit: 17 (2d10 + 6) Psychic damage.",
+                "action": {
+                    "range": "reach 10 ft. or range 120 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 10,
+                        "damage": [
+                            {
+                                "dice": "2d10",
+                                "bonus": 6,
+                                "type": "psychic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "dark-reckoning",
+                "name": "Dark Reckoning",
+                "category": "actions",
+                "text": "Ranged Attack Roll: +10, range 120 ft. Hit: 33 (6d10) Necrotic damage, and the target is cursed. At the start of the priest's next turn, the cursed target erupts with shadow energy, dealing 11 (2d10) Psychic damage to each creature in a 10-foot Emanation originating from and including the cursed target, and the curse ends.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "range": "range 120 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 10,
+                        "damage": [
+                            {
+                                "dice": "6d10",
+                                "type": "necrotic"
+                            },
+                            {
+                                "dice": "2d10",
+                                "type": "psychic",
+                                "condition": "to each creature in a 10-foot Emanation originating from and including the cursed target, and the curse ends"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "necrotic",
+                "psychic"
+            ],
+            "senses": [
+                "superior_darkvision"
+            ],
+            "movement": [
+                "climb"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_attack",
+                "ranged_attack",
+                "reach"
+            ],
+            "languages": [
+                "common"
+            ]
+        }
+    },
+    {
+        "id": "festergut-icc",
+        "kind": "monster",
+        "name": "Festergut",
+        "source": "ICC",
+        "edition": "one",
+        "tags": [
+            "Legendary Resistances"
+        ],
+        "size": [
+            "huge"
+        ],
+        "creature_type": {
+            "type": "construct"
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "ac": [
+            {
+                "value": 14
+            }
+        ],
+        "hp": {
+            "average": 207,
+            "formula": "18d12 + 90"
+        },
+        "speed": {
+            "walk": 40
+        },
+        "abilities": {
+            "str": 21,
+            "dex": 13,
+            "con": 20,
+            "int": 8,
+            "wis": 12,
+            "cha": 10
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 11,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "lightning",
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "exhaustion",
+                    "frightened",
+                    "paralyzed",
+                    "petrified",
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "Common (WoW)",
+            "Forsaken",
+            "Orcish"
+        ],
+        "cr": {
+            "cr": "17",
+            "xp": 18000,
+            "pb": 6
+        },
+        "initiative": {
+            "bonus": 7
+        },
+        "features": [
+            {
+                "id": "gaseous-blight",
+                "name": "Gaseous Blight",
+                "category": "traits",
+                "text": "Festergut fills the room with toxic rot. Constitution Saving Throw: DC 19, each creature that starts its turn in the room. Failure: 21 (6d6) Poison damage.",
+                "action": {
+                    "save": {
+                        "ability": "con",
+                        "dc": 19,
+                        "on_success": "none",
+                        "damage": [
+                            {
+                                "dice": "6d6",
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "legendary-resistance",
+                "name": "Legendary Resistance",
+                "category": "traits",
+                "text": "If Festergut fails a saving throw, it can choose to succeed instead.",
+                "uses": {
+                    "max": 4,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Festergut makes two attacks, using Claw or Gastric Bloat in any combination."
+            },
+            {
+                "id": "claw",
+                "name": "Claw",
+                "category": "actions",
+                "text": "Melee Attack Roll: +11, reach 10 ft. Hit: 38 (6d10 + 5) Slashing damage plus 14 (4d6) Necrotic damage.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 11,
+                        "damage": [
+                            {
+                                "dice": "6d10",
+                                "bonus": 5,
+                                "type": "slashing"
+                            },
+                            {
+                                "dice": "4d6",
+                                "type": "necrotic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "gastric-bloat",
+                "name": "Gastric Bloat",
+                "category": "actions",
+                "text": "Ranged Attack Roll: +11, range 120 ft. Hit: 39 (6d12) Acid damage, and the target gains 1 Exhaustion level. If the target dies from Exhaustion, it explodes, creating the following effect: Dexterity Saving Throw: DC 19, each creature in a 10-foot Emanation originating from the dead creature. Failure: 33 (6d10) Acid damage. Success: Half damage.\n\nExhaustion levels gained from Gastric Bloat vanish when Festergut dies.",
+                "action": {
+                    "range": "range 120 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 11,
+                        "damage": [
+                            {
+                                "dice": "6d12",
+                                "type": "acid"
+                            }
+                        ]
+                    },
+                    "save": {
+                        "ability": "dex",
+                        "dc": 19,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "6d10",
+                                "type": "acid"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "vile-gas",
+                "name": "Vile Gas",
+                "category": "actions",
+                "text": "Constitution Saving Throw: DC 19, each creature in a 20-foot-radius Sphere centered on a point Festergut can see within 120 feet. Failure: 35 (10d6) Poison damage, and the target has the Poisoned condition until the end of its next turn. While Poisoned, the target has the Stunned condition as it vomits uncontrollably. Success: Half damage, and the target has the Poisoned condition until the end of its next turn.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "area": "20-foot sphere",
+                    "save": {
+                        "ability": "con",
+                        "dc": 19,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "10d6",
+                                "type": "poison"
+                            }
+                        ],
+                        "conditions": [
+                            "poisoned",
+                            "stunned"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "inhale-blight",
+                "name": "Inhale Blight",
+                "category": "bonus_actions",
+                "text": "Festergut inhales toxic rot, empowering itself and diminishing the potency of its Gaseous Blight. It regains 19 (3d12) Hit Points and has Advantage on attack rolls and saving throws until the end of its next turn. The damage dealt by its Gaseous Blight trait is reduced by 11 (3d6)."
+            },
+            {
+                "id": "pungent-blight-requires-2-uses-of-inhale-blight",
+                "name": "Pungent Blight (Requires 2 Uses of Inhale Blight)",
+                "category": "bonus_actions",
+                "text": "If Festergut has used Inhale Blight twice, it violently releases the blight, creating the following effect and returning its Gaseous Blight to full strength. Constitution Saving Throw: DC 19, each creature in a 40-foot Emanation originating from Festergut. Failure: 35 (10d6) Poison damage. Success: Half damage.",
+                "action": {
+                    "area": "40-foot emanation",
+                    "save": {
+                        "ability": "con",
+                        "dc": 19,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "10d6",
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "acid",
+                "poison",
+                "necrotic",
+                "slashing"
+            ],
+            "conditions_inflicted": [
+                "exhaustion",
+                "poisoned",
+                "stunned"
+            ],
+            "saves_forced": [
+                "con",
+                "dex"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "legendary_resistances"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_attack",
+                "ranged_attack",
+                "reach"
+            ],
+            "languages": [
+                "common"
+            ]
+        }
+    },
+    {
+        "id": "frost-wyrm-icc",
+        "kind": "monster",
+        "name": "Frost Wyrm",
+        "source": "ICC",
+        "edition": "one",
+        "tags": [
+            "Legendary Resistances",
+            "Magic Resistance"
+        ],
+        "size": [
+            "huge"
+        ],
+        "creature_type": {
+            "type": "undead"
+        },
+        "alignment": [
+            "lawful evil"
+        ],
+        "ac": [
+            {
+                "value": 20
+            }
+        ],
+        "hp": {
+            "average": 162,
+            "formula": "13d12 + 78"
+        },
+        "speed": {
+            "walk": 40,
+            "fly": 80,
+            "burrow": 30
+        },
+        "abilities": {
+            "str": 25,
+            "dex": 10,
+            "con": 23,
+            "int": 19,
+            "wis": 15,
+            "cha": 21
+        },
+        "saves": {
+            "dex": 6,
+            "wis": 8
+        },
+        "skills": {
+            "perception": 14,
+            "stealth": 6
+        },
+        "senses": {
+            "darkvision": 120,
+            "blindsight": 60
+        },
+        "passive_perception": 24,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "cold",
+                    "necrotic",
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "exhaustion",
+                    "frightened",
+                    "paralyzed",
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "Common (WoW)",
+            "Draconic (WoW)",
+            "Forsaken",
+            "Orcish"
+        ],
+        "cr": {
+            "cr": "17",
+            "xp": 18000,
+            "pb": 6
+        },
+        "initiative": {
+            "bonus": 12
+        },
+        "features": [
+            {
+                "id": "legendary-resistance",
+                "name": "Legendary Resistance",
+                "category": "traits",
+                "text": "If the wyrm fails a saving throw, it can choose to succeed instead.",
+                "uses": {
+                    "max": 3,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "life-suppression",
+                "name": "Life Suppression",
+                "category": "traits",
+                "text": "Creatures within 60 feet of the wyrm can't regain Hit Points."
+            },
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The wyrm has Advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The wyrm makes three attacks, using Rend or Icy Blast in any combination."
+            },
+            {
+                "id": "rend",
+                "name": "Rend",
+                "category": "actions",
+                "text": "Melee Attack Roll: +13, reach 10 ft. Hit: 18 (2d10 + 7) Slashing damage plus 4 (1d8) Cold damage.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 13,
+                        "damage": [
+                            {
+                                "dice": "2d10",
+                                "bonus": 7,
+                                "type": "slashing"
+                            },
+                            {
+                                "dice": "1d8",
+                                "type": "cold"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "icy-blast",
+                "name": "Icy Blast",
+                "category": "actions",
+                "text": "Ranged Attack Roll: +11, range 60 ft. Hit: 21 (6d6) Cold damage, and the target's Speed is reduced by 10 feet until the end of the wyrm's next turn.",
+                "action": {
+                    "range": "range 60 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 11,
+                        "damage": [
+                            {
+                                "dice": "6d6",
+                                "type": "cold"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "frost-breath",
+                "name": "Frost Breath",
+                "category": "actions",
+                "text": "Constitution Saving Throw: DC 20, each creature in a 60-foot Cone. Failure: 39 (6d12) Cold damage, and until the end of the target's next turn, the target's Speed is halved; the target can't take Reactions; and it can take either an action or a Bonus Action on its turn, not both. Success: Half damage only.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "area": "60-foot cone",
+                    "save": {
+                        "ability": "con",
+                        "dc": 20,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "6d12",
+                                "type": "cold"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "pounce",
+                "name": "Pounce",
+                "category": "legendary_actions",
+                "text": "The wyrm moves up to half its Speed, and it makes one Rend or Icy Blast attack."
+            },
+            {
+                "id": "terrifying-roar",
+                "name": "Terrifying Roar",
+                "category": "legendary_actions",
+                "text": "Wisdom Saving Throw: DC 19, each creature in a 30-foot Emanation originating from the wyrm. Failure: 11 (2d10) Psychic damage, and the target has the Frightened condition until the end of its next turn. Failure or Success: The wyrm can't take this action again until the start of its next turn.",
+                "action": {
+                    "area": "30-foot emanation",
+                    "save": {
+                        "ability": "wis",
+                        "dc": 19,
+                        "on_success": "none",
+                        "damage": [
+                            {
+                                "dice": "2d10",
+                                "type": "psychic"
+                            }
+                        ],
+                        "conditions": [
+                            "frightened"
+                        ]
+                    }
+                }
+            }
+        ],
+        "legendary_actions": {
+            "uses": 3
+        },
+        "filters": {
+            "damage_dealt": [
+                "cold",
+                "slashing",
+                "psychic"
+            ],
+            "conditions_inflicted": [
+                "frightened"
+            ],
+            "saves_forced": [
+                "con",
+                "wis"
+            ],
+            "senses": [
+                "blindsight",
+                "superior_darkvision"
+            ],
+            "movement": [
+                "fly",
+                "burrow"
+            ],
+            "actions": [
+                "breath_weapon",
+                "multiattack"
+            ],
+            "traits": [
+                "legendary_resistances",
+                "magic_resistance"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_attack",
+                "ranged_attack",
+                "reach"
+            ],
+            "languages": [
+                "common",
+                "draconic"
+            ]
+        }
+    },
+    {
+        "id": "lady-deathwhisper-icc",
+        "kind": "monster",
+        "name": "Lady Deathwhisper",
+        "source": "ICC",
+        "edition": "one",
+        "tags": [
+            "Legendary Resistances"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "undead",
+            "tags": [
+                "lich",
+                "wizard"
+            ]
+        },
+        "alignment": [
+            "lawful evil"
+        ],
+        "ac": [
+            {
+                "value": 20
+            }
+        ],
+        "hp": {
+            "average": 150,
+            "formula": "20d10 + 40"
+        },
+        "speed": {
+            "walk": 5,
+            "fly": 40
+        },
+        "abilities": {
+            "str": 11,
+            "dex": 16,
+            "con": 14,
+            "int": 23,
+            "wis": 14,
+            "cha": 22
+        },
+        "saves": {
+            "con": 9,
+            "int": 13,
+            "wis": 9
+        },
+        "skills": {
+            "arcana": 20,
+            "history": 13,
+            "insight": 9,
+            "perception": 16,
+            "religion": 20
+        },
+        "senses": {
+            "truesight": 120
+        },
+        "passive_perception": 26,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "cold",
+                    "lightning"
+                ]
+            },
+            "immune": {
+                "types": [
+                    "necrotic",
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "exhaustion",
+                    "frightened",
+                    "paralyzed",
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "Common (WoW)",
+            "Forsaken",
+            "Orcish"
+        ],
+        "cr": {
+            "cr": "21",
+            "xp": 33000,
+            "pb": 7
+        },
+        "initiative": {
+            "bonus": 10
+        },
+        "features": [
+            {
+                "id": "legendary-resistance",
+                "name": "Legendary Resistance",
+                "category": "traits",
+                "text": "If Deathwhisper fails a saving throw, she can choose to succeed instead.",
+                "uses": {
+                    "max": 4,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "mana-shield",
+                "name": "Mana Shield",
+                "category": "traits",
+                "text": "Deathwhisper is surrounded by a magical shield of force with 150 Hit Points. Whenever she would take damage, the shield takes the damage instead (after applying her Resistances and Immunities). If damage reduces the shield to 0 HP, Deathwhisper takes any remaining damage. Damage taken by the shield doesn't affect Deathwhisper's Concentration. Deathwhisper restores the shield to its Hit Point maximum whenever she finishes a Short or Long Rest."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "If her Mana Shield is active, Deathwhisper makes three Shadow Bolt attacks. Otherwise, she makes three attacks, using Paralyzing Touch or Frostbolt in any combination."
+            },
+            {
+                "id": "paralyzing-touch",
+                "name": "Paralyzing Touch",
+                "category": "actions",
+                "text": "Melee Attack Roll: +13, reach 10 ft. Hit: 16 (3d6 + 6) Cold damage, and the target has the Paralyzed condition until the start of Deathwhisper's next turn.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 13,
+                        "damage": [
+                            {
+                                "dice": "3d6",
+                                "bonus": 6,
+                                "type": "cold"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "shadow-bolt",
+                "name": "Shadow Bolt",
+                "category": "actions",
+                "text": "Melee or Ranged Attack Roll: +13, reach 10 ft. or range 120 ft. Hit: 25 (3d12 + 6) Psychic damage.",
+                "action": {
+                    "range": "reach 10 ft. or range 120 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 13,
+                        "damage": [
+                            {
+                                "dice": "3d12",
+                                "bonus": 6,
+                                "type": "psychic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "frostbolt",
+                "name": "Frostbolt",
+                "category": "actions",
+                "text": "Ranged Attack Roll: +13, range 120 ft. Hit: 19 (2d12 + 6) Cold damage, and the target has the Restrained condition until the start of Deathwhisper's next turn.",
+                "action": {
+                    "range": "range 120 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 13,
+                        "damage": [
+                            {
+                                "dice": "2d12",
+                                "bonus": 6,
+                                "type": "cold"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "death-and-decay",
+                "name": "Death and Decay",
+                "category": "legendary_actions",
+                "text": "Wisdom Saving Throw: DC 21, each creature in a 20-foot-radius Sphere centered on a point Deathwhisper can see within 120 feet. Failure: 7 (2d6) Necrotic damage, and the target is cursed until the end of Deathwhisper's next turn. A cursed creature takes an extra 1d6 Necrotic damage each time it takes damage from Deathwhisper's spell or attack roll. Success: Half damage only. Failure or Success: Deathwhisper can't take this action again until the start of her next turn.",
+                "action": {
+                    "area": "20-foot sphere",
+                    "save": {
+                        "ability": "wis",
+                        "dc": 21,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "type": "necrotic"
+                            },
+                            {
+                                "dice": "1d6",
+                                "type": "necrotic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "deathly-teleport-requires-no-mana-shield",
+                "name": "Deathly Teleport (Requires No Mana Shield)",
+                "category": "legendary_actions",
+                "text": "Deathwhisper teleports up to 60 feet to an unoccupied space she can see, and each creature within 10 feet of the space she left takes 11 (2d10) Necrotic damage.",
+                "action": {
+                    "damage": [
+                        {
+                            "dice": "2d10",
+                            "type": "necrotic"
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "shadow-strike",
+                "name": "Shadow Strike",
+                "category": "legendary_actions",
+                "text": "Deathwhisper makes one Shadow Bolt attack."
+            }
+        ],
+        "legendary_actions": {
+            "uses": 3
+        },
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "int",
+                "dc": 21,
+                "text": "Deathwhisper casts one of the following spells, using Intelligence as the spellcasting ability (spell save DC 21):",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "detect-magic-xphb"
+                            },
+                            {
+                                "spell": "detect-thoughts-xphb"
+                            },
+                            {
+                                "spell": "dispel-magic-xphb"
+                            },
+                            {
+                                "spell": "invisibility-xphb"
+                            },
+                            {
+                                "spell": "mage-hand-xphb"
+                            },
+                            {
+                                "spell": "prestidigitation-xphb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "spells": [
+                            {
+                                "spell": "scrying-xphb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 2,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "animate-dead-xphb"
+                            },
+                            {
+                                "spell": "dimension-door-xphb"
+                            },
+                            {
+                                "spell": "plane-shift-xphb"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Dominate Mind (Recharge 5–6)",
+                "ability": "int",
+                "text": "Deathwhisper casts Dominate Monster, using the same spellcasting ability as Spellcasting.",
+                "display_as": "bonus_actions",
+                "hidden": [
+                    "recharge"
+                ],
+                "groups": [
+                    {
+                        "how": "recharge",
+                        "uses": 5,
+                        "spells": [
+                            {
+                                "spell": "dominate-monster-xphb"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Protective Magic",
+                "ability": "int",
+                "text": "Deathwhisper casts Counterspell or Shield in response to the spell's trigger, using the same spellcasting ability as Spellcasting.",
+                "display_as": "reactions",
+                "hidden": [
+                    "will"
+                ],
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "counterspell-xphb"
+                            },
+                            {
+                                "spell": "shield-xphb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "cold",
+                "necrotic",
+                "psychic",
+                "force"
+            ],
+            "conditions_inflicted": [
+                "paralyzed",
+                "restrained",
+                "charmed",
+                "invisible"
+            ],
+            "saves_forced": [
+                "wis",
+                "con"
+            ],
+            "senses": [
+                "truesight"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "legendary_resistances"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_attack",
+                "ranged_attack",
+                "reach"
+            ],
+            "languages": [
+                "common"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "lord-marrowgar-icc",
+        "kind": "monster",
+        "name": "Lord Marrowgar",
+        "source": "ICC",
+        "edition": "one",
+        "tags": [
+            "Legendary Resistances"
+        ],
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "undead"
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "ac": [
+            {
+                "value": 21
+            }
+        ],
+        "hp": {
+            "average": 345,
+            "formula": "30d10 + 180"
+        },
+        "speed": {
+            "walk": 5,
+            "fly": 40
+        },
+        "abilities": {
+            "str": 24,
+            "dex": 21,
+            "con": 23,
+            "int": 14,
+            "wis": 15,
+            "cha": 16
+        },
+        "saves": {
+            "wis": 9,
+            "cha": 10
+        },
+        "skills": {
+            "perception": 16
+        },
+        "senses": {
+            "truesight": 60
+        },
+        "passive_perception": 26,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "piercing"
+                ]
+            },
+            "immune": {
+                "types": [
+                    "cold",
+                    "necrotic",
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "blinded",
+                    "charmed",
+                    "deafened",
+                    "exhaustion",
+                    "frightened",
+                    "paralyzed",
+                    "poisoned",
+                    "stunned",
+                    "unconscious"
+                ]
+            }
+        },
+        "languages": [
+            "Common (WoW)",
+            "Forsaken",
+            "Orcish"
+        ],
+        "cr": {
+            "cr": "21",
+            "xp": 33000,
+            "pb": 7
+        },
+        "initiative": {
+            "bonus": 12
+        },
+        "features": [
+            {
+                "id": "bone-storm",
+                "name": "Bone Storm",
+                "category": "traits",
+                "text": "At the end of each of Marrowgar's turns, each creature in a 10-foot Emanation originating from Marrowgar takes 10 (3d6) Slashing damage.",
+                "action": {
+                    "damage": [
+                        {
+                            "dice": "3d6",
+                            "type": "slashing"
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "legendary-resistance",
+                "name": "Legendary Resistance",
+                "category": "traits",
+                "text": "If Marrowgar fails a saving throw, it can choose to succeed instead.",
+                "uses": {
+                    "max": 4,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Marrowgar makes one Axe of the Frozen Throne attack and two Bone Slice attacks."
+            },
+            {
+                "id": "axe-of-the-frozen-throne",
+                "name": "Axe of the Frozen Throne",
+                "category": "actions",
+                "text": "Melee Attack Roll: +14, reach 10 ft. Hit: 13 (1d12 + 7) Slashing damage plus 6 (1d12) Cold damage, and the target has the Prone condition.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 14,
+                        "damage": [
+                            {
+                                "dice": "1d12",
+                                "bonus": 7,
+                                "type": "slashing"
+                            },
+                            {
+                                "dice": "1d12",
+                                "type": "cold"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "bone-slice",
+                "name": "Bone Slice",
+                "category": "actions",
+                "text": "Melee Attack Roll: +14, reach 20 ft. Hit: 18 (2d10 + 7) Slashing damage.",
+                "action": {
+                    "range": "reach 20 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 14,
+                        "damage": [
+                            {
+                                "dice": "2d10",
+                                "bonus": 7,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "bone-spike-graveyard",
+                "name": "Bone Spike Graveyard",
+                "category": "actions",
+                "text": "Dexterity Saving Throw: DC 21, each creature in a 60-foot Emanation originating from Marrowgar. Failure: 14 (4d6) Piercing damage, and the target has the Restrained condition as it is trapped inside a bone spike. Success: Half damage only.\n\nA Restrained creature can be freed by destroying the bone spike, which is a Large object with AC 17; HP 25; and Immunity to Cold, Necrotic, Poison, and Psychic damage.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "area": "60-foot emanation",
+                    "save": {
+                        "ability": "dex",
+                        "dc": 21,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "4d6",
+                                "type": "piercing"
+                            }
+                        ],
+                        "conditions": [
+                            "restrained"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "coldflame",
+                "name": "Coldflame",
+                "category": "legendary_actions",
+                "text": "Dexterity Saving Throw: DC 21, each creature in a 300-foot-long, 10-foot-wide Line. Failure: 16 (3d10) Cold damage. Success: Half damage. Failure or Success: Marrowgar can't take this action again until the start of its next turn.",
+                "action": {
+                    "area": "10-foot line",
+                    "save": {
+                        "ability": "dex",
+                        "dc": 21,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "3d10",
+                                "type": "cold"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "strike",
+                "name": "Strike",
+                "category": "legendary_actions",
+                "text": "Marrowgar makes one Axe of the Frozen Throne attack."
+            }
+        ],
+        "legendary_actions": {
+            "uses": 3
+        },
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "cold",
+                "piercing",
+                "slashing"
+            ],
+            "conditions_inflicted": [
+                "prone",
+                "restrained"
+            ],
+            "saves_forced": [
+                "dex"
+            ],
+            "senses": [
+                "truesight"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "legendary_resistances"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_attack",
+                "reach"
+            ],
+            "languages": [
+                "common"
+            ]
+        }
+    },
+    {
+        "id": "plague-dog-icc",
+        "kind": "monster",
+        "name": "Plague-Dog",
+        "source": "ICC",
+        "edition": "one",
+        "tags": [
+            "Pack Tactics"
+        ],
+        "size": [
+            "huge"
+        ],
+        "creature_type": {
+            "type": "construct"
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "ac": [
+            {
+                "value": 16
+            }
+        ],
+        "hp": {
+            "average": 189,
+            "formula": "18d12 + 72"
+        },
+        "speed": {
+            "walk": 50
+        },
+        "abilities": {
+            "str": 22,
+            "dex": 14,
+            "con": 19,
+            "int": 3,
+            "wis": 12,
+            "cha": 10
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 11,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "lightning",
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "exhaustion",
+                    "frightened",
+                    "paralyzed",
+                    "petrified",
+                    "poisoned"
+                ]
+            }
+        },
+        "cr": {
+            "cr": "14",
+            "xp": 11500,
+            "pb": 5
+        },
+        "initiative": {
+            "bonus": 7
+        },
+        "features": [
+            {
+                "id": "pack-tactics",
+                "name": "Pack Tactics",
+                "category": "traits",
+                "text": "The plague-dog has Advantage on an attack roll against a creature if at least one of the plague-dog's allies is within 5 feet of the creature and the ally doesn't have the Incapacitated condition."
+            },
+            {
+                "id": "plague-stench",
+                "name": "Plague Stench",
+                "category": "traits",
+                "text": "Constitution Saving Throw: DC 17, any creature that starts its turn in a 10-foot Emanation originating from the plague-dog. Failure: 19 (3d12) Poison damage, and the target has the Poisoned condition until the start of its next turn.",
+                "action": {
+                    "area": "10-foot emanation",
+                    "save": {
+                        "ability": "con",
+                        "dc": 17,
+                        "on_success": "none",
+                        "damage": [
+                            {
+                                "dice": "3d12",
+                                "type": "poison"
+                            }
+                        ],
+                        "conditions": [
+                            "poisoned"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The plague-dog makes two Rend attacks."
+            },
+            {
+                "id": "rend",
+                "name": "Rend",
+                "category": "actions",
+                "text": "Melee Attack Roll: +11, reach 10 ft. Hit: 20 (4d6 + 6) Slashing damage plus 14 (4d6) Necrotic damage.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 11,
+                        "damage": [
+                            {
+                                "dice": "4d6",
+                                "bonus": 6,
+                                "type": "slashing"
+                            },
+                            {
+                                "dice": "4d6",
+                                "type": "necrotic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "decimate",
+                "name": "Decimate",
+                "category": "actions",
+                "text": "Constitution Saving Throw: DC 17, each creature in a 30-foot Emanation originating from the plague-dog. Failure: 61 (7d8 + 30) Necrotic damage. Success: Half damage.\n\nA Humanoid killed by this action rises at the start of the plague-dog's next turn as a Zombie that is an ally to the plague-dog and its allies.",
+                "uses": {
+                    "max": 1,
+                    "reset": "long"
+                },
+                "action": {
+                    "area": "30-foot emanation",
+                    "save": {
+                        "ability": "con",
+                        "dc": 17,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "7d8",
+                                "bonus": 30,
+                                "type": "necrotic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "eerie-howl",
+                "name": "Eerie Howl",
+                "category": "bonus_actions",
+                "text": "Wisdom Saving Throw: DC 17, each creature in a 60-foot Emanation originating from the plague-dog. Failure: 14 (4d6) Psychic damage, and the target has the Frightened condition. At the end of each of its turns, the target repeats the save, ending the effect on itself on a success. After 1 minute, it succeeds automatically. While Frightened, the target can do only one of the following on each of its turns: move, take an action, or take a Bonus Action. Success: Half damage only.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "area": "60-foot emanation",
+                    "save": {
+                        "ability": "wis",
+                        "dc": 17,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "4d6",
+                                "type": "psychic"
+                            }
+                        ],
+                        "conditions": [
+                            "frightened"
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "poison",
+                "necrotic",
+                "slashing",
+                "psychic"
+            ],
+            "conditions_inflicted": [
+                "frightened",
+                "poisoned"
+            ],
+            "saves_forced": [
+                "con",
+                "wis"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "pack_tactics"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_attack",
+                "reach"
+            ]
+        }
+    },
+    {
+        "id": "plagueworks-ooze-icc",
+        "kind": "monster",
+        "name": "Plagueworks Ooze",
+        "source": "ICC",
+        "edition": "one",
+        "tags": [
+            "Amorphous",
+            "Spider Climb"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "ooze"
+        },
+        "alignment": [
+            "unaligned"
+        ],
+        "ac": [
+            {
+                "value": 7
+            }
+        ],
+        "hp": {
+            "average": 67,
+            "formula": "9d8 + 27"
+        },
+        "speed": {
+            "walk": 20,
+            "climb": 20
+        },
+        "abilities": {
+            "str": 16,
+            "dex": 5,
+            "con": 16,
+            "int": 1,
+            "wis": 6,
+            "cha": 1
+        },
+        "senses": {
+            "blindsight": 60
+        },
+        "passive_perception": 8,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "acid",
+                    "cold",
+                    "lightning"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "deafened",
+                    "exhaustion",
+                    "frightened",
+                    "grappled",
+                    "prone",
+                    "restrained"
+                ]
+            }
+        },
+        "cr": {
+            "cr": "4",
+            "xp": 1100,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": -3
+        },
+        "features": [
+            {
+                "id": "amorphous",
+                "name": "Amorphous",
+                "category": "traits",
+                "text": "The ooze can move through a space as narrow as 1 inch without expending extra movement to do so."
+            },
+            {
+                "id": "corrosive-form",
+                "name": "Corrosive Form",
+                "category": "traits",
+                "text": "A creature that hits the ooze with a melee attack roll takes 4 (1d8) Acid damage. If the ooze has used its Merge action, the damage is increased by 4 (1d8) for each merged ooze beyond the first. Nonmagical ammunition is destroyed immediately after hitting the ooze and dealing any damage. Any nonmagical weapon takes a -1 cumulative penalty to attack rolls immediately after dealing damage to the ooze and coming into contact with it. The weapon is destroyed if the penalty reaches -5. The penalty can be removed by casting the Mending spell on the weapon.\n\nIn 1 minute, the ooze can eat through 2 feet of nonmagical wood or metal.",
+                "action": {
+                    "damage": [
+                        {
+                            "dice": "1d8",
+                            "type": "acid"
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "spider-climb",
+                "name": "Spider Climb",
+                "category": "traits",
+                "text": "The ooze can climb difficult surfaces, including along ceilings, without needing to make an ability check."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The ooze makes one Sticky Pseudopod attack and can make one additional Sticky Pseudopod attack for each size category it is larger than Medium (maximum of three additional attacks)."
+            },
+            {
+                "id": "sticky-pseudopod",
+                "name": "Sticky Pseudopod",
+                "category": "actions",
+                "text": "Melee Attack Roll: +5, reach 5 ft. Hit: 17 (4d6 + 3) Acid damage, and the target's Speed is reduced by 10 feet until the end of its next turn. Nonmagical armor worn by the target takes a -1 penalty to the AC it offers. The armor is destroyed if the penalty reduces its AC to 10. The penalty can be removed by casting the Mending spell on the armor.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 5,
+                        "damage": [
+                            {
+                                "dice": "4d6",
+                                "bonus": 3,
+                                "type": "acid"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "merge",
+                "name": "Merge",
+                "category": "actions",
+                "text": "The ooze merges with another Plagueworks Ooze within 5 feet of itself. The merged ooze's size increases by one category (from Medium to Large, Large to Huge, or Huge to Gargantuan [the maximum]), it acts on the Initiative count of the other ooze, and it has the combined Hit Points of both component oozes."
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "acid"
+            ],
+            "senses": [
+                "blindsight"
+            ],
+            "movement": [
+                "climb"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "amorphous",
+                "spider_climb"
+            ],
+            "misc": [
+                "melee_attack"
+            ]
+        }
+    },
+    {
+        "id": "prince-keleseth-icc",
+        "kind": "monster",
+        "name": "Prince Keleseth",
+        "source": "ICC",
+        "edition": "one",
+        "tags": [
+            "Legendary Resistances",
+            "Sunlight Sensitivity"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "undead",
+            "tags": [
+                "elf",
+                "vampire"
+            ]
+        },
+        "alignment": [
+            "lawful evil"
+        ],
+        "ac": [
+            {
+                "value": 16
+            }
+        ],
+        "hp": {
+            "average": 475,
+            "formula": "50d8 + 250"
+        },
+        "speed": {
+            "walk": 40,
+            "fly": 40,
+            "climb": 40,
+            "hover": true
+        },
+        "abilities": {
+            "str": 22,
+            "dex": 18,
+            "con": 20,
+            "int": 19,
+            "wis": 16,
+            "cha": 23
+        },
+        "saves": {
+            "str": 12,
+            "dex": 10,
+            "wis": 9,
+            "cha": 12
+        },
+        "skills": {
+            "arcana": 10,
+            "perception": 15,
+            "stealth": 10
+        },
+        "senses": {
+            "blindsight": 120
+        },
+        "passive_perception": 25,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "cold",
+                    "necrotic"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "exhaustion"
+                ]
+            }
+        },
+        "languages": [
+            "Common (WoW)",
+            "Forsaken",
+            "Orcish",
+            "Thalassian"
+        ],
+        "cr": {
+            "cr": "18",
+            "xp": 20000,
+            "pb": 6
+        },
+        "initiative": {
+            "bonus": 16
+        },
+        "features": [
+            {
+                "id": "invocation-of-blood",
+                "name": "Invocation of Blood",
+                "category": "traits",
+                "text": "At any time, one of the three vampires is under the Invocation of Blood (it starts on Prince Valanar). While under the Invocation of Blood, the vampire has Vulnerability to all damage and gains one additional Legendary Action use each round. At the end of each of Valanar's turns, the Invocation of Blood shifts to a different vampire. Roll 1d6: on a 1-2, it moves to Prince Keleseth; on a 3-4, it moves to Prince Taldaram; on a 5-6, it moves to Prince Valanar. If the result indicates the vampire currently under the Invocation, the Invocation doesn't move this turn."
+            },
+            {
+                "id": "legendary-resistance",
+                "name": "Legendary Resistance",
+                "category": "traits",
+                "text": "If the vampire fails a saving throw, it can choose to succeed instead.",
+                "uses": {
+                    "max": 3,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "sunlight-weakness",
+                "name": "Sunlight Weakness",
+                "category": "traits",
+                "text": "The vampire takes 20 Radiant damage if it starts its turn in sunlight. While in sunlight, it has Disadvantage on attack rolls and ability checks.",
+                "action": {
+                    "damage": [
+                        {
+                            "bonus": 20,
+                            "type": "radiant"
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Keleseth makes two attacks, using Grave Strike or Shadow Lance in any combination."
+            },
+            {
+                "id": "grave-strike",
+                "name": "Grave Strike",
+                "category": "actions",
+                "text": "Melee Attack Roll: +12, reach 5 ft. Hit: 10 (1d8 + 6) Slashing damage plus 18 (4d8) Necrotic damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 12,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 6,
+                                "type": "slashing"
+                            },
+                            {
+                                "dice": "4d8",
+                                "type": "necrotic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "shadow-lance",
+                "name": "Shadow Lance",
+                "category": "actions",
+                "text": "Ranged Attack Roll: +12, range 120 ft. Hit: 22 (4d10 + 6) Psychic damage.",
+                "action": {
+                    "range": "range 120 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 12,
+                        "damage": [
+                            {
+                                "dice": "4d10",
+                                "bonus": 6,
+                                "type": "psychic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "sanguine-drain",
+                "name": "Sanguine Drain",
+                "category": "bonus_actions",
+                "text": "Constitution Saving Throw: DC 20, one creature the vampire can see within 30 feet that isn't a Construct or an Undead. Failure: 14 (4d6) Necrotic damage. The target's Hit Point maximum decreases by an amount equal to the damage taken, and the vampire regains Hit Points equal to that amount.",
+                "action": {
+                    "save": {
+                        "ability": "con",
+                        "dc": 20,
+                        "on_success": "none",
+                        "damage": [
+                            {
+                                "dice": "4d6",
+                                "type": "necrotic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "umbral-strike",
+                "name": "Umbral Strike",
+                "category": "legendary_actions",
+                "text": "The vampire moves up to half its Speed, and it makes one Grave Strike or Shadow Lance attack."
+            }
+        ],
+        "section_notes": {
+            "legendary_actions": "Legendary Action Uses: 3 (4 Under Invocation of Blood). Immediately after another creature's turn, the vampire can expend a use to take one of the following actions. The vampire regains all expended uses at the start of each of its turns."
+        },
+        "legendary_actions": {
+            "uses": 3
+        },
+        "spellcasting": [
+            {
+                "name": "Hunger of Hadar (Recharge 5–6)",
+                "ability": "cha",
+                "dc": 20,
+                "text": "Keleseth casts Hunger of Hadar (level 5 version), requiring no spell components and using Charisma as the spellcasting ability (spell save DC 20).",
+                "display_as": "actions",
+                "hidden": [
+                    "recharge"
+                ],
+                "groups": [
+                    {
+                        "how": "recharge",
+                        "uses": 5,
+                        "spells": [
+                            {
+                                "spell": "hunger-of-hadar-xphb",
+                                "note": "(level 5 version)"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Beguile",
+                "ability": "cha",
+                "dc": 20,
+                "text": "The vampire casts Hold Person, requiring no spell components and using Charisma as the spellcasting ability (spell save DC 20). The vampire can't take this action again until the start of its next turn.",
+                "display_as": "legendary_actions",
+                "hidden": [
+                    "legendary"
+                ],
+                "groups": [
+                    {
+                        "how": "legendary",
+                        "uses": 1,
+                        "spells": [
+                            {
+                                "spell": "hold-person-xphb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "necrotic",
+                "slashing",
+                "psychic",
+                "acid",
+                "cold"
+            ],
+            "conditions_inflicted": [
+                "blinded",
+                "paralyzed"
+            ],
+            "saves_forced": [
+                "con",
+                "dex",
+                "wis"
+            ],
+            "senses": [
+                "blindsight"
+            ],
+            "movement": [
+                "fly",
+                "climb",
+                "hover"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "legendary_resistances",
+                "sunlight_sensitivity"
+            ],
+            "misc": [
+                "hit_point_reduction",
+                "melee_attack",
+                "melee_weapon",
+                "ranged_attack"
+            ],
+            "languages": [
+                "common"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "prince-taldaram-icc",
+        "kind": "monster",
+        "name": "Prince Taldaram",
+        "source": "ICC",
+        "edition": "one",
+        "tags": [
+            "Legendary Resistances",
+            "Sunlight Sensitivity"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "undead",
+            "tags": [
+                "elf",
+                "vampire"
+            ]
+        },
+        "alignment": [
+            "lawful evil"
+        ],
+        "ac": [
+            {
+                "value": 16
+            }
+        ],
+        "hp": {
+            "average": 475,
+            "formula": "50d8 + 250"
+        },
+        "speed": {
+            "walk": 40,
+            "fly": 40,
+            "climb": 40,
+            "hover": true
+        },
+        "abilities": {
+            "str": 22,
+            "dex": 18,
+            "con": 20,
+            "int": 19,
+            "wis": 16,
+            "cha": 23
+        },
+        "saves": {
+            "str": 12,
+            "dex": 10,
+            "wis": 9,
+            "cha": 12
+        },
+        "skills": {
+            "arcana": 10,
+            "perception": 15,
+            "stealth": 10
+        },
+        "senses": {
+            "blindsight": 120
+        },
+        "passive_perception": 25,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "cold",
+                    "necrotic"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "exhaustion"
+                ]
+            }
+        },
+        "languages": [
+            "Common (WoW)",
+            "Forsaken",
+            "Orcish",
+            "Thalassian"
+        ],
+        "cr": {
+            "cr": "18",
+            "xp": 20000,
+            "pb": 6
+        },
+        "initiative": {
+            "bonus": 16
+        },
+        "features": [
+            {
+                "id": "invocation-of-blood",
+                "name": "Invocation of Blood",
+                "category": "traits",
+                "text": "At any time, one of the three vampires is under the Invocation of Blood (it starts on Prince Valanar). While under the Invocation of Blood, the vampire has Vulnerability to all damage and gains one additional Legendary Action use each round. At the end of each of Valanar's turns, the Invocation of Blood shifts to a different vampire. Roll 1d6: on a 1-2, it moves to Prince Keleseth; on a 3-4, it moves to Prince Taldaram; on a 5-6, it moves to Prince Valanar. If the result indicates the vampire currently under the Invocation, the Invocation doesn't move this turn."
+            },
+            {
+                "id": "legendary-resistance",
+                "name": "Legendary Resistance",
+                "category": "traits",
+                "text": "If the vampire fails a saving throw, it can choose to succeed instead.",
+                "uses": {
+                    "max": 3,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "sunlight-weakness",
+                "name": "Sunlight Weakness",
+                "category": "traits",
+                "text": "The vampire takes 20 Radiant damage if it starts its turn in sunlight. While in sunlight, it has Disadvantage on attack rolls and ability checks.",
+                "action": {
+                    "damage": [
+                        {
+                            "bonus": 20,
+                            "type": "radiant"
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Taldaram makes two attacks, using Grave Strike or Conjure Flame in any combination."
+            },
+            {
+                "id": "grave-strike",
+                "name": "Grave Strike",
+                "category": "actions",
+                "text": "Melee Attack Roll: +12, reach 5 ft. Hit: 10 (1d8 + 6) Slashing damage plus 18 (4d8) Necrotic damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 12,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 6,
+                                "type": "slashing"
+                            },
+                            {
+                                "dice": "4d8",
+                                "type": "necrotic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "conjure-flame",
+                "name": "Conjure Flame",
+                "category": "actions",
+                "text": "Ranged Attack Roll: +12, range 120 ft. Hit: 22 (3d10 + 6) Fire damage, and each creature within a 10-foot Emanation originating from the target takes 5 (1d10) Fire damage.",
+                "action": {
+                    "range": "range 120 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 12,
+                        "damage": [
+                            {
+                                "dice": "3d10",
+                                "bonus": 6,
+                                "type": "fire"
+                            },
+                            {
+                                "dice": "1d10",
+                                "type": "fire"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "glittering-sparks",
+                "name": "Glittering Sparks",
+                "category": "actions",
+                "text": "Dexterity Saving Throw: DC 20, each creature in a 30-foot Cone. Failure: 31 (7d8) Fire damage, and the target's Speed is reduced by 10 feet until the end of Taldaram's next turn. Success: Half damage only.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "area": "30-foot cone",
+                    "save": {
+                        "ability": "dex",
+                        "dc": 20,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "7d8",
+                                "type": "fire"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "sanguine-drain",
+                "name": "Sanguine Drain",
+                "category": "bonus_actions",
+                "text": "Constitution Saving Throw: DC 20, one creature the vampire can see within 30 feet that isn't a Construct or an Undead. Failure: 14 (4d6) Necrotic damage. The target's Hit Point maximum decreases by an amount equal to the damage taken, and the vampire regains Hit Points equal to that amount.",
+                "action": {
+                    "save": {
+                        "ability": "con",
+                        "dc": 20,
+                        "on_success": "none",
+                        "damage": [
+                            {
+                                "dice": "4d6",
+                                "type": "necrotic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "umbral-strike",
+                "name": "Umbral Strike",
+                "category": "legendary_actions",
+                "text": "The vampire moves up to half its Speed, and it makes one Grave Strike or Conjure Flame attack."
+            }
+        ],
+        "section_notes": {
+            "legendary_actions": "Legendary Action Uses: 3 (4 Under Invocation of Blood). Immediately after another creature's turn, the vampire can expend a use to take one of the following actions. The vampire regains all expended uses at the start of each of its turns."
+        },
+        "legendary_actions": {
+            "uses": 3
+        },
+        "spellcasting": [
+            {
+                "name": "Beguile",
+                "ability": "cha",
+                "dc": 20,
+                "text": "The vampire casts Hold Person, requiring no spell components and using Charisma as the spellcasting ability (spell save DC 20). The vampire can't take this action again until the start of its next turn.",
+                "display_as": "legendary_actions",
+                "hidden": [
+                    "legendary"
+                ],
+                "groups": [
+                    {
+                        "how": "legendary",
+                        "uses": 1,
+                        "spells": [
+                            {
+                                "spell": "hold-person-xphb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "fire",
+                "necrotic",
+                "slashing"
+            ],
+            "conditions_inflicted": [
+                "paralyzed"
+            ],
+            "saves_forced": [
+                "con",
+                "dex",
+                "wis"
+            ],
+            "senses": [
+                "blindsight"
+            ],
+            "movement": [
+                "fly",
+                "climb",
+                "hover"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "legendary_resistances",
+                "sunlight_sensitivity"
+            ],
+            "misc": [
+                "area_of_effect",
+                "hit_point_reduction",
+                "melee_attack",
+                "ranged_attack"
+            ],
+            "languages": [
+                "common"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "prince-valanar-icc",
+        "kind": "monster",
+        "name": "Prince Valanar",
+        "source": "ICC",
+        "edition": "one",
+        "tags": [
+            "Legendary Resistances",
+            "Sunlight Sensitivity"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "undead",
+            "tags": [
+                "elf",
+                "vampire"
+            ]
+        },
+        "alignment": [
+            "lawful evil"
+        ],
+        "ac": [
+            {
+                "value": 16
+            }
+        ],
+        "hp": {
+            "average": 475,
+            "formula": "50d8 + 250"
+        },
+        "speed": {
+            "walk": 40,
+            "fly": 40,
+            "climb": 40,
+            "hover": true
+        },
+        "abilities": {
+            "str": 22,
+            "dex": 18,
+            "con": 20,
+            "int": 19,
+            "wis": 16,
+            "cha": 23
+        },
+        "saves": {
+            "str": 12,
+            "dex": 10,
+            "wis": 9,
+            "cha": 12
+        },
+        "skills": {
+            "arcana": 10,
+            "perception": 15,
+            "stealth": 10
+        },
+        "senses": {
+            "blindsight": 120
+        },
+        "passive_perception": 25,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "cold",
+                    "necrotic"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "exhaustion"
+                ]
+            }
+        },
+        "languages": [
+            "Common (WoW)",
+            "Forsaken",
+            "Orcish",
+            "Thalassian"
+        ],
+        "cr": {
+            "cr": "18",
+            "xp": 20000,
+            "pb": 6
+        },
+        "initiative": {
+            "bonus": 16
+        },
+        "features": [
+            {
+                "id": "invocation-of-blood",
+                "name": "Invocation of Blood",
+                "category": "traits",
+                "text": "At any time, one of the three vampires is under the Invocation of Blood (it starts on Prince Valanar). While under the Invocation of Blood, the vampire has Vulnerability to all damage and gains one additional Legendary Action use each round. At the end of each of Valanar's turns, the Invocation of Blood shifts to a different vampire. Roll 1d6: on a 1-2, it moves to Prince Keleseth; on a 3-4, it moves to Prince Taldaram; on a 5-6, it moves to Prince Valanar. If the result indicates the vampire currently under the Invocation, the Invocation doesn't move this turn."
+            },
+            {
+                "id": "legendary-resistance",
+                "name": "Legendary Resistance",
+                "category": "traits",
+                "text": "If the vampire fails a saving throw, it can choose to succeed instead.",
+                "uses": {
+                    "max": 3,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "sunlight-weakness",
+                "name": "Sunlight Weakness",
+                "category": "traits",
+                "text": "The vampire takes 20 Radiant damage if it starts its turn in sunlight. While in sunlight, it has Disadvantage on attack rolls and ability checks.",
+                "action": {
+                    "damage": [
+                        {
+                            "bonus": 20,
+                            "type": "radiant"
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Valanar makes two attacks, using Grave Strike or Shock Vortex in any combination."
+            },
+            {
+                "id": "grave-strike",
+                "name": "Grave Strike",
+                "category": "actions",
+                "text": "Melee Attack Roll: +12, reach 5 ft. Hit: 10 (1d8 + 6) Slashing damage plus 18 (4d8) Necrotic damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 12,
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "bonus": 6,
+                                "type": "slashing"
+                            },
+                            {
+                                "dice": "4d8",
+                                "type": "necrotic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "shock-vortex",
+                "name": "Shock Vortex",
+                "category": "actions",
+                "text": "Ranged Attack Roll: +12, range 120 ft. Hit: 22 (3d10 + 6) Lightning damage, and the target is pushed 5 feet straight away from Valanar and has the Prone condition.",
+                "action": {
+                    "range": "range 120 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 12,
+                        "damage": [
+                            {
+                                "dice": "3d10",
+                                "bonus": 6,
+                                "type": "lightning"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "kinetic-bomb",
+                "name": "Kinetic Bomb",
+                "category": "actions",
+                "text": "Valanar creates a kinetic bomb—a Small object with AC 13 and Immunity to all damage—in an unoccupied space he can see within 120 feet of himself, 20 feet above the ground. Each round at the start of Valanar's turn, the bomb drifts 10 feet toward the ground. If it is hit by an attack roll, it rises 5 feet. If it reaches the ground, it explodes, creating the following effect. Dexterity Saving Throw: DC 20, each creature of Valanar's choice in a 60-foot-radius Sphere centered on the bomb. Failure: 42 (12d6) Force damage, and the target is pushed 10 feet straight away from the bomb and has the Prone condition. Success: Half damage only.\n\nThe bomb vanishes when all three vampires drop to 0 Hit Points.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "area": "60-foot sphere",
+                    "save": {
+                        "ability": "dex",
+                        "dc": 20,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "12d6",
+                                "type": "force"
+                            }
+                        ],
+                        "conditions": [
+                            "prone"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "sanguine-drain",
+                "name": "Sanguine Drain",
+                "category": "bonus_actions",
+                "text": "Constitution Saving Throw: DC 20, one creature the vampire can see within 30 feet that isn't a Construct or an Undead. Failure: 14 (4d6) Necrotic damage. The target's Hit Point maximum decreases by an amount equal to the damage taken, and the vampire regains Hit Points equal to that amount.",
+                "action": {
+                    "save": {
+                        "ability": "con",
+                        "dc": 20,
+                        "on_success": "none",
+                        "damage": [
+                            {
+                                "dice": "4d6",
+                                "type": "necrotic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "umbral-strike",
+                "name": "Umbral Strike",
+                "category": "legendary_actions",
+                "text": "The vampire moves up to half its Speed, and it makes one Grave Strike or Shock Vortex attack."
+            }
+        ],
+        "section_notes": {
+            "legendary_actions": "Legendary Action Uses: 3 (4 Under Invocation of Blood). Immediately after another creature's turn, the vampire can expend a use to take one of the following actions. The vampire regains all expended uses at the start of each of its turns."
+        },
+        "legendary_actions": {
+            "uses": 3
+        },
+        "spellcasting": [
+            {
+                "name": "Beguile",
+                "ability": "cha",
+                "dc": 20,
+                "text": "The vampire casts Hold Person, requiring no spell components and using Charisma as the spellcasting ability (spell save DC 20). The vampire can't take this action again until the start of its next turn.",
+                "display_as": "legendary_actions",
+                "hidden": [
+                    "legendary"
+                ],
+                "groups": [
+                    {
+                        "how": "legendary",
+                        "uses": 1,
+                        "spells": [
+                            {
+                                "spell": "hold-person-xphb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "lightning",
+                "necrotic",
+                "force",
+                "slashing"
+            ],
+            "conditions_inflicted": [
+                "prone",
+                "paralyzed"
+            ],
+            "saves_forced": [
+                "con",
+                "dex",
+                "wis"
+            ],
+            "senses": [
+                "blindsight"
+            ],
+            "movement": [
+                "fly",
+                "climb",
+                "hover"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "legendary_resistances",
+                "sunlight_sensitivity"
+            ],
+            "misc": [
+                "area_of_effect",
+                "hit_point_reduction",
+                "melee_attack",
+                "ranged_attack"
+            ],
+            "languages": [
+                "common"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "professor-putricide-phase-1-icc",
+        "kind": "monster",
+        "name": "Professor Putricide, Phase 1",
+        "source": "ICC",
+        "edition": "one",
+        "tags": [
+            "Legendary Resistances",
+            "Magic Resistance"
+        ],
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "undead"
+        },
+        "alignment": [
+            "chaotic evil"
+        ],
+        "ac": [
+            {
+                "value": 17
+            }
+        ],
+        "hp": {
+            "average": 299,
+            "formula": "26d10 + 156"
+        },
+        "speed": {
+            "walk": 20
+        },
+        "abilities": {
+            "str": 22,
+            "dex": 16,
+            "con": 23,
+            "int": 22,
+            "wis": 21,
+            "cha": 14
+        },
+        "saves": {
+            "dex": 9,
+            "int": 12,
+            "wis": 11
+        },
+        "skills": {
+            "arcana": 18,
+            "perception": 11
+        },
+        "senses": {
+            "darkvision": 120
+        },
+        "passive_perception": 21,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "acid",
+                    "cold",
+                    "necrotic",
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "exhaustion",
+                    "frightened",
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "Common (WoW)",
+            "Forsaken",
+            "Orcish"
+        ],
+        "cr": {
+            "cr": "20",
+            "xp": 25000,
+            "pb": 6
+        },
+        "initiative": {
+            "bonus": 9
+        },
+        "features": [
+            {
+                "id": "legendary-resistance",
+                "name": "Legendary Resistance",
+                "category": "traits",
+                "text": "If Putricide fails a saving throw, he can choose to succeed instead.",
+                "uses": {
+                    "max": 4,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "Putricide has Advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "unstable-mutation",
+                "name": "Unstable Mutation",
+                "category": "traits",
+                "text": "When Putricide is reduced to 0 Hit Points, his current Hit Point total instead resets to 299 Hit Points, and he regains any expended uses of Legendary Resistance. Additionally, he sprouts two additional arms from his back, loses access to the actions below, and gains access to the actions in \"Actions—Phase 2\". Award the characters an additional 25,000 XP for defeating Professor Putricide after Unstable Mutation activates (50,000 XP total).",
+                "uses": {
+                    "max": 1,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Professor Putricide makes two Thrash attacks and uses Spawn Volatile Ooze or Spawn Gas Cloud if available."
+            },
+            {
+                "id": "thrash",
+                "name": "Thrash",
+                "category": "actions",
+                "text": "Melee Attack Roll: +12, reach 5 ft. Hit: 19 (2d12 + 6) Slashing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 12,
+                        "damage": [
+                            {
+                                "dice": "2d12",
+                                "bonus": 6,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "spawn-volatile-ooze-recharges-when-a-gas-cloud-is-destroyed",
+                "name": "Spawn Volatile Ooze (Recharges When a Gas Cloud Is Destroyed)",
+                "category": "actions",
+                "text": "Putricide creates a volatile ooze—a Small object with AC 9; HP 90; and Resistance to Acid, Cold, and Fire damage—in an unoccupied space he can see within 15 feet of himself. The ooze targets a random enemy within 60 feet of itself; the target is cursed until the ooze is destroyed. A cursed creature's Speed becomes 0. At the end of Putricide's turn, the cursed creature takes 35 (10d6) Acid damage, and the ooze moves 10 feet straight toward it. When the ooze enters a space within 5 feet of the cursed creature, it releases a spray of acid, creating the following effect. Dexterity Saving Throw: DC 20, each creature in a 20-foot Emanation originating from the ooze. Failure: 78 (12d12) Acid damage, and the target is pushed 10 feet directly away from the ooze. Success: Half damage only. Failure or Success: The ooze curses a new random enemy within 60 feet of itself and repeats this process until it is destroyed.",
+                "action": {
+                    "area": "20-foot emanation",
+                    "save": {
+                        "ability": "dex",
+                        "dc": 20,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "12d12",
+                                "type": "acid"
+                            }
+                        ]
+                    },
+                    "damage": [
+                        {
+                            "dice": "10d6",
+                            "type": "acid"
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "spawn-gas-cloud-recharges-when-a-volatile-ooze-is-destroyed",
+                "name": "Spawn Gas Cloud (Recharges When a Volatile Ooze Is Destroyed)",
+                "category": "actions",
+                "text": "Putricide creates a gas cloud—a Small object with AC 9, HP 45, and Resistance to all damage—in an unoccupied space within 15 feet of himself. The cloud targets a random enemy within 60 feet of itself; the target is cursed until the cloud is destroyed. At the end of Putricide's turn, the cursed creature takes 56 (16d6) Poison damage, and the cloud moves 10 feet straight toward it. This Poison damage is reduced by 7 (2d6) each round after the first, to a minimum of 7 (2d6). When the cloud enters a space within 5 feet of the cursed creature, it releases a toxic spray, creating the following effect. Dexterity Saving Throw: DC 20, each creature in a 120-foot Emanation originating from the cloud. Failure: 10 Poison damage for each d6 of damage the cursed creature took this round. Success: Half damage. Failure or Success: The cloud curses a new random enemy within 60 feet of itself and repeats this process until it is destroyed.",
+                "action": {
+                    "area": "120-foot emanation",
+                    "save": {
+                        "ability": "dex",
+                        "dc": 20,
+                        "on_success": "half"
+                    },
+                    "damage": [
+                        {
+                            "dice": "16d6",
+                            "type": "poison"
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "bounding-enthusiasm",
+                "name": "Bounding Enthusiasm",
+                "category": "bonus_actions",
+                "text": "Putricide moves up to his Speed without provoking Opportunity Attacks."
+            },
+            {
+                "id": "mutated-slime",
+                "name": "Mutated Slime",
+                "category": "bonus_actions",
+                "text": "Putricide hurls a vial of mutated slime to a point on the ground he can see within 60 feet of himself, where it shatters and spreads over the ground in a 5-foot-radius circle. A creature that starts its turn in the area or enters it for the first time on a turn is subjected to the following effect. Constitution Saving Throw: DC 20. Failure: 44 (8d10) Poison damage. Success: Half damage only. A creature makes this save only once per turn.\n\nThe pool lasts for 10 minutes, and at the start of Putricide's turn, the pool expands, increasing its radius by 5 feet (to a maximum of 30 feet).",
+                "action": {
+                    "save": {
+                        "ability": "con",
+                        "dc": 20,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "8d10",
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "acid",
+                "poison",
+                "slashing"
+            ],
+            "saves_forced": [
+                "con",
+                "dex"
+            ],
+            "senses": [
+                "superior_darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "legendary_resistances",
+                "magic_resistance"
+            ],
+            "misc": [
+                "area_of_effect",
+                "curse",
+                "melee_attack"
+            ],
+            "languages": [
+                "common"
+            ]
+        }
+    },
+    {
+        "id": "professor-putricide-phase-2-icc",
+        "kind": "monster",
+        "name": "Professor Putricide, Phase 2",
+        "source": "ICC",
+        "edition": "one",
+        "tags": [
+            "Legendary Resistances",
+            "Magic Resistance"
+        ],
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "undead"
+        },
+        "alignment": [
+            "chaotic evil"
+        ],
+        "ac": [
+            {
+                "value": 17
+            }
+        ],
+        "hp": {
+            "average": 299,
+            "formula": "26d10 + 156"
+        },
+        "speed": {
+            "walk": 20
+        },
+        "abilities": {
+            "str": 22,
+            "dex": 16,
+            "con": 23,
+            "int": 22,
+            "wis": 21,
+            "cha": 14
+        },
+        "saves": {
+            "dex": 9,
+            "int": 12,
+            "wis": 11
+        },
+        "skills": {
+            "arcana": 18,
+            "perception": 11
+        },
+        "senses": {
+            "darkvision": 120
+        },
+        "passive_perception": 21,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "acid",
+                    "cold",
+                    "necrotic",
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "exhaustion",
+                    "frightened",
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "Common (WoW)",
+            "Forsaken",
+            "Orcish"
+        ],
+        "cr": {
+            "cr": "20",
+            "xp": 25000,
+            "pb": 6
+        },
+        "initiative": {
+            "bonus": 9
+        },
+        "features": [
+            {
+                "id": "legendary-resistance",
+                "name": "Legendary Resistance",
+                "category": "traits",
+                "text": "If Putricide fails a saving throw, he can choose to succeed instead.",
+                "uses": {
+                    "max": 4,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "Putricide has Advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Professor Putricide makes four Thrash attacks."
+            },
+            {
+                "id": "thrash",
+                "name": "Thrash",
+                "category": "actions",
+                "text": "Melee Attack Roll: +12, reach 5 ft. Hit: 19 (2d12 + 6) Slashing damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 12,
+                        "damage": [
+                            {
+                                "dice": "2d12",
+                                "bonus": 6,
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "alchemical-assault",
+                "name": "Alchemical Assault",
+                "category": "actions",
+                "text": "Professor Putricide hurls one of the following alchemical substances:\n\n- **Choking Gas Bombs.** Putricide throws three vials that explode at separate points he can see within 60 feet of himself. Constitution Saving Throw: DC 20, each creature in a 10-foot-radius Sphere centered on the point. Failure: 21 (6d6) Poison damage, and the target has the Poisoned condition until the end of Putricide's next turn. Success: Half damage only.\n- **Malleable Goo.** Putricide hurls rubbery goo. Ranged Attack Roll: +12, range 60 ft. Hit: 19 (3d8 + 6) Acid damage, and the target can take only an action or a Bonus Action on its next turn, not both. Hit or Miss:  The goo bounces to another target within 60 feet of the previous one, repeating the attack until it has hit or missed three times.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 4
+                }
+            },
+            {
+                "id": "alchemical-assault-choking-gas-bombs",
+                "name": "Choking Gas Bombs",
+                "category": "actions",
+                "parent": "alchemical-assault",
+                "text": "Putricide throws three vials that explode at separate points he can see within 60 feet of himself. Constitution Saving Throw: DC 20, each creature in a 10-foot-radius Sphere centered on the point. Failure: 21 (6d6) Poison damage, and the target has the Poisoned condition until the end of Putricide's next turn. Success: Half damage only.",
+                "action": {
+                    "area": "10-foot sphere",
+                    "save": {
+                        "ability": "con",
+                        "dc": 20,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "6d6",
+                                "type": "poison"
+                            }
+                        ],
+                        "conditions": [
+                            "poisoned"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "alchemical-assault-malleable-goo",
+                "name": "Malleable Goo",
+                "category": "actions",
+                "parent": "alchemical-assault",
+                "text": "Putricide hurls rubbery goo. Ranged Attack Roll: +12, range 60 ft. Hit: 19 (3d8 + 6) Acid damage, and the target can take only an action or a Bonus Action on its next turn, not both. Hit or Miss:  The goo bounces to another target within 60 feet of the previous one, repeating the attack until it has hit or missed three times.",
+                "action": {
+                    "range": "range 60 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 12,
+                        "damage": [
+                            {
+                                "dice": "3d8",
+                                "bonus": 6,
+                                "type": "acid"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "bounding-enthusiasm",
+                "name": "Bounding Enthusiasm",
+                "category": "bonus_actions",
+                "text": "Putricide moves up to his Speed without provoking Opportunity Attacks."
+            },
+            {
+                "id": "mutated-slime",
+                "name": "Mutated Slime",
+                "category": "bonus_actions",
+                "text": "Putricide hurls a vial of mutated slime to a point on the ground he can see within 60 feet of himself, where it shatters and spreads over the ground in a 5-foot-radius circle. A creature that starts its turn in the area or enters it for the first time on a turn is subjected to the following effect. Constitution Saving Throw: DC 20. Failure: 44 (8d10) Poison damage. Success: Half damage only. A creature makes this save only once per turn.\n\nThe pool lasts for 10 minutes, and at the start of Putricide's turn, the pool expands, increasing its radius by 5 feet (to a maximum of 30 feet).",
+                "action": {
+                    "save": {
+                        "ability": "con",
+                        "dc": 20,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "8d10",
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "acid",
+                "poison",
+                "slashing"
+            ],
+            "conditions_inflicted": [
+                "poisoned"
+            ],
+            "saves_forced": [
+                "con"
+            ],
+            "senses": [
+                "superior_darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "legendary_resistances",
+                "magic_resistance"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_attack",
+                "ranged_attack"
+            ],
+            "languages": [
+                "common"
+            ]
+        }
+    },
+    {
+        "id": "pustulating-horror-icc",
+        "kind": "monster",
+        "name": "Pustulating Horror",
+        "source": "ICC",
+        "edition": "one",
+        "tags": [
+            "Death Burst"
+        ],
+        "size": [
+            "huge"
+        ],
+        "creature_type": {
+            "type": "undead"
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "ac": [
+            {
+                "value": 9
+            }
+        ],
+        "hp": {
+            "average": 152,
+            "formula": "16d10 + 64"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 19,
+            "dex": 8,
+            "con": 19,
+            "int": 3,
+            "wis": 8,
+            "cha": 5
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 9,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "exhaustion",
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "understands Forsaken and Giant but can't speak"
+        ],
+        "cr": {
+            "cr": "7",
+            "xp": 2900,
+            "pb": 3
+        },
+        "initiative": {
+            "bonus": -1
+        },
+        "features": [
+            {
+                "id": "blight-bomb",
+                "name": "Blight Bomb",
+                "category": "traits",
+                "text": "The horror explodes when it dies. Constitution Saving Throw: DC 15, each creature in a 15-foot Emanation originating from the horror. Failure: 28 (8d6) Fire damage. Success: Half damage.",
+                "action": {
+                    "area": "15-foot emanation",
+                    "save": {
+                        "ability": "con",
+                        "dc": 15,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "8d6",
+                                "type": "fire"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "pestilent-pustules",
+                "name": "Pestilent Pustules",
+                "category": "traits",
+                "text": "A creature that hits the horror with a melee attack roll takes 7 (2d6) Poison damage.",
+                "action": {
+                    "damage": [
+                        {
+                            "dice": "2d6",
+                            "type": "poison"
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The horror makes two Slam attacks and uses Spit Plague."
+            },
+            {
+                "id": "slam",
+                "name": "Slam",
+                "category": "actions",
+                "text": "Melee Attack Roll: +7, reach 10 ft. Hit: 13 (2d8 + 4) Bludgeoning damage.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 7,
+                        "damage": [
+                            {
+                                "dice": "2d8",
+                                "bonus": 4,
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "spit-plague",
+                "name": "Spit Plague",
+                "category": "actions",
+                "text": "Dexterity Saving Throw: DC 15, one creature the horror can see within 30 feet. Failure: 10 (3d6) Poison damage, and the target has the Poisoned condition until the end of its next turn.",
+                "action": {
+                    "save": {
+                        "ability": "dex",
+                        "dc": 15,
+                        "on_success": "none",
+                        "damage": [
+                            {
+                                "dice": "3d6",
+                                "type": "poison"
+                            }
+                        ],
+                        "conditions": [
+                            "poisoned"
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "bludgeoning",
+                "fire",
+                "poison"
+            ],
+            "conditions_inflicted": [
+                "poisoned"
+            ],
+            "saves_forced": [
+                "con",
+                "dex"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "death_burst"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_attack",
+                "reach"
+            ],
+            "languages": [
+                "cant_speak",
+                "giant"
+            ]
+        }
+    },
+    {
+        "id": "rotface-icc",
+        "kind": "monster",
+        "name": "Rotface",
+        "source": "ICC",
+        "edition": "one",
+        "tags": [
+            "Legendary Resistances"
+        ],
+        "size": [
+            "huge"
+        ],
+        "creature_type": {
+            "type": "construct"
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "ac": [
+            {
+                "value": 14
+            }
+        ],
+        "hp": {
+            "average": 250,
+            "formula": "20d12 + 120"
+        },
+        "speed": {
+            "walk": 40
+        },
+        "abilities": {
+            "str": 23,
+            "dex": 13,
+            "con": 22,
+            "int": 8,
+            "wis": 12,
+            "cha": 10
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 11,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "acid",
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "exhaustion",
+                    "frightened",
+                    "paralyzed",
+                    "petrified",
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "Common (WoW)",
+            "Forsaken",
+            "Orcish"
+        ],
+        "cr": {
+            "cr": "17",
+            "xp": 18000,
+            "pb": 6
+        },
+        "initiative": {
+            "bonus": 7
+        },
+        "features": [
+            {
+                "id": "legendary-resistance",
+                "name": "Legendary Resistance",
+                "category": "traits",
+                "text": "If Rotface fails a saving throw, it can choose to succeed instead.",
+                "uses": {
+                    "max": 4,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "ooze-flood",
+                "name": "Ooze Flood",
+                "category": "traits",
+                "text": "Acidic slime drips from the vats in Rotface's room, creating a growing pool on the floor. At the start of Rotface's first turn during each combat, the pool's area is a 10-foot-radius circle centered on a point along one of the room's walls. At the start of each of Rotface's turns, the area's radius expands by 5 feet. A creature that enters the area for the first time on a turn or starts its turn there takes 10 (3d6) Acid damage, and its Speed is reduced by 10 feet until the start of its next turn.",
+                "action": {
+                    "damage": [
+                        {
+                            "dice": "3d6",
+                            "type": "acid"
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Rotface makes two Claw attacks and uses Slime Spray."
+            },
+            {
+                "id": "claw",
+                "name": "Claw",
+                "category": "actions",
+                "text": "Melee Attack Roll: +12, reach 10 ft. Hit: 39 (6d10 + 6) Slashing damage plus 14 (4d6) Acid damage.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 12,
+                        "damage": [
+                            {
+                                "dice": "6d10",
+                                "bonus": 6,
+                                "type": "slashing"
+                            },
+                            {
+                                "dice": "4d6",
+                                "type": "acid"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "slime-spray",
+                "name": "Slime Spray",
+                "category": "actions",
+                "text": "Dexterity Saving Throw: DC 20, each creature in a 60-foot Cone. Failure: 26 (4d12) Acid damage. The creature takes the damage again at the start of each of its turns until the slime is scraped off (requiring an action). Success: Half damage only.",
+                "action": {
+                    "area": "60-foot cone",
+                    "save": {
+                        "ability": "dex",
+                        "dc": 20,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "4d12",
+                                "type": "acid"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "mutated-infection",
+                "name": "Mutated Infection",
+                "category": "bonus_actions",
+                "text": "Constitution Saving Throw: DC 20, one creature Rotface can see within 60 feet. Failure: The target has the Poisoned condition. While Poisoned, the target can't regain Hit Points and takes 21 (6d6) Acid damage at the start of each of its turns, and it repeats the save at the end of each of its turns, ending the effect on itself on a success. After 1 minute, it succeeds automatically.\n\nWhen the Poisoned condition on the target ends, a Plagueworks Ooze is created in an unoccupied space within 5 feet of the creature. The ooze takes its turn immediately after Rotface on the same Initiative count. The ooze fights until destroyed.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "save": {
+                        "ability": "con",
+                        "dc": 20,
+                        "on_success": "none",
+                        "damage": [
+                            {
+                                "dice": "6d6",
+                                "type": "acid"
+                            }
+                        ],
+                        "conditions": [
+                            "poisoned"
+                        ]
+                    }
+                }
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "acid",
+                "slashing"
+            ],
+            "conditions_inflicted": [
+                "poisoned"
+            ],
+            "saves_forced": [
+                "con",
+                "dex"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "legendary_resistances"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_attack",
+                "reach"
+            ],
+            "languages": [
+                "common"
+            ]
+        }
+    },
+    {
+        "id": "servant-of-the-throne-icc",
+        "kind": "monster",
+        "name": "Servant of the Throne",
+        "source": "ICC",
+        "edition": "one",
+        "tags": [
+            "Magic Resistance"
+        ],
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "undead",
+            "tags": [
+                "lich",
+                "wizard"
+            ]
+        },
+        "alignment": [
+            "lawful evil"
+        ],
+        "ac": [
+            {
+                "value": 17
+            }
+        ],
+        "hp": {
+            "average": 195,
+            "formula": "30d10 + 30"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 10,
+            "dex": 14,
+            "con": 12,
+            "int": 20,
+            "wis": 15,
+            "cha": 16
+        },
+        "saves": {
+            "wis": 6
+        },
+        "skills": {
+            "arcana": 13,
+            "perception": 6
+        },
+        "senses": {
+            "darkvision": 120
+        },
+        "passive_perception": 16,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "cold"
+                ]
+            },
+            "immune": {
+                "types": [
+                    "necrotic",
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "exhaustion",
+                    "frightened",
+                    "paralyzed",
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "Common (WoW)",
+            "Forsaken",
+            "Orcish"
+        ],
+        "cr": {
+            "cr": "12",
+            "xp": 8400,
+            "pb": 4
+        },
+        "initiative": {
+            "bonus": 6
+        },
+        "features": [
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The servant has Advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The servant makes three Icy Burst attacks."
+            },
+            {
+                "id": "icy-burst",
+                "name": "Icy Burst",
+                "category": "actions",
+                "text": "Melee or Ranged Attack Roll: +9, reach 5 ft. or range 120 ft. Hit: 27 (4d10 + 5) Cold damage.",
+                "action": {
+                    "range": "reach 5 ft. or range 120 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 9,
+                        "damage": [
+                            {
+                                "dice": "4d10",
+                                "bonus": 5,
+                                "type": "cold"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "int",
+                "dc": 17,
+                "text": "The servant casts one of the following spells, using Intelligence as the spellcasting ability (spell save DC 17):",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "detect-magic-xphb"
+                            },
+                            {
+                                "spell": "detect-thoughts-xphb"
+                            },
+                            {
+                                "spell": "light-xphb"
+                            },
+                            {
+                                "spell": "mage-hand-xphb"
+                            },
+                            {
+                                "spell": "prestidigitation-xphb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "cone-of-cold-xphb",
+                                "note": "(level 9 version)"
+                            },
+                            {
+                                "spell": "fly-xphb"
+                            },
+                            {
+                                "spell": "scrying-xphb"
+                            },
+                            {
+                                "spell": "teleport-xphb"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Misty Step (3/Day)",
+                "ability": "int",
+                "text": "The servant casts Misty Step, using the same spellcasting ability as Spellcasting.",
+                "display_as": "bonus_actions",
+                "hidden": [
+                    "daily"
+                ],
+                "groups": [
+                    {
+                        "uses": 3,
+                        "per": "day",
+                        "spells": [
+                            {
+                                "spell": "misty-step-xphb"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Protective Magic",
+                "ability": "int",
+                "text": "The servant casts Counterspell or Shield in response to the spell's trigger, using the same spellcasting ability as Spellcasting.",
+                "display_as": "reactions",
+                "hidden": [
+                    "will"
+                ],
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "counterspell-xphb"
+                            },
+                            {
+                                "spell": "shield-xphb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "cold",
+                "force"
+            ],
+            "saves_forced": [
+                "con",
+                "wis"
+            ],
+            "senses": [
+                "superior_darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "magic_resistance"
+            ],
+            "misc": [
+                "melee_attack",
+                "ranged_attack"
+            ],
+            "languages": [
+                "common"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "sindragosa-icc",
+        "kind": "monster",
+        "name": "Sindragosa",
+        "source": "ICC",
+        "edition": "one",
+        "tags": [
+            "Legendary Resistances",
+            "Magic Resistance"
+        ],
+        "size": [
+            "gargantuan"
+        ],
+        "creature_type": {
+            "type": "undead"
+        },
+        "alignment": [
+            "lawful evil"
+        ],
+        "ac": [
+            {
+                "value": 20
+            }
+        ],
+        "hp": {
+            "average": 367,
+            "formula": "21d20 + 147"
+        },
+        "speed": {
+            "walk": 40,
+            "fly": 80,
+            "burrow": 30
+        },
+        "abilities": {
+            "str": 25,
+            "dex": 10,
+            "con": 24,
+            "int": 20,
+            "wis": 15,
+            "cha": 21
+        },
+        "saves": {
+            "dex": 7
+        },
+        "skills": {
+            "perception": 16,
+            "stealth": 7
+        },
+        "senses": {
+            "darkvision": 120,
+            "blindsight": 60
+        },
+        "passive_perception": 26,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "cold",
+                    "necrotic",
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "exhaustion",
+                    "frightened",
+                    "paralyzed",
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "Common (WoW)",
+            "Draconic (WoW)",
+            "Forsaken",
+            "Orcish"
+        ],
+        "cr": {
+            "cr": "23",
+            "xp": 50000,
+            "pb": 7
+        },
+        "initiative": {
+            "bonus": 14
+        },
+        "features": [
+            {
+                "id": "legendary-resistance",
+                "name": "Legendary Resistance",
+                "category": "traits",
+                "text": "If Sindragosa fails a saving throw, she can choose to succeed instead.",
+                "uses": {
+                    "max": 4,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "life-suppression",
+                "name": "Life Suppression",
+                "category": "traits",
+                "text": "Creatures within 60 feet of Sindragosa can't regain Hit Points."
+            },
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "Sindragosa has Advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Sindragosa makes three attacks, using Rend or Icy Grip in any combination."
+            },
+            {
+                "id": "rend",
+                "name": "Rend",
+                "category": "actions",
+                "text": "Melee Attack Roll: +14, reach 10 ft. Hit: 18 (2d10 + 7) Slashing damage plus 4 (1d8) Cold damage.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 14,
+                        "damage": [
+                            {
+                                "dice": "2d10",
+                                "bonus": 7,
+                                "type": "slashing"
+                            },
+                            {
+                                "dice": "1d8",
+                                "type": "cold"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "icy-grip",
+                "name": "Icy Grip",
+                "category": "actions",
+                "text": "Ranged Attack Roll: +12, range 60 ft. Hit: 21 (6d6) Cold damage, and the target is pulled up to 40 feet straight toward Sindragosa.",
+                "action": {
+                    "range": "range 60 ft.",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": 12,
+                        "damage": [
+                            {
+                                "dice": "6d6",
+                                "type": "cold"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "frost-breath",
+                "name": "Frost Breath",
+                "category": "actions",
+                "text": "Constitution Saving Throw: DC 22, each creature in a 60-foot Cone. Failure: 52 (8d12) Cold damage, and the target has the Restrained condition until the end of Sindragosa's next turn. Success: Half damage only.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 5
+                },
+                "action": {
+                    "area": "60-foot cone",
+                    "save": {
+                        "ability": "con",
+                        "dc": 22,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "8d12",
+                                "type": "cold"
+                            }
+                        ],
+                        "conditions": [
+                            "restrained"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "ice-tombs-1-day-usable-only-while-bloodied",
+                "name": "Ice Tombs (1/Day, Usable Only While Bloodied)",
+                "category": "actions",
+                "text": "Constitution Saving Throw: DC 22, each of two creatures Sindragosa can see within 60 feet. Failure: 27 (6d8) Cold damage, and the target is entombed in ice. Success: Half damage only.\n\nAn entombed creature is suffocating, has the Restrained and Stunned conditions, has Total Cover against attacks and other effects outside the tomb, and takes 24 (7d6) Cold damage at the start of each of its turns. The ice tomb is a Large object with AC 13; HP 27; and Immunity to Cold, Poison, and Psychic damage. Breaking the tomb ends the effect on an entombed creature.",
+                "action": {
+                    "save": {
+                        "ability": "con",
+                        "dc": 22,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "6d8",
+                                "type": "cold"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "blistering-cold",
+                "name": "Blistering Cold",
+                "category": "bonus_actions",
+                "text": "Constitution Saving Throw: DC 22, each creature in a 20-foot Emanation. Failure: 19 (3d12) Cold damage.",
+                "action": {
+                    "area": "20-foot emanation",
+                    "save": {
+                        "ability": "con",
+                        "dc": 22,
+                        "on_success": "none",
+                        "damage": [
+                            {
+                                "dice": "3d12",
+                                "type": "cold"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "pounce",
+                "name": "Pounce",
+                "category": "legendary_actions",
+                "text": "Sindragosa moves up to half her Speed, and she makes one Rend or Icy Grip attack."
+            },
+            {
+                "id": "terrifying-roar",
+                "name": "Terrifying Roar",
+                "category": "legendary_actions",
+                "text": "Wisdom Saving Throw: DC 20, each creature in a 30-foot Emanation originating from Sindragosa. Failure: 11 (2d10) Psychic damage, and the target has the Frightened condition until the end of its next turn. Failure or Success: Sindragosa can't take this action again until the start of her next turn.",
+                "action": {
+                    "area": "30-foot emanation",
+                    "save": {
+                        "ability": "wis",
+                        "dc": 20,
+                        "on_success": "none",
+                        "damage": [
+                            {
+                                "dice": "2d10",
+                                "type": "psychic"
+                            }
+                        ],
+                        "conditions": [
+                            "frightened"
+                        ]
+                    }
+                }
+            }
+        ],
+        "legendary_actions": {
+            "uses": 3
+        },
+        "spellcasting": [
+            {
+                "name": "Unchained Magic (2/Day)",
+                "ability": "cha",
+                "dc": 20,
+                "text": "Sindragosa casts Counterspell in response to the spell's trigger, using Charisma as the spellcasting ability (save DC 20). If the target fails the save against the spell, it takes 13 (2d12) Psychic damage.",
+                "display_as": "reactions",
+                "hidden": [
+                    "daily"
+                ],
+                "groups": [
+                    {
+                        "uses": 2,
+                        "per": "day",
+                        "spells": [
+                            {
+                                "spell": "counterspell-xphb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "cold",
+                "slashing",
+                "psychic"
+            ],
+            "conditions_inflicted": [
+                "frightened",
+                "restrained",
+                "stunned"
+            ],
+            "saves_forced": [
+                "con",
+                "wis"
+            ],
+            "senses": [
+                "blindsight",
+                "superior_darkvision"
+            ],
+            "movement": [
+                "fly",
+                "burrow"
+            ],
+            "actions": [
+                "breath_weapon",
+                "multiattack"
+            ],
+            "traits": [
+                "legendary_resistances",
+                "magic_resistance"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_attack",
+                "ranged_attack",
+                "reach"
+            ],
+            "languages": [
+                "common",
+                "draconic"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "sister-svalna-icc",
+        "kind": "monster",
+        "name": "Sister Svalna",
+        "source": "ICC",
+        "edition": "one",
+        "tags": [
+            "Magic Resistance"
+        ],
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "undead",
+            "tags": [
+                "angel"
+            ]
+        },
+        "alignment": [
+            "lawful evil"
+        ],
+        "ac": [
+            {
+                "value": 19
+            }
+        ],
+        "hp": {
+            "average": 262,
+            "formula": "21d10 + 147"
+        },
+        "speed": {
+            "walk": 40,
+            "fly": 120,
+            "hover": true
+        },
+        "abilities": {
+            "str": 24,
+            "dex": 20,
+            "con": 24,
+            "int": 19,
+            "wis": 22,
+            "cha": 25
+        },
+        "saves": {
+            "str": 12,
+            "con": 12,
+            "wis": 11,
+            "cha": 12
+        },
+        "skills": {
+            "perception": 11
+        },
+        "senses": {
+            "truesight": 120
+        },
+        "passive_perception": 21,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "radiant"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "exhaustion",
+                    "frightened"
+                ]
+            }
+        },
+        "languages": [
+            "all; telepathy 120 ft."
+        ],
+        "cr": {
+            "cr": "16",
+            "xp": 15000,
+            "pb": 5
+        },
+        "initiative": {
+            "bonus": 10
+        },
+        "features": [
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "Sister Svalna has Advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Sister Svalna makes three Bone Spear attacks or uses Divine Surge twice."
+            },
+            {
+                "id": "bone-spear",
+                "name": "Bone Spear",
+                "category": "actions",
+                "text": "Melee or Ranged Attack Roll: +12, reach 10 ft. or range 60/120 ft. Hit: 14 (2d6 + 7) Piercing damage plus 18 (4d8) Cold damage.",
+                "action": {
+                    "range": "reach 10 ft. or range 60/120 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 12,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 7,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "4d8",
+                                "type": "cold"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "divine-surge",
+                "name": "Divine Surge",
+                "category": "actions",
+                "text": "Dexterity Saving Throw: DC 20, each enemy in a 20-foot-radius Sphere centered on a point Sister Svalna can see within 120 feet. Failure: 24 (7d6) Necrotic damage. Success: Half damage.",
+                "action": {
+                    "area": "20-foot sphere",
+                    "save": {
+                        "ability": "dex",
+                        "dc": 20,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "7d6",
+                                "type": "necrotic"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "cha",
+                "text": "Sister Svalna casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability:",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "detect-evil-and-good-xphb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "commune-xphb"
+                            },
+                            {
+                                "spell": "create-undead-xphb",
+                                "note": "(usable at any hour of the day)"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "cold",
+                "necrotic",
+                "piercing"
+            ],
+            "saves_forced": [
+                "dex"
+            ],
+            "senses": [
+                "truesight"
+            ],
+            "movement": [
+                "fly",
+                "hover"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "magic_resistance"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_attack",
+                "melee_weapon",
+                "ranged_attack",
+                "reach",
+                "thrown_weapon"
+            ],
+            "languages": [
+                "telepathy",
+                "all"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "the-damned-icc",
+        "kind": "monster",
+        "name": "The Damned",
+        "source": "ICC",
+        "edition": "one",
+        "tags": [
+            "Death Burst"
+        ],
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "undead"
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "ac": [
+            {
+                "value": 16
+            }
+        ],
+        "hp": {
+            "average": 170,
+            "formula": "20d10 + 60"
+        },
+        "speed": {
+            "walk": 40
+        },
+        "abilities": {
+            "str": 21,
+            "dex": 16,
+            "con": 17,
+            "int": 13,
+            "wis": 15,
+            "cha": 9
+        },
+        "saves": {
+            "dex": 7,
+            "con": 7,
+            "wis": 6
+        },
+        "skills": {
+            "perception": 6,
+            "stealth": 7
+        },
+        "senses": {
+            "darkvision": 120
+        },
+        "passive_perception": 16,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "cold"
+                ]
+            },
+            "immune": {
+                "types": [
+                    "necrotic",
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "exhaustion",
+                    "frightened",
+                    "paralyzed",
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "understands Forsaken but can't speak"
+        ],
+        "cr": {
+            "cr": "12",
+            "xp": 8400,
+            "pb": 4
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "blood-frenzy",
+                "name": "Blood Frenzy",
+                "category": "traits",
+                "text": "The Damned has Advantage on attack rolls against any creature that doesn't have all its Hit Points."
+            },
+            {
+                "id": "shattered-bones",
+                "name": "Shattered Bones",
+                "category": "traits",
+                "text": "The Damned explodes when it dies. Constitution Saving Throw: DC 15, each creature in a 15-foot Emanation originating from the Damned. Failure: 32 (5d12) Necrotic damage. Success: Half damage.",
+                "action": {
+                    "area": "15-foot emanation",
+                    "save": {
+                        "ability": "con",
+                        "dc": 15,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "5d12",
+                                "type": "necrotic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The Damned makes two Scything Claw attacks."
+            },
+            {
+                "id": "scything-claw",
+                "name": "Scything Claw",
+                "category": "actions",
+                "text": "Melee Attack Roll: +9, reach 15 ft. Hit: 21 (3d10 + 5) Slashing damage plus 9 (2d8) Necrotic damage.",
+                "action": {
+                    "range": "reach 15 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 9,
+                        "damage": [
+                            {
+                                "dice": "3d10",
+                                "bonus": 5,
+                                "type": "slashing"
+                            },
+                            {
+                                "dice": "2d8",
+                                "type": "necrotic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "deadly-reach",
+                "name": "Deadly Reach",
+                "category": "reactions",
+                "text": "Trigger: A creature enters a space within 15 feet of the Damned. Response: The Damned makes one Scything Claw attack against the triggering creature."
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "necrotic",
+                "slashing"
+            ],
+            "saves_forced": [
+                "con"
+            ],
+            "senses": [
+                "superior_darkvision"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "death_burst"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_attack",
+                "reach"
+            ],
+            "languages": [
+                "cant_speak"
+            ]
+        }
+    },
+    {
+        "id": "tirion-fordring-icc",
+        "kind": "monster",
+        "name": "Tirion Fordring",
+        "source": "ICC",
+        "edition": "one",
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "humanoid",
+            "tags": [
+                "human",
+                "paladin"
+            ]
+        },
+        "alignment": [
+            "lawful good"
+        ],
+        "ac": [
+            {
+                "value": 18
+            }
+        ],
+        "hp": {
+            "average": 202,
+            "formula": "27d10 + 81"
+        },
+        "speed": {
+            "walk": 30
+        },
+        "abilities": {
+            "str": 20,
+            "dex": 16,
+            "con": 16,
+            "int": 15,
+            "wis": 16,
+            "cha": 18
+        },
+        "saves": {
+            "str": 10,
+            "con": 8,
+            "wis": 8,
+            "cha": 9
+        },
+        "skills": {
+            "athletics": 10,
+            "perception": 8,
+            "persuasion": 9,
+            "religion": 7
+        },
+        "passive_perception": 18,
+        "defenses": {
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "frightened"
+                ]
+            }
+        },
+        "languages": [
+            "Common (WoW)",
+            "Dwarven",
+            "Orcish"
+        ],
+        "cr": {
+            "cr": "15",
+            "xp": 13000,
+            "pb": 5
+        },
+        "initiative": {
+            "bonus": 8
+        },
+        "features": [
+            {
+                "id": "aura-of-bravery",
+                "name": "Aura of Bravery",
+                "category": "traits",
+                "text": "Creatures of Tirion's choice in a 30-foot Emanation originating from him have Immunity to the Charmed and Frightened conditions while there."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Tirion makes three Ashbringer attacks."
+            },
+            {
+                "id": "ashbringer",
+                "name": "Ashbringer",
+                "category": "actions",
+                "text": "Melee Attack Roll: +13, reach 5 ft. Hit: 15 (2d6 + 8) Slashing damage plus 27 (5d10) Fire damage. If the target is Undead, it takes an extra 11 (2d10) Fire damage.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 13,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 8,
+                                "type": "slashing"
+                            },
+                            {
+                                "dice": "5d10",
+                                "type": "fire"
+                            },
+                            {
+                                "dice": "2d10",
+                                "type": "fire"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "cha",
+                "dc": 17,
+                "text": "Tirion casts one of the following spells, using Charisma as the spellcasting ability (spell save DC 17):",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "daylight-xphb"
+                            },
+                            {
+                                "spell": "dispel-evil-and-good-xphb"
+                            },
+                            {
+                                "spell": "greater-restoration-xphb"
+                            },
+                            {
+                                "spell": "phantom-steed-xphb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "items": [
+            {
+                "item": "ashbringer-wow",
+                "qty": 1
+            },
+            {
+                "item": "plate-armor-xphb",
+                "qty": 1
+            }
+        ],
+        "flags": {
+            "npc": true,
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "fire",
+                "slashing"
+            ],
+            "saves_forced": [
+                "cha"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_attack"
+            ],
+            "languages": [
+                "common"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    },
+    {
+        "id": "valkyr-herald-icc",
+        "kind": "monster",
+        "name": "Val'kyr Herald",
+        "source": "ICC",
+        "edition": "one",
+        "tags": [
+            "Flyby",
+            "Magic Resistance"
+        ],
+        "size": [
+            "large"
+        ],
+        "creature_type": {
+            "type": "undead",
+            "tags": [
+                "angel"
+            ]
+        },
+        "alignment": [
+            "neutral evil"
+        ],
+        "ac": [
+            {
+                "value": 18
+            }
+        ],
+        "hp": {
+            "average": 168,
+            "formula": "16d10 + 80"
+        },
+        "speed": {
+            "walk": 30,
+            "fly": 60
+        },
+        "abilities": {
+            "str": 23,
+            "dex": 18,
+            "con": 20,
+            "int": 19,
+            "wis": 20,
+            "cha": 23
+        },
+        "saves": {
+            "int": 9,
+            "wis": 10,
+            "cha": 11
+        },
+        "skills": {
+            "insight": 10,
+            "perception": 15,
+            "religion": 9
+        },
+        "senses": {
+            "truesight": 120
+        },
+        "passive_perception": 25,
+        "defenses": {
+            "immune": {
+                "types": [
+                    "cold",
+                    "necrotic"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "exhaustion",
+                    "frightened"
+                ]
+            }
+        },
+        "languages": [
+            "all"
+        ],
+        "cr": {
+            "cr": "14",
+            "xp": 11500,
+            "pb": 5
+        },
+        "initiative": {
+            "bonus": 9
+        },
+        "features": [
+            {
+                "id": "flyby",
+                "name": "Flyby",
+                "category": "traits",
+                "text": "The val'kyr doesn't provoke an Opportunity Attack when it flies out of an enemy's reach."
+            },
+            {
+                "id": "magic-resistance",
+                "name": "Magic Resistance",
+                "category": "traits",
+                "text": "The val'kyr has Advantage on saving throws against spells and other magical effects."
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "The val'kyr makes two Reaper's Spear attacks."
+            },
+            {
+                "id": "reapers-spear",
+                "name": "Reaper's Spear",
+                "category": "actions",
+                "text": "Melee or Ranged Attack Roll: +11, reach 10 ft. or range 40/120 ft. Hit: 13 (2d6 + 6) Piercing damage plus 27 (6d8) Necrotic damage.",
+                "action": {
+                    "range": "reach 10 ft. or range 40/120 ft.",
+                    "attack": {
+                        "kind": "melee_or_ranged",
+                        "bonus": 11,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 6,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "6d8",
+                                "type": "necrotic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "severed-essence",
+                "name": "Severed Essence",
+                "category": "bonus_actions",
+                "text": "Charisma Saving Throw: DC 19, one creature the val'kyr can see within 120 feet of itself. Failure: 18 (4d8) Psychic damage, and the val'kyr creates an animated spectral echo of the target in an unoccupied space the val'kyr can see within 30 feet of the target. Success: Half damage only.\n\nThe spectral echo has the same size, Armor Class, and saving throw bonuses as the target, and it has Hit Points equal to the amount of Psychic damage this action dealt to the target. At the start of each of the val'kyr's turns until the echo or the val'kyr is destroyed, the echo makes a psychic assault on the target, which the target perceives as a version of itself using its own weapons or spells against it. The target takes 18 (4d8) Psychic damage.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 4
+                },
+                "action": {
+                    "save": {
+                        "ability": "cha",
+                        "dc": 19,
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "4d8",
+                                "type": "psychic"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "necrotic",
+                "piercing",
+                "psychic"
+            ],
+            "saves_forced": [
+                "cha"
+            ],
+            "senses": [
+                "truesight"
+            ],
+            "movement": [
+                "fly"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "flyby",
+                "magic_resistance"
+            ],
+            "misc": [
+                "melee_attack",
+                "melee_weapon",
+                "ranged_attack",
+                "reach",
+                "thrown_weapon"
+            ],
+            "languages": [
+                "all"
+            ]
+        }
+    },
+    {
+        "id": "vengeful-geist-icc",
+        "kind": "monster",
+        "name": "Vengeful Geist",
+        "source": "ICC",
+        "edition": "one",
+        "tags": [
+            "Pack Tactics"
+        ],
+        "size": [
+            "medium"
+        ],
+        "creature_type": {
+            "type": "undead"
+        },
+        "alignment": [
+            "chaotic evil"
+        ],
+        "ac": [
+            {
+                "value": 14
+            }
+        ],
+        "hp": {
+            "average": 66,
+            "formula": "12d8 + 12"
+        },
+        "speed": {
+            "walk": 40,
+            "climb": 40
+        },
+        "abilities": {
+            "str": 18,
+            "dex": 19,
+            "con": 13,
+            "int": 11,
+            "wis": 10,
+            "cha": 8
+        },
+        "saves": {
+            "dex": 6
+        },
+        "senses": {
+            "darkvision": 60
+        },
+        "passive_perception": 10,
+        "defenses": {
+            "resist": {
+                "types": [
+                    "necrotic"
+                ]
+            },
+            "immune": {
+                "types": [
+                    "poison"
+                ]
+            },
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "exhaustion",
+                    "poisoned"
+                ]
+            }
+        },
+        "languages": [
+            "Common (WoW)",
+            "Forsaken",
+            "Orcish"
+        ],
+        "cr": {
+            "cr": "3",
+            "xp": 700,
+            "pb": 2
+        },
+        "initiative": {
+            "bonus": 4
+        },
+        "features": [
+            {
+                "id": "avoidance",
+                "name": "Avoidance",
+                "category": "traits",
+                "text": "If the geist is subjected to an effect that allows it to make a saving throw to take only half damage, it instead takes no damage if it succeeds on the save and only half damage if it fails. It can't use this trait if it has the Incapacitated condition."
+            },
+            {
+                "id": "pack-tactics",
+                "name": "Pack Tactics",
+                "category": "traits",
+                "text": "The geist has Advantage on an attack roll against a creature if at least one of the geist's allies is within 5 feet of the creature and the ally doesn't have the Incapacitated condition."
+            },
+            {
+                "id": "claw",
+                "name": "Claw",
+                "category": "actions",
+                "text": "Melee Attack Roll: +6, reach 5 ft. Hit: 11 (2d6 + 4) Slashing damage. If the geist used Leap immediately before this attack, it deals an extra 14 (4d6) Slashing damage, and the target has the Prone condition.",
+                "action": {
+                    "range": "reach 5 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 6,
+                        "damage": [
+                            {
+                                "dice": "2d6",
+                                "bonus": 4,
+                                "type": "slashing"
+                            },
+                            {
+                                "dice": "4d6",
+                                "type": "slashing"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "leap",
+                "name": "Leap",
+                "category": "bonus_actions",
+                "text": "The geist jumps up to 30 feet by spending 10 feet of movement.",
+                "uses": {
+                    "max": 1,
+                    "reset": "recharge",
+                    "recharge": 4
+                }
+            }
+        ],
+        "filters": {
+            "damage_dealt": [
+                "slashing"
+            ],
+            "conditions_inflicted": [
+                "prone"
+            ],
+            "senses": [
+                "darkvision"
+            ],
+            "movement": [
+                "climb"
+            ],
+            "traits": [
+                "pack_tactics"
+            ],
+            "misc": [
+                "melee_attack"
+            ],
+            "languages": [
+                "common"
+            ]
+        }
+    }
+]

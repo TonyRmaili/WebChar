@@ -1,0 +1,267 @@
+[
+    {
+        "id": "yarnspinner-dod",
+        "kind": "monster",
+        "name": "Yarnspinner",
+        "source": "DoD",
+        "edition": "classic",
+        "tags": [
+            "Legendary Resistances",
+            "Spider Climb",
+            "Web Walker"
+        ],
+        "size": [
+            "huge"
+        ],
+        "creature_type": {
+            "type": "fey",
+            "tags": [
+                "archfey"
+            ]
+        },
+        "alignment": [
+            "lawful good"
+        ],
+        "ac": [
+            {
+                "value": 16,
+                "from": [
+                    "natural armor"
+                ]
+            }
+        ],
+        "hp": {
+            "average": 138,
+            "formula": "12d12 + 60"
+        },
+        "speed": {
+            "walk": 40,
+            "climb": 40
+        },
+        "abilities": {
+            "str": 24,
+            "dex": 16,
+            "con": 21,
+            "int": 18,
+            "wis": 21,
+            "cha": 19
+        },
+        "saves": {
+            "con": 9,
+            "wis": 9,
+            "cha": 8
+        },
+        "skills": {
+            "perception": 13,
+            "stealth": 7
+        },
+        "senses": {
+            "truesight": 120
+        },
+        "passive_perception": 23,
+        "defenses": {
+            "condition_immune": {
+                "types": [
+                    "charmed",
+                    "frightened"
+                ]
+            }
+        },
+        "languages": [
+            "Common",
+            "Druidic",
+            "Sylvan"
+        ],
+        "cr": {
+            "cr": "10",
+            "xp": 5900,
+            "pb": 4
+        },
+        "initiative": {
+            "bonus": 3
+        },
+        "features": [
+            {
+                "id": "fey-rebirth",
+                "name": "Fey Rebirth",
+                "category": "traits",
+                "text": "If Yarnspinner dies in his Domain of Delight, he revives with all his hit points 1d4 days later in a safe location in that domain."
+            },
+            {
+                "id": "legendary-resistance",
+                "name": "Legendary Resistance",
+                "category": "traits",
+                "text": "If Yarnspinner fails a saving throw, he can choose to succeed instead.",
+                "uses": {
+                    "max": 3,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "spider-climb",
+                "name": "Spider Climb",
+                "category": "traits",
+                "text": "Yarnspinner can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check."
+            },
+            {
+                "id": "web-walker",
+                "name": "Web Walker",
+                "category": "traits",
+                "text": "Yarnspinner ignores movement restrictions caused by webbing."
+            },
+            {
+                "id": "web-weaver",
+                "name": "Web Weaver",
+                "category": "traits",
+                "text": "Yarnspinner can take 1 minute to craft one of the following structures out of webbing:\n\n- A 3-inch-thick, opaque wall of webbing consisting of up to three 10-foot-square sections, each of which must be anchored on at least two sides by other walls or surfaces. Each section has AC 12; 20 hit points; vulnerability to fire damage; and immunity to bludgeoning, poison, and psychic damage.\n- A hut small enough to fit in a 10-foot cube. The hut comes with a closable door and a comfortable bed made of webbing, sized for a Tiny, Small, or Medium creature.\n- A message consisting of no more than twenty-five characters, anchored at various points so it hangs in the air.",
+                "uses": {
+                    "max": 3,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "multiattack",
+                "name": "Multiattack",
+                "category": "actions",
+                "text": "Yarnspinner makes two Bite attacks and uses Spellcasting or Web once."
+            },
+            {
+                "id": "bite",
+                "name": "Bite",
+                "category": "actions",
+                "text": "Melee Weapon Attack: +11 to hit, reach 10 ft., one target. Hit: 17 (3d6 + 7) piercing damage plus 11 (2d10) poison damage.",
+                "action": {
+                    "range": "reach 10 ft.",
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": 11,
+                        "damage": [
+                            {
+                                "dice": "3d6",
+                                "bonus": 7,
+                                "type": "piercing"
+                            },
+                            {
+                                "dice": "2d10",
+                                "type": "poison"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "web",
+                "name": "Web",
+                "category": "actions",
+                "text": "Yarnspinner shoots webbing at one creature he can see within 120 feet of himself. The target must succeed on a DC 17 Strength saving throw or be restrained for 1 hour. The target can repeat the save at the end of each of its turns, ending the effect on itself on a success.",
+                "action": {
+                    "save": {
+                        "ability": "str",
+                        "dc": 17,
+                        "on_success": "none",
+                        "conditions": [
+                            "restrained"
+                        ]
+                    }
+                }
+            }
+        ],
+        "spellcasting": [
+            {
+                "name": "Spellcasting",
+                "ability": "wis",
+                "dc": 17,
+                "text": "Yarnspinner casts one of the following spells, requiring no material components and using Wisdom as the spellcasting ability (spell save DC 17):",
+                "display_as": "actions",
+                "groups": [
+                    {
+                        "how": "at_will",
+                        "spells": [
+                            {
+                                "spell": "faerie-fire-phb"
+                            },
+                            {
+                                "spell": "speak-with-animals-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 2,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "animal-friendship-phb"
+                            },
+                            {
+                                "spell": "create-food-and-water-phb"
+                            },
+                            {
+                                "spell": "revivify-phb"
+                            }
+                        ]
+                    },
+                    {
+                        "uses": 1,
+                        "per": "day",
+                        "each": true,
+                        "spells": [
+                            {
+                                "spell": "awaken-phb",
+                                "note": "(as an action)"
+                            },
+                            {
+                                "spell": "pass-without-trace-phb"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "flags": {
+            "named": true
+        },
+        "filters": {
+            "damage_dealt": [
+                "poison",
+                "piercing"
+            ],
+            "conditions_inflicted": [
+                "restrained",
+                "charmed"
+            ],
+            "saves_forced": [
+                "str",
+                "dex",
+                "wis"
+            ],
+            "senses": [
+                "truesight"
+            ],
+            "movement": [
+                "climb"
+            ],
+            "actions": [
+                "multiattack"
+            ],
+            "traits": [
+                "legendary_resistances",
+                "spider_climb",
+                "web_walker"
+            ],
+            "misc": [
+                "area_of_effect",
+                "melee_weapon_attack",
+                "reach"
+            ],
+            "languages": [
+                "common",
+                "druidic",
+                "sylvan"
+            ],
+            "spellcasting": [
+                "other"
+            ]
+        }
+    }
+]

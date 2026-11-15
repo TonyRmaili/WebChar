@@ -1,0 +1,769 @@
+{
+  "bigbys-hand-xphb": {
+    "label": "Arcane Hand (XPHB)",
+    "hash": "b2c2b812ae82a990",
+    "prompt": "c3f7d159249dc4d9",
+    "output": {
+      "text": "You create a Large hand of shimmering magical energy in an unoccupied space that you can see within range. The hand lasts for the duration, and it moves at your command, mimicking the movements of your own hand.\n\nThe hand is an object that has AC 20 and Hit Points equal to your Hit Point maximum. If it drops to 0 Hit Points, the spell ends. The hand doesn't occupy its space.\n\nWhen you cast the spell and as a Bonus Action on your later turns, you can move the hand up to 60 feet and then cause one of the following effects:\n\n- **Clenched Fist.** The hand strikes a target within 5 feet of it. Make a melee spell attack. On a hit, the target takes 5d8 Force damage.\n- **Forceful Hand.** The hand attempts to push a Huge or smaller creature within 5 feet of it. The target must succeed on a Strength saving throw, or the hand pushes the target up to 5 feet plus a number of feet equal to five times your spellcasting ability modifier. The hand moves with the target, remaining within 5 feet of it.\n- **Grasping Hand.** The hand attempts to grapple a Huge or smaller creature within 5 feet of it. The target must succeed on a Dexterity saving throw, or the target has the Grappled condition, with an escape DC equal to your spell save DC. While the hand grapples the target, you can take a Bonus Action to cause the hand to crush it, dealing Bludgeoning damage to the target equal to 4d6 plus your spellcasting ability modifier.\n- **Interposing Hand.** The hand grants you Half Cover against attacks and other effects that originate from its space or that pass through it. In addition, its space counts as Difficult Terrain for your enemies.\n\n**Using a Higher-Level Spell Slot.** The damage of the Clenched Fist increases by 2d8 and the damage of the Grasping Hand increases by 2d6 for each spell slot level above 5.",
+      "features": [
+        {
+          "id": "clenched-fist",
+          "name": "Clenched Fist",
+          "level": 1,
+          "category": "bonus_actions",
+          "action": {
+            "range": "5 ft.",
+            "attack": {
+              "kind": "melee",
+              "bonus": "pb + spell_mod",
+              "damage": [
+                {
+                  "dice": "5d8",
+                  "type": "force",
+                  "per_slot": "2d8"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "forceful-hand",
+          "name": "Forceful Hand",
+          "level": 1,
+          "category": "bonus_actions",
+          "action": {
+            "range": "5 ft.",
+            "save": {
+              "ability": "str",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "none"
+            }
+          }
+        },
+        {
+          "id": "grasping-hand",
+          "name": "Grasping Hand",
+          "level": 1,
+          "category": "bonus_actions",
+          "action": {
+            "range": "5 ft.",
+            "damage": [
+              {
+                "dice": "4d6",
+                "bonus": "spell_mod",
+                "type": "bludgeoning",
+                "per_slot": "2d6"
+              }
+            ],
+            "save": {
+              "ability": "dex",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "none",
+              "conditions": [
+                "grappled"
+              ]
+            }
+          }
+        }
+      ],
+      "extra_grants": {}
+    },
+    "problems": [],
+    "tokens": 11936,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "low",
+    "at": "2026-11-14T15:47:16+00:00"
+  },
+  "cure-wounds-xphb": {
+    "label": "Cure Wounds (XPHB)",
+    "hash": "280fc6ea4c47ccf3",
+    "prompt": "c3f7d159249dc4d9",
+    "output": {
+      "text": "A creature you touch regains a number of Hit Points equal to 2d8 plus your spellcasting ability modifier.\n\n**Using a Higher-Level Spell Slot.** The healing increases by 2d8 for each spell slot level above 1.",
+      "features": [
+        {
+          "id": "cure-wounds",
+          "name": "Cure Wounds",
+          "level": 1,
+          "category": "actions",
+          "action": {
+            "range": "touch",
+            "heal": "2d8 + spell_mod",
+            "heal_per_slot": "2d8"
+          }
+        }
+      ],
+      "extra_grants": {}
+    },
+    "problems": [],
+    "tokens": 10696,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "low",
+    "at": "2026-11-14T15:47:27+00:00"
+  },
+  "fireball-xphb": {
+    "label": "Fireball (XPHB)",
+    "hash": "45c0f5620579d6aa",
+    "prompt": "c3f7d159249dc4d9",
+    "output": {
+      "text": "A bright streak flashes from you to a point you choose within range and then blossoms with a low roar into a fiery explosion. Each creature in a 20-foot-radius Sphere centered on that point makes a Dexterity saving throw, taking 8d6 Fire damage on a failed save or half as much damage on a successful one.\n\nFlammable objects in the area that aren't being worn or carried start burning.\n\n**Using a Higher-Level Spell Slot.** The damage increases by 1d6 for each spell slot level above 3.",
+      "features": [
+        {
+          "id": "fireball",
+          "name": "Fireball",
+          "level": 1,
+          "category": "actions",
+          "action": {
+            "range": "150 ft.",
+            "area": "20-foot-radius sphere",
+            "save": {
+              "ability": "dex",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "half",
+              "damage": [
+                {
+                  "dice": "8d6",
+                  "type": "fire",
+                  "per_slot": "1d6"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "extra_grants": {}
+    },
+    "problems": [],
+    "tokens": 10872,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "low",
+    "at": "2026-11-14T15:47:30+00:00"
+  },
+  "mage-armor-xphb": {
+    "label": "Mage Armor (XPHB)",
+    "hash": "2ed2ab4439561870",
+    "prompt": "c3f7d159249dc4d9",
+    "output": {
+      "text": "You touch a willing creature who isn't wearing armor. Until the spell ends, the target's base AC becomes 13 plus its Dexterity modifier. The spell ends early if the target dons armor.",
+      "features": [
+        {
+          "id": "mage-armor",
+          "name": "Mage Armor",
+          "level": 1,
+          "category": "actions",
+          "toggle": {
+            "modifiers": [
+              {
+                "target": "ac",
+                "base": "13 + dex_mod",
+                "requires": [
+                  "no_armor"
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "extra_grants": {}
+    },
+    "problems": [],
+    "tokens": 10610,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "low",
+    "at": "2026-11-14T15:47:34+00:00"
+  },
+  "shield-xphb": {
+    "label": "Shield (XPHB)",
+    "hash": "e3d83ff2bcdba868",
+    "prompt": "c3f7d159249dc4d9",
+    "output": {
+      "text": "An imperceptible barrier of magical force protects you. Until the start of your next turn, you have a +5 bonus to AC, including against the triggering attack, and you take no damage from Magic Missile.",
+      "features": [
+        {
+          "id": "shield",
+          "name": "Shield",
+          "level": 1,
+          "category": "reactions",
+          "toggle": {
+            "modifiers": [
+              {
+                "target": "ac",
+                "add": 5
+              }
+            ]
+          }
+        }
+      ],
+      "extra_grants": {}
+    },
+    "problems": [],
+    "tokens": 10703,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "low",
+    "at": "2026-11-14T15:47:39+00:00"
+  },
+  "bless-xphb": {
+    "label": "Bless (XPHB)",
+    "hash": "096c6893517afd5d",
+    "prompt": "c3f7d159249dc4d9",
+    "output": {
+      "text": "You bless up to three creatures within range. Whenever a target makes an attack roll or a saving throw before the spell ends, the target adds 1d4 to the attack roll or save.\n\n**Using a Higher-Level Spell Slot.** You can target one additional creature for each spell slot level above 1.",
+      "features": [
+        {
+          "id": "bless",
+          "name": "Bless",
+          "level": 1,
+          "category": "actions",
+          "toggle": {
+            "modifiers": [
+              {
+                "target": "attack",
+                "add": "1d4"
+              },
+              {
+                "target": "save.str",
+                "add": "1d4"
+              },
+              {
+                "target": "save.dex",
+                "add": "1d4"
+              },
+              {
+                "target": "save.con",
+                "add": "1d4"
+              },
+              {
+                "target": "save.int",
+                "add": "1d4"
+              },
+              {
+                "target": "save.wis",
+                "add": "1d4"
+              },
+              {
+                "target": "save.cha",
+                "add": "1d4"
+              }
+            ]
+          }
+        }
+      ],
+      "extra_grants": {}
+    },
+    "problems": [],
+    "tokens": 10918,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "low",
+    "at": "2026-11-14T15:50:59+00:00"
+  },
+  "heroism-xphb": {
+    "label": "Heroism (XPHB)",
+    "hash": "8926565da69607c9",
+    "prompt": "c3f7d159249dc4d9",
+    "output": {
+      "text": "A willing creature you touch is imbued with bravery. Until the spell ends, the creature is immune to the Frightened condition and gains Temporary Hit Points equal to your spellcasting ability modifier at the start of each of its turns.\n\n**Using a Higher-Level Spell Slot.** You can target one additional creature for each spell slot level above 1.",
+      "features": [
+        {
+          "id": "heroism",
+          "name": "Heroism",
+          "level": 1,
+          "category": "actions",
+          "action": {
+            "range": "touch",
+            "temp_hp": "spell_mod"
+          },
+          "toggle": {
+            "grants": {
+              "defenses": {
+                "condition_immune": [
+                  "frightened"
+                ]
+              }
+            }
+          }
+        }
+      ],
+      "extra_grants": {}
+    },
+    "problems": [],
+    "tokens": 10920,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "low",
+    "at": "2026-11-14T15:51:05+00:00"
+  },
+  "hex-xphb": {
+    "label": "Hex (XPHB)",
+    "hash": "6c5c9728637ed0e2",
+    "prompt": "c284811f81590d8f",
+    "output": {
+      "text": "You place a curse on a creature that you can see within range. Until the spell ends, you deal an extra 1d6 Necrotic damage to the target whenever you hit it with an attack roll. Also, choose one ability when you cast the spell. The target has Disadvantage on ability checks made with the chosen ability.\n\nIf the target drops to 0 Hit Points before this spell ends, you can take a Bonus Action on a later turn to curse a new creature.\n\n**Using a Higher-Level Spell Slot.** Your Concentration can last longer with a spell slot of level 2 (up to 4 hours), 3-4 (up to 8 hours), or 5+ (24 hours).",
+      "features": [
+        {
+          "id": "hex",
+          "name": "Hex",
+          "level": 1,
+          "category": "bonus_actions",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": "1d6",
+                  "type": "necrotic"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "extra_grants": {}
+    },
+    "problems": [],
+    "tokens": 11228,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "low",
+    "at": "2026-11-14T15:58:01+00:00"
+  },
+  "magic-missile-xphb": {
+    "label": "Magic Missile (XPHB)",
+    "hash": "f410348e8f5876f7",
+    "prompt": "c284811f81590d8f",
+    "output": {
+      "text": "You create three glowing darts of magical force. Each dart strikes a creature of your choice that you can see within range. A dart deals 1d4 + 1 Force damage to its target. The darts all strike simultaneously, and you can direct them to hit one creature or several.\n\n**Using a Higher-Level Spell Slot.** The spell creates one more dart for each spell slot level above 1.",
+      "features": [
+        {
+          "id": "magic-missile",
+          "name": "Magic Missile",
+          "level": 1,
+          "category": "actions",
+          "action": {
+            "damage": [
+              {
+                "dice": "1d4",
+                "bonus": 1,
+                "type": "force"
+              }
+            ]
+          }
+        }
+      ],
+      "extra_grants": {}
+    },
+    "problems": [],
+    "tokens": 11113,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "low",
+    "at": "2026-11-14T15:58:06+00:00"
+  },
+  "spiritual-weapon-xphb": {
+    "label": "Spiritual Weapon (XPHB)",
+    "hash": "07603b990f01a750",
+    "prompt": "c3f7d159249dc4d9",
+    "output": {
+      "text": "You create a floating, spectral force that resembles a weapon of your choice and lasts for the duration. The force appears within range in a space of your choice, and you can immediately make one melee spell attack against one creature within 5 feet of the force. On a hit, the target takes Force damage equal to 1d8 plus your spellcasting ability modifier.\n\nAs a Bonus Action on your later turns, you can move the force up to 20 feet and repeat the attack against a creature within 5 feet of it.\n\n**Using a Higher-Level Spell Slot.** The damage increases by 1d8 for every slot level above 2.",
+      "features": [
+        {
+          "id": "spiritual-weapon",
+          "name": "Spiritual Weapon",
+          "level": 1,
+          "category": "bonus_actions",
+          "action": {
+            "range": "5 ft.",
+            "attack": {
+              "kind": "melee",
+              "bonus": "pb + spell_mod",
+              "damage": [
+                {
+                  "dice": "1d8",
+                  "bonus": "spell_mod",
+                  "type": "force",
+                  "per_slot": "1d8"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "extra_grants": {}
+    },
+    "problems": [],
+    "tokens": 10907,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "low",
+    "at": "2026-11-14T15:51:21+00:00"
+  },
+  "toll-the-dead-xphb": {
+    "label": "Toll the Dead (XPHB)",
+    "hash": "823563e66841c0d3",
+    "prompt": "c284811f81590d8f",
+    "output": {
+      "text": "You point at one creature you can see within range, and the single chime of a dolorous bell is audible within 10 feet of the target. The target must succeed on a Wisdom saving throw or take 1d8 Necrotic damage. If the target is missing any of its Hit Points, it instead takes 1d12 Necrotic damage.\n\n**Cantrip Upgrade.** The damage increases by one die when you reach levels 5 (2d8 or 2d12), 11 (3d8 or 3d12), and 17 (4d8 or 4d12).",
+      "features": [
+        {
+          "id": "toll-the-dead",
+          "name": "Toll the Dead",
+          "level": 1,
+          "category": "actions",
+          "action": {
+            "range": "60 ft.",
+            "save": {
+              "ability": "wis",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "none",
+              "damage": [
+                {
+                  "dice": {
+                    "1": "1d8",
+                    "5": "2d8",
+                    "11": "3d8",
+                    "17": "4d8"
+                  },
+                  "type": "necrotic"
+                },
+                {
+                  "dice": {
+                    "1": "1d12",
+                    "5": "2d12",
+                    "11": "3d12",
+                    "17": "4d12"
+                  },
+                  "type": "necrotic",
+                  "condition": "instead if the target is missing any of its Hit Points"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "extra_grants": {}
+    },
+    "problems": [],
+    "tokens": 11289,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "low",
+    "at": "2026-11-14T15:58:10+00:00"
+  },
+  "acid-splash-xphb": {
+    "label": "Acid Splash (XPHB)",
+    "hash": "f023427464ad4dfa",
+    "prompt": "52ca5b5a7bfda30b",
+    "output": {
+      "features": [
+        {
+          "id": "acid-splash",
+          "name": "Acid Splash",
+          "level": 1,
+          "category": "actions",
+          "action": {
+            "area": "5-foot-radius sphere",
+            "save": {
+              "ability": "dex",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "none",
+              "damage": [
+                {
+                  "dice": {
+                    "1": "1d6",
+                    "5": "2d6",
+                    "11": "3d6",
+                    "17": "4d6"
+                  },
+                  "type": "acid"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "extra_grants": {}
+    },
+    "problems": [],
+    "tokens": 9481,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "low",
+    "at": "2026-11-14T17:42:43+00:00"
+  },
+  "aid-xphb": {
+    "label": "Aid (XPHB)",
+    "hash": "930103783ec160b9",
+    "prompt": "62e7d20aff5f507b",
+    "output": {
+      "features": [
+        {
+          "id": "aid",
+          "name": "Aid",
+          "level": 1,
+          "category": "actions",
+          "toggle": {
+            "modifiers": [
+              {
+                "target": "hp_max",
+                "add": 5
+              }
+            ]
+          }
+        }
+      ],
+      "extra_grants": {}
+    },
+    "problems": [],
+    "tokens": 9549,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "low",
+    "at": "2026-11-14T17:48:03+00:00"
+  },
+  "alarm-xphb": {
+    "label": "Alarm (XPHB)",
+    "hash": "aba38276aee40006",
+    "prompt": "52ca5b5a7bfda30b",
+    "output": {
+      "features": [],
+      "extra_grants": {}
+    },
+    "problems": [],
+    "tokens": 9327,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "low",
+    "at": "2026-11-14T17:42:54+00:00"
+  },
+  "alter-self-xphb": {
+    "label": "Alter Self (XPHB)",
+    "hash": "1a76acf3ab21ef5c",
+    "prompt": "06385df5aa8d7c7e",
+    "output": {
+      "features": [
+        {
+          "id": "aquatic-adaptation",
+          "name": "Aquatic Adaptation",
+          "level": 1,
+          "category": "actions",
+          "toggle": {
+            "grants": {
+              "speed": {
+                "swim": "walk"
+              }
+            }
+          }
+        },
+        {
+          "id": "natural-weapons",
+          "name": "Natural Weapons",
+          "level": 1,
+          "category": "actions",
+          "action": {
+            "attack": {
+              "kind": "melee",
+              "bonus": "pb + spell_mod",
+              "damage": [
+                {
+                  "dice": "1d6",
+                  "bonus": "spell_mod",
+                  "type": "slashing",
+                  "condition": "claws"
+                },
+                {
+                  "dice": "1d6",
+                  "bonus": "spell_mod",
+                  "type": "piercing",
+                  "condition": "fangs or horns"
+                },
+                {
+                  "dice": "1d6",
+                  "bonus": "spell_mod",
+                  "type": "bludgeoning",
+                  "condition": "hooves"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "extra_grants": {}
+    },
+    "problems": [],
+    "tokens": 10544,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "low",
+    "at": "2026-11-14T18:55:36+00:00"
+  },
+  "animal-friendship-xphb": {
+    "label": "Animal Friendship (XPHB)",
+    "hash": "356d25d5103438e0",
+    "prompt": "62e7d20aff5f507b",
+    "output": {
+      "features": [
+        {
+          "id": "animal-friendship",
+          "name": "Animal Friendship",
+          "level": 1,
+          "category": "actions",
+          "action": {
+            "save": {
+              "ability": "wis",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "none",
+              "conditions": [
+                "charmed"
+              ]
+            }
+          }
+        }
+      ],
+      "extra_grants": {}
+    },
+    "problems": [],
+    "tokens": 9445,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "low",
+    "at": "2026-11-14T17:48:20+00:00"
+  },
+  "bane-xphb": {
+    "label": "Bane (XPHB)",
+    "hash": "7916ab6a4db79aab",
+    "prompt": "62e7d20aff5f507b",
+    "output": {
+      "features": [
+        {
+          "id": "bane",
+          "name": "Bane",
+          "level": 1,
+          "category": "actions",
+          "action": {
+            "save": {
+              "ability": "cha",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "none"
+            }
+          }
+        }
+      ],
+      "extra_grants": {}
+    },
+    "problems": [],
+    "tokens": 9671,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "low",
+    "at": "2026-11-14T17:48:23+00:00"
+  },
+  "command-xphb": {
+    "label": "Command (XPHB)",
+    "hash": "7cafbadf3567d1a5",
+    "prompt": "62e7d20aff5f507b",
+    "output": {
+      "features": [
+        {
+          "id": "command",
+          "name": "Command",
+          "level": 1,
+          "category": "actions",
+          "action": {
+            "save": {
+              "ability": "wis",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "none",
+              "conditions": [
+                "prone"
+              ]
+            }
+          }
+        }
+      ],
+      "extra_grants": {}
+    },
+    "problems": [],
+    "tokens": 9555,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "low",
+    "at": "2026-11-14T17:48:29+00:00"
+  },
+  "hold-person-xphb": {
+    "label": "Hold Person (XPHB)",
+    "hash": "622b029b6274fe4f",
+    "prompt": "62e7d20aff5f507b",
+    "output": {
+      "features": [
+        {
+          "id": "hold-person",
+          "name": "Hold Person",
+          "level": 1,
+          "category": "actions",
+          "action": {
+            "save": {
+              "ability": "wis",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "none",
+              "conditions": [
+                "paralyzed"
+              ]
+            }
+          }
+        }
+      ],
+      "extra_grants": {}
+    },
+    "problems": [],
+    "tokens": 9494,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "low",
+    "at": "2026-11-14T17:48:32+00:00"
+  },
+  "shillelagh-xphb": {
+    "label": "Shillelagh (XPHB)",
+    "hash": "1910c17ffec1f73d",
+    "prompt": "06385df5aa8d7c7e",
+    "output": {
+      "features": [
+        {
+          "id": "shillelagh",
+          "name": "Shillelagh",
+          "level": 1,
+          "category": "bonus_actions",
+          "action": {
+            "attack": {
+              "kind": "melee",
+              "bonus": "pb + spell_mod",
+              "damage": [
+                {
+                  "dice": {
+                    "1": "1d8",
+                    "5": "1d10",
+                    "11": "1d12",
+                    "17": "2d6"
+                  },
+                  "bonus": "spell_mod",
+                  "type": "weapon"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "extra_grants": {}
+    },
+    "problems": [],
+    "tokens": 9744,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "low",
+    "at": "2026-11-14T18:55:47+00:00"
+  }
+}
