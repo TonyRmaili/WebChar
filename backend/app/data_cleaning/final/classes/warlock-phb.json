@@ -1,0 +1,774 @@
+[
+    {
+        "id": "warlock-phb",
+        "kind": "class",
+        "name": "Warlock",
+        "source": "PHB",
+        "edition": "classic",
+        "srd": {
+            "5.1": "Warlock"
+        },
+        "reprinted_as": [
+            "warlock-xphb"
+        ],
+        "hit_die": "d8",
+        "hp": {
+            "first": "8 + con_mod",
+            "per_level": "5 + con_mod"
+        },
+        "saves": [
+            "wis",
+            "cha"
+        ],
+        "grants": {
+            "weapons": [
+                "simple_weapons"
+            ],
+            "armor": [
+                "light"
+            ],
+            "items": [
+                {
+                    "item": "leather-armor-phb",
+                    "qty": 1
+                },
+                {
+                    "item": "dagger-phb",
+                    "qty": 2
+                }
+            ]
+        },
+        "choices": [
+            {
+                "type": "pool",
+                "id": "skills",
+                "label": "Skills",
+                "grant": "skills",
+                "count": 2,
+                "from": [
+                    "arcana",
+                    "deception",
+                    "history",
+                    "intimidation",
+                    "investigation",
+                    "nature",
+                    "religion"
+                ]
+            },
+            {
+                "type": "bundle",
+                "id": "starting_equipment",
+                "label": "Starting Equipment",
+                "options": [
+                    {
+                        "id": "a",
+                        "label": "Light Crossbow, Crossbow Bolts (20)",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "light-crossbow-phb",
+                                    "qty": 1
+                                },
+                                {
+                                    "item": "crossbow-bolts-20-phb",
+                                    "qty": 1
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "id": "b",
+                        "label": "Simple Weapons",
+                        "choices": [
+                            {
+                                "type": "pool",
+                                "id": "items",
+                                "label": "Simple Weapons",
+                                "grant": "items",
+                                "count": 1,
+                                "from": "simple_weapons"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "bundle",
+                "id": "starting_equipment_2",
+                "label": "Starting Equipment",
+                "options": [
+                    {
+                        "id": "a",
+                        "label": "Component Pouch",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "component-pouch-phb",
+                                    "qty": 1
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "id": "b",
+                        "label": "Arcane Focuses",
+                        "choices": [
+                            {
+                                "type": "pool",
+                                "id": "items_2",
+                                "label": "Arcane Focuses",
+                                "grant": "items",
+                                "count": 1,
+                                "from": "arcane_focuses"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "bundle",
+                "id": "starting_equipment_3",
+                "label": "Starting Equipment",
+                "options": [
+                    {
+                        "id": "a",
+                        "label": "Scholar's Pack",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "scholars-pack-phb",
+                                    "qty": 1
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "id": "b",
+                        "label": "Dungeoneer's Pack",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "dungeoneers-pack-phb",
+                                    "qty": 1
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "type": "pool",
+                "id": "items_3",
+                "label": "Simple Weapons",
+                "grant": "items",
+                "count": 1,
+                "from": "simple_weapons"
+            }
+        ],
+        "starting_gold": "4d4 × 10",
+        "multiclass": {
+            "requires": [
+                {
+                    "cha": 13
+                }
+            ],
+            "grants": {
+                "weapons": [
+                    "simple_weapons"
+                ],
+                "armor": [
+                    "light"
+                ]
+            }
+        },
+        "subclass": {
+            "title": "Otherworldly Patron",
+            "level": 1,
+            "text": "At 1st level, you have struck a bargain with an otherworldly being chosen from the list of available patrons. Your choice grants you features at 1st level and again at 6th, 10th, and 14th level."
+        },
+        "columns": [
+            {
+                "id": "invocations",
+                "name": "Invocations Known",
+                "values": {
+                    "2": 2,
+                    "5": 3,
+                    "7": 4,
+                    "9": 5,
+                    "12": 6,
+                    "15": 7,
+                    "18": 8
+                }
+            }
+        ],
+        "spellcasting": {
+            "ability": "cha",
+            "progression": "pact",
+            "list": "warlock-phb",
+            "cantrips": {
+                "1": 2,
+                "4": 3,
+                "10": 4
+            },
+            "known": {
+                "1": 2,
+                "2": 3,
+                "3": 4,
+                "4": 5,
+                "5": 6,
+                "6": 7,
+                "7": 8,
+                "8": 9,
+                "9": 10,
+                "11": 11,
+                "13": 12,
+                "15": 13,
+                "17": 14,
+                "19": 15
+            },
+            "pact": {
+                "slots": {
+                    "1": 1,
+                    "2": 2,
+                    "11": 3,
+                    "17": 4
+                },
+                "level": {
+                    "1": 1,
+                    "3": 2,
+                    "5": 3,
+                    "7": 4,
+                    "9": 5
+                }
+            },
+            "arcanum": {
+                "11": 6,
+                "13": 7,
+                "15": 8,
+                "17": 9
+            }
+        },
+        "progression": [
+            {
+                "level": 1,
+                "features": [
+                    "warlock-phb:pact-magic"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "otherworldly_patron_1",
+                        "label": "Otherworldly Patron",
+                        "grant": "subclass",
+                        "count": 1,
+                        "from": "warlock-phb"
+                    }
+                ]
+            },
+            {
+                "level": 2,
+                "features": [
+                    "warlock-phb:eldritch-invocations"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "eldritch_invocations_2",
+                        "label": "Eldritch Invocations",
+                        "grant": "optional_features",
+                        "count": 2,
+                        "from": {
+                            "feature_type": [
+                                "eldritch_invocation"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 3,
+                "features": [
+                    "warlock-phb:pact-boon"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "pact_boon_3",
+                        "label": "Pact Boon",
+                        "grant": "optional_features",
+                        "count": 1,
+                        "from": {
+                            "feature_type": [
+                                "pact_boon"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 4,
+                "features": [],
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_4",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_4",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_4",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 5,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "eldritch_invocations_5",
+                        "label": "Eldritch Invocations",
+                        "grant": "optional_features",
+                        "count": 1,
+                        "from": {
+                            "feature_type": [
+                                "eldritch_invocation"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 6,
+                "subclass_features": true
+            },
+            {
+                "level": 7,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "eldritch_invocations_7",
+                        "label": "Eldritch Invocations",
+                        "grant": "optional_features",
+                        "count": 1,
+                        "from": {
+                            "feature_type": [
+                                "eldritch_invocation"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 8,
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_8",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_8",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_8",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 9,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "eldritch_invocations_9",
+                        "label": "Eldritch Invocations",
+                        "grant": "optional_features",
+                        "count": 1,
+                        "from": {
+                            "feature_type": [
+                                "eldritch_invocation"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 10,
+                "subclass_features": true
+            },
+            {
+                "level": 11,
+                "features": [
+                    "warlock-phb:mystic-arcanum-6th-level"
+                ]
+            },
+            {
+                "level": 12,
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_12",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_12",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_12",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "pool",
+                        "id": "eldritch_invocations_12",
+                        "label": "Eldritch Invocations",
+                        "grant": "optional_features",
+                        "count": 1,
+                        "from": {
+                            "feature_type": [
+                                "eldritch_invocation"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 13,
+                "upgrades": [
+                    "warlock-phb:mystic-arcanum-6th-level"
+                ]
+            },
+            {
+                "level": 14,
+                "subclass_features": true
+            },
+            {
+                "level": 15,
+                "upgrades": [
+                    "warlock-phb:mystic-arcanum-6th-level"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "eldritch_invocations_15",
+                        "label": "Eldritch Invocations",
+                        "grant": "optional_features",
+                        "count": 1,
+                        "from": {
+                            "feature_type": [
+                                "eldritch_invocation"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 16,
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_16",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_16",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_16",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 17,
+                "upgrades": [
+                    "warlock-phb:mystic-arcanum-6th-level"
+                ]
+            },
+            {
+                "level": 18,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "eldritch_invocations_18",
+                        "label": "Eldritch Invocations",
+                        "grant": "optional_features",
+                        "count": 1,
+                        "from": {
+                            "feature_type": [
+                                "eldritch_invocation"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 19,
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_19",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_19",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_19",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 20,
+                "features": [
+                    "warlock-phb:eldritch-master"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "warlock-phb:pact-magic",
+                "name": "Pact Magic",
+                "level": 1,
+                "text": "Your arcane research and the magic bestowed on you by your patron have given you facility with spells. See chapter 10 for the general rules of spellcasting and chapter 11 for the warlock spell list.\n\n**Cantrips.** You know two cantrips of your choice from the warlock spell list. You learn additional warlock cantrips of your choice at higher levels, as shown in the Cantrips Known column of the Warlock table.\n\n**Spell Slots.** The Warlock table shows how many spell slots you have to cast your warlock spells of 1st through 5th level. The table also shows what the level of those slots is; all of your spell slots are the same level. To cast one of your warlock spells of 1st level or higher, you must expend a spell slot. You regain all expended spell slots when you finish a short or long rest.\n\nFor example, when you are 5th level, you have two 3rd-level spell slots. To cast the 1st-level spell Witch Bolt, you must spend one of those slots, and you cast it as a 3rd-level spell.\n\n**Spells Known of 1st Level and Higher.** At 1st level, you know two 1st-level spells of your choice from the warlock spell list.\n\nThe Spells Known column of the Warlock table shows when you learn more warlock spells of your choice of 1st level and higher. A spell you choose must be of a level no higher than what's shown in the table's Slot Level column for your level. When you reach 6th level, for example, you learn a new warlock spell, which can be 1st, 2nd, or 3rd level.\n\nAdditionally, when you gain a level in this class, you can choose one of the warlock spells you know and replace it with another spell from the warlock spell list, which also must be of a level for which you have spell slots.\n\n**Spellcasting Ability.** Charisma is your spellcasting ability for your warlock spells, so you use your Charisma whenever a spell refers to your spellcasting ability. In addition, you use your Charisma modifier when setting the saving throw DC for a warlock spell you cast and when making an attack roll with one.\n\n**Spell save DC** = 8 + your proficiency bonus + your Charisma modifier\n\n**Spell attack modifier** = your proficiency bonus + your Charisma modifier\n\n**Spellcasting Focus.** You can use an arcane focus as a spellcasting focus for your warlock spells.",
+                "srd": {
+                    "5.1": "Pact Magic"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "warlock-phb:eldritch-invocations",
+                "name": "Eldritch Invocations",
+                "level": 2,
+                "text": "In your study of occult lore, you have unearthed eldritch invocations, fragments of forbidden knowledge that imbue you with an abiding magical ability.\n\nAt 2nd level, you gain two eldritch invocations of your choice. A list of the available options can be found on the Optional Features page. When you gain certain warlock levels, you gain additional invocations of your choice, as shown in the Invocations Known column of the Warlock table.\n\nAdditionally, when you gain a level in this class, you can choose one of the invocations you know and replace it with another invocation that you could learn at that level.\n\nIf an eldritch invocation has prerequisites, you must meet them to learn it. You can learn the invocation at the same time that you meet its prerequisites. A level prerequisite refers to your level in this class.",
+                "srd": {
+                    "5.1": "Eldritch Invocations"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "warlock-phb:pact-boon",
+                "name": "Pact Boon",
+                "level": 3,
+                "text": "At 3rd level, your otherworldly patron bestows a gift upon you for your loyal service. You gain one of the following features of your choice.\n\n- Pact of the Chain\n- Pact of the Blade\n- Pact of the Tome\n- Pact of the Talisman",
+                "srd": {
+                    "5.1": "Pact Boon"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "warlock-phb:mystic-arcanum-6th-level",
+                "name": "Mystic Arcanum (6th level)",
+                "level": 11,
+                "text": "At 11th level, your patron bestows upon you a magical secret called an arcanum. Choose one 6th-level spell from the warlock spell list as this arcanum.\n\nYou can cast your arcanum spell once without expending a spell slot. You must finish a long rest before you can do so again.\n\nAt higher levels, you gain more warlock spells of your choice that can be cast in this way: one 7th-level spell at 13th level, one 8th-level spell at 15th level, and one 9th-level spell at 17th level. You regain all uses of your Mystic Arcanum when you finish a long rest.\n\n**Mystic Arcanum (7th level).** At 13th level, your patron bestows upon you a magical secret called an arcanum. Choose one 7th-level spell from the warlock spell list as this arcanum.\n\nYou can cast your arcanum spell once without expending a spell slot. You must finish a long rest before you can do so again.\n\n**Mystic Arcanum (8th level).** At 15th level, your patron bestows upon you a magical secret called an arcanum. Choose one 8th-level spell from the warlock spell list as this arcanum.\n\nYou can cast your arcanum spell once without expending a spell slot. You must finish a long rest before you can do so again.\n\n**Mystic Arcanum (9th level).** At 17th level, your patron bestows upon you a magical secret called an arcanum. Choose one 9th-level spell from the warlock spell list as this arcanum.\n\nYou can cast your arcanum spell once without expending a spell slot. You must finish a long rest before you can do so again.",
+                "srd": {
+                    "5.1": "Mystic Arcanum (6th level)"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "warlock-phb:eldritch-master",
+                "name": "Eldritch Master",
+                "level": 20,
+                "text": "At 20th level, you can draw on your inner reserve of mystical power while entreating your patron to regain expended spell slots. You can spend 1 minute entreating your patron for aid to regain all your expended spell slots from your Pact Magic feature. Once you regain spell slots with this feature, you must finish a long rest before you can do so again.",
+                "srd": {
+                    "5.1": "Eldritch Master"
+                },
+                "category": "actions",
+                "uses": {
+                    "max": 1,
+                    "reset": "long"
+                }
+            }
+        ],
+        "resources": []
+    }
+]

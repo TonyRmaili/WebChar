@@ -169,7 +169,7 @@ export default function Sheets({ onView }) {
     setBusy(true);
     setPartyError(null);
     try {
-      await grantExperience(delta);
+      await grantExperience(delta, activeChars.map((c) => c.id));
       return true;
     } catch (e) {
       setPartyError(`Couldn't change experience — ${e.message}`);

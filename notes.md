@@ -1,18 +1,51 @@
+# intersting extra data material
+1. actions ; srd
+2. bastions
+3. conditionsdiseases; srd
+4. charcreationoptions
+5. cultsboons
+6. deities ; srd
+7. languages; srd
+8. encounters (table)
+9. loot (table)
+10. names; perhaps replaces fantasynames generator in python?
+11. objects
+12. rewards
+13. senses ;srd
+14. skills; srd
+15. tables; srd
+16. trapshazards; srd
+17. variantrules; srd
+18. vehicles
 
+
+# Fixes for the builder
+1. More than one epic boon can get randomized=?
+# Fixes for the define
+-general: Can't delete any features that follow from the builder. 
+
+
+-Spells
+1. messy casting tags for always prepared and at will; all of those. 
+2. Some bug blocked loading spells from catalogue? after the define changes. Noticed after creating a spell from the define section. 
+
+-Feats
+1. allow the remaining optional_features to be selected here? What happens when a class example warlock classic is selected? were will they land automatically. test this after some srd classic classes are in. After this perhaps change the tab name to Features.
+
+-Features
+1. Now it just hosts player-made things. Name suggestions
+    Effects
+
+-Inventory
+1. consumable section needs an amount stepper in the tag line, were edit is
+2. weapons like frost brand (group item) is not selectable from inventory "add from catalogue"
+
+# New features
+random encounter builder and difficulty calculator
 
 # Stores endpoints and API
-
-
 let claude revisit the new routers character and catalogue
 and mention the update_character bug
-
-# Overall 
-1. if lag persists use:
-    fix by using selectors such as const melee = useCharStore((s) => s.charData.offense.melee);
-                                   const updateCharField = useCharStore((s) => s.updateCharField);
-    
-2. Major function breakout. Far too many repeatable functions everywere
-    math.js, functions
 
 
     
@@ -28,27 +61,18 @@ Entire 5etools data upload
 
 
 # backend
-1. break out resting logic, messy atm but works
-2. experiance to all grants experiance to ALL characters, not just he selected ones
-
-
-Cleaners needs a correct run method for single object and large file pipeline.
-Cleaners actually need an overhaul and preparations for SRD law ."perfect" data is the goal this time. 
-
 review all old files from the very start of the project such as security.py and db_setup 
 before deploying site
 
 
 # SpellBook / Play
-Let pact slots be added with differant levels like spell slots
 implement mystic arcanum here?
 
 # HealthPlay
-1. CurrentHp make smaller to at least fit quad digits, some slight overlap on to maxhp (case currentHp = 999 for example)
 
 
 # Biography 
-1. changing subrace needs a confirmation "done" before accepting. Right now this is harmless but later changes in the define will remove and add in the new stuff
+1. changing subrace needs a confirmation "done" before accepting. Right now this is harmless but later changes in the define will remove and add in the new stuff. Lost the feature to swap races/bg
 
 
 # EffectsPlay
@@ -85,10 +109,10 @@ either which way some optianl features needs home
 
 # Catalogues
 
-1. CRUD operations - Spells only left
-2. Exclude filter option? 2 clicks and color change
-3. strip all None values from every catalogue object, even for created ones
-4. implement a randomizer
+
+1. Exclude filter option? 2 clicks and color change
+2. strip all None values from every catalogue object, even for created ones
+3. implement a randomizer
 
     # Races 
     1. increase size tag to all sizes
@@ -96,76 +120,14 @@ either which way some optianl features needs home
     # Items
     setting gold silver cp to create item instead of user needing to do math
     fix "light" to read list[dict] or dict (atleast list[0])
-    
-    # Monsters
-    fly fix displaying: [object Object] ft., swim 60 ft., canHover true ft.  
-
-    # Spells
-    LLM clean all before implementing CRUD
 
     # Feats
-    data set needs flattening of some prof.keys instead of dict to fit create form
-
     allow more filter options like resistance 
 
 
-    # Background 
-
-    # Optional Features
 
 
 
-    # Classes
-    1. collapsable features
-    2. ignore null feauters like subclass and ASI
-    3. center the subclass buttons
-    4. multiselect subclasses like 5etools
-    5. hide all core features and only show subclass feature
-    6. Needs its own create class feature before launch to work with SRD laws
-
-
-
-
-
-# Frontend
-MANY repeating constants such as source book names, skills and such needs 
-one common place, look catalogue.helpers
-
-
-
-# Character Builder (Wizard)
-
-*Feats 
-More than one epic boon can get randomized
-
-
-
-
-this goes with SRD law overhaul and perfect data
------------------------------
-keep or throw from final_build
-"unresolved"
-"spell_list_rules"
-"feats"
-pending_ability_choices
-ability_max_override
-feat_ability_bonuses
-base_scores
-saving_throw_proficiencies
-skill_expertise
-skill_proficiencies
-ability_bonuses
-caster_level
-
-Needs logic or improved handling
-"caster_level"
-
-
-These replaced by _mod?
-"check": null,
-"save": null,
-
-characters land with 0 charges
 
 # popup bug storage reseter in console
 Object.keys(localStorage).filter(k => k.startsWith("popup-storage")).forEach(k => localStorage.removeItem(k));

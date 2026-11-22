@@ -1,0 +1,304 @@
+{
+  "cleric-xphb:divine-order": {
+    "label": "Cleric (XPHB) · Divine Order",
+    "hash": "d0e63e078869ca2f",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "protector",
+          "name": "Protector",
+          "level": 1,
+          "category": "traits",
+          "grants": {
+            "weapons": [
+              "martial_weapons"
+            ],
+            "armor": [
+              "heavy"
+            ]
+          }
+        },
+        {
+          "id": "thaumaturge",
+          "name": "Thaumaturge",
+          "level": 1,
+          "category": "traits",
+          "modifiers": [
+            {
+              "target": "check.arcana",
+              "add": "max(1, wis_mod)"
+            },
+            {
+              "target": "check.religion",
+              "add": "max(1, wis_mod)"
+            }
+          ]
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11593,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:14:01+00:00"
+  },
+  "cleric-xphb:channel-divinity": {
+    "label": "Cleric (XPHB) · Channel Divinity",
+    "hash": "877d84ca3c018ad5",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "divine-spark",
+          "name": "Divine Spark",
+          "level": 2,
+          "category": "actions",
+          "action": {
+            "range": "30 feet",
+            "heal": {
+              "1": "1d8 + wis_mod",
+              "7": "2d8 + wis_mod",
+              "13": "3d8 + wis_mod",
+              "18": "4d8 + wis_mod"
+            },
+            "save": {
+              "ability": "con",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "half",
+              "damage": [
+                {
+                  "dice": {
+                    "1": "1d8",
+                    "7": "2d8",
+                    "13": "3d8",
+                    "18": "4d8"
+                  },
+                  "bonus": "wis_mod",
+                  "type": "necrotic",
+                  "condition": "if you choose Necrotic damage, instead of Radiant damage (your choice)"
+                },
+                {
+                  "dice": {
+                    "1": "1d8",
+                    "7": "2d8",
+                    "13": "3d8",
+                    "18": "4d8"
+                  },
+                  "bonus": "wis_mod",
+                  "type": "radiant",
+                  "condition": "if you choose Radiant damage, instead of Necrotic damage (your choice)"
+                }
+              ]
+            }
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "turn-undead",
+          "name": "Turn Undead",
+          "level": 2,
+          "category": "actions",
+          "action": {
+            "range": "30 feet",
+            "save": {
+              "ability": "wis",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "none",
+              "conditions": [
+                "frightened",
+                "incapacitated"
+              ]
+            }
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        }
+      ],
+      "resources": [
+        {
+          "name": "Channel Divinity",
+          "max": "channel_divinity",
+          "reset": "long",
+          "short_rest": 1
+        }
+      ]
+    },
+    "problems": [],
+    "tokens": 12919,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:14:07+00:00"
+  },
+  "cleric-xphb:sear-undead": {
+    "label": "Cleric (XPHB) · Sear Undead",
+    "hash": "dfe841baad9c09db",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 12013,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:14:23+00:00"
+  },
+  "cleric-xphb:blessed-strikes": {
+    "label": "Cleric (XPHB) · Blessed Strikes",
+    "hash": "73dd24c44040571f",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "divine-strike",
+          "name": "Divine Strike",
+          "level": 7,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": "1d8",
+                  "type": "necrotic",
+                  "condition": "if you choose Necrotic"
+                },
+                {
+                  "dice": "1d8",
+                  "type": "radiant",
+                  "condition": "if you choose Radiant"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "potent-spellcasting",
+          "name": "Potent Spellcasting",
+          "level": 7,
+          "category": "traits",
+          "modifiers": [
+            {
+              "target": "damage",
+              "add": "wis_mod"
+            }
+          ]
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 12179,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:14:35+00:00"
+  },
+  "cleric-xphb:divine-intervention": {
+    "label": "Cleric (XPHB) · Divine Intervention",
+    "hash": "21e813db51268c47",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "divine-intervention",
+          "name": "Divine Intervention",
+          "level": 10,
+          "category": "actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11709,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:14:46+00:00"
+  },
+  "cleric-xphb:improved-blessed-strikes": {
+    "label": "Cleric (XPHB) · Improved Blessed Strikes",
+    "hash": "74388b7b553e48d5",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "potent-spellcasting",
+          "name": "Potent Spellcasting",
+          "level": 14,
+          "category": "traits",
+          "action": {
+            "range": "60 feet",
+            "temp_hp": "2 * wis_mod"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 12071,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:14:53+00:00"
+  },
+  "cleric-xphb:greater-divine-intervention": {
+    "label": "Cleric (XPHB) · Greater Divine Intervention",
+    "hash": "a69f764117befb8d",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11537,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:15:05+00:00"
+  },
+  "cleric-xphb:life-xphb": {
+    "label": "Cleric (XPHB) · Life Domain (XPHB)",
+    "hash": "c945f68abea361f6",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "preserve-life",
+          "name": "Preserve Life",
+          "level": 3,
+          "category": "actions",
+          "action": {
+            "range": "30 feet",
+            "heal": "5 * class_level"
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 12143,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:15:11+00:00"
+  }
+}

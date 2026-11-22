@@ -23,6 +23,15 @@ const EXPORT_KINDS = {
 
 const sortCharacters = (list) => [...(list ?? [])].sort((a, b) => a.id - b.id);
 
+// What the wizard made and where it went, in one line.
+function createdText(name, result) {
+  const who = name || "Your character";
+  const copies = (result?.campaign || []).map((c) => `${c.as === "npc" ? "an NPC" : "a party member"} (${c.name})`);
+  const where = [result?.id ? "saved to your characters" : null, copies.length ? `added to the campaign as ${copies.join(" and ")}` : null].filter(Boolean).join(", and ");
+  const open = result?.open ? ` ${result.open} choice${result.open > 1 ? "s are" : " is"} still open: finish them on the sheet.` : "";
+  return `${who} was ${where || "created"}.${open}`;
+}
+
 export default function CreateCharacters() {
   const userData = useAuthStore((s) => s.userData);
   const fetchUser = useAuthStore((s) => s.fetchUser);
@@ -183,7 +192,7 @@ export default function CreateCharacters() {
 
           {building && (
             <div className="mt-8">
-              <BuildWizard onCreated={(name) => setNotice({ tone: "ok", text: `${name || "Your character"} was created. Click their token to use them in Sheets.` })} />
+              <BuildWizard onCreated={(name, result) => setNotice({ tone: "ok", text: createdText(name, result) })} />
             </div>
           )}
         </section>

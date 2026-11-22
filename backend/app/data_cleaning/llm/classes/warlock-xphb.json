@@ -1,0 +1,145 @@
+{
+  "warlock-xphb:magical-cunning": {
+    "label": "Warlock (XPHB) · Magical Cunning",
+    "hash": "491b89d5286ad8ef",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "magical-cunning",
+          "name": "Magical Cunning",
+          "level": 2,
+          "category": "actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11335,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-19T11:42:18+00:00"
+  },
+  "warlock-xphb:contact-patron": {
+    "label": "Warlock (XPHB) · Contact Patron",
+    "hash": "a79ccf0e2e2af5ec",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "contact-patron",
+          "name": "Contact Patron",
+          "level": 9,
+          "category": "traits"
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11351,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-19T11:42:22+00:00"
+  },
+  "warlock-xphb:mystic-arcanum": {
+    "label": "Warlock (XPHB) · Mystic Arcanum",
+    "hash": "84c20dea3f78415f",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11781,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-19T11:42:26+00:00"
+  },
+  "warlock-xphb:eldritch-master": {
+    "label": "Warlock (XPHB) · Eldritch Master",
+    "hash": "4986b81a863b5018",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11159,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-19T11:42:32+00:00"
+  },
+  "warlock-xphb:fiend-xphb": {
+    "label": "Warlock (XPHB) · Fiend Patron (XPHB)",
+    "hash": "1cea8e3b981331c8",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "dark-one-s-blessing",
+          "name": "Dark One's Blessing",
+          "level": 3,
+          "category": "traits",
+          "action": {
+            "temp_hp": "max(1, cha_mod + class_level)"
+          }
+        },
+        {
+          "id": "dark-one-s-own-luck",
+          "name": "Dark One's Own Luck",
+          "level": 6,
+          "category": "traits",
+          "uses": {
+            "max": "max(1, cha_mod)",
+            "reset": "long"
+          }
+        },
+        {
+          "id": "hurl-through-hell",
+          "name": "Hurl Through Hell",
+          "level": 14,
+          "category": "traits",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "action": {
+            "attack": {
+              "kind": "any"
+            },
+            "save": {
+              "ability": "cha",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "none",
+              "damage": [
+                {
+                  "dice": "8d10",
+                  "type": "psychic",
+                  "condition": "if the target isn't a Fiend"
+                }
+              ],
+              "conditions": [
+                "incapacitated"
+              ]
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13201,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-19T11:42:34+00:00"
+  }
+}

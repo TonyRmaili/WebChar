@@ -1,0 +1,831 @@
+[
+    {
+        "id": "sorcerer-phb",
+        "kind": "class",
+        "name": "Sorcerer",
+        "source": "PHB",
+        "edition": "classic",
+        "srd": {
+            "5.1": "Sorcerer"
+        },
+        "reprinted_as": [
+            "sorcerer-xphb"
+        ],
+        "hit_die": "d6",
+        "hp": {
+            "first": "6 + con_mod",
+            "per_level": "4 + con_mod"
+        },
+        "saves": [
+            "con",
+            "cha"
+        ],
+        "grants": {
+            "weapons": [
+                "dagger",
+                "dart",
+                "sling",
+                "quarterstaff",
+                "light_crossbow"
+            ],
+            "items": [
+                {
+                    "item": "dagger-phb",
+                    "qty": 2
+                }
+            ]
+        },
+        "choices": [
+            {
+                "type": "pool",
+                "id": "skills",
+                "label": "Skills",
+                "grant": "skills",
+                "count": 2,
+                "from": [
+                    "arcana",
+                    "deception",
+                    "insight",
+                    "intimidation",
+                    "persuasion",
+                    "religion"
+                ]
+            },
+            {
+                "type": "bundle",
+                "id": "starting_equipment",
+                "label": "Starting Equipment",
+                "options": [
+                    {
+                        "id": "a",
+                        "label": "Light Crossbow, Crossbow Bolts (20)",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "light-crossbow-phb",
+                                    "qty": 1
+                                },
+                                {
+                                    "item": "crossbow-bolts-20-phb",
+                                    "qty": 1
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "id": "b",
+                        "label": "Simple Weapons",
+                        "choices": [
+                            {
+                                "type": "pool",
+                                "id": "items",
+                                "label": "Simple Weapons",
+                                "grant": "items",
+                                "count": 1,
+                                "from": "simple_weapons"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "bundle",
+                "id": "starting_equipment_2",
+                "label": "Starting Equipment",
+                "options": [
+                    {
+                        "id": "a",
+                        "label": "Component Pouch",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "component-pouch-phb",
+                                    "qty": 1
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "id": "b",
+                        "label": "Arcane Focuses",
+                        "choices": [
+                            {
+                                "type": "pool",
+                                "id": "items_2",
+                                "label": "Arcane Focuses",
+                                "grant": "items",
+                                "count": 1,
+                                "from": "arcane_focuses"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "bundle",
+                "id": "starting_equipment_3",
+                "label": "Starting Equipment",
+                "options": [
+                    {
+                        "id": "a",
+                        "label": "Dungeoneer's Pack",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "dungeoneers-pack-phb",
+                                    "qty": 1
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "id": "b",
+                        "label": "Explorer's Pack",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "explorers-pack-phb",
+                                    "qty": 1
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        ],
+        "starting_gold": "3d4 × 10",
+        "multiclass": {
+            "requires": [
+                {
+                    "cha": 13
+                }
+            ]
+        },
+        "subclass": {
+            "title": "Sorcerous Origin",
+            "level": 1,
+            "text": "Choose a sorcerous origin, which describes the source of your innate magical power, from the list of available origins.\n\nYour choice grants you features when you choose it at 1st level and again at 6th, 14th, and 18th level."
+        },
+        "columns": [
+            {
+                "id": "sorcery_points",
+                "name": "Sorcery Points",
+                "values": {
+                    "2": 2,
+                    "3": 3,
+                    "4": 4,
+                    "5": 5,
+                    "6": 6,
+                    "7": 7,
+                    "8": 8,
+                    "9": 9,
+                    "10": 10,
+                    "11": 11,
+                    "12": 12,
+                    "13": 13,
+                    "14": 14,
+                    "15": 15,
+                    "16": 16,
+                    "17": 17,
+                    "18": 18,
+                    "19": 19,
+                    "20": 20
+                }
+            }
+        ],
+        "resources": [
+            {
+                "id": "sorcery_points",
+                "name": "Sorcery Points",
+                "max": {
+                    "2": 2,
+                    "3": 3,
+                    "4": 4,
+                    "5": 5,
+                    "6": 6,
+                    "7": 7,
+                    "8": 8,
+                    "9": 9,
+                    "10": 10,
+                    "11": 11,
+                    "12": 12,
+                    "13": 13,
+                    "14": 14,
+                    "15": 15,
+                    "16": 16,
+                    "17": 17,
+                    "18": 18,
+                    "19": 19,
+                    "20": 20
+                },
+                "reset": "long"
+            }
+        ],
+        "spellcasting": {
+            "ability": "cha",
+            "progression": "full",
+            "list": "sorcerer-phb",
+            "cantrips": {
+                "1": 4,
+                "4": 5,
+                "10": 6
+            },
+            "known": {
+                "1": 2,
+                "2": 3,
+                "3": 4,
+                "4": 5,
+                "5": 6,
+                "6": 7,
+                "7": 8,
+                "8": 9,
+                "9": 10,
+                "10": 11,
+                "11": 12,
+                "13": 13,
+                "15": 14,
+                "17": 15
+            },
+            "slots": {
+                "1": [
+                    2
+                ],
+                "2": [
+                    3
+                ],
+                "3": [
+                    4,
+                    2
+                ],
+                "4": [
+                    4,
+                    3
+                ],
+                "5": [
+                    4,
+                    3,
+                    2
+                ],
+                "6": [
+                    4,
+                    3,
+                    3
+                ],
+                "7": [
+                    4,
+                    3,
+                    3,
+                    1
+                ],
+                "8": [
+                    4,
+                    3,
+                    3,
+                    2
+                ],
+                "9": [
+                    4,
+                    3,
+                    3,
+                    3,
+                    1
+                ],
+                "10": [
+                    4,
+                    3,
+                    3,
+                    3,
+                    2
+                ],
+                "11": [
+                    4,
+                    3,
+                    3,
+                    3,
+                    2,
+                    1
+                ],
+                "13": [
+                    4,
+                    3,
+                    3,
+                    3,
+                    2,
+                    1,
+                    1
+                ],
+                "15": [
+                    4,
+                    3,
+                    3,
+                    3,
+                    2,
+                    1,
+                    1,
+                    1
+                ],
+                "17": [
+                    4,
+                    3,
+                    3,
+                    3,
+                    2,
+                    1,
+                    1,
+                    1,
+                    1
+                ],
+                "18": [
+                    4,
+                    3,
+                    3,
+                    3,
+                    3,
+                    1,
+                    1,
+                    1,
+                    1
+                ],
+                "19": [
+                    4,
+                    3,
+                    3,
+                    3,
+                    3,
+                    2,
+                    1,
+                    1,
+                    1
+                ],
+                "20": [
+                    4,
+                    3,
+                    3,
+                    3,
+                    3,
+                    2,
+                    2,
+                    1,
+                    1
+                ]
+            }
+        },
+        "progression": [
+            {
+                "level": 1,
+                "features": [
+                    "sorcerer-phb:spellcasting"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "sorcerous_origin_1",
+                        "label": "Sorcerous Origin",
+                        "grant": "subclass",
+                        "count": 1,
+                        "from": "sorcerer-phb"
+                    }
+                ]
+            },
+            {
+                "level": 2,
+                "features": [
+                    "sorcerer-phb:font-of-magic"
+                ]
+            },
+            {
+                "level": 3,
+                "features": [
+                    "sorcerer-phb:metamagic"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "metamagic_3",
+                        "label": "Metamagic",
+                        "grant": "optional_features",
+                        "count": 2,
+                        "from": {
+                            "feature_type": [
+                                "metamagic"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 4,
+                "features": [],
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_4",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_4",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_4",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 5,
+                "features": []
+            },
+            {
+                "level": 6,
+                "subclass_features": true
+            },
+            {
+                "level": 8,
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_8",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_8",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_8",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 10,
+                "upgrades": [
+                    "sorcerer-phb:metamagic"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "metamagic_10",
+                        "label": "Metamagic",
+                        "grant": "optional_features",
+                        "count": 1,
+                        "from": {
+                            "feature_type": [
+                                "metamagic"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 12,
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_12",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_12",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_12",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 14,
+                "subclass_features": true
+            },
+            {
+                "level": 16,
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_16",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_16",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_16",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 17,
+                "upgrades": [
+                    "sorcerer-phb:metamagic"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "metamagic_17",
+                        "label": "Metamagic",
+                        "grant": "optional_features",
+                        "count": 1,
+                        "from": {
+                            "feature_type": [
+                                "metamagic"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 18,
+                "subclass_features": true
+            },
+            {
+                "level": 19,
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_19",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_19",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_19",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 20,
+                "features": [
+                    "sorcerer-phb:sorcerous-restoration"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "sorcerer-phb:spellcasting",
+                "name": "Spellcasting",
+                "level": 1,
+                "text": "An event in your past, or in the life of a parent or ancestor, left an indelible mark on you, infusing you with arcane magic. This font of magic, whatever its origin, fuels your spells. See chapter 10 for the general rules of spellcasting and chapter 11 for the sorcerer spell list.\n\n**Cantrips.** At 1st level, you know four cantrips of your choice from the sorcerer spell list. You learn an additional sorcerer cantrip of your choice at 4th level and another at 10th level.\n\n**Spell Slots.** The Sorcerer table shows how many spell slots you have to cast your sorcerer spells of 1st level and higher. To cast one of these sorcerer spells, you must expend a slot of the spell's level or higher. You regain all expended spell slots when you finish a long rest.\n\nFor example, if you know the 1st-level spell Burning Hands and have a 1st-level and a 2nd-level spell slot available, you can cast Burning Hands using either slot.\n\n**Spells Known of 1st Level and Higher.** You know two 1st-level spells of your choice from the sorcerer spell list.\n\nYou learn an additional sorcerer spell of your choice at each level except 12th, 14th, 16th, 18th, 19th, and 20th. Each of these spells must be of a level for which you have spell slots. For instance, when you reach 3rd level in this class, you can learn one new spell of 1st or 2nd level.\n\nAdditionally, when you gain a level in this class, you can choose one of the sorcerer spells you know and replace it with another spell from the sorcerer spell list, which also must be of a level for which you have spell slots.\n\n**Spellcasting Ability.** Charisma is your spellcasting ability for your sorcerer spells, since the power of your magic relies on your ability to project your will into the world. You use your Charisma whenever a spell refers to your spellcasting ability. In addition, you use your Charisma modifier when setting the saving throw DC for a sorcerer spell you cast and when making an attack roll with one.\n\n**Spell save DC** = 8 + your proficiency bonus + your Charisma modifier\n\n**Spell attack modifier** = your proficiency bonus + your Charisma modifier\n\n**Spellcasting Focus.** You can use an arcane focus as a spellcasting focus for your sorcerer spells.",
+                "srd": {
+                    "5.1": "Spellcasting"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "sorcerer-phb:font-of-magic",
+                "name": "Font of Magic",
+                "level": 2,
+                "text": "At 2nd level, you tap into a deep wellspring of magic within yourself. This wellspring is represented by sorcery points, which allow you to create a variety of magical effects.",
+                "srd": {
+                    "5.1": "Font of Magic"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "sorcerer-phb:sorcery-points",
+                "name": "Sorcery Points",
+                "level": 2,
+                "text": "You have 2 sorcery points, and you gain one additional point every time you level up, to a maximum of 20 at level 20. You can never have more sorcery points than shown on the table for your level. You regain all spent sorcery points when you finish a long rest.",
+                "parent": "sorcerer-phb:font-of-magic",
+                "srd": {
+                    "5.1": "Sorcery Points"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "sorcerer-phb:flexible-casting",
+                "name": "Flexible Casting",
+                "level": 2,
+                "text": "You can use your sorcery points to gain additional spell slots, or sacrifice spell slots to gain additional sorcery points. You learn other ways to use your sorcery points as you reach higher levels.\n\n**Creating Spell Slots.** You can transform unexpended sorcery points into one spell slot as a bonus action on your turn. The created spell slots vanish at the end of a long rest. The Creating Spell Slots table shows the cost of creating a spell slot of a given level. You can create spell slots no higher in level than 5th.\n\nCreating Spell Slots\n\nSpell Slot Level | Sorcery Point Cost\n--- | ---\n1st | 2\n2nd | 3\n3rd | 5\n4th | 6\n5th | 7\n\n**Converting a Spell Slot to Sorcery Points.** As a bonus action on your turn, you can expend one spell slot and gain a number of sorcery points equal to the slot's level.",
+                "parent": "sorcerer-phb:font-of-magic",
+                "srd": {
+                    "5.1": "Flexible Casting"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "sorcerer-phb:metamagic",
+                "name": "Metamagic",
+                "level": 3,
+                "text": "At 3rd level, you gain the ability to twist your spells to suit your needs. You gain two of the following Metamagic options of your choice. You gain another one at 10th and 17th level.\n\nYou can use only one Metamagic option on a spell when you cast it, unless otherwise noted.\n\n- Careful Spell\n- Distant Spell\n- Empowered Spell\n- Extended Spell\n- Heightened Spell\n- Quickened Spell\n- Subtle Spell\n- Twinned Spell\n\n**Metamagic.** At 10th level, you learn an additional metamagic option.\n\n**Metamagic.** At 17th level, you learn an additional metamagic option.",
+                "srd": {
+                    "5.1": "Metamagic"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "sorcerer-phb:sorcerous-restoration",
+                "name": "Sorcerous Restoration",
+                "level": 20,
+                "text": "At 20th level, you regain 4 expended sorcery points whenever you finish a short rest.",
+                "srd": {
+                    "5.1": "Sorcerous Restoration"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "sorcerer-phb:flexible-casting:creating-spell-slots",
+                "name": "Creating Spell Slots",
+                "level": 2,
+                "text": "**Creating Spell Slots.** You can transform unexpended sorcery points into one spell slot as a bonus action on your turn. The created spell slots vanish at the end of a long rest. The Creating Spell Slots table shows the cost of creating a spell slot of a given level. You can create spell slots no higher in level than 5th.\n\nCreating Spell Slots\n\nSpell Slot Level | Sorcery Point Cost\n--- | ---\n1st | 2\n2nd | 3\n3rd | 5\n4th | 6\n5th | 7",
+                "parent": "sorcerer-phb:flexible-casting",
+                "category": "bonus_actions"
+            },
+            {
+                "id": "sorcerer-phb:flexible-casting:converting-a-spell-slot-to-sorcery-points",
+                "name": "Converting a Spell Slot to Sorcery Points",
+                "level": 2,
+                "text": "**Converting a Spell Slot to Sorcery Points.** As a bonus action on your turn, you can expend one spell slot and gain a number of sorcery points equal to the slot's level.",
+                "parent": "sorcerer-phb:flexible-casting",
+                "category": "bonus_actions"
+            }
+        ]
+    }
+]

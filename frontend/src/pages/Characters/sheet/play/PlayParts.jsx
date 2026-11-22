@@ -141,7 +141,35 @@ const CARD_TONE = {
   item: "border-warn/45 hover:border-warn",
 };
 
-export function UseCard({ title, meta, chips = [], detail, uses, note, tone = "default", onSpend, onRestore }) {
+/* `toggle` = { on, onChange }: a feature you switch on and off (Rage,
+   Mage Armor) gets its diamond on the card, next to its name. */
+function CardToggle({ toggle }) {
+  return (
+    <span
+      role="switch"
+      aria-checked={!!toggle.on}
+      tabIndex={0}
+      title={toggle.on ? "On: its bonuses count. Click to switch it off." : "Off. Click to switch it on."}
+      onClick={(e) => {
+        e.stopPropagation();
+        toggle.onChange(!toggle.on);
+      }}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          e.stopPropagation();
+          toggle.onChange(!toggle.on);
+        }
+      }}
+      className="group inline-flex h-5 shrink-0 cursor-pointer items-center gap-1 pt-0.5"
+    >
+      <span className={`h-2.5 w-2.5 rotate-45 border-[1.5px] transition ${toggle.on ? "border-rubric bg-rubric" : "border-rule/70 group-hover:border-ink"}`} />
+      <span className={`text-[10px] font-semibold uppercase tracking-wider ${toggle.on ? "text-rubric" : "text-ink-faded"}`}>{toggle.on ? "on" : "off"}</span>
+    </span>
+  );
+}
+
+export function UseCard({ title, meta, chips = [], detail, uses, note, tone = "default", onSpend, onRestore, toggle }) {
   const trackable = !!uses;
   const empty = trackable && uses.cur <= 0;
   const canRestore = trackable && (uses.max == null || uses.cur < uses.max);
@@ -156,6 +184,7 @@ export function UseCard({ title, meta, chips = [], detail, uses, note, tone = "d
   const body = (
     <>
       <div className="flex items-start gap-2">
+        {toggle && <CardToggle toggle={toggle} />}
         <div className="min-w-0 flex-1">
           <div className={`truncate text-[15px] font-semibold ${empty ? "text-ink-faded" : "text-ink"}`}>{title}</div>
           {meta && <div className="truncate text-xs italic text-ink-faded">{meta}</div>}

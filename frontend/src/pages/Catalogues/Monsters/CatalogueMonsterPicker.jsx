@@ -3,7 +3,7 @@ import { useCatalogueStore } from "../../../store/CatalogueStore";
 import { usePopupStore } from "../../../store/PopupStore";
 import { INK } from "../../../styles/parchment";
 import { Hint, NumberInput, PickerRow, PickerShell, Tag, addBtn } from "../../../styles/parchmentForm";
-import { formatSource } from "./monsterHelpers";
+import { HOMEBREW, formatSource } from "../catalogueHelpers";
 import { allCatalogueMonsters, catalogueMonsterKey, monsterOrigin, monsterSummary } from "./catalogueMonsters";
 
 /* Search the monster catalogue (the official books and your homebrew)
@@ -23,7 +23,7 @@ import { allCatalogueMonsters, catalogueMonsterKey, monsterOrigin, monsterSummar
 const MAX_RESULTS = 60;
 
 export default function CatalogueMonsterPicker({ onAdd, onClose, title = "Add a monster", addLabel = "add", maxCount = 99, oneAtATime = false, has }) {
-  const monstersData = useCatalogueStore((s) => s.monstersData);
+  const monsters = useCatalogueStore((s) => s.monsters);
   const loading = useCatalogueStore((s) => s.loadingMonsters);
   const loadMonsters = useCatalogueStore((s) => s.loadMonsters);
   const openPopup = usePopupStore((s) => s.open);
@@ -35,10 +35,10 @@ export default function CatalogueMonsterPicker({ onAdd, onClose, title = "Add a 
 
   // The catalogue is large, so it's only fetched when first needed.
   useEffect(() => {
-    if (!monstersData?.monsters && !loading) loadMonsters();
+    if (!monsters?.length && !loading) loadMonsters();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const all = useMemo(() => allCatalogueMonsters(monstersData), [monstersData]);
+  const all = useMemo(() => allCatalogueMonsters(monsters), [monsters]);
 
   // Names starting with the search come first, then names containing it.
   const results = useMemo(() => {
@@ -94,7 +94,7 @@ export default function CatalogueMonsterPicker({ onAdd, onClose, title = "Add a 
                 name={m.name}
                 onOpen={() => openPopup("monster", m)}
                 meta={<Tag className="hidden normal-case italic tracking-normal @md:inline">{monsterSummary(m)}</Tag>}
-                source={m.source === "HOMEBREW" ? <span className="italic">{origin}</span> : <span title={formatSource(m.source)}>{m.source}</span>}
+                source={m.source === HOMEBREW ? <span className="italic">{origin}</span> : <span title={formatSource(m.source)}>{m.source}</span>}
                 highlight={isPicked}
                 action={
                   oneAtATime
@@ -115,7 +115,7 @@ export default function CatalogueMonsterPicker({ onAdd, onClose, title = "Add a 
               <span className={`italic ${INK.faded}`}>add</span>
               <NumberInput value={Number(count) || 1} min={1} max={maxCount} fallback={1} onChange={(v) => setCount(v ?? 1)} aria-label="How many" className="w-10" />
               <span className="font-semibold">{picked.name}</span>
-              {picked.source === "HOMEBREW" && <span className={`text-sm italic ${INK.faint}`}>{monsterOrigin(picked)}</span>}
+              {picked.source === HOMEBREW && <span className={`text-sm italic ${INK.faint}`}>{monsterOrigin(picked)}</span>}
               <button type="button" onClick={handleAdd} disabled={adding} className={addBtn}>
                 {adding ? "adding…" : addLabel}
               </button>

@@ -12,6 +12,7 @@ import {
   monsterAc,
   rechargeLabel,
   restoreAll,
+  sectionFeatures,
 } from "./minionHelpers";
 
 /* One minion group at the table: unit HP tokens on top, the group's
@@ -67,15 +68,15 @@ const CHIP_TONE = {
   damage: "text-bad",
 };
 
-function EffectRow({ sectionKey, item, minion, onChange }) {
+function EffectRow({ item, minion, onChange }) {
   const max = itemMaxUses(item);
-  const key = chargeKey(sectionKey, item);
+  const key = chargeKey(item);
   const units = minion.units || [];
   const chips = effectChips(item);
-  const recharge = rechargeLabel(item.charges);
+  const recharge = rechargeLabel(item.uses);
 
   return (
-    <div className="border-l-2 border-rule/40 py-1 pl-2.5" title={item.notes || ""}>
+    <div className="border-l-2 border-rule/40 py-1 pl-2.5" title={item.text || ""}>
       <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-0.5">
         <span className="text-[15px] font-semibold text-ink">{item.name}</span>
         {chips.map((c, i) => (
@@ -129,7 +130,7 @@ export default function MinionPlayCard({ minion, isSelected, onUnitClick, onSele
   const sections = PLAY_SECTIONS.map(({ key, title }) => ({
     key,
     title,
-    items: m.effects?.[key]?.items || [],
+    items: sectionFeatures(m, key),
   })).filter((s) => s.items.length > 0);
 
   const onRestore = () => {
@@ -194,8 +195,7 @@ export default function MinionPlayCard({ minion, isSelected, onUnitClick, onSele
               <div className={smallCaps}>{s.title}</div>
               {s.items.map((item, i) => (
                 <EffectRow
-                  key={`${s.key}-${item.name}-${i}`}
-                  sectionKey={s.key}
+                  key={item.id || `${s.key}-${i}`}
                   item={item}
                   minion={minion}
                   onChange={onChange}

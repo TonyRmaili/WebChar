@@ -1,0 +1,682 @@
+[
+    {
+        "id": "ranger-xphb",
+        "kind": "class",
+        "name": "Ranger",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Ranger"
+        },
+        "hit_die": "d10",
+        "hp": {
+            "first": "10 + con_mod",
+            "per_level": "6 + con_mod"
+        },
+        "primary_ability": [
+            [
+                "dex",
+                "wis"
+            ]
+        ],
+        "saves": [
+            "str",
+            "dex"
+        ],
+        "grants": {
+            "weapons": [
+                "simple_weapons",
+                "martial_weapons"
+            ],
+            "armor": [
+                "light",
+                "medium",
+                "shields"
+            ],
+            "spells": [
+                {
+                    "spell": "hunters-mark-xphb",
+                    "how": "prepared",
+                    "at": 1
+                }
+            ]
+        },
+        "choices": [
+            {
+                "type": "pool",
+                "id": "skills",
+                "label": "Skills",
+                "grant": "skills",
+                "count": 3,
+                "from": [
+                    "animal_handling",
+                    "athletics",
+                    "insight",
+                    "investigation",
+                    "nature",
+                    "perception",
+                    "stealth",
+                    "survival"
+                ]
+            },
+            {
+                "type": "bundle",
+                "id": "starting_equipment",
+                "label": "Starting Equipment",
+                "options": [
+                    {
+                        "id": "a",
+                        "label": "Studded Leather Armor, Scimitar, Shortsword, Longbow, Arrows (20), Quiver, Sprig Of Mistletoe, Explorer's Pack, 7 GP",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "studded-leather-armor-xphb",
+                                    "qty": 1
+                                },
+                                {
+                                    "item": "scimitar-xphb",
+                                    "qty": 1
+                                },
+                                {
+                                    "item": "shortsword-xphb",
+                                    "qty": 1
+                                },
+                                {
+                                    "item": "longbow-xphb",
+                                    "qty": 1
+                                },
+                                {
+                                    "item": "arrows-20-xphb",
+                                    "qty": 1
+                                },
+                                {
+                                    "item": "quiver-xphb",
+                                    "qty": 1
+                                },
+                                {
+                                    "item": "sprig-of-mistletoe-xphb",
+                                    "qty": 1
+                                },
+                                {
+                                    "item": "explorers-pack-xphb",
+                                    "qty": 1
+                                }
+                            ],
+                            "currency": {
+                                "gp": 7
+                            }
+                        }
+                    },
+                    {
+                        "id": "b",
+                        "label": "150 GP",
+                        "grants": {
+                            "currency": {
+                                "gp": 150
+                            }
+                        }
+                    }
+                ]
+            }
+        ],
+        "multiclass": {
+            "requires": [
+                {
+                    "dex": 13,
+                    "wis": 13
+                }
+            ],
+            "grants": {
+                "weapons": [
+                    "martial_weapons"
+                ],
+                "armor": [
+                    "light",
+                    "medium",
+                    "shields"
+                ]
+            },
+            "choices": [
+                {
+                    "type": "pool",
+                    "id": "skills",
+                    "label": "Skills",
+                    "grant": "skills",
+                    "count": 1,
+                    "from": [
+                        "animal_handling",
+                        "athletics",
+                        "insight",
+                        "investigation",
+                        "nature",
+                        "perception",
+                        "stealth",
+                        "survival"
+                    ]
+                }
+            ]
+        },
+        "subclass": {
+            "title": "Ranger Subclass",
+            "level": 3,
+            "text": "You gain a Ranger subclass of your choice. A subclass is a specialization that grants you features at certain Ranger levels. For the rest of your career, you gain each of your subclass's features that are of your Ranger level or lower."
+        },
+        "columns": [
+            {
+                "id": "favored_enemy",
+                "name": "Favored Enemy",
+                "values": {
+                    "1": 2,
+                    "5": 3,
+                    "9": 4,
+                    "13": 5,
+                    "17": 6
+                }
+            }
+        ],
+        "spellcasting": {
+            "ability": "wis",
+            "progression": "half_up",
+            "list": "ranger-xphb",
+            "prepared": {
+                "1": 2,
+                "2": 3,
+                "3": 4,
+                "4": 5,
+                "5": 6,
+                "7": 7,
+                "9": 9,
+                "11": 10,
+                "13": 11,
+                "15": 12,
+                "17": 14,
+                "19": 15
+            },
+            "change": "long_rest",
+            "slots": {
+                "1": [
+                    2
+                ],
+                "3": [
+                    3
+                ],
+                "5": [
+                    4,
+                    2
+                ],
+                "7": [
+                    4,
+                    3
+                ],
+                "9": [
+                    4,
+                    3,
+                    2
+                ],
+                "11": [
+                    4,
+                    3,
+                    3
+                ],
+                "13": [
+                    4,
+                    3,
+                    3,
+                    1
+                ],
+                "15": [
+                    4,
+                    3,
+                    3,
+                    2
+                ],
+                "17": [
+                    4,
+                    3,
+                    3,
+                    3,
+                    1
+                ],
+                "19": [
+                    4,
+                    3,
+                    3,
+                    3,
+                    2
+                ]
+            }
+        },
+        "progression": [
+            {
+                "level": 1,
+                "features": [
+                    "ranger-xphb:spellcasting",
+                    "ranger-xphb:favored-enemy",
+                    "ranger-xphb:weapon-mastery"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "weapon_mastery_1",
+                        "label": "Weapon Mastery",
+                        "grant": "weapon_masteries",
+                        "count": 2,
+                        "from": "proficient_weapons"
+                    }
+                ]
+            },
+            {
+                "level": 2,
+                "features": [
+                    "ranger-xphb:deft-explorer",
+                    "ranger-xphb:fighting-style"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "fighting_style_2",
+                        "label": "Fighting Style",
+                        "grant": "feats",
+                        "count": 1,
+                        "from": {
+                            "category": [
+                                "fighting_style"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 3,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "ranger_subclass_3",
+                        "label": "Ranger Subclass",
+                        "grant": "subclass",
+                        "count": 1,
+                        "from": "ranger-xphb"
+                    }
+                ]
+            },
+            {
+                "level": 4,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "ability_score_improvement_4",
+                        "label": "Ability Score Improvement",
+                        "grant": "feats",
+                        "count": 1,
+                        "from": {
+                            "category": [
+                                "general"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 5,
+                "features": [
+                    "ranger-xphb:extra-attack"
+                ]
+            },
+            {
+                "level": 6,
+                "features": [
+                    "ranger-xphb:roving"
+                ]
+            },
+            {
+                "level": 7,
+                "subclass_features": true
+            },
+            {
+                "level": 8,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "ability_score_improvement_8",
+                        "label": "Ability Score Improvement",
+                        "grant": "feats",
+                        "count": 1,
+                        "from": {
+                            "category": [
+                                "general"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 9,
+                "features": [
+                    "ranger-xphb:expertise"
+                ]
+            },
+            {
+                "level": 10,
+                "features": [
+                    "ranger-xphb:tireless"
+                ]
+            },
+            {
+                "level": 11,
+                "subclass_features": true
+            },
+            {
+                "level": 12,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "ability_score_improvement_12",
+                        "label": "Ability Score Improvement",
+                        "grant": "feats",
+                        "count": 1,
+                        "from": {
+                            "category": [
+                                "general"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 13,
+                "features": [
+                    "ranger-xphb:relentless-hunter"
+                ]
+            },
+            {
+                "level": 14,
+                "features": [
+                    "ranger-xphb:natures-veil"
+                ]
+            },
+            {
+                "level": 15,
+                "subclass_features": true
+            },
+            {
+                "level": 16,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "ability_score_improvement_16",
+                        "label": "Ability Score Improvement",
+                        "grant": "feats",
+                        "count": 1,
+                        "from": {
+                            "category": [
+                                "general"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 17,
+                "features": [
+                    "ranger-xphb:precise-hunter"
+                ]
+            },
+            {
+                "level": 18,
+                "features": [
+                    "ranger-xphb:feral-senses"
+                ]
+            },
+            {
+                "level": 19,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "epic_boon_19",
+                        "label": "Epic Boon",
+                        "grant": "feats",
+                        "count": 1,
+                        "from": {
+                            "category": [
+                                "epic_boon"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 20,
+                "features": [
+                    "ranger-xphb:foe-slayer"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "ranger-xphb:spellcasting",
+                "name": "Spellcasting",
+                "level": 1,
+                "text": "You have learned to channel the magical essence of nature to cast spells. See chapter 7 for the rules on spellcasting. The information below details how you use those rules with Ranger spells, which appear in the Ranger spell list later in the class's description.\n\n**Spell Slots.** The Ranger Features table shows how many spell slots you have to cast your level 1+ spells. You regain all expended slots when you finish a Long Rest.\n\n**Prepared Spells of Level 1+.** You prepare the list of level 1+ spells that are available for you to cast with this feature. To start, choose two level 1 Ranger spells. Cure Wounds and Ensnaring Strike are recommended.\n\nThe number of spells on your list increases as you gain Ranger levels, as shown in the Prepared Spells column of the Ranger Features table. Whenever that number increases, choose additional Ranger spells until the number of spells on your list matches the number in the Ranger Features table. The chosen spells must be of a level for which you have spell slots. For example, if you're a level 5 Ranger, your list of prepared spells can include six Ranger spells of level 1 or 2 in any combination.\n\nIf another Ranger feature gives you spells that you always have prepared, those spells don't count against the number of spells you can prepare with this feature, but those spells otherwise count as Ranger spells for you.\n\n**Changing Your Prepared Spells.** Whenever you finish a Long Rest, you can replace one spell on your list with another Ranger spell for which you have spell slots.\n\n**Spellcasting Ability.** Wisdom is your spellcasting ability for your Ranger spells.\n\n**Spellcasting Focus.** You can use a Druidic Focus as a Spellcasting Focus for your Ranger spells.",
+                "srd": {
+                    "5.2": "Spellcasting"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "ranger-xphb:favored-enemy",
+                "name": "Favored Enemy",
+                "level": 1,
+                "text": "You always have the Hunter's Mark spell prepared. You can cast it twice without expending a spell slot, and you regain all expended uses of this ability when you finish a Long Rest.\n\nThe number of times you can cast the spell without a spell slot increases when you reach certain Ranger levels, as shown in the Favored Enemy column of the Ranger Features table.",
+                "srd": {
+                    "5.2": "Favored Enemy"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "ranger-xphb:weapon-mastery",
+                "name": "Weapon Mastery",
+                "level": 1,
+                "text": "Your training with weapons allows you to use the mastery properties of two kinds of weapons of your choice with which you have proficiency, such as Longbows and Shortswords.\n\nWhenever you finish a Long Rest, you can change the kinds of weapons you chose. For example, you could switch to using the mastery properties of Scimitars and Longswords.",
+                "srd": {
+                    "5.2": "Weapon Mastery"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "ranger-xphb:deft-explorer",
+                "name": "Deft Explorer",
+                "level": 2,
+                "text": "Thanks to your travels, you gain the following benefits.\n\n**Expertise.** Choose one of your skill proficiencies with which you lack Expertise. You gain Expertise in that skill.\n\n**Languages.** You know two languages of your choice from the language tables in chapter 2.",
+                "srd": {
+                    "5.2": "Deft Explorer"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "ranger-xphb:fighting-style",
+                "name": "Fighting Style",
+                "level": 2,
+                "text": "You gain a Fighting Style feat of your choice. Instead of choosing one of those feats, you can choose the option below.\n\n- Druidic Warrior",
+                "srd": {
+                    "5.2": "Fighting Style"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "ranger-xphb:extra-attack",
+                "name": "Extra Attack",
+                "level": 5,
+                "text": "You can attack twice instead of once whenever you take the Attack action on your turn.",
+                "srd": {
+                    "5.2": "Extra Attack"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "ranger-xphb:roving",
+                "name": "Roving",
+                "level": 6,
+                "text": "Your Speed increases by 10 feet while you aren't wearing Heavy armor. You also have a Climb Speed and a Swim Speed equal to your Speed.",
+                "srd": {
+                    "5.2": "Roving"
+                },
+                "category": "traits",
+                "grants": {
+                    "speed": {
+                        "swim": "walk",
+                        "climb": "walk"
+                    }
+                }
+            },
+            {
+                "id": "ranger-xphb:expertise",
+                "name": "Expertise",
+                "level": 9,
+                "text": "Choose two of your skill proficiencies with which you lack Expertise. You gain Expertise in those skills.",
+                "srd": {
+                    "5.2": "Expertise"
+                },
+                "category": "traits",
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "expertise_1",
+                        "label": "Expertise",
+                        "grant": "expertise",
+                        "count": 2,
+                        "from": "proficient_skills"
+                    }
+                ]
+            },
+            {
+                "id": "ranger-xphb:tireless",
+                "name": "Tireless",
+                "level": 10,
+                "text": "Primal forces now help fuel you on your journeys, granting you the following benefits.\n\n**Temporary Hit Points.** As a Magic action, you can give yourself a number of Temporary Hit Points equal to 1d8 plus your Wisdom modifier (minimum of 1). You can use this action a number of times equal to your Wisdom modifier (minimum of once), and you regain all expended uses when you finish a Long Rest.\n\n**Decrease Exhaustion.** Whenever you finish a Short Rest, your Exhaustion level, if any, decreases by 1.",
+                "srd": {
+                    "5.2": "Tireless"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "ranger-xphb:relentless-hunter",
+                "name": "Relentless Hunter",
+                "level": 13,
+                "text": "Taking damage can't break your Concentration on Hunter's Mark.",
+                "srd": {
+                    "5.2": "Relentless Hunter"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "ranger-xphb:natures-veil",
+                "name": "Nature's Veil",
+                "level": 14,
+                "text": "You invoke spirits of nature to magically hide yourself. As a Bonus Action, you can give yourself the Invisible condition until the end of your next turn.\n\nYou can use this feature a number of times equal to your Wisdom modifier (minimum of once), and you regain all expended uses when you finish a Long Rest.",
+                "srd": {
+                    "5.2": "Nature's Veil"
+                },
+                "category": "bonus_actions",
+                "uses": {
+                    "max": "max(1, wis_mod)",
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "ranger-xphb:precise-hunter",
+                "name": "Precise Hunter",
+                "level": 17,
+                "text": "You have Advantage on attack rolls against the creature currently marked by your Hunter's Mark.",
+                "srd": {
+                    "5.2": "Precise Hunter"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "ranger-xphb:feral-senses",
+                "name": "Feral Senses",
+                "level": 18,
+                "text": "Your connection to the forces of nature grants you Blindsight with a range of 30 feet.",
+                "srd": {
+                    "5.2": "Feral Senses"
+                },
+                "category": "traits",
+                "grants": {
+                    "senses": {
+                        "blindsight": 30
+                    }
+                }
+            },
+            {
+                "id": "ranger-xphb:foe-slayer",
+                "name": "Foe Slayer",
+                "level": 20,
+                "text": "The damage die of your Hunter's Mark is a d10 rather than a d6.",
+                "srd": {
+                    "5.2": "Foe Slayer"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "ranger-xphb:deft-explorer:expertise",
+                "name": "Expertise",
+                "level": 2,
+                "text": "**Expertise.** Choose one of your skill proficiencies with which you lack Expertise. You gain Expertise in that skill.",
+                "parent": "ranger-xphb:deft-explorer",
+                "category": "traits",
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "expertise_1",
+                        "label": "Expertise",
+                        "grant": "expertise",
+                        "count": 1,
+                        "from": "proficient_skills"
+                    }
+                ]
+            },
+            {
+                "id": "ranger-xphb:deft-explorer:languages",
+                "name": "Languages",
+                "level": 2,
+                "text": "**Languages.** You know two languages of your choice from the language tables in chapter 2.",
+                "parent": "ranger-xphb:deft-explorer",
+                "category": "traits",
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "languages_1",
+                        "label": "Languages",
+                        "grant": "languages",
+                        "count": 2,
+                        "from": "all_languages"
+                    }
+                ]
+            },
+            {
+                "id": "ranger-xphb:tireless:temporary-hit-points",
+                "name": "Temporary Hit Points",
+                "level": 10,
+                "text": "**Temporary Hit Points.** As a Magic action, you can give yourself a number of Temporary Hit Points equal to 1d8 plus your Wisdom modifier (minimum of 1). You can use this action a number of times equal to your Wisdom modifier (minimum of once), and you regain all expended uses when you finish a Long Rest.",
+                "parent": "ranger-xphb:tireless",
+                "category": "actions",
+                "uses": {
+                    "max": "max(1, wis_mod)",
+                    "reset": "long"
+                },
+                "action": {
+                    "temp_hp": "max(1, 1d8 + wis_mod)"
+                }
+            },
+            {
+                "id": "ranger-xphb:tireless:decrease-exhaustion",
+                "name": "Decrease Exhaustion",
+                "level": 10,
+                "text": "**Decrease Exhaustion.** Whenever you finish a Short Rest, your Exhaustion level, if any, decreases by 1.",
+                "parent": "ranger-xphb:tireless",
+                "category": "traits"
+            }
+        ],
+        "resources": []
+    }
+]

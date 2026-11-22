@@ -1,0 +1,100 @@
+{
+  "warlock-phb:mystic-arcanum-6th-level": {
+    "label": "Warlock (PHB) · Mystic Arcanum (6th level)",
+    "hash": "f0ca2506a0db5af1",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11547,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-19T11:41:58+00:00"
+  },
+  "warlock-phb:eldritch-master": {
+    "label": "Warlock (PHB) · Eldritch Master",
+    "hash": "8419fe1eb98e601a",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "eldritch-master",
+          "name": "Eldritch Master",
+          "level": 20,
+          "category": "actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11346,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-19T11:42:00+00:00"
+  },
+  "warlock-phb:fiend-phb": {
+    "label": "Warlock (PHB) · The Fiend (PHB)",
+    "hash": "538bcd608a68a525",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "dark-one-s-blessing",
+          "name": "Dark One's Blessing",
+          "level": 1,
+          "category": "traits",
+          "action": {
+            "temp_hp": "max(1, cha_mod + class_level)"
+          }
+        },
+        {
+          "id": "dark-one-s-own-luck",
+          "name": "Dark One's Own Luck",
+          "level": 6,
+          "category": "traits",
+          "uses": {
+            "max": 1,
+            "reset": "short"
+          }
+        },
+        {
+          "id": "hurl-through-hell",
+          "name": "Hurl Through Hell",
+          "level": 14,
+          "category": "traits",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": "10d10",
+                  "type": "psychic",
+                  "condition": "if the target is not a fiend"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 12730,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-19T11:42:04+00:00"
+  }
+}

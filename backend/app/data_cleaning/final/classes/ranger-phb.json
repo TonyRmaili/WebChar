@@ -1,0 +1,838 @@
+[
+    {
+        "id": "ranger-phb",
+        "kind": "class",
+        "name": "Ranger",
+        "source": "PHB",
+        "edition": "classic",
+        "srd": {
+            "5.1": "Ranger"
+        },
+        "reprinted_as": [
+            "ranger-xphb"
+        ],
+        "hit_die": "d10",
+        "hp": {
+            "first": "10 + con_mod",
+            "per_level": "6 + con_mod"
+        },
+        "saves": [
+            "str",
+            "dex"
+        ],
+        "grants": {
+            "weapons": [
+                "simple_weapons",
+                "martial_weapons"
+            ],
+            "armor": [
+                "light",
+                "medium",
+                "shields"
+            ],
+            "items": [
+                {
+                    "item": "longbow-phb",
+                    "qty": 1
+                },
+                {
+                    "item": "arrows-20-phb",
+                    "qty": 1
+                }
+            ]
+        },
+        "choices": [
+            {
+                "type": "pool",
+                "id": "skills",
+                "label": "Skills",
+                "grant": "skills",
+                "count": 3,
+                "from": [
+                    "animal_handling",
+                    "athletics",
+                    "insight",
+                    "investigation",
+                    "nature",
+                    "perception",
+                    "stealth",
+                    "survival"
+                ]
+            },
+            {
+                "type": "bundle",
+                "id": "starting_equipment",
+                "label": "Starting Equipment",
+                "options": [
+                    {
+                        "id": "a",
+                        "label": "Scale Mail",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "scale-mail-phb",
+                                    "qty": 1
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "id": "b",
+                        "label": "Leather Armor",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "leather-armor-phb",
+                                    "qty": 1
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "type": "bundle",
+                "id": "starting_equipment_2",
+                "label": "Starting Equipment",
+                "options": [
+                    {
+                        "id": "a",
+                        "label": "2 Shortsword",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "shortsword-phb",
+                                    "qty": 2
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "id": "b",
+                        "label": "Simple Melee Weapons",
+                        "choices": [
+                            {
+                                "type": "pool",
+                                "id": "items",
+                                "label": "Simple Melee Weapons",
+                                "grant": "items",
+                                "count": 2,
+                                "from": "simple_melee_weapons"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "bundle",
+                "id": "starting_equipment_3",
+                "label": "Starting Equipment",
+                "options": [
+                    {
+                        "id": "a",
+                        "label": "Dungeoneer's Pack",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "dungeoneers-pack-phb",
+                                    "qty": 1
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "id": "b",
+                        "label": "Explorer's Pack",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "explorers-pack-phb",
+                                    "qty": 1
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        ],
+        "starting_gold": "5d4 × 10",
+        "multiclass": {
+            "requires": [
+                {
+                    "dex": 13,
+                    "wis": 13
+                }
+            ],
+            "grants": {
+                "weapons": [
+                    "simple_weapons",
+                    "martial_weapons"
+                ],
+                "armor": [
+                    "light",
+                    "medium",
+                    "shields"
+                ]
+            },
+            "choices": [
+                {
+                    "type": "pool",
+                    "id": "skills",
+                    "label": "Skills",
+                    "grant": "skills",
+                    "count": 1,
+                    "from": [
+                        "animal_handling",
+                        "athletics",
+                        "insight",
+                        "investigation",
+                        "nature",
+                        "perception",
+                        "stealth",
+                        "survival"
+                    ]
+                }
+            ]
+        },
+        "subclass": {
+            "title": "Ranger Archetype",
+            "level": 3,
+            "text": "At 3rd level, you choose an archetype that you strive to emulate from the list of available archetypes. Your choice grants features at 3rd level, and again at 7th, 11th, and 15th level."
+        },
+        "spellcasting": {
+            "ability": "wis",
+            "progression": "half",
+            "list": "ranger-phb",
+            "known": {
+                "2": 2,
+                "3": 3,
+                "5": 4,
+                "7": 5,
+                "9": 6,
+                "11": 7,
+                "13": 8,
+                "15": 9,
+                "17": 10,
+                "19": 11
+            },
+            "slots": {
+                "2": [
+                    2
+                ],
+                "3": [
+                    3
+                ],
+                "5": [
+                    4,
+                    2
+                ],
+                "7": [
+                    4,
+                    3
+                ],
+                "9": [
+                    4,
+                    3,
+                    2
+                ],
+                "11": [
+                    4,
+                    3,
+                    3
+                ],
+                "13": [
+                    4,
+                    3,
+                    3,
+                    1
+                ],
+                "15": [
+                    4,
+                    3,
+                    3,
+                    2
+                ],
+                "17": [
+                    4,
+                    3,
+                    3,
+                    3,
+                    1
+                ],
+                "19": [
+                    4,
+                    3,
+                    3,
+                    3,
+                    2
+                ]
+            }
+        },
+        "progression": [
+            {
+                "level": 1,
+                "features": [
+                    "ranger-phb:favored-enemy",
+                    "ranger-phb:natural-explorer"
+                ]
+            },
+            {
+                "level": 2,
+                "features": [
+                    "ranger-phb:fighting-style",
+                    "ranger-phb:spellcasting"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "fighting_style_2",
+                        "label": "Fighting Style",
+                        "grant": "optional_features",
+                        "count": 1,
+                        "from": {
+                            "feature_type": [
+                                "fighting_style"
+                            ],
+                            "class": [
+                                "ranger"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 3,
+                "features": [
+                    "ranger-phb:primeval-awareness"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "ranger_archetype_3",
+                        "label": "Ranger Archetype",
+                        "grant": "subclass",
+                        "count": 1,
+                        "from": "ranger-phb"
+                    }
+                ]
+            },
+            {
+                "level": 4,
+                "features": [],
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_4",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_4",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_4",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 5,
+                "features": [
+                    "ranger-phb:extra-attack"
+                ]
+            },
+            {
+                "level": 6,
+                "features": [
+                    "ranger-phb:favored-enemy-and-natural-explorer-improvements"
+                ]
+            },
+            {
+                "level": 7,
+                "subclass_features": true
+            },
+            {
+                "level": 8,
+                "features": [
+                    "ranger-phb:lands-stride"
+                ],
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_8",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_8",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_8",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 10,
+                "features": [
+                    "ranger-phb:hide-in-plain-sight",
+                    "ranger-phb:natural-explorer-improvement"
+                ],
+                "upgrades": []
+            },
+            {
+                "level": 11,
+                "subclass_features": true
+            },
+            {
+                "level": 12,
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_12",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_12",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_12",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 14,
+                "features": [
+                    "ranger-phb:vanish",
+                    "ranger-phb:favored-enemy-improvement"
+                ]
+            },
+            {
+                "level": 15,
+                "subclass_features": true
+            },
+            {
+                "level": 16,
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_16",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_16",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_16",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 18,
+                "features": [
+                    "ranger-phb:feral-senses"
+                ]
+            },
+            {
+                "level": 19,
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_19",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_19",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_19",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 20,
+                "features": [
+                    "ranger-phb:foe-slayer"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "ranger-phb:favored-enemy",
+                "name": "Favored Enemy",
+                "level": 1,
+                "text": "Beginning at 1st level, you have significant experience studying, tracking, hunting, and even talking to a certain type of enemy.\n\nChoose a type of favored enemy: aberrations, beasts, celestials, constructs, dragons, elementals, fey, fiends, giants, monstrosities, oozes, plants, or undead. Alternatively, you can select two races of humanoid (such as gnolls and orcs) as favored enemies.\n\nYou have advantage on Wisdom (Survival) checks to track your favored enemies, as well as on Intelligence checks to recall information about them.\n\nWhen you gain this feature, you also learn one language of your choice that is spoken by your favored enemies, if they speak one at all.\n\nYou choose one additional favored enemy, as well as an associated language, at 6th and 14th level. As you gain levels, your choices should reflect the types of monsters you have encountered on your adventures.",
+                "srd": {
+                    "5.1": "Favored Enemy"
+                },
+                "category": "traits",
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "languages_1",
+                        "label": "Languages",
+                        "grant": "languages",
+                        "count": 1,
+                        "from": "all_languages"
+                    },
+                    {
+                        "type": "pool",
+                        "id": "languages_2",
+                        "label": "Languages",
+                        "grant": "languages",
+                        "count": 1,
+                        "from": "all_languages",
+                        "at": 6
+                    },
+                    {
+                        "type": "pool",
+                        "id": "languages_3",
+                        "label": "Languages",
+                        "grant": "languages",
+                        "count": 1,
+                        "from": "all_languages",
+                        "at": 14
+                    }
+                ]
+            },
+            {
+                "id": "ranger-phb:natural-explorer",
+                "name": "Natural Explorer",
+                "level": 1,
+                "text": "You are particularly familiar with one type of natural environment and are adept at traveling and surviving in such regions. Choose one type of favored terrain: arctic, coast, desert, forest, grassland, mountain, swamp, or the Underdark. When you make an Intelligence or Wisdom check related to your favored terrain, your proficiency bonus is doubled if you are using a skill that you're proficient in.\n\nWhile traveling for an hour or more in your favored terrain, you gain the following benefits:\n\n- Difficult terrain doesn't slow your group's travel.\n- Your group can't become lost except by magical means.\n- Even when you are engaged in another activity while traveling (such as foraging, navigating, or tracking), you remain alert to danger.\n- If you are traveling alone, you can move stealthily at a normal pace.\n- When you forage, you find twice as much food as you normally would.\n- While tracking other creatures, you also learn their exact number, their sizes, and how long ago they passed through the area.\n\nYou choose additional favored terrain types at 6th and 10th level.",
+                "srd": {
+                    "5.1": "Natural Explorer"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "ranger-phb:fighting-style",
+                "name": "Fighting Style",
+                "level": 2,
+                "text": "At 2nd level, you adopt a particular style of fighting as your specialty. Choose one of the following options. You can't take a Fighting Style option more than once, even if you later get to choose again.\n\n- Archery\n- Defense\n- Dueling\n- Two-Weapon Fighting\n- Blind Fighting\n- Druidic Warrior\n- Thrown Weapon Fighting",
+                "srd": {
+                    "5.1": "Fighting Style"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "ranger-phb:spellcasting",
+                "name": "Spellcasting",
+                "level": 2,
+                "text": "By the time you reach 2nd level, you have learned to use the magical essence of nature to cast spells, much as a druid does. See chapter 10 for the general rules of spellcasting and chapter 11 for the ranger spell list.\n\n**Spell Slots.** The Ranger table shows how many spell slots you have to cast your ranger spells of 1st level and higher. To cast one of these spells, you must expend a slot of the spell's level or higher. You regain all expended spell slots when you finish a long rest.\n\nFor example, if you know the 1st-level spell Animal Friendship and have a 1st-level and a 2nd-level spell slot available, you can cast Animal Friendship using either slot.\n\n**Spells Known of 1st Level and Higher.** You know two 1st-level spells of your choice from the ranger spell list.\n\nThe Spells Known column of the Ranger table shows when you learn more ranger spells of your choice. Each of these spells must be of a level for which you have spell slots. For instance, when you reach 5th level in this class, you can learn one new spell of 1st or 2nd level.\n\nAdditionally, when you gain a level in this class, you can choose one of the ranger spells you know and replace it with another spell from the ranger spell list, which also must be of a level for which you have spell slots.\n\n**Spellcasting Ability.** Wisdom is your spellcasting ability for your ranger spells, since your magic draws on your attunement to nature. You use your Wisdom whenever a spell refers to your spellcasting ability. In addition, you use your Wisdom modifier when setting the saving throw DC for a ranger spell you cast and when making an attack roll with one.\n\n**Spell save DC** = 8 + your proficiency bonus + your Wisdom modifier\n\n**Spell attack modifier** = your proficiency bonus + your Wisdom modifier",
+                "srd": {
+                    "5.1": "Spellcasting"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "ranger-phb:primeval-awareness",
+                "name": "Primeval Awareness",
+                "level": 3,
+                "text": "Beginning at 3rd level, you can use your action and expend one ranger spell slot to focus your awareness on the region around you. For 1 minute per level of the spell slot you expend, you can sense whether the following types of creatures are present within 1 mile of you (or within up to 6 miles if you are in your favored terrain): aberrations, celestials, dragons, elementals, fey, fiends, and undead. This feature doesn't reveal the creatures' location or number.",
+                "srd": {
+                    "5.1": "Primeval Awareness"
+                },
+                "category": "actions",
+                "action": {
+                    "range": "1 mile (up to 6 miles in favored terrain)"
+                }
+            },
+            {
+                "id": "ranger-phb:extra-attack",
+                "name": "Extra Attack",
+                "level": 5,
+                "text": "Beginning at 5th level, you can attack twice, instead of once, whenever you take the Attack action on your turn.",
+                "srd": {
+                    "5.1": "Extra Attack"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "ranger-phb:favored-enemy-and-natural-explorer-improvements",
+                "name": "Favored Enemy and Natural Explorer improvements",
+                "level": 6,
+                "text": "At 6th level, you gain an additional favored terrain.\n\nAt 6th level, you choose one additional favored enemy, as well as an associated language. Your choice should reflect the types of monsters you have encountered on your adventures.",
+                "srd": {
+                    "5.1": "Favored Enemy and Natural Explorer improvements"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "ranger-phb:lands-stride",
+                "name": "Land's Stride",
+                "level": 8,
+                "text": "Starting at 8th level, moving through nonmagical difficult terrain costs you no extra movement. You can also pass through nonmagical plants without being slowed by them and without taking damage from them if they have thorns, spines, or a similar hazard.\n\nIn addition, you have advantage on saving throws against plants that are magically created or manipulated to impede movement, such as those created by the Entangle spell.",
+                "srd": {
+                    "5.1": "Land's Stride"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "ranger-phb:hide-in-plain-sight",
+                "name": "Hide in Plain Sight",
+                "level": 10,
+                "text": "Starting at 10th level, you can spend 1 minute creating camouflage for yourself. You must have access to fresh mud, dirt, plants, soot, and other naturally occurring materials with which to create your camouflage.\n\nOnce you are camouflaged in this way, you can try to hide by pressing yourself up against a solid surface, such as a tree or wall, that is at least as tall and wide as you are. You gain a +10 bonus to Dexterity (Stealth) checks as long as you remain there without moving or taking actions. Once you move or take an action or a reaction, you must camouflage yourself again to gain this benefit.",
+                "srd": {
+                    "5.1": "Hide in Plain Sight"
+                },
+                "category": "traits",
+                "toggle": {
+                    "modifiers": [
+                        {
+                            "target": "check.stealth",
+                            "add": 10
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "ranger-phb:natural-explorer-improvement",
+                "name": "Natural Explorer improvement",
+                "level": 10,
+                "text": "You gain an additional favored terrain.",
+                "srd": {
+                    "5.1": "Natural Explorer improvement"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "ranger-phb:vanish",
+                "name": "Vanish",
+                "level": 14,
+                "text": "Starting at 14th level, you can use the Hide action as a bonus action on your turn. Also, you can't be tracked by nonmagical means, unless you choose to leave a trail.",
+                "srd": {
+                    "5.1": "Vanish"
+                },
+                "category": "bonus_actions"
+            },
+            {
+                "id": "ranger-phb:favored-enemy-improvement",
+                "name": "Favored Enemy improvement",
+                "level": 14,
+                "text": "At 14th level, you choose one additional favored enemy, as well as an associated language. Your choice should reflect the types of monsters you have encountered on your adventures.",
+                "srd": {
+                    "5.1": "Favored Enemy improvement"
+                },
+                "category": "traits",
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "languages_1",
+                        "label": "Languages",
+                        "grant": "languages",
+                        "count": 1,
+                        "from": "all_languages"
+                    }
+                ]
+            },
+            {
+                "id": "ranger-phb:feral-senses",
+                "name": "Feral Senses",
+                "level": 18,
+                "text": "At 18th level, you gain preternatural senses that help you fight creatures you can't see. When you attack a creature you can't see, your inability to see it doesn't impose disadvantage on your attack rolls against it. You are also aware of the location of any invisible creature within 30 feet of you, provided that the creature isn't hidden from you and you aren't blinded or deafened.",
+                "srd": {
+                    "5.1": "Feral Senses"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "ranger-phb:foe-slayer",
+                "name": "Foe Slayer",
+                "level": 20,
+                "text": "At 20th level, you become an unparalleled hunter of your enemies. Once on each of your turns, you can add your Wisdom modifier to the attack roll or the damage roll of an attack you make against one of your favored enemies. You can choose to use this feature before or after the roll, but before any effects of the roll are applied.",
+                "srd": {
+                    "5.1": "Foe Slayer"
+                },
+                "category": "traits"
+            }
+        ],
+        "resources": []
+    }
+]

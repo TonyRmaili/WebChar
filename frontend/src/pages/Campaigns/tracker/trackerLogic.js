@@ -1,8 +1,9 @@
 import { afterDamage } from "../../../components/dice/groupRollHelper";
 import { CONDITION_OPTIONS } from "../../../utils/Constants";
-import { effectiveMaxHp, healthOf, initiativeTotal } from "../../Characters/sheet/play/playHelpers";
+import { currentHp, derivedOf } from "../../../utils/derive";
 import { CHARACTER_ACTIONS, characterView } from "../statblock/characterStatblock";
 import { MONSTER_ACTIONS, hpCurOf, hpMaxOf, initiativeOf, monsterView } from "../statblock/monsterStatblock";
+import { recharges, usesOf } from "../../../utils/featureRuntime";
 import { applyTemplates, givenTemplates, resolveTemplates } from "../templates/templateLogic";
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -84,18 +85,19 @@ export function combatantsOf(encounter, copies, templates = [], groups = []) {
 
 /* ─── numbers we need from either kind of creature ───────────────── */
 
-export const dexScore = (c) => toInt(c.data?.ability_scores?.dex?.score, 10);
+// Ties in initiative go to the higher Dexterity.
+export const dexScore = (c) => toInt(c.kind === "monster" ? c.data?.abilities?.dex : derivedOf(c.data)?.abilities?.dex?.score, 10);
 
-export const initiativeBonus = (c) => (!c.data ? 0 : c.kind === "monster" ? initiativeOf(c.data) : initiativeTotal(c.data));
+export const initiativeBonus = (c) => (!c.data ? 0 : c.kind === "monster" ? initiativeOf(c.data) : derivedOf(c.data)?.initiative ?? 0);
 
 export function hpOf(c) {
   if (!c.data) return { cur: 0, max: 0, temp: 0 };
   if (c.kind === "monster") return { cur: hpCurOf(c.data), max: hpMaxOf(c.data), temp: toInt(c.data.hp_temp, 0) };
-  const h = healthOf(c.data);
-  return { cur: toInt(h.current_hp, 0), max: effectiveMaxHp(h), temp: toInt(h.temp_hp, 0) };
+  const max = derivedOf(c.data)?.hp_max ?? 0;
+  return { cur: currentHp(c.data, max), max, temp: toInt(c.data.state?.hp_temp, 0) };
 }
 
-export const acOf = (c) => (!c.data ? null : c.kind === "monster" ? toInt(asList(c.data.ac)[0]?.value, null) : toInt(c.data.ac, null));
+export const acOf = (c) => (!c.data ? null : c.kind === "monster" ? toInt(asList(c.data.ac)[0]?.value, null) : derivedOf(c.data)?.ac ?? null);
 
 // Write HP back in the creature's own layout.
 // `cur` is what you see; templates may add HP on top (`_hp_delta`), so the
@@ -104,7 +106,9 @@ function withHp(c, { cur, temp }) {
   const base = c.base ?? c.data;
   const own = cur - toInt(c.data?._hp_delta, 0);
   if (c.kind === "monster") return { ...base, hp_current: own, hp_temp: temp };
-  return { ...base, health: { ...healthOf(base), current_hp: own, temp_hp: temp } };
+  // A character's file says null for full health (version 2: state).
+  const max = derivedOf(base)?.hp_max ?? 0;
+  return { ...base, state: { ...(base.state || {}), hp_current: own >= max ? null : Math.max(0, own), hp_temp: temp } };
 }
 
 // Damage takes temporary HP first (afterDamage, shared with the dice
@@ -136,7 +140,7 @@ export const fullHp = (c) => withHp(c, { cur: hpOf(c).max, temp: 0 });
 // (hpOf reads `data`, so "full" includes HP that templates add.)
 
 // Every use back: charges, legendary actions, spell uses, spell slots,
-// sorcery points. Done through the statblock's own view and actions, so it
+// class pools. Done through the statblock's own view and actions, so it
 // refills exactly the dots the card shows (hidden rows included).
 export function restoreUses(c) {
   const base = c.base ?? c.data;
@@ -243,49 +247,30 @@ export function previousTurn(list, turn, round) {
 // What happens to a monster as its turn starts: legendary actions come
 // back, and each "Recharge 5–6" that is spent rolls a d6.
 // Returns { data, notes: ["Fire Breath recharged (rolled 6)", …] }.
-// (Rows a template gives recharge too; their uses live in template_uses.)
+// Rows a template gives recharge too; their uses live in template_uses.
+// (`c.data` has the template rows in it, `c.base` is the monster's own.)
 export function startOfTurn(c) {
   const base = c.base ?? c.data;
   if (c.kind !== "monster" || !base) return { data: base, notes: [] };
   const notes = [];
+  // A spent recharge rolls; true when it came back.
+  const rolls = (f) => {
+    const uses = usesOf(f);
+    if (f?.uses?.reset !== "recharge" || !uses || uses.cur >= uses.max) return false;
+    const roll = d(6);
+    const back = recharges(f.uses, roll);
+    notes.push(`${f.name} ${back ? "recharged" : "didn't recharge"} (rolled ${roll})`);
+    return back;
+  };
   const templateUses = { ...(base.template_uses || {}) };
-  for (const block of Object.values(c.data.effects || {})) {
-    for (const it of asList(block?.items)) {
-      const ch = it?.charges;
-      if (!it?.from_template || !ch || ch.reset_type !== "recharge_dice") continue;
-      const max = toInt(ch.max_charges ?? 1, 1);
-      if (toInt(ch.current_charges, max) >= max) continue;
-      const roll = d(6);
-      if (roll < toInt(ch.recharge_dice, 6)) notes.push(`${it.name} didn't recharge (rolled ${roll})`);
-      else {
-        notes.push(`${it.name} recharged (rolled ${roll})`);
-        delete templateUses[it.id];
-      }
-    }
-  }
-  const effects = {};
-  for (const [key, block] of Object.entries(base.effects || {})) {
-    effects[key] = {
-      ...block,
-      items: asList(block?.items).map((it) => {
-        const ch = it?.charges;
-        if (!ch || ch.reset_type !== "recharge_dice") return it;
-        const max = toInt(ch.max_charges ?? 1, 1);
-        if (toInt(ch.current_charges, max) >= max) return it;
-        const roll = d(6);
-        const need = toInt(ch.recharge_dice, 6);
-        if (roll < need) {
-          notes.push(`${it.name} didn't recharge (rolled ${roll})`);
-          return it;
-        }
-        notes.push(`${it.name} recharged (rolled ${roll})`);
-        return { ...it, charges: { ...ch, current_charges: max } };
-      }),
-    };
-  }
-  const data = { ...base, effects, template_uses: templateUses };
-  const lap = base.legendary_action_points;
-  if (lap?.legendary_actions != null) data.legendary_action_points = { ...lap, current: toInt(lap.legendary_actions, 0) };
+  for (const f of asList(c.data?.features)) if (f?.from_template && rolls(f)) delete templateUses[f.id];
+  const features = asList(base.features).map((f) => {
+    if (!rolls(f)) return f;
+    const { uses_left, ...back } = f;
+    return back;
+  });
+  const data = { ...base, features, template_uses: templateUses };
+  if (base.legendary_actions?.uses) data.legendary_actions = { ...base.legendary_actions, left: base.legendary_actions.uses };
   return { data, notes };
 }
 

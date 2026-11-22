@@ -1,0 +1,115 @@
+[
+    {
+        "id": "ranger-xphb:hunter-xphb",
+        "kind": "subclass",
+        "name": "Hunter",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Hunter"
+        },
+        "text": "*Protect Nature and People from Destruction*\n\nYou stalk prey in the wilds and elsewhere, using your abilities as a Hunter to protect nature and people everywhere from forces that would destroy them.",
+        "class_id": "ranger-xphb",
+        "short_name": "Hunter",
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "ranger-xphb:hunter-xphb:hunters-prey",
+                    "ranger-xphb:hunter-xphb:hunters-lore"
+                ]
+            },
+            {
+                "level": 7,
+                "features": [
+                    "ranger-xphb:hunter-xphb:defensive-tactics"
+                ]
+            },
+            {
+                "level": 11,
+                "features": [
+                    "ranger-xphb:hunter-xphb:superior-hunters-prey"
+                ]
+            },
+            {
+                "level": 15,
+                "features": [
+                    "ranger-xphb:hunter-xphb:superior-hunters-defense"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "ranger-xphb:hunter-xphb:hunters-prey",
+                "name": "Hunter's Prey",
+                "level": 3,
+                "text": "You gain one of the following feature options of your choice. Whenever you finish a Short or Long Rest, you can replace the chosen option with the other one.\n\n**Colossus Slayer.** Your tenacity can wear down even the most resilient foes. When you hit a creature with a weapon, the weapon deals an extra 1d8 damage to the target if it's missing any of its Hit Points. You can deal this extra damage only once per turn.\n\n**Horde Breaker.** Once on each of your turns when you make an attack with a weapon, you can make another attack with the same weapon against a different creature that is within 5 feet of the original target, that is within the weapon's range, and that you haven't attacked this turn.",
+                "srd": {
+                    "5.2": "Hunter's Prey"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "ranger-xphb:hunter-xphb:hunters-lore",
+                "name": "Hunter's Lore",
+                "level": 3,
+                "text": "You can call on the forces of nature to reveal certain strengths and weaknesses of your prey. While a creature is marked by your Hunter's Mark, you know whether that creature has any Immunities, Resistances, or Vulnerabilities, and if the creature has any, you know what they are.",
+                "srd": {
+                    "5.2": "Hunter's Lore"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "ranger-xphb:hunter-xphb:defensive-tactics",
+                "name": "Defensive Tactics",
+                "level": 7,
+                "text": "You gain one of the following feature options of your choice. Whenever you finish a Short or Long Rest, you can replace the chosen option with the other one.\n\n**Escape the Horde.** Opportunity Attacks have Disadvantage against you.\n\n**Multiattack Defense.** When a creature hits you with an attack roll, that creature has Disadvantage on all other attack rolls against you this turn.",
+                "srd": {
+                    "5.2": "Defensive Tactics"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "ranger-xphb:hunter-xphb:superior-hunters-prey",
+                "name": "Superior Hunter's Prey",
+                "level": 11,
+                "text": "Once per turn when you deal damage to a creature marked by your Hunter's Mark, you can also deal that spell's extra damage to a different creature that you can see within 30 feet of the first creature.",
+                "srd": {
+                    "5.2": "Superior Hunter's Prey"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "ranger-xphb:hunter-xphb:superior-hunters-defense",
+                "name": "Superior Hunter's Defense",
+                "level": 15,
+                "text": "When you take damage, you can take a Reaction to give yourself Resistance to that damage and any other damage of the same type until the end of the current turn.",
+                "srd": {
+                    "5.2": "Superior Hunter's Defense"
+                },
+                "category": "reactions"
+            },
+            {
+                "id": "ranger-xphb:hunter-xphb:hunters-prey:colossus-slayer",
+                "name": "Colossus Slayer",
+                "level": 3,
+                "text": "**Colossus Slayer.** Your tenacity can wear down even the most resilient foes. When you hit a creature with a weapon, the weapon deals an extra 1d8 damage to the target if it's missing any of its Hit Points. You can deal this extra damage only once per turn.",
+                "parent": "ranger-xphb:hunter-xphb:hunters-prey",
+                "category": "traits",
+                "action": {
+                    "attack": {
+                        "kind": "any",
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "type": "weapon",
+                                "condition": "if the target is missing any Hit Points"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "resources": []
+    }
+]

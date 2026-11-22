@@ -1,0 +1,223 @@
+[
+    {
+        "id": "ranger-phb:hunter-phb",
+        "kind": "subclass",
+        "name": "Hunter",
+        "source": "PHB",
+        "edition": "classic",
+        "srd": {
+            "5.1": "Hunter"
+        },
+        "reprinted_as": [
+            "ranger-xphb:hunter-xphb"
+        ],
+        "text": "Emulating the Hunter archetype means accepting your place as a bulwark between civilization and the terrors of the wilderness. As you walk the Hunter's path, you learn specialized techniques for fighting the threats you face, from rampaging ogres and hordes of orcs to towering giants and terrifying dragons.",
+        "class_id": "ranger-phb",
+        "short_name": "Hunter",
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "ranger-phb:hunter-phb:hunters-prey"
+                ]
+            },
+            {
+                "level": 7,
+                "features": [
+                    "ranger-phb:hunter-phb:defensive-tactics"
+                ]
+            },
+            {
+                "level": 11,
+                "features": [
+                    "ranger-phb:hunter-phb:multiattack"
+                ]
+            },
+            {
+                "level": 15,
+                "features": [
+                    "ranger-phb:hunter-phb:superior-hunters-defense"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "ranger-phb:hunter-phb:hunters-prey",
+                "name": "Hunter's Prey",
+                "level": 3,
+                "text": "At 3rd level, you gain one of the following features of your choice.",
+                "srd": {
+                    "5.1": "Hunter's Prey"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "ranger-phb:hunter-phb:colossus-slayer",
+                "name": "Colossus Slayer",
+                "level": 3,
+                "text": "Your tenacity can wear down the most potent foes. When you hit a creature with a weapon attack, the creature takes an extra 1d8 damage if it's below its hit point maximum. You can deal this extra damage only once per turn.",
+                "parent": "ranger-phb:hunter-phb:hunters-prey",
+                "srd": {
+                    "5.1": "Colossus Slayer"
+                },
+                "category": "traits",
+                "action": {
+                    "attack": {
+                        "kind": "any"
+                    }
+                }
+            },
+            {
+                "id": "ranger-phb:hunter-phb:giant-killer",
+                "name": "Giant Killer",
+                "level": 3,
+                "text": "When a Large or larger creature within 5 feet of you hits or misses you with an attack, you can use your reaction to attack that creature immediately after its attack, provided that you can see the creature.",
+                "parent": "ranger-phb:hunter-phb:hunters-prey",
+                "srd": {
+                    "5.1": "Giant Killer"
+                },
+                "category": "reactions"
+            },
+            {
+                "id": "ranger-phb:hunter-phb:horde-breaker",
+                "name": "Horde Breaker",
+                "level": 3,
+                "text": "Once on each of your turns when you make a weapon attack, you can make another attack with the same weapon against a different creature that is within 5 feet of the original target and within range of your weapon.",
+                "parent": "ranger-phb:hunter-phb:hunters-prey",
+                "srd": {
+                    "5.1": "Horde Breaker"
+                },
+                "category": "actions",
+                "action": {
+                    "range": "within range of your weapon"
+                }
+            },
+            {
+                "id": "ranger-phb:hunter-phb:defensive-tactics",
+                "name": "Defensive Tactics",
+                "level": 7,
+                "text": "At 7th level, you gain one of the following features of your choice.",
+                "srd": {
+                    "5.1": "Defensive Tactics"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "ranger-phb:hunter-phb:escape-the-horde",
+                "name": "Escape the Horde",
+                "level": 7,
+                "text": "Opportunity attacks against you are made with disadvantage.",
+                "parent": "ranger-phb:hunter-phb:defensive-tactics",
+                "srd": {
+                    "5.1": "Escape the Horde"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "ranger-phb:hunter-phb:multiattack-defense",
+                "name": "Multiattack Defense",
+                "level": 7,
+                "text": "When a creature hits you with an attack, you gain a +4 bonus to AC against all subsequent attacks made by that creature for the rest of the turn.",
+                "parent": "ranger-phb:hunter-phb:defensive-tactics",
+                "srd": {
+                    "5.1": "Multiattack Defense"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "ranger-phb:hunter-phb:steel-will",
+                "name": "Steel Will",
+                "level": 7,
+                "text": "You have advantage on saving throws against being frightened.",
+                "parent": "ranger-phb:hunter-phb:defensive-tactics",
+                "srd": {
+                    "5.1": "Steel Will"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "ranger-phb:hunter-phb:multiattack",
+                "name": "Multiattack",
+                "level": 11,
+                "text": "At 11th level, you gain one of the following features of your choice.",
+                "srd": {
+                    "5.1": "Multiattack"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "ranger-phb:hunter-phb:volley",
+                "name": "Volley",
+                "level": 11,
+                "text": "You can use your action to make a ranged attack against any number of creatures within 10 feet of a point you can see within your weapon's range. You must have ammunition for each target, as normal, and you make a separate attack roll for each target.",
+                "parent": "ranger-phb:hunter-phb:multiattack",
+                "srd": {
+                    "5.1": "Volley"
+                },
+                "category": "actions",
+                "action": {
+                    "range": "within your weapon's range",
+                    "area": "within 10 feet of a point you can see"
+                }
+            },
+            {
+                "id": "ranger-phb:hunter-phb:whirlwind-attack",
+                "name": "Whirlwind Attack",
+                "level": 11,
+                "text": "You can use your action to make a melee attack against any number of creatures within 5 feet of you, with a separate attack roll for each target.",
+                "parent": "ranger-phb:hunter-phb:multiattack",
+                "srd": {
+                    "5.1": "Whirlwind Attack"
+                },
+                "category": "actions",
+                "action": {
+                    "area": "within 5 feet of you"
+                }
+            },
+            {
+                "id": "ranger-phb:hunter-phb:superior-hunters-defense",
+                "name": "Superior Hunter's Defense",
+                "level": 15,
+                "text": "At 15th level, you gain one of the following features of your choice.",
+                "srd": {
+                    "5.1": "Superior Hunter's Defense"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "ranger-phb:hunter-phb:evasion",
+                "name": "Evasion",
+                "level": 15,
+                "text": "You can nimbly dodge out of the way of certain area effects, such as a red dragon's fiery breath or a Lightning Bolt spell. When you are subjected to an effect that allows you to make a Dexterity saving throw to take only half damage, you instead take no damage if you succeed on the saving throw, and only half damage if you fail.",
+                "parent": "ranger-phb:hunter-phb:superior-hunters-defense",
+                "srd": {
+                    "5.1": "Evasion"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "ranger-phb:hunter-phb:stand-against-the-tide",
+                "name": "Stand Against the Tide",
+                "level": 15,
+                "text": "When a hostile creature misses you with a melee attack, you can use your reaction to force that creature to repeat the same attack against another creature (other than itself) of your choice.",
+                "parent": "ranger-phb:hunter-phb:superior-hunters-defense",
+                "srd": {
+                    "5.1": "Stand Against the Tide"
+                },
+                "category": "reactions"
+            },
+            {
+                "id": "ranger-phb:hunter-phb:uncanny-dodge",
+                "name": "Uncanny Dodge",
+                "level": 15,
+                "text": "When an attacker that you can see hits you with an attack, you can use your reaction to halve the attack's damage against you.",
+                "parent": "ranger-phb:hunter-phb:superior-hunters-defense",
+                "srd": {
+                    "5.1": "Uncanny Dodge"
+                },
+                "category": "reactions"
+            }
+        ],
+        "resources": []
+    }
+]

@@ -1,0 +1,371 @@
+{
+  "druid-xphb:druidic": {
+    "label": "Druid (XPHB) · Druidic",
+    "hash": "5048439a0c3bf870",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "druidic",
+          "name": "Druidic",
+          "level": 1,
+          "category": "traits",
+          "grants": {
+            "languages": [
+              "druidic"
+            ]
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11309,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:16:08+00:00"
+  },
+  "druid-xphb:primal-order": {
+    "label": "Druid (XPHB) · Primal Order",
+    "hash": "dde30bb77a0d1fb5",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "magician",
+          "name": "Magician",
+          "level": 1,
+          "category": "traits",
+          "modifiers": [
+            {
+              "target": "check.arcana",
+              "add": "max(1, wis_mod)"
+            },
+            {
+              "target": "check.nature",
+              "add": "max(1, wis_mod)"
+            }
+          ]
+        },
+        {
+          "id": "warden",
+          "name": "Warden",
+          "level": 1,
+          "category": "traits",
+          "grants": {
+            "weapons": [
+              "martial_weapons"
+            ],
+            "armor": [
+              "medium"
+            ]
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11593,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:16:11+00:00"
+  },
+  "druid-xphb:wild-companion": {
+    "label": "Druid (XPHB) · Wild Companion",
+    "hash": "84dbba19202fd248",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "wild-companion",
+          "name": "Wild Companion",
+          "level": 2,
+          "category": "traits"
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11286,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:16:17+00:00"
+  },
+  "druid-xphb:wild-shape": {
+    "label": "Druid (XPHB) · Wild Shape",
+    "hash": "6baeb681ed558859",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "wild-shape",
+          "name": "Wild Shape",
+          "level": 2,
+          "category": "bonus_actions",
+          "action": {
+            "temp_hp": "class_level"
+          },
+          "toggle": true,
+          "consumes": {
+            "resource": "wild_shape",
+            "amount": 1
+          }
+        }
+      ],
+      "resources": [
+        {
+          "name": "Wild Shape",
+          "max": "wild_shape",
+          "reset": "long",
+          "short_rest": 1
+        }
+      ]
+    },
+    "problems": [],
+    "tokens": 12682,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:16:20+00:00"
+  },
+  "druid-xphb:wild-resurgence": {
+    "label": "Druid (XPHB) · Wild Resurgence",
+    "hash": "3f8d33591eee8258",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "wild-resurgence",
+          "name": "Wild Resurgence",
+          "level": 5,
+          "category": "traits",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11744,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:16:32+00:00"
+  },
+  "druid-xphb:elemental-fury": {
+    "label": "Druid (XPHB) · Elemental Fury",
+    "hash": "c9d9aae3f9a6b698",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "potent-spellcasting",
+          "name": "Potent Spellcasting",
+          "level": 7,
+          "category": "traits",
+          "modifiers": [
+            {
+              "target": "damage",
+              "add": "wis_mod"
+            }
+          ]
+        },
+        {
+          "id": "primal-strike",
+          "name": "Primal Strike",
+          "level": 7,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": "1d8",
+                  "type": "cold",
+                  "condition": "choose when you hit; weapon or Beast form attack in Wild Shape; once on each of your turns; extra damage choice."
+                },
+                {
+                  "dice": "1d8",
+                  "type": "fire",
+                  "condition": "choose when you hit; weapon or Beast form attack in Wild Shape; once on each of your turns; extra damage choice."
+                },
+                {
+                  "dice": "1d8",
+                  "type": "lightning",
+                  "condition": "choose when you hit; weapon or Beast form attack in Wild Shape; once on each of your turns; extra damage choice."
+                },
+                {
+                  "dice": "1d8",
+                  "type": "thunder",
+                  "condition": "choose when you hit; weapon or Beast form attack in Wild Shape; once on each of your turns; extra damage choice."
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 12180,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:16:41+00:00"
+  },
+  "druid-xphb:improved-elemental-fury": {
+    "label": "Druid (XPHB) · Improved Elemental Fury",
+    "hash": "ebc51d0f74b2dd2b",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11839,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:16:51+00:00"
+  },
+  "druid-xphb:beast-spells": {
+    "label": "Druid (XPHB) · Beast Spells",
+    "hash": "07f10b3799de5cab",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "beast-spells",
+          "name": "Beast Spells",
+          "level": 18,
+          "category": "traits"
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11187,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:17:01+00:00"
+  },
+  "druid-xphb:archdruid": {
+    "label": "Druid (XPHB) · Archdruid",
+    "hash": "dc95e733820ea4c5",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "nature-magician",
+          "name": "Nature Magician",
+          "level": 20,
+          "category": "traits",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11983,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:17:04+00:00"
+  },
+  "druid-xphb:land-xphb": {
+    "label": "Druid (XPHB) · Circle of the Land (XPHB)",
+    "hash": "2010afd7137659c8",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "land-s-aid",
+          "name": "Land's Aid",
+          "level": 3,
+          "category": "actions",
+          "action": {
+            "range": "60 feet",
+            "area": "10-foot-radius Sphere",
+            "heal": {
+              "1": "2d6",
+              "10": "3d6",
+              "14": "4d6"
+            },
+            "save": {
+              "ability": "con",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "half",
+              "damage": [
+                {
+                  "dice": {
+                    "1": "2d6",
+                    "10": "3d6",
+                    "14": "4d6"
+                  },
+                  "type": "necrotic"
+                }
+              ]
+            }
+          },
+          "consumes": {
+            "resource": "wild_shape",
+            "amount": 1
+          }
+        },
+        {
+          "id": "natural-recovery",
+          "name": "Natural Recovery",
+          "level": 6,
+          "category": "traits",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          }
+        },
+        {
+          "id": "nature-s-ward",
+          "name": "Nature's Ward",
+          "level": 10,
+          "category": "traits",
+          "grants": {
+            "defenses": {
+              "condition_immune": [
+                "poisoned"
+              ]
+            }
+          }
+        },
+        {
+          "id": "nature-s-sanctuary",
+          "name": "Nature's Sanctuary",
+          "level": 14,
+          "category": "actions",
+          "action": {
+            "range": "within 120 feet",
+            "area": "15-foot Cube"
+          },
+          "consumes": {
+            "resource": "wild_shape",
+            "amount": 1
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13556,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:17:13+00:00"
+  }
+}

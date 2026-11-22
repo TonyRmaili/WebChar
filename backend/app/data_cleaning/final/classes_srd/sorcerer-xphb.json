@@ -1,0 +1,621 @@
+[
+    {
+        "id": "sorcerer-xphb",
+        "kind": "class",
+        "name": "Sorcerer",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Sorcerer"
+        },
+        "hit_die": "d6",
+        "hp": {
+            "first": "6 + con_mod",
+            "per_level": "4 + con_mod"
+        },
+        "primary_ability": [
+            [
+                "cha"
+            ]
+        ],
+        "saves": [
+            "con",
+            "cha"
+        ],
+        "grants": {
+            "weapons": [
+                "simple_weapons"
+            ]
+        },
+        "choices": [
+            {
+                "type": "pool",
+                "id": "skills",
+                "label": "Skills",
+                "grant": "skills",
+                "count": 2,
+                "from": [
+                    "arcana",
+                    "deception",
+                    "insight",
+                    "intimidation",
+                    "persuasion",
+                    "religion"
+                ]
+            },
+            {
+                "type": "bundle",
+                "id": "starting_equipment",
+                "label": "Starting Equipment",
+                "options": [
+                    {
+                        "id": "a",
+                        "label": "Spear, 2 Dagger, Crystal, Dungeoneer's Pack, 28 GP",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "spear-xphb",
+                                    "qty": 1
+                                },
+                                {
+                                    "item": "dagger-xphb",
+                                    "qty": 2
+                                },
+                                {
+                                    "item": "crystal-xphb",
+                                    "qty": 1
+                                },
+                                {
+                                    "item": "dungeoneers-pack-xphb",
+                                    "qty": 1
+                                }
+                            ],
+                            "currency": {
+                                "gp": 28
+                            }
+                        }
+                    },
+                    {
+                        "id": "b",
+                        "label": "50 GP",
+                        "grants": {
+                            "currency": {
+                                "gp": 50
+                            }
+                        }
+                    }
+                ]
+            }
+        ],
+        "multiclass": {
+            "requires": [
+                {
+                    "cha": 13
+                }
+            ]
+        },
+        "subclass": {
+            "title": "Sorcerer Subclass",
+            "level": 3,
+            "text": "You gain a Sorcerer subclass of your choice. A subclass is a specialization that grants you features at certain Sorcerer levels. For the rest of your career, you gain each of your subclass's features that are of your Sorcerer level or lower."
+        },
+        "columns": [
+            {
+                "id": "sorcery_points",
+                "name": "Sorcery Points",
+                "values": {
+                    "2": 2,
+                    "3": 3,
+                    "4": 4,
+                    "5": 5,
+                    "6": 6,
+                    "7": 7,
+                    "8": 8,
+                    "9": 9,
+                    "10": 10,
+                    "11": 11,
+                    "12": 12,
+                    "13": 13,
+                    "14": 14,
+                    "15": 15,
+                    "16": 16,
+                    "17": 17,
+                    "18": 18,
+                    "19": 19,
+                    "20": 20
+                }
+            }
+        ],
+        "resources": [
+            {
+                "id": "sorcery_points",
+                "name": "Sorcery Points",
+                "max": {
+                    "2": 2,
+                    "3": 3,
+                    "4": 4,
+                    "5": 5,
+                    "6": 6,
+                    "7": 7,
+                    "8": 8,
+                    "9": 9,
+                    "10": 10,
+                    "11": 11,
+                    "12": 12,
+                    "13": 13,
+                    "14": 14,
+                    "15": 15,
+                    "16": 16,
+                    "17": 17,
+                    "18": 18,
+                    "19": 19,
+                    "20": 20
+                },
+                "reset": "long"
+            }
+        ],
+        "spellcasting": {
+            "ability": "cha",
+            "progression": "full",
+            "list": "sorcerer-xphb",
+            "cantrips": {
+                "1": 4,
+                "4": 5,
+                "10": 6
+            },
+            "prepared": {
+                "1": 2,
+                "2": 4,
+                "3": 6,
+                "4": 7,
+                "5": 9,
+                "6": 10,
+                "7": 11,
+                "8": 12,
+                "9": 14,
+                "10": 15,
+                "11": 16,
+                "13": 17,
+                "15": 18,
+                "17": 19,
+                "18": 20,
+                "19": 21,
+                "20": 22
+            },
+            "change": "level",
+            "slots": {
+                "1": [
+                    2
+                ],
+                "2": [
+                    3
+                ],
+                "3": [
+                    4,
+                    2
+                ],
+                "4": [
+                    4,
+                    3
+                ],
+                "5": [
+                    4,
+                    3,
+                    2
+                ],
+                "6": [
+                    4,
+                    3,
+                    3
+                ],
+                "7": [
+                    4,
+                    3,
+                    3,
+                    1
+                ],
+                "8": [
+                    4,
+                    3,
+                    3,
+                    2
+                ],
+                "9": [
+                    4,
+                    3,
+                    3,
+                    3,
+                    1
+                ],
+                "10": [
+                    4,
+                    3,
+                    3,
+                    3,
+                    2
+                ],
+                "11": [
+                    4,
+                    3,
+                    3,
+                    3,
+                    2,
+                    1
+                ],
+                "13": [
+                    4,
+                    3,
+                    3,
+                    3,
+                    2,
+                    1,
+                    1
+                ],
+                "15": [
+                    4,
+                    3,
+                    3,
+                    3,
+                    2,
+                    1,
+                    1,
+                    1
+                ],
+                "17": [
+                    4,
+                    3,
+                    3,
+                    3,
+                    2,
+                    1,
+                    1,
+                    1,
+                    1
+                ],
+                "18": [
+                    4,
+                    3,
+                    3,
+                    3,
+                    3,
+                    1,
+                    1,
+                    1,
+                    1
+                ],
+                "19": [
+                    4,
+                    3,
+                    3,
+                    3,
+                    3,
+                    2,
+                    1,
+                    1,
+                    1
+                ],
+                "20": [
+                    4,
+                    3,
+                    3,
+                    3,
+                    3,
+                    2,
+                    2,
+                    1,
+                    1
+                ]
+            }
+        },
+        "progression": [
+            {
+                "level": 1,
+                "features": [
+                    "sorcerer-xphb:spellcasting",
+                    "sorcerer-xphb:innate-sorcery"
+                ]
+            },
+            {
+                "level": 2,
+                "features": [
+                    "sorcerer-xphb:font-of-magic",
+                    "sorcerer-xphb:metamagic",
+                    "sorcerer-xphb:metamagic-options"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "metamagic_2",
+                        "label": "Metamagic",
+                        "grant": "optional_features",
+                        "count": 2,
+                        "from": {
+                            "feature_type": [
+                                "metamagic"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 3,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "sorcerer_subclass_3",
+                        "label": "Sorcerer Subclass",
+                        "grant": "subclass",
+                        "count": 1,
+                        "from": "sorcerer-xphb"
+                    }
+                ]
+            },
+            {
+                "level": 4,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "ability_score_improvement_4",
+                        "label": "Ability Score Improvement",
+                        "grant": "feats",
+                        "count": 1,
+                        "from": {
+                            "category": [
+                                "general"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 5,
+                "features": [
+                    "sorcerer-xphb:sorcerous-restoration"
+                ]
+            },
+            {
+                "level": 6,
+                "subclass_features": true
+            },
+            {
+                "level": 7,
+                "features": [
+                    "sorcerer-xphb:sorcery-incarnate"
+                ]
+            },
+            {
+                "level": 8,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "ability_score_improvement_8",
+                        "label": "Ability Score Improvement",
+                        "grant": "feats",
+                        "count": 1,
+                        "from": {
+                            "category": [
+                                "general"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 10,
+                "upgrades": [
+                    "sorcerer-xphb:metamagic"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "metamagic_10",
+                        "label": "Metamagic",
+                        "grant": "optional_features",
+                        "count": 2,
+                        "from": {
+                            "feature_type": [
+                                "metamagic"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 12,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "ability_score_improvement_12",
+                        "label": "Ability Score Improvement",
+                        "grant": "feats",
+                        "count": 1,
+                        "from": {
+                            "category": [
+                                "general"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 14,
+                "subclass_features": true
+            },
+            {
+                "level": 16,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "ability_score_improvement_16",
+                        "label": "Ability Score Improvement",
+                        "grant": "feats",
+                        "count": 1,
+                        "from": {
+                            "category": [
+                                "general"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 17,
+                "upgrades": [
+                    "sorcerer-xphb:metamagic"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "metamagic_17",
+                        "label": "Metamagic",
+                        "grant": "optional_features",
+                        "count": 2,
+                        "from": {
+                            "feature_type": [
+                                "metamagic"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 18,
+                "subclass_features": true
+            },
+            {
+                "level": 19,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "epic_boon_19",
+                        "label": "Epic Boon",
+                        "grant": "feats",
+                        "count": 1,
+                        "from": {
+                            "category": [
+                                "epic_boon"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 20,
+                "features": [
+                    "sorcerer-xphb:arcane-apotheosis"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "sorcerer-xphb:spellcasting",
+                "name": "Spellcasting",
+                "level": 1,
+                "text": "Drawing from your innate magic, you can cast spells. See chapter 7 for the rules on spellcasting. The information below details how you use those rules with Sorcerer spells, which appear in the Sorcerer spell list later in the class's description.\n\n**Cantrips.** You know four Sorcerer cantrips of your choice. Light, Prestidigitation, Shocking Grasp, and Sorcerous Burst are recommended. Whenever you gain a Sorcerer level, you can replace one of your cantrips from this feature with another Sorcerer cantrip of your choice.\n\nWhen you reach Sorcerer levels 4 and 10, you learn another Sorcerer cantrip of your choice, as shown in the Cantrips column of the Sorcerer Features table.\n\n**Spell Slots.** The Sorcerer Features table shows how many spell slots you have to cast your level 1+ spells. You regain all expended slots when you finish a Long Rest.\n\n**Prepared Spells of Level 1+.** You prepare the list of level 1+ spells that are available for you to cast with this feature. To start, choose two level 1 Sorcerer spells. Burning Hands and Detect Magic are recommended.\n\nThe number of spells on your list increases as you gain Sorcerer levels, as shown in the Prepared Spells column of the Sorcerer Features table. Whenever that number increases, choose additional Sorcerer spells until the number of spells on your list matches the number in the Sorcerer Features table. The chosen spells must be of a level for which you have spell slots. For example, if you're a level 3 Sorcerer, your list of prepared spells can include six Sorcerer spells of level 1 or 2 in any combination.\n\nIf another Sorcerer feature gives you spells that you always have prepared, those spells don't count against the number of spells you can prepare with this feature, but those spells otherwise count as Sorcerer spells for you.\n\n**Changing Your Prepared Spells.** Whenever you gain a Sorcerer level, you can replace one spell on your list with another Sorcerer spell for which you have spell slots.\n\n**Spellcasting Ability.** Charisma is your spellcasting ability for your Sorcerer spells.\n\n**Spellcasting Focus.** You can use an Arcane Focus as a Spellcasting Focus for your Sorcerer spells.",
+                "srd": {
+                    "5.2": "Spellcasting"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "sorcerer-xphb:innate-sorcery",
+                "name": "Innate Sorcery",
+                "level": 1,
+                "text": "An event in your past left an indelible mark on you, infusing you with simmering magic. As a Bonus Action, you can unleash that magic for 1 minute, during which you gain the following benefits:\n\n- The spell save DC of your Sorcerer spells increases by 1.\n- You have Advantage on the attack rolls of Sorcerer spells you cast.\n\nYou can use this feature twice, and you regain all expended uses of it when you finish a Long Rest.",
+                "srd": {
+                    "5.2": "Innate Sorcery"
+                },
+                "category": "bonus_actions",
+                "uses": {
+                    "max": 2,
+                    "reset": "long"
+                },
+                "toggle": {
+                    "uses_charge": true,
+                    "modifiers": [
+                        {
+                            "target": "spell_dc",
+                            "add": 1
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "sorcerer-xphb:font-of-magic",
+                "name": "Font of Magic",
+                "level": 2,
+                "text": "You can tap into the wellspring of magic within yourself. This wellspring is represented by Sorcery Points, which allow you to create a variety of magical effects.\n\nYou have 2 Sorcery Points, and you gain more as you reach higher levels, as shown in the Sorcery Points column of the Sorcerer Features table. You can't have more Sorcery Points than the number shown in the table for your level. You regain all expended Sorcery Points when you finish a Long Rest.\n\nYou can use your Sorcery Points to fuel the options below, along with other features, such as Metamagic, that use those points.\n\n**Converting Spell Slots to Sorcery Points.** You can expend a spell slot to gain a number of Sorcery Points equal to the slot's level (no action required).\n\n**Creating Spell Slots.** As a Bonus Action, you can transform unexpended Sorcery Points into one spell slot. The Creating Spell Slots table shows the cost of creating a spell slot of a given level, and it lists the minimum Sorcerer level you must be to create a slot. You can create a spell slot no higher than level 5.\n\nAny spell slot you create with this feature vanishes when you finish a Long Rest.\n\nCreating Spell Slots\n\nSpell Slot Level | Sorcery Point Cost | Min. Sorcerer Level\n--- | --- | ---\n1 | 2 | 2\n2 | 3 | 3\n3 | 5 | 5\n4 | 6 | 7\n5 | 7 | 9",
+                "srd": {
+                    "5.2": "Font of Magic"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "sorcerer-xphb:metamagic",
+                "name": "Metamagic",
+                "level": 2,
+                "text": "Because your magic flows from within, you can alter your spells to suit your needs; you gain two Metamagic options of your choice from \"Metamagic Options\" later in this class's description. You use the chosen options to temporarily modify spells you cast. To use an option, you must spend the number of Sorcery Points that it costs.\n\nYou can use only one Metamagic option on a spell when you cast it unless otherwise noted in one of those options.\n\nWhenever you gain a Sorcerer level, you can replace one of your Metamagic options with one you don't know. You gain two more options at Sorcerer level 10 and two more at Sorcerer level 17.\n\n**Metamagic.** Because your magic flows from within you, you can alter your spells to suit your needs; you gain two Metamagic options of your choice from the \"Metamagic Options\" section later in this class's description.\n\nYou can use only one Metamagic option on a spell when you cast it, unless otherwise noted in one of those options.\n\nWhenever you gain a Sorcerer level, you can replace one of your Metamagic options with one you don't know.",
+                "srd": {
+                    "5.2": "Metamagic"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "sorcerer-xphb:metamagic-options",
+                "name": "Metamagic Options",
+                "level": 2,
+                "text": "The following options are available to your Metamagic feature. The options are presented in alphabetical order.\n\n- Careful Spell\n- Distant Spell\n- Empowered Spell\n- Extended Spell\n- Heightened Spell\n- Quickened Spell\n- Seeking Spell\n- Subtle Spell\n- Transmuted Spell\n- Twinned Spell",
+                "srd": {
+                    "5.2": "Metamagic Options"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "sorcerer-xphb:sorcerous-restoration",
+                "name": "Sorcerous Restoration",
+                "level": 5,
+                "text": "When you finish a Short Rest, you can regain expended Sorcery Points, but no more than a number equal to half your Sorcerer level (round down). Once you use this feature, you can't do so again until you finish a Long Rest.",
+                "srd": {
+                    "5.2": "Sorcerous Restoration"
+                },
+                "category": "traits",
+                "uses": {
+                    "max": 1,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "sorcerer-xphb:sorcery-incarnate",
+                "name": "Sorcery Incarnate",
+                "level": 7,
+                "text": "If you have no uses of Innate Sorcery left, you can use it if you spend 2 Sorcery Points when you take the Bonus Action to activate it.\n\nIn addition, while your Innate Sorcery feature is active, you can use up to two of your Metamagic options on each spell you cast.",
+                "consumes": {
+                    "resource": "sorcery_points",
+                    "amount": 2
+                },
+                "srd": {
+                    "5.2": "Sorcery Incarnate"
+                },
+                "category": "bonus_actions"
+            },
+            {
+                "id": "sorcerer-xphb:arcane-apotheosis",
+                "name": "Arcane Apotheosis",
+                "level": 20,
+                "text": "While your Innate Sorcery feature is active, you can use one Metamagic option on each of your turns without spending Sorcery Points on it.",
+                "srd": {
+                    "5.2": "Arcane Apotheosis"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "sorcerer-xphb:font-of-magic:creating-spell-slots",
+                "name": "Creating Spell Slots",
+                "level": 2,
+                "text": "**Creating Spell Slots.** As a Bonus Action, you can transform unexpended Sorcery Points into one spell slot. The Creating Spell Slots table shows the cost of creating a spell slot of a given level, and it lists the minimum Sorcerer level you must be to create a slot. You can create a spell slot no higher than level 5.\n\nAny spell slot you create with this feature vanishes when you finish a Long Rest.\n\nCreating Spell Slots\n\nSpell Slot Level | Sorcery Point Cost | Min. Sorcerer Level\n--- | --- | ---\n1 | 2 | 2\n2 | 3 | 3\n3 | 5 | 5\n4 | 6 | 7\n5 | 7 | 9",
+                "parent": "sorcerer-xphb:font-of-magic",
+                "category": "bonus_actions"
+            }
+        ]
+    }
+]

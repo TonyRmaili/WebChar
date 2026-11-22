@@ -1,0 +1,235 @@
+[
+    {
+        "id": "paladin-phb:devotion-phb",
+        "kind": "subclass",
+        "name": "Oath of Devotion",
+        "source": "PHB",
+        "edition": "classic",
+        "srd": {
+            "5.1": "Oath of Devotion"
+        },
+        "reprinted_as": [
+            "paladin-xphb:devotion-xphb"
+        ],
+        "text": "The Oath of Devotion binds a paladin to the loftiest ideals of justice, virtue, and order. Sometimes called cavaliers, white knights, or holy warriors, these paladins meet the ideal of the knight in shining armor, acting with honor in pursuit of justice and the greater good. They hold themselves to the highest standards of conduct, and some, for better or worse, hold the rest of the world to the same standards. Many who swear this oath are devoted to gods of law and good and use their gods' tenets as the measure of their devotion. They hold angels—the perfect servants of good—as their ideals, and incorporate images of angelic wings into their helmets or coats of arms.",
+        "class_id": "paladin-phb",
+        "short_name": "Devotion",
+        "grants": {
+            "spells": [
+                {
+                    "spell": "protection-from-evil-and-good-phb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "sanctuary-phb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "lesser-restoration-phb",
+                    "how": "prepared",
+                    "at": 5
+                },
+                {
+                    "spell": "zone-of-truth-phb",
+                    "how": "prepared",
+                    "at": 5
+                },
+                {
+                    "spell": "beacon-of-hope-phb",
+                    "how": "prepared",
+                    "at": 9
+                },
+                {
+                    "spell": "dispel-magic-phb",
+                    "how": "prepared",
+                    "at": 9
+                },
+                {
+                    "spell": "freedom-of-movement-phb",
+                    "how": "prepared",
+                    "at": 13
+                },
+                {
+                    "spell": "guardian-of-faith-phb",
+                    "how": "prepared",
+                    "at": 13
+                },
+                {
+                    "spell": "commune-phb",
+                    "how": "prepared",
+                    "at": 17
+                },
+                {
+                    "spell": "flame-strike-phb",
+                    "how": "prepared",
+                    "at": 17
+                }
+            ]
+        },
+        "resources": [
+            {
+                "id": "channel_divinity",
+                "name": "Channel Divinity"
+            }
+        ],
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "paladin-phb:devotion-phb:tenets-of-devotion",
+                    "paladin-phb:devotion-phb:oath-spells",
+                    "paladin-phb:devotion-phb:channel-divinity"
+                ]
+            },
+            {
+                "level": 7,
+                "features": [
+                    "paladin-phb:devotion-phb:aura-of-devotion"
+                ]
+            },
+            {
+                "level": 15,
+                "features": [
+                    "paladin-phb:devotion-phb:purity-of-spirit"
+                ]
+            },
+            {
+                "level": 20,
+                "features": [
+                    "paladin-phb:devotion-phb:holy-nimbus"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "paladin-phb:devotion-phb:tenets-of-devotion",
+                "name": "Tenets of Devotion",
+                "level": 3,
+                "text": "Though the exact words and strictures of the Oath of Devotion vary, paladins of this oath share these tenets.\n\n**Honesty.** Don't lie or cheat. Let your word be your promise.\n\n**Courage.** Never fear to act, though caution is wise.\n\n**Compassion.** Aid others, protect the weak, and punish those who threaten them. Show mercy to your foes, but temper it with wisdom.\n\n**Honor.** Treat others with fairness, and let your honorable deeds be an example to them. Do as much good as possible while causing the least amount of harm.\n\n**Duty.** Be responsible for your actions and their consequences, protect those entrusted to your care, and obey those who have just authority over you.",
+                "srd": {
+                    "5.1": "Tenets of Devotion"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "paladin-phb:devotion-phb:oath-spells",
+                "name": "Oath Spells",
+                "level": 3,
+                "text": "You gain oath spells at the paladin levels listed.\n\nOath of Devotion Spells\n\nPaladin Level | Spells\n--- | ---\n3rd | Protection from Evil and Good, Sanctuary\n5th | Lesser Restoration, Zone of Truth\n9th | Beacon of Hope, Dispel Magic\n13th | Freedom of Movement, Guardian of Faith\n17th | Commune, Flame Strike",
+                "srd": {
+                    "5.1": "Oath Spells"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "paladin-phb:devotion-phb:channel-divinity",
+                "name": "Channel Divinity",
+                "level": 3,
+                "text": "When you take this oath at 3rd level, you gain the following two Channel Divinity options.",
+                "srd": {
+                    "5.1": "Channel Divinity"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "paladin-phb:devotion-phb:sacred-weapon",
+                "name": "Sacred Weapon",
+                "level": 3,
+                "text": "As an action, you can imbue one weapon that you are holding with positive energy, using your Channel Divinity. For 1 minute, you add your Charisma modifier to attack rolls made with that weapon (with a minimum bonus of +1). The weapon also emits bright light in a 20-foot radius and dim light 20 feet beyond that. If the weapon is not already magical, it becomes magical for the duration.\n\nYou can end this effect on your turn as part of any other action. If you are no longer holding or carrying this weapon, or if you fall unconscious, this effect ends.",
+                "parent": "paladin-phb:devotion-phb:channel-divinity",
+                "consumes": {
+                    "resource": "channel_divinity",
+                    "amount": 1
+                },
+                "srd": {
+                    "5.1": "Sacred Weapon"
+                },
+                "category": "actions",
+                "toggle": {
+                    "modifiers": [
+                        {
+                            "target": "attack",
+                            "add": "max(1, cha_mod)"
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "paladin-phb:devotion-phb:turn-the-unholy",
+                "name": "Turn the Unholy",
+                "level": 3,
+                "text": "As an action, you present your holy symbol and speak a prayer censuring fiends and undead, using your Channel Divinity. Each fiend or undead that can see or hear you within 30 feet of you must make a Wisdom saving throw. If the creature fails its saving throw, it is turned for 1 minute or until it takes damage.\n\nA turned creature must spend its turns trying to move as far away from you as it can, and it can't willingly move to a space within 30 feet of you. It also can't take reactions. For its action, it can use only the Dash action or try to escape from an effect that prevents it from moving. If there's nowhere to move, the creature can use the Dodge action.",
+                "parent": "paladin-phb:devotion-phb:channel-divinity",
+                "consumes": {
+                    "resource": "channel_divinity",
+                    "amount": 1
+                },
+                "srd": {
+                    "5.1": "Turn the Unholy"
+                },
+                "category": "actions",
+                "action": {
+                    "range": "30 feet",
+                    "save": {
+                        "ability": "wis",
+                        "dc": "8 + cha_mod + pb",
+                        "on_success": "none"
+                    }
+                }
+            },
+            {
+                "id": "paladin-phb:devotion-phb:aura-of-devotion",
+                "name": "Aura of Devotion",
+                "level": 7,
+                "text": "Starting at 7th level, you and friendly creatures within 10 feet of you can't be charmed while you are conscious.\n\nAt 18th level, the range of this aura increases to 30 feet.",
+                "srd": {
+                    "5.1": "Aura of Devotion"
+                },
+                "category": "traits",
+                "grants": {
+                    "defenses": {
+                        "condition_immune": [
+                            "charmed"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "paladin-phb:devotion-phb:purity-of-spirit",
+                "name": "Purity of Spirit",
+                "level": 15,
+                "text": "Beginning at 15th level, you are always under the effects of a Protection from Evil and Good spell.",
+                "srd": {
+                    "5.1": "Purity of Spirit"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "paladin-phb:devotion-phb:holy-nimbus",
+                "name": "Holy Nimbus",
+                "level": 20,
+                "text": "At 20th level, as an action, you can emanate an aura of sunlight. For 1 minute, bright light shines from you in a 30-foot radius, and dim light shines 30 feet beyond that.\n\nWhenever an enemy creature starts its turn in the bright light, the creature takes 10 radiant damage.\n\nIn addition, for the duration, you have advantage on saving throws against spells cast by fiends or undead.\n\nOnce you use this feature, you can't use it again until you finish a long rest.",
+                "srd": {
+                    "5.1": "Holy Nimbus"
+                },
+                "category": "actions",
+                "uses": {
+                    "max": 1,
+                    "reset": "long"
+                },
+                "action": {
+                    "area": "30-foot radius",
+                    "damage": [
+                        {
+                            "bonus": 10,
+                            "type": "radiant",
+                            "condition": "enemy starts its turn in the bright light"
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+]

@@ -1,5 +1,6 @@
 import { crStats, formatCR } from "../../Catalogues/Monsters/monsterHelpers";
-import { idGen } from "../../Characters/sheet/define/effectEditor";
+import { newId } from "../../../utils/featureRuntime";
+import { currentHp, derivedOf } from "../../../utils/derive";
 import { prepareMonster } from "../statblock/monsterStatblock";
 
 /* Pure logic for encounters: the creatures in them and their XP. Shape: claude/encounters-contract.md in the project. */
@@ -15,33 +16,22 @@ const toInt = (v, fallback = 0) => {
 
 // A monster ready for a fight: full HP, every use back, nothing left from
 // an earlier fight. Hidden rows and the DM's notes on it are kept.
+// (No uses_left anywhere means every use is there.)
 function freshForFight(m) {
-  const effects = {};
-  for (const [key, block] of Object.entries(m.effects || {})) {
-    effects[key] = {
-      ...block,
-      items: asList(block?.items).map((it) => {
-        if (!it?.charges) return it;
-        const max = toInt(it.charges.max_charges ?? it.charges.per_rest_count, 0);
-        return { ...it, charges: { ...it.charges, current_charges: max } };
-      }),
-    };
-  }
   const out = {
     ...m,
-    effects,
+    features: asList(m.features).map(({ uses_left, ...f }) => f),
     hp_current: Math.max(0, toInt(m.hp?.average, 0)),
     hp_temp: 0,
     template_uses: {},
-    spellcasting: asList(m.spellcasting).map((b) => ({
-      ...b,
-      groups: asList(b.groups).map(({ current, ...g }) => ({ ...g, spells: asList(g.spells).map(({ current: _c, ...s }) => s) })),
-    })),
   };
-  if (!out.spellcasting.length) delete out.spellcasting;
-  if (out.legendary_action_points) {
-    out.legendary_action_points = { ...out.legendary_action_points, current: toInt(out.legendary_action_points.legendary_actions, 0) };
+  if (asList(m.spellcasting).length) {
+    out.spellcasting = m.spellcasting.map((b) => ({
+      ...b,
+      groups: asList(b.groups).map(({ uses_left, ...g }) => ({ ...g, spells: asList(g.spells).map(({ uses_left: _u, ...s }) => s) })),
+    }));
   }
+  if (m.legendary_actions?.uses) out.legendary_actions = { ...m.legendary_actions, left: m.legendary_actions.uses };
   return out;
 }
 
@@ -69,7 +59,7 @@ export function monstersFor(encounter, source, count, from) {
   const names = nextNames(asList(encounter.monsters).map((m) => m.name), base.name || "Monster", count);
   return names.map((name) => ({
     ...structuredClone(base),
-    id: idGen(),
+    id: newId(),
     name,
     shelf: from === "shelf" ? source.file : null,
   }));
@@ -81,7 +71,7 @@ const stripCampaignBits = ({ _added, ...rest }) => rest;
 
 export const monsterXp = (m) => {
   const xp = toInt(m?.cr?.xp, NaN);
-  return Number.isFinite(xp) ? xp : crStats(m?.cr?.base)?.xp ?? 0;
+  return Number.isFinite(xp) ? xp : crStats(m?.cr?.cr)?.xp ?? 0;
 };
 
 export const totalXp = (encounter) => asList(encounter.monsters).reduce((sum, m) => sum + monsterXp(m), 0);
@@ -94,16 +84,17 @@ export const awardedXp = (encounter) => {
 
 /* ─── short lines ────────────────────────────────────────────────── */
 
+// A character (version-2 file): its numbers are worked out, never stored.
 export const characterLine = (c) => {
-  const classes = asList(c?.classes).filter((k) => k?.class_name).map((k) => `${k.class_name} ${k.level ?? ""}`.trim()).join(" / ");
-  const hp = c?.health ? `HP ${toInt(c.health.current_hp, 0)}/${toInt(c.health.max_hp, 0)}` : "";
-  const ac = c?.ac != null && c.ac !== "" ? `AC ${toInt(c.ac, 0)}` : "";
-  return [classes, hp, ac].filter(Boolean).join(" · ");
+  const d = derivedOf(c);
+  if (!d) return "";
+  const classes = d.classes.map((k) => `${k.name} ${k.level}`).join(" / ");
+  return [classes, `HP ${currentHp(c, d.hp_max)}/${d.hp_max}`, `AC ${d.ac}`].filter(Boolean).join(" · ");
 };
 
 export const monsterLine = (m) => {
   const ac = toInt(asList(m?.ac)[0]?.value, NaN);
-  return [formatCR(m?.cr), `HP ${toInt(m?.hp_current, toInt(m?.hp?.average, 0))}/${toInt(m?.hp?.average, 0)}`, Number.isFinite(ac) ? `AC ${ac}` : ""].filter(Boolean).join(" · ");
+  return [formatCR(m), `HP ${toInt(m?.hp_current, toInt(m?.hp?.average, 0))}/${toInt(m?.hp?.average, 0)}`, Number.isFinite(ac) ? `AC ${ac}` : ""].filter(Boolean).join(" · ");
 };
 
 // The start of the notes, for the encounter's line in the list.
@@ -129,7 +120,7 @@ export function withLootItem(encounter, entry) {
       ...loot,
       items: same
         ? items.map((it) => (it === same ? { ...it, quantity: (Number(it.quantity) || 1) + 1 } : it))
-        : [...items, { id: idGen(), name: entry.name, source: entry.source ?? null, quantity: 1 }],
+        : [...items, { id: newId(), name: entry.name, source: entry.source ?? null, quantity: 1 }],
     },
   };
 }

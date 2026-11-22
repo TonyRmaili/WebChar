@@ -1,33 +1,25 @@
-import { formatCR } from "./monsterHelpers";
+import { HOMEBREW } from "../catalogueHelpers";
+import { formatCR, monsterTypes } from "./monsterHelpers";
 
-/* The monster catalogue as one flat list, for anything that lets you pick
-   a monster from it (minions on a character, monsters in a campaign).
+/* The monster catalogue for anything that lets you pick a monster from it
+   (minions on a character, monsters in a campaign). The store keeps one
+   flat list: the books, then public and private homebrew (tagged with
+   `visibility`). */
 
-   CatalogueStore.loadMonsters keeps monsters grouped by source book, and
-   puts your homebrew (public and private) under "HOMEBREW", each tagged
-   with `visibility`. */
+const isHomebrew = (m) => m?.source === HOMEBREW;
 
-const asList = (v) => (Array.isArray(v) ? v : []);
+// A key that tells two monsters apart: every monster has an id.
+export const catalogueMonsterKey = (m) => (isHomebrew(m) ? `${HOMEBREW}#${m?.id}` : m?.id);
 
-const isHomebrew = (m) => m?.source === "HOMEBREW";
-
-// A key that tells two monsters apart. Homebrew monsters can share a name
-// (yours and someone else's public one), so they go by id.
-export const catalogueMonsterKey = (m) => (isHomebrew(m) && m?.id != null ? `HOMEBREW#${m.id}` : `${m?.name}|${m?.source}`);
-
-// Every monster once. Your own public homebrew can come back in both the
+// Every monster once. Your own public homebrew comes back in both the
 // public and the private list; the private copy is kept.
-export function allCatalogueMonsters(monstersData) {
-  const root = monstersData?.monsters;
-  if (!root || typeof root !== "object") return [];
+export function allCatalogueMonsters(monsters) {
   const byKey = new Map();
-  for (const list of Object.values(root)) {
-    for (const m of asList(list)) {
-      if (!m?.name) continue;
-      const key = catalogueMonsterKey(m);
-      const seen = byKey.get(key);
-      if (!seen || (seen.visibility !== "private" && m.visibility === "private")) byKey.set(key, m);
-    }
+  for (const m of Array.isArray(monsters) ? monsters : []) {
+    if (!m?.name) continue;
+    const key = catalogueMonsterKey(m);
+    const seen = byKey.get(key);
+    if (!seen || (seen.visibility !== "private" && m.visibility === "private")) byKey.set(key, m);
   }
   return [...byKey.values()];
 }
@@ -35,9 +27,9 @@ export function allCatalogueMonsters(monstersData) {
 // Where a monster comes from, in words: "XMM", "your homebrew", "public homebrew".
 export const monsterOrigin = (m) => (!isHomebrew(m) ? m?.source || "" : m?.visibility === "public" ? "public homebrew" : "your homebrew");
 
-// "CR 1/4 · M undead" — a short line under a name.
+// "CR 1/4 · Medium Undead" — a short line under a name.
 export const monsterSummary = (m) => {
-  const size = asList(m?.size).join("/");
-  const type = typeof m?.type === "string" ? m.type : m?.type?.type || "";
-  return [formatCR(m?.cr), [size, type].filter(Boolean).join(" ")].filter(Boolean).join(" · ");
+  const size = (m?.size || []).map((s) => s[0].toUpperCase() + s.slice(1)).join("/");
+  const type = monsterTypes(m).join("/");
+  return [formatCR(m), [size, type].filter(Boolean).join(" ")].filter(Boolean).join(" · ");
 };

@@ -2,179 +2,109 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useCatalogueStore } from "../../../store/CatalogueStore";
 import { usePopupStore } from "../../../store/PopupStore";
 import useAuthStore from "../../../store/AuthStore";
-import ItemRow from "./ItemRow";
 import FilterSection from "../FilterSection";
 import FilterPopup, { FilterButton } from "../FilterPopup";
 import ItemCreatePopup from "./ItemCreatePopup";
-import RowContextMenu from "../RowContextMenu";
 import { ErrorLine, LoadingLine, Toolbar, chip, searchCls } from "../catalogueStyle";
+import { CatalogueRow, ChipToggles, useEntryMenu } from "../catalogueParts";
 import { addBtn } from "../../../styles/parchmentForm";
 import {
-  collectUnique,
-  formatSource,
-  formatRarity,
-  RARITY_ORDER,
-  WEAPON_PROPERTIES,
-  WEAPON_MASTERIES,
-} from "./itemHelpers";
+  HOMEBREW, EDITIONS, RARITY_ORDER, formatEdition, formatSource, formatRarity, labelFromId, titleCase,
+  collectUnique, toggleIn, matchesQuery, passesAny, byName,
+} from "../catalogueHelpers";
+import { HAS_LABELS, KINDS, itemHas, itemRowMeta, kindOf } from "./itemHelpers";
 
-const ATTUNE_OPTIONS = [
-  { value: "any", label: "Any" },
-  { value: "yes", label: "Required" },
-  { value: "no",  label: "None" },
-];
-
+/* The Items catalogue: items, magic variants (Flame Tongue, +1 Weapon)
+   and groups (Absorbing Tattoo). A group's members are left out of the
+   list unless you search, or switch "group members" on; they open from
+   the group's card. The filters offer only values the loaded items have. */
 export default function Items() {
   const items = useCatalogueStore((s) => s.items);
   const loading = useCatalogueStore((s) => s.loadingItems);
-  const error = useCatalogueStore((s) => s.error);
+  const error = useCatalogueStore((s) => s.itemsError);
   const loadItems = useCatalogueStore((s) => s.loadItems);
-  const deleteItemAction = useCatalogueStore((s) => s.deleteItem);
+  const deleteItem = useCatalogueStore((s) => s.deleteItem);
 
   const openPopup = usePopupStore((s) => s.open);
   const currentUser = useAuthStore((s) => s.userData?.name);
 
-  const [selectedSources, setSelectedSources] = useState(["XDMG"]);
-  const [selectedRarities, setSelectedRarities] = useState([]);
-  const [selectedTypes, setSelectedTypes] = useState([]);
-  const [selectedBaseItems, setSelectedBaseItems] = useState([]);
-  const [selectedProperties, setSelectedProperties] = useState([]);
-  const [selectedMasteries, setSelectedMasteries] = useState([]);
-  const [attune, setAttune] = useState("any");
   const [query, setQuery] = useState("");
   const [filtersOpen, setFiltersOpen] = useState(false);
-  const [createOpen, setCreateOpen] = useState(false);
-  const [editingItem, setEditingItem] = useState(null);
-  const [copyFromItem, setCopyFromItem] = useState(null);
-  const [contextMenu, setContextMenu] = useState(null);
+  const [showMembers, setShowMembers] = useState(false);
+  const [editions, setEditions] = useState(["one"]);
+  const [sources, setSources] = useState([]);
+  const [kinds, setKinds] = useState([]);
+  const [rarities, setRarities] = useState([]);
+  const [types, setTypes] = useState([]);
+  const [tags, setTags] = useState([]);
+  const [tiers, setTiers] = useState([]);
+  const [has, setHas] = useState([]);
+  const [properties, setProperties] = useState([]);
+  const [masteries, setMasteries] = useState([]);
+  const [damageTypes, setDamageTypes] = useState([]);
 
-  useEffect(() => { loadItems(); }, [loadItems]);
+  const [form, setForm] = useState(null); // null = closed · {} new · { editing } · { copyFrom }
+  const [openMenu, menu] = useEntryMenu({
+    user: currentUser,
+    onCopy: (it) => setForm({ copyFrom: it }),
+    onEdit: (it) => setForm({ editing: it }),
+    onDelete: deleteItem,
+  });
 
-  const sources = useMemo(() => {
-    const derived = collectUnique(items, "source");
-    return derived.includes("HOMEBREW") ? derived : ["HOMEBREW", ...derived];
+  useEffect(() => {
+    loadItems();
+  }, [loadItems]);
+
+  // What the filters offer: only values some item has.
+  const options = useMemo(() => {
+    const found = collectUnique(items, "source");
+    const rar = collectUnique(items, "rarity");
+    return {
+      sources: found.includes(HOMEBREW) ? found : [HOMEBREW, ...found],
+      kinds: Object.keys(KINDS).filter((k) => (items || []).some((it) => kindOf(it) === k)),
+      rarities: RARITY_ORDER.filter((r) => rar.includes(r)),
+      types: collectUnique(items, "item_types"),
+      tags: collectUnique(items, "item_tags"),
+      tiers: collectUnique(items, "tier"),
+      has: Object.keys(HAS_LABELS).filter((k) => (items || []).some((it) => itemHas(it).includes(k))),
+      properties: collectUnique(items, (it) => it.weapon?.properties),
+      masteries: collectUnique(items, (it) => it.weapon?.mastery),
+      damageTypes: collectUnique(items, (it) => it.weapon?.damage?.type),
+    };
   }, [items]);
 
-  const rarities = useMemo(() => {
-    const present = collectUnique(items, "rarity");
-    return RARITY_ORDER.filter((r) => present.includes(r));
-  }, [items]);
+  const filtered = useMemo(
+    () =>
+      (items || [])
+        .filter(
+          (it) =>
+            (showMembers || query.trim() || !it.group) &&
+            passesAny(editions, [it.edition]) &&
+            passesAny(sources, [it.source]) &&
+            passesAny(kinds, [kindOf(it)]) &&
+            passesAny(rarities, [it.rarity]) &&
+            passesAny(types, it.item_types) &&
+            passesAny(tags, it.item_tags) &&
+            passesAny(tiers, [it.tier]) &&
+            passesAny(has, itemHas(it)) &&
+            passesAny(properties, it.weapon?.properties) &&
+            passesAny(masteries, it.weapon?.mastery) &&
+            passesAny(damageTypes, [it.weapon?.damage?.type]) &&
+            matchesQuery(it, query)
+        )
+        .sort(byName),
+    [items, showMembers, editions, sources, kinds, rarities, types, tags, tiers, has, properties, masteries, damageTypes, query]
+  );
 
-  // types comes from the `types` list field, flattened across items.
-  const types = useMemo(() => collectUnique(items, "types"), [items]);
-  const baseItems = useMemo(() => collectUnique(items, "baseItem"), [items]);
-
-  // Derive properties + masteries from data, ordered by full constant list
-  // so the filter shows everything possible (not just what's loaded right now).
-  const propertiesPresent = useMemo(() => {
-    const set = new Set();
-    for (const it of items || []) {
-      for (const p of it?.properties || []) set.add(p);
-    }
-    return WEAPON_PROPERTIES.filter((p) => set.has(p));
-  }, [items]);
-
-  const masteriesPresent = useMemo(() => {
-    const set = new Set();
-    for (const it of items || []) {
-      if (it?.mastery) set.add(it.mastery);
-    }
-    return WEAPON_MASTERIES.filter((m) => set.has(m));
-  }, [items]);
-
-  const toggle = (setter) => (val) =>
-    setter((prev) =>
-      prev.includes(val) ? prev.filter((x) => x !== val) : [...prev, val]
-    );
-
-  const toggleSource = toggle(setSelectedSources);
-  const toggleRarity = toggle(setSelectedRarities);
-  const toggleType = toggle(setSelectedTypes);
-  const toggleBaseItem = toggle(setSelectedBaseItems);
-  const toggleProperty = toggle(setSelectedProperties);
-  const toggleMastery = toggle(setSelectedMasteries);
-
-  const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    return (items || []).filter((it) => {
-      if (!it) return false;
-      if (selectedSources.length && !selectedSources.includes(it.source)) return false;
-      if (selectedRarities.length && !selectedRarities.includes(it.rarity)) return false;
-      if (selectedTypes.length) {
-        const itTypes = it.types || [];
-        if (!selectedTypes.some((t) => itTypes.includes(t))) return false;
-      }
-      if (selectedBaseItems.length && !selectedBaseItems.includes(it.baseItem)) return false;
-      if (selectedProperties.length) {
-        const itProps = it.properties || [];
-        if (!selectedProperties.some((p) => itProps.includes(p))) return false;
-      }
-      if (selectedMasteries.length && !selectedMasteries.includes(it.mastery)) return false;
-      if (attune === "yes" && !it.reqAttune) return false;
-      if (attune === "no" && it.reqAttune) return false;
-      if (q) {
-        const itTypes = (it.types || []).join(" ");
-        const hay = [it?.name, itTypes, it?.rarity, it?.source, it?.baseItem]
-          .filter(Boolean).join(" ").toLowerCase();
-        if (!hay.includes(q)) return false;
-      }
-      return true;
-    });
-  }, [
-    items, query, selectedSources, selectedRarities, selectedTypes,
-    selectedBaseItems, selectedProperties, selectedMasteries, attune,
-  ]);
-
-  const handleRowContextMenu = (e, item) => {
-    const isHomebrew = item.source === "HOMEBREW";
-    const isOwner = isHomebrew && item.created_by === currentUser;
-
-    const menuItems = [];
-    menuItems.push({
-      label: "Copy",
-      onClick: () => { setCopyFromItem(item); setCreateOpen(true); },
-    });
-
-    if (isOwner) {
-      menuItems.push({
-        label: "Edit",
-        onClick: () => { setEditingItem(item); setCreateOpen(true); },
-      });
-      menuItems.push({
-        label: "Delete",
-        danger: true,
-        onClick: async () => {
-          if (!window.confirm(`Delete "${item.name}"? This cannot be undone.`)) return;
-          try { await deleteItemAction(item.id); }
-          catch (err) { alert(`Delete failed: ${err.message}`); }
-        },
-      });
-    }
-    setContextMenu({ x: e.clientX, y: e.clientY, items: menuItems });
-  };
-
-  const handleCreateClose = () => {
-    setCreateOpen(false);
-    setEditingItem(null);
-    setCopyFromItem(null);
-  };
-
+  const all = [editions, sources, kinds, rarities, types, tags, tiers, has, properties, masteries, damageTypes];
+  const setters = [setEditions, setSources, setKinds, setRarities, setTypes, setTags, setTiers, setHas, setProperties, setMasteries, setDamageTypes];
+  const activeCount = all.reduce((n, l) => n + l.length, 0) + (showMembers ? 1 : 0);
   const clearAll = () => {
-    setSelectedSources([]);
-    setSelectedRarities([]);
-    setSelectedTypes([]);
-    setSelectedBaseItems([]);
-    setSelectedProperties([]);
-    setSelectedMasteries([]);
-    setAttune("any");
+    setters.forEach((s) => s([]));
+    setShowMembers(false);
     setQuery("");
   };
-
-  const activeCount =
-    selectedSources.length + selectedRarities.length +
-    selectedTypes.length + selectedBaseItems.length +
-    selectedProperties.length + selectedMasteries.length +
-    (attune !== "any" ? 1 : 0);
+  const toggler = (setter) => (v) => setter((l) => toggleIn(l, v));
 
   return (
     <div className="min-h-[640px] w-full">
@@ -190,125 +120,75 @@ export default function Items() {
             right={
               <>
                 <span className="text-xs italic text-ink-faded">
-                  {filtered.length} of {(items || []).length}
+                  {filtered.length} of {items.length}
                 </span>
-                <button onClick={() => setCreateOpen(true)} className={`${addBtn} !text-sm`}>
+                <button type="button" onClick={() => setForm({})} className={`${addBtn} !text-sm`}>
                   + create
                 </button>
               </>
             }
           />
 
-          <FilterPopup open={filtersOpen} onClose={() => setFiltersOpen(false)}
-                       activeCount={activeCount} onClear={clearAll}>
-            <FilterSection title="Sources">
-              <div className="grid grid-cols-2 gap-x-6 gap-y-1.5 sm:grid-cols-3 lg:grid-cols-4">
-                {sources.map((src) => (
-                  <button key={src} onClick={() => toggleSource(src)} title={formatSource(src)}
-                          className={`${chip(selectedSources.includes(src))} truncate`}>
-                    {formatSource(src)}
-                  </button>
-                ))}
+          <FilterPopup open={filtersOpen} onClose={() => setFiltersOpen(false)} activeCount={activeCount} onClear={clearAll}>
+            <FilterSection title="Edition">
+              <ChipToggles options={EDITIONS} selected={editions} labelOf={formatEdition} onToggle={toggler(setEditions)} />
+            </FilterSection>
+            <FilterSection title="Sources" defaultOpen={false}>
+              <ChipToggles options={options.sources} selected={sources} labelOf={formatSource} onToggle={toggler(setSources)}
+                           className="!grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4" />
+            </FilterSection>
+            <FilterSection title="Kind">
+              <div className="flex flex-wrap gap-x-4 gap-y-1.5">
+                <ChipToggles options={options.kinds} selected={kinds} labelOf={(k) => KINDS[k]} onToggle={toggler(setKinds)} />
+                <button type="button" onClick={() => setShowMembers((v) => !v)} className={chip(showMembers)}
+                        title="A group's items (the ten Absorbing Tattoos) are listed in the group's card; this lists them here too">
+                  group members
+                </button>
               </div>
             </FilterSection>
-
             <FilterSection title="Rarity">
-              <div className="flex flex-wrap gap-x-4 gap-y-1.5">
-                {rarities.map((r) => (
-                  <button key={r} onClick={() => toggleRarity(r)} className={chip(selectedRarities.includes(r))}>
-                    {formatRarity(r)}
-                  </button>
-                ))}
-              </div>
+              <ChipToggles options={options.rarities} selected={rarities} labelOf={formatRarity} onToggle={toggler(setRarities)} />
             </FilterSection>
-
-            <FilterSection title="Attunement">
-              <div className="flex flex-wrap gap-x-4 gap-y-1.5">
-                {ATTUNE_OPTIONS.map((o) => (
-                  <button key={o.value} onClick={() => setAttune(o.value)} className={chip(attune === o.value)}>
-                    {o.label}
-                  </button>
-                ))}
-              </div>
+            <FilterSection title="Type">
+              <ChipToggles options={options.types} selected={types} labelOf={labelFromId} onToggle={toggler(setTypes)} />
             </FilterSection>
-
-            {types.length > 0 && (
-              <FilterSection title="Type">
-                <div className="flex flex-wrap gap-x-4 gap-y-1.5">
-                  {types.map((t) => (
-                    <button key={t} onClick={() => toggleType(t)} className={chip(selectedTypes.includes(t))}>{t}</button>
-                  ))}
-                </div>
+            <FilterSection title="Has">
+              <ChipToggles options={options.has} selected={has} labelOf={(k) => HAS_LABELS[k]} onToggle={toggler(setHas)} />
+            </FilterSection>
+            <FilterSection title="Tags" defaultOpen={false}>
+              <ChipToggles options={options.tags} selected={tags} labelOf={labelFromId} onToggle={toggler(setTags)} />
+            </FilterSection>
+            {options.tiers.length > 0 && (
+              <FilterSection title="Tier" defaultOpen={false}>
+                <ChipToggles options={options.tiers} selected={tiers} labelOf={titleCase} onToggle={toggler(setTiers)} />
               </FilterSection>
             )}
-
-            {baseItems.length > 0 && (
-              <FilterSection title="Base Item">
-                <div className="flex flex-wrap gap-x-4 gap-y-1.5">
-                  {baseItems.map((b) => (
-                    <button key={b} onClick={() => toggleBaseItem(b)} className={chip(selectedBaseItems.includes(b))}>
-                      {b}
-                    </button>
-                  ))}
-                </div>
-              </FilterSection>
-            )}
-
-            {propertiesPresent.length > 0 && (
-              <FilterSection title="Weapon Properties">
-                <div className="flex flex-wrap gap-x-4 gap-y-1.5">
-                  {propertiesPresent.map((p) => (
-                    <button key={p} onClick={() => toggleProperty(p)} className={chip(selectedProperties.includes(p))}>
-                      {p}
-                    </button>
-                  ))}
-                </div>
-              </FilterSection>
-            )}
-
-            {masteriesPresent.length > 0 && (
-              <FilterSection title="Mastery">
-                <div className="flex flex-wrap gap-x-4 gap-y-1.5">
-                  {masteriesPresent.map((m) => (
-                    <button key={m} onClick={() => toggleMastery(m)} className={chip(selectedMasteries.includes(m))}>
-                      {m}
-                    </button>
-                  ))}
-                </div>
-              </FilterSection>
-            )}
+            <FilterSection title="Weapon Properties" defaultOpen={false}>
+              <ChipToggles options={options.properties} selected={properties} labelOf={labelFromId} onToggle={toggler(setProperties)} />
+            </FilterSection>
+            <FilterSection title="Mastery" defaultOpen={false}>
+              <ChipToggles options={options.masteries} selected={masteries} labelOf={labelFromId} onToggle={toggler(setMasteries)} />
+            </FilterSection>
+            <FilterSection title="Damage Type" defaultOpen={false}>
+              <ChipToggles options={options.damageTypes} selected={damageTypes} labelOf={labelFromId} onToggle={toggler(setDamageTypes)} />
+            </FilterSection>
           </FilterPopup>
 
           {filtered.length === 0 ? (
             <LoadingLine>No items match your filters.</LoadingLine>
           ) : (
             <div className="grid grid-cols-1 gap-x-8 md:grid-cols-2 xl:grid-cols-3">
-              {filtered.map((it, idx) => (
-                <ItemRow
-                  key={`${it?.id || it?.name}-${it?.source}-${idx}`}
-                  item={it}
-                  onOpen={(item) => openPopup("item", item)}
-                  onContextMenu={handleRowContextMenu}
-                />
+              {filtered.map((it) => (
+                <CatalogueRow key={`${it.id}-${it.visibility || ""}`} entry={it} meta={itemRowMeta(it)}
+                              onOpen={(x) => openPopup("item", x)} onContextMenu={openMenu} />
               ))}
             </div>
           )}
 
-          {contextMenu && (
-            <RowContextMenu
-              x={contextMenu.x}
-              y={contextMenu.y}
-              items={contextMenu.items}
-              onClose={() => setContextMenu(null)}
-            />
-          )}
+          {menu}
 
-          <ItemCreatePopup
-            open={createOpen}
-            onClose={handleCreateClose}
-            editingItem={editingItem}
-            copyFromItem={copyFromItem}
-          />
+          <ItemCreatePopup open={form !== null} onClose={() => setForm(null)}
+                           editingItem={form?.editing || null} copyFromItem={form?.copyFrom || null} />
         </>
       )}
     </div>

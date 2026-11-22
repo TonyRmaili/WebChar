@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Bubble, INK, InkButton, InkNumber, InkRemove, InkSelect, InkText, InkTextArea, Mark } from "../../../styles/parchment";
 import { Chevron, Switch, addBtn } from "../../../styles/parchmentForm";
 import CataloguePicker from "./CataloguePicker";
+import { RichText } from "../../Catalogues/catalogueParts";
 
 /* ═══════════════════════════════════════════════════════════════════
    Statblock — draws one creature on parchment, the way a printed stat
@@ -423,7 +424,11 @@ function EntryLine({ entry, textOpen, onToggleText, onUses, onHide, onView }) {
           </button>
         )}
       </div>
-      {textOpen && entry.text && <p className={`whitespace-pre-line pl-[26px] text-sm ${INK.faded}`}>{entry.text}</p>}
+      {textOpen && entry.text && (
+        <div className="pl-[26px]">
+          <RichText text={entry.text} className="!text-sm" />
+        </div>
+      )}
     </div>
   );
 }
@@ -538,16 +543,20 @@ function Sections({ view, raw, editing, edits, actions, set, use, onView, openRe
 
 /* ─── spells ─────────────────────────────────────────────────────── */
 
-// Characters: slots, sorcery points and spells by level.
+// Characters: slots, pools and spells by level. Slot numbers come from
+// the character's class levels, so they can be spent but not resized here
+// (an adapter without setSlotMax / addSlotLevel).
 function LevelSpellcasting({ sc, raw, editing, actions, set, use, onView }) {
   const uses = editing ? set : use;
+  const resizable = !!(actions.setSlotMax && actions.addSlotLevel);
   const addLevel = (list) => set(actions.addSlotLevel(raw, list).raw);
   return (
     <div className="mb-3">
       <div className="break-inside-avoid">
         <Heading
           right={
-            editing && (
+            editing &&
+            resizable && (
               <>
                 <button type="button" className={addBtn} onClick={() => addLevel("spellslots")}>
                   + slot level
@@ -569,11 +578,11 @@ function LevelSpellcasting({ sc, raw, editing, actions, set, use, onView }) {
           {sc.slots.filter((slot) => editing || slot.max > 0).map((slot) => (
             <span key={`${slot.ref.list}:${slot.ref.id}`} className="flex items-center gap-1.5 text-sm">
               <span className={INK.faded}>{slot.label}</span>
-              {editing && (
+              {editing && resizable && (
                 <InkNumber value={slot.max} onChange={(v) => set(actions.setSlotMax(raw, slot.ref, v))} min={0} max={9} fallback={0} aria-label={`${slot.label} slots`} className="h-6 w-8 text-sm" />
               )}
               <Pips cur={slot.cur} max={slot.max} onSet={(cur) => uses(actions.setUses(raw, slot.ref, cur))} label={`${slot.label} slot`} />
-              {editing && <InkRemove onClick={() => set(actions.remove(raw, slot.ref))} label={`Remove ${slot.label} slots`} />}
+              {editing && resizable && <InkRemove onClick={() => set(actions.remove(raw, slot.ref))} label={`Remove ${slot.label} slots`} />}
             </span>
           ))}
           {sc.sorcery && (
@@ -643,11 +652,11 @@ function GroupSpellcasting({ sc, raw, editing, actions, set, use, onView }) {
               </InkSelect>
               <span className={`flex items-baseline gap-1 italic ${INK.faded}`}>
                 save DC
-                <InkNumber value={b.saveDc} onChange={(v) => patchBlock(b, { save_dc: v })} min={0} max={40} placeholder="—" aria-label="Spell save DC" className="h-6 w-10 text-sm" />
+                <InkNumber value={b.saveDc} onChange={(v) => patchBlock(b, { dc: v ?? undefined })} min={0} max={40} placeholder="—" aria-label="Spell save DC" className="h-6 w-10 text-sm" />
               </span>
               <span className={`flex items-baseline gap-1 italic ${INK.faded}`}>
                 to hit +
-                <InkNumber value={b.attack} onChange={(v) => patchBlock(b, { spell_attack_bonus: v })} min={-5} max={30} placeholder="—" aria-label="Spell attack bonus" className="h-6 w-10 text-sm" />
+                <InkNumber value={b.attack} onChange={(v) => patchBlock(b, { attack: v ?? undefined })} min={-5} max={30} placeholder="—" aria-label="Spell attack bonus" className="h-6 w-10 text-sm" />
               </span>
               <InkRemove
                 onClick={() => window.confirm(`Remove ${b.title} and all its spells?`) && set(actions.remove(raw, b.ref))}
@@ -661,9 +670,9 @@ function GroupSpellcasting({ sc, raw, editing, actions, set, use, onView }) {
             </p>
           )}
           {editing ? (
-            <InkTextArea value={actions.row(raw, b.ref)?.notes ?? ""} onChange={(e) => patchBlock(b, { notes: e.target.value })} rows={1} placeholder="It casts one of the following spells, needing no material components…" aria-label="Spellcasting text" />
+            <InkTextArea value={actions.row(raw, b.ref)?.text ?? ""} onChange={(e) => patchBlock(b, { text: e.target.value })} rows={1} placeholder="It casts one of the following spells, needing no material components…" aria-label="Spellcasting text" />
           ) : (
-            b.notes && <p className={`text-sm ${INK.faded}`}>{b.notes}</p>
+            b.notes && <RichText text={b.notes} className="!text-sm" />
           )}
 
           <div className="mt-1 space-y-1">

@@ -1,54 +1,61 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import useCharStore from "../../../../store/CharStore";
+import React, { useEffect, useMemo, useState } from "react";
 import { useCatalogueStore } from "../../../../store/CatalogueStore";
 import { usePopupStore } from "../../../../store/PopupStore";
-import { usesFromCharges, regainLabel } from "../play/playHelpers";
-import {
-  INK,
-  InkButton,
-  InkChoice,
-  InkHeading,
-  InkNumber,
-  InkRemove,
-  InkSelect,
-  InkText,
-  InkTextArea,
-  Leader,
-  Mark,
-  ParchmentSheet,
-  SubHeading,
-  Title,
-} from "../../../../styles/parchment";
+import { INK, InkButton, InkNumber, InkSelect, InkText, Leader, Mark, ParchmentSheet, Title } from "../../../../styles/parchment";
+import { DefineSection, Field, Hint, PickerRow, PickerShell, Segmented, Tag, TextBlock, addBtn, dangerBtn, ghostBtn } from "../../../../styles/parchmentForm";
+import useAuthStore from "../../../../store/AuthStore";
+import useCharStore from "../../../../store/CharStore";
+import ItemCreatePopup from "../../../Catalogues/Items/ItemCreatePopup";
+import { asList, labelOf, useSheet } from "../sheetHelpers";
+import { weaponAttack } from "../featureHelpers";
+import { actionWords } from "../../../../utils/featureRuntime";
 import {
   COINS,
-  NO_CHARGES,
   addFromCatalogue,
-  asList,
+  addOwnItem,
+  editedCopy,
+  variantItem,
+  itemRecord,
+  newId,
+  replaceItem,
+  restoredCopy,
+  savedCopy,
   attunedCount,
-  catalogueKey,
-  duplicateRow,
+  chargesOf,
+  duplicateItem,
   formatGp,
-  isCatalogueItem,
+  inventoryOf,
+  isConsumable,
+  isMagic,
+  itemSpells,
   matchesQuery,
-  newGearItem,
-  newMagicItem,
-  normalizeInventory,
+  needsAttunement,
   num,
-  ownedCount,
-  toggleCharges,
+  patchItem,
+  regainText,
+  removeItem,
+  setCoin,
+  setMaxAttunement,
   totalInGp,
+  weightOf,
 } from "./inventoryHelpers";
 
-/* Define tab: Inventory — purse, magic items and gear, on parchment.
+/* Define tab: Inventory, on parchment.
 
-   Two kinds of item:
-   - From the catalogue: read-only here. Click the name to open its card.
-     You set only what's yours: how many, attuned, consumable.
-   - Your own (no catalogue source): a glowing rock, a letter, anything
-     that isn't a real D&D item. Click the name to edit it and its notes.
-
-   Magic items with charges, and gear marked consumable (◆), show up in
-   Play's Actions & Charges. */
+   The purse, then the items: magic items, mundane gear, consumables.
+   Each row is the character's own copy of the item:
+     ◆ (left)     shown in Play: its cards there (attack, charges, −1,
+                  its features). Off: no card, but equipped it still counts.
+     the name     opens its card (the copy as it is now)
+     equipped     it counts on the sheet: armour and shield set your AC,
+                  its bonuses, grants and features apply
+     attuned      only for an item that needs attunement
+     ⋯            how many, charges left, your note, edit, duplicate, remove
+   "edit" opens the catalogue's item form on the copy: save to this sheet
+   only, or to your catalogue too (a homebrew entry; the copy then comes
+   from it). "back to the book's" undoes your changes since the original
+   (or since your homebrew entry). Items from your class and background
+   start here; add more from the catalogue, or make your own. */
 
 const MAX_PICKER_ROWS = 80;
 
@@ -68,7 +75,7 @@ const showRarity = (r) => r && !["none", "unknown"].includes(String(r).toLowerCa
 
 function Purse({ currency, onSet }) {
   const [amount, setAmount] = useState(null);
-  const [coin, setCoin] = useState("gp");
+  const [coin, setCoinKey] = useState("gp");
   const [message, setMessage] = useState("");
 
   const apply = (sign) => {
@@ -112,15 +119,7 @@ function Purse({ currency, onSet }) {
           aria-label="Amount to add or spend"
           className="h-7 w-20 text-[15px]"
         />
-        <InkSelect
-          value={coin}
-          onChange={(e) => {
-            setCoin(e.target.value);
-            setMessage("");
-          }}
-          aria-label="Coin"
-          className="h-7 text-sm"
-        >
+        <InkSelect value={coin} onChange={(e) => setCoinKey(e.target.value)} aria-label="Coin" className="h-7 text-sm">
           {COINS.map((c) => (
             <option key={c.key} value={c.key}>
               {c.key}
@@ -143,219 +142,229 @@ function Purse({ currency, onSet }) {
 
 /* ─── Catalogue picker ───────────────────────────────────────────── */
 
-function ItemPicker({ entries, loading, inv, onOpen, onAdd, onClose }) {
+function ItemPicker({ items, owned, onAdd, onView, onClose }) {
   const [query, setQuery] = useState("");
+  const [magicOnly, setMagicOnly] = useState(false);
+  const [variant, setVariant] = useState(null); // a variant waiting for its base item
   const q = query.trim().toLowerCase();
-
-  const all = asList(entries).filter((e) => e?.name);
+  // Items and variants (a variant asks which base item it's on); a group's
+  // members are listed on their own.
+  const all = items.filter((e) => e?.name && e.kind !== "item_group");
+  const byId = useMemo(() => new Map(items.map((e) => [e.id, e])), [items]);
+  const bases = variant ? asList(variant.applies_to).map((id) => byId.get(id)).filter(Boolean) : [];
   const rows = all
-    .filter((e) => !q || e.name.toLowerCase().includes(q) || String(e.source || "").toLowerCase().includes(q))
-    .sort((a, b) => a.name.localeCompare(b.name));
-
+    .filter((e) => (!magicOnly || isMagic(e)) && (!q || e.name.toLowerCase().includes(q) || String(e.source || "").toLowerCase().includes(q)))
+    .sort((a, b) => a.name.localeCompare(b.name) || String(a.source).localeCompare(String(b.source)));
   return (
-    <section className="mb-8">
-      <InkHeading right={<InkButton onClick={onClose}>close</InkButton>}>From the catalogue</InkHeading>
-      <InkText value={query} onChange={(e) => setQuery(e.target.value)} placeholder="search by name or source…" autoFocus className="mb-2 h-8 w-full max-w-sm text-[15px]" />
-
-      <div className="max-h-72 overflow-y-auto border-y border-rule/25 py-1">
-        {loading && all.length === 0 && <p className={`py-2 text-sm italic ${INK.faint}`}>Fetching the catalogue…</p>}
-        {!loading && rows.length === 0 && <p className={`py-2 text-sm italic ${INK.faint}`}>Nothing matches.</p>}
-        {rows.slice(0, MAX_PICKER_ROWS).map((entry) => {
-          const owned = ownedCount(inv, entry);
-          const type = asList(entry.types)[0];
-          return (
-            <div key={catalogueKey(entry)} className="flex items-baseline gap-2 py-1 hover:bg-ink/[0.04]">
-              <button type="button" onClick={() => onOpen(entry)} className="truncate text-left text-[15px] hover:underline hover:decoration-dotted" title="Open its card">
-                {entry.name}
+    <PickerShell
+      title="Add from the catalogue"
+      query={query}
+      onQuery={setQuery}
+      onClose={onClose}
+      filters={
+        <button type="button" onClick={() => setMagicOnly((v) => !v)} className={`text-xs italic ${magicOnly ? INK.rubric : INK.faded}`}>
+          {magicOnly ? "magic items only" : "all items"}
+        </button>
+      }
+      footer={`${rows.length > MAX_PICKER_ROWS ? `first ${MAX_PICKER_ROWS} of ${rows.length} — type to narrow` : `${rows.length} of ${all.length}`} · click a name to view its card`}
+    >
+      {variant && (
+        <div className="mb-2 border-l-2 border-rubric/40 py-1 pl-3">
+          <div className="mb-1 flex items-baseline gap-3 text-sm">
+            <span className="italic">{variant.name}: on which {bases.some((x) => x.armor) ? "item" : "weapon"}?</span>
+            <button type="button" onClick={() => setVariant(null)} className={`ml-auto text-xs italic ${INK.faded} hover:text-ink`}>
+              cancel
+            </button>
+          </div>
+          <div className="flex flex-wrap gap-x-3 gap-y-1">
+            {bases.length === 0 && <Hint>None of its base items are in your catalogue.</Hint>}
+            {bases.map((bi) => (
+              <button
+                key={bi.id}
+                type="button"
+                onClick={() => {
+                  onAdd(variantItem(variant, bi));
+                  setVariant(null);
+                }}
+                className="text-sm hover:underline hover:decoration-dotted hover:underline-offset-4"
+                title={bi.source}
+              >
+                {bi.name} <span className={`text-[10px] ${INK.faint}`}>{bi.source}</span>
               </button>
-              {entry.reqAttune && <span className={`shrink-0 text-[10px] italic ${INK.faded}`}>attunement</span>}
-              {type && <span className={`hidden shrink-0 text-[10px] uppercase tracking-wider @lg:inline ${INK.faint}`}>{type}</span>}
-              {showRarity(entry.rarity) && <span className={`hidden shrink-0 text-[10px] uppercase tracking-wider @md:inline ${rarityInk(entry.rarity)}`}>{entry.rarity}</span>}
-              <Leader />
-              <span className={`shrink-0 text-[10px] uppercase tracking-wider ${INK.faint}`}>{entry.source}</span>
-              {owned > 0 && <span className={`shrink-0 text-xs italic ${INK.faded}`}>have {owned}</span>}
-              <InkButton onClick={() => onAdd(entry)} active className="shrink-0">
-                {owned > 0 ? "+1" : "add"}
-              </InkButton>
-            </div>
-          );
-        })}
-      </div>
-      <p className={`mt-1 text-[11px] italic ${INK.faint}`}>
-        {rows.length > MAX_PICKER_ROWS ? `first ${MAX_PICKER_ROWS} of ${rows.length} — type to narrow` : `${rows.length} of ${all.length}`} · potions, scrolls and ammunition go to Gear as consumables
-      </p>
-    </section>
-  );
-}
-
-/* ─── Small pieces ───────────────────────────────────────────────── */
-
-// −  n  +
-// An item saved without an amount counts as one.
-function Count({ value, onChange }) {
-  const n = num(value, 1);
-  const btn = `w-5 text-center text-base leading-none ${INK.faded} hover:text-ink disabled:opacity-30`;
-  return (
-    <span className="inline-flex shrink-0 items-baseline">
-      <button type="button" className={btn} onClick={() => onChange(Math.max(0, n - 1))} disabled={n <= 0} aria-label="One less">
-        −
-      </button>
-      <InkNumber value={n} min={0} fallback={0} onChange={(v) => onChange(v ?? 0)} aria-label="Amount" className="h-6 w-9 text-[15px]" />
-      <button type="button" className={btn} onClick={() => onChange(n + 1)} aria-label="One more">
-        +
-      </button>
-    </span>
-  );
-}
-
-// Charges for your own magic items, written as a sentence:
-// "7 charges, 5 left, regain all · some on a rest"
-function ChargeBlanks({ charges, onChange }) {
-  const c = charges || {};
-  const max = num(c.max_charges, 0);
-  const regainsAll = c.reset_amount === "full" || (max > 0 && num(c.reset_amount, 0) >= max);
-  const set = (p) => onChange({ ...c, has: true, ...p });
-
-  return (
-    <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1 text-[15px]">
-      <InkNumber
-        value={max || null}
-        min={1}
-        fallback={1}
-        placeholder="—"
-        onChange={(v) => {
-          // Full stays full when the max changes; otherwise keep what's left.
-          const cur = c.current_charges;
-          const wasFull = cur === "" || cur == null || num(cur, 0) >= max;
-          set({ max_charges: v, current_charges: wasFull ? v : Math.min(num(cur, v), v) });
-        }}
-        aria-label="Max charges"
-        className="h-6 w-9"
-      />
-      <span className={INK.faded}>charges,</span>
-      <InkNumber
-        value={c.current_charges === "" || c.current_charges == null ? null : num(c.current_charges, null)}
-        min={0}
-        max={max || undefined}
-        placeholder={max ? String(max) : "—"}
-        onChange={(v) => set({ current_charges: v ?? "" })}
-        aria-label="Charges left"
-        className="h-6 w-9"
-      />
-      <span className={INK.faded}>left · on a rest regain</span>
-      <InkChoice
-        label="Regain on rest"
-        options={[
-          { value: "all", label: "all" },
-          { value: "some", label: "some" },
-        ]}
-        value={regainsAll ? "all" : "some"}
-        onChange={(v) => set({ reset_amount: v === "all" ? "full" : max > 1 ? 1 : 0 })}
-      />
-      {!regainsAll && (
-        <InkNumber value={num(c.reset_amount, 0)} min={0} max={max || undefined} fallback={0} onChange={(v) => set({ reset_amount: v ?? 0 })} aria-label="Regained on rest" className="h-6 w-9" />
+            ))}
+          </div>
+        </div>
       )}
-    </div>
+      {rows.length === 0 && <Hint className="py-2">{all.length ? "Nothing matches." : "Fetching the catalogue…"}</Hint>}
+      {rows.slice(0, MAX_PICKER_ROWS).map((e) => {
+        const n = owned(e);
+        if (e.kind === "item_variant")
+          return (
+            <PickerRow
+              key={`${e.id}-${e.visibility || ""}`}
+              name={e.name}
+              onOpen={() => onView(e)}
+              meta={showRarity(e.rarity) ? <Tag className={rarityInk(e.rarity)}>{e.rarity}</Tag> : null}
+              source={e.source}
+              highlight={n > 0}
+              action={{ label: "add…", onClick: () => setVariant(e) }}
+            />
+          );
+        return (
+          <PickerRow
+            key={`${e.id}-${e.visibility || ""}`}
+            name={e.name}
+            onOpen={() => onView(e)}
+            meta={showRarity(e.rarity) ? <Tag className={rarityInk(e.rarity)}>{e.rarity}</Tag> : null}
+            source={e.source}
+            highlight={n > 0}
+            action={{ label: n ? `add (${n})` : "add", onClick: () => onAdd(e) }}
+          />
+        );
+      })}
+    </PickerShell>
   );
 }
 
 /* ─── One item ───────────────────────────────────────────────────── */
 
-function ItemRow({ row, kind, open, attuneFull, onToggle, onPatch, onRemove, onDuplicate, onMove, onOpenCard }) {
-  const isMagic = kind === "magic";
-  const fromCatalogue = isCatalogueItem(row);
-  const uses = isMagic ? usesFromCharges(row.charges) : null;
-  const regain = uses ? regainLabel(row.charges?.reset_amount, uses.max) : "";
-
-  const mark = isMagic ? (
-    <Mark
-      on={!!row.attuned}
-      onClick={() => onPatch({ attuned: !row.attuned })}
-      disabled={!row.attuned && attuneFull}
-      label={row.attuned ? "Attuned" : "Not attuned"}
-      title={!row.attuned && attuneFull ? "All attunement slots are used" : row.attuned ? "Attuned — click to end attunement" : "Click to attune"}
-    />
-  ) : (
-    <Mark
-      on={!!row.consumed}
-      onClick={() => onPatch({ consumed: !row.consumed })}
-      label={row.consumed ? "Consumable" : "Not consumable"}
-      title={row.consumed ? "Consumable — shown in Play with a −1 button" : "Click to mark as consumable"}
-    />
+// A word on the dotted line that inks in when it's on (equipped, attuned).
+function WordToggle({ on, onClick, label, title, disabled = false }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={disabled}
+      aria-pressed={on}
+      title={title}
+      className={`shrink-0 text-[10px] font-semibold uppercase tracking-[0.14em] transition disabled:cursor-not-allowed disabled:opacity-40 ${
+        on ? INK.rubric : `${INK.faint} hover:text-ink`
+      }`}
+    >
+      {label}
+    </button>
   );
+}
+
+function ItemRow({ it, d, open, attuneFull, onToggle, onPatch, onRemove, onDuplicate, onView, onEdit, onRestore }) {
+  const charges = chargesOf(it);
+  const attack = it.equipped && it.weapon ? weaponAttack(it, d) : null;
+  const ac = it.armor ? (it.armor.category === "shield" ? `+${it.armor.base ?? 2} AC` : `AC ${it.armor.base}${it.armor.dex_cap === 0 ? "" : " + Dex"}${it.armor.dex_cap ? ` (max ${it.armor.dex_cap})` : ""}`) : null;
+  const spells = itemSpells(it);
+  const shown = it.shown !== false;
 
   return (
-    <div className="break-inside-avoid">
-      <div className="group flex items-baseline gap-1.5 py-[3px]">
-        <span className="self-center">{mark}</span>
-        <div className="flex min-w-0 flex-1 items-baseline">
-          {fromCatalogue ? (
-            <button
-              type="button"
-              onClick={onOpenCard || undefined}
-              disabled={!onOpenCard}
-              className="truncate text-left text-[15px] enabled:hover:underline enabled:hover:decoration-dotted disabled:cursor-default"
-              title={onOpenCard ? "Open its card" : "Loading the catalogue…"}
-            >
-              {row.name}
-            </button>
-          ) : (
-            <button
-              type="button"
-              onClick={onToggle}
-              aria-expanded={open}
-              className={`truncate text-left text-[15px] italic hover:underline hover:decoration-dotted ${row.name ? "" : INK.faint}`}
-              title="Your own item — click to edit"
-            >
-              {row.name || "unnamed item"}
-            </button>
+    <div className={open ? "col-span-full" : ""}>
+      <div className={`group flex items-baseline gap-1.5 py-[3px] ${shown ? "" : "opacity-70"}`}>
+        <span className="self-center">
+          <Mark on={shown} onClick={() => onPatch({ shown: !shown })} label={shown ? "Shown in Play" : "Not shown in Play"} title={shown ? "Shown in Play (when there's something to use)" : "Not shown in Play"} />
+        </span>
+        <button type="button" onClick={onView} title="Open its card" className={`truncate text-left text-[15px] hover:underline hover:decoration-dotted hover:underline-offset-4 ${it.name ? "" : `italic ${INK.faint}`}`}>
+          {it.name || "unnamed item"}
+        </button>
+        {num(it.qty, 1) !== 1 && !isConsumable(it) && <span className="shrink-0 text-sm tabular-nums">×{num(it.qty, 1)}</span>}
+        {showRarity(it.rarity) && <span className={`shrink-0 text-[10px] uppercase tracking-wider ${rarityInk(it.rarity)}`}>{it.rarity}</span>}
+        {it.edited && <span className={`shrink-0 text-[10px] italic ${INK.faint}`} title="You changed this item">edited</span>}
+        {!it.item && <span className={`shrink-0 text-[10px] uppercase tracking-wider ${INK.faint}`} title="Made by you">yours</span>}
+        <Leader />
+        <span className="flex min-w-0 shrink flex-wrap items-baseline justify-end gap-x-2 text-xs">
+          {ac && <span className={INK.faded}>{ac}</span>}
+          {attack && (
+            <span className={INK.rubric}>
+              {attack.hit >= 0 ? "+" : ""}
+              {attack.hit} · {actionWords({ damage: attack.damage })}
+            </span>
           )}
-          {fromCatalogue && showRarity(row.rarity) && (
-            <span className={`ml-1.5 shrink-0 text-[10px] uppercase tracking-wider ${rarityInk(row.rarity)}`}>{row.rarity}</span>
+          {charges && (
+            <span className={`italic ${INK.faded}`}>
+              {charges.cur}/{charges.max} charges
+            </span>
           )}
-          {!fromCatalogue && <span className={`ml-1.5 shrink-0 text-[10px] italic ${INK.faint}`}>your own</span>}
-          <Leader />
-        </div>
-        {uses && (
-          <span className={`shrink-0 text-xs ${INK.faded}`} title={regain}>
-            <span className={`font-semibold ${INK.ink}`}>
-              {uses.cur}/{uses.max}
-            </span>{" "}
-            charges
+        </span>
+        <WordToggle on={!!it.equipped} onClick={() => onPatch({ equipped: !it.equipped })} label="equipped" title={it.equipped ? "Equipped / worn: it counts on the sheet" : "Equip or wear it"} />
+        {needsAttunement(it) && (
+          <WordToggle
+            on={!!it.attuned}
+            onClick={() => onPatch({ attuned: !it.attuned })}
+            label="attuned"
+            title={it.attuned ? "Attuned: click to end it" : attuneFull ? "All attunement slots are used (you can still attune)" : "Attune to it"}
+          />
+        )}
+        {isConsumable(it) && (
+          <span className="flex shrink-0 items-baseline text-sm tabular-nums" role="group" aria-label={`How many ${it.name || "items"}`}>
+            <button type="button" onClick={() => onPatch({ qty: Math.max(0, num(it.qty, 1) - 1) })} className={`w-5 ${INK.faded} hover:text-ink`} title="One fewer" aria-label="One fewer">
+              −
+            </button>
+            <span className="min-w-[1.25rem] text-center font-semibold">{num(it.qty, 1)}</span>
+            <button type="button" onClick={() => onPatch({ qty: num(it.qty, 1) + 1 })} className={`w-5 ${INK.faded} hover:text-ink`} title="One more" aria-label="One more">
+              +
+            </button>
           </span>
         )}
-        <Count value={row.amount} onChange={(amount) => onPatch({ amount })} />
-        <span className="opacity-0 transition group-hover:opacity-100 focus-within:opacity-100">
-          <InkRemove onClick={onRemove} label={`Remove ${row.name || "item"}`} />
-        </span>
+        <button type="button" onClick={onToggle} aria-expanded={open} title="How many, charges, your note, edit…" className={`shrink-0 px-0.5 text-sm leading-none ${open ? INK.rubric : INK.faded} hover:text-ink`}>
+          ⋯
+        </button>
       </div>
 
-      {/* Notes of your own items, as a quiet line under the name */}
-      {!fromCatalogue && !open && row.notes && <p className={`-mt-0.5 mb-1 ml-[26px] line-clamp-1 text-xs italic ${INK.faded}`}>{row.notes}</p>}
-
-      {/* Editor — your own items only */}
-      {!fromCatalogue && open && (
-        <div className="mb-3 ml-[26px] mt-1 space-y-2 border-l-2 border-rubric/40 pl-3">
-          <InkText value={row.name ?? ""} autoFocus={!row.name} onChange={(e) => onPatch({ name: e.target.value }, true)} placeholder="what is it?" className="h-8 w-full max-w-sm text-[15px]" aria-label="Item name" />
-          {isMagic && (
-            <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-              <span className="self-center">
-                <Mark on={!!row.charges?.has} onClick={() => onPatch({ charges: toggleCharges(row.charges, !row.charges?.has) })} label="Has charges" />
-              </span>
-              {row.charges?.has ? (
-                <ChargeBlanks charges={row.charges} onChange={(charges) => onPatch({ charges })} />
-              ) : (
-                <span className={`text-sm italic ${INK.faded}`}>has charges</span>
-              )}
-            </div>
+      {open && (
+        <div className="mb-4 ml-[26px] mt-1 space-y-3 border-l-2 border-rubric/40 pl-4">
+          <div className="flex flex-wrap items-baseline gap-x-6 gap-y-2">
+            <Field label="How many">
+              <InkNumber value={num(it.qty, 1)} min={0} fallback={1} onChange={(v) => onPatch({ qty: v ?? 1 })} aria-label="How many" className="h-7 w-14 text-[15px]" />
+            </Field>
+            <Field label="Used up when used">
+              <Segmented
+                size="sm"
+                options={[
+                  { value: "yes", label: "yes" },
+                  { value: "no", label: "no" },
+                ]}
+                value={isConsumable(it) ? "yes" : "no"}
+                onChange={(v) => onPatch({ consumable: v === "yes" })}
+              />
+            </Field>
+            {charges && (
+              <Field label="Charges">
+                <span className="flex items-baseline gap-2 text-sm">
+                  <InkNumber value={charges.cur} min={0} max={charges.max} fallback={charges.max} onChange={(v) => onPatch({ charges_used: charges.max - (v ?? charges.max) })} aria-label="Charges left" className="h-7 w-10 text-[15px]" />
+                  of {charges.max} · <span className={`italic ${INK.faded}`}>{regainText(charges)}</span>
+                </span>
+              </Field>
+            )}
+          </div>
+          {spells.length > 0 && (
+            <p className="text-sm">
+              <span className={`text-[10px] font-semibold uppercase tracking-[0.16em] ${INK.faded}`}>Casts </span>
+              {spells.map((s) => `${labelOf(String(s.id).replace(/-[a-z0-9]+$/, ""))}${s.cost ? ` (${s.cost} charge${s.cost > 1 ? "s" : ""})` : s.atWill ? " (at will)" : ""}`).join(", ")}
+            </p>
           )}
-          <InkTextArea value={row.notes ?? ""} onChange={(e) => onPatch({ notes: e.target.value }, true)} placeholder="notes — where you found it, what it does…" rows={2} />
-          <div className="flex flex-wrap items-baseline gap-x-4">
-            <InkButton onClick={onMove}>{isMagic ? "move to gear" : "move to magic items"}</InkButton>
-            <InkButton onClick={onDuplicate}>duplicate</InkButton>
-            <InkButton onClick={onToggle} active className="ml-auto">
+          {attack && (
+            <p className="text-sm">
+              {attack.range} · {attack.hit >= 0 ? "+" : ""}
+              {attack.hit} to hit{attack.proficient ? "" : " (not proficient)"} · {actionWords({ damage: attack.damage })}
+              {attack.versatile && ` · two-handed ${actionWords({ damage: [attack.versatile] })}`}
+              {attack.mastery.length > 0 && <span className={INK.faded}> · mastery: {attack.mastery.map(labelOf).join(", ")}</span>}
+            </p>
+          )}
+          <TextBlock value={it.notes || ""} onChange={(e) => onPatch({ notes: e.target.value })} placeholder="Your note…" minRows={1} />
+          <div className="flex flex-wrap items-baseline gap-x-5">
+            <button type="button" onClick={onToggle} className={ghostBtn}>
               done
-            </InkButton>
+            </button>
+            <button type="button" onClick={onEdit} className={ghostBtn} title="Change the item itself: its numbers, text, properties…">
+              edit the item
+            </button>
+            {it.edited && it.book && (
+              <button type="button" onClick={onRestore} className={ghostBtn} title="Undo every change you made to the item">
+                back to the book's
+              </button>
+            )}
+            <button type="button" onClick={onDuplicate} className={ghostBtn}>
+              duplicate
+            </button>
+            <button type="button" onClick={onRemove} className={`ml-auto ${dangerBtn}`}>
+              remove
+            </button>
           </div>
         </div>
       )}
@@ -365,186 +374,178 @@ function ItemRow({ row, kind, open, attuneFull, onToggle, onPatch, onRemove, onD
 
 /* ─── Tab ─────────────────────────────────────────────────────────── */
 
+// Each item in one of three; equipped and attuned are marks on the line.
+const GROUPS = [
+  { key: "magic", title: "Magic items", test: (it) => isMagic(it) && !isConsumable(it) },
+  { key: "mundane", title: "Mundane", test: (it) => !isMagic(it) && !isConsumable(it) },
+  { key: "consumables", title: "Consumables", test: (it) => isConsumable(it) },
+];
+
 export default function InventoryDefine() {
-  const charData = useCharStore((s) => s.charData);
-  const patchChar = useCharStore((s) => s.patchChar);
-
+  const { ch, d, patchChar } = useSheet();
   const catalogue = useCatalogueStore((s) => s.items);
-  const loadingItems = useCatalogueStore((s) => s.loadingItems);
-  const loadItems = useCatalogueStore((s) => s.loadItems);
+  const createItem = useCatalogueStore((s) => s.createItem);
+  const updateItem = useCatalogueStore((s) => s.updateItem);
+  const userName = useAuthStore((s) => s.userData?.name);
   const openPopup = usePopupStore((s) => s.open);
-
   const [openId, setOpenId] = useState(null);
+  const [picking, setPicking] = useState(false);
   const [query, setQuery] = useState("");
-  const [pickerOpen, setPickerOpen] = useState(false);
+  // The item form: { row } to edit a copy, { row: null } to make your own.
+  const [form, setForm] = useState(null);
 
-  const inv = useMemo(() => normalizeInventory(charData?.inventory), [charData?.inventory]);
-
-  // The catalogue is needed for the picker and for opening cards.
-  const needsCatalogue = pickerOpen || [...inv.magic, ...inv.mundane].some(isCatalogueItem);
   useEffect(() => {
-    if (needsCatalogue && asList(catalogue).length === 0 && !loadingItems) loadItems();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [needsCatalogue]);
+    const store = useCatalogueStore.getState();
+    if (!(store.items || []).length && !store.loadingItems) store.loadItems();
+  }, []);
 
-  // Clicks save right away; typing saves a moment later.
-  const persist = (next, typing = false) => patchChar({ inventory: next }, { now: !typing });
+  const inv = useMemo(() => inventoryOf(ch), [ch]);
+  if (!ch || !d) return null;
 
-  const entryFor = useCallback(
-    (row) => (row.source ? asList(catalogue).find((c) => c.name === row.name && c.source === row.source) : null),
-    [catalogue]
-  );
-
-  if (!charData) return null;
-
+  const attuned = attunedCount(inv.items);
+  const attuneFull = inv.max_attunement > 0 && attuned >= inv.max_attunement;
   const q = query.trim().toLowerCase();
-  const attuned = attunedCount(inv);
-  const attuneMax = inv.max_attunment;
-  const attuneFull = attuneMax > 0 && attuned >= attuneMax;
+  const visible = inv.items.filter((it) => matchesQuery(it, q));
+  const weight = weightOf(inv.items);
+  const capacity = d.abilities.str.score * 15;
 
-  const patchRow = (list, id, patch, typing = false) => {
-    if (patch.attuned === true && attuneFull) return;
-    persist({ ...inv, [list]: inv[list].map((r) => (r.id === id ? { ...r, ...patch } : r)) }, typing);
+  const write = (patch, now = true) => patchChar(patch, { now });
+  const owned = (e) => inv.items.filter((i) => i.item === e.id).reduce((n, i) => n + num(i.qty, 1), 0);
+  // The player's own catalogue entry a copy comes from (saving updates it).
+  const homebrewOf = (row) => {
+    const entry = row?.item ? (catalogue || []).find((c) => c.id === row.item) : null;
+    return entry && entry.visibility && entry.created_by === userName ? { id: entry.id, name: entry.name, visibility: entry.visibility } : null;
+  };
+  const latest = () => inventoryOf(useCharStore.getState().charData || ch).items;
+
+  const add = (entry) => {
+    const { patch } = addFromCatalogue(ch, entry);
+    write(patch);
+  };
+  const remove = (it) => {
+    if (!window.confirm(`Remove ${it.name || "this item"}${num(it.qty, 1) > 1 ? ` (all ${it.qty})` : ""}?`)) return;
+    write(removeItem(ch, it.id));
+    setOpenId(null);
+  };
+  const patchRow = (it, p) => write(patchItem(ch, it.id, p), !("notes" in p));
+
+  // The form's save: the copy only, or the catalogue too.
+  const submit = async (record, { catalogue: toCatalogue, asNew }) => {
+    const row = form?.row ? latest().find((i) => i.id === form.row.id) || form.row : null;
+    const now = useCharStore.getState().charData || ch;
+    if (!toCatalogue) {
+      if (row) write(replaceItem(now, editedCopy(row, record)));
+      else write(addOwnItem(now, { ...itemRecord(record), id: newId(), item: null, from: "manual", qty: 1, equipped: false }));
+      return;
+    }
+    const target = row ? homebrewOf(row) : null;
+    const entry = { ...itemRecord(record), visibility: record.visibility || "private" };
+    delete entry.id;
+    const saved = target && !asNew ? await updateItem(target.id, { ...entry, id: target.id }) : await createItem(entry);
+    const fresh = useCharStore.getState().charData || ch;
+    if (row) write(replaceItem(fresh, savedCopy(row, saved)));
+    else write(addOwnItem(fresh, { ...itemRecord(saved), id: newId(), item: saved.id, from: "manual", qty: 1, equipped: false }));
   };
 
-  const addOwn = (list, row) => {
-    persist({ ...inv, [list]: [...inv[list], row] });
-    setOpenId(row.id);
-  };
-
-  const removeRow = (list, row) => {
-    if (!window.confirm(`Remove "${row.name || "unnamed item"}"?`)) return;
-    persist({ ...inv, [list]: inv[list].filter((r) => r.id !== row.id) });
-    if (openId === row.id) setOpenId(null);
-  };
-
-  const duplicate = (list, row) => {
-    const copy = duplicateRow(row);
-    const i = inv[list].findIndex((r) => r.id === row.id);
-    persist({ ...inv, [list]: [...inv[list].slice(0, i + 1), copy, ...inv[list].slice(i + 1)] });
-    setOpenId(copy.id);
-  };
-
-  // Your own items can switch lists; name, amount and notes come along.
-  const move = (from, row) => {
-    const to = from === "magic" ? "mundane" : "magic";
-    const { id, name, amount, notes } = row;
-    const moved = to === "magic" ? { id, name, amount, notes, attuned: false, charges: { ...NO_CHARGES } } : { id, name, amount, notes, consumed: false };
-    persist({ ...inv, [from]: inv[from].filter((r) => r.id !== id), [to]: [...inv[to], moved] });
-  };
-
-  const renderRows = (list, rows) =>
-    rows.map((row) => {
-      const entry = entryFor(row);
-      return (
+  const list = (items) => (
+    <div className="grid grid-cols-1 items-start gap-x-10 @5xl:grid-cols-2">
+      {items.map((it) => (
         <ItemRow
-          key={row.id}
-          row={row}
-          kind={list === "magic" ? "magic" : "gear"}
-          open={openId === row.id}
+          key={it.id}
+          it={it}
+          d={d}
+          open={openId === it.id}
           attuneFull={attuneFull}
-          onToggle={() => setOpenId((id) => (id === row.id ? null : row.id))}
-          onPatch={(patch, typing) => patchRow(list, row.id, patch, typing)}
-          onRemove={() => removeRow(list, row)}
-          onDuplicate={() => duplicate(list, row)}
-          onMove={() => move(list, row)}
-          onOpenCard={entry ? () => openPopup("item", entry) : null}
+          onToggle={() => setOpenId(openId === it.id ? null : it.id)}
+          onPatch={(p) => patchRow(it, p)}
+          onRemove={() => remove(it)}
+          onDuplicate={() => write(duplicateItem(ch, it))}
+          onView={() => openPopup("item", { ...it, _sheet: true })}
+          onEdit={() => setForm({ row: it })}
+          onRestore={() => write(replaceItem(ch, restoredCopy(it)))}
         />
-      );
-    });
-
-  const magic = inv.magic.filter((r) => matchesQuery(r, q));
-  const consumables = inv.mundane.filter((r) => r.consumed && matchesQuery(r, q));
-  const gear = inv.mundane.filter((r) => !r.consumed && matchesQuery(r, q));
-  const itemCount = inv.magic.length + inv.mundane.length;
+      ))}
+    </div>
+  );
 
   return (
     <ParchmentSheet>
       <Title
         after={
           <span className={`text-sm italic ${INK.faded}`}>
-            {itemCount} {itemCount === 1 ? "item" : "items"} · {formatGp(totalInGp(inv.currency))}
+            {inv.items.length} items · {formatGp(totalInGp(inv.currency))}
+            {weight > 0 && ` · ${Math.round(weight * 10) / 10} of ${capacity} lb`}
           </span>
         }
-        right={
-          <>
-            <InkText value={query} onChange={(e) => setQuery(e.target.value)} placeholder="search…" aria-label="Search items" className="h-7 w-32 text-sm" />
-            <InkButton onClick={() => setPickerOpen((o) => !o)} active={pickerOpen}>
-              {pickerOpen ? "close catalogue" : "+ from the catalogue"}
-            </InkButton>
-          </>
-        }
+        right={<InkText value={query} onChange={(e) => setQuery(e.target.value)} placeholder="search…" aria-label="Search items" className="h-7 w-32 text-sm" />}
       >
         Inventory
       </Title>
 
-      {pickerOpen && (
-        <ItemPicker
-          entries={catalogue}
-          loading={loadingItems}
-          inv={inv}
-          onOpen={(entry) => openPopup("item", entry)}
-          onAdd={(entry) => persist(addFromCatalogue(inv, entry).inv)}
-          onClose={() => setPickerOpen(false)}
-        />
-      )}
+      <div className="space-y-8">
+        <DefineSection title="Purse" storageKey="define.inventory.purse">
+          <Purse currency={inv.currency} onSet={(coin, v) => write(setCoin(ch, coin, v))} />
+        </DefineSection>
 
-      <section className="mb-9">
-        <InkHeading>Purse</InkHeading>
-        <Purse currency={inv.currency} onSet={(key, value) => persist({ ...inv, currency: { ...inv.currency, [key]: value } })} />
-      </section>
-
-      <div className="grid grid-cols-1 gap-x-12 gap-y-9 @4xl:grid-cols-2">
-        <section>
-          <InkHeading
-            right={
-              <span className={`inline-flex items-baseline gap-1 text-xs italic ${attuneFull ? INK.rubric : INK.faded}`} title="Attunement slots (empty = no limit)">
-                ◆ attuned {attuned} of
-                <InkNumber value={attuneMax || null} min={0} max={10} fallback={0} placeholder="∞" onChange={(v) => persist({ ...inv, max_attunment: v ?? 0 })} aria-label="Attunement slots" className="h-6 w-7 text-xs not-italic" />
+        <DefineSection
+          title="Items"
+          count={inv.items.length}
+          storageKey="define.inventory.items"
+          actions={(setOpen) => (
+            <span className="flex items-baseline gap-4">
+              <span className={`inline-flex items-baseline gap-1 text-xs italic ${attuneFull ? INK.rubric : INK.faded}`} title="Attunement slots">
+                attuned {attuned} of
+                <InkNumber value={inv.max_attunement} min={0} fallback={3} onChange={(v) => write(setMaxAttunement(ch, v ?? 3))} aria-label="Attunement slots" className="h-6 w-7 text-xs" />
               </span>
-            }
-          >
-            Magic items
-          </InkHeading>
-          {inv.magic.length === 0 ? (
-            <p className={`text-sm italic ${INK.faint}`}>None yet.</p>
-          ) : magic.length === 0 ? (
-            <p className={`text-sm italic ${INK.faint}`}>Nothing matches “{query}”.</p>
-          ) : (
-            renderRows("magic", magic)
+              <button
+                type="button"
+                onClick={() => {
+                  setOpen(true);
+                  setPicking((v) => !v);
+                }}
+                className={addBtn}
+              >
+                + from the catalogue
+              </button>
+              <button type="button" onClick={() => setForm({ row: null })} className={addBtn}>
+                + your own
+              </button>
+            </span>
           )}
-          <div className="mt-2">
-            <InkButton onClick={() => addOwn("magic", newMagicItem())}>+ your own magic item</InkButton>
-          </div>
-        </section>
-
-        <section>
-          <InkHeading right={<span className={`text-xs italic ${INK.faded}`}>◆ consumable</span>}>Gear</InkHeading>
-          {inv.mundane.length === 0 ? (
-            <p className={`text-sm italic ${INK.faint}`}>None yet.</p>
-          ) : consumables.length + gear.length === 0 ? (
-            <p className={`text-sm italic ${INK.faint}`}>Nothing matches “{query}”.</p>
-          ) : (
-            <>
-              {consumables.length > 0 && (
-                <>
-                  <SubHeading count={consumables.length}>Consumables</SubHeading>
-                  {renderRows("mundane", consumables)}
-                </>
-              )}
-              {gear.length > 0 && (
-                <>
-                  {consumables.length > 0 && <SubHeading count={gear.length}>Everything else</SubHeading>}
-                  {renderRows("mundane", gear)}
-                </>
-              )}
-            </>
+        >
+          {picking && (
+            <div className="mb-5">
+              <ItemPicker items={catalogue || []} owned={owned} onAdd={add} onView={(e) => openPopup("item", e)} onClose={() => setPicking(false)} />
+            </div>
           )}
-          <div className="mt-2">
-            <InkButton onClick={() => addOwn("mundane", newGearItem(false))}>+ your own item</InkButton>
-          </div>
-        </section>
+          {inv.items.length === 0 ? (
+            <Hint>Nothing carried yet.</Hint>
+          ) : (
+            <div className="space-y-5">
+              {GROUPS.map((g) => {
+                const items = visible.filter(g.test);
+                if (!items.length) return null;
+                return (
+                  <div key={g.key}>
+                    <div className={`mb-1 text-[11px] font-semibold uppercase tracking-[0.2em] ${INK.rubric}`}>
+                      {g.title} <span className={`font-normal ${INK.faint}`}>{items.length}</span>
+                    </div>
+                    {list(items)}
+                  </div>
+                );
+              })}
+              <p className={`text-xs italic ${INK.faint}`}>◆ = shown in Play · click a name for its card · equipped / attuned on the line · ⋯ for how many, charges, your note and editing</p>
+            </div>
+          )}
+        </DefineSection>
       </div>
+
+      <ItemCreatePopup
+        open={!!form}
+        onClose={() => setForm(null)}
+        editingItem={form?.row ? { ...itemRecord(form.row), visibility: homebrewOf(form.row)?.visibility } : null}
+        sheet={{ onSubmit: submit, homebrew: form?.row ? homebrewOf(form.row) : null }}
+      />
     </ParchmentSheet>
   );
 }

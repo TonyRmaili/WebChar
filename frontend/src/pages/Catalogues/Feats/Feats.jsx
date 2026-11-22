@@ -1,131 +1,98 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useCatalogueStore } from "../../../store/CatalogueStore";
 import { usePopupStore } from "../../../store/PopupStore";
 import useAuthStore from "../../../store/AuthStore";
 import FilterSection from "../FilterSection";
 import FilterPopup, { FilterButton } from "../FilterPopup";
-import RowContextMenu from "../RowContextMenu";
-import FeatRow from "./FeatRow";
 import FeatCreatePopup from "./FeatCreatePopup";
-import { ErrorLine, LoadingLine, Toolbar, chip, searchCls } from "../catalogueStyle";
+import { ErrorLine, LoadingLine, Toolbar, searchCls } from "../catalogueStyle";
+import { CatalogueRow, ChipToggles, useEntryMenu } from "../catalogueParts";
 import { addBtn } from "../../../styles/parchmentForm";
 import {
-  formatSource,
-  formatCategory,
-  ABILITY,
-  ABILITY_ORDER,
-  getFeatAbilities,
-} from "./featsHelpers";
+  HOMEBREW, ABILITIES, ABILITY_SHORT, EDITIONS, formatEdition, formatSource,
+  collectUnique, toggleIn, matchesQuery, passesAny, byName, buildNameIndex,
+  offeredAbilities, offeredKinds, GIVES_LABELS, prerequisiteKinds, PREREQUISITE_LABELS,
+} from "../catalogueHelpers";
+import { categoryLabel, featRowMeta } from "./featsHelpers";
 
+const NO_CATEGORY = "none";
+const REPEATABLE = [
+  { value: "yes", label: "Repeatable" },
+  { value: "no", label: "Once only" },
+];
+
+/* The Feats catalogue: a filterable list; a click opens the card, a
+   right-click copies (and, for your own homebrew, edits or deletes).
+   The filters offer only values the loaded feats have. */
 export default function Feats() {
-  const featsData = useCatalogueStore((s) => s.featsData);
+  const feats = useCatalogueStore((s) => s.feats);
   const loading = useCatalogueStore((s) => s.loadingFeats);
-  const error = useCatalogueStore((s) => s.error);
+  const error = useCatalogueStore((s) => s.featsError);
   const loadFeats = useCatalogueStore((s) => s.loadFeats);
-  const deleteFeatAction = useCatalogueStore((s) => s.deleteFeat);
-
-  const feats = featsData.feats || [];
-  const categories = featsData.categories || [];
-
-  const [selectedSources, setSelectedSources] = useState(["XPHB"]);
-  const [selectedCategories, setSelectedCategories] = useState([]);
-  const [selectedAbilities, setSelectedAbilities] = useState([]);
-  const [query, setQuery] = useState("");
-  const [filtersOpen, setFiltersOpen] = useState(false);
-
-  const [createOpen, setCreateOpen] = useState(false);
-  const [editingFeat, setEditingFeat] = useState(null);
-  const [copyFromFeat, setCopyFromFeat] = useState(null);
-  const [contextMenu, setContextMenu] = useState(null);
+  const deleteFeat = useCatalogueStore((s) => s.deleteFeat);
 
   const openPopup = usePopupStore((s) => s.open);
   const currentUser = useAuthStore((s) => s.userData?.name);
 
-  useEffect(() => { loadFeats(); }, []);
+  const [query, setQuery] = useState("");
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const [editions, setEditions] = useState(["one"]);
+  const [sources, setSources] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [abilities, setAbilities] = useState([]);
+  const [prereqs, setPrereqs] = useState([]);
+  const [gives, setGives] = useState([]);
+  const [repeatable, setRepeatable] = useState([]);
 
-  // Ensure HOMEBREW is selectable even before any homebrew feat exists.
-  const sources = useMemo(() => {
-    const base = featsData.sources || [];
-    return base.includes("HOMEBREW") ? base : ["HOMEBREW", ...base];
-  }, [featsData]);
+  const [form, setForm] = useState(null); // null = closed · {} new · { editing } · { copyFrom }
+  const [openMenu, menu] = useEntryMenu({
+    user: currentUser,
+    onCopy: (f) => setForm({ copyFrom: f }),
+    onEdit: (f) => setForm({ editing: f }),
+    onDelete: deleteFeat,
+  });
 
-  const toggle = (setter) => (val) =>
-    setter((prev) =>
-      prev.includes(val) ? prev.filter((x) => x !== val) : [...prev, val]
-    );
+  useEffect(() => {
+    loadFeats();
+  }, [loadFeats]);
 
-  const toggleSource = toggle(setSelectedSources);
-  const toggleCategory = toggle(setSelectedCategories);
-  const toggleAbility = toggle(setSelectedAbilities);
+  const index = useMemo(() => buildNameIndex(feats), [feats]);
 
-  const handleRowContextMenu = (e, feat) => {
-    const isHomebrew = feat.source === "HOMEBREW";
-    const isOwner = isHomebrew && feat.created_by === currentUser;
+  // What the filters offer: only values some feat has.
+  const sourceOptions = useMemo(() => {
+    const found = collectUnique(feats, "source");
+    return found.includes(HOMEBREW) ? found : [HOMEBREW, ...found];
+  }, [feats]);
+  const categoryOptions = useMemo(() => collectUnique(feats, (f) => f.category || NO_CATEGORY), [feats]);
+  const prereqOptions = useMemo(() => collectUnique(feats, prerequisiteKinds), [feats]);
+  const givesOptions = useMemo(() => collectUnique(feats, offeredKinds), [feats]);
 
-    const items = [];
-    items.push({
-      label: "Copy",
-      onClick: () => {
-        setCopyFromFeat(feat);
-        setCreateOpen(true);
-      },
-    });
+  const filtered = useMemo(
+    () =>
+      (feats || [])
+        .filter(
+          (f) =>
+            passesAny(editions, [f.edition]) &&
+            passesAny(sources, [f.source]) &&
+            passesAny(categories, [f.category || NO_CATEGORY]) &&
+            passesAny(abilities, offeredAbilities(f)) &&
+            passesAny(prereqs, prerequisiteKinds(f)) &&
+            passesAny(gives, offeredKinds(f)) &&
+            passesAny(repeatable, [f.repeatable ? "yes" : "no"]) &&
+            matchesQuery(f, query)
+        )
+        .sort(byName),
+    [feats, editions, sources, categories, abilities, prereqs, gives, repeatable, query]
+  );
 
-    if (isOwner) {
-      items.push({
-        label: "Edit",
-        onClick: () => {
-          setEditingFeat(feat);
-          setCreateOpen(true);
-        },
-      });
-      items.push({
-        label: "Delete",
-        danger: true,
-        onClick: async () => {
-          if (!window.confirm(`Delete "${feat.name}"? This cannot be undone.`)) return;
-          try {
-            await deleteFeatAction(feat.id);
-          } catch (err) {
-            alert(`Delete failed: ${err.message}`);
-          }
-        },
-      });
-    }
-
-    setContextMenu({ x: e.clientX, y: e.clientY, items });
-  };
-
-  const handleCreateClose = () => {
-    setCreateOpen(false);
-    setEditingFeat(null);
-    setCopyFromFeat(null);
-  };
-
-  const filteredFeats = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    return feats.filter((feat) => {
-      if (!feat) return false;
-      if (selectedSources.length > 0 && !selectedSources.includes(feat.source)) return false;
-      if (selectedCategories.length > 0 && !selectedCategories.includes(feat.category)) return false;
-      if (selectedAbilities.length > 0) {
-        const abil = getFeatAbilities(feat.ability_score_increase);
-        if (!selectedAbilities.some((a) => abil.includes(a))) return false;
-      }
-      if (q && !feat.name.toLowerCase().includes(q)) return false;
-      return true;
-    });
-  }, [feats, query, selectedSources, selectedCategories, selectedAbilities]);
-
+  const activeCount =
+    editions.length + sources.length + categories.length + abilities.length + prereqs.length + gives.length + repeatable.length;
   const clearAll = () => {
-    setSelectedSources([]);
-    setSelectedCategories([]);
-    setSelectedAbilities([]);
+    [setEditions, setSources, setCategories, setAbilities, setPrereqs, setGives, setRepeatable].forEach((s) => s([]));
     setQuery("");
   };
 
-  const activeCount =
-    selectedSources.length + selectedCategories.length + selectedAbilities.length;
+  const toggler = (setter) => (v) => setter((l) => toggleIn(l, v));
 
   return (
     <div className="min-h-[640px] w-full">
@@ -141,87 +108,58 @@ export default function Feats() {
             right={
               <>
                 <span className="text-xs italic text-ink-faded">
-                  {filteredFeats.length} of {feats.length}
+                  {filtered.length} of {feats.length}
                 </span>
-                <button onClick={() => setCreateOpen(true)} className={`${addBtn} !text-sm`}>
+                <button type="button" onClick={() => setForm({})} className={`${addBtn} !text-sm`}>
                   + create
                 </button>
               </>
             }
           />
 
-          <FilterPopup
-            open={filtersOpen}
-            onClose={() => setFiltersOpen(false)}
-            activeCount={activeCount}
-            onClear={clearAll}
-          >
+          <FilterPopup open={filtersOpen} onClose={() => setFiltersOpen(false)} activeCount={activeCount} onClear={clearAll}>
+            <FilterSection title="Edition">
+              <ChipToggles options={EDITIONS} selected={editions} labelOf={formatEdition} onToggle={toggler(setEditions)} />
+            </FilterSection>
             <FilterSection title="Sources">
-              <div className="grid grid-cols-2 gap-x-6 gap-y-1.5 sm:grid-cols-3 lg:grid-cols-4">
-                {sources.map((source) => (
-                  <button
-                    key={source}
-                    onClick={() => toggleSource(source)}
-                    title={formatSource(source)}
-                    className={`${chip(selectedSources.includes(source))} truncate`}
-                  >
-                    {formatSource(source)}
-                  </button>
-                ))}
-              </div>
+              <ChipToggles options={sourceOptions} selected={sources} labelOf={formatSource} onToggle={toggler(setSources)}
+                           className="!grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4" />
             </FilterSection>
-
-            <FilterSection title="Categories">
-              <div className="flex flex-wrap gap-x-4 gap-y-1.5">
-                {categories.map((cate) => (
-                  <button key={cate} onClick={() => toggleCategory(cate)} className={chip(selectedCategories.includes(cate))}>
-                    {formatCategory(cate)}
-                  </button>
-                ))}
-              </div>
+            <FilterSection title="Category">
+              <ChipToggles options={categoryOptions} selected={categories} onToggle={toggler(setCategories)}
+                           labelOf={(c) => (c === NO_CATEGORY ? "No category (classic)" : categoryLabel(c))} />
             </FilterSection>
-
-            <FilterSection title="Ability">
-              <div className="flex flex-wrap gap-x-4 gap-y-1.5">
-                {ABILITY_ORDER.map((a) => (
-                  <button key={a} onClick={() => toggleAbility(a)} className={chip(selectedAbilities.includes(a))}>
-                    {ABILITY[a]}
-                  </button>
-                ))}
-              </div>
+            <FilterSection title="Ability Scores">
+              <ChipToggles options={ABILITIES} selected={abilities} labelOf={(a) => ABILITY_SHORT[a]} onToggle={toggler(setAbilities)} />
+            </FilterSection>
+            <FilterSection title="Prerequisite">
+              <ChipToggles options={prereqOptions} selected={prereqs} onToggle={toggler(setPrereqs)}
+                           labelOf={(k) => (k === "none" ? "None" : PREREQUISITE_LABELS[k] || k)} />
+            </FilterSection>
+            <FilterSection title="Gives">
+              <ChipToggles options={givesOptions} selected={gives} labelOf={(k) => GIVES_LABELS[k] || k} onToggle={toggler(setGives)} />
+            </FilterSection>
+            <FilterSection title="Repeatable" defaultOpen={false}>
+              <ChipToggles options={REPEATABLE.map((r) => r.value)} selected={repeatable} onToggle={toggler(setRepeatable)}
+                           labelOf={(v) => REPEATABLE.find((r) => r.value === v).label} />
             </FilterSection>
           </FilterPopup>
 
-          {filteredFeats.length === 0 ? (
+          {filtered.length === 0 ? (
             <LoadingLine>No feats match your filters.</LoadingLine>
           ) : (
             <div className="grid grid-cols-1 gap-x-8 md:grid-cols-2 xl:grid-cols-3">
-              {filteredFeats.map((feat, idx) => (
-                <FeatRow
-                  key={`${feat.id || feat.name}-${feat.source}-${idx}`}
-                  feat={feat}
-                  onOpen={(f) => openPopup("feat", f)}
-                  onContextMenu={handleRowContextMenu}
-                />
+              {filtered.map((f) => (
+                <CatalogueRow key={`${f.id}-${f.visibility || ""}`} entry={f} meta={featRowMeta(f, index)}
+                              onOpen={(x) => openPopup("feat", x)} onContextMenu={openMenu} />
               ))}
             </div>
           )}
 
-          {contextMenu && (
-            <RowContextMenu
-              x={contextMenu.x}
-              y={contextMenu.y}
-              items={contextMenu.items}
-              onClose={() => setContextMenu(null)}
-            />
-          )}
+          {menu}
 
-          <FeatCreatePopup
-            open={createOpen}
-            onClose={handleCreateClose}
-            editingFeat={editingFeat}
-            copyFromFeat={copyFromFeat}
-          />
+          <FeatCreatePopup open={form !== null} onClose={() => setForm(null)}
+                           editingFeat={form?.editing || null} copyFromFeat={form?.copyFrom || null} />
         </>
       )}
     </div>

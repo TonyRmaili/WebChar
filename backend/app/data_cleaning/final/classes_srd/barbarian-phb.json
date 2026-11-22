@@ -1,0 +1,720 @@
+[
+    {
+        "id": "barbarian-phb",
+        "kind": "class",
+        "name": "Barbarian",
+        "source": "PHB",
+        "edition": "classic",
+        "srd": {
+            "5.1": "Barbarian"
+        },
+        "reprinted_as": [
+            "barbarian-xphb"
+        ],
+        "hit_die": "d12",
+        "hp": {
+            "first": "12 + con_mod",
+            "per_level": "7 + con_mod"
+        },
+        "saves": [
+            "str",
+            "con"
+        ],
+        "grants": {
+            "weapons": [
+                "simple_weapons",
+                "martial_weapons"
+            ],
+            "armor": [
+                "light",
+                "medium",
+                "shields"
+            ],
+            "items": [
+                {
+                    "item": "explorers-pack-phb",
+                    "qty": 1
+                },
+                {
+                    "item": "javelin-phb",
+                    "qty": 4
+                }
+            ]
+        },
+        "choices": [
+            {
+                "type": "pool",
+                "id": "skills",
+                "label": "Skills",
+                "grant": "skills",
+                "count": 2,
+                "from": [
+                    "animal_handling",
+                    "athletics",
+                    "intimidation",
+                    "nature",
+                    "perception",
+                    "survival"
+                ]
+            },
+            {
+                "type": "bundle",
+                "id": "starting_equipment",
+                "label": "Starting Equipment",
+                "options": [
+                    {
+                        "id": "a",
+                        "label": "Greataxe",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "greataxe-phb",
+                                    "qty": 1
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "id": "b",
+                        "label": "Martial Melee Weapons",
+                        "choices": [
+                            {
+                                "type": "pool",
+                                "id": "items",
+                                "label": "Martial Melee Weapons",
+                                "grant": "items",
+                                "count": 1,
+                                "from": "martial_melee_weapons"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "bundle",
+                "id": "starting_equipment_2",
+                "label": "Starting Equipment",
+                "options": [
+                    {
+                        "id": "a",
+                        "label": "2 Handaxe",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "handaxe-phb",
+                                    "qty": 2
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "id": "b",
+                        "label": "Simple Weapons",
+                        "choices": [
+                            {
+                                "type": "pool",
+                                "id": "items_2",
+                                "label": "Simple Weapons",
+                                "grant": "items",
+                                "count": 1,
+                                "from": "simple_weapons"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "starting_gold": "2d4 × 10",
+        "multiclass": {
+            "requires": [
+                {
+                    "str": 13
+                }
+            ],
+            "grants": {
+                "weapons": [
+                    "simple_weapons",
+                    "martial_weapons"
+                ],
+                "armor": [
+                    "shields"
+                ]
+            }
+        },
+        "subclass": {
+            "title": "Primal Path",
+            "level": 3,
+            "text": "At 3rd level, you choose a path that shapes the nature of your rage from the list of available paths. Your choice grants you features at 3rd level and again at 6th, 10th, and 14th levels."
+        },
+        "columns": [
+            {
+                "id": "rages",
+                "name": "Rages",
+                "values": {
+                    "1": 2,
+                    "3": 3,
+                    "6": 4,
+                    "12": 5,
+                    "17": 6,
+                    "20": "unlimited"
+                }
+            },
+            {
+                "id": "rage_damage",
+                "name": "Rage Damage",
+                "values": {
+                    "1": 2,
+                    "9": 3,
+                    "16": 4
+                }
+            }
+        ],
+        "resources": [
+            {
+                "id": "rage",
+                "name": "Rage",
+                "max": {
+                    "1": 2,
+                    "3": 3,
+                    "6": 4,
+                    "12": 5,
+                    "17": 6,
+                    "20": "unlimited"
+                },
+                "reset": "long"
+            }
+        ],
+        "progression": [
+            {
+                "level": 1,
+                "features": [
+                    "barbarian-phb:rage",
+                    "barbarian-phb:unarmored-defense"
+                ]
+            },
+            {
+                "level": 2,
+                "features": [
+                    "barbarian-phb:danger-sense",
+                    "barbarian-phb:reckless-attack"
+                ]
+            },
+            {
+                "level": 3,
+                "features": [],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "primal_path_3",
+                        "label": "Primal Path",
+                        "grant": "subclass",
+                        "count": 1,
+                        "from": "barbarian-phb"
+                    }
+                ]
+            },
+            {
+                "level": 4,
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_4",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_4",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_4",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 5,
+                "features": [
+                    "barbarian-phb:extra-attack",
+                    "barbarian-phb:fast-movement"
+                ]
+            },
+            {
+                "level": 6,
+                "subclass_features": true
+            },
+            {
+                "level": 7,
+                "features": [
+                    "barbarian-phb:feral-instinct"
+                ]
+            },
+            {
+                "level": 8,
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_8",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_8",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_8",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 9,
+                "features": [
+                    "barbarian-phb:brutal-critical-1-die"
+                ]
+            },
+            {
+                "level": 10,
+                "subclass_features": true
+            },
+            {
+                "level": 11,
+                "features": [
+                    "barbarian-phb:relentless-rage"
+                ]
+            },
+            {
+                "level": 12,
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_12",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_12",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_12",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 13,
+                "upgrades": [
+                    "barbarian-phb:brutal-critical-1-die"
+                ]
+            },
+            {
+                "level": 14,
+                "subclass_features": true
+            },
+            {
+                "level": 15,
+                "features": [
+                    "barbarian-phb:persistent-rage"
+                ]
+            },
+            {
+                "level": 16,
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_16",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_16",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_16",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 17,
+                "upgrades": [
+                    "barbarian-phb:brutal-critical-1-die"
+                ]
+            },
+            {
+                "level": 18,
+                "features": [
+                    "barbarian-phb:indomitable-might"
+                ]
+            },
+            {
+                "level": 19,
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_19",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_19",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_19",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 20,
+                "features": [
+                    "barbarian-phb:primal-champion"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "barbarian-phb:rage",
+                "name": "Rage",
+                "level": 1,
+                "text": "In battle, you fight with primal ferocity. On your turn, you can enter a rage as a bonus action.\n\nWhile raging, you gain the following benefits if you aren't wearing heavy armor:\n\n- You have advantage on Strength checks and Strength saving throws.\n- When you make a melee weapon attack using Strength, you gain a +2 bonus to the damage roll. This bonus increases as you level.\n- You have resistance to bludgeoning, piercing, and slashing damage.\n\nIf you are able to cast spells, you can't cast them or concentrate on them while raging.\n\nYour rage lasts for 1 minute. It ends early if you are knocked unconscious or if your turn ends and you haven't attacked a hostile creature since your last turn or taken damage since then. You can also end your rage on your turn as a bonus action.\n\nOnce you have raged the maximum number of times for your barbarian level, you must finish a long rest before you can rage again. You may rage 2 times at 1st level, 3 at 3rd, 4 at 6th, 5 at 12th, and 6 at 17th.",
+                "srd": {
+                    "5.1": "Rage"
+                },
+                "category": "bonus_actions",
+                "toggle": {
+                    "grants": {
+                        "defenses": {
+                            "resist": [
+                                "bludgeoning",
+                                "piercing",
+                                "slashing"
+                            ]
+                        }
+                    },
+                    "modifiers": [
+                        {
+                            "target": "damage",
+                            "add": "rage_damage"
+                        }
+                    ]
+                },
+                "consumes": {
+                    "resource": "rage",
+                    "amount": 1
+                }
+            },
+            {
+                "id": "barbarian-phb:unarmored-defense",
+                "name": "Unarmored Defense",
+                "level": 1,
+                "text": "While you are not wearing any armor, your Armor Class equals 10 + your Dexterity modifier + your Constitution modifier. You can use a shield and still gain this benefit.",
+                "srd": {
+                    "5.1": "Unarmored Defense"
+                },
+                "category": "traits",
+                "modifiers": [
+                    {
+                        "target": "ac",
+                        "base": "10 + dex_mod + con_mod",
+                        "requires": [
+                            "no_armor"
+                        ]
+                    }
+                ]
+            },
+            {
+                "id": "barbarian-phb:danger-sense",
+                "name": "Danger Sense",
+                "level": 2,
+                "text": "At 2nd level, you gain an uncanny sense of when things nearby aren't as they should be, giving you an edge when you dodge away from danger. You have advantage on Dexterity saving throws against effects that you can see, such as traps and spells. To gain this benefit, you can't be blinded, deafened, or incapacitated.",
+                "srd": {
+                    "5.1": "Danger Sense"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "barbarian-phb:reckless-attack",
+                "name": "Reckless Attack",
+                "level": 2,
+                "text": "Starting at 2nd level, you can throw aside all concern for defense to attack with fierce desperation. When you make your first attack on your turn, you can decide to attack recklessly. Doing so gives you advantage on melee weapon attack rolls using Strength during this turn, but attack rolls against you have advantage until your next turn.",
+                "srd": {
+                    "5.1": "Reckless Attack"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "barbarian-phb:extra-attack",
+                "name": "Extra Attack",
+                "level": 5,
+                "text": "Beginning at 5th level, you can attack twice, instead of once, whenever you take the Attack action on your turn.",
+                "srd": {
+                    "5.1": "Extra Attack"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "barbarian-phb:fast-movement",
+                "name": "Fast Movement",
+                "level": 5,
+                "text": "Starting at 5th level, your speed increases by 10 feet while you aren't wearing heavy armor.",
+                "srd": {
+                    "5.1": "Fast Movement"
+                },
+                "category": "traits",
+                "modifiers": [
+                    {
+                        "target": "speed.walk",
+                        "add": 10
+                    }
+                ]
+            },
+            {
+                "id": "barbarian-phb:feral-instinct",
+                "name": "Feral Instinct",
+                "level": 7,
+                "text": "By 7th level, your instincts are so honed that you have advantage on initiative rolls.\n\nAdditionally, if you are surprised at the beginning of combat and aren't incapacitated, you can act normally on your first turn, but only if you enter your rage before doing anything else on that turn.",
+                "srd": {
+                    "5.1": "Feral Instinct"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "barbarian-phb:brutal-critical-1-die",
+                "name": "Brutal Critical (1 die)",
+                "level": 9,
+                "text": "Beginning at 9th level, you can roll one additional weapon damage die when determining the extra damage for a critical hit with a melee attack.\n\nThis increases to two additional dice at 13th level and three additional dice at 17th level.\n\n**Brutal Critical (2 dice).** At 13th level, you can roll two additional weapon damage dice when determining the extra damage for a critical hit with a melee attack.\n\nThis increases to three additional dice at 17th level.\n\n**Brutal Critical (3 dice).** At 17th level, you can roll three additional weapon damage dice when determining the extra damage for a critical hit with a melee attack.",
+                "srd": {
+                    "5.1": "Brutal Critical (1 die)"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "barbarian-phb:relentless-rage",
+                "name": "Relentless Rage",
+                "level": 11,
+                "text": "Starting at 11th level, your rage can keep you fighting despite grievous wounds. If you drop to 0 hit points while you're raging and don't die outright, you can make a DC 10 Constitution saving throw. If you succeed, you drop to 1 hit point instead.\n\nEach time you use this feature after the first, the DC increases by 5. When you finish a short or long rest, the DC resets to 10.",
+                "srd": {
+                    "5.1": "Relentless Rage"
+                },
+                "category": "traits",
+                "action": {
+                    "save": {
+                        "ability": "con",
+                        "dc": 10,
+                        "on_success": "none"
+                    }
+                }
+            },
+            {
+                "id": "barbarian-phb:persistent-rage",
+                "name": "Persistent Rage",
+                "level": 15,
+                "text": "Beginning at 15th level, your rage is so fierce that it ends early only if you fall unconscious or if you choose to end it.",
+                "srd": {
+                    "5.1": "Persistent Rage"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "barbarian-phb:indomitable-might",
+                "name": "Indomitable Might",
+                "level": 18,
+                "text": "Beginning at 18th level, if your total for a Strength check is less than your Strength score, you can use that score in place of the total.",
+                "srd": {
+                    "5.1": "Indomitable Might"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "barbarian-phb:primal-champion",
+                "name": "Primal Champion",
+                "level": 20,
+                "text": "At 20th level, you embody the power of the wilds. Your Strength and Constitution scores increase by 4. Your maximum for those scores is now 24.",
+                "srd": {
+                    "5.1": "Primal Champion"
+                },
+                "category": "traits"
+            }
+        ]
+    }
+]

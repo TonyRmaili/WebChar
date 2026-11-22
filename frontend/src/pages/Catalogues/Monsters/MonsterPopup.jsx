@@ -1,255 +1,176 @@
-import React from "react";
+import React, { useMemo } from "react";
+import { useCatalogueStore } from "../../../store/CatalogueStore";
+import { usePopupStore } from "../../../store/PopupStore";
+import { CardHeader, RichText } from "../catalogueParts";
+import { ABILITIES, ABILITY_SHORT, buildNameIndex } from "../catalogueHelpers";
 import {
-  formatSource,
-  formatTypeLine,
-  formatAC,
-  formatHP,
-  formatSpeed,
-  formatInitiative,
-  formatSenses,
-  formatSkills,
-  formatTypedBlock,
-  formatLanguages,
-  formatChallenge,
-  formatCharges,
-  formatSpellMeta,
-  formatSpellEntry,
-  getEffectCategories,
-  monsterUsesLevel,
-  ABILITY,
-  ABILITY_ORDER,
-  EFFECT_SECTIONS,
-  titleCase,
+  abilityMod, signed, formatAC, formatHP, formatSpeed, formatInitiative, statRows, monsterSubtitle, monsterSections,
+  featureUsesWords, legendaryUsesWords, shownSpellGroups, spellGroupLabel, spellEntryWords,
 } from "./monsterHelpers";
 
+const linkCls = "underline decoration-dotted underline-offset-2 hover:text-rubric";
+
+/* A monster's statblock, laid out like the 2024 books: type line; AC, HP,
+   speed and initiative; the ability table with saves; skills, defenses,
+   senses, languages and CR; then traits, actions, bonus actions,
+   reactions, legendary, mythic and lair actions, with spellcasting in the
+   section it's used from. Variants come last: a version opens its own
+   statblock, a toggle variant's abilities are switched on in the tracker. */
 export default function MonsterPopup({ monster }) {
+  const monsters = useCatalogueStore((s) => s.monsters);
+  const spells = useCatalogueStore((s) => s.spells);
+  const items = useCatalogueStore((s) => s.items);
+  const openPopup = usePopupStore((s) => s.open);
+  const index = useMemo(() => buildNameIndex(monsters, spells, items), [monsters, spells, items]);
+  const byId = useMemo(() => Object.fromEntries((monsters || []).map((m) => [m.id, m])), [monsters]);
+
   if (!monster) return null;
-
-  const {
-    name, source,
-    ac, hp, speed, initiative,
-    ability_scores, skill,
-    immunities, resistances, vulnerabilities, condition_immunities,
-    senses, passive_perception, languages,
-    cr, environment, treasure, gear,
-    traitTags, actionTags,
-    legendary_action_points,
-    spellcasting,
-  } = monster;
-
-  const cats = getEffectCategories(monster);
-  const challengeLabel = monsterUsesLevel(monster) ? "Level" : "Challenge";
-
-  const meta = [
-    ["Skills", formatSkills(skill)],
-    ["Damage Immunities", formatTypedBlock(immunities)],
-    ["Damage Resistances", formatTypedBlock(resistances)],
-    ["Damage Vulnerabilities", formatTypedBlock(vulnerabilities)],
-    ["Condition Immunities", formatTypedBlock(condition_immunities)],
-    ["Senses", formatSenses(senses, passive_perception)],
-    ["Languages", formatLanguages(languages)],
-    [challengeLabel, formatChallenge(cr)],
-    ["Environment", (environment || []).map(titleCase).join(", ")],
-    ["Treasure", (treasure || []).map(titleCase).join(", ")],
-    [
-      "Gear",
-      (gear || [])
-        .map((g) => `${g.quantity > 1 ? `${g.quantity}× ` : ""}${titleCase(g.name)}`)
-        .join(", "),
-    ],
-  ].filter(([, v]) => v);
-
+  const m = monster;
+  const base = m.version_of ? byId[m.version_of] : null;
   const vitals = [
-    ["AC", formatAC(ac)],
-    ["HP", formatHP(hp)],
-    ["Speed", formatSpeed(speed)],
-    ["Initiative", formatInitiative(initiative)],
+    ["AC", formatAC(m.ac)],
+    ["HP", formatHP(m.hp)],
+    ["Speed", formatSpeed(m.speed)],
+    ["Initiative", formatInitiative(m.initiative, m)],
   ].filter(([, v]) => v);
 
   return (
     <div className="wc-page h-full overflow-y-auto !rounded-none">
       <div className="px-5 py-4">
-        {/* Title */}
-        <div className="mb-2 flex items-baseline justify-between border-b border-rule/40 pb-1">
-          <h2 className="text-xl font-bold uppercase tracking-wide text-ink">{name}</h2>
-          <span className="text-xs text-ink-faded" title={formatSource(source)}>
-            {source}
-          </span>
-        </div>
+        <CardHeader entry={m} subtitle={monsterSubtitle(m)} />
 
-        <p className="mb-3 text-sm italic text-ink-faded">
-          {formatTypeLine(monster)}
-        </p>
+        {m.version_of && (
+          <p className="mb-2 text-xs italic text-ink-faded">
+            A version of{" "}
+            {base ? (
+              <button type="button" onClick={() => openPopup("monster", base)} className={linkCls}>{base.name}</button>
+            ) : (
+              index[m.version_of] || m.version_of
+            )}
+            .
+          </p>
+        )}
 
         {vitals.length > 0 && (
-          <div className="mb-3 grid grid-cols-1 gap-y-0.5 border-y border-rule/40 py-2 text-xs text-ink-faded">
-            {vitals.map(([k, v]) => (
-              <div key={k} className="flex gap-1">
-                <span className="font-semibold text-ink">{k}:</span>
-                <span>{v}</span>
-              </div>
-            ))}
+          <div className="mb-2 space-y-0.5">
+            {vitals.map(([k, v]) => <StatRow key={k} label={k}>{v}</StatRow>)}
           </div>
         )}
 
-        {ability_scores && <AbilityTable scores={ability_scores} />}
+        {m.abilities && <AbilityTable monster={m} />}
+        {m.abilities_note && <p className="mb-2 text-xs italic text-ink-faded">{m.abilities_note}</p>}
 
-        {meta.length > 0 && (
-          <div className="mt-3 space-y-0.5 border-b border-rule/40 pb-2 text-xs text-ink">
-            {meta.map(([k, v]) => (
-              <div key={k}>
-                <span className="font-semibold text-ink-faded">{k}: </span>
-                <span>{v}</span>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {(traitTags?.length || actionTags?.length) ? (
-          <div className="mt-2 flex flex-wrap gap-x-3 gap-y-0.5">
-            {(traitTags || []).map((t) => <Chip key={`t-${t}`}>{t}</Chip>)}
-            {(actionTags || []).map((t) => <Chip key={`a-${t}`}>{t}</Chip>)}
-          </div>
-        ) : null}
-
-        {EFFECT_SECTIONS.map(({ key, title }) => {
-          const cat = cats?.[key];
-          const items = cat?.items || [];
-          if (!items.length && !cat?.header) return null;
-
-          let displayTitle = title;
-          if (key === "legendary_actions" && legendary_action_points?.legendary_actions != null) {
-            displayTitle = `Legendary Actions (${legendary_action_points.legendary_actions})`;
-          }
-          if (key === "lair_actions" && legendary_action_points?.lair_actions != null) {
-            displayTitle = `Lair Actions (${legendary_action_points.lair_actions})`;
-          }
-
-          return (
-            <EffectSection
-              key={key}
-              title={displayTitle}
-              header={cat?.header}
-              items={items}
-            />
-          );
-        })}
-
-        {Array.isArray(spellcasting) && spellcasting.length > 0 && (
-          <div className="mt-4 space-y-3 border-t border-rule/40 pt-3">
-            {spellcasting.map((b, i) => <SpellcastingBlock key={i} block={b} />)}
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
-
-/* ───────── sub-components (unchanged) ───────── */
-
-function AbilityTable({ scores }) {
-  return (
-    <div className="my-3 border-y border-rule/40 py-2">
-      <table className="w-full text-xs text-center">
-        <thead>
-          <tr className="text-ink-faded">
-            {ABILITY_ORDER.map((a) => (
-              <th key={a} className="font-bold uppercase tracking-wider py-0.5">
-                {ABILITY[a]}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            {ABILITY_ORDER.map((a) => {
-              const s = scores[a] || {};
-              const sign = s.mod >= 0 ? "+" : "";
-              const showSave = s.proficient || s.expertise || s.save !== s.mod;
-              return (
-                <td key={a} className="py-0.5">
-                  <div>{s.score} <span className="text-ink-faded">({sign}{s.mod})</span></div>
-                  {showSave && (
-                    <div className="text-[10px] italic text-ink-faded">
-                      save {s.save >= 0 ? "+" : ""}{s.save}
-                    </div>
-                  )}
-                </td>
-              );
-            })}
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  );
-}
-
-function EffectSection({ title, header, items }) {
-  return (
-    <div className="mt-3">
-      <h3 className="mb-1.5 border-b border-rubric/40 pb-0.5 text-sm font-bold uppercase tracking-wider text-rubric">
-        {title}
-      </h3>
-      {header && (
-        <p className="mb-1.5 whitespace-pre-line text-xs italic text-ink-faded">
-          {header}
-        </p>
-      )}
-      <div className="space-y-1.5 text-sm">
-        {items.map((it, i) => <EffectItem key={i} item={it} />)}
-      </div>
-    </div>
-  );
-}
-
-function EffectItem({ item }) {
-  const chargeLabel = formatCharges(item.charges);
-  return (
-    <p>
-      <span className="font-bold italic">{item.name}.</span>
-      {chargeLabel && (
-        <span className="ml-1 text-xs text-ink-faded">{chargeLabel}</span>
-      )}{" "}
-      <span>{item.notes}</span>
-    </p>
-  );
-}
-
-function SpellcastingBlock({ block }) {
-  const meta = formatSpellMeta(block);
-  return (
-    <div>
-      <h3 className="mb-1.5 border-b border-rubric/40 pb-0.5 text-sm font-bold uppercase tracking-wider text-rubric">
-        {block.name}
-        {meta && (
-          <span className="ml-2 text-xs font-normal normal-case tracking-normal text-ink-faded">
-            · {meta}
-          </span>
-        )}
-      </h3>
-      {block.notes && (
-        <p className="mb-1.5 text-sm text-ink">{block.notes}</p>
-      )}
-      {(block.groups || []).length > 0 && (
-        <div className="space-y-0.5 text-sm text-ink">
-          {block.groups.map((g, i) => (
-            <div key={i}>
-              <span className="italic text-ink-faded">{g.label}: </span>
-              <span>
-                {(g.spells || []).map(formatSpellEntry).join(", ")}
-              </span>
-            </div>
-          ))}
+        <div className="mb-3 space-y-0.5 border-b border-rule/40 pb-2">
+          {statRows(m, index).map((r) => <StatRow key={r.label} label={r.label}>{r.value}</StatRow>)}
         </div>
-      )}
+
+        {monsterSections(m).map((s) => (
+          <section key={s.key} className="mt-4">
+            <h3 className="mb-1.5 border-b border-rubric/40 pb-0.5 text-sm font-bold uppercase tracking-wider text-rubric">{s.title}</h3>
+            {s.key === "legendary_actions" && legendaryUsesWords(m) && (
+              <p className="mb-1.5 text-sm italic text-ink-faded">{legendaryUsesWords(m)}</p>
+            )}
+            {m.section_notes?.[s.key] && <p className="mb-1.5 text-sm italic text-ink-faded">{m.section_notes[s.key]}</p>}
+            <div className="space-y-2">
+              {s.spellcasting.map((b, i) => <SpellcastingBlock key={`sc-${i}`} block={b} index={index} />)}
+              {s.features.map((f, i) => <Feature key={f.id || i} feature={f} />)}
+            </div>
+          </section>
+        ))}
+
+        {m.variants?.length > 0 && (
+          <section className="mt-5">
+            <h3 className="mb-1.5 border-b border-rule/40 pb-0.5 text-sm font-bold uppercase tracking-wider text-ink-faded">Variants</h3>
+            <div className="space-y-3">
+              {m.variants.map((v) => {
+                const version = v.version ? byId[v.version] : null;
+                return (
+                  <div key={v.id}>
+                    <div className="mb-0.5 text-sm font-semibold">{v.name}</div>
+                    <RichText text={v.text} className="!text-sm" />
+                    {version && (
+                      <button type="button" onClick={() => openPopup("monster", version)} className={`mt-1 text-xs italic ${linkCls}`}>
+                        Open the {version.name} statblock
+                      </button>
+                    )}
+                    {v.features?.length > 0 && (
+                      <p className="mt-1 text-xs italic text-ink-faded">These abilities are off until switched on in the initiative tracker.</p>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+        )}
+      </div>
     </div>
   );
 }
 
-function Chip({ children }) {
+function StatRow({ label, children }) {
   return (
-    <span className="text-[10px] font-semibold uppercase tracking-wider text-ink-faded">
-      {children}
-    </span>
+    <div className="text-sm leading-snug">
+      <span className="font-bold text-ink">{label} </span>
+      <span className="text-ink">{children}</span>
+    </div>
+  );
+}
+
+// Score, modifier and save for each ability (2024 layout).
+function AbilityTable({ monster: m }) {
+  return (
+    <table className="my-2 w-full border-y border-rule/40 text-center text-sm">
+      <thead>
+        <tr className="text-[10px] uppercase tracking-wider text-ink-faded">
+          {ABILITIES.map((a) => <th key={a} className="pt-1 font-semibold">{ABILITY_SHORT[a]}</th>)}
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          {ABILITIES.map((a) => {
+            const score = m.abilities?.[a];
+            const mod = abilityMod(score);
+            const save = m.saves?.[a];
+            return (
+              <td key={a} className="pb-1 align-top">
+                <div className="font-semibold">{score ?? "—"}</div>
+                <div className="text-xs text-ink-faded">{mod == null ? "" : signed(mod)}</div>
+                <div className={`text-[11px] ${save != null ? "font-semibold text-ink" : "text-ink-faint"}`} title="Saving throw">
+                  {save != null ? `save ${signed(save)}` : mod == null ? "" : `save ${signed(mod)}`}
+                </div>
+              </td>
+            );
+          })}
+        </tr>
+      </tbody>
+    </table>
+  );
+}
+
+// "**Fire Breath (Recharge 5–6).** Dexterity Saving Throw: DC 21, …"
+// A feature without a name (a section's opening words) is shown as text.
+function Feature({ feature: f }) {
+  if (!f.name) return <RichText text={f.text} className="!text-sm" />;
+  const uses = featureUsesWords(f);
+  return <RichText text={`**${f.name}${uses ? ` ${uses}` : ""}.** ${f.text || ""}`} className="!text-sm" />;
+}
+
+function SpellcastingBlock({ block, index }) {
+  const groups = shownSpellGroups(block);
+  return (
+    <div className="text-sm">
+      <RichText text={`**${block.name}.** ${block.text || ""}`} className="!text-sm" />
+      {groups.length > 0 && (
+        <ul className="mt-1 space-y-0.5 pl-3">
+          {groups.map((g, i) => (
+            <li key={i}>
+              <span className="italic text-ink-faded">{spellGroupLabel(g)}: </span>
+              {(g.spells || []).map((s) => spellEntryWords(s, index)).join(", ")}
+            </li>
+          ))}
+        </ul>
+      )}
+      {block.footer && <p className="mt-1 text-xs italic text-ink-faded">{block.footer}</p>}
+    </div>
   );
 }

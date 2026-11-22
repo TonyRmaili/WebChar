@@ -92,6 +92,7 @@ CATEGORIES = {
     # own; a legendary group (lair actions, regional effects) goes inside
     # each monster that uses it.
     "monsters": {"lists": ["monster", "legendaryGroup"], "monsters": True},
+    "actions": {"lists":["action"]}
 }
 
 # Keys a copy does not take from its base unless `_preserve` names them.

@@ -1,0 +1,160 @@
+{
+  "cleric-phb:channel-divinity": {
+    "label": "Cleric (PHB) · Channel Divinity",
+    "hash": "ca9ef9d9e03e2cb1",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "channel-divinity-turn-undead",
+          "name": "Channel Divinity: Turn Undead",
+          "level": 2,
+          "category": "actions",
+          "action": {
+            "range": "30 feet",
+            "save": {
+              "ability": "wis",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "none"
+            }
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        }
+      ],
+      "resources": [
+        {
+          "name": "Channel Divinity",
+          "max": {
+            "1": 1,
+            "6": 2,
+            "18": 3
+          },
+          "reset": "short",
+          "short_rest": "all"
+        }
+      ]
+    },
+    "problems": [],
+    "tokens": 11948,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:13:29+00:00"
+  },
+  "cleric-phb:destroy-undead-cr-1-2": {
+    "label": "Cleric (PHB) · Destroy Undead (CR 1/2)",
+    "hash": "54b09de72235639f",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11391,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:13:35+00:00"
+  },
+  "cleric-phb:divine-intervention": {
+    "label": "Cleric (PHB) · Divine Intervention",
+    "hash": "75ed6e6f90735993",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "divine-intervention",
+          "name": "Divine Intervention",
+          "level": 10,
+          "category": "actions"
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11437,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:13:38+00:00"
+  },
+  "cleric-phb:divine-intervention-improvement": {
+    "label": "Cleric (PHB) · Divine Intervention Improvement",
+    "hash": "134ba882fe0c68da",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11103,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:13:43+00:00"
+  },
+  "cleric-phb:life-phb": {
+    "label": "Cleric (PHB) · Life Domain (PHB)",
+    "hash": "1da2fce74214399b",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "bonus-proficiency",
+          "name": "Bonus Proficiency",
+          "level": 1,
+          "category": "traits",
+          "grants": {
+            "armor": [
+              "heavy"
+            ]
+          }
+        },
+        {
+          "id": "channel-divinity-preserve-life",
+          "name": "Channel Divinity: Preserve Life",
+          "level": 2,
+          "category": "actions",
+          "action": {
+            "range": "30 feet",
+            "heal": "5 * class_level"
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "divine-strike",
+          "name": "Divine Strike",
+          "level": 8,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": {
+                    "1": "1d8",
+                    "14": "2d8"
+                  },
+                  "type": "radiant"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13073,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:13:46+00:00"
+  }
+}

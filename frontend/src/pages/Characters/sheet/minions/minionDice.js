@@ -1,6 +1,6 @@
 import { selKey } from "../../../../store/MinionStore";
-import { EFFECT_SECTIONS } from "../../../Catalogues/Monsters/monsterHelpers";
 import { saveOf } from "../../../Campaigns/statblock/monsterStatblock";
+import { canRoll, rollOf } from "../../../../utils/featureRuntime";
 import { chargeKey, changeHp, changeUse, displayName, hpMaxOf, itemMaxUses, monsterAc } from "./minionHelpers";
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -13,8 +13,11 @@ import { chargeKey, changeHp, changeUse, displayName, hpMaxOf, itemMaxUses, mons
                    HP, save bonuses, defenses), and the damage back onto
                    the units afterwards
 
-   Effects come from the minion's copy of its monster
-   (`minion.monster.effects`); nothing here rolls or saves anything.
+   Effects come from the features of the minion's copy of its monster
+   (`minion.monster.features`); nothing here rolls or saves anything.
+   A number still in words (a summon's "3 + spell level") can't be
+   rolled: that damage is left out, and an attack or save without a real
+   to-hit or DC isn't offered until it has one.
    ═══════════════════════════════════════════════════════════════════ */
 
 const asList = (v) => (Array.isArray(v) ? v : []);
@@ -26,44 +29,30 @@ const lower = (s) => String(s || "").toLowerCase();
 const words = (list) => asList(list).map((x) => lower(typeof x === "string" ? x : x?.name || x?.type)).filter(Boolean);
 const ABILITY_KEYS = ["str", "dex", "con", "int", "wis", "cha"];
 
-/* ─── damage, as the engine reads it ─────────────────────────────── */
-
-// { dice_count: 2, dice_size: "d6", mod: 3 } → "2d6+3" (only a number when there are no dice)
-export function diceOf(d) {
-  const count = toInt(d?.dice_count, 0);
-  const size = String(d?.dice_size || "").toLowerCase().replace(/^d?/, "d");
-  const mod = toInt(d?.mod, 0);
-  const dice = count > 0 && size !== "d" ? `${count}${size}` : "";
-  if (!dice) return String(Math.max(0, mod));
-  return mod ? `${dice}${mod > 0 ? "+" : ""}${mod}` : dice;
-}
-
-export const damagePartsOf = (damages) => asList(damages).map((d) => ({ dice: diceOf(d), type: lower(d?.damage_type) || "untyped" }));
-
 /* ─── what a group can roll ──────────────────────────────────────── */
 
-/* Every effect with an attack roll or a save, from every section:
+/* Every switched-on feature with an attack roll or a save:
    [{ id, section, name, kind: "attack" | "save", toHit, dc, ability, half,
       damage: [{ dice, type }], usesKey, maxUses }] */
 export function rollingEffects(minion) {
   const out = [];
-  for (const { key } of EFFECT_SECTIONS) {
-    for (const item of asList(minion?.monster?.effects?.[key]?.items)) {
-      if (!item || item.active === false) continue;
-      const base = { id: chargeKey(key, item), section: key, name: item.name || "Unnamed", usesKey: chargeKey(key, item), maxUses: itemMaxUses(item) };
-      if (item.attack) {
-        out.push({ ...base, kind: "attack", toHit: toInt(item.attack.hit_bonus, 0), damage: damagePartsOf(item.attack.damages) });
-      } else if (item.save?.target) {
-        out.push({
-          ...base,
-          kind: "save",
-          dc: toInt(item.save.dc_bonus, 10),
-          ability: lower(item.save.target).slice(0, 3),
-          half: Boolean(item.save.half_damage),
-          damage: damagePartsOf(item.save.damages),
-        });
-      }
-    }
+  for (const f of asList(minion?.monster?.features)) {
+    if (!f || f.active === false) continue;
+    const r = rollOf(f);
+    if (!canRoll(r) || r.kind === "damage") continue;
+    out.push({
+      id: chargeKey(f),
+      section: f.category || "traits",
+      name: f.name || "Unnamed",
+      usesKey: chargeKey(f),
+      maxUses: itemMaxUses(f),
+      kind: r.kind,
+      toHit: r.toHit,
+      dc: r.dc,
+      ability: r.ability,
+      half: r.half,
+      damage: r.damage,
+    });
   }
   return out;
 }
@@ -99,17 +88,12 @@ export function selectedByGroup(minions, selected) {
 /* ─── units as targets (they're hit) ─────────────────────────────── */
 
 function defensesOf(monster) {
-  return {
-    resistances: words(monster?.resistances?.types),
-    immunities: words(monster?.immunities?.types),
-    vulnerabilities: words(monster?.vulnerabilities?.types),
-  };
+  const d = monster?.defenses || {};
+  return { resistances: words(d.resist?.types), immunities: words(d.immune?.types), vulnerabilities: words(d.vulnerable?.types) };
 }
 
 const hasMagicResistance = (monster) =>
-  Object.values(monster?.effects || {})
-    .flatMap((s) => asList(s?.items))
-    .some((x) => /magic resistance/i.test(String(x?.name || "")));
+  asList(monster?.features).some((f) => f?.active !== false && /magic resistance/i.test(String(f?.name || "")));
 
 // Selected units → targets for GroupRoll. Key: "<minion id>:<unit id>".
 export function unitTargets(minions, selected) {

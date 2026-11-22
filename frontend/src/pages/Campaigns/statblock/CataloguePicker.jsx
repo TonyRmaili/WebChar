@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useCatalogueStore } from "../../../store/CatalogueStore";
 import { Hint, PickerRow, PickerShell, Tag, chipBtn } from "../../../styles/parchmentForm";
+import { featRowMeta } from "../../Catalogues/Feats/featsHelpers";
+import { itemRowMeta } from "../../Catalogues/Items/itemHelpers";
+import { optionalFeatureRowMeta } from "../../Catalogues/OptionalFeatures/optionalFeatureHelpers";
+import { spellRowMeta } from "../../Catalogues/Spells/spellHelpers";
 
 /* Pick something from a catalogue to add to a statblock: feats, optional
    features, items or spells. Click a name to read its card; "add" puts it
@@ -8,41 +12,20 @@ import { Hint, PickerRow, PickerShell, Tag, chipBtn } from "../../../styles/parc
 
 const asList = (v) => (Array.isArray(v) ? v : []);
 const MAX_ROWS = 80;
-const ORD = ["Cantrip", "1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th"];
-const words = (s) => String(s || "").replace(/_/g, " ");
 
-// What each kind reads from the catalogue store, and how a row is labelled.
+// What each kind reads from the catalogue store, and how a row is labelled
+// (the same short note the catalogue's own list shows).
 const KINDS = {
-  feat: {
-    title: "Add a feat",
-    popup: "feat",
-    select: (s) => s.featsData?.feats,
-    loader: "loadFeats",
-    tag: (e) => (e.category ? words(e.category) : "classic"),
-    // Feats have no edition key; One D&D feats are the ones with a category.
-    edition: (e) => (e.category ? "one" : "classic"),
-  },
+  feat: { title: "Add a feat", popup: "feat", select: (s) => s.feats, loader: "loadFeats", tag: (e) => featRowMeta(e) || "" },
   optionalFeature: {
     title: "Add an optional feature",
     popup: "optionalFeature",
-    select: (s) => s.optionalFeaturesData?.features,
+    select: (s) => s.optionalFeatures,
     loader: "loadOptionalFeatures",
-    tag: (e) => words(e.feature_type),
+    tag: (e) => optionalFeatureRowMeta(e) || "",
   },
-  item: {
-    title: "Add an item",
-    popup: "item",
-    select: (s) => s.items,
-    loader: "loadItems",
-    tag: (e) => (e.rarity && e.rarity !== "none" ? e.rarity : asList(e.types)[0] || ""),
-  },
-  spell: {
-    title: "Add a spell",
-    popup: "spell",
-    select: (s) => s.spellsData?.spells,
-    loader: "loadSpells",
-    tag: (e) => ORD[Number(e.level) || 0] || "",
-  },
+  item: { title: "Add an item", popup: "item", select: (s) => s.items, loader: "loadItems", tag: (e) => itemRowMeta(e) || "" },
+  spell: { title: "Add a spell", popup: "spell", select: (s) => s.spells, loader: "loadSpells", tag: (e) => spellRowMeta(e) || "" },
 };
 
 const EDITIONS = [
@@ -64,7 +47,8 @@ export default function CataloguePicker({ kind, has, onAdd, onView, onClose }) {
   }, [kind]);
 
   const q = query.trim().toLowerCase();
-  const pool = all.filter((e) => e?.name && (!cfg.edition || editions.includes(cfg.edition(e))));
+  // Every catalogue entry has an edition ("one" or "classic").
+  const pool = all.filter((e) => e?.name && editions.includes(e.edition || "one"));
   const rows = pool
     .filter((e) => !q || e.name.toLowerCase().includes(q) || String(e.source || "").toLowerCase().includes(q) || cfg.tag(e).toLowerCase().includes(q))
     .sort((a, b) => a.name.localeCompare(b.name) || String(a.source).localeCompare(String(b.source)));
@@ -81,14 +65,11 @@ export default function CataloguePicker({ kind, has, onAdd, onView, onClose }) {
       onQuery={setQuery}
       placeholder="search by name, book or type…"
       onClose={onClose}
-      filters={
-        cfg.edition &&
-        EDITIONS.map((e) => (
+      filters={EDITIONS.map((e) => (
           <button key={e.id} type="button" onClick={() => toggleEdition(e.id)} className={chipBtn(editions.includes(e.id))}>
             {e.label}
           </button>
-        ))
-      }
+        ))}
       footer={`${rows.length > MAX_ROWS ? `first ${MAX_ROWS} of ${rows.length} — type to narrow` : `${rows.length} of ${pool.length}`} · click a name to read it`}
     >
       {rows.length === 0 && <Hint className="py-2">{all.length ? "Nothing matches." : "Fetching the catalogue…"}</Hint>}
@@ -96,7 +77,7 @@ export default function CataloguePicker({ kind, has, onAdd, onView, onClose }) {
         const taken = has(entry);
         return (
           <PickerRow
-            key={`${entry.name}__${entry.source}__${entry.feature_type || ""}`}
+            key={`${entry.id}__${entry.visibility || ""}`}
             name={entry.name}
             onOpen={() => onView(cfg.popup, entry)}
             meta={<Tag>{cfg.tag(entry)}</Tag>}

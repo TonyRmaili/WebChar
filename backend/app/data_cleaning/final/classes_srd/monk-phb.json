@@ -1,0 +1,928 @@
+[
+    {
+        "id": "monk-phb",
+        "kind": "class",
+        "name": "Monk",
+        "source": "PHB",
+        "edition": "classic",
+        "srd": {
+            "5.1": "Monk"
+        },
+        "reprinted_as": [
+            "monk-xphb"
+        ],
+        "hit_die": "d8",
+        "hp": {
+            "first": "8 + con_mod",
+            "per_level": "5 + con_mod"
+        },
+        "saves": [
+            "str",
+            "dex"
+        ],
+        "grants": {
+            "weapons": [
+                "simple_weapons",
+                "shortsword"
+            ],
+            "items": [
+                {
+                    "item": "dart-phb",
+                    "qty": 10
+                }
+            ]
+        },
+        "choices": [
+            {
+                "type": "pool",
+                "id": "tools",
+                "label": "Tools",
+                "grant": "tools",
+                "count": 1,
+                "from": [
+                    "artisans_tools",
+                    "musical_instruments"
+                ]
+            },
+            {
+                "type": "pool",
+                "id": "skills",
+                "label": "Skills",
+                "grant": "skills",
+                "count": 2,
+                "from": [
+                    "acrobatics",
+                    "athletics",
+                    "history",
+                    "insight",
+                    "religion",
+                    "stealth"
+                ]
+            },
+            {
+                "type": "bundle",
+                "id": "starting_equipment",
+                "label": "Starting Equipment",
+                "options": [
+                    {
+                        "id": "a",
+                        "label": "Shortsword",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "shortsword-phb",
+                                    "qty": 1
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "id": "b",
+                        "label": "Simple Weapons",
+                        "choices": [
+                            {
+                                "type": "pool",
+                                "id": "items",
+                                "label": "Simple Weapons",
+                                "grant": "items",
+                                "count": 1,
+                                "from": "simple_weapons"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "bundle",
+                "id": "starting_equipment_2",
+                "label": "Starting Equipment",
+                "options": [
+                    {
+                        "id": "a",
+                        "label": "Dungeoneer's Pack",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "dungeoneers-pack-phb",
+                                    "qty": 1
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "id": "b",
+                        "label": "Explorer's Pack",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "explorers-pack-phb",
+                                    "qty": 1
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        ],
+        "starting_gold": "5d4",
+        "multiclass": {
+            "requires": [
+                {
+                    "dex": 13,
+                    "wis": 13
+                }
+            ],
+            "grants": {
+                "weapons": [
+                    "simple_weapons",
+                    "shortsword"
+                ]
+            }
+        },
+        "subclass": {
+            "title": "Monastic Tradition",
+            "level": 3,
+            "text": "When you reach 3rd level, you commit yourself to a monastic tradition, chosen from the list of available traditions. Your tradition grants you features at 3rd level and again at 6th, 11th, and 17th level."
+        },
+        "columns": [
+            {
+                "id": "martial_arts",
+                "name": "Martial Arts",
+                "values": {
+                    "1": "1d4",
+                    "5": "1d6",
+                    "11": "1d8",
+                    "17": "1d10"
+                }
+            },
+            {
+                "id": "focus_points",
+                "name": "Ki Points",
+                "values": {
+                    "2": 2,
+                    "3": 3,
+                    "4": 4,
+                    "5": 5,
+                    "6": 6,
+                    "7": 7,
+                    "8": 8,
+                    "9": 9,
+                    "10": 10,
+                    "11": 11,
+                    "12": 12,
+                    "13": 13,
+                    "14": 14,
+                    "15": 15,
+                    "16": 16,
+                    "17": 17,
+                    "18": 18,
+                    "19": 19,
+                    "20": 20
+                }
+            },
+            {
+                "id": "unarmored_movement",
+                "name": "Unarmored Movement",
+                "values": {
+                    "2": 10,
+                    "6": 15,
+                    "10": 20,
+                    "14": 25,
+                    "18": 30
+                }
+            }
+        ],
+        "resources": [
+            {
+                "id": "focus_points",
+                "name": "Ki Points",
+                "max": {
+                    "2": 2,
+                    "3": 3,
+                    "4": 4,
+                    "5": 5,
+                    "6": 6,
+                    "7": 7,
+                    "8": 8,
+                    "9": 9,
+                    "10": 10,
+                    "11": 11,
+                    "12": 12,
+                    "13": 13,
+                    "14": 14,
+                    "15": 15,
+                    "16": 16,
+                    "17": 17,
+                    "18": 18,
+                    "19": 19,
+                    "20": 20
+                },
+                "reset": "short",
+                "short_rest": "all"
+            }
+        ],
+        "progression": [
+            {
+                "level": 1,
+                "features": [
+                    "monk-phb:unarmored-defense",
+                    "monk-phb:martial-arts"
+                ]
+            },
+            {
+                "level": 2,
+                "features": [
+                    "monk-phb:ki",
+                    "monk-phb:unarmored-movement"
+                ]
+            },
+            {
+                "level": 3,
+                "features": [
+                    "monk-phb:deflect-missiles"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "monastic_tradition_3",
+                        "label": "Monastic Tradition",
+                        "grant": "subclass",
+                        "count": 1,
+                        "from": "monk-phb"
+                    }
+                ]
+            },
+            {
+                "level": 4,
+                "features": [
+                    "monk-phb:slow-fall"
+                ],
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_4",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_4",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_4",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 5,
+                "features": [
+                    "monk-phb:extra-attack",
+                    "monk-phb:stunning-strike"
+                ]
+            },
+            {
+                "level": 6,
+                "features": [
+                    "monk-phb:ki-empowered-strikes"
+                ],
+                "subclass_features": true
+            },
+            {
+                "level": 7,
+                "features": [
+                    "monk-phb:evasion",
+                    "monk-phb:stillness-of-mind"
+                ]
+            },
+            {
+                "level": 8,
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_8",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_8",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_8",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 9,
+                "features": [
+                    "monk-phb:unarmored-movement-improvement"
+                ]
+            },
+            {
+                "level": 10,
+                "features": [
+                    "monk-phb:purity-of-body"
+                ]
+            },
+            {
+                "level": 11,
+                "subclass_features": true
+            },
+            {
+                "level": 12,
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_12",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_12",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_12",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 13,
+                "features": [
+                    "monk-phb:tongue-of-the-sun-and-moon"
+                ]
+            },
+            {
+                "level": 14,
+                "features": [
+                    "monk-phb:diamond-soul"
+                ]
+            },
+            {
+                "level": 15,
+                "features": [
+                    "monk-phb:timeless-body"
+                ]
+            },
+            {
+                "level": 16,
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_16",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_16",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_16",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 17,
+                "subclass_features": true
+            },
+            {
+                "level": 18,
+                "features": [
+                    "monk-phb:empty-body"
+                ]
+            },
+            {
+                "level": 19,
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_19",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_19",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_19",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 20,
+                "features": [
+                    "monk-phb:perfect-self"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "monk-phb:unarmored-defense",
+                "name": "Unarmored Defense",
+                "level": 1,
+                "text": "Beginning at 1st level, while you are wearing no armor and not wielding a shield, your AC equals 10 + your Dexterity modifier + your Wisdom modifier.",
+                "srd": {
+                    "5.1": "Unarmored Defense"
+                },
+                "category": "traits",
+                "modifiers": [
+                    {
+                        "target": "ac",
+                        "base": "10 + dex_mod + wis_mod",
+                        "requires": [
+                            "no_armor",
+                            "no_shield"
+                        ]
+                    }
+                ]
+            },
+            {
+                "id": "monk-phb:martial-arts",
+                "name": "Martial Arts",
+                "level": 1,
+                "text": "Your practice of martial arts gives you mastery of combat styles that use unarmed strikes and monk weapons, which are shortswords and any simple melee weapons that don't have the two-handed or heavy property.\n\nYou gain the following benefits while you are unarmed or wielding only monk weapons and you aren't wearing armor or wielding a shield.\n\n- You can use Dexterity instead of Strength for the attack and damage rolls of your unarmed strikes and monk weapons.\n- You can roll a d4 in place of the normal damage of your unarmed strike or monk weapon. This die changes as you gain monk levels, as shown in the Martial Arts column of the Monk table.\n- When you use the Attack action with an unarmed strike or a monk weapon on your turn, you can make one unarmed strike as a bonus action. For example, if you take the Attack action and attack with a quarterstaff, you can also make an unarmed strike as a bonus action, assuming you haven't already taken a bonus action this turn.\n\nCertain monasteries use specialized forms of the monk weapons. For example, you might use a club that is two lengths of wood connected by a short chain (called a nunchaku) or a sickle with a shorter, straighter blade (called a kama).",
+                "srd": {
+                    "5.1": "Martial Arts"
+                },
+                "category": "bonus_actions",
+                "action": {
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": "dex_mod + pb",
+                        "damage": [
+                            {
+                                "dice": "martial_arts",
+                                "bonus": "dex_mod",
+                                "type": "bludgeoning",
+                                "condition": "unarmed strike"
+                            },
+                            {
+                                "dice": "martial_arts",
+                                "bonus": "dex_mod",
+                                "type": "weapon",
+                                "condition": "monk weapon"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "monk-phb:ki",
+                "name": "Ki",
+                "level": 2,
+                "text": "Starting at 2nd level, your training allows you to harness the mystic energy of ki. Your access to this energy is represented by a number of ki points. Your monk level determines the number of points you have, as shown in the Ki Points column of the Monk table.\n\nYou can spend these points to fuel various ki features. You start knowing three such features: Flurry of Blows, Patient Defense, and Step of the Wind. You learn more ki features as you gain levels in this class.\n\nWhen you spend a ki point, it is unavailable until you finish a short or long rest, at the end of which you draw all of your expended ki back into yourself. You must spend at least 30 minutes of the rest meditating to regain your ki points.\n\nSome of your ki features require your target to make a saving throw to resist the feature's effects. The saving throw DC is calculated as follows:\n\n**Ki save DC** = 8 + your proficiency bonus + your Wisdom modifier",
+                "srd": {
+                    "5.1": "Ki"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "monk-phb:flurry-of-blows",
+                "name": "Flurry of Blows",
+                "level": 2,
+                "text": "Immediately after you take the Attack action on your turn, you can spend 1 ki point to make two unarmed strikes as a bonus action.",
+                "parent": "monk-phb:ki",
+                "consumes": {
+                    "resource": "focus_points",
+                    "amount": 1
+                },
+                "srd": {
+                    "5.1": "Flurry of Blows"
+                },
+                "category": "bonus_actions"
+            },
+            {
+                "id": "monk-phb:patient-defense",
+                "name": "Patient Defense",
+                "level": 2,
+                "text": "You can spend 1 ki point to take the Dodge action as a bonus action on your turn.",
+                "parent": "monk-phb:ki",
+                "consumes": {
+                    "resource": "focus_points",
+                    "amount": 1
+                },
+                "srd": {
+                    "5.1": "Patient Defense"
+                },
+                "category": "bonus_actions"
+            },
+            {
+                "id": "monk-phb:step-of-the-wind",
+                "name": "Step of the Wind",
+                "level": 2,
+                "text": "You can spend 1 ki point to take the Disengage or Dash action as a bonus action on your turn, and your jump distance is doubled for the turn.",
+                "parent": "monk-phb:ki",
+                "consumes": {
+                    "resource": "focus_points",
+                    "amount": 1
+                },
+                "srd": {
+                    "5.1": "Step of the Wind"
+                },
+                "category": "bonus_actions"
+            },
+            {
+                "id": "monk-phb:unarmored-movement",
+                "name": "Unarmored Movement",
+                "level": 2,
+                "text": "Starting at 2nd level, your speed increases by 10 feet while you are not wearing armor or wielding a shield. This bonus increases when you reach certain monk levels, as shown in the Monk table.\n\nAt 9th level, you gain the ability to move along vertical surfaces and across liquids on your turn without falling during the move.",
+                "srd": {
+                    "5.1": "Unarmored Movement"
+                },
+                "category": "traits",
+                "modifiers": [
+                    {
+                        "target": "speed.walk",
+                        "add": "unarmored_movement"
+                    }
+                ]
+            },
+            {
+                "id": "monk-phb:deflect-missiles",
+                "name": "Deflect Missiles",
+                "level": 3,
+                "text": "Starting at 3rd level, you can use your reaction to deflect or catch the missile when you are hit by a ranged weapon attack. When you do so, the damage you take from the attack is reduced by 1d10 + your Dexterity modifier + your monk level.\n\nIf you reduce the damage to 0, you can catch the missile if it is small enough for you to hold in one hand and you have at least one hand free. If you catch a missile in this way, you can spend 1 ki point to make a ranged attack (range 20/60 feet) with the weapon or piece of ammunition you just caught, as part of the same reaction. You make this attack with proficiency, regardless of your weapon proficiencies, and the missile counts as a monk weapon for the attack.",
+                "srd": {
+                    "5.1": "Deflect Missiles"
+                },
+                "category": "reactions"
+            },
+            {
+                "id": "monk-phb:slow-fall",
+                "name": "Slow Fall",
+                "level": 4,
+                "text": "Beginning at 4th level, you can use your reaction when you fall to reduce any falling damage you take by an amount equal to five times your monk level.",
+                "srd": {
+                    "5.1": "Slow Fall"
+                },
+                "category": "reactions"
+            },
+            {
+                "id": "monk-phb:extra-attack",
+                "name": "Extra Attack",
+                "level": 5,
+                "text": "Beginning at 5th level, you can attack twice, instead of once, whenever you take the Attack action on your turn.",
+                "srd": {
+                    "5.1": "Extra Attack"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "monk-phb:stunning-strike",
+                "name": "Stunning Strike",
+                "level": 5,
+                "text": "Starting at 5th level, you can interfere with the flow of ki in an opponent's body. When you hit another creature with a melee weapon attack, you can spend 1 ki point to attempt a stunning strike. The target must succeed on a Constitution saving throw or be stunned until the end of your next turn.",
+                "consumes": {
+                    "resource": "focus_points",
+                    "amount": 1
+                },
+                "srd": {
+                    "5.1": "Stunning Strike"
+                },
+                "category": "traits",
+                "action": {
+                    "attack": {
+                        "kind": "melee"
+                    },
+                    "save": {
+                        "ability": "con",
+                        "on_success": "none",
+                        "conditions": [
+                            "stunned"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "monk-phb:ki-empowered-strikes",
+                "name": "Ki-Empowered Strikes",
+                "level": 6,
+                "text": "Starting at 6th level, your unarmed strikes count as magical for the purpose of overcoming resistance and immunity to nonmagical attacks and damage.",
+                "srd": {
+                    "5.1": "Ki-Empowered Strikes"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "monk-phb:evasion",
+                "name": "Evasion",
+                "level": 7,
+                "text": "At 7th level, your instinctive agility lets you dodge out of the way of certain area effects, such as a blue dragon's lightning breath or a Fireball spell. When you are subjected to an effect that allows you to make a Dexterity saving throw to take only half damage, you instead take no damage if you succeed on the saving throw, and only half damage if you fail.",
+                "srd": {
+                    "5.1": "Evasion"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "monk-phb:stillness-of-mind",
+                "name": "Stillness of Mind",
+                "level": 7,
+                "text": "Starting at 7th level, you can use your action to end one effect on yourself that is causing you to be charmed or frightened.",
+                "srd": {
+                    "5.1": "Stillness of Mind"
+                },
+                "category": "actions"
+            },
+            {
+                "id": "monk-phb:unarmored-movement-improvement",
+                "name": "Unarmored Movement improvement",
+                "level": 9,
+                "text": "At 9th level, you gain the ability to move along vertical surfaces and across liquids on your turn without falling during the move.",
+                "srd": {
+                    "5.1": "Unarmored Movement improvement"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "monk-phb:purity-of-body",
+                "name": "Purity of Body",
+                "level": 10,
+                "text": "At 10th level, your mastery of the ki flowing through you makes you immune to disease and poison.",
+                "srd": {
+                    "5.1": "Purity of Body"
+                },
+                "category": "traits",
+                "grants": {
+                    "defenses": {
+                        "immune": [
+                            "poison"
+                        ],
+                        "condition_immune": [
+                            "poisoned"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "monk-phb:tongue-of-the-sun-and-moon",
+                "name": "Tongue of the Sun and Moon",
+                "level": 13,
+                "text": "Starting at 13th level, you learn to touch the ki of other minds so that you understand all spoken languages. Moreover, any creature that can understand a language can understand what you say.",
+                "srd": {
+                    "5.1": "Tongue of the Sun and Moon"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "monk-phb:diamond-soul",
+                "name": "Diamond Soul",
+                "level": 14,
+                "text": "Beginning at 14th level, your mastery of ki grants you proficiency in all saving throws.\n\nAdditionally, whenever you make a saving throw and fail, you can spend 1 ki point to reroll it and take the second result.",
+                "consumes": {
+                    "resource": "focus_points",
+                    "amount": 1
+                },
+                "srd": {
+                    "5.1": "Diamond Soul"
+                },
+                "category": "traits",
+                "grants": {
+                    "saves": [
+                        "str",
+                        "dex",
+                        "con",
+                        "int",
+                        "wis",
+                        "cha"
+                    ]
+                }
+            },
+            {
+                "id": "monk-phb:timeless-body",
+                "name": "Timeless Body",
+                "level": 15,
+                "text": "At 15th level, your ki sustains you so that you suffer none of the frailty of old age, and you can't be aged magically. You can still die of old age, however. In addition, you no longer need food or water.",
+                "srd": {
+                    "5.1": "Timeless Body"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "monk-phb:empty-body",
+                "name": "Empty Body",
+                "level": 18,
+                "text": "Beginning at 18th level, you can use your action to spend 4 ki points to become invisible for 1 minute. During that time, you also have resistance to all damage but force damage.\n\nAdditionally, you can spend 8 ki points to cast the Astral Projection spell, without needing material components. When you do so, you can't take any other creatures with you.",
+                "consumes": {
+                    "resource": "focus_points",
+                    "amount": 4
+                },
+                "srd": {
+                    "5.1": "Empty Body"
+                },
+                "category": "actions",
+                "toggle": {
+                    "grants": {
+                        "defenses": {
+                            "resist": [
+                                "acid",
+                                "bludgeoning",
+                                "cold",
+                                "fire",
+                                "lightning",
+                                "necrotic",
+                                "piercing",
+                                "poison",
+                                "psychic",
+                                "radiant",
+                                "slashing",
+                                "thunder"
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "id": "monk-phb:perfect-self",
+                "name": "Perfect Self",
+                "level": 20,
+                "text": "At 20th level, when you roll for initiative and have no ki points remaining, you regain 4 ki points.",
+                "srd": {
+                    "5.1": "Perfect Self"
+                },
+                "category": "traits"
+            }
+        ]
+    }
+]

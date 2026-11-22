@@ -1,142 +1,105 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useCatalogueStore } from "../../../store/CatalogueStore";
 import { usePopupStore } from "../../../store/PopupStore";
-import RaceRow from "./RaceRow";
+import useAuthStore from "../../../store/AuthStore";
 import FilterSection from "../FilterSection";
 import FilterPopup, { FilterButton } from "../FilterPopup";
 import RaceCreatePopup from "./RaceCreatePopup";
-import RowContextMenu from "../RowContextMenu";
-import useAuthStore from "../../../store/AuthStore";
-import { ErrorLine, LoadingLine, Toolbar, chip, searchCls } from "../catalogueStyle";
+import { ErrorLine, LoadingLine, Toolbar, searchCls } from "../catalogueStyle";
+import { CatalogueRow, ChipToggles, useEntryMenu } from "../catalogueParts";
 import { addBtn } from "../../../styles/parchmentForm";
 import {
-  collectUnique,
-  cap,
-  formatSource,
-  SIZE_LABELS,
-  SIZE_ORDER,
-} from "./raceHelpers";
+  HOMEBREW, ABILITIES, ABILITY_SHORT, EDITIONS, formatEdition, formatSource, labelFromId, titleCase,
+  collectUnique, toggleIn, matchesQuery, passesAny, byName, offeredAbilities, offeredKinds, GIVES_LABELS,
+  offeredSenses, offeredSpeeds, offeredResistances,
+} from "../catalogueHelpers";
+import { raceRowMeta } from "./raceHelpers";
 
+const SUBRACES = [
+  { value: "yes", label: "Has subraces" },
+  { value: "no", label: "No subraces" },
+];
+
+/* The Races catalogue: a filterable list; a click opens the card, a
+   right-click copies (and, for your own homebrew, edits or deletes).
+   The filters offer only values the loaded races have, subraces included. */
 export default function Races() {
   const races = useCatalogueStore((s) => s.races);
   const loading = useCatalogueStore((s) => s.loadingRaces);
-  const error = useCatalogueStore((s) => s.error);
+  const error = useCatalogueStore((s) => s.racesError);
   const loadRaces = useCatalogueStore((s) => s.loadRaces);
-
-  const [selectedSources, setSelectedSources] = useState(["XPHB"]);
-  const [selectedTypes, setSelectedTypes] = useState([]);
-  const [selectedSizes, setSelectedSizes] = useState([]);
-  const [query, setQuery] = useState("");
-  const [filtersOpen, setFiltersOpen] = useState(false);
-  const [createOpen, setCreateOpen] = useState(false);
-  const [editingRace, setEditingRace] = useState(null);   // homebrew being edited
-  const [copyFromRace, setCopyFromRace] = useState(null); // race being copied as template
-  const [contextMenu, setContextMenu] = useState(null);   // { x, y, race }
+  const deleteRace = useCatalogueStore((s) => s.deleteRace);
 
   const openPopup = usePopupStore((s) => s.open);
   const currentUser = useAuthStore((s) => s.userData?.name);
 
-  const updateRaceAction = useCatalogueStore((s) => s.updateRace);
-  const deleteRaceAction = useCatalogueStore((s) => s.deleteRace);
+  const [query, setQuery] = useState("");
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const [editions, setEditions] = useState(["one"]);
+  const [sources, setSources] = useState([]);
+  const [sizes, setSizes] = useState([]);
+  const [types, setTypes] = useState([]);
+  const [abilities, setAbilities] = useState([]);
+  const [senses, setSenses] = useState([]);
+  const [speeds, setSpeeds] = useState([]);
+  const [resists, setResists] = useState([]);
+  const [gives, setGives] = useState([]);
+  const [subraces, setSubraces] = useState([]);
 
-  useEffect(() => { loadRaces(); }, [loadRaces]);
+  const [form, setForm] = useState(null); // null = closed · {} new · { editing } · { copyFrom }
+  const [openMenu, menu] = useEntryMenu({
+    user: currentUser,
+    onCopy: (r) => setForm({ copyFrom: r }),
+    onEdit: (r) => setForm({ editing: r }),
+    onDelete: deleteRace,
+  });
 
-  const sources = useMemo(() => {
-    const derived = collectUnique(races, "source");
-    return derived.includes("HOMEBREW") ? derived : ["HOMEBREW", ...derived];
+  useEffect(() => {
+    loadRaces();
+  }, [loadRaces]);
+
+  // What the filters offer: only values some race (or subrace) has.
+  const options = useMemo(() => {
+    const found = collectUnique(races, "source");
+    return {
+      sources: found.includes(HOMEBREW) ? found : [HOMEBREW, ...found],
+      sizes: collectUnique(races, (r) => [...(r.size || []), ...(r.subraces || []).flatMap((s) => s.size || [])]),
+      types: collectUnique(races, "creature_types"),
+      senses: collectUnique(races, offeredSenses),
+      speeds: collectUnique(races, offeredSpeeds),
+      resists: collectUnique(races, offeredResistances),
+      gives: collectUnique(races, offeredKinds),
+    };
   }, [races]);
 
-  const creatureTypes = useMemo(() => collectUnique(races, "creature_type"), [races]);
-  const sizes = useMemo(() => {
-    const present = collectUnique(races, "sizes");
-    return SIZE_ORDER.filter((s) => present.includes(s));
-  }, [races]);
+  const filtered = useMemo(
+    () =>
+      (races || [])
+        .filter(
+          (r) =>
+            passesAny(editions, [r.edition]) &&
+            passesAny(sources, [r.source]) &&
+            passesAny(sizes, [...(r.size || []), ...(r.subraces || []).flatMap((s) => s.size || [])]) &&
+            passesAny(types, r.creature_types) &&
+            passesAny(abilities, offeredAbilities(r)) &&
+            passesAny(senses, offeredSenses(r)) &&
+            passesAny(speeds, offeredSpeeds(r)) &&
+            passesAny(resists, offeredResistances(r)) &&
+            passesAny(gives, offeredKinds(r)) &&
+            passesAny(subraces, [r.subraces?.length ? "yes" : "no"]) &&
+            matchesQuery(r, query)
+        )
+        .sort(byName),
+    [races, editions, sources, sizes, types, abilities, senses, speeds, resists, gives, subraces, query]
+  );
 
-  const toggle = (setter) => (val) =>
-    setter((prev) =>
-      prev.includes(val) ? prev.filter((x) => x !== val) : [...prev, val]
-    );
-
-
-  const handleRowContextMenu = (e, race) => {
-    const isHomebrew = race.source === "HOMEBREW";
-    const isOwner = isHomebrew && race.created_by === currentUser;
-
-    const items = [];
-    items.push({
-      label: "Copy",
-      onClick: () => {
-        setCopyFromRace(race);
-        setCreateOpen(true);
-      },
-    });
-
-    if (isOwner) {
-      items.push({
-        label: "Edit",
-        onClick: () => {
-          setEditingRace(race);
-          setCreateOpen(true);
-        },
-      });
-      items.push({
-        label: "Delete",
-        danger: true,
-        onClick: async () => {
-          if (!window.confirm(`Delete "${race.name}"? This cannot be undone.`)) return;
-          try {
-            await deleteRaceAction(race.id);
-          } catch (err) {
-            alert(`Delete failed: ${err.message}`);
-          }
-        },
-      });
-    }
-
-    setContextMenu({ x: e.clientX, y: e.clientY, items });
-  };
-
-  const handleCreateClose = () => {
-    setCreateOpen(false);
-    setEditingRace(null);
-    setCopyFromRace(null);
-  };
-
-  const toggleSource = toggle(setSelectedSources);
-  const toggleType = toggle(setSelectedTypes);
-  const toggleSize = toggle(setSelectedSizes);
-
-  const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    return (races || []).filter((r) => {
-      if (!r) return false;   
-      if (selectedSources.length && !selectedSources.includes(r.source)) return false;
-      if (selectedTypes.length && !selectedTypes.includes(r.creature_type)) return false;
-      if (selectedSizes.length) {
-        const rs = r.sizes || [];
-        if (!selectedSizes.some((s) => rs.includes(s))) return false;
-      }
-      if (q) {
-        const subNames = (r.sub_races || [])
-          .map((sr) => sr.display_name || sr.name)
-          .filter(Boolean).join(" ");
-        const hay = [r?.name, r?.creature_type, r?.source, subNames]
-          .filter(Boolean).join(" ").toLowerCase();
-        if (!hay.includes(q)) return false;
-      }
-      return true;
-    });
-  }, [races, query, selectedSources, selectedTypes, selectedSizes]);
-
+  const all = [editions, sources, sizes, types, abilities, senses, speeds, resists, gives, subraces];
+  const activeCount = all.reduce((n, l) => n + l.length, 0);
   const clearAll = () => {
-    setSelectedSources([]);
-    setSelectedTypes([]);
-    setSelectedSizes([]);
+    [setEditions, setSources, setSizes, setTypes, setAbilities, setSenses, setSpeeds, setResists, setGives, setSubraces].forEach((s) => s([]));
     setQuery("");
   };
-
-  const activeCount =
-    selectedSources.length + selectedTypes.length + selectedSizes.length;
+  const toggler = (setter) => (v) => setter((l) => toggleIn(l, v));
 
   return (
     <div className="min-h-[640px] w-full">
@@ -152,88 +115,65 @@ export default function Races() {
             right={
               <>
                 <span className="text-xs italic text-ink-faded">
-                  {filtered.length} of {(races || []).length}
+                  {filtered.length} of {races.length}
                 </span>
-                <button onClick={() => setCreateOpen(true)} className={`${addBtn} !text-sm`}>
+                <button type="button" onClick={() => setForm({})} className={`${addBtn} !text-sm`}>
                   + create
                 </button>
               </>
             }
           />
 
-          {/* Filter popup */}
-          <FilterPopup
-            open={filtersOpen}
-            onClose={() => setFiltersOpen(false)}
-            activeCount={activeCount}
-            onClear={clearAll}
-          >
+          <FilterPopup open={filtersOpen} onClose={() => setFiltersOpen(false)} activeCount={activeCount} onClear={clearAll}>
+            <FilterSection title="Edition">
+              <ChipToggles options={EDITIONS} selected={editions} labelOf={formatEdition} onToggle={toggler(setEditions)} />
+            </FilterSection>
             <FilterSection title="Sources">
-              <div className="grid grid-cols-2 gap-x-6 gap-y-1.5 sm:grid-cols-3 lg:grid-cols-4">
-                {sources.map((src) => (
-                  <button
-                    key={src}
-                    onClick={() => toggleSource(src)}
-                    title={formatSource(src)}
-                    className={`${chip(selectedSources.includes(src))} truncate`}
-                  >
-                    {formatSource(src)}
-                  </button>
-                ))}
-              </div>
+              <ChipToggles options={options.sources} selected={sources} labelOf={formatSource} onToggle={toggler(setSources)}
+                           className="!grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4" />
             </FilterSection>
-
-            <FilterSection title="Creature Type">
-              <div className="flex flex-wrap gap-x-4 gap-y-1.5">
-                {creatureTypes.map((t) => (
-                  <button key={t} onClick={() => toggleType(t)} className={chip(selectedTypes.includes(t))}>
-                    {cap(t)}
-                  </button>
-                ))}
-              </div>
-            </FilterSection>
-
             <FilterSection title="Size">
-              <div className="flex flex-wrap gap-x-4 gap-y-1.5">
-                {sizes.map((s) => (
-                  <button key={s} onClick={() => toggleSize(s)} className={chip(selectedSizes.includes(s))}>
-                    {SIZE_LABELS[s] || cap(s)}
-                  </button>
-                ))}
-              </div>
+              <ChipToggles options={options.sizes} selected={sizes} labelOf={titleCase} onToggle={toggler(setSizes)} />
+            </FilterSection>
+            <FilterSection title="Creature Type">
+              <ChipToggles options={options.types} selected={types} labelOf={titleCase} onToggle={toggler(setTypes)} />
+            </FilterSection>
+            <FilterSection title="Ability Scores">
+              <ChipToggles options={ABILITIES} selected={abilities} labelOf={(a) => ABILITY_SHORT[a]} onToggle={toggler(setAbilities)} />
+            </FilterSection>
+            <FilterSection title="Senses">
+              <ChipToggles options={options.senses} selected={senses} labelOf={labelFromId} onToggle={toggler(setSenses)} />
+            </FilterSection>
+            <FilterSection title="Speed">
+              <ChipToggles options={options.speeds} selected={speeds} labelOf={labelFromId} onToggle={toggler(setSpeeds)} />
+            </FilterSection>
+            <FilterSection title="Resistances & Immunities" defaultOpen={false}>
+              <ChipToggles options={options.resists} selected={resists} labelOf={labelFromId} onToggle={toggler(setResists)} />
+            </FilterSection>
+            <FilterSection title="Gives" defaultOpen={false}>
+              <ChipToggles options={options.gives} selected={gives} labelOf={(k) => GIVES_LABELS[k] || k} onToggle={toggler(setGives)} />
+            </FilterSection>
+            <FilterSection title="Subraces" defaultOpen={false}>
+              <ChipToggles options={SUBRACES.map((o) => o.value)} selected={subraces} onToggle={toggler(setSubraces)}
+                           labelOf={(v) => SUBRACES.find((o) => o.value === v).label} />
             </FilterSection>
           </FilterPopup>
 
-          {/* Results */}
           {filtered.length === 0 ? (
             <LoadingLine>No races match your filters.</LoadingLine>
           ) : (
             <div className="grid grid-cols-1 gap-x-8 md:grid-cols-2 xl:grid-cols-3">
-            {filtered.map((r, idx) => (
-              <RaceRow
-                key={`${r?.id || r?.name}-${r?.source}-${idx}`}
-                race={r}
-                onOpen={(race) => openPopup("race", race)}
-                onContextMenu={handleRowContextMenu}
-              />
-            ))}
-          </div>
-          )}
-          {contextMenu && (
-            <RowContextMenu
-              x={contextMenu.x}
-              y={contextMenu.y}
-              items={contextMenu.items}
-              onClose={() => setContextMenu(null)}
-            />
+              {filtered.map((r) => (
+                <CatalogueRow key={`${r.id}-${r.visibility || ""}`} entry={r} meta={raceRowMeta(r)}
+                              onOpen={(x) => openPopup("race", x)} onContextMenu={openMenu} />
+              ))}
+            </div>
           )}
 
-          <RaceCreatePopup
-            open={createOpen}
-            onClose={handleCreateClose}
-            editingRace={editingRace}
-            copyFromRace={copyFromRace}
-          />
+          {menu}
+
+          <RaceCreatePopup open={form !== null} onClose={() => setForm(null)}
+                           editingRace={form?.editing || null} copyFromRace={form?.copyFrom || null} />
         </>
       )}
     </div>

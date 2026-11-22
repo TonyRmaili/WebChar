@@ -10,7 +10,7 @@ import { INK, InkButton, InkChoice, InkNumber, InkSelect, Line } from "../../sty
 const SCORE_RULES = [
   { value: "standard", label: "Standard array" },
   { value: "pointBuy", label: "Point buy" },
-  { value: "random", label: "Roll 3d6" },
+  { value: "random", label: "Roll 4d6" },
   { value: "custom", label: "Custom" },
 ];
 
@@ -32,7 +32,11 @@ export function defaultsFor(method) {
 }
 
 const d6 = () => 1 + Math.floor(Math.random() * 6);
-const rollAbility = () => d6() + d6() + d6(); // 3d6 → 3..18
+// 4d6, drop the lowest → 3..18
+const rollAbility = () => {
+  const dice = [d6(), d6(), d6(), d6()].sort((a, b) => a - b);
+  return dice[1] + dice[2] + dice[3];
+};
 export const rollPool = () => Array.from({ length: 6 }, rollAbility); // 6 abilities
 
 export const modOf = (s) => (s == null ? null : Math.floor((s - 10) / 2));
@@ -124,7 +128,7 @@ export default function AbilityScoreBoxes({ method, scores, pool, onMethodChange
           (pool.length === 0 ? (
             <p className={`text-sm italic ${INK.faded}`}>
               <InkButton active onClick={onRoll} className="text-sm">
-                roll 3d6 six times
+                roll 4d6 (drop the lowest) six times
               </InkButton>{" "}
               — then hand the numbers out below.
             </p>

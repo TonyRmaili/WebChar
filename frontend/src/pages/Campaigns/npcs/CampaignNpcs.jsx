@@ -15,6 +15,7 @@ import MonsterShelf from "../encounters/MonsterShelf";
 import Groups from "../groups/Groups";
 import Templates from "../templates/Templates";
 import { applyTemplates, givenTemplates, memberIn, resolveTemplates } from "../templates/templateLogic";
+import { derivedOf } from "../../../utils/derive";
 
 /* Campaign › Combat — every creature the DM keeps for this campaign:
    the party, NPCs and monsters.
@@ -32,11 +33,8 @@ import { applyTemplates, givenTemplates, memberIn, resolveTemplates } from "../t
 
 const EMPTY = [];
 
-const classSummary = (c) =>
-  (Array.isArray(c?.classes) ? c.classes : [])
-    .filter((k) => k?.class_name)
-    .map((k) => `${k.class_name} ${k.level ?? ""}`.trim())
-    .join(" / ");
+// "Druid 4 / Shaman 3", from the character's class levels (version-2 file).
+const classSummary = (c) => (derivedOf(c)?.classes || []).map((k) => `${k.name} ${k.level}`).join(" / ");
 
 // What each list is, and the words that go with it.
 const GROUPS = {

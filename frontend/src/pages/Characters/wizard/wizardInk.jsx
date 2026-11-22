@@ -17,13 +17,22 @@ function Bullet({ on, round }) {
 }
 
 /* One option you can pick: ◇ Stealth. Picked ones are inked in rubric.
+   `onView` (right-click) opens the option's card without picking it.
    `warn` marks an option something else already gives you (picking it
    would waste the choice); `title` explains why. */
-export function Pick({ on, onClick, children, warn = false, round = false, disabled = false, title }) {
+export function Pick({ on, onClick, onView, children, warn = false, round = false, disabled = false, title }) {
   return (
     <button
       type="button"
       onClick={onClick}
+      onContextMenu={
+        onView
+          ? (e) => {
+              e.preventDefault();
+              onView();
+            }
+          : undefined
+      }
       disabled={disabled}
       title={title}
       aria-pressed={!!on}

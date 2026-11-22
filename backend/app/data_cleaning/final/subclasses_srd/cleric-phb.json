@@ -1,0 +1,195 @@
+[
+    {
+        "id": "cleric-phb:life-phb",
+        "kind": "subclass",
+        "name": "Life Domain",
+        "source": "PHB",
+        "edition": "classic",
+        "srd": {
+            "5.1": "Life Domain"
+        },
+        "reprinted_as": [
+            "cleric-xphb:life-xphb"
+        ],
+        "text": "The Life domain focuses on the vibrant positive energy—one of the fundamental forces of the universe—that sustains all life. The gods of life promote vitality and health through healing the sick and wounded, caring for those in need, and driving away the forces of death and undeath. Almost any non-evil deity can claim influence over this domain, particularly agricultural deities (such as Chauntea, Arawai, and Demeter), sun gods (such as Lathander, Pelor, and Re-Horakhty), gods of healing or endurance (such as Ilmater, Mishakal, Apollo, and Diancecht), and gods of home and community (such as Hestia, Hathor, and Boldrei).\n\nAt each indicated cleric level, you add the listed spells to your spells prepared.\n\nLife Domain Spells\n\nCleric Level | Spells\n--- | ---\n1st | Bless, Cure Wounds\n3rd | Lesser Restoration, Spiritual Weapon\n5th | Beacon of Hope, Revivify\n7th | Death Ward, Guardian of Faith\n9th | Mass Cure Wounds, Raise Dead",
+        "class_id": "cleric-phb",
+        "short_name": "Life",
+        "grants": {
+            "spells": [
+                {
+                    "spell": "bless-phb",
+                    "how": "prepared",
+                    "at": 1
+                },
+                {
+                    "spell": "cure-wounds-phb",
+                    "how": "prepared",
+                    "at": 1
+                },
+                {
+                    "spell": "lesser-restoration-phb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "spiritual-weapon-phb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "beacon-of-hope-phb",
+                    "how": "prepared",
+                    "at": 5
+                },
+                {
+                    "spell": "revivify-phb",
+                    "how": "prepared",
+                    "at": 5
+                },
+                {
+                    "spell": "death-ward-phb",
+                    "how": "prepared",
+                    "at": 7
+                },
+                {
+                    "spell": "guardian-of-faith-phb",
+                    "how": "prepared",
+                    "at": 7
+                },
+                {
+                    "spell": "mass-cure-wounds-phb",
+                    "how": "prepared",
+                    "at": 9
+                },
+                {
+                    "spell": "raise-dead-phb",
+                    "how": "prepared",
+                    "at": 9
+                }
+            ]
+        },
+        "progression": [
+            {
+                "level": 1,
+                "features": [
+                    "cleric-phb:life-phb:bonus-proficiency",
+                    "cleric-phb:life-phb:disciple-of-life"
+                ]
+            },
+            {
+                "level": 2,
+                "features": [
+                    "cleric-phb:life-phb:channel-divinity-preserve-life"
+                ]
+            },
+            {
+                "level": 6,
+                "features": [
+                    "cleric-phb:life-phb:blessed-healer"
+                ]
+            },
+            {
+                "level": 8,
+                "features": [
+                    "cleric-phb:life-phb:divine-strike"
+                ]
+            },
+            {
+                "level": 17,
+                "features": [
+                    "cleric-phb:life-phb:supreme-healing"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "cleric-phb:life-phb:bonus-proficiency",
+                "name": "Bonus Proficiency",
+                "level": 1,
+                "text": "When you choose this domain at 1st level, you gain proficiency with heavy armor.",
+                "srd": {
+                    "5.1": "Bonus Proficiency"
+                },
+                "category": "traits",
+                "grants": {
+                    "armor": [
+                        "heavy"
+                    ]
+                }
+            },
+            {
+                "id": "cleric-phb:life-phb:disciple-of-life",
+                "name": "Disciple of Life",
+                "level": 1,
+                "text": "Also starting at 1st level, your healing spells are more effective. Whenever you use a spell of 1st level or higher to restore hit points to a creature, the creature regains additional hit points equal to 2 + the spell's level.",
+                "srd": {
+                    "5.1": "Disciple of Life"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "cleric-phb:life-phb:channel-divinity-preserve-life",
+                "name": "Channel Divinity: Preserve Life",
+                "level": 2,
+                "text": "Starting at 2nd level, you can use your Channel Divinity to heal the badly injured.\n\nAs an action, you present your holy symbol and evoke healing energy that can restore a number of hit points equal to five times your cleric level. Choose any creatures within 30 feet of you, and divide those hit points among them. This feature can restore a creature to no more than half of its hit point maximum. You can't use this feature on an undead or a construct.",
+                "consumes": {
+                    "resource": "channel_divinity",
+                    "amount": 1
+                },
+                "srd": {
+                    "5.1": "Channel Divinity: Preserve Life"
+                },
+                "category": "actions",
+                "action": {
+                    "range": "30 feet",
+                    "heal": "5 * class_level"
+                }
+            },
+            {
+                "id": "cleric-phb:life-phb:blessed-healer",
+                "name": "Blessed Healer",
+                "level": 6,
+                "text": "Beginning at 6th level, the healing spells you cast on others heal you as well. When you cast a spell of 1st level or higher that restores hit points to a creature other than you, you regain hit points equal to 2 + the spell's level.",
+                "srd": {
+                    "5.1": "Blessed Healer"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "cleric-phb:life-phb:divine-strike",
+                "name": "Divine Strike",
+                "level": 8,
+                "text": "At 8th level, you gain the ability to infuse your weapon strikes with divine energy. Once on each of your turns when you hit a creature with a weapon attack, you can cause the attack to deal an extra 1d8 radiant damage to the target. When you reach 14th level, the extra damage increases to 2d8.",
+                "srd": {
+                    "5.1": "Divine Strike"
+                },
+                "category": "traits",
+                "action": {
+                    "attack": {
+                        "kind": "any",
+                        "damage": [
+                            {
+                                "dice": {
+                                    "1": "1d8",
+                                    "14": "2d8"
+                                },
+                                "type": "radiant"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "cleric-phb:life-phb:supreme-healing",
+                "name": "Supreme Healing",
+                "level": 17,
+                "text": "Starting at 17th level, when you would normally roll one or more dice to restore hit points with a spell, you instead use the highest number possible for each die. For example, instead of restoring 2d6 hit points to a creature, you restore 12.",
+                "srd": {
+                    "5.1": "Supreme Healing"
+                },
+                "category": "traits"
+            }
+        ],
+        "resources": []
+    }
+]

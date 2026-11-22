@@ -30,11 +30,11 @@ export default function OmniSearch() {
   /* ---- data slices ---- */
   const items            = useCatalogueStore((s) => s.items);
   const races            = useCatalogueStore((s) => s.races);
-  const feats            = useCatalogueStore((s) => s.featsData?.feats);
-  const backgrounds      = useCatalogueStore((s) => s.backgroundsData?.backgrounds);
-  const spells           = useCatalogueStore((s) => s.spellsData?.spells);
-  const optionalFeatures = useCatalogueStore((s) => s.optionalFeaturesData?.features);
-  const monstersData     = useCatalogueStore((s) => s.monstersData);
+  const feats            = useCatalogueStore((s) => s.feats);
+  const backgrounds      = useCatalogueStore((s) => s.backgrounds);
+  const spells           = useCatalogueStore((s) => s.spells);
+  const optionalFeatures = useCatalogueStore((s) => s.optionalFeatures);
+  const monsters         = useCatalogueStore((s) => s.monsters);
 
   /* ---- loaders (lazy, on first focus) ---- */
   const loadItems            = useCatalogueStore((s) => s.loadItems);
@@ -48,8 +48,15 @@ export default function OmniSearch() {
   const ensureLoaded = () => {
     if (loadedRef.current) return;
     loadedRef.current = true;
-    loadSpells(); loadItems(); loadRaces(); loadFeats();
-    loadBackgrounds(); loadOptionalFeatures(); loadMonsters();
+    // only the catalogues not loaded yet (the bestiary is large)
+    const s = useCatalogueStore.getState();
+    if (!s.spells?.length) loadSpells();
+    if (!s.items?.length) loadItems();
+    if (!s.races?.length) loadRaces();
+    if (!s.feats?.length) loadFeats();
+    if (!s.backgrounds?.length) loadBackgrounds();
+    if (!s.optionalFeatures?.length) loadOptionalFeatures();
+    if (!s.monsters?.length) loadMonsters();
   };
 
   /* ---- flat search index across all catalogues ---- */
@@ -66,13 +73,9 @@ export default function OmniSearch() {
     push("feat", feats);
     push("background", backgrounds);
     push("optionalFeature", optionalFeatures);
-
-    const root = monstersData?.monsters;
-    if (root && typeof root === "object") {
-      for (const list of Object.values(root)) push("monster", list);
-    }
+    push("monster", monsters);
     return out;
-  }, [spells, items, races, feats, backgrounds, optionalFeatures, monstersData]);
+  }, [spells, items, races, feats, backgrounds, optionalFeatures, monsters]);
 
   /* ---- filter + rank (prefix matches first), capped ---- */
   const results = useMemo(() => {
@@ -123,7 +126,7 @@ export default function OmniSearch() {
               {results.map((r, i) => {
                 const cat = CATALOGUES[r.type];
                 return (
-                  <li key={`${r.type}-${r.name}-${r.source}-${i}`}>
+                  <li key={`${r.type}-${r.data.id || r.name}-${i}`}>
                     <button
                       type="button"
                       // mouseDown (not click) + preventDefault keeps the input

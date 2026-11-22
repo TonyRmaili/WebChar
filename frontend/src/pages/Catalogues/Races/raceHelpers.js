@@ -1,103 +1,109 @@
-// ─── Sources ───────────────────────────────────────────────────────
-export const SOURCE_NAMES = {
-  XPHB: "Player Handbook One",
-  PHB: "Player Handbook Classic",
-  SCAG: "Sword Coast Adventurer's Guide",
-  BGDIA: "Baldur's Gate: Descent into Avernus",
-  TCE: "Tasha's Cauldron of Everything",
-  XGE: "Xanathar's Guide to Everything",
-  ERLW: "Eberron: Rising from the Last War",
-  AAG: "Astral Adventure's Guide",
-  AI: "Acquisitions Incorporated",
-  BGG: "Bigby Presents: Glory of the Giants",
-  BMT: "The Book of Many Things",
-  DSotDQ: "Dragonlance: Shadow of the Dragon Queen",
-  EFA: "Eberron: Forge of the Artificer",
-  EGW: "Explorer's Guide to Wildemount",
-  FRHoF: "Forgotten Realms: Heroes of Faerun",
-  GGR: "Guildmasters Guide to Ravnica",
-  GoS: "Ghosts of Saltmarsh",
-  MOT: "Mythic Odysseys of Theros",
-  SCC: "Strixhaven: A Curriculum of Chaos",
-  ToA: "Tomb of Annihilation",
-  VRGR: "Van Richten's Guide to Ravenloft",
-  WBtW: "The Wild Beyond the Witchlight",
-  FTD: "Fizban's Treasury of Dragons",
-  MPMM: "Mordenkainen Presents: Monsters of the Multiverse",
-  MTF: "Mordenkainen's Tome of Foes",
-  VGM: "Volo's Guide to Monsters",
-  HOMEBREW: "Homebrew",
-};
-export const formatSource = (src) => SOURCE_NAMES[src] || src;
+import { HOMEBREW, pruneEmpty, formatSize, titleCase } from "../catalogueHelpers";
+import {
+  emptyHeaderForm, headerToForm, formToHeader, emptyGrantsForm, grantsToForm, formToGrants,
+} from "../catalogueForms";
 
-// ─── Shared ────────────────────────────────────────────────────────
-export const ABILITY_LABELS = {
-  str: "STR", dex: "DEX", con: "CON",
-  int: "INT", wis: "WIS", cha: "CHA",
+/* ═══════════════════════════════════════════════════════════════════
+   raceHelpers — what only races need. The shared words are in
+   ../catalogueHelpers, the shared form conversion in ../catalogueForms.
+
+   A race record (final/races.json):
+     header · text · size · creature_types · grants · choices
+     · subraces · features
+   A race with subraces needs one picked. A subrace only holds what it
+   adds or changes:
+     size           its own size, when it differs
+     replaces       race grants it replaces instead of adding to
+                    (["ability"]: use the subrace's bonuses, not the race's)
+     replaces_text  the race's named text blocks its text replaces
+   ═══════════════════════════════════════════════════════════════════ */
+
+// The race grants a subrace can replace.
+export const REPLACEABLE = ["ability", "skills", "tools", "languages", "speed", "senses", "defenses", "spells", "weapons", "feats"];
+
+// "Small or Medium Humanoid"
+export const raceSubtitle = (race) =>
+  [formatSize(race.size), (race.creature_types || []).map(titleCase).join(" or ")].filter(Boolean).join(" ");
+
+// The short note on a race's row: "4 subraces", else its size.
+export const raceRowMeta = (race) => {
+  const n = race.subraces?.length || 0;
+  return n ? `${n} ${n === 1 ? "subrace" : "subraces"}` : formatSize(race.size);
 };
 
-export const SIZE_LABELS = {
-  tiny: "Tiny", small: "Small", medium: "Medium", large: "Large",
+/* ─── subraces ───────────────────────────────────────────────────── */
+
+export const emptySubrace = () => ({
+  name: "", text: "", size: [], grants: emptyGrantsForm(), replaces: [], replacesText: [], rest: {},
+});
+
+const subraceToForm = (sr, copy) => {
+  const { id, kind, name, source, edition, text, size, grants, choices, replaces, replaces_text, srd, reprinted_as, ...rest } = sr;
+  return {
+    id: copy ? undefined : id,
+    name: name || "",
+    text: text || "",
+    size: size || [],
+    grants: grantsToForm(grants, choices),
+    replaces: replaces || [],
+    replacesText: replaces_text || [],
+    rest,
+  };
 };
 
-export const SIZE_ORDER = ["tiny", "small", "medium", "large"];
-
-// Collect unique top-level values (flattens arrays).
-export const collectUnique = (items, key) => {
-  const set = new Set();
-  for (const it of items || []) {
-    const v = it?.[key];
-    if (v == null) continue;
-    if (Array.isArray(v)) v.forEach((x) => x && set.add(x));
-    else set.add(v);
-  }
-  return [...set].sort((a, b) => String(a).localeCompare(String(b)));
+const formToSubrace = (sr, form) => {
+  const { grants, choices } = formToGrants(sr.grants);
+  return {
+    ...pruneEmpty({
+      ...sr.rest,
+      ...(sr.id ? { id: sr.id } : {}),
+      kind: "subrace",
+      name: sr.name.trim(),
+      source: HOMEBREW,
+      edition: form.edition,
+      text: sr.text,
+      size: sr.size,
+      replaces: sr.replaces,
+      replaces_text: sr.replacesText,
+    }),
+    grants,
+    choices,
+  };
 };
 
-// "Walk 30 ft, Fly 60 ft (hover)" — nulls skipped
-export const formatSpeed = (speed) => {
-  if (!speed) return "";
-  const parts = [];
-  const modes = ["walk", "fly", "swim", "climb", "burrow"];
-  for (const m of modes) {
-    const v = speed[m];
-    if (v == null) continue;
-    let s = `${cap(m)} ${v} ft`;
-    if (m === "fly" && speed.hover) s += " (hover)";
-    parts.push(s);
-  }
-  return parts.join(", ");
-};
+/* ─── race ↔ form ────────────────────────────────────────────────── */
 
-// "Darkvision 60 ft, Tremorsense 30 ft"
-export const formatSenses = (senses) => {
-  if (!senses) return "";
-  const parts = [];
-  for (const k of ["darkvision", "tremorsense", "blindsight", "truesight"]) {
-    if (senses[k] != null) parts.push(`${cap(k)} ${senses[k]} ft`);
-  }
-  return parts.join(", ");
-};
+export const emptyRaceForm = () => ({
+  ...emptyHeaderForm(),
+  size: ["medium"],
+  creatureTypes: ["humanoid"],
+  grants: { ...emptyGrantsForm(), speed: { walk: 30 } },
+  subraces: [],
+  features: [],
+});
 
-// Short header: "Humanoid • Medium" / "Humanoid • Small or Medium"
-export const formatTypeAndSize = (race) => {
-  const t = race?.creature_type ? cap(race.creature_type) : "";
-  const sizes = (race?.sizes || []).map((s) => SIZE_LABELS[s] || cap(s));
-  const sizeStr = sizes.length === 0 ? "" : sizes.join(" or ");
-  return [t, sizeStr].filter(Boolean).join(" • ");
-};
+export function raceToForm(race, { copy = false } = {}) {
+  return {
+    ...headerToForm(race, { copy }),
+    size: race.size || [],
+    creatureTypes: race.creature_types || ["humanoid"],
+    grants: grantsToForm(race.grants, race.choices),
+    subraces: (race.subraces || []).map((sr) => subraceToForm(sr, copy)),
+    features: race.features || [],
+  };
+}
 
-export const cap = (s) =>
-  s ? String(s)[0].toUpperCase() + String(s).slice(1) : s;
-
-// Pretty-print a ChooseBlock, e.g. "Choose 1 of STR/DEX/CON, +2 each"
-export const formatChoose = (choose, { abilityMode = false } = {}) => {
-  if (!choose) return "";
-  const opts = Array.isArray(choose.options) ? choose.options : [choose.options];
-  const cleaned = opts
-    .filter(Boolean)
-    .map((o) => (abilityMode ? (ABILITY_LABELS[o] || o.toUpperCase()) : o));
-  const body = cleaned.length ? cleaned.join(" / ") : "any";
-  const amt = choose.amount != null ? `, +${choose.amount} each` : "";
-  return `Choose ${choose.count} of ${body}${amt}`;
-};
+export function formToRace(form, original) {
+  const { grants, choices } = formToGrants(form.grants);
+  return {
+    ...pruneEmpty({
+      ...formToHeader(form, "race", original),
+      subraces: form.subraces.filter((sr) => sr.name.trim()).map((sr) => formToSubrace(sr, form)),
+      features: form.features,
+    }),
+    size: form.size.length ? form.size : ["medium"],
+    creature_types: form.creatureTypes.length ? form.creatureTypes : ["humanoid"],
+    grants,
+    choices,
+  };
+}

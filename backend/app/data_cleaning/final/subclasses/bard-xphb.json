@@ -1,0 +1,146 @@
+[
+    {
+        "id": "bard-xphb:lore-xphb",
+        "kind": "subclass",
+        "name": "College of Lore",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "College of Lore"
+        },
+        "text": "*Plumb the Depths of Magical Knowledge*\n\nBards of the College of Lore collect spells and secrets from diverse sources, such as scholarly tomes, mystical rites, and peasant tales. The college's members gather in libraries and universities to share their lore with one another. They also meet at festivals or affairs of state, where they can expose corruption, unravel lies, and poke fun at self-important figures of authority.",
+        "class_id": "bard-xphb",
+        "short_name": "Lore",
+        "choices": [
+            {
+                "type": "pool",
+                "id": "spells",
+                "label": "Spells",
+                "grant": "spells",
+                "count": 1,
+                "from": {
+                    "spell_level": [
+                        0,
+                        1,
+                        2,
+                        3
+                    ],
+                    "class": [
+                        "cleric",
+                        "druid",
+                        "wizard"
+                    ]
+                },
+                "how": "prepared",
+                "at": 6
+            },
+            {
+                "type": "pool",
+                "id": "spells_2",
+                "label": "Spells",
+                "grant": "spells",
+                "count": 1,
+                "from": {
+                    "spell_level": [
+                        0,
+                        1,
+                        2,
+                        3
+                    ],
+                    "class": [
+                        "cleric",
+                        "druid",
+                        "wizard"
+                    ]
+                },
+                "how": "prepared",
+                "at": 6
+            }
+        ],
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "bard-xphb:lore-xphb:bonus-proficiencies",
+                    "bard-xphb:lore-xphb:cutting-words"
+                ]
+            },
+            {
+                "level": 6,
+                "features": [
+                    "bard-xphb:lore-xphb:magical-discoveries"
+                ]
+            },
+            {
+                "level": 14,
+                "features": [
+                    "bard-xphb:lore-xphb:peerless-skill"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "bard-xphb:lore-xphb:bonus-proficiencies",
+                "name": "Bonus Proficiencies",
+                "level": 3,
+                "text": "You gain proficiency with three skills of your choice.",
+                "srd": {
+                    "5.2": "Bonus Proficiencies"
+                },
+                "category": "traits",
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "skills_1",
+                        "label": "Skills",
+                        "grant": "skills",
+                        "count": 3,
+                        "from": "all_skills"
+                    }
+                ]
+            },
+            {
+                "id": "bard-xphb:lore-xphb:cutting-words",
+                "name": "Cutting Words",
+                "level": 3,
+                "text": "You learn to use your wit to supernaturally distract, confuse, and otherwise sap the confidence and competence of others. When a creature that you can see within 60 feet of yourself makes a damage roll or succeeds on an ability check or attack roll, you can take a Reaction to expend one use of your Bardic Inspiration; roll your Bardic Inspiration die, and subtract the number rolled from the creature's roll, reducing the damage or potentially turning the success into a failure.",
+                "srd": {
+                    "5.2": "Cutting Words"
+                },
+                "category": "reactions",
+                "action": {
+                    "range": "60 feet"
+                },
+                "consumes": {
+                    "resource": "bardic_inspiration",
+                    "amount": 1
+                }
+            },
+            {
+                "id": "bard-xphb:lore-xphb:magical-discoveries",
+                "name": "Magical Discoveries",
+                "level": 6,
+                "text": "You learn two spells of your choice. These spells can come from the Cleric, Druid, or Wizard spell list or any combination thereof (see a class's section for its spell list). A spell you choose must be a cantrip or a spell for which you have spell slots, as shown in the Bard Features table.\n\nYou always have the chosen spells prepared, and whenever you gain a Bard level, you can replace one of the spells with another spell that meets these requirements.",
+                "srd": {
+                    "5.2": "Magical Discoveries"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "bard-xphb:lore-xphb:peerless-skill",
+                "name": "Peerless Skill",
+                "level": 14,
+                "text": "When you make an ability check or attack roll and fail, you can expend one use of Bardic Inspiration; roll the Bardic Inspiration die, and add the number rolled to the d20, potentially turning a failure into a success. On a failure, the Bardic Inspiration isn't expended.",
+                "srd": {
+                    "5.2": "Peerless Skill"
+                },
+                "category": "traits",
+                "consumes": {
+                    "resource": "bardic_inspiration",
+                    "amount": 1
+                }
+            }
+        ],
+        "resources": []
+    }
+]

@@ -1,0 +1,703 @@
+[
+    {
+        "id": "rogue-xphb",
+        "kind": "class",
+        "name": "Rogue",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Rogue"
+        },
+        "hit_die": "d8",
+        "hp": {
+            "first": "8 + con_mod",
+            "per_level": "5 + con_mod"
+        },
+        "primary_ability": [
+            [
+                "dex"
+            ]
+        ],
+        "saves": [
+            "dex",
+            "int"
+        ],
+        "grants": {
+            "tools": [
+                "thieves_tools"
+            ],
+            "weapons": [
+                "martial_weapons_finesse_or_light",
+                "simple_weapons"
+            ],
+            "armor": [
+                "light"
+            ]
+        },
+        "choices": [
+            {
+                "type": "pool",
+                "id": "skills",
+                "label": "Skills",
+                "grant": "skills",
+                "count": 4,
+                "from": [
+                    "acrobatics",
+                    "athletics",
+                    "deception",
+                    "insight",
+                    "intimidation",
+                    "investigation",
+                    "perception",
+                    "persuasion",
+                    "sleight_of_hand",
+                    "stealth"
+                ]
+            },
+            {
+                "type": "bundle",
+                "id": "starting_equipment",
+                "label": "Starting Equipment",
+                "options": [
+                    {
+                        "id": "a",
+                        "label": "Leather Armor, 2 Dagger, Shortsword, Shortbow, Arrows (20), Quiver, Thieves' Tools, Burglar's Pack, 8 GP",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "leather-armor-xphb",
+                                    "qty": 1
+                                },
+                                {
+                                    "item": "dagger-xphb",
+                                    "qty": 2
+                                },
+                                {
+                                    "item": "shortsword-xphb",
+                                    "qty": 1
+                                },
+                                {
+                                    "item": "shortbow-xphb",
+                                    "qty": 1
+                                },
+                                {
+                                    "item": "arrows-20-xphb",
+                                    "qty": 1
+                                },
+                                {
+                                    "item": "quiver-xphb",
+                                    "qty": 1
+                                },
+                                {
+                                    "item": "thieves-tools-xphb",
+                                    "qty": 1
+                                },
+                                {
+                                    "item": "burglars-pack-xphb",
+                                    "qty": 1
+                                }
+                            ],
+                            "currency": {
+                                "gp": 8
+                            }
+                        }
+                    },
+                    {
+                        "id": "b",
+                        "label": "100 GP",
+                        "grants": {
+                            "currency": {
+                                "gp": 100
+                            }
+                        }
+                    }
+                ]
+            }
+        ],
+        "multiclass": {
+            "requires": [
+                {
+                    "dex": 13
+                }
+            ],
+            "grants": {
+                "tools": [
+                    "thieves_tools"
+                ],
+                "armor": [
+                    "light"
+                ]
+            },
+            "choices": [
+                {
+                    "type": "pool",
+                    "id": "skills",
+                    "label": "Skills",
+                    "grant": "skills",
+                    "count": 1,
+                    "from": [
+                        "acrobatics",
+                        "athletics",
+                        "deception",
+                        "insight",
+                        "intimidation",
+                        "investigation",
+                        "perception",
+                        "persuasion",
+                        "sleight_of_hand",
+                        "stealth"
+                    ]
+                }
+            ]
+        },
+        "subclass": {
+            "title": "Rogue Subclass",
+            "level": 3,
+            "text": "You gain a Rogue subclass of your choice. A subclass is a specialization that grants you features at certain Rogue levels. For the rest of your career, you gain each of your subclass's features that are of your Rogue level or lower."
+        },
+        "columns": [
+            {
+                "id": "sneak_attack",
+                "name": "Sneak Attack",
+                "values": {
+                    "1": "1d6",
+                    "3": "2d6",
+                    "5": "3d6",
+                    "7": "4d6",
+                    "9": "5d6",
+                    "11": "6d6",
+                    "13": "7d6",
+                    "15": "8d6",
+                    "17": "9d6",
+                    "19": "10d6"
+                }
+            }
+        ],
+        "progression": [
+            {
+                "level": 1,
+                "features": [
+                    "rogue-xphb:expertise",
+                    "rogue-xphb:sneak-attack",
+                    "rogue-xphb:thieves-cant",
+                    "rogue-xphb:weapon-mastery"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "weapon_mastery_1",
+                        "label": "Weapon Mastery",
+                        "grant": "weapon_masteries",
+                        "count": 2,
+                        "from": "proficient_weapons"
+                    }
+                ]
+            },
+            {
+                "level": 2,
+                "features": [
+                    "rogue-xphb:cunning-action"
+                ]
+            },
+            {
+                "level": 3,
+                "features": [
+                    "rogue-xphb:steady-aim"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "rogue_subclass_3",
+                        "label": "Rogue Subclass",
+                        "grant": "subclass",
+                        "count": 1,
+                        "from": "rogue-xphb"
+                    }
+                ]
+            },
+            {
+                "level": 4,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "ability_score_improvement_4",
+                        "label": "Ability Score Improvement",
+                        "grant": "feats",
+                        "count": 1,
+                        "from": {
+                            "category": [
+                                "general"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 5,
+                "features": [
+                    "rogue-xphb:cunning-strike",
+                    "rogue-xphb:uncanny-dodge"
+                ]
+            },
+            {
+                "level": 6,
+                "upgrades": [
+                    "rogue-xphb:expertise"
+                ]
+            },
+            {
+                "level": 7,
+                "features": [
+                    "rogue-xphb:evasion",
+                    "rogue-xphb:reliable-talent"
+                ]
+            },
+            {
+                "level": 8,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "ability_score_improvement_8",
+                        "label": "Ability Score Improvement",
+                        "grant": "feats",
+                        "count": 1,
+                        "from": {
+                            "category": [
+                                "general"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 9,
+                "subclass_features": true
+            },
+            {
+                "level": 10,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "ability_score_improvement_10",
+                        "label": "Ability Score Improvement",
+                        "grant": "feats",
+                        "count": 1,
+                        "from": {
+                            "category": [
+                                "general"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 11,
+                "features": [
+                    "rogue-xphb:improved-cunning-strike"
+                ]
+            },
+            {
+                "level": 12,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "ability_score_improvement_12",
+                        "label": "Ability Score Improvement",
+                        "grant": "feats",
+                        "count": 1,
+                        "from": {
+                            "category": [
+                                "general"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 13,
+                "subclass_features": true
+            },
+            {
+                "level": 14,
+                "features": [
+                    "rogue-xphb:devious-strikes"
+                ]
+            },
+            {
+                "level": 15,
+                "features": [
+                    "rogue-xphb:slippery-mind"
+                ]
+            },
+            {
+                "level": 16,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "ability_score_improvement_16",
+                        "label": "Ability Score Improvement",
+                        "grant": "feats",
+                        "count": 1,
+                        "from": {
+                            "category": [
+                                "general"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 17,
+                "subclass_features": true
+            },
+            {
+                "level": 18,
+                "features": [
+                    "rogue-xphb:elusive"
+                ]
+            },
+            {
+                "level": 19,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "epic_boon_19",
+                        "label": "Epic Boon",
+                        "grant": "feats",
+                        "count": 1,
+                        "from": {
+                            "category": [
+                                "epic_boon"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 20,
+                "features": [
+                    "rogue-xphb:stroke-of-luck"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "rogue-xphb:expertise",
+                "name": "Expertise",
+                "level": 1,
+                "text": "You gain Expertise in two of your skill proficiencies of your choice. Sleight of Hand and Stealth are recommended if you have proficiency in them.\n\nAt Rogue level 6, you gain Expertise in two more of your skill proficiencies of your choice.\n\n**Expertise.** You gain Expertise in two of your Skill Proficiencies of your choice.",
+                "srd": {
+                    "5.2": "Expertise"
+                },
+                "category": "traits",
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "expertise_1",
+                        "label": "Expertise",
+                        "grant": "expertise",
+                        "count": 2,
+                        "from": "proficient_skills"
+                    },
+                    {
+                        "type": "pool",
+                        "id": "expertise_2",
+                        "label": "Expertise",
+                        "grant": "expertise",
+                        "count": 2,
+                        "from": "proficient_skills",
+                        "at": 6
+                    }
+                ]
+            },
+            {
+                "id": "rogue-xphb:sneak-attack",
+                "name": "Sneak Attack",
+                "level": 1,
+                "text": "You know how to strike subtly and exploit a foe's distraction. Once per turn, you can deal an extra 1d6 damage to one creature you hit with an attack roll if you have Advantage on the roll and the attack uses a Finesse or a Ranged weapon. The extra damage's type is the same as the weapon's type.\n\nYou don't need Advantage on the attack roll if at least one of your allies is within 5 feet of the target, the ally doesn't have the Incapacitated condition, and you don't have Disadvantage on the attack roll.\n\nThe extra damage increases as you gain Rogue levels, as shown in the Sneak Attack column of the Rogue Features table.",
+                "srd": {
+                    "5.2": "Sneak Attack"
+                },
+                "category": "traits",
+                "action": {
+                    "attack": {
+                        "kind": "any",
+                        "damage": [
+                            {
+                                "dice": "sneak_attack",
+                                "type": "weapon",
+                                "condition": "on a qualifying hit"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "rogue-xphb:thieves-cant",
+                "name": "Thieves' Cant",
+                "level": 1,
+                "text": "You picked up various languages in the communities where you plied your roguish talents. You know Thieves' Cant and one other language of your choice, which you choose from the language tables in chapter 2.",
+                "srd": {
+                    "5.2": "Thieves' Cant"
+                },
+                "category": "traits",
+                "grants": {
+                    "languages": [
+                        "thieves_cant"
+                    ]
+                },
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "languages_1",
+                        "label": "Languages",
+                        "grant": "languages",
+                        "count": 1,
+                        "from": "all_languages"
+                    }
+                ]
+            },
+            {
+                "id": "rogue-xphb:weapon-mastery",
+                "name": "Weapon Mastery",
+                "level": 1,
+                "text": "Your training with weapons allows you to use the mastery properties of two kinds of weapons of your choice with which you have proficiency, such as Daggers and Shortbows.\n\nWhenever you finish a Long Rest, you can change the kinds of weapons you chose. For example, you could switch to using the mastery properties of Scimitars and Shortswords.",
+                "srd": {
+                    "5.2": "Weapon Mastery"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "rogue-xphb:cunning-action",
+                "name": "Cunning Action",
+                "level": 2,
+                "text": "Your quick thinking and agility allow you to move and act quickly. On your turn, you can take one of the following actions as a Bonus Action: Dash, Disengage, or Hide.",
+                "srd": {
+                    "5.2": "Cunning Action"
+                },
+                "category": "bonus_actions"
+            },
+            {
+                "id": "rogue-xphb:steady-aim",
+                "name": "Steady Aim",
+                "level": 3,
+                "text": "As a Bonus Action, you give yourself Advantage on your next attack roll on the current turn. You can use this feature only if you haven't moved during this turn, and after you use it, your Speed is 0 until the end of the current turn.",
+                "srd": {
+                    "5.2": "Steady Aim"
+                },
+                "category": "bonus_actions"
+            },
+            {
+                "id": "rogue-xphb:cunning-strike",
+                "name": "Cunning Strike",
+                "level": 5,
+                "text": "You've developed cunning ways to use your Sneak Attack. When you deal Sneak Attack damage, you can add one of the following Cunning Strike effects. Each effect has a die cost, which is the number of Sneak Attack damage dice you must forgo to add the effect. You remove the die before rolling, and the effect occurs immediately after the attack's damage is dealt. For example, if you add the Poison effect, remove 1d6 from the Sneak Attack's damage before rolling.\n\nIf a Cunning Strike effect requires a saving throw, the DC equals 8 plus your Dexterity modifier and Proficiency Bonus.",
+                "srd": {
+                    "5.2": "Cunning Strike"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "rogue-xphb:poison-cost-1d6",
+                "name": "Poison (Cost: 1d6)",
+                "level": 5,
+                "text": "You add a toxin to your strike, forcing the target to make a Constitution saving throw. On a failed save, the target has the Poisoned condition for 1 minute. At the end of each of its turns, the Poisoned target repeats the save, ending the effect on itself on a success.\n\nTo use this effect, you must have a Poisoner's Kit on your person.",
+                "parent": "rogue-xphb:cunning-strike",
+                "srd": {
+                    "5.2": "Poison (Cost: 1d6)"
+                },
+                "category": "traits",
+                "action": {
+                    "save": {
+                        "ability": "con",
+                        "dc": "8 + dex_mod + pb",
+                        "on_success": "none",
+                        "conditions": [
+                            "poisoned"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "rogue-xphb:trip-cost-1d6",
+                "name": "Trip (Cost: 1d6)",
+                "level": 5,
+                "text": "If the target is Large or smaller, it must succeed on a Dexterity saving throw or have the Prone condition.",
+                "parent": "rogue-xphb:cunning-strike",
+                "srd": {
+                    "5.2": "Trip (Cost: 1d6)"
+                },
+                "category": "traits",
+                "action": {
+                    "save": {
+                        "ability": "dex",
+                        "dc": "8 + dex_mod + pb",
+                        "on_success": "none",
+                        "conditions": [
+                            "prone"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "rogue-xphb:withdraw-cost-1d6",
+                "name": "Withdraw (Cost: 1d6)",
+                "level": 5,
+                "text": "Immediately after the attack, you move up to half your Speed without provoking Opportunity Attacks.",
+                "parent": "rogue-xphb:cunning-strike",
+                "srd": {
+                    "5.2": "Withdraw (Cost: 1d6)"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "rogue-xphb:uncanny-dodge",
+                "name": "Uncanny Dodge",
+                "level": 5,
+                "text": "When an attacker that you can see hits you with an attack roll, you can take a Reaction to halve the attack's damage against you (round down).",
+                "srd": {
+                    "5.2": "Uncanny Dodge"
+                },
+                "category": "reactions"
+            },
+            {
+                "id": "rogue-xphb:evasion",
+                "name": "Evasion",
+                "level": 7,
+                "text": "You can nimbly dodge out of the way of certain dangers. When you're subjected to an effect that allows you to make a Dexterity saving throw to take only half damage, you instead take no damage if you succeed on the saving throw and only half damage if you fail. You can't use this feature if you have the Incapacitated condition.",
+                "srd": {
+                    "5.2": "Evasion"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "rogue-xphb:reliable-talent",
+                "name": "Reliable Talent",
+                "level": 7,
+                "text": "Whenever you make an ability check that uses one of your skill or tool proficiencies, you can treat a d20 roll of 9 or lower as a 10.",
+                "srd": {
+                    "5.2": "Reliable Talent"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "rogue-xphb:improved-cunning-strike",
+                "name": "Improved Cunning Strike",
+                "level": 11,
+                "text": "You can use up to two Cunning Strike effects when you deal Sneak Attack damage, paying the die cost for each effect.",
+                "srd": {
+                    "5.2": "Improved Cunning Strike"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "rogue-xphb:devious-strikes",
+                "name": "Devious Strikes",
+                "level": 14,
+                "text": "You've practiced new ways to use your Sneak Attack deviously. The following effects are now among your Cunning Strike options.",
+                "srd": {
+                    "5.2": "Devious Strikes"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "rogue-xphb:daze-cost-2d6",
+                "name": "Daze (Cost: 2d6)",
+                "level": 14,
+                "text": "The target must succeed on a Constitution saving throw, or on its next turn, it can do only one of the following: move or take an action or a Bonus Action.",
+                "parent": "rogue-xphb:devious-strikes",
+                "srd": {
+                    "5.2": "Daze (Cost: 2d6)"
+                },
+                "category": "traits",
+                "action": {
+                    "save": {
+                        "ability": "con",
+                        "on_success": "none"
+                    }
+                }
+            },
+            {
+                "id": "rogue-xphb:knock-out-cost-6d6",
+                "name": "Knock Out (Cost: 6d6)",
+                "level": 14,
+                "text": "The target must succeed on a Constitution saving throw, or it has the Unconscious condition for 1 minute or until it takes any damage. The Unconscious target repeats the save at the end of each of its turns, ending the effect on itself on a success.",
+                "parent": "rogue-xphb:devious-strikes",
+                "srd": {
+                    "5.2": "Knock Out (Cost: 6d6)"
+                },
+                "category": "traits",
+                "action": {
+                    "save": {
+                        "ability": "con",
+                        "on_success": "none",
+                        "conditions": [
+                            "unconscious"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "rogue-xphb:obscure-cost-3d6",
+                "name": "Obscure (Cost: 3d6)",
+                "level": 14,
+                "text": "The target must succeed on a Dexterity saving throw, or it has the Blinded condition until the end of its next turn.",
+                "parent": "rogue-xphb:devious-strikes",
+                "srd": {
+                    "5.2": "Obscure (Cost: 3d6)"
+                },
+                "category": "traits",
+                "action": {
+                    "save": {
+                        "ability": "dex",
+                        "on_success": "none",
+                        "conditions": [
+                            "blinded"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "rogue-xphb:slippery-mind",
+                "name": "Slippery Mind",
+                "level": 15,
+                "text": "Your cunning mind is exceptionally difficult to control. You gain proficiency in Wisdom and Charisma saving throws.",
+                "srd": {
+                    "5.2": "Slippery Mind"
+                },
+                "category": "traits",
+                "grants": {
+                    "saves": [
+                        "wis",
+                        "cha"
+                    ]
+                }
+            },
+            {
+                "id": "rogue-xphb:elusive",
+                "name": "Elusive",
+                "level": 18,
+                "text": "You're so evasive that attackers rarely gain the upper hand against you. No attack roll can have Advantage against you unless you have the Incapacitated condition.",
+                "srd": {
+                    "5.2": "Elusive"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "rogue-xphb:stroke-of-luck",
+                "name": "Stroke of Luck",
+                "level": 20,
+                "text": "You have a marvelous knack for succeeding when you need to. If you fail a D20 Test, you can turn the roll into a 20.\n\nOnce you use this feature, you can't use it again until you finish a Short or Long Rest.",
+                "srd": {
+                    "5.2": "Stroke of Luck"
+                },
+                "category": "traits",
+                "uses": {
+                    "max": 1,
+                    "reset": "short"
+                }
+            }
+        ],
+        "resources": []
+    }
+]

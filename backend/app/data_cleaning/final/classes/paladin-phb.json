@@ -1,0 +1,828 @@
+[
+    {
+        "id": "paladin-phb",
+        "kind": "class",
+        "name": "Paladin",
+        "source": "PHB",
+        "edition": "classic",
+        "srd": {
+            "5.1": "Paladin"
+        },
+        "reprinted_as": [
+            "paladin-xphb"
+        ],
+        "hit_die": "d10",
+        "hp": {
+            "first": "10 + con_mod",
+            "per_level": "6 + con_mod"
+        },
+        "saves": [
+            "wis",
+            "cha"
+        ],
+        "grants": {
+            "weapons": [
+                "simple_weapons",
+                "martial_weapons"
+            ],
+            "armor": [
+                "light",
+                "medium",
+                "heavy",
+                "shields"
+            ],
+            "items": [
+                {
+                    "item": "chain-mail-phb",
+                    "qty": 1
+                }
+            ]
+        },
+        "choices": [
+            {
+                "type": "pool",
+                "id": "skills",
+                "label": "Skills",
+                "grant": "skills",
+                "count": 2,
+                "from": [
+                    "athletics",
+                    "insight",
+                    "intimidation",
+                    "medicine",
+                    "persuasion",
+                    "religion"
+                ]
+            },
+            {
+                "type": "bundle",
+                "id": "starting_equipment",
+                "label": "Starting Equipment",
+                "options": [
+                    {
+                        "id": "a",
+                        "label": "Martial Weapons, Shield",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "shield-phb",
+                                    "qty": 1
+                                }
+                            ]
+                        },
+                        "choices": [
+                            {
+                                "type": "pool",
+                                "id": "items",
+                                "label": "Martial Weapons",
+                                "grant": "items",
+                                "count": 1,
+                                "from": "martial_weapons"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "b",
+                        "label": "Martial Weapons",
+                        "choices": [
+                            {
+                                "type": "pool",
+                                "id": "items_2",
+                                "label": "Martial Weapons",
+                                "grant": "items",
+                                "count": 2,
+                                "from": "martial_weapons"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "bundle",
+                "id": "starting_equipment_2",
+                "label": "Starting Equipment",
+                "options": [
+                    {
+                        "id": "a",
+                        "label": "5 Javelin",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "javelin-phb",
+                                    "qty": 5
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "id": "b",
+                        "label": "Simple Melee Weapons",
+                        "choices": [
+                            {
+                                "type": "pool",
+                                "id": "items_3",
+                                "label": "Simple Melee Weapons",
+                                "grant": "items",
+                                "count": 1,
+                                "from": "simple_melee_weapons"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "bundle",
+                "id": "starting_equipment_3",
+                "label": "Starting Equipment",
+                "options": [
+                    {
+                        "id": "a",
+                        "label": "Priest's Pack",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "priests-pack-phb",
+                                    "qty": 1
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "id": "b",
+                        "label": "Explorer's Pack",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "explorers-pack-phb",
+                                    "qty": 1
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "type": "pool",
+                "id": "items_4",
+                "label": "Holy Symbols",
+                "grant": "items",
+                "count": 1,
+                "from": "holy_symbols"
+            }
+        ],
+        "starting_gold": "5d4 × 10",
+        "multiclass": {
+            "requires": [
+                {
+                    "str": 13,
+                    "cha": 13
+                }
+            ],
+            "grants": {
+                "weapons": [
+                    "simple_weapons",
+                    "martial_weapons"
+                ],
+                "armor": [
+                    "light",
+                    "medium",
+                    "shields"
+                ]
+            }
+        },
+        "subclass": {
+            "title": "Sacred Oath",
+            "level": 3,
+            "text": "When you reach 3rd level, you swear the oath that binds you as a paladin forever. Up to this time you have been in a preparatory stage, committed to the path but not yet sworn to it. Now you choose from the list of available oaths.\n\nYour choice grants you features at 3rd level and again at 7th, 15th, and 20th level. Those features include oath spells and the Channel Divinity feature.\n\n**Oath Spells.** Each oath has a list of associated spells. You gain access to these spells at the levels specified in the oath description. Once you gain access to an oath spell, you always have it prepared. Oath spells don't count against the number of spells you can prepare each day.\n\nIf you gain an oath spell that doesn't appear on the paladin spell list, the spell is nonetheless a paladin spell for you.\n\n**Breaking Your Oath.** A paladin tries to hold to the highest standards of conduct, but even the most virtuous paladin is fallible. Sometimes the right path proves too demanding, sometimes a situation calls for the lesser of two evils, and sometimes the heat of emotion causes a paladin to transgress his or her oath.\n\nA paladin who has broken a vow typically seeks absolution from a cleric who shares his or her faith or from another paladin of the same order. The paladin might spend an all-night vigil in prayer as a sign of penitence, or undertake a fast or similar act of self-denial. After a rite of confession and forgiveness, the paladin starts fresh.\n\nIf a paladin willfully violates his or her oath and shows no sign of repentance, the consequences can be more serious. At the DM's discretion, an impenitent paladin might be forced to abandon this class and adopt another, or perhaps to take the Oathbreaker paladin option that appears in the Dungeon Master's Guide."
+        },
+        "spellcasting": {
+            "ability": "cha",
+            "progression": "half",
+            "list": "paladin-phb",
+            "prepared": "max(1, class_level / 2 + cha_mod)",
+            "change": "long_rest",
+            "slots": {
+                "2": [
+                    2
+                ],
+                "3": [
+                    3
+                ],
+                "5": [
+                    4,
+                    2
+                ],
+                "7": [
+                    4,
+                    3
+                ],
+                "9": [
+                    4,
+                    3,
+                    2
+                ],
+                "11": [
+                    4,
+                    3,
+                    3
+                ],
+                "13": [
+                    4,
+                    3,
+                    3,
+                    1
+                ],
+                "15": [
+                    4,
+                    3,
+                    3,
+                    2
+                ],
+                "17": [
+                    4,
+                    3,
+                    3,
+                    3,
+                    1
+                ],
+                "19": [
+                    4,
+                    3,
+                    3,
+                    3,
+                    2
+                ]
+            }
+        },
+        "progression": [
+            {
+                "level": 1,
+                "features": [
+                    "paladin-phb:divine-sense",
+                    "paladin-phb:lay-on-hands"
+                ]
+            },
+            {
+                "level": 2,
+                "features": [
+                    "paladin-phb:divine-smite",
+                    "paladin-phb:fighting-style",
+                    "paladin-phb:spellcasting"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "fighting_style_2",
+                        "label": "Fighting Style",
+                        "grant": "optional_features",
+                        "count": 1,
+                        "from": {
+                            "feature_type": [
+                                "fighting_style"
+                            ],
+                            "class": [
+                                "paladin"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 3,
+                "features": [
+                    "paladin-phb:divine-health"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "sacred_oath_3",
+                        "label": "Sacred Oath",
+                        "grant": "subclass",
+                        "count": 1,
+                        "from": "paladin-phb"
+                    }
+                ]
+            },
+            {
+                "level": 4,
+                "features": [],
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_4",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_4",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_4",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 5,
+                "features": [
+                    "paladin-phb:extra-attack"
+                ]
+            },
+            {
+                "level": 6,
+                "features": [
+                    "paladin-phb:aura-of-protection"
+                ]
+            },
+            {
+                "level": 7,
+                "subclass_features": true
+            },
+            {
+                "level": 8,
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_8",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_8",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_8",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 10,
+                "features": [
+                    "paladin-phb:aura-of-courage"
+                ]
+            },
+            {
+                "level": 11,
+                "features": [
+                    "paladin-phb:improved-divine-smite"
+                ]
+            },
+            {
+                "level": 12,
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_12",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_12",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_12",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 14,
+                "features": [
+                    "paladin-phb:cleansing-touch"
+                ]
+            },
+            {
+                "level": 15,
+                "subclass_features": true
+            },
+            {
+                "level": 16,
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_16",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_16",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_16",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 18,
+                "features": [
+                    "paladin-phb:aura-improvements"
+                ]
+            },
+            {
+                "level": 19,
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_19",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_19",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_19",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 20,
+                "subclass_features": true
+            }
+        ],
+        "features": [
+            {
+                "id": "paladin-phb:divine-sense",
+                "name": "Divine Sense",
+                "level": 1,
+                "text": "The presence of strong evil registers on your senses like a noxious odor, and powerful good rings like heavenly music in your ears. As an action, you can open your awareness to detect such forces. Until the end of your next turn, you know the location of any celestial, fiend, or undead within 60 feet of you that is not behind total cover. You know the type (celestial, fiend, or undead) of any being whose presence you sense, but not its identity (the vampire Count Strahd von Zarovich, for instance). Within the same radius, you also detect the presence of any place or object that has been consecrated or desecrated, as with the Hallow spell.\n\nYou can use this feature a number of times equal to 1 + your Charisma modifier. When you finish a long rest, you regain all expended uses.",
+                "srd": {
+                    "5.1": "Divine Sense"
+                },
+                "category": "actions",
+                "uses": {
+                    "max": "1 + cha_mod",
+                    "reset": "long"
+                },
+                "action": {
+                    "range": "60 feet"
+                }
+            },
+            {
+                "id": "paladin-phb:lay-on-hands",
+                "name": "Lay on Hands",
+                "level": 1,
+                "text": "Your blessed touch can heal wounds. You have a pool of healing power that replenishes when you take a long rest. With that pool, you can restore a total number of hit points equal to your paladin level × 5.\n\nAs an action, you can touch a creature and draw power from the pool to restore a number of hit points to that creature, up to the maximum amount remaining in your pool.\n\nAlternatively, you can expend 5 hit points from your pool of healing to cure the target of one disease or neutralize one poison affecting it. You can cure multiple diseases and neutralize multiple poisons with a single use of Lay on Hands, expending hit points separately for each one.\n\nThis feature has no effect on undead and constructs.",
+                "srd": {
+                    "5.1": "Lay on Hands"
+                },
+                "category": "actions",
+                "action": {
+                    "range": "touch",
+                    "heal": "5 * class_level"
+                }
+            },
+            {
+                "id": "paladin-phb:divine-smite",
+                "name": "Divine Smite",
+                "level": 2,
+                "text": "Starting at 2nd level, when you hit a creature with a melee weapon attack, you can expend one spell slot to deal radiant damage to the target, in addition to the weapon's damage. The extra damage is 2d8 for a 1st-level spell slot, plus 1d8 for each spell level higher than 1st, to a maximum of 5d8. The damage increases by 1d8 if the target is an undead or a fiend, to a maximum of 6d8.",
+                "srd": {
+                    "5.1": "Divine Smite"
+                },
+                "category": "traits",
+                "action": {
+                    "attack": {
+                        "kind": "melee",
+                        "damage": [
+                            {
+                                "dice": "2d8",
+                                "type": "radiant"
+                            },
+                            {
+                                "dice": "1d8",
+                                "type": "radiant",
+                                "condition": "extra against Undead or fiends"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "paladin-phb:fighting-style",
+                "name": "Fighting Style",
+                "level": 2,
+                "text": "At 2nd level, you adopt a particular style of fighting as your specialty. Choose one of the following options. You can't take the same Fighting Style option more than once, even if you get to choose again.\n\n- Defense\n- Dueling\n- Great Weapon Fighting\n- Protection\n- Blessed Warrior\n- Blind Fighting\n- Interception",
+                "srd": {
+                    "5.1": "Fighting Style"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "paladin-phb:spellcasting",
+                "name": "Spellcasting",
+                "level": 2,
+                "text": "By 2nd level, you have learned to draw on divine magic through meditation and prayer to cast spells as a cleric does. See chapter 10 for the general rules of spellcasting and chapter 11 for the paladin spell list.\n\n**Preparing and Casting Spells.** The Paladin table shows how many spell slots you have to cast your paladin spells. To cast one of your paladin spells of 1st level or higher, you must expend a slot of the spell's level or higher. You regain all expended spell slots when you finish a long rest.\n\nYou prepare the list of paladin spells that are available for you to cast, choosing from the paladin spell list. When you do so, choose a number of paladin spells equal to your Charisma modifier + half your paladin level, rounded down (minimum of one spell). The spells must be of a level for which you have spell slots.\n\nFor example, if you are a 5th-level paladin, you have four 1st-level and two 2nd-level spell slots. With a Charisma of 14, your list of prepared spells can include four spells of 1st or 2nd-level, in any combination. If you prepare the 1st-level spell Cure Wounds, you can cast it using a 1st-level or a 2nd-level slot. Casting the spell doesn't remove it from your list of prepared spells.\n\nYou can change your list of prepared spells when you finish a long rest. Preparing a new list of paladin spells requires time spent in prayer and meditation: at least 1 minute per spell level for each spell on your list.\n\n**Spellcasting Ability.** Charisma is your spellcasting ability for your paladin spells, since their power derives from the strength of your convictions. You use your Charisma whenever a spell refers to your spellcasting ability. In addition, you use your Charisma modifier when setting the saving throw DC for a paladin spell you cast and when making an attack roll with one.\n\n**Spell save DC** = 8 + your proficiency bonus + your Charisma modifier\n\n**Spell attack modifier** = your proficiency bonus + your Charisma modifier\n\n**Spellcasting Focus.** You can use a holy symbol as a spellcasting focus for your paladin spells.",
+                "srd": {
+                    "5.1": "Spellcasting"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "paladin-phb:divine-health",
+                "name": "Divine Health",
+                "level": 3,
+                "text": "By 3rd level, the divine magic flowing through you makes you immune to disease.",
+                "srd": {
+                    "5.1": "Divine Health"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "paladin-phb:extra-attack",
+                "name": "Extra Attack",
+                "level": 5,
+                "text": "Beginning at 5th level, you can attack twice, instead of once, whenever you take the Attack action on your turn.",
+                "srd": {
+                    "5.1": "Extra Attack"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "paladin-phb:aura-of-protection",
+                "name": "Aura of Protection",
+                "level": 6,
+                "text": "Starting at 6th level, whenever you or a friendly creature within 10 feet of you must make a saving throw, the creature gains a bonus to the saving throw equal to your Charisma modifier (with a minimum bonus of +1). You must be conscious to grant this bonus.\n\nAt 18th level, the range of this aura increases to 30 feet.",
+                "srd": {
+                    "5.1": "Aura of Protection"
+                },
+                "category": "traits",
+                "modifiers": [
+                    {
+                        "target": "save.str",
+                        "add": "max(1, cha_mod)"
+                    },
+                    {
+                        "target": "save.dex",
+                        "add": "max(1, cha_mod)"
+                    },
+                    {
+                        "target": "save.con",
+                        "add": "max(1, cha_mod)"
+                    },
+                    {
+                        "target": "save.int",
+                        "add": "max(1, cha_mod)"
+                    },
+                    {
+                        "target": "save.wis",
+                        "add": "max(1, cha_mod)"
+                    },
+                    {
+                        "target": "save.cha",
+                        "add": "max(1, cha_mod)"
+                    }
+                ]
+            },
+            {
+                "id": "paladin-phb:aura-of-courage",
+                "name": "Aura of Courage",
+                "level": 10,
+                "text": "Starting at 10th level, you and friendly creatures within 10 feet of you can't be frightened while you are conscious.\n\nAt 18th level, the range of this aura increases to 30 feet.",
+                "srd": {
+                    "5.1": "Aura of Courage"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "paladin-phb:improved-divine-smite",
+                "name": "Improved Divine Smite",
+                "level": 11,
+                "text": "By 11th level, you are so suffused with righteous might that all your melee weapon strikes carry divine power with them. Whenever you hit a creature with a melee weapon, the creature takes an extra 1d8 radiant damage.",
+                "srd": {
+                    "5.1": "Improved Divine Smite"
+                },
+                "category": "traits",
+                "action": {
+                    "attack": {
+                        "kind": "melee",
+                        "damage": [
+                            {
+                                "dice": "1d8",
+                                "type": "radiant"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "paladin-phb:cleansing-touch",
+                "name": "Cleansing Touch",
+                "level": 14,
+                "text": "Beginning at 14th level, you can use your action to end one spell on yourself or on one willing creature that you touch.\n\nYou can use this feature a number of times equal to your Charisma modifier (a minimum of once). You regain expended uses when you finish a long rest.",
+                "srd": {
+                    "5.1": "Cleansing Touch"
+                },
+                "category": "actions",
+                "uses": {
+                    "max": "max(1, cha_mod)",
+                    "reset": "long"
+                },
+                "action": {
+                    "range": "touch"
+                }
+            },
+            {
+                "id": "paladin-phb:aura-improvements",
+                "name": "Aura improvements",
+                "level": 18,
+                "text": "At 18th level, the range of your Aura of Protection increases to 30 feet.",
+                "srd": {
+                    "5.1": "Aura improvements"
+                },
+                "category": "traits"
+            }
+        ],
+        "resources": [
+            {
+                "id": "healing_power",
+                "name": "Healing Power",
+                "max": "5 * class_level",
+                "reset": "long"
+            }
+        ]
+    }
+]

@@ -1,396 +1,494 @@
-// ─── Sources ───────────────────────────────────────────────────────
-export const SOURCE_NAMES = {
-  XMM: "Monster Manual One",
-  MM: "Monster Manual Classic",
-  XPHB: "Player Handbook One",
-  PHB: "Player Handbook Classic",
-  XDMG: "Dungeon Master's Guide One",
-  DMG: "Dungeon Master's Guide Classic",
-  TCE: "Tasha's Cauldron of Everything",
-  XGE: "Xanathar's Guide to Everything",
-  VGM: "Volo's Guide to Monsters",
-  MTF: "Mordenkainen's Tome of Foes",
-  MPMM: "Mordenkainen Presents: Monsters of the Multiverse",
-  FTD: "Fizban's Treasury of Dragons",
-  BGG: "Bigby Presents: Glory of the Giants",
-  ERLW: "Eberron: Rising from the Last War",
-  EGW: "Explorer's Guide to Wildemount",
-  MOT: "Mythic Odysseys of Theros",
-  VRGR: "Van Richten's Guide to Ravenloft",
-  SCC: "Strixhaven: A Curriculum of Chaos",
-  GGR: "Guildmasters Guide to Ravnica",
-  ToA: "Tomb of Annihilation",
-  WBtW: "The Wild Beyond the Witchlight",
-  BMT: "The Book of Many Things",
-  SatO: "Sigil and the Outlands",
-  GoS: "Ghosts of Saltmarsh",
-  BGDIA: "Baldur's Gate: Descent into Avernus",
-  DSotDQ: "Dragonlance: Shadow of the Dragon Queen",
-  IDRotF: "Icewind Dale: Rime of the Frostmaiden",
-  CoS: "Curse of Strahd",
-  PotA: "Princes of the Apocalypse",
-};
-export const formatSource = (s) => SOURCE_NAMES[s] || s;
+import {
+  ABILITIES, ABILITY_NAMES, ABILITY_SHORT, CATEGORY_LABELS,
+  cap, titleCase, labelFromId, plural, formatValue, formatSize, nameFromId, pruneEmpty, valueFromText, textFromValue,
+} from "../catalogueHelpers";
+import { headerToForm, formToHeader } from "../catalogueForms";
 
-// ─── Shared ────────────────────────────────────────────────────────
-export const ABILITY_ORDER = ["str", "dex", "con", "int", "wis", "cha"];
-export const ABILITY = {
-  str: "STR", dex: "DEX", con: "CON",
-  int: "INT", wis: "WIS", cha: "CHA",
-};
-const cap = (s) =>
-  typeof s === "string" && s ? s[0].toUpperCase() + s.slice(1) : s;
-export const titleCase = (s) =>
-  String(s || "")
-    .split(" ")
-    .map((w) => (w ? w[0].toUpperCase() + w.slice(1).toLowerCase() : w))
-    .join(" ");
+/* ═══════════════════════════════════════════════════════════════════
+   monsterHelpers — the Monsters catalogue: statblock wording, the
+   values its filters offer, and the record ↔ form conversion.
 
-// effects may be entirely absent (monster has no actions/traits/etc.)
-export const getEffectCategories = (monster) => monster?.effects || {};
+   A monster record (data-model §4h) is a whole statblock: size, type,
+   AC, HP, speed, abilities, saves, skills, senses, defenses, languages,
+   CR, `features` (traits, actions, … each with its numbers in
+   `action`), `spellcasting` blocks, gear (`items`) and `variants`.
+   It has no `text` of its own: every feature carries its own.
+   ═══════════════════════════════════════════════════════════════════ */
 
-// ─── CR / Level ────────────────────────────────────────────────────
+// ─── Challenge ─────────────────────────────────────────────────────
+
 export const CR_OPTIONS = [
-  "0", "1/8", "1/4", "1/2",
-  "1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+  "0", "1/8", "1/4", "1/2", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
   "11", "12", "13", "14", "15", "16", "17", "18", "19", "20",
   "21", "22", "23", "24", "25", "26", "27", "28", "29", "30",
 ];
-const CR_FRAC = { "0": 0, "1/8": 0.125, "1/4": 0.25, "1/2": 0.5 };
-export const crToNumber = (cr) => {
-  if (cr == null) return null;
-  if (cr in CR_FRAC) return CR_FRAC[cr];
+
+// XP and proficiency bonus by CR (the DMG table), for a new statblock.
+const CR_XP = [10, 25, 50, 100, 200, 450, 700, 1100, 1800, 2300, 2900, 3900, 5000, 5900, 7200, 8400, 10000, 11500,
+  13000, 15000, 18000, 20000, 22000, 25000, 33000, 41000, 50000, 62000, 75000, 90000, 105000, 120000, 135000, 155000];
+export const crStats = (cr) => {
+  const i = CR_OPTIONS.indexOf(String(cr));
+  if (i < 0) return null;
+  const n = crNumber(cr);
+  return { xp: CR_XP[i], pb: n < 1 ? 2 : Math.floor((n - 1) / 4) + 2 }; // CR 1–4 +2, 5–8 +3 … 29–30 +9
+};
+
+const FRACTIONS = { "1/8": 0.125, "1/4": 0.25, "1/2": 0.5 };
+export const crNumber = (cr) => {
+  if (cr == null || cr === "unknown") return null;
+  if (cr in FRACTIONS) return FRACTIONS[cr];
   const n = Number(cr);
   return Number.isFinite(n) ? n : null;
 };
 
-export const monsterUsesLevel = (m) => m?.cr?.level != null;
+// A number to sort and range-filter by: the CR, or the level of a
+// level-based statblock (sidekicks, Dragonlance NPCs).
+export const monsterDifficulty = (m) => crNumber(m?.cr?.cr) ?? (m?.level != null ? Number(m.level) : null);
 
-// "CR 21" for cr-based, "Level 4" for level-based.
-export const formatCR = (cr) => {
-  if (!cr) return "";
-  if (cr.level != null) return `Level ${cr.level}`;
-  if (cr.base != null) return `CR ${cr.base}`;
-  return "";
+// "CR 17" · "CR 1/4" · "Level 4" · ""
+export const formatCR = (m) =>
+  m?.cr?.cr && m.cr.cr !== "unknown" ? `CR ${m.cr.cr}` : m?.level != null ? `Level ${m.level}` : "";
+
+const thousands = (n) => new Intl.NumberFormat("en-US").format(n);
+
+// "17 (XP 18,000, or 20,000 in lair; PB +6)"
+export const formatChallenge = (m) => {
+  const c = m?.cr;
+  if (!c?.cr) return "";
+  if (c.cr === "unknown") return "Unknown";
+  const xp = [];
+  if (c.xp != null) xp.push(`XP ${thousands(c.xp)}`);
+  if (c.xp_lair != null) xp.push(`or ${thousands(c.xp_lair)} in lair${c.lair && c.lair !== c.cr ? ` (CR ${c.lair})` : ""}`);
+  if (c.xp_coven != null) xp.push(`or ${thousands(c.xp_coven)} in a coven${c.coven ? ` (CR ${c.coven})` : ""}`);
+  const pb = c.pb != null ? `PB +${c.pb}` : m.pb_note ? `PB ${m.pb_note}` : "";
+  const bits = [xp.join(", "), pb].filter(Boolean).join("; ");
+  return bits ? `${c.cr} (${bits})` : c.cr;
 };
 
-export const formatXp = (xp) =>
-  xp == null ? "" : new Intl.NumberFormat("en-US").format(xp);
+// ─── Type line ─────────────────────────────────────────────────────
 
-// Full challenge line for the popup body.
-export const formatChallenge = (cr) => {
-  if (!cr) return "";
-  if (cr.level != null) {
-    return cr.pb != null ? `${cr.level} (PB +${cr.pb})` : String(cr.level);
-  }
-  if (cr.base != null) {
-    const extras = [];
-    if (cr.xp != null) extras.push(`${formatXp(cr.xp)} XP`);
-    if (cr.pb != null) extras.push(`PB +${cr.pb}`);
-    return extras.length ? `${cr.base} (${extras.join(", ")})` : `${cr.base}`;
-  }
-  return "";
+export const monsterTypes = (m) => {
+  const t = m?.creature_type?.type;
+  return Array.isArray(t) ? t : t ? [t] : [];
 };
 
-// ─── Type / subtype ────────────────────────────────────────────────
-export const getMonsterType = (m) => {
-  const t = m?.type;
-  if (!t) return "";
-  return typeof t === "string" ? t : t.type || "";
-};
-export const getMonsterSubtypes = (m) => {
-  const t = m?.type;
-  if (!t || typeof t === "string") return [];
-  return Array.isArray(t.tags) ? t.tags : [];
-};
-
-export const formatTypeLine = (m) => {
-  const size = (m?.size || []).join(" or ");
-  const type = getMonsterType(m);
-  const subs = getMonsterSubtypes(m);
-  const subStr = subs.length ? ` (${subs.join(", ")})` : "";
-  const align = (m?.alignment || []).join(", ");
-  const head = [size, type].filter(Boolean).join(" ");
-  return `${head}${subStr}${align ? `, ${align}` : ""}`;
+// "Huge Dragon (Chromatic), Chaotic Evil" · "Medium Swarm of Tiny Beasts, Unaligned"
+export const monsterSubtitle = (m) => {
+  const ct = m?.creature_type || {};
+  const types = monsterTypes(m).map(titleCase).join(" or ");
+  const what = ct.swarm_of ? `Swarm of ${titleCase(ct.swarm_of)} ${types}s` : types;
+  const tags = ct.tags?.length ? ` (${ct.tags.map(titleCase).join(", ")})` : "";
+  const note = ct.note ? ` ${ct.note}` : "";
+  const align = (m?.alignment || []).map(titleCase).join(" or ");
+  const head = `${[formatSize(m?.size), what].filter(Boolean).join(" ")}${tags}${note}`;
+  return [head, [m?.alignment_prefix, align].filter(Boolean).join(" ")].filter(Boolean).join(", ");
 };
 
-// ─── AC ────────────────────────────────────────────────────────────
-export const formatAC = (ac) => {
-  if (!Array.isArray(ac) || !ac.length) return "";
-  return ac
+// The short note on a list row: "CR 17 · Dragon".
+export const monsterRowMeta = (m) => [formatCR(m), monsterTypes(m).map(titleCase).join("/")].filter(Boolean).join(" · ");
+
+// ─── Statblock lines ───────────────────────────────────────────────
+
+export const abilityMod = (score) => (Number.isFinite(Number(score)) && score !== null ? Math.floor((Number(score) - 10) / 2) : null);
+export const signed = (v) => (typeof v === "number" ? `${v >= 0 ? "+" : ""}${v}` : formatValue(v));
+
+// "19 (natural armor)", "10 in humanoid form, 11 (natural armor) in boar or hybrid form"
+export const formatAC = (ac) =>
+  (ac || [])
     .map((a) => {
-      let s = String(a.value);
-      const from = (a.from || []).join(", ");
-      if (from) s += ` (${from})`;
+      if (a.special && a.value == null) return a.special;
+      let s = String(a.value ?? "");
+      if (a.from?.length) s += ` (${a.from.join(", ")})`;
       if (a.condition) s += ` ${a.condition}`;
-      if (a.special) s += ` — ${a.special}`;
+      if (a.special) s += ` (${a.special})`;
+      return s;
+    })
+    .join(", ");
+
+// "256 (19d12 + 133)"
+export const formatHP = (hp) => {
+  if (!hp) return "";
+  if (hp.special && hp.average == null) return hp.special;
+  const s = hp.formula ? `${hp.average} (${hp.formula})` : String(hp.average ?? "");
+  return hp.temporary ? `${s} temporary` : s;
+};
+
+const SPEED_ORDER = ["walk", "burrow", "climb", "fly", "swim"];
+export const SPEED_MODES = SPEED_ORDER;
+
+// "40 ft., Climb 40 ft., Fly 80 ft. (hover)"
+export const formatSpeed = (speed) => {
+  if (!speed) return "";
+  const notes = speed.notes || {};
+  return SPEED_ORDER.filter((k) => speed[k] != null)
+    .map((k) => {
+      let s = k === "walk" ? `${speed[k]} ft.` : `${cap(k)} ${speed[k]} ft.`;
+      if (k === "fly" && speed.hover) s += " (hover)";
+      if (notes[k]) s += ` (${notes[k]})`;
       return s;
     })
     .join(", ");
 };
 
-// ─── HP ────────────────────────────────────────────────────────────
-export const formatHP = (hp) => {
-  if (!hp) return "";
-  if (hp.average != null && hp.formula) return `${hp.average} (${hp.formula})`;
-  if (hp.average != null) return String(hp.average);
-  if (hp.special) return hp.special;
-  return "";
+export const formatInitiative = (init, m) => {
+  if (!init) return "";
+  const dex = abilityMod(m?.abilities?.dex);
+  const score = typeof init.bonus === "number" ? ` (${10 + init.bonus})` : "";
+  const shown = init.bonus ?? dex;
+  if (shown == null) return "";
+  return `${signed(shown)}${score}${init.advantage ? ", with advantage" : ""}`;
 };
 
-// ─── Speed ─────────────────────────────────────────────────────────
-export const formatSpeed = (speed) => {
-  if (!speed || typeof speed !== "object") return "";
-  const parts = [];
-  for (const [key, val] of Object.entries(speed)) {
-    if (val == null) continue;
-    if (key === "walk") parts.unshift(`${val} ft.`);
-    else parts.push(`${key} ${val} ft.`);
-  }
-  return parts.join(", ");
+// "Perception +13, Stealth +6"
+export const formatSkills = (skills) =>
+  Object.entries(skills || {}).map(([k, v]) => `${labelFromId(k)} ${signed(v)}`).join(", ");
+
+// "Dex +6, Wis +7"
+export const formatSaves = (saves) =>
+  ABILITIES.filter((a) => saves?.[a] != null).map((a) => `${ABILITY_SHORT[a]} ${signed(saves[a])}`).join(", ");
+
+// "Darkvision 120 ft., Blindsight 60 ft.; Passive Perception 23"
+export const formatSenses = (m) => {
+  const s = m?.senses || {};
+  const list = ["blindsight", "darkvision", "tremorsense", "truesight"].filter((k) => s[k] != null).map((k) => `${cap(k)} ${s[k]} ft.`);
+  if (s.notes) list.push(s.notes);
+  const passive = m?.passive_perception != null ? `Passive Perception ${m.passive_perception}` : "";
+  return [list.join(", "), passive].filter(Boolean).join("; ");
 };
 
-// ─── Initiative ────────────────────────────────────────────────────
-export const formatInitiative = (init) => {
-  if (!init || init.total == null) return "";
-  const sign = init.total >= 0 ? "+" : "";
-  return `${sign}${init.total}${init.advantage ? " (adv.)" : ""}`;
-};
-
-// ─── Senses ────────────────────────────────────────────────────────
-export const formatSenses = (senses, passive) => {
-  const parts = [];
-  if (senses && typeof senses === "object") {
-    for (const [k, v] of Object.entries(senses)) {
-      if (v == null) continue;
-      parts.push(`${cap(k)} ${v} ft.`);
-    }
-  }
-  if (passive != null) parts.push(`Passive Perception ${passive}`);
-  return parts.join(", ");
-};
-
-export const getMonsterSenses = (m) =>
-  m?.senses && typeof m.senses === "object" ? Object.keys(m.senses) : [];
-
-// ─── Skills ────────────────────────────────────────────────────────
-export const formatSkills = (skill) => {
-  if (!skill || typeof skill !== "object") return "";
-  return Object.entries(skill)
-    .map(([k, v]) => `${titleCase(k)} ${v}`)
-    .join(", ");
-};
-
-// ─── Damage / condition resistances/immunities ─────────────────────
-export const formatTypedBlock = (block) => {
+// A defense block → "Fire, Cold; Bludgeoning, Piercing, Slashing from nonmagical attacks"
+export const formatDefense = (block) => {
   if (!block) return "";
   const parts = [];
-  if (Array.isArray(block.types) && block.types.length)
-    parts.push(block.types.map(cap).join(", "));
-  if (Array.isArray(block.conditional)) {
-    for (const c of block.conditional) {
-      const t = (c.types || []).map(cap).join(", ");
-      parts.push(`${t} ${c.note || ""}`.trim());
-    }
+  if (block.types?.length) parts.push(block.types.map(cap).join(", "));
+  for (const c of block.conditional || []) {
+    const types = (c.types || []).map(cap).join(", ");
+    if (!c.note) parts.push(types);
+    else parts.push(/:\s*$/.test(c.note) ? `${c.note} ${types}` : `${types} ${c.note}`);
   }
   if (block.special) parts.push(block.special);
   return parts.filter(Boolean).join("; ");
 };
 
-// ─── Languages ─────────────────────────────────────────────────────
-export const formatLanguages = (langs) =>
-  Array.isArray(langs) && langs.length ? langs.map(titleCase).join(", ") : "—";
+const SUMMON_WORDS = (s, index) =>
+  s.spell ? `${nameFromId(s.spell, index)}${s.spell_level ? ` (level ${s.spell_level})` : ""}` : s.class ? `the ${nameFromId(s.class, index)}` : "";
 
-// ─── Charges → label ───────────────────────────────────────────────
-export const formatCharges = (c) => {
-  if (!c) return "";
-  const { reset_type, recharge_dice, per_rest_count, max_charges } = c;
-  if (reset_type === "recharge_dice") {
-    if (!recharge_dice) return "(Recharge)";
-    const d = String(recharge_dice);
-    if (d === "6") return "(Recharge 6)";
-    if (/^\d$/.test(d)) return `(Recharge ${d}-6)`;
-    return `(Recharge ${d})`;
-  }
-  if (reset_type === "long_rest")
-    return `(${per_rest_count ?? max_charges}/Day)`;
-  if (reset_type === "short_rest")
-    return `(${per_rest_count ?? max_charges}/Short Rest)`;
-  if (reset_type === "special") return "(Special)";
-  return "";
+// The rows under the ability table, in the 2024 order.
+export const statRows = (m, index) => {
+  const rows = [];
+  const add = (label, value) => value && rows.push({ label, value });
+  const d = m.defenses || {};
+  add("Skills", formatSkills(m.skills) + (m.skills_note ? ` (${m.skills_note})` : ""));
+  add("Vulnerabilities", formatDefense(d.vulnerable));
+  add("Resistances", formatDefense(d.resist));
+  add("Immunities", [formatDefense(d.immune), formatDefense(d.condition_immune)].filter(Boolean).join("; "));
+  add("Senses", formatSenses(m));
+  add("Languages", (m.languages || []).join(", ") || (m.kind === "monster" ? "None" : ""));
+  add("CR", formatChallenge(m));
+  if (m.level != null) add("Level", `${m.level}${m.pb_note ? ` (PB ${m.pb_note})` : ""}`);
+  add("Gear", (m.items || []).map((it) => `${it.qty > 1 ? `${it.qty} ` : ""}${nameFromId(it.item, index)}`).join(", "));
+  if (m.summoned_by) add("Summoned by", SUMMON_WORDS(m.summoned_by, index));
+  return rows;
 };
 
-// ─── Spellcasting ──────────────────────────────────────────────────
-export const formatSpellMeta = (block) => {
-  if (!block) return "";
-  const parts = [];
-  if (block.ability) parts.push(ABILITY[block.ability] || block.ability.toUpperCase());
-  if (block.save_dc != null) parts.push(`DC ${block.save_dc}`);
-  if (block.spell_attack_bonus != null) {
-    const s = block.spell_attack_bonus >= 0 ? "+" : "";
-    parts.push(`${s}${block.spell_attack_bonus} to hit`);
-  }
-  return parts.join(", ");
-};
+// ─── Features ──────────────────────────────────────────────────────
 
-export const formatSpellEntry = (sp) => {
-  if (!sp) return "";
-  const name = titleCase(sp.name);
-  return sp.note ? `${name} (${sp.note})` : name;
-};
-
-// ─── Effect categories — fixed display order ───────────────────────
-export const EFFECT_SECTIONS = [
-  { key: "traits",            title: "Traits" },
-  { key: "actions",           title: "Actions" },
-  { key: "bonus_actions",     title: "Bonus Actions" },
-  { key: "reactions",         title: "Reactions" },
-  { key: "legendary_actions", title: "Legendary Actions" },
-  { key: "mythic_actions",    title: "Mythic Actions" },
-  { key: "lair_actions",      title: "Lair Actions" },
-  { key: "regional_effects",  title: "Regional Effects" },
+export const SECTIONS = [
+  "traits", "actions", "bonus_actions", "reactions", "legendary_actions", "mythic_actions", "lair_actions", "regional_effects",
 ];
+export const SECTION_TITLES = {
+  traits: "Traits", actions: "Actions", bonus_actions: "Bonus Actions", reactions: "Reactions",
+  legendary_actions: "Legendary Actions", mythic_actions: "Mythic Actions", lair_actions: "Lair Actions",
+  regional_effects: "Regional Effects",
+};
+export const CATEGORY_OPTIONS = SECTIONS.map((value) => ({ value, label: CATEGORY_LABELS[value] || titleCase(value) }));
 
-// ─── Generic collector ─────────────────────────────────────────────
-export const collectUnique = (rows, key) => {
-  const set = new Set();
-  for (const r of rows || []) {
-    const v = r?.[key];
-    if (v == null) continue;
-    if (Array.isArray(v)) v.forEach((x) => x && set.add(x));
-    else set.add(v);
+// "(Recharge 5–6)" · "(3/Day, or 4/Day in Lair)" · "(Costs 2 Actions)"
+export const featureUsesWords = (f) => {
+  const bits = [];
+  const u = f.uses;
+  if (u?.reset === "recharge") bits.push(u.recharge && u.recharge < 6 ? `Recharge ${u.recharge}–6` : `Recharge ${u.recharge ?? 6}`);
+  else if (u) {
+    const per = { long: "Day", short: "Short Rest", turn: "Turn" }[u.reset] || titleCase(u.reset || "");
+    bits.push(`${formatValue(u.max)}/${per}${u.max_in_lair != null ? `, or ${formatValue(u.max_in_lair)}/${per} in Lair` : ""}`);
   }
-  return [...set].sort((a, b) => String(a).localeCompare(String(b)));
+  if (f.cost > 1) bits.push(`Costs ${f.cost} Actions`);
+  return bits.length ? `(${bits.join("; ")})` : "";
 };
 
-// ─── Movement modes ────────────────────────────────────────────────
-// Returns array of movement modes present on monster (only numeric, >0).
-// Skips boolean modifiers like `hover`.
-export const getMonsterMovements = (m) => {
-  const speed = m?.speed;
-  if (!speed || typeof speed !== "object") return [];
-  return Object.keys(speed).filter(
-    (k) => typeof speed[k] === "number" && speed[k] > 0
-  );
+// What 5etools calls each spell group, for a block's `hidden` list.
+const groupKind = (g) =>
+  g.how === "at_will" ? "will"
+  : g.how === "legendary" ? "legendary"
+  : g.how === "recharge" ? "recharge"
+  : g.per === "day" ? "daily"
+  : g.per === "long" ? "restLong"
+  : g.per === "short" ? "rest"
+  : g.slots != null || g.level != null ? "spells"
+  : g.how || "";
+
+const PER_WORDS = { day: "Day", long: "Long Rest", short: "Short Rest", year: "Year" };
+
+// "At will" · "2/Day each" · "Level 1 (4 slots)" · "Levels 1–3 (2 level 3 slots)" · "Cantrips"
+export const spellGroupLabel = (g) => {
+  if (g.how === "at_will") return g.level === 0 ? "Cantrips (at will)" : "At will";
+  if (g.how === "legendary") return `Legendary action${g.uses ? ` (${g.uses})` : ""}`;
+  if (g.how === "recharge") return `Recharge${g.uses ? ` ${g.uses}` : ""}`;
+  if (g.how === "charges") return g.uses ? plural(g.uses, "charge") : "Charges";
+  if (g.how === "ritual") return "Rituals";
+  if (g.uses != null) return `${g.uses}/${PER_WORDS[g.per] || titleCase(g.per || "day")}${g.each ? " each" : ""}`;
+  if (g.level === 0) return "Cantrips";
+  if (g.level != null) {
+    const range = g.lower && g.lower !== g.level;
+    const slots = g.slots != null ? ` (${plural(g.slots, range ? `level ${g.level} slot` : "slot")})` : "";
+    return range ? `Levels ${g.lower}–${g.level}${slots}` : `Level ${g.level}${slots}`;
+  }
+  return titleCase(g.how || "");
 };
 
-// ─── Sortable difficulty value ─────────────────────────────────────
-// Unified numeric value for sorting — works for both CR and level monsters.
-// Returns null when neither is set (those rows go to the end of sorted lists).
-export const getMonsterDifficulty = (m) => {
-  const cr = m?.cr;
-  if (!cr) return null;
-  if (cr.level != null) return cr.level;
-  return crToNumber(cr.base);
-};
+// The groups a card lists: the ones the book doesn't already spell out in the text.
+export const shownSpellGroups = (block) => (block.groups || []).filter((g) => !(block.hidden || []).includes(groupKind(g)));
 
-// ─── Conditions inflicted / forced saves ───────────────────────────
-export const getMonsterConditionInflict = (m) =>
-  Array.isArray(m?.condition_inflict) ? m.condition_inflict : [];
+export const spellEntryWords = (s, index) =>
+  s.spell ? `${nameFromId(s.spell, index)}${s.note ? ` ${s.note}` : ""}` : s.text || "";
 
-export const getMonsterForcedSaves = (m) =>
-  Array.isArray(m?.forced_saving_throw) ? m.forced_saving_throw : [];
-
-// Short labels for saves: "constitution" → "CON"
-const SAVE_ABBR = {
-  strength: "STR", dexterity: "DEX", constitution: "CON",
-  intelligence: "INT", wisdom: "WIS", charisma: "CHA",
-};
-export const formatSaveLabel = (s) =>
-  SAVE_ABBR[String(s || "").toLowerCase()] || titleCase(s);
-
-
-
-// ─── CR → XP / PB table (xp & pb auto-derived from base CR) ────────
-export const CR_STATS = {
-  "0":  { xp: 10,     pb: 2 },
-  "1/8":{ xp: 25,     pb: 2 },
-  "1/4":{ xp: 50,     pb: 2 },
-  "1/2":{ xp: 100,    pb: 2 },
-  "1":  { xp: 200,    pb: 2 },
-  "2":  { xp: 450,    pb: 2 },
-  "3":  { xp: 700,    pb: 2 },
-  "4":  { xp: 1100,   pb: 2 },
-  "5":  { xp: 1800,   pb: 3 },
-  "6":  { xp: 2300,   pb: 3 },
-  "7":  { xp: 2900,   pb: 3 },
-  "8":  { xp: 3900,   pb: 3 },
-  "9":  { xp: 5000,   pb: 4 },
-  "10": { xp: 5900,   pb: 4 },
-  "11": { xp: 7200,   pb: 4 },
-  "12": { xp: 8400,   pb: 4 },
-  "13": { xp: 10000,  pb: 5 },
-  "14": { xp: 11500,  pb: 5 },
-  "15": { xp: 13000,  pb: 5 },
-  "16": { xp: 15000,  pb: 5 },
-  "17": { xp: 18000,  pb: 6 },
-  "18": { xp: 20000,  pb: 6 },
-  "19": { xp: 22000,  pb: 6 },
-  "20": { xp: 25000,  pb: 6 },
-  "21": { xp: 33000,  pb: 7 },
-  "22": { xp: 41000,  pb: 7 },
-  "23": { xp: 50000,  pb: 7 },
-  "24": { xp: 62000,  pb: 7 },
-  "25": { xp: 75000,  pb: 8 },
-  "26": { xp: 90000,  pb: 8 },
-  "27": { xp: 105000, pb: 8 },
-  "28": { xp: 120000, pb: 8 },
-  "29": { xp: 135000, pb: 9 },
-  "30": { xp: 155000, pb: 9 },
-};
-export const crStats = (base) => CR_STATS[String(base)] || null;
-
-// ─── Derived ability math (frontend auto-fill) ─────────────────────
-export const abilityMod = (score) => {
-  const n = Number(score);
-  return Number.isFinite(n) ? Math.floor((n - 10) / 2) : 0;
-};
-export const signed = (n) => {
-  const v = Number(n) || 0;
-  return `${v >= 0 ? "+" : ""}${v}`;
-};
-
-// Expands {abil:{score,proficient}} → full ability_scores block.
-// expertise is always false; save = mod + (proficient ? pb : 0).
-export const buildAbilityScores = (input, pb) => {
-  const out = {};
-  const p = Number(pb) || 0;
-  for (const a of ABILITY_ORDER) {
-    const row = input?.[a] || {};
-    const score = Number(row.score);
-    const s = Number.isFinite(score) ? score : 10;
-    const mod = abilityMod(s);
-    const proficient = !!row.proficient;
-    out[a] = { score: s, proficient, expertise: false, mod, save: mod + (proficient ? p : 0) };
+/* The statblock's sections in order: { key, title, features, spellcasting }.
+   Toggle-variant features are left out (they're in their variant's text),
+   and so are options with a `parent` (the parent's text has them). */
+export const monsterSections = (m) => {
+  const out = [];
+  for (const key of SECTIONS) {
+    const features = (m.features || []).filter((f) => (f.category || "traits") === key && !f.variant && !f.parent);
+    const spellcasting = (m.spellcasting || []).filter((b) => (b.display_as || "traits") === key);
+    if (features.length || spellcasting.length) out.push({ key, title: SECTION_TITLES[key], features, spellcasting });
   }
   return out;
 };
 
-// 10 + Perception skill bonus if set, else 10 + WIS mod.
-export const computePassivePerception = (abilityScores, skill) => {
-  const perc = skill?.perception;
-  if (perc != null && perc !== "") {
-    const n = Number(String(perc).trim());
-    if (Number.isFinite(n)) return 10 + n;
-  }
-  return 10 + (abilityScores?.wis?.mod ?? 0);
+// "Legendary Action Uses: 3 (4 in Lair)."
+export const legendaryUsesWords = (m) => {
+  const l = m.legendary_actions;
+  if (!l?.uses) return "";
+  return `Legendary Action Uses: ${l.uses}${l.uses_in_lair ? ` (${l.uses_in_lair} in Lair)` : ""}.`;
 };
 
-// ─── Recursively strip null/undefined/""/[]/{} — keeps 0 and false ─
-export const pruneEmpty = (val) => {
-  if (val === null || val === undefined) return undefined;
-  if (typeof val === "string") return val.trim() === "" ? undefined : val;
-  if (Array.isArray(val)) {
-    const arr = val.map(pruneEmpty).filter((v) => v !== undefined);
-    return arr.length ? arr : undefined;
-  }
-  if (typeof val === "object") {
-    const out = {};
-    for (const [k, v] of Object.entries(val)) {
-      const pv = pruneEmpty(v);
-      if (pv !== undefined) out[k] = pv;
-    }
-    return Object.keys(out).length ? out : undefined;
-  }
-  return val; // number | boolean
+// ─── Filters ───────────────────────────────────────────────────────
+// Every filter value is read from the statblock itself as well as from
+// 5etools' tag lists (`filters`), so a homebrew monster that has no tag
+// lists is still found.
+
+const union = (...lists) => [...new Set(lists.flat().filter(Boolean))];
+
+const allDamage = (m) =>
+  (m.features || []).flatMap((f) => {
+    const a = f.action || {};
+    return [...(a.attack?.damage || []), ...(a.save?.damage || []), ...(a.damage || [])];
+  });
+
+export const monsterDamageDealt = (m) =>
+  union(m.filters?.damage_dealt, allDamage(m).map((d) => d.type).filter((t) => t && t !== "weapon" && t !== "chosen"));
+
+export const monsterConditions = (m) =>
+  union(m.filters?.conditions_inflicted, (m.features || []).flatMap((f) => f.action?.save?.conditions || []));
+
+export const monsterSavesForced = (m) =>
+  union(m.filters?.saves_forced, (m.features || []).map((f) => f.action?.save?.ability));
+
+export const monsterSenses = (m) =>
+  union(m.filters?.senses, Object.keys(m.senses || {}).filter((k) => k !== "notes"));
+
+export const monsterMovement = (m) =>
+  union(m.filters?.movement, ["fly", "swim", "climb", "burrow"].filter((k) => m.speed?.[k]), m.speed?.hover ? ["hover"] : []);
+
+export const monsterDefenses = (m, kind) => {
+  const b = m.defenses?.[kind];
+  return union(b?.types, (b?.conditional || []).flatMap((c) => c.types || []));
 };
+
+export const HAS_LABELS = {
+  legendary: "Legendary actions", lair: "Lair actions", mythic: "Mythic actions", spellcasting: "Spellcasting",
+  reactions: "Reactions", variants: "Variants", version: "A version of another", summon: "A summon",
+  npc: "NPC", named: "Named", familiar: "Familiar", swarm: "Swarm",
+};
+
+export const monsterHas = (m) => {
+  const cats = new Set((m.features || []).map((f) => f.category));
+  const out = [];
+  if (m.legendary_actions || cats.has("legendary_actions")) out.push("legendary");
+  if (cats.has("lair_actions") || m.cr?.xp_lair != null) out.push("lair");
+  if (cats.has("mythic_actions") || m.mythic_encounter) out.push("mythic");
+  if (m.spellcasting?.length) out.push("spellcasting");
+  if (cats.has("reactions")) out.push("reactions");
+  if (m.variants?.length) out.push("variants");
+  if (m.version_of) out.push("version");
+  if (m.summoned_by) out.push("summon");
+  if (m.flags?.npc) out.push("npc");
+  if (m.flags?.named) out.push("named");
+  if (m.flags?.familiar) out.push("familiar");
+  if (m.creature_type?.swarm_of) out.push("swarm");
+  return out;
+};
+
+// ─── Form ──────────────────────────────────────────────────────────
+// The form keeps the editable parts flat; anything it has no field for
+// is carried through in `rest` (or a part's own *Rest), so a copy or an
+// edit never loses data. Features, spellcasting blocks and gear are
+// edited in their record shape.
+
+const HANDLED = new Set([
+  "id", "kind", "name", "source", "edition", "visibility", "text", "aliases", "tags", "created_by",
+  "size", "creature_type", "alignment", "alignment_prefix", "ac", "hp", "speed", "abilities", "saves", "skills",
+  "senses", "passive_perception", "defenses", "languages", "cr", "level", "initiative", "legendary_actions",
+  "features", "spellcasting", "items", "flags", "filters",
+]);
+
+export const DEFENSE_KINDS = ["resist", "immune", "vulnerable", "condition_immune"];
+export const DEFENSE_LABELS = { resist: "Resistances", immune: "Damage immunities", vulnerable: "Vulnerabilities", condition_immune: "Condition immunities" };
+
+const omit = (obj, keys) => Object.fromEntries(Object.entries(obj || {}).filter(([k]) => !keys.includes(k)));
+
+const blankAbilities = () => Object.fromEntries(ABILITIES.map((a) => [a, 10]));
+
+export const emptyMonsterForm = () => ({
+  name: "", edition: "one", visibility: "private", text: "",
+  size: ["medium"],
+  types: ["humanoid"], typeTags: "", swarmOf: "", typeRest: {},
+  alignment: "", alignmentPrefix: "",
+  ac: [{ value: 10, from: "", condition: "", special: "" }],
+  hp: { average: null, formula: "", special: "" }, hpRest: {},
+  speed: { walk: 30 }, hover: false, speedNotes: {},
+  abilities: blankAbilities(),
+  saves: {},
+  skills: [],
+  senses: {}, sensesNotes: "", passive: null,
+  defenses: Object.fromEntries(DEFENSE_KINDS.map((k) => [k, []])), defensesRest: {},
+  languages: "",
+  challenge: "cr", cr: "1", xp: 200, pb: 2, crRest: {}, level: null,
+  initiative: null, initAdvantage: false,
+  legendaryUses: null, legendaryLair: null,
+  features: [],
+  spellcasting: [],
+  items: [],
+  flags: { npc: false, named: false, familiar: false }, flagsRest: {},
+  environment: [], filtersRest: {},
+  rest: {},
+});
+
+export function monsterToForm(m, { copy = false } = {}) {
+  const ct = m.creature_type || {};
+  const defenses = m.defenses || {};
+  return {
+    ...headerToForm(m, { copy }),
+    size: m.size || [],
+    types: monsterTypes(m),
+    typeTags: (ct.tags || []).join(", "),
+    swarmOf: ct.swarm_of || "",
+    typeRest: omit(ct, ["type", "tags", "swarm_of"]),
+    typeIsList: Array.isArray(ct.type),
+    alignment: (m.alignment || []).join(", "),
+    alignmentPrefix: m.alignment_prefix || "",
+    // `fromList` keeps the book's list, since one item can hold a comma ("breastplate, shield").
+    ac: (m.ac || []).map((a) => ({
+      value: a.value ?? null, from: (a.from || []).join(", "), fromList: a.from || [], condition: a.condition || "", special: a.special || "",
+    })),
+    hp: { average: m.hp?.average ?? null, formula: m.hp?.formula || "", special: m.hp?.special || "" },
+    hpRest: omit(m.hp, ["average", "formula", "special"]),
+    speed: omit(m.speed, ["hover", "notes"]),
+    hover: !!m.speed?.hover,
+    speedNotes: m.speed?.notes || {},
+    abilities: m.abilities ? { ...m.abilities } : {},
+    saves: Object.fromEntries(Object.entries(m.saves || {}).map(([k, v]) => [k, textFromValue(v)])),
+    skills: Object.entries(m.skills || {}).map(([skill, v]) => ({ skill, value: textFromValue(v) })),
+    senses: omit(m.senses, ["notes"]),
+    sensesNotes: m.senses?.notes || "",
+    passive: m.passive_perception ?? null,
+    defenses: Object.fromEntries(DEFENSE_KINDS.map((k) => [k, defenses[k]?.types || []])),
+    defensesRest: Object.fromEntries(DEFENSE_KINDS.filter((k) => defenses[k]).map((k) => [k, omit(defenses[k], ["types"])])),
+    languages: (m.languages || []).join("\n"),
+    challenge: m.cr ? "cr" : m.level != null ? "level" : "none",
+    cr: m.cr?.cr || "",
+    xp: m.cr?.xp ?? null,
+    pb: m.cr?.pb ?? null,
+    crRest: omit(m.cr, ["cr", "xp", "pb"]),
+    level: m.level ?? null,
+    initiative: m.initiative?.bonus ?? null,
+    initAdvantage: !!m.initiative?.advantage,
+    hasInitiative: !!m.initiative,
+    legendaryUses: m.legendary_actions?.uses ?? null,
+    legendaryLair: m.legendary_actions?.uses_in_lair ?? null,
+    legendaryRest: omit(m.legendary_actions, ["uses", "uses_in_lair"]),
+    features: (m.features || []).map((f) => ({ ...f })),
+    spellcasting: (m.spellcasting || []).map((b) => ({ ...b, groups: (b.groups || []).map((g) => ({ ...g })) })),
+    items: (m.items || []).map((it) => ({ ...it })),
+    flags: { npc: !!m.flags?.npc, named: !!m.flags?.named, familiar: !!m.flags?.familiar },
+    flagsRest: omit(m.flags, ["npc", "named", "familiar"]),
+    environment: m.filters?.environment || [],
+    filtersRest: omit(m.filters, ["environment"]),
+    rest: Object.fromEntries(Object.entries(m).filter(([k]) => !HANDLED.has(k))),
+  };
+}
+
+const slug = (s) => String(s || "").toLowerCase().replace(/['’]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+
+// New features get an id from their name, unique within the monster.
+const withIds = (features) => {
+  const used = new Set(features.map((f) => f.id).filter(Boolean));
+  return features.map((f) => {
+    if (f.id) return f;
+    const base = slug(f.name) || "feature";
+    let id = base;
+    for (let n = 2; used.has(id); n += 1) id = `${base}-${n}`;
+    used.add(id);
+    return { ...f, id };
+  });
+};
+
+const csv = (s) => String(s || "").split(",").map((x) => x.trim()).filter(Boolean);
+
+export function formToMonster(form, original) {
+  const f = form;
+  const types = f.types.length > 1 || f.typeIsList ? f.types : f.types[0];
+  const notesOrNothing = (o) => (Object.keys(o || {}).length ? o : undefined);
+  const record = {
+    ...formToHeader(f, "monster", original),
+    ...f.rest,
+    size: f.size,
+    creature_type: { ...f.typeRest, type: types, tags: csv(f.typeTags), swarm_of: f.swarmOf || undefined },
+    alignment: csv(f.alignment),
+    alignment_prefix: f.alignmentPrefix.trim() || undefined,
+    ac: f.ac.map((a) => ({
+      value: a.value ?? undefined, from: a.fromList && a.from === a.fromList.join(", ") ? a.fromList : csv(a.from), condition: a.condition.trim() || undefined, special: a.special.trim() || undefined,
+    })),
+    hp: { ...f.hpRest, average: f.hp.average ?? undefined, formula: f.hp.formula.trim() || undefined, special: f.hp.special.trim() || undefined },
+    speed: { ...f.speed, hover: f.hover || undefined, notes: notesOrNothing(f.speedNotes) },
+    abilities: f.abilities,
+    saves: Object.fromEntries(Object.entries(f.saves).map(([k, v]) => [k, valueFromText(v)])),
+    skills: Object.fromEntries(f.skills.filter((s) => s.skill).map((s) => [s.skill, valueFromText(s.value)])),
+    senses: { ...f.senses, notes: f.sensesNotes.trim() || undefined },
+    passive_perception: f.passive ?? undefined,
+    defenses: Object.fromEntries(DEFENSE_KINDS.map((k) => [k, { ...f.defensesRest[k], types: f.defenses[k] }])),
+    languages: f.languages.split("\n").map((l) => l.trim()).filter(Boolean),
+    cr: f.challenge === "cr" && f.cr ? { ...f.crRest, cr: f.cr, xp: f.xp ?? undefined, pb: f.pb ?? undefined } : undefined,
+    level: f.challenge === "level" ? f.level ?? undefined : undefined,
+    initiative: f.initiative != null || f.initAdvantage || f.hasInitiative
+      ? { bonus: f.initiative ?? abilityMod(f.abilities?.dex) ?? 0, advantage: f.initAdvantage || undefined }
+      : undefined,
+    legendary_actions: { ...f.legendaryRest, uses: f.legendaryUses ?? undefined, uses_in_lair: f.legendaryLair ?? undefined },
+    features: withIds(f.features),
+    spellcasting: f.spellcasting,
+    items: f.items,
+    flags: { ...f.flagsRest, npc: f.flags.npc || undefined, named: f.flags.named || undefined, familiar: f.flags.familiar || undefined },
+    filters: { ...f.filtersRest, environment: f.environment },
+  };
+  return pruneEmpty(record);
+}
+
+// ─── Form pieces' blanks ───────────────────────────────────────────
+
+export const emptyFeature = (category = "actions") => ({ name: "", category, text: "" });
+export const emptySpellBlock = () => ({
+  name: "Spellcasting", ability: "int", text: "", display_as: "actions", groups: [{ how: "at_will", spells: [] }],
+});
+
+export const SIZE_OPTIONS = ["tiny", "small", "medium", "large", "huge", "gargantuan"];
+export const ABILITY_LABELS = ABILITY_NAMES;

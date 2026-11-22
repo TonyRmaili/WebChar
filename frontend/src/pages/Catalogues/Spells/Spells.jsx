@@ -1,186 +1,106 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useCatalogueStore } from "../../../store/CatalogueStore";
+import { usePopupStore } from "../../../store/PopupStore";
+import useAuthStore from "../../../store/AuthStore";
 import FilterSection from "../FilterSection";
 import FilterPopup, { FilterButton } from "../FilterPopup";
-import { ErrorLine, LoadingLine, SortControl, Toolbar, chip, searchCls } from "../catalogueStyle";
+import SpellCreatePopup from "./SpellCreatePopup";
+import { ErrorLine, LoadingLine, SortControl, Toolbar, searchCls } from "../catalogueStyle";
+import { CatalogueRow, ChipToggles, FoldChips, useEntryMenu } from "../catalogueParts";
+import { addBtn } from "../../../styles/parchmentForm";
 import {
-  formatSource,
-  collectUnique,
-  getSpellClasses,
-  LEVEL_OPTIONS,
-  formatLevelChip,
-  getSpellDamageTypes,
-  isSpellRitual,
-  isSpellConcentration,
-  getSpellActionType,
-  ACTION_TYPES,
-  COMPONENT_OPTIONS,
+  HOMEBREW, EDITIONS, ABILITY_SHORT, SPELL_SCHOOLS, formatEdition, formatSource, labelFromId, titleCase,
+  collectUnique, toggleIn, matchesQuery, passesAny, byName,
+} from "../catalogueHelpers";
+import {
+  LEVELS, TIME_UNITS, CASTING_LABELS, COMPONENT_LABELS, GIVES_LABELS, formatLevel, spellArea, spellAttack, spellCasting,
+  spellClasses, spellComponents, spellConditions, spellDamage, spellGives, spellRowMeta, spellSaves, spellTimes,
 } from "./spellHelpers";
-import SpellRow from "./SpellRow";
-import { usePopupStore } from "../../../store/PopupStore";
 
-const cap = (s) => (s ? s[0].toUpperCase() + s.slice(1) : s);
-const tidy = (s) => String(s).replace(/_/g, " ");
+const inOrder = (order) => (found) => order.filter((x) => found.includes(x));
 
-// A line of filter words in the filter popup.
-const Words = ({ children }) => <div className="flex flex-wrap gap-x-4 gap-y-1.5">{children}</div>;
-
+/* The Spells catalogue. Every filter offers only values the loaded spells
+   have; damage, saves, conditions and attacks are read from the spell's
+   numbers as well as from the book's tags, so homebrew is found the same
+   way. Class filters by the class's name, whichever book it's from.
+   Sort by level or by name. */
 export default function Spells() {
-  const spellsData = useCatalogueStore((s) => s.spellsData);
+  const spells = useCatalogueStore((s) => s.spells);
   const loading = useCatalogueStore((s) => s.loadingSpells);
-  const error = useCatalogueStore((s) => s.error);
+  const error = useCatalogueStore((s) => s.spellsError);
   const loadSpells = useCatalogueStore((s) => s.loadSpells);
-
-  const spells = spellsData?.spells || [];
-  const classList = spellsData?.class_list || {};
-
-  const [selectedSources, setSelectedSources] = useState([]);
-  const [selectedSchools, setSelectedSchools] = useState([]);
-  const [selectedLevels, setSelectedLevels] = useState([]);
-  const [selectedClasses, setSelectedClasses] = useState([]);
-  const [selectedAreaTags, setSelectedAreaTags] = useState([]);
-  const [selectedDamage, setSelectedDamage] = useState([]);
-  const [selectedComponents, setSelectedComponents] = useState([]);
-  const [selectedActionTypes, setSelectedActionTypes] = useState([]);
-  const [ritualOnly, setRitualOnly] = useState(false);
-  const [concentrationOnly, setConcentrationOnly] = useState(false);
-  const [query, setQuery] = useState("");
-  const [filtersOpen, setFiltersOpen] = useState(false);
-
-  // null | "asc" | "desc"
-  const [sortDir, setSortDir] = useState(null);
+  const deleteSpell = useCatalogueStore((s) => s.deleteSpell);
 
   const openPopup = usePopupStore((s) => s.open);
+  const currentUser = useAuthStore((s) => s.userData?.name);
+
+  const [query, setQuery] = useState("");
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const [sortDir, setSortDir] = useState(null);
+  const [picked, setPicked] = useState({}); // filter key → selected values
+
+  const [form, setForm] = useState(null); // null = closed · {} new · { editing } · { copyFrom }
+  const [openMenu, menu] = useEntryMenu({
+    user: currentUser,
+    onCopy: (sp) => setForm({ copyFrom: sp }),
+    onEdit: (sp) => setForm({ editing: sp }),
+    onDelete: deleteSpell,
+  });
 
   useEffect(() => {
-    loadSpells();
-  }, [loadSpells]);
+    if (!spells?.length) loadSpells();
+  }, [loadSpells]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const sources = useMemo(() => collectUnique(spells, "source"), [spells]);
-  const schools = useMemo(() => collectUnique(spells, "school"), [spells]);
-  const areaTags = useMemo(() => collectUnique(spells, "area_tags"), [spells]);
+  /* Every chip filter: how to read its values from a spell, how to name
+     them, and whether its section starts open. Edition starts on "one". */
+  const FILTERS = useMemo(
+    () => [
+      { key: "edition", title: "Edition", read: (sp) => [sp.edition], options: () => EDITIONS, label: formatEdition, open: true },
+      { key: "source", title: "Sources", read: (sp) => [sp.source], label: formatSource, grid: true },
+      { key: "level", title: "Level", read: (sp) => [sp.level], options: inOrder(LEVELS), label: formatLevel, open: true },
+      { key: "school", title: "School", read: (sp) => [sp.school], options: inOrder(SPELL_SCHOOLS), label: titleCase, open: true },
+      { key: "class", title: "Class", read: spellClasses, label: (c) => c, open: true },
+      { key: "time", title: "Casting Time", read: spellTimes, options: inOrder(TIME_UNITS), label: labelFromId },
+      { key: "casting", title: "Casting", read: spellCasting, options: inOrder(Object.keys(CASTING_LABELS)), label: (k) => CASTING_LABELS[k] },
+      { key: "components", title: "Components", read: spellComponents, options: inOrder(Object.keys(COMPONENT_LABELS)), label: (k) => COMPONENT_LABELS[k] },
+      { key: "damage", title: "Damage", read: spellDamage, label: titleCase },
+      { key: "saves", title: "Saving Throw", read: spellSaves, label: (a) => ABILITY_SHORT[a] || titleCase(a) },
+      { key: "conditions", title: "Conditions", read: spellConditions, label: titleCase },
+      { key: "attack", title: "Attack Roll", read: spellAttack, label: titleCase },
+      { key: "area", title: "Area", read: spellArea, label: labelFromId },
+      { key: "checks", title: "Ability Check", read: (sp) => sp.filters?.checks, label: (a) => ABILITY_SHORT[a] || titleCase(a) },
+      { key: "creatures", title: "Creature Types", read: (sp) => sp.filters?.creature_types, label: titleCase },
+      { key: "gives", title: "Gives", read: spellGives, options: inOrder(Object.keys(GIVES_LABELS)), label: (k) => GIVES_LABELS[k] },
+      { key: "tags", title: "Tags", read: (sp) => sp.filters?.tags, label: labelFromId },
+    ],
+    []
+  );
 
-  // Derive damage types from data so the filter reflects what's actually there.
-  const damageTypes = useMemo(() => {
-    const set = new Set();
-    for (const sp of spells) {
-      for (const d of getSpellDamageTypes(sp)) set.add(d);
+  // What each filter offers: only values some spell has.
+  const options = useMemo(() => {
+    const out = {};
+    for (const f of FILTERS) {
+      const found = collectUnique(spells, f.read);
+      out[f.key] = f.options ? f.options(found) : f.key === "source" && !found.includes(HOMEBREW) ? [HOMEBREW, ...found] : found;
     }
-    return [...set].sort();
-  }, [spells]);
+    return out;
+  }, [spells, FILTERS]);
 
-  const classes = useMemo(() => {
-    const set = new Set();
-    for (const arr of Object.values(classList)) {
-      for (const c of arr) set.add(c);
-    }
-    return [...set].sort((a, b) => a.localeCompare(b));
-  }, [classList]);
-
-  const toggle = (setter) => (val) => setter((prev) => (prev.includes(val) ? prev.filter((x) => x !== val) : [...prev, val]));
-
-  const toggleSource = toggle(setSelectedSources);
-  const toggleSchool = toggle(setSelectedSchools);
-  const toggleLevel = toggle(setSelectedLevels);
-  const toggleClass = toggle(setSelectedClasses);
-  const toggleAreaTag = toggle(setSelectedAreaTags);
-  const toggleDamage = toggle(setSelectedDamage);
-  const toggleComponent = toggle(setSelectedComponents);
-  const toggleActionType = toggle(setSelectedActionTypes);
-
-  // Lookup for component predicates so the filter loop stays tight.
-  const componentPredicates = useMemo(() => {
-    const m = {};
-    for (const opt of COMPONENT_OPTIONS) m[opt.value] = opt.test;
-    return m;
-  }, []);
+  const selected = (key) => picked[key] ?? (key === "edition" ? ["one"] : []);
+  const toggle = (key) => (v) => setPicked((p) => ({ ...p, [key]: toggleIn(selected(key), v) }));
 
   const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    return spells.filter((sp) => {
-      if (selectedSources.length > 0 && !selectedSources.includes(sp.source)) return false;
-      if (selectedSchools.length > 0 && !selectedSchools.includes(sp.school)) return false;
-      if (selectedLevels.length > 0 && !selectedLevels.includes(sp.level)) return false;
-      if (selectedAreaTags.length > 0) {
-        const tags = sp.area_tags || [];
-        if (!selectedAreaTags.some((t) => tags.includes(t))) return false;
-      }
-      if (selectedClasses.length > 0) {
-        const spClasses = getSpellClasses(sp, classList);
-        if (!selectedClasses.some((c) => spClasses.includes(c))) return false;
-      }
-      if (selectedDamage.length > 0) {
-        const dt = getSpellDamageTypes(sp);
-        if (!selectedDamage.some((d) => dt.includes(d))) return false;
-      }
-      if (selectedComponents.length > 0) {
-        const c = sp.components;
-        if (!selectedComponents.some((k) => componentPredicates[k]?.(c))) return false;
-      }
-      if (selectedActionTypes.length > 0) {
-        if (!selectedActionTypes.includes(getSpellActionType(sp))) return false;
-      }
-      if (ritualOnly && !isSpellRitual(sp)) return false;
-      if (concentrationOnly && !isSpellConcentration(sp)) return false;
-      if (q && !sp.name.toLowerCase().includes(q)) return false;
-      return true;
-    });
-  }, [
-    spells,
-    classList,
-    componentPredicates,
-    query,
-    selectedSources,
-    selectedSchools,
-    selectedLevels,
-    selectedClasses,
-    selectedAreaTags,
-    selectedDamage,
-    selectedComponents,
-    selectedActionTypes,
-    ritualOnly,
-    concentrationOnly,
-  ]);
-
-  // Sort by level (cantrips = 0). Null/undefined levels sink to end.
-  const sorted = useMemo(() => {
-    if (!sortDir) return filtered;
+    const rows = (spells || []).filter((sp) => FILTERS.every((f) => passesAny(selected(f.key), f.read(sp))) && matchesQuery(sp, query));
+    if (!sortDir) return rows.sort(byName);
     const dir = sortDir === "asc" ? 1 : -1;
-    return [...filtered].sort((a, b) => {
-      const av = typeof a?.level === "number" ? a.level : null;
-      const bv = typeof b?.level === "number" ? b.level : null;
-      if (av == null && bv == null) return 0;
-      if (av == null) return 1;
-      if (bv == null) return -1;
-      return (av - bv) * dir;
-    });
-  }, [filtered, sortDir]);
+    return rows.sort((a, b) => ((a.level ?? 0) - (b.level ?? 0)) * dir || byName(a, b));
+  }, [spells, FILTERS, picked, query, sortDir]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  const activeCount = FILTERS.reduce((n, f) => n + selected(f.key).length, 0);
   const clearAll = () => {
-    setSelectedSources([]);
-    setSelectedSchools([]);
-    setSelectedLevels([]);
-    setSelectedClasses([]);
-    setSelectedAreaTags([]);
-    setSelectedDamage([]);
-    setSelectedComponents([]);
-    setSelectedActionTypes([]);
-    setRitualOnly(false);
-    setConcentrationOnly(false);
+    setPicked(Object.fromEntries(FILTERS.map((f) => [f.key, []])));
     setQuery("");
   };
-
-  const activeCount =
-    selectedSources.length +
-    selectedSchools.length +
-    selectedLevels.length +
-    selectedClasses.length +
-    selectedAreaTags.length +
-    selectedDamage.length +
-    selectedComponents.length +
-    selectedActionTypes.length +
-    (ritualOnly ? 1 : 0) +
-    (concentrationOnly ? 1 : 0);
 
   return (
     <div className="min-h-[640px] w-full">
@@ -195,113 +115,48 @@ export default function Spells() {
             search={<input type="text" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="search spells…" className={searchCls} />}
             sort={<SortControl label="sort by level" value={sortDir} onChange={setSortDir} />}
             right={
-              <span className="text-xs italic text-ink-faded">
-                {sorted.length} of {spells.length}
-              </span>
+              <>
+                <span className="text-xs italic text-ink-faded">
+                  {filtered.length} of {spells.length}
+                </span>
+                <button type="button" onClick={() => setForm({})} className={`${addBtn} !text-sm`}>
+                  + create
+                </button>
+              </>
             }
           />
 
           <FilterPopup open={filtersOpen} onClose={() => setFiltersOpen(false)} activeCount={activeCount} onClear={clearAll}>
-            <FilterSection title="Sources">
-              <div className="grid grid-cols-2 gap-x-6 gap-y-1.5 sm:grid-cols-3 lg:grid-cols-4">
-                {sources.map((source) => (
-                  <button key={source} onClick={() => toggleSource(source)} title={formatSource(source)} className={`${chip(selectedSources.includes(source))} truncate`}>
-                    {formatSource(source)}
-                  </button>
-                ))}
-              </div>
-            </FilterSection>
-
-            <FilterSection title="School">
-              <Words>
-                {schools.map((s) => (
-                  <button key={s} onClick={() => toggleSchool(s)} className={chip(selectedSchools.includes(s))}>
-                    {cap(s)}
-                  </button>
-                ))}
-              </Words>
-            </FilterSection>
-
-            <FilterSection title="Level">
-              <Words>
-                {LEVEL_OPTIONS.map((lvl) => (
-                  <button key={lvl} onClick={() => toggleLevel(lvl)} className={chip(selectedLevels.includes(lvl))}>
-                    {formatLevelChip(lvl)}
-                  </button>
-                ))}
-              </Words>
-            </FilterSection>
-
-            <FilterSection title="Class">
-              <Words>
-                {classes.map((c) => (
-                  <button key={c} onClick={() => toggleClass(c)} className={chip(selectedClasses.includes(c))}>
-                    {c}
-                  </button>
-                ))}
-              </Words>
-            </FilterSection>
-
-            {damageTypes.length > 0 && (
-              <FilterSection title="Damage Types">
-                <Words>
-                  {damageTypes.map((d) => (
-                    <button key={d} onClick={() => toggleDamage(d)} className={chip(selectedDamage.includes(d))}>
-                      {cap(d)}
-                    </button>
-                  ))}
-                </Words>
-              </FilterSection>
+            {FILTERS.map((f) =>
+              options[f.key]?.length ? (
+                <FilterSection key={f.key} title={f.title} defaultOpen={!!f.open}>
+                  {options[f.key].length > 24 && !f.grid ? (
+                    <FoldChips label={`${options[f.key].length} to choose from`} options={options[f.key]} selected={selected(f.key)}
+                               labelOf={f.label} onToggle={toggle(f.key)} defaultOpen />
+                  ) : (
+                    <ChipToggles options={options[f.key]} selected={selected(f.key)} labelOf={f.label} onToggle={toggle(f.key)}
+                                 className={f.grid ? "!grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4" : ""} />
+                  )}
+                </FilterSection>
+              ) : null
             )}
-
-            <FilterSection title="Components">
-              <Words>
-                {COMPONENT_OPTIONS.map((o) => (
-                  <button key={o.value} onClick={() => toggleComponent(o.value)} className={chip(selectedComponents.includes(o.value))}>
-                    {o.label}
-                  </button>
-                ))}
-              </Words>
-            </FilterSection>
-
-            <FilterSection title="Action Type">
-              <Words>
-                {ACTION_TYPES.map((o) => (
-                  <button key={o.value} onClick={() => toggleActionType(o.value)} className={chip(selectedActionTypes.includes(o.value))}>
-                    {o.label}
-                  </button>
-                ))}
-              </Words>
-            </FilterSection>
-
-            <FilterSection title="Casting">
-              <Words>
-                <button onClick={() => setRitualOnly((v) => !v)} className={chip(ritualOnly)}>
-                  Ritual only
-                </button>
-                <button onClick={() => setConcentrationOnly((v) => !v)} className={chip(concentrationOnly)}>
-                  Concentration only
-                </button>
-              </Words>
-            </FilterSection>
-
-            <FilterSection title="Area">
-              <Words>
-                {areaTags.map((t) => (
-                  <button key={t} onClick={() => toggleAreaTag(t)} className={chip(selectedAreaTags.includes(t))}>
-                    {cap(tidy(t))}
-                  </button>
-                ))}
-              </Words>
-            </FilterSection>
           </FilterPopup>
 
-          <div className="grid grid-cols-1 gap-x-8 md:grid-cols-2 xl:grid-cols-3">
-            {sorted.map((sp, idx) => (
-              <SpellRow key={`${sp.name}-${sp.source}-${idx}`} spell={sp} onOpen={(spell) => openPopup("spell", spell)} />
-            ))}
-          </div>
-          {sorted.length === 0 && <LoadingLine>No spells match.</LoadingLine>}
+          {filtered.length === 0 ? (
+            <LoadingLine>No spells match your filters.</LoadingLine>
+          ) : (
+            <div className="grid grid-cols-1 gap-x-8 md:grid-cols-2 xl:grid-cols-3">
+              {filtered.map((sp) => (
+                <CatalogueRow key={`${sp.id}-${sp.visibility || ""}`} entry={sp} meta={spellRowMeta(sp)}
+                              onOpen={(x) => openPopup("spell", x)} onContextMenu={openMenu} />
+              ))}
+            </div>
+          )}
+
+          {menu}
+
+          <SpellCreatePopup open={form !== null} onClose={() => setForm(null)}
+                            editingSpell={form?.editing || null} copyFromSpell={form?.copyFrom || null} />
         </>
       )}
     </div>

@@ -1,0 +1,587 @@
+{
+  "monk-xphb:martial-arts": {
+    "label": "Monk (XPHB) · Martial Arts",
+    "hash": "669b4d129bd23652",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "bonus-unarmed-strike",
+          "name": "Bonus Unarmed Strike",
+          "level": 1,
+          "category": "bonus_actions"
+        },
+        {
+          "id": "martial-arts-die",
+          "name": "Martial Arts Die",
+          "level": 1,
+          "category": "actions",
+          "action": {
+            "attack": {
+              "kind": "melee",
+              "damage": [
+                {
+                  "dice": "martial_arts",
+                  "type": "weapon"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13010,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:19:39+00:00"
+  },
+  "monk-xphb:unarmored-defense": {
+    "label": "Monk (XPHB) · Unarmored Defense",
+    "hash": "31777b085d07ba91",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "unarmored-defense",
+          "name": "Unarmored Defense",
+          "level": 1,
+          "category": "traits",
+          "modifiers": [
+            {
+              "target": "ac",
+              "base": "10 + dex_mod + wis_mod",
+              "requires": [
+                "no_armor",
+                "no_shield"
+              ]
+            }
+          ]
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11394,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:19:54+00:00"
+  },
+  "monk-xphb:monks-focus": {
+    "label": "Monk (XPHB) · Monk's Focus",
+    "hash": "2665f2a5ad5f6d4e",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "flurry-of-blows",
+          "name": "Flurry of Blows",
+          "level": 2,
+          "category": "bonus_actions",
+          "consumes": {
+            "resource": "focus_points",
+            "amount": 1
+          }
+        },
+        {
+          "id": "patient-defense",
+          "name": "Patient Defense",
+          "level": 2,
+          "category": "bonus_actions"
+        },
+        {
+          "id": "step-of-the-wind",
+          "name": "Step of the Wind",
+          "level": 2,
+          "category": "bonus_actions"
+        }
+      ],
+      "resources": [
+        {
+          "name": "Focus Points",
+          "max": "focus_points",
+          "reset": "short",
+          "short_rest": "all"
+        }
+      ]
+    },
+    "problems": [],
+    "tokens": 11928,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:19:57+00:00"
+  },
+  "monk-xphb:unarmored-movement": {
+    "label": "Monk (XPHB) · Unarmored Movement",
+    "hash": "b522ef9f5dbc8b78",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "unarmored-movement",
+          "name": "Unarmored Movement",
+          "level": 2,
+          "category": "traits",
+          "modifiers": [
+            {
+              "target": "speed.walk",
+              "add": "unarmored_movement"
+            }
+          ]
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11506,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:20:01+00:00"
+  },
+  "monk-xphb:uncanny-metabolism": {
+    "label": "Monk (XPHB) · Uncanny Metabolism",
+    "hash": "f96525e7babe0f37",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "uncanny-metabolism",
+          "name": "Uncanny Metabolism",
+          "level": 2,
+          "category": "traits",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "action": {
+            "heal": "class_level + martial_arts"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11737,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:20:05+00:00"
+  },
+  "monk-xphb:deflect-attacks": {
+    "label": "Monk (XPHB) · Deflect Attacks",
+    "hash": "b42738fdc7f2c467",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "deflect-attacks",
+          "name": "Deflect Attacks",
+          "level": 3,
+          "category": "reactions",
+          "action": {
+            "save": {
+              "ability": "dex",
+              "on_success": "none",
+              "damage": [
+                {
+                  "dice": "martial_arts",
+                  "bonus": "dex_mod",
+                  "type": "weapon"
+                },
+                {
+                  "dice": "martial_arts",
+                  "type": "weapon"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 24062,
+    "tries": 2,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:20:11+00:00"
+  },
+  "monk-xphb:slow-fall": {
+    "label": "Monk (XPHB) · Slow Fall",
+    "hash": "7e15d7f98942727e",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "slow-fall",
+          "name": "Slow Fall",
+          "level": 4,
+          "category": "reactions"
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11377,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:20:28+00:00"
+  },
+  "monk-xphb:extra-attack": {
+    "label": "Monk (XPHB) · Extra Attack",
+    "hash": "6e4b70720afc4cba",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11367,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:20:31+00:00"
+  },
+  "monk-xphb:stunning-strike": {
+    "label": "Monk (XPHB) · Stunning Strike",
+    "hash": "98f7594625c31456",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "stunning-strike",
+          "name": "Stunning Strike",
+          "level": 5,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any"
+            },
+            "save": {
+              "ability": "con",
+              "on_success": "none",
+              "conditions": [
+                "stunned"
+              ]
+            }
+          },
+          "consumes": {
+            "resource": "focus_points",
+            "amount": 1
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11769,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:20:34+00:00"
+  },
+  "monk-xphb:empowered-strikes": {
+    "label": "Monk (XPHB) · Empowered Strikes",
+    "hash": "1462b57178640026",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11829,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:20:40+00:00"
+  },
+  "monk-xphb:evasion": {
+    "label": "Monk (XPHB) · Evasion",
+    "hash": "31de76fab1e05057",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11358,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:20:48+00:00"
+  },
+  "monk-xphb:acrobatic-movement": {
+    "label": "Monk (XPHB) · Acrobatic Movement",
+    "hash": "66f9bb241707ced7",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11352,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:20:52+00:00"
+  },
+  "monk-xphb:heightened-focus": {
+    "label": "Monk (XPHB) · Heightened Focus",
+    "hash": "24c23062179e8a4e",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "flurry-of-blows",
+          "name": "Flurry of Blows",
+          "level": 10,
+          "category": "bonus_actions",
+          "consumes": {
+            "resource": "focus_points",
+            "amount": 1
+          }
+        },
+        {
+          "id": "patient-defense",
+          "name": "Patient Defense",
+          "level": 10,
+          "category": "bonus_actions",
+          "action": {
+            "temp_hp": "2 * martial_arts"
+          },
+          "consumes": {
+            "resource": "focus_points",
+            "amount": 1
+          }
+        },
+        {
+          "id": "step-of-the-wind",
+          "name": "Step of the Wind",
+          "level": 10,
+          "category": "bonus_actions",
+          "action": {
+            "range": "5 feet"
+          },
+          "consumes": {
+            "resource": "focus_points",
+            "amount": 1
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 12280,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:20:55+00:00"
+  },
+  "monk-xphb:self-restoration": {
+    "label": "Monk (XPHB) · Self-Restoration",
+    "hash": "82059d5803e23ce5",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11367,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:21:05+00:00"
+  },
+  "monk-xphb:deflect-energy": {
+    "label": "Monk (XPHB) · Deflect Energy",
+    "hash": "b591ca3a75e35d0e",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11346,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:21:07+00:00"
+  },
+  "monk-xphb:disciplined-survivor": {
+    "label": "Monk (XPHB) · Disciplined Survivor",
+    "hash": "21e3bba71ae3d214",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "disciplined-survivor",
+          "name": "Disciplined Survivor",
+          "level": 14,
+          "category": "traits",
+          "consumes": {
+            "resource": "focus_points",
+            "amount": 1
+          },
+          "grants": {
+            "saves": [
+              "str",
+              "dex",
+              "con",
+              "int",
+              "wis",
+              "cha"
+            ]
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11552,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:21:10+00:00"
+  },
+  "monk-xphb:perfect-focus": {
+    "label": "Monk (XPHB) · Perfect Focus",
+    "hash": "381e15f802e73bce",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11349,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:21:14+00:00"
+  },
+  "monk-xphb:superior-defense": {
+    "label": "Monk (XPHB) · Superior Defense",
+    "hash": "5ed0a1029cc967e1",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "superior-defense",
+          "name": "Superior Defense",
+          "level": 18,
+          "category": "traits",
+          "toggle": {
+            "grants": {
+              "defenses": {
+                "resist": [
+                  "acid",
+                  "bludgeoning",
+                  "cold",
+                  "fire",
+                  "lightning",
+                  "necrotic",
+                  "piercing",
+                  "poison",
+                  "psychic",
+                  "radiant",
+                  "slashing",
+                  "thunder",
+                  "weapon"
+                ]
+              }
+            }
+          },
+          "consumes": {
+            "resource": "focus_points",
+            "amount": 3
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11661,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:21:17+00:00"
+  },
+  "monk-xphb:body-and-mind": {
+    "label": "Monk (XPHB) · Body and Mind",
+    "hash": "80cca5dd93f2bece",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11331,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:21:22+00:00"
+  },
+  "monk-xphb:open-hand-xphb": {
+    "label": "Monk (XPHB) · Warrior of the Open Hand (XPHB)",
+    "hash": "828be27097fe55b6",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "open-hand-technique",
+          "name": "Open Hand Technique",
+          "level": 3,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "melee"
+            }
+          }
+        },
+        {
+          "id": "wholeness-of-body",
+          "name": "Wholeness of Body",
+          "level": 6,
+          "category": "bonus_actions",
+          "uses": {
+            "max": "max(1, wis_mod)",
+            "reset": "long"
+          },
+          "action": {
+            "heal": "max(1, martial_arts + wis_mod)"
+          }
+        },
+        {
+          "id": "quivering-palm",
+          "name": "Quivering Palm",
+          "level": 17,
+          "category": "actions",
+          "action": {
+            "save": {
+              "ability": "con",
+              "on_success": "half",
+              "damage": [
+                {
+                  "dice": "10d12",
+                  "type": "force"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13895,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:21:24+00:00"
+  }
+}

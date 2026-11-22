@@ -1,781 +1,365 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useCatalogueStore } from "../../../store/CatalogueStore";
 import FilterSection from "../FilterSection";
+import { CreateModal, fieldCls, hintCls, labelCls, addRowCls, removeRowCls, textareaCls } from "../catalogueStyle";
+import { BasicsSection, ChipToggles, EntryPicker, FoldChips, Segmented } from "../catalogueParts";
 import {
-  ChipsHeading,
-  CreateModal,
-  addRowCls,
-  boxCls,
-  checkCls,
-  checkLabelCls,
-  chip,
-  fieldCls,
-  hintCls,
-  labelCls,
-  removeRowCls,
-  textareaCls,
-} from "../catalogueStyle";
-import MonsterEffectsBuilder, { effectsToForm, formToEffects, emptyEffects } from "./MonsterEffectsBuilder";
+  ABILITIES, ABILITY_SHORT, SKILL_IDS, DAMAGE_TYPES, CONDITIONS, CREATURE_TYPES,
+  buildNameIndex, collectUnique, toggleIn, numOrNull, labelFromId, nameFromId, titleCase,
+} from "../catalogueHelpers";
 import {
-  ABILITY_ORDER, ABILITY,
-  crStats, buildAbilityScores, computePassivePerception,
-  abilityMod, signed, pruneEmpty,
-  CR_OPTIONS, getMonsterType, getMonsterSubtypes, titleCase,
+  CR_OPTIONS, DEFENSE_KINDS, DEFENSE_LABELS, SIZE_OPTIONS, SPEED_MODES,
+  abilityMod, crStats, emptyMonsterForm, formToMonster, formatDefense, monsterToForm, signed,
 } from "./monsterHelpers";
-import {
-  DAMAGE_TYPES, CONDITION_OPTIONS, LANGUAGE_OPTIONS, SKILL_OPTIONS,
-} from "../../../utils/Constants";
+import MonsterFeaturesEditor from "./MonsterFeaturesEditor";
+import MonsterSpellcastingEditor from "./MonsterSpellcastingEditor";
 
-const SPEED_MODES = ["walk", "fly", "swim", "climb", "burrow"];
-const SENSE_MODES = ["darkvision", "blindsight", "tremorsense", "truesight"];
-const SAVE_WORDS = ["strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma"];
-const SPELL_ABILITIES = ["int", "wis", "cha"];
-const ALIGNMENTS = [
-  "Lawful Good", "Neutral Good", "Chaotic Good",
-  "Lawful Neutral", "Neutral", "Chaotic Neutral",
-  "Lawful Evil", "Neutral Evil", "Chaotic Evil",
-  "Unaligned", "Any Alignment",
+const CHALLENGE_MODES = [
+  { value: "cr", label: "Challenge rating" },
+  { value: "level", label: "Level" },
+  { value: "none", label: "None" },
 ];
-const skillKeys = Object.keys(SKILL_OPTIONS);
-const cap = (s) => (typeof s === "string" && s ? s[0].toUpperCase() + s.slice(1) : s);
+const SENSE_KEYS = ["darkvision", "blindsight", "tremorsense", "truesight"];
 
-const emptyAbilities = () =>
-  ABILITY_ORDER.reduce((acc, a) => { acc[a] = { score: "10", proficient: false }; return acc; }, {});
-
-const makeDefault = () => ({
-  name: "",
-  visibility: "private",
-  size: "",
-  type: "",
-  alignment: "",
-  ac: "",
-  hp: "",
-  speeds: { walk: "", fly: "", swim: "", climb: "", burrow: "" },
-  senses: { darkvision: "", blindsight: "", tremorsense: "", truesight: "" },
-  initiativeTotal: "",
-  initiativeAdv: false,
-  crBase: "",
-  languages: [],
-  environment: [],
-  traitTags: [],
-  immune: [],
-  resist: [],
-  vulnerable: [],
-  conditionImmune: [],
-  conditionInflict: [],
-  forcedSaves: [],
-  skills: [],                 // [{ skill, bonus }]
-  abilities: emptyAbilities(),
-  gear: [],                   // [{ name, source, quantity }]
-  legendaryActions: "",
-  spellAbility: "",
-  spellSaveDc: "",
-  spellAttackBonus: "",
-  spellNotes: "",
-  spellGroups: [],            // [{ label, uses, each, spells:[name] }]
-  effects: emptyEffects(),
-  // preserved (no dedicated editor)
-  _typeTags: [],
-});
-
+/* Create, edit or copy a monster: the whole statblock, top to bottom.
+   The form writes the same record the pipeline makes (data-model §4h);
+   what it has no field for (variants, a version's base, a summon's
+   spell, 5etools' tag lists) is kept unchanged. */
 export default function MonsterCreatePopup({ open, onClose, editingMonster, copyFromMonster }) {
   const createMonster = useCatalogueStore((s) => s.createMonster);
   const updateMonster = useCatalogueStore((s) => s.updateMonster);
-  const creating = useCatalogueStore((s) => s.creatingMonster);
-  const createError = useCatalogueStore((s) => s.createMonsterError);
+  const saving = useCatalogueStore((s) => s.savingMonster);
+  const saveError = useCatalogueStore((s) => s.monstersError);
 
-  const monstersData = useCatalogueStore((s) => s.monstersData);
+  const monsters = useCatalogueStore((s) => s.monsters);
+  const spells = useCatalogueStore((s) => s.spells);
   const items = useCatalogueStore((s) => s.items);
-  const loadItems = useCatalogueStore((s) => s.loadItems);
-  const spellsData = useCatalogueStore((s) => s.spellsData);
   const loadSpells = useCatalogueStore((s) => s.loadSpells);
+  const loadItems = useCatalogueStore((s) => s.loadItems);
 
-  const [form, setForm] = useState(makeDefault());
+  const [form, setForm] = useState(emptyMonsterForm);
   const [nameError, setNameError] = useState(false);
-  const [tagDraft, setTagDraft] = useState("");
 
-  const sizes = monstersData?.sizes || [];
-  const typePrefixes = useMemo(
-    () => [...(monstersData?.types?.prefix || [])].sort(),
-    [monstersData]
-  );
-  const envs = monstersData?.environments || [];
-  const traitsList = monstersData?.traits || [];
-
-  // Lazy-load reference data.
   useEffect(() => {
     if (!open) return;
-    if (!Array.isArray(items) || items.length === 0) loadItems();
-    const sl = spellsData?.spells;
-    if (!Array.isArray(sl) || sl.length === 0) loadSpells();
-  }, [open]); // eslint-disable-line
+    if (!spells?.length) loadSpells();
+    if (!items?.length) loadItems();
+  }, [open]); // eslint-disable-line react-hooks/exhaustive-deps
 
-
-  // Repopulate from edit / copy.
   useEffect(() => {
     if (!open) return;
     setNameError(false);
-    setTagDraft("");
-
     const src = editingMonster || copyFromMonster;
-    if (!src) { setForm(makeDefault()); return; }
-
-    const abilities = {};
-    for (const a of ABILITY_ORDER) {
-      const row = src.ability_scores?.[a] || {};
-      abilities[a] = {
-        score: row.score != null ? String(row.score) : "10",
-        proficient: !!row.proficient,
-      };
-    }
-    const speeds = { walk: "", fly: "", swim: "", climb: "", burrow: "" };
-    if (src.speed) for (const m of SPEED_MODES) {
-      const v = src.speed[m];
-      if (typeof v === "number") speeds[m] = String(v);
-      else if (v && typeof v === "object" && typeof v.number === "number") speeds[m] = String(v.number);
-    }
-    const senses = { darkvision: "", blindsight: "", tremorsense: "", truesight: "" };
-    if (src.senses) for (const s of SENSE_MODES) {
-      if (typeof src.senses[s] === "number") senses[s] = String(src.senses[s]);
-    }
-    const skills = src.skill && typeof src.skill === "object"
-      ? Object.entries(src.skill).map(([skill, bonus]) => ({ skill, bonus: String(bonus).replace("+", "") }))
-      : [];
-    const traitTags = [...new Set([...(src.traitTags || []), ...(src.actionTags || [])])];
-    const sc = Array.isArray(src.spellcasting) ? src.spellcasting[0] : null;
-    const spellGroups = sc?.groups
-      ? sc.groups.map((g) => ({
-          label: g.label || "",
-          uses: g.uses == null ? "" : String(g.uses),
-          each: !!g.each,
-          spells: (g.spells || []).map((s) => s.name).filter(Boolean),
-        }))
-      : [];
-
-    setForm({
-      ...makeDefault(),
-      name: copyFromMonster ? `${src.name} (copy)` : (src.name || ""),
-      visibility: copyFromMonster ? "private" : (src.visibility || "private"),
-      size: src.size?.[0] || "",
-      type: getMonsterType(src) || "",
-      _typeTags: getMonsterSubtypes(src) || [],
-      alignment: (src.alignment || []).join(" "),
-      ac: src.ac?.[0]?.value != null ? String(src.ac[0].value) : "",
-      hp: src.hp?.average != null ? String(src.hp.average) : "",
-      speeds, senses,
-      initiativeTotal: src.initiative?.total != null ? String(src.initiative.total) : "",
-      initiativeAdv: !!src.initiative?.advantage,
-      crBase: src.cr?.base != null ? String(src.cr.base) : "",
-      languages: src.languages || [],
-      environment: src.environment || [],
-      traitTags,
-      immune: src.immunities?.types || [],
-      resist: src.resistances?.types || [],
-      vulnerable: src.vulnerabilities?.types || [],
-      conditionImmune: src.condition_immunities?.types || [],
-      conditionInflict: src.condition_inflict || [],
-      forcedSaves: src.forced_saving_throw || [],
-      skills,
-      abilities,
-      gear: (src.gear || []).map((g) => ({ name: g.name, source: g.source || "XPHB", quantity: g.quantity || 1 })),
-      legendaryActions: src.legendary_action_points?.legendary_actions != null
-        ? String(src.legendary_action_points.legendary_actions) : "",
-      spellAbility: sc?.ability || "",
-      spellSaveDc: sc?.save_dc != null ? String(sc.save_dc) : "",
-      spellAttackBonus: sc?.spell_attack_bonus != null ? String(sc.spell_attack_bonus) : "",
-      spellNotes: sc?.notes || "",
-      spellGroups,
-      effects: effectsToForm(src.effects),
-    });
+    setForm(src ? monsterToForm(src, { copy: !editingMonster }) : emptyMonsterForm());
   }, [open, editingMonster, copyFromMonster]);
 
-  // ── reference option lists ──
-  const gearItems = useMemo(() => {
-    const list = Array.isArray(items) ? items : [];
-    return list.filter((it) => it?.source === "XDMG" || it?.source === "XPHB");
-  }, [items]);
-  const itemNames = useMemo(
-    () => [...new Set(gearItems.map((it) => it.name).filter(Boolean))].sort((a, b) => a.localeCompare(b)),
-    [gearItems]
-  );
-  const itemSourceByName = useMemo(() => {
-    const map = {};
-    for (const it of gearItems) if (it.name && !map[it.name]) map[it.name] = it.source;
-    // prefer XPHB when a name exists in both
-    for (const it of gearItems) if (it.source === "XPHB") map[it.name] = "XPHB";
-    return map;
-  }, [gearItems]);
-  const xphbSpellNames = useMemo(() => {
-    const list = spellsData?.spells;
-    if (!Array.isArray(list)) return [];
-    const names = list.filter((sp) => sp?.source === "XPHB" && sp?.name).map((sp) => sp.name);
-    return [...new Set(names)].sort((a, b) => a.localeCompare(b));
-  }, [spellsData]);
+  const index = useMemo(() => buildNameIndex(spells, items), [spells, items]);
+  const habitats = useMemo(() => collectUnique(monsters, (m) => m.filters?.environment), [monsters]);
 
   if (!open) return null;
 
-  const update = (key, val) => setForm((f) => ({ ...f, [key]: val }));
-  const updateNested = (key, sub, val) =>
-    setForm((f) => ({ ...f, [key]: { ...f[key], [sub]: val } }));
-  const toggleListItem = (key, val) =>
-    setForm((f) => ({
-      ...f,
-      [key]: f[key].includes(val) ? f[key].filter((x) => x !== val) : [...f[key], val],
-    }));
-
-  const livePb = (form.crBase && crStats(form.crBase)?.pb) || 2;
-  const liveXp = form.crBase ? crStats(form.crBase)?.xp : null;
-
-  // ── traitTags free-text add ──
-  const addTag = () => {
-    const t = tagDraft.trim();
-    if (!t) return;
-    setForm((f) => (f.traitTags.includes(t) ? f : { ...f, traitTags: [...f.traitTags, t] }));
-    setTagDraft("");
-  };
-
-  // ── skill rows ──
-  const addSkill = () =>
-    setForm((f) => {
-      const used = new Set(f.skills.map((r) => r.skill));
-      const next = skillKeys.find((k) => !used.has(k)) || skillKeys[0];
-      return { ...f, skills: [...f.skills, { skill: next, bonus: "0" }] };
-    });
-  const updateSkill = (idx, key, val) =>
-    setForm((f) => ({ ...f, skills: f.skills.map((r, i) => (i === idx ? { ...r, [key]: val } : r)) }));
-  const removeSkill = (idx) =>
-    setForm((f) => ({ ...f, skills: f.skills.filter((_, i) => i !== idx) }));
-
-  // ── gear rows ──
-  const addGear = () =>
-    setForm((f) => ({ ...f, gear: [...f.gear, { name: "", source: "XPHB", quantity: 1 }] }));
-  const updateGear = (idx, name) =>
-    setForm((f) => ({
-      ...f,
-      gear: f.gear.map((g, i) => (i === idx ? { ...g, name, source: itemSourceByName[name] || "XPHB" } : g)),
-    }));
-  const updateGearQty = (idx, qty) =>
-    setForm((f) => ({ ...f, gear: f.gear.map((g, i) => (i === idx ? { ...g, quantity: qty } : g)) }));
-  const removeGear = (idx) =>
-    setForm((f) => ({ ...f, gear: f.gear.filter((_, i) => i !== idx) }));
-
-  // ── spellcasting groups ──
-  const addGroup = () =>
-    setForm((f) => ({ ...f, spellGroups: [...f.spellGroups, { label: "At will", uses: "", each: false, spells: [] }] }));
-  const updateGroup = (idx, key, val) =>
-    setForm((f) => ({ ...f, spellGroups: f.spellGroups.map((g, i) => (i === idx ? { ...g, [key]: val } : g)) }));
-  const removeGroup = (idx) =>
-    setForm((f) => ({ ...f, spellGroups: f.spellGroups.filter((_, i) => i !== idx) }));
-  const toggleGroupSpell = (idx, name) =>
-    setForm((f) => ({
-      ...f,
-      spellGroups: f.spellGroups.map((g, i) =>
-        i === idx
-          ? { ...g, spells: g.spells.includes(name) ? g.spells.filter((x) => x !== name) : [...g.spells, name] }
-          : g
-      ),
-    }));
-
-  const buildPayload = () => {
-    const pb = livePb;
-    const ability_scores = buildAbilityScores(form.abilities, pb);
-
-    const skill = {};
-    for (const row of form.skills) {
-      if (!row.skill) continue;
-      skill[row.skill] = signed(row.bonus);
-    }
-    const passive_perception = computePassivePerception(ability_scores, skill);
-
-    const speed = {};
-    for (const m of SPEED_MODES) {
-      const v = form.speeds[m];
-      if (v !== "" && v != null) speed[m] = Number(v);
-    }
-    const senses = {};
-    for (const s of SENSE_MODES) {
-      const v = form.senses[s];
-      if (v !== "" && v != null) senses[s] = Number(v);
-    }
-
-    const cr = form.crBase
-      ? { base: form.crBase, xp: crStats(form.crBase)?.xp ?? null, pb }
-      : null;
-    const ac = form.ac !== "" ? [{ value: Number(form.ac) }] : null;
-    const hp = form.hp !== "" ? { average: Number(form.hp) } : null;
-    const initiative = form.initiativeTotal !== ""
-      ? { total: Number(form.initiativeTotal), advantage: !!form.initiativeAdv } : null;
-    const type = form._typeTags?.length ? { type: form.type, tags: form._typeTags } : (form.type || null);
-
-    const gear = form.gear
-      .filter((g) => g.name)
-      .map((g) => ({ name: g.name, source: g.source || "XPHB", quantity: Number(g.quantity) || 1 }));
-
-    const groups = form.spellGroups
-      .map((g) => ({
-        label: g.label || "",
-        uses: g.uses === "" || g.uses == null ? null : Number(g.uses),
-        each: !!g.each,
-        spells: g.spells.filter(Boolean).map((n) => ({ name: n.toLowerCase() })),
-      }))
-      .filter((g) => g.spells.length);
-    const spellcasting = groups.length
-      ? [{
-          name: "Spellcasting",
-          ability: form.spellAbility || null,
-          save_dc: form.spellSaveDc === "" ? null : Number(form.spellSaveDc),
-          spell_attack_bonus: form.spellAttackBonus === "" ? null : Number(form.spellAttackBonus),
-          notes: form.spellNotes || null,
-          groups,
-        }]
-      : null;
-
-    const legendary_action_points = form.legendaryActions !== ""
-      ? { legendary_actions: Number(form.legendaryActions) } : null;
-
-    const lower = (arr) => arr.map((s) => s.toLowerCase());
-
-    const raw = {
-      name: form.name.trim(),
-      source: "HOMEBREW",
-      visibility: form.visibility,
-      size: form.size ? [form.size] : null,
-      type,
-      alignment: form.alignment ? [form.alignment] : null,
-      ac, hp, speed, initiative, senses,
-      languages: form.languages,
-      cr,
-      skill,
-      condition_inflict: lower(form.conditionInflict),
-      forced_saving_throw: lower(form.forcedSaves),
-      immunities: { types: lower(form.immune) },
-      resistances: { types: lower(form.resist) },
-      vulnerabilities: { types: lower(form.vulnerable) },
-      condition_immunities: { types: lower(form.conditionImmune) },
-      environment: lower(form.environment),
-      traitTags: form.traitTags,
-      gear,
-      legendary_action_points,
-      spellcasting,
-      effects: formToEffects(form.effects),
-    };
-
-    const pruned = pruneEmpty(raw) || {};
-    // guarantee identity + always-present derived blocks survive pruning
-    pruned.name = form.name.trim();
-    pruned.source = "HOMEBREW";
-    pruned.visibility = form.visibility;
-    pruned.ability_scores = ability_scores;
-    pruned.passive_perception = passive_perception;
-    return pruned;
-  };
+  const set = (key, value) => setForm((f) => ({ ...f, [key]: value }));
+  const patch = (key, p) => setForm((f) => ({ ...f, [key]: { ...f[key], ...p } }));
+  const union = (a, b) => [...new Set([...(a || []), ...(b || [])])];
 
   const isEditing = !!editingMonster;
-  const titleText = isEditing ? "Edit Monster" : copyFromMonster ? "Copy Monster" : "Create Monster";
+  const title = isEditing ? "Edit Monster" : copyFromMonster ? "Copy Monster" : "Create Monster";
 
-  const handleSubmit = async () => {
-    if (!form.name.trim()) { setNameError(true); return; }
+  const handleSave = async () => {
+    if (!form.name.trim()) {
+      setNameError(true);
+      return;
+    }
     setNameError(false);
+    const record = formToMonster(form, isEditing ? editingMonster : null);
     try {
-      const payload = buildPayload();
-      if (isEditing) await updateMonster(editingMonster.id, payload);
-      else await createMonster(payload);
-      setTimeout(onClose, 0);
+      if (isEditing) await updateMonster(editingMonster.id, record);
+      else await createMonster(record);
+      onClose();
     } catch {
-      // createMonsterError already set
+      /* the error is shown in the footer */
     }
   };
 
+  // Picking a CR fills in its XP and proficiency bonus.
+  const setCR = (cr) => {
+    const stats = crStats(cr);
+    setForm((f) => ({ ...f, cr, xp: stats?.xp ?? f.xp, pb: stats?.pb ?? f.pb }));
+  };
+  const setAc = (i, p) => set("ac", form.ac.map((a, j) => (j === i ? { ...a, ...p } : a)));
+  const setSkill = (i, p) => set("skills", form.skills.map((s, j) => (j === i ? { ...s, ...p } : s)));
+  const setSpeed = (k, v) => {
+    const next = { ...form.speed };
+    if (v == null) delete next[k];
+    else next[k] = v;
+    set("speed", next);
+  };
+  const setSense = (k, v) => {
+    const next = { ...form.senses };
+    if (v == null) delete next[k];
+    else next[k] = v;
+    set("senses", next);
+  };
+  const restKeys = Object.keys(form.rest);
+  const pb = form.challenge === "cr" ? form.pb : null;
 
   return (
-    <CreateModal
-      open={open}
-      title={titleText}
-      onClose={onClose}
-      onSave={handleSubmit}
-      saving={creating}
-      saveLabel={isEditing ? "Save Changes" : "Save"}
-      error={createError}
-    >
-          {/* ── Basics ── */}
-          <FilterSection title="Basics" defaultOpen>
-            <div className="space-y-3">
-              <div>
-                <label className={labelCls}>
-                  Name <span className="text-rubric">*</span>
-                </label>
-                <input
-                  type="text" value={form.name}
-                  onChange={(e) => update("name", e.target.value)}
-                  placeholder="e.g. Boneweald Hierophant"
-                  className={`${fieldCls} ${nameError ? "!border-solid !border-bad" : ""}`}
-                />
-                {nameError && <p className="mt-1 text-xs italic text-bad">Name is required.</p>}
-              </div>
-
-              <div>
-                <div className={labelCls}>Visibility</div>
-                <div className="flex gap-x-4">
-                  {["private", "public"].map((v) => (
-                    <button key={v} type="button" onClick={() => update("visibility", v)} className={chip(form.visibility === v)}>
-                      {cap(v)}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div className="grid grid-cols-3 gap-3">
-                <div>
-                  <label className={labelCls}>Size</label>
-                  <select value={form.size} onChange={(e) => update("size", e.target.value)} className={fieldCls}>
-                    <option value="">—</option>
-                    {sizes.map((s) => <option key={s} value={s}>{s}</option>)}
-                  </select>
-                </div>
-                <div>
-                  <label className={labelCls}>Type</label>
-                  <select value={form.type} onChange={(e) => update("type", e.target.value)} className={fieldCls}>
-                    <option value="">—</option>
-                    {typePrefixes.map((t) => <option key={t} value={t}>{titleCase(t)}</option>)}
-                  </select>
-                </div>
-                <div>
-                  <label className={labelCls}>Alignment</label>
-                  <select value={form.alignment} onChange={(e) => update("alignment", e.target.value)} className={fieldCls}>
-                    <option value="">—</option>
-                    {ALIGNMENTS.map((a) => <option key={a} value={a}>{a}</option>)}
-                  </select>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-3 gap-3 items-end">
-                <div>
-                  <label className={labelCls}>Challenge</label>
-                  <select value={form.crBase} onChange={(e) => update("crBase", e.target.value)} className={fieldCls}>
-                    <option value="">—</option>
-                    {CR_OPTIONS.map((c) => <option key={c} value={c}>{c}</option>)}
-                  </select>
-                </div>
-                <div className={`${hintCls} col-span-2 pb-1`}>
-                  {form.crBase
-                    ? <>Auto: <span className="not-italic text-rubric">{liveXp?.toLocaleString()} XP</span>, <span className="not-italic text-rubric">PB +{livePb}</span></>
-                    : <>XP & PB auto-fill from CR.</>}
-                </div>
-              </div>
-            </div>
-          </FilterSection>
-
-          {/* ── Vitals ── */}
-          <FilterSection title="Vitals">
-            <div className="space-y-3">
-              <div className="grid grid-cols-3 gap-3">
-                <div>
-                  <label className={labelCls}>AC</label>
-                  <input type="number" value={form.ac} onChange={(e) => update("ac", e.target.value)} className={fieldCls} placeholder="—" />
-                </div>
-                <div>
-                  <label className={labelCls}>HP (avg)</label>
-                  <input type="number" value={form.hp} onChange={(e) => update("hp", e.target.value)} className={fieldCls} placeholder="—" />
-                </div>
-                <div>
-                  <label className={labelCls}>Initiative</label>
-                  <div className="flex items-baseline gap-3">
-                    <input type="number" value={form.initiativeTotal} onChange={(e) => update("initiativeTotal", e.target.value)} className={fieldCls} placeholder="±" />
-                    <label className={`${checkLabelCls} whitespace-nowrap`}>
-                      <input type="checkbox" className={checkCls} checked={form.initiativeAdv} onChange={(e) => update("initiativeAdv", e.target.checked)} />
-                      adv
-                    </label>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <div className={labelCls}>Speeds (ft.)</div>
-                <div className="grid grid-cols-5 gap-2">
-                  {SPEED_MODES.map((m) => (
-                    <div key={m}>
-                      <div className={labelCls}>{m}</div>
-                      <input type="number" value={form.speeds[m]} onChange={(e) => updateNested("speeds", m, e.target.value)} className={fieldCls} placeholder="—" />
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <div className={labelCls}>Senses (ft.)</div>
-                <div className="grid grid-cols-4 gap-2">
-                  {SENSE_MODES.map((s) => (
-                    <div key={s}>
-                      <div className={labelCls}>{s}</div>
-                      <input type="number" value={form.senses[s]} onChange={(e) => updateNested("senses", s, e.target.value)} className={fieldCls} placeholder="—" />
-                    </div>
-                  ))}
-                </div>
-                <p className={`${hintCls} mt-1`}>Passive Perception is auto-calculated.</p>
-              </div>
-            </div>
-          </FilterSection>
-
-          {/* ── Ability Scores ── */}
-          <FilterSection title="Ability Scores">
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-              {ABILITY_ORDER.map((a) => {
-                const row = form.abilities[a];
-                const mod = abilityMod(row.score);
-                const save = mod + (row.proficient ? livePb : 0);
-                return (
-                  <div key={a} className="border-l border-rule/30 pl-3">
-                    <div className="mb-1 flex items-baseline justify-between">
-                      <span className="text-[11px] font-semibold tracking-[0.16em] text-rubric">{ABILITY[a]}</span>
-                      <span className="text-xs italic text-ink-faded">mod {signed(mod)} · save {signed(save)}</span>
-                    </div>
-                    <div className="flex items-baseline gap-3">
-                      <input
-                        type="number" value={row.score}
-                        onChange={(e) => setForm((f) => ({ ...f, abilities: { ...f.abilities, [a]: { ...f.abilities[a], score: e.target.value } } }))}
-                        className={fieldCls}
-                      />
-                      <label className={`${checkLabelCls} whitespace-nowrap`}>
-                        <input
-                          type="checkbox" className={checkCls} checked={row.proficient}
-                          onChange={(e) => setForm((f) => ({ ...f, abilities: { ...f.abilities, [a]: { ...f.abilities[a], proficient: e.target.checked } } }))}
-                        />
-                        prof
-                      </label>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </FilterSection>
-
-          {/* ── Skills ── */}
-          <FilterSection title="Skills">
-            <div className="space-y-2">
-              {form.skills.map((row, idx) => {
-                const used = new Set(form.skills.filter((_, i) => i !== idx).map((r) => r.skill));
-                return (
-                  <div key={idx} className="flex items-baseline gap-3">
-                    <select value={row.skill} onChange={(e) => updateSkill(idx, "skill", e.target.value)} className={`${fieldCls} flex-1`}>
-                      {skillKeys.map((k) => (
-                        <option key={k} value={k} disabled={used.has(k)}>{titleCase(k)}</option>
-                      ))}
-                    </select>
-                    <input type="number" value={row.bonus} onChange={(e) => updateSkill(idx, "bonus", e.target.value)} className={`${fieldCls} max-w-[80px]`} placeholder="±" />
-                    <button onClick={() => removeSkill(idx)} aria-label="Remove" className={removeRowCls}>✕</button>
-                  </div>
-                );
-              })}
-              <button onClick={addSkill} className={addRowCls}>
-                + Add Skill
-              </button>
-            </div>
-          </FilterSection>
-
-          {/* ── Defenses ── */}
-          <FilterSection title="Defenses">
-            <div className="space-y-2">
-              <CollapsibleChips label="Damage Immunities" options={DAMAGE_TYPES} selected={form.immune} onToggle={(v) => toggleListItem("immune", v)} />
-              <CollapsibleChips label="Damage Resistances" options={DAMAGE_TYPES} selected={form.resist} onToggle={(v) => toggleListItem("resist", v)} />
-              <CollapsibleChips label="Damage Vulnerabilities" options={DAMAGE_TYPES} selected={form.vulnerable} onToggle={(v) => toggleListItem("vulnerable", v)} />
-              <CollapsibleChips label="Condition Immunities" options={CONDITION_OPTIONS} selected={form.conditionImmune} onToggle={(v) => toggleListItem("conditionImmune", v)} />
-            </div>
-          </FilterSection>
-
-          {/* ── Tags ── */}
-          <FilterSection title="Tags">
-            <div className="space-y-3">
-              <div>
-                <div className={labelCls}>
-                  Trait & Action Tags {form.traitTags.length > 0 && <span className="normal-case">({form.traitTags.length})</span>}
-                </div>
-                {form.traitTags.length > 0 && (
-                  <div className="mb-2 flex flex-wrap gap-x-4 gap-y-1">
-                    {form.traitTags.map((t) => (
-                      <button key={t} type="button" onClick={() => toggleListItem("traitTags", t)} className={chip(true)}>{t} <span aria-hidden className="text-ink-faded">✕</span></button>
-                    ))}
-                  </div>
-                )}
-                <div className="mb-2 flex items-baseline gap-3">
-                  <input
-                    type="text" value={tagDraft}
-                    onChange={(e) => setTagDraft(e.target.value)}
-                    onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); addTag(); } }}
-                    placeholder="Add custom tag…" className={fieldCls}
-                  />
-                  <button onClick={addTag} className={`${addRowCls} whitespace-nowrap`}>
-                    + Add
-                  </button>
-                </div>
-                {traitsList.length > 0 && (
-                  <div className="flex max-h-28 flex-wrap gap-x-4 gap-y-1 overflow-y-auto pr-1">
-                    {traitsList.map((t) => (
-                      <button key={t} type="button" onClick={() => toggleListItem("traitTags", t)} className={chip(form.traitTags.includes(t))}>{t}</button>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              <CollapsibleChips label="Conditions Inflicted" options={CONDITION_OPTIONS} selected={form.conditionInflict} onToggle={(v) => toggleListItem("conditionInflict", v)} />
-              <CollapsibleChips label="Forced Saving Throws" options={SAVE_WORDS} selected={form.forcedSaves} onToggle={(v) => toggleListItem("forcedSaves", v)} />
-            </div>
-          </FilterSection>
-
-          {/* ── Languages & Environment ── */}
-          <FilterSection title="Languages & Environment">
-            <div className="space-y-2">
-              <CollapsibleChips label="Languages" options={LANGUAGE_OPTIONS} selected={form.languages} onToggle={(v) => toggleListItem("languages", v)} keepCase />
-              <CollapsibleChips label="Environment" options={envs} selected={form.environment} onToggle={(v) => toggleListItem("environment", v)} />
-            </div>
-          </FilterSection>
-
-          {/* ── Gear ── */}
-          <FilterSection title="Gear">
-            <div className="space-y-2">
-              {form.gear.map((g, idx) => (
-                <div key={idx} className={boxCls}>
-                  <div className="flex justify-between items-center">
-                    <span className={labelCls}>
-                      {g.name ? `${g.name} (${g.source})` : `Item ${idx + 1}`}
-                    </span>
-                    <button onClick={() => removeGear(idx)} aria-label="Remove" className={removeRowCls}>✕</button>
-                  </div>
-                  <NamePicker options={itemNames} value={g.name} placeholder="Search items…" onSelect={(n) => updateGear(idx, n)} />
-                  <div className="max-w-[120px]">
-                    <div className={labelCls}>Quantity</div>
-                    <input type="number" min={1} value={g.quantity} onChange={(e) => updateGearQty(idx, e.target.value)} className={fieldCls} />
-                  </div>
-                </div>
-              ))}
-              <button onClick={addGear} className={addRowCls}>
-                + Add Gear
-              </button>
-            </div>
-          </FilterSection>
-
-          {/* ── Legendary ── */}
-          <FilterSection title="Legendary Actions">
-            <div className="max-w-[160px]">
-              <label className={labelCls}>Action Points</label>
-              <input type="number" min={0} value={form.legendaryActions} onChange={(e) => update("legendaryActions", e.target.value)} className={fieldCls} placeholder="—" />
-              <p className={`${hintCls} mt-1`}>Leave blank if not legendary.</p>
-            </div>
-          </FilterSection>
-
-          {/* ── Spellcasting ── */}
-          <FilterSection title="Spellcasting">
-            <div className="space-y-3">
-              <div className="grid grid-cols-3 gap-3">
-                <div>
-                  <label className={labelCls}>Ability</label>
-                  <select value={form.spellAbility} onChange={(e) => update("spellAbility", e.target.value)} className={fieldCls}>
-                    <option value="">—</option>
-                    {SPELL_ABILITIES.map((a) => <option key={a} value={a}>{ABILITY[a]}</option>)}
-                  </select>
-                </div>
-                <div>
-                  <label className={labelCls}>Save DC</label>
-                  <input type="number" value={form.spellSaveDc} onChange={(e) => update("spellSaveDc", e.target.value)} className={fieldCls} placeholder="—" />
-                </div>
-                <div>
-                  <label className={labelCls}>Atk Bonus</label>
-                  <input type="number" value={form.spellAttackBonus} onChange={(e) => update("spellAttackBonus", e.target.value)} className={fieldCls} placeholder="±" />
-                </div>
-              </div>
-              <div>
-                <label className={labelCls}>Notes</label>
-                <textarea value={form.spellNotes} onChange={(e) => update("spellNotes", e.target.value)} rows={2} className={textareaCls}
-                  placeholder="The creature casts one of the following spells…" />
-              </div>
-
-              <div className="space-y-2">
-                {form.spellGroups.map((g, idx) => (
-                  <div key={idx} className={boxCls}>
-                    <div className="flex justify-between items-center">
-                      <span className={labelCls}>Group {idx + 1}</span>
-                      <button onClick={() => removeGroup(idx)} aria-label="Remove" className={removeRowCls}>✕</button>
-                    </div>
-                    <div className="grid grid-cols-3 gap-x-4 items-end">
-                      <div className="col-span-1">
-                        <div className={labelCls}>Label</div>
-                        <input type="text" value={g.label} onChange={(e) => updateGroup(idx, "label", e.target.value)} className={fieldCls} placeholder="At will" />
-                      </div>
-                      <div>
-                        <div className={labelCls}>Uses</div>
-                        <input type="number" value={g.uses} onChange={(e) => updateGroup(idx, "uses", e.target.value)} className={fieldCls} placeholder="∞" />
-                      </div>
-                      <label className={`${checkLabelCls} pb-1`}>
-                        <input type="checkbox" className={checkCls} checked={g.each} onChange={(e) => updateGroup(idx, "each", e.target.checked)} />
-                        each
-                      </label>
-                    </div>
-                    {g.spells.length > 0 && (
-                      <div className="flex flex-wrap gap-x-4 gap-y-1">
-                        {g.spells.map((n) => (
-                          <button key={n} type="button" onClick={() => toggleGroupSpell(idx, n)} className={chip(true)}>{titleCase(n)} <span aria-hidden className="text-ink-faded">✕</span></button>
-                        ))}
-                      </div>
-                    )}
-                    <NamePicker options={xphbSpellNames} value="" placeholder="Add spell…" onSelect={(n) => toggleGroupSpell(idx, n)} />
-                  </div>
-                ))}
-                <button onClick={addGroup} className={addRowCls}>
-                  + Add Spell Group
-                </button>
-              </div>
-            </div>
-        </FilterSection>
-
-          {/* ── Actions, Traits & Other Effects ── */}
-          <MonsterEffectsBuilder
-            value={form.effects}
-            onChange={(next) => update("effects", next)}
-          />
-    </CreateModal>
-  );
-}
-
-/* ─── Collapsible chip multi-select ─── */
-function CollapsibleChips({ label, options, selected, onToggle, keepCase }) {
-  const [open, setOpen] = useState(false);
-  const display = keepCase ? ((x) => x) : ((x) => (typeof x === "string" ? x[0].toUpperCase() + x.slice(1) : x));
-  return (
-    <div>
-      <ChipsHeading open={open} onToggle={() => setOpen((o) => !o)} label={label} count={selected.length} />
-      {open && (
-        <div className="flex flex-wrap gap-2 pl-3 mb-2 max-h-40 overflow-y-auto pr-1">
-          {(options || []).map((opt) => (
-            <button key={opt} type="button" onClick={() => onToggle(opt)} className={chip(selected.includes(opt))}>
-              {display(opt)}
-            </button>
-          ))}
+    <CreateModal open={open} title={title} onClose={onClose} onSave={handleSave} saving={saving}
+                 saveLabel={isEditing ? "Save Changes" : "Save"} error={saveError} width="max-w-4xl">
+      <BasicsSection form={form} set={set} nameError={nameError} namePlaceholder="e.g. Ash Wyrmling">
+        <div>
+          <div className={labelCls}>Size (several = pick one)</div>
+          <ChipToggles options={union(SIZE_OPTIONS, form.size)} selected={form.size} labelOf={titleCase}
+                       onToggle={(s) => set("size", toggleIn(form.size, s))} />
         </div>
-      )}
-    </div>
-  );
-}
+        <div>
+          <div className={labelCls}>Creature type (several = pick one)</div>
+          <ChipToggles options={union(CREATURE_TYPES, form.types)} selected={form.types} labelOf={titleCase}
+                       onToggle={(t) => set("types", toggleIn(form.types, t))} />
+        </div>
+        <div className="flex flex-wrap items-baseline gap-x-6 gap-y-2">
+          <label className="flex items-baseline gap-2">
+            <span className={`${labelCls} !mb-0`}>Tags</span>
+            <input type="text" value={form.typeTags} onChange={(e) => set("typeTags", e.target.value)} placeholder="demon, shapechanger"
+                   className={`${fieldCls} !w-48`} />
+          </label>
+          <label className="flex items-baseline gap-2">
+            <span className={`${labelCls} !mb-0`}>Swarm of</span>
+            <select value={form.swarmOf} onChange={(e) => set("swarmOf", e.target.value)} className={`${fieldCls} !w-28`}>
+              <option value="">— not a swarm —</option>
+              {SIZE_OPTIONS.map((s) => <option key={s} value={s}>{titleCase(s)}</option>)}
+            </select>
+          </label>
+        </div>
+        <div className="flex flex-wrap items-baseline gap-x-3 gap-y-2">
+          <span className={`${labelCls} !mb-0`}>Alignment</span>
+          <input type="text" value={form.alignmentPrefix} onChange={(e) => set("alignmentPrefix", e.target.value)} placeholder="typically"
+                 className={`${fieldCls} !w-24`} aria-label="Alignment prefix" />
+          <input type="text" value={form.alignment} onChange={(e) => set("alignment", e.target.value)} placeholder="chaotic evil"
+                 className={`${fieldCls} !w-56`} aria-label="Alignment (several: comma between)" />
+        </div>
+      </BasicsSection>
 
-/* ─── Generic searchable single-select ─── */
-function NamePicker({ options, value, onSelect, placeholder }) {
-  const [query, setQuery] = useState("");
-  const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    if (!q) return [];
-    return (options || []).filter((n) => n.toLowerCase().includes(q)).slice(0, 60);
-  }, [query, options]);
-  return (
-    <div>
-      <input type="text" value={query} onChange={(e) => setQuery(e.target.value)}
-             placeholder={(options || []).length ? placeholder : "Loading…"}
-             className={`${fieldCls} mb-2`} />
-      <div className="flex max-h-32 flex-wrap gap-x-4 gap-y-1 overflow-y-auto pr-1">
-        {filtered.map((name) => (
-          <button key={name} type="button" onClick={() => { onSelect(name); setQuery(""); }} className={chip(value === name)}>
-            {name}
-          </button>
-        ))}
-        {query && filtered.length === 0 && <span className={hintCls}>No matches.</span>}
-      </div>
-    </div>
+      <FilterSection title="Armor, Hit Points & Initiative">
+        <div className="space-y-3">
+          <div>
+            <div className="flex items-baseline gap-3">
+              <span className={`${labelCls} !mb-0`}>Armor Class</span>
+              <button type="button" onClick={() => set("ac", [...form.ac, { value: null, from: "", condition: "", special: "" }])} className={addRowCls}>
+                + another AC
+              </button>
+            </div>
+            {form.ac.map((a, i) => (
+              <div key={i} className="mt-1 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                <input type="number" value={a.value ?? ""} onChange={(e) => setAc(i, { value: numOrNull(e.target.value) })} placeholder="—"
+                       className={`${fieldCls} !w-14`} aria-label="AC" />
+                <input type="text" value={a.from} onChange={(e) => setAc(i, { from: e.target.value })} placeholder="from (natural armor)"
+                       className={`${fieldCls} !w-44`} />
+                <input type="text" value={a.condition} onChange={(e) => setAc(i, { condition: e.target.value })} placeholder="when (in bear form)"
+                       className={`${fieldCls} !w-44`} />
+                <input type="text" value={a.special} onChange={(e) => setAc(i, { special: e.target.value })} placeholder="or a rule in words"
+                       className={`${fieldCls} min-w-[8rem] flex-1`} />
+                <button type="button" onClick={() => set("ac", form.ac.filter((_, j) => j !== i))} className={removeRowCls} aria-label="Remove AC">✕</button>
+              </div>
+            ))}
+          </div>
+          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+            <span className={`${labelCls} !mb-0`}>Hit Points</span>
+            <input type="number" min={0} value={form.hp.average ?? ""} onChange={(e) => patch("hp", { average: numOrNull(e.target.value) })}
+                   placeholder="—" className={`${fieldCls} !w-16`} aria-label="Average" />
+            <input type="text" value={form.hp.formula} onChange={(e) => patch("hp", { formula: e.target.value })} placeholder="19d12 + 133"
+                   className={`${fieldCls} !w-32`} aria-label="Dice" />
+            <input type="text" value={form.hp.special} onChange={(e) => patch("hp", { special: e.target.value })} placeholder="or in words (a summon's HP)"
+                   className={`${fieldCls} min-w-[8rem] flex-1`} />
+          </div>
+          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+            <span className={`${labelCls} !mb-0`}>Initiative</span>
+            <input type="number" value={form.initiative ?? ""} onChange={(e) => set("initiative", numOrNull(e.target.value))}
+                   placeholder={signed(abilityMod(form.abilities.dex) ?? 0)} className={`${fieldCls} !w-14`} aria-label="Initiative bonus" />
+            <label className="flex items-baseline gap-2 text-sm">
+              <input type="checkbox" checked={form.initAdvantage} onChange={(e) => set("initAdvantage", e.target.checked)} className="accent-rubric" />
+              with advantage
+            </label>
+            <span className={hintCls}>Empty = its Dexterity modifier.</span>
+          </div>
+        </div>
+      </FilterSection>
+
+      <FilterSection title="Speed & Senses">
+        <div className="space-y-3">
+          <div className="flex flex-wrap items-baseline gap-x-5 gap-y-2">
+            {SPEED_MODES.map((k) => (
+              <label key={k} className="flex items-baseline gap-1.5">
+                <span className="text-xs text-ink-faded">{titleCase(k)}</span>
+                <input type="number" min={0} value={form.speed[k] ?? ""} placeholder="—" onChange={(e) => setSpeed(k, numOrNull(e.target.value))}
+                       className={`${fieldCls} !w-14`} />
+              </label>
+            ))}
+            <label className="flex items-baseline gap-2 text-sm">
+              <input type="checkbox" checked={form.hover} onChange={(e) => set("hover", e.target.checked)} className="accent-rubric" />
+              hover
+            </label>
+          </div>
+          <div className="flex flex-wrap items-baseline gap-x-5 gap-y-2">
+            {SENSE_KEYS.map((k) => (
+              <label key={k} className="flex items-baseline gap-1.5">
+                <span className="text-xs text-ink-faded">{titleCase(k)}</span>
+                <input type="number" min={0} value={form.senses[k] ?? ""} placeholder="—" onChange={(e) => setSense(k, numOrNull(e.target.value))}
+                       className={`${fieldCls} !w-14`} />
+              </label>
+            ))}
+            <label className="flex items-baseline gap-1.5">
+              <span className="text-xs text-ink-faded">Passive Perception</span>
+              <input type="number" min={0} value={form.passive ?? ""} onChange={(e) => set("passive", numOrNull(e.target.value))}
+                     placeholder={String(10 + (abilityMod(form.abilities.wis) ?? 0))} className={`${fieldCls} !w-14`} />
+            </label>
+          </div>
+          <input type="text" value={form.sensesNotes} onChange={(e) => set("sensesNotes", e.target.value)}
+                 placeholder="a note on its senses (blind beyond this radius)" className={fieldCls} />
+        </div>
+      </FilterSection>
+
+      <FilterSection title="Abilities, Saves & Skills">
+        <div className="space-y-3">
+          <div className="grid grid-cols-3 gap-x-4 gap-y-2 sm:grid-cols-6">
+            {ABILITIES.map((a) => {
+              const mod = abilityMod(form.abilities[a]);
+              return (
+                <div key={a} className="text-center">
+                  <div className={labelCls}>{ABILITY_SHORT[a]}</div>
+                  <input type="number" min={0} value={form.abilities[a] ?? ""} onChange={(e) => patch("abilities", { [a]: numOrNull(e.target.value) })}
+                         className={`${fieldCls} !w-14 text-center`} aria-label={`${a} score`} />
+                  <div className="text-xs text-ink-faded">{mod == null ? "—" : signed(mod)}</div>
+                  <input type="text" value={form.saves[a] ?? ""} placeholder="save"
+                         onChange={(e) => set("saves", { ...form.saves, [a]: e.target.value })}
+                         className={`${fieldCls} !w-14 text-center text-xs`} aria-label={`${a} save bonus`}
+                         title={pb != null && mod != null ? `Proficient: ${signed(mod + pb)}` : "A proficient save's bonus"} />
+                </div>
+              );
+            })}
+          </div>
+          <p className={hintCls}>Fill a save only where it's proficient; the others use the modifier. A summon's bonus can be a formula (2 + pb).</p>
+          <div>
+            <div className="flex items-baseline gap-3">
+              <span className={`${labelCls} !mb-0`}>Skills</span>
+              <button type="button" onClick={() => set("skills", [...form.skills, { skill: "perception", value: "" }])} className={addRowCls}>
+                + skill
+              </button>
+            </div>
+            {form.skills.map((s, i) => (
+              <div key={i} className="mt-1 flex items-baseline gap-3">
+                <select value={s.skill} onChange={(e) => setSkill(i, { skill: e.target.value })} className={`${fieldCls} !w-44`}>
+                  {union(SKILL_IDS, [s.skill]).map((k) => <option key={k} value={k}>{labelFromId(k)}</option>)}
+                </select>
+                <span className="text-xs text-ink-faded">+</span>
+                <input type="text" value={s.value} onChange={(e) => setSkill(i, { value: e.target.value })} placeholder="5" className={`${fieldCls} !w-20`} />
+                <button type="button" onClick={() => set("skills", form.skills.filter((_, j) => j !== i))} className={removeRowCls} aria-label="Remove skill">✕</button>
+              </div>
+            ))}
+          </div>
+        </div>
+      </FilterSection>
+
+      <FilterSection title="Resistances & Immunities" defaultOpen={false}>
+        <div className="space-y-1">
+          {DEFENSE_KINDS.map((k) => {
+            const kept = form.defensesRest[k];
+            const keptWords = kept ? formatDefense(kept) : "";
+            return (
+              <div key={k}>
+                <FoldChips label={DEFENSE_LABELS[k]} options={k === "condition_immune" ? CONDITIONS : DAMAGE_TYPES}
+                           selected={form.defenses[k]} onToggle={(t) => set("defenses", { ...form.defenses, [k]: toggleIn(form.defenses[k], t) })} />
+                {keptWords && <p className={`${hintCls} mb-1 pl-4`}>Also: {keptWords} (kept as written)</p>}
+              </div>
+            );
+          })}
+        </div>
+      </FilterSection>
+
+      <FilterSection title="Languages & Challenge">
+        <div className="space-y-3">
+          <div>
+            <div className={labelCls}>Languages (one per line)</div>
+            <textarea value={form.languages} onChange={(e) => set("languages", e.target.value)} rows={2} className={textareaCls}
+                      placeholder={"Common\nDraconic\ntelepathy 120 ft."} />
+          </div>
+          <Segmented options={CHALLENGE_MODES} value={form.challenge} onChange={(v) => set("challenge", v)} />
+          {form.challenge === "cr" && (
+            <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+              <span className="text-xs text-ink-faded">CR</span>
+              <select value={form.cr} onChange={(e) => setCR(e.target.value)} className={`${fieldCls} !w-20`}>
+                {union(CR_OPTIONS, form.cr ? [form.cr] : []).map((c) => <option key={c} value={c}>{c}</option>)}
+              </select>
+              <span className="text-xs text-ink-faded">XP</span>
+              <input type="number" min={0} value={form.xp ?? ""} onChange={(e) => set("xp", numOrNull(e.target.value))} className={`${fieldCls} !w-20`} />
+              <span className="text-xs text-ink-faded">PB +</span>
+              <input type="number" min={0} value={form.pb ?? ""} onChange={(e) => set("pb", numOrNull(e.target.value))} className={`${fieldCls} !w-12`} />
+            </div>
+          )}
+          {form.challenge === "level" && (
+            <label className="flex items-baseline gap-2">
+              <span className="text-xs text-ink-faded">Level</span>
+              <input type="number" min={1} max={20} value={form.level ?? ""} onChange={(e) => set("level", numOrNull(e.target.value))}
+                     className={`${fieldCls} !w-14`} />
+            </label>
+          )}
+          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+            <span className="text-xs text-ink-faded">Legendary action uses</span>
+            <input type="number" min={0} value={form.legendaryUses ?? ""} placeholder="—" onChange={(e) => set("legendaryUses", numOrNull(e.target.value))}
+                   className={`${fieldCls} !w-12`} />
+            <span className="text-xs text-ink-faded">in its lair</span>
+            <input type="number" min={0} value={form.legendaryLair ?? ""} placeholder="—" onChange={(e) => set("legendaryLair", numOrNull(e.target.value))}
+                   className={`${fieldCls} !w-12`} />
+          </div>
+        </div>
+      </FilterSection>
+
+      <FilterSection title="Traits & Actions">
+        <MonsterFeaturesEditor features={form.features} onChange={(v) => set("features", v)} variants={form.rest.variants || []} />
+      </FilterSection>
+
+      <FilterSection title="Spellcasting" defaultOpen={form.spellcasting.length > 0}>
+        <MonsterSpellcastingEditor blocks={form.spellcasting} onChange={(v) => set("spellcasting", v)} spells={spells} index={index} />
+      </FilterSection>
+
+      <FilterSection title="Gear" defaultOpen={false}>
+        <div className="space-y-2">
+          {form.items.map((it, i) => (
+            <div key={`${it.item}-${i}`} className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+              <input type="number" min={1} value={it.qty ?? 1} aria-label="Quantity" className={`${fieldCls} !w-12`}
+                     onChange={(e) => set("items", form.items.map((x, j) => (j === i ? { ...x, qty: numOrNull(e.target.value) ?? 1 } : x)))} />
+              <span className="min-w-[10rem] flex-1 text-sm">{nameFromId(it.item, index)}</span>
+              <label className="flex items-baseline gap-2 text-sm" title="One of its attacks uses this item">
+                <input type="checkbox" checked={!!it.attacks} className="accent-rubric"
+                       onChange={(e) => set("items", form.items.map((x, j) => (j === i ? { ...x, attacks: e.target.checked || undefined } : x)))} />
+                attacks with it
+              </label>
+              <button type="button" onClick={() => set("items", form.items.filter((_, j) => j !== i))} className={removeRowCls} aria-label="Remove">✕</button>
+            </div>
+          ))}
+          <EntryPicker entries={items} selected={[]} index={index} placeholder="add from the item catalogue…"
+                       onToggle={(id) => set("items", [...form.items, { item: id, qty: 1 }])} />
+        </div>
+      </FilterSection>
+
+      <FilterSection title="Labels" defaultOpen={false}>
+        <div className="space-y-2">
+          <div className="flex flex-wrap gap-x-6">
+            {[["npc", "NPC"], ["named", "Named character"], ["familiar", "Can be a familiar"]].map(([k, label]) => (
+              <label key={k} className="flex items-baseline gap-2 text-sm">
+                <input type="checkbox" checked={form.flags[k]} onChange={(e) => patch("flags", { [k]: e.target.checked })} className="accent-rubric" />
+                {label}
+              </label>
+            ))}
+          </div>
+          <FoldChips label="Habitat" options={union(habitats, form.environment)} selected={form.environment}
+                     onToggle={(h) => set("environment", toggleIn(form.environment, h))} />
+        </div>
+      </FilterSection>
+
+      {restKeys.length > 0 && (
+        <p className={`${hintCls} mt-2`}>Also kept as they are: {restKeys.map((k) => titleCase(k.replace(/_/g, " "))).join(", ")}.</p>
+      )}
+    </CreateModal>
   );
 }

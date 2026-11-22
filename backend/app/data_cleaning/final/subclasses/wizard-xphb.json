@@ -1,0 +1,293 @@
+[
+    {
+        "id": "wizard-xphb:evoker-xphb",
+        "kind": "subclass",
+        "name": "Evoker",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Evoker"
+        },
+        "text": "*Create Explosive Elemental Effects*\n\nYour studies focus on magic that creates powerful elemental effects such as bitter cold, searing flame, rolling thunder, crackling lightning, and burning acid. Some Evokers find employment in military forces, serving as artillery to blast armies from afar. Others use their power to protect others, while some seek their own gain.",
+        "class_id": "wizard-xphb",
+        "short_name": "Evoker",
+        "choices": [
+            {
+                "type": "pool",
+                "id": "spells",
+                "label": "Spells",
+                "grant": "spells",
+                "count": 1,
+                "from": {
+                    "spell_level": [
+                        0,
+                        1,
+                        2
+                    ],
+                    "class": "wizard",
+                    "school": "evocation"
+                },
+                "how": "known",
+                "at": 3
+            },
+            {
+                "type": "pool",
+                "id": "spells_2",
+                "label": "Spells",
+                "grant": "spells",
+                "count": 1,
+                "from": {
+                    "spell_level": [
+                        0,
+                        1,
+                        2
+                    ],
+                    "class": "wizard",
+                    "school": "evocation"
+                },
+                "how": "known",
+                "at": 3
+            },
+            {
+                "type": "pool",
+                "id": "spells_3",
+                "label": "Spells",
+                "grant": "spells",
+                "count": 1,
+                "from": {
+                    "spell_level": [
+                        0,
+                        1,
+                        2,
+                        3
+                    ],
+                    "class": "wizard",
+                    "school": "evocation"
+                },
+                "how": "known",
+                "at": 5
+            },
+            {
+                "type": "pool",
+                "id": "spells_4",
+                "label": "Spells",
+                "grant": "spells",
+                "count": 1,
+                "from": {
+                    "spell_level": [
+                        0,
+                        1,
+                        2,
+                        3,
+                        4
+                    ],
+                    "class": "wizard",
+                    "school": "evocation"
+                },
+                "how": "known",
+                "at": 7
+            },
+            {
+                "type": "pool",
+                "id": "spells_5",
+                "label": "Spells",
+                "grant": "spells",
+                "count": 1,
+                "from": {
+                    "spell_level": [
+                        0,
+                        1,
+                        2,
+                        3,
+                        4,
+                        5
+                    ],
+                    "class": "wizard",
+                    "school": "evocation"
+                },
+                "how": "known",
+                "at": 9
+            },
+            {
+                "type": "pool",
+                "id": "spells_6",
+                "label": "Spells",
+                "grant": "spells",
+                "count": 1,
+                "from": {
+                    "spell_level": [
+                        0,
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6
+                    ],
+                    "class": "wizard",
+                    "school": "evocation"
+                },
+                "how": "known",
+                "at": 11
+            },
+            {
+                "type": "pool",
+                "id": "spells_7",
+                "label": "Spells",
+                "grant": "spells",
+                "count": 1,
+                "from": {
+                    "spell_level": [
+                        0,
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7
+                    ],
+                    "class": "wizard",
+                    "school": "evocation"
+                },
+                "how": "known",
+                "at": 13
+            },
+            {
+                "type": "pool",
+                "id": "spells_8",
+                "label": "Spells",
+                "grant": "spells",
+                "count": 1,
+                "from": {
+                    "spell_level": [
+                        0,
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8
+                    ],
+                    "class": "wizard",
+                    "school": "evocation"
+                },
+                "how": "known",
+                "at": 15
+            },
+            {
+                "type": "pool",
+                "id": "spells_9",
+                "label": "Spells",
+                "grant": "spells",
+                "count": 1,
+                "from": {
+                    "spell_level": [
+                        0,
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9
+                    ],
+                    "class": "wizard",
+                    "school": "evocation"
+                },
+                "how": "known",
+                "at": 17
+            }
+        ],
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "wizard-xphb:evoker-xphb:evocation-savant",
+                    "wizard-xphb:evoker-xphb:potent-cantrip"
+                ]
+            },
+            {
+                "level": 6,
+                "features": [
+                    "wizard-xphb:evoker-xphb:sculpt-spells"
+                ]
+            },
+            {
+                "level": 10,
+                "features": [
+                    "wizard-xphb:evoker-xphb:empowered-evocation"
+                ]
+            },
+            {
+                "level": 14,
+                "features": [
+                    "wizard-xphb:evoker-xphb:overchannel"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "wizard-xphb:evoker-xphb:evocation-savant",
+                "name": "Evocation Savant",
+                "level": 3,
+                "text": "Choose two Wizard spells from the Evocation school, each of which must be no higher than level 2, and add them to your spellbook for free.\n\nIn addition, whenever you gain access to a new level of spell slots in this class, you can add one Wizard spell from the Evocation school to your spellbook for free. The chosen spell must be of a level for which you have spell slots.",
+                "srd": {
+                    "5.2": "Evocation Savant"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "wizard-xphb:evoker-xphb:potent-cantrip",
+                "name": "Potent Cantrip",
+                "level": 3,
+                "text": "Your damaging cantrips affect even creatures that avoid the brunt of the effect. When you cast a cantrip at a creature and you miss with the attack roll or the target succeeds on a saving throw against the cantrip, the target takes half the cantrip's damage (if any) but suffers no additional effect from the cantrip.",
+                "srd": {
+                    "5.2": "Potent Cantrip"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "wizard-xphb:evoker-xphb:sculpt-spells",
+                "name": "Sculpt Spells",
+                "level": 6,
+                "text": "You can create pockets of relative safety within the effects of your evocations. When you cast an Evocation spell that affects other creatures that you can see, you can choose a number of them equal to 1 plus the spell's level. The chosen creatures automatically succeed on their saving throws against the spell, and they take no damage if they would normally take half damage on a successful save.",
+                "srd": {
+                    "5.2": "Sculpt Spells"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "wizard-xphb:evoker-xphb:empowered-evocation",
+                "name": "Empowered Evocation",
+                "level": 10,
+                "text": "Whenever you cast a Wizard spell from the Evocation school, you can add your Intelligence modifier to one damage roll of that spell.",
+                "srd": {
+                    "5.2": "Empowered Evocation"
+                },
+                "category": "traits",
+                "modifiers": [
+                    {
+                        "target": "damage",
+                        "add": "int_mod"
+                    }
+                ]
+            },
+            {
+                "id": "wizard-xphb:evoker-xphb:overchannel",
+                "name": "Overchannel",
+                "level": 14,
+                "text": "You can increase the power of your spells. When you cast a Wizard spell with a spell slot of levels 1–5 that deals damage, you can deal maximum damage with that spell on the turn you cast it.\n\nThe first time you do so, you suffer no adverse effect. If you use this feature again before you finish a Long Rest, you take 2d12 Necrotic damage for each level of the spell slot immediately after you cast it. This damage ignores Resistance and Immunity.\n\nEach time you use this feature again before finishing a Long Rest, the Necrotic damage per spell level increases by 1d12.",
+                "srd": {
+                    "5.2": "Overchannel"
+                },
+                "category": "traits"
+            }
+        ],
+        "resources": []
+    }
+]

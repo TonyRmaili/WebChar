@@ -12,6 +12,8 @@ the book's other entries, the book's publication date). Anything still
 undecided is reported and left out (add it to patches/optionalfeatures.json).
 """
 
+import re
+
 from pydantic import ValidationError
 
 from ..schemas.common_schema import dump
@@ -48,7 +50,9 @@ def clean_optionalfeature(entry: dict) -> tuple[dict | None, list[str]]:
             out["consumes"] = {"resource": out["consumes"]["resource"],
                                "min": cons.get("amountMin"), "max": cons.get("amountMax")}
 
-    if entry.get("repeatable"):
+    # 5etools leaves `repeatable` off some 2024 invocations whose text has a
+    # "Repeatable." block (Agonizing Blast, Eldritch Spear, …)
+    if entry.get("repeatable") or re.search(r"\*\*Repeatable\.\*\*", out.get("text") or ""):
         out["repeatable"] = True
     pre = prerequisites(entry.get("prerequisite"), problems)
     if pre:

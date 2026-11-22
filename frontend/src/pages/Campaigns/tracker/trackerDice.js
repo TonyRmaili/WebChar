@@ -1,4 +1,4 @@
-import { abilitiesOf, pbOf, saveTotal } from "../../Characters/sheet/define/abilityHelpers";
+import { derivedOf } from "../../../utils/derive";
 import { saveOf } from "../statblock/monsterStatblock";
 import { acOf, hpOf } from "./trackerLogic";
 
@@ -18,22 +18,24 @@ const ABILITY_KEYS = ["str", "dex", "con", "int", "wis", "cha"];
 export function saveBonusOf(c, ability) {
   if (!c.data) return 0;
   if (c.kind === "monster") return saveOf(c.data, ability);
-  return saveTotal(abilitiesOf(c.data)[ability], pbOf(c.data)) ?? 0;
+  return derivedOf(c.data)?.abilities?.[ability]?.save ?? 0;
 }
 
 export function defensesOf(c) {
   const d = c.data || {};
   if (c.kind === "monster") {
-    return { resistances: words(d.resistances?.types), immunities: words(d.immunities?.types), vulnerabilities: words(d.vulnerabilities?.types) };
+    const def = d.defenses || {};
+    return { resistances: words(def.resist?.types), immunities: words(def.immune?.types), vulnerabilities: words(def.vulnerable?.types) };
   }
-  const def = d.defenses || {};
-  return { resistances: words(def.resistances), immunities: words(def.immunities), vulnerabilities: words(def.vulnerabilities) };
+  const def = derivedOf(d)?.defenses || {};
+  return { resistances: words(def.resist), immunities: words(def.immune), vulnerabilities: words(def.vulnerable) };
 }
 
 // Monsters with the Magic Resistance trait save against spells with advantage.
 export function hasMagicResistance(c) {
   const d = c.data || {};
-  const names = c.kind === "monster" ? Object.values(d.effects || {}).flatMap((s) => asList(s?.items)).map((x) => x?.name) : asList(d.effects).map((x) => x?.name);
+  const own = c.kind === "monster" ? d.features : asList(d.layers).flatMap((l) => asList(l?.features));
+  const names = asList(own).filter((x) => x?.active !== false).map((x) => x?.name);
   return names.some((n) => /magic resistance/i.test(String(n || "")));
 }
 

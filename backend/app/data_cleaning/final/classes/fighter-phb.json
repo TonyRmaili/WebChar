@@ -1,0 +1,782 @@
+[
+    {
+        "id": "fighter-phb",
+        "kind": "class",
+        "name": "Fighter",
+        "source": "PHB",
+        "edition": "classic",
+        "srd": {
+            "5.1": "Fighter"
+        },
+        "reprinted_as": [
+            "fighter-xphb"
+        ],
+        "hit_die": "d10",
+        "hp": {
+            "first": "10 + con_mod",
+            "per_level": "6 + con_mod"
+        },
+        "saves": [
+            "str",
+            "con"
+        ],
+        "grants": {
+            "weapons": [
+                "simple_weapons",
+                "martial_weapons"
+            ],
+            "armor": [
+                "light",
+                "medium",
+                "heavy",
+                "shields"
+            ]
+        },
+        "choices": [
+            {
+                "type": "pool",
+                "id": "skills",
+                "label": "Skills",
+                "grant": "skills",
+                "count": 2,
+                "from": [
+                    "acrobatics",
+                    "animal_handling",
+                    "athletics",
+                    "history",
+                    "insight",
+                    "intimidation",
+                    "perception",
+                    "survival"
+                ]
+            },
+            {
+                "type": "bundle",
+                "id": "starting_equipment",
+                "label": "Starting Equipment",
+                "options": [
+                    {
+                        "id": "a",
+                        "label": "Chain Mail",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "chain-mail-phb",
+                                    "qty": 1
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "id": "b",
+                        "label": "Leather Armor, Longbow, Arrows (20)",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "leather-armor-phb",
+                                    "qty": 1
+                                },
+                                {
+                                    "item": "longbow-phb",
+                                    "qty": 1
+                                },
+                                {
+                                    "item": "arrows-20-phb",
+                                    "qty": 1
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "type": "bundle",
+                "id": "starting_equipment_2",
+                "label": "Starting Equipment",
+                "options": [
+                    {
+                        "id": "a",
+                        "label": "Martial Weapons, Shield",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "shield-phb",
+                                    "qty": 1
+                                }
+                            ]
+                        },
+                        "choices": [
+                            {
+                                "type": "pool",
+                                "id": "items",
+                                "label": "Martial Weapons",
+                                "grant": "items",
+                                "count": 1,
+                                "from": "martial_weapons"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "b",
+                        "label": "Martial Weapons",
+                        "choices": [
+                            {
+                                "type": "pool",
+                                "id": "items_2",
+                                "label": "Martial Weapons",
+                                "grant": "items",
+                                "count": 2,
+                                "from": "martial_weapons"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "bundle",
+                "id": "starting_equipment_3",
+                "label": "Starting Equipment",
+                "options": [
+                    {
+                        "id": "a",
+                        "label": "Light Crossbow, Crossbow Bolts (20)",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "light-crossbow-phb",
+                                    "qty": 1
+                                },
+                                {
+                                    "item": "crossbow-bolts-20-phb",
+                                    "qty": 1
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "id": "b",
+                        "label": "2 Handaxe",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "handaxe-phb",
+                                    "qty": 2
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "type": "bundle",
+                "id": "starting_equipment_4",
+                "label": "Starting Equipment",
+                "options": [
+                    {
+                        "id": "a",
+                        "label": "Dungeoneer's Pack",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "dungeoneers-pack-phb",
+                                    "qty": 1
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "id": "b",
+                        "label": "Explorer's Pack",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "explorers-pack-phb",
+                                    "qty": 1
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        ],
+        "starting_gold": "5d4 × 10",
+        "multiclass": {
+            "requires": [
+                {
+                    "str": 13
+                },
+                {
+                    "dex": 13
+                }
+            ],
+            "grants": {
+                "weapons": [
+                    "simple_weapons",
+                    "martial_weapons"
+                ],
+                "armor": [
+                    "light",
+                    "medium",
+                    "shields"
+                ]
+            }
+        },
+        "subclass": {
+            "title": "Martial Archetype",
+            "level": 3,
+            "text": "At 3rd level, you choose an archetype from the list available that you strive to emulate in your combat styles and techniques. The archetype you choose grants you features at 3rd level and again at 7th, 10th, 15th, and 18th level."
+        },
+        "progression": [
+            {
+                "level": 1,
+                "features": [
+                    "fighter-phb:fighting-style",
+                    "fighter-phb:second-wind"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "fighting_style_1",
+                        "label": "Fighting Style",
+                        "grant": "optional_features",
+                        "count": 1,
+                        "from": {
+                            "feature_type": [
+                                "fighting_style"
+                            ],
+                            "class": [
+                                "fighter"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 2,
+                "features": [
+                    "fighter-phb:action-surge"
+                ]
+            },
+            {
+                "level": 3,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "martial_archetype_3",
+                        "label": "Martial Archetype",
+                        "grant": "subclass",
+                        "count": 1,
+                        "from": "fighter-phb"
+                    }
+                ]
+            },
+            {
+                "level": 4,
+                "features": [],
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_4",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_4",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_4",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 5,
+                "features": [
+                    "fighter-phb:extra-attack"
+                ]
+            },
+            {
+                "level": 6,
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_6",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_6",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_6",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 7,
+                "subclass_features": true
+            },
+            {
+                "level": 8,
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_8",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_8",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_8",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 9,
+                "features": [
+                    "fighter-phb:indomitable"
+                ]
+            },
+            {
+                "level": 10,
+                "subclass_features": true
+            },
+            {
+                "level": 11,
+                "upgrades": [
+                    "fighter-phb:extra-attack"
+                ]
+            },
+            {
+                "level": 12,
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_12",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_12",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_12",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 13,
+                "upgrades": [
+                    "fighter-phb:indomitable"
+                ]
+            },
+            {
+                "level": 14,
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_14",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_14",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_14",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 15,
+                "subclass_features": true
+            },
+            {
+                "level": 16,
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_16",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_16",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_16",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 17,
+                "upgrades": [
+                    "fighter-phb:action-surge",
+                    "fighter-phb:indomitable"
+                ]
+            },
+            {
+                "level": 18,
+                "subclass_features": true
+            },
+            {
+                "level": 19,
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_19",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_19",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_19",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 20,
+                "upgrades": [
+                    "fighter-phb:extra-attack"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "fighter-phb:fighting-style",
+                "name": "Fighting Style",
+                "level": 1,
+                "text": "You adopt a particular style of fighting as your specialty. Choose one of the following options. You can't take the same Fighting Style option more than once, even if you get to choose again.\n\n- Archery\n- Defense\n- Dueling\n- Great Weapon Fighting\n- Protection\n- Two-Weapon Fighting\n- Blind Fighting\n- Interception\n- Superior Technique\n- Thrown Weapon Fighting\n- Unarmed Fighting",
+                "srd": {
+                    "5.1": "Fighting Style"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "fighter-phb:second-wind",
+                "name": "Second Wind",
+                "level": 1,
+                "text": "You have a limited well of stamina that you can draw on to protect yourself from harm. On your turn, you can use a bonus action to regain hit points equal to 1d10 + your fighter level.\n\nOnce you use this feature, you must finish a short or long rest before you can use it again.",
+                "srd": {
+                    "5.1": "Second Wind"
+                },
+                "category": "bonus_actions",
+                "uses": {
+                    "max": 1,
+                    "reset": "short"
+                },
+                "action": {
+                    "heal": "1d10 + class_level"
+                }
+            },
+            {
+                "id": "fighter-phb:action-surge",
+                "name": "Action Surge",
+                "level": 2,
+                "text": "Starting at 2nd level, you can push yourself beyond your normal limits for a moment. On your turn, you can take one additional action.\n\nOnce you use this feature, you must finish a short or long rest before you can use it again. Starting at 17th level, you can use it twice before a rest, but only once on the same turn.\n\n**Action Surge (two uses).** At 17th level, you can use Action Surge twice before a rest, but only once on the same turn.",
+                "srd": {
+                    "5.1": "Action Surge"
+                },
+                "category": "traits",
+                "uses": {
+                    "max": {
+                        "1": 1,
+                        "17": 2
+                    },
+                    "reset": "short"
+                }
+            },
+            {
+                "id": "fighter-phb:extra-attack",
+                "name": "Extra Attack",
+                "level": 5,
+                "text": "Beginning at 5th level, you can attack twice, instead of once, whenever you take the Attack action on your turn.\n\nThe number of attacks increases to three when you reach 11th level in this class and to four when you reach 20th level in this class.\n\n**Extra Attack (2).** At 11th level, you can attack three times whenever you take the Attack action on your turn.\n\n**Extra Attack (3).** At 20th level, you can attack four times whenever you take the Attack action on your turn.",
+                "srd": {
+                    "5.1": "Extra Attack"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "fighter-phb:indomitable",
+                "name": "Indomitable",
+                "level": 9,
+                "text": "Beginning at 9th level, you can reroll a saving throw that you fail. If you do so, you must use the new roll, and you can't use this feature again until you finish a long rest.\n\nYou can use this feature twice between long rests starting at 13th level and three times between long rests starting at 17th level.\n\n**Indomitable (two uses).** At 13th level, you can use Indomitable twice between long rests.\n\n**Indomitable (three uses).** At 17th level, you can use Indomitable three times between long rests.",
+                "srd": {
+                    "5.1": "Indomitable"
+                },
+                "category": "traits",
+                "uses": {
+                    "max": {
+                        "1": 1,
+                        "13": 2,
+                        "17": 3
+                    },
+                    "reset": "long"
+                }
+            }
+        ],
+        "resources": []
+    }
+]

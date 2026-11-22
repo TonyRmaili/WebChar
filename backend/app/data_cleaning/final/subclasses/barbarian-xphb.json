@@ -1,0 +1,123 @@
+[
+    {
+        "id": "barbarian-xphb:berserker-xphb",
+        "kind": "subclass",
+        "name": "Path of the Berserker",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Path of the Berserker"
+        },
+        "text": "*Channel Rage into Violent Fury*\n\nBarbarians who walk the Path of the Berserker direct their Rage primarily toward violence. Their path is one of untrammeled fury, and they thrill in the chaos of battle as they allow their Rage to seize and empower them.",
+        "class_id": "barbarian-xphb",
+        "short_name": "Berserker",
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "barbarian-xphb:berserker-xphb:frenzy"
+                ]
+            },
+            {
+                "level": 6,
+                "features": [
+                    "barbarian-xphb:berserker-xphb:mindless-rage"
+                ]
+            },
+            {
+                "level": 10,
+                "features": [
+                    "barbarian-xphb:berserker-xphb:retaliation"
+                ]
+            },
+            {
+                "level": 14,
+                "features": [
+                    "barbarian-xphb:berserker-xphb:intimidating-presence"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "barbarian-xphb:berserker-xphb:frenzy",
+                "name": "Frenzy",
+                "level": 3,
+                "text": "If you use Reckless Attack while your Rage is active, you deal extra damage to the first target you hit on your turn with a Strength-based attack. To determine the extra damage, roll a number of d6s equal to your Rage Damage bonus, and add them together. The damage has the same type as the weapon or Unarmed Strike used for the attack.",
+                "srd": {
+                    "5.2": "Frenzy"
+                },
+                "category": "traits",
+                "action": {
+                    "attack": {
+                        "kind": "melee",
+                        "damage": [
+                            {
+                                "dice": {
+                                    "1": "2d6",
+                                    "9": "3d6",
+                                    "16": "4d6"
+                                },
+                                "type": "weapon",
+                                "condition": "when you use Reckless Attack and hit the first target on your turn with a Strength-based attack."
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "barbarian-xphb:berserker-xphb:mindless-rage",
+                "name": "Mindless Rage",
+                "level": 6,
+                "text": "You have Immunity to the Charmed and Frightened conditions while your Rage is active. If you're Charmed or Frightened when you enter your Rage, the condition ends on you.",
+                "srd": {
+                    "5.2": "Mindless Rage"
+                },
+                "category": "traits",
+                "grants": {
+                    "defenses": {
+                        "condition_immune": [
+                            "charmed",
+                            "frightened"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "barbarian-xphb:berserker-xphb:retaliation",
+                "name": "Retaliation",
+                "level": 10,
+                "text": "When you take damage from a creature that is within 5 feet of you, you can take a Reaction to make one melee attack against that creature, using a weapon or an Unarmed Strike.",
+                "srd": {
+                    "5.2": "Retaliation"
+                },
+                "category": "reactions"
+            },
+            {
+                "id": "barbarian-xphb:berserker-xphb:intimidating-presence",
+                "name": "Intimidating Presence",
+                "level": 14,
+                "text": "As a Bonus Action, you can strike terror into others with your menacing presence and primal power. When you do so, each creature of your choice in a 30-foot Emanation originating from you must make a Wisdom saving throw (DC 8 plus your Strength modifier and Proficiency Bonus). On a failed save, a creature has the Frightened condition for 1 minute. At the end of each of the Frightened creature's turns, the creature repeats the save, ending the effect on itself on a success.\n\nOnce you use this feature, you can't use it again until you finish a Long Rest unless you expend a use of your Rage (no action required) to restore your use of it.",
+                "srd": {
+                    "5.2": "Intimidating Presence"
+                },
+                "category": "bonus_actions",
+                "uses": {
+                    "max": 1,
+                    "reset": "long"
+                },
+                "action": {
+                    "area": "30-foot Emanation",
+                    "save": {
+                        "ability": "wis",
+                        "dc": "8 + str_mod + pb",
+                        "on_success": "none",
+                        "conditions": [
+                            "frightened"
+                        ]
+                    }
+                }
+            }
+        ],
+        "resources": []
+    }
+]

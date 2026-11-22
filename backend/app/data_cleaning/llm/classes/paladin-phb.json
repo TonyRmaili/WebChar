@@ -1,0 +1,356 @@
+{
+  "paladin-phb:divine-sense": {
+    "label": "Paladin (PHB) · Divine Sense",
+    "hash": "f1ef273ba1cd0aa1",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "divine-sense",
+          "name": "Divine Sense",
+          "level": 1,
+          "category": "actions",
+          "uses": {
+            "max": "1 + cha_mod",
+            "reset": "long"
+          },
+          "action": {
+            "range": "60 feet"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11379,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:21:47+00:00"
+  },
+  "paladin-phb:lay-on-hands": {
+    "label": "Paladin (PHB) · Lay on Hands",
+    "hash": "1b086e25836c0898",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "lay-on-hands",
+          "name": "Lay on Hands",
+          "level": 1,
+          "category": "actions",
+          "action": {
+            "range": "touch",
+            "heal": "5 * class_level"
+          }
+        }
+      ],
+      "resources": [
+        {
+          "name": "Healing Power",
+          "max": "5 * class_level",
+          "reset": "long"
+        }
+      ]
+    },
+    "problems": [],
+    "tokens": 11873,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:21:50+00:00"
+  },
+  "paladin-phb:divine-smite": {
+    "label": "Paladin (PHB) · Divine Smite",
+    "hash": "45f288f479ae444b",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "divine-smite",
+          "name": "Divine Smite",
+          "level": 2,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "melee",
+              "damage": [
+                {
+                  "dice": "2d8",
+                  "type": "radiant"
+                },
+                {
+                  "dice": "1d8",
+                  "type": "radiant",
+                  "condition": "extra against Undead or fiends"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11644,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:22:02+00:00"
+  },
+  "paladin-phb:divine-health": {
+    "label": "Paladin (PHB) · Divine Health",
+    "hash": "d55c2fb218fc6a5d",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11101,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:22:08+00:00"
+  },
+  "paladin-phb:extra-attack": {
+    "label": "Paladin (PHB) · Extra Attack",
+    "hash": "4d95cbd27b883ecb",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11135,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-19T11:34:39+00:00"
+  },
+  "paladin-phb:aura-of-protection": {
+    "label": "Paladin (PHB) · Aura of Protection",
+    "hash": "4533a608c033dd90",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "aura-of-protection",
+          "name": "Aura of Protection",
+          "level": 6,
+          "category": "traits",
+          "modifiers": [
+            {
+              "target": "save.str",
+              "add": "max(1, cha_mod)"
+            },
+            {
+              "target": "save.dex",
+              "add": "max(1, cha_mod)"
+            },
+            {
+              "target": "save.con",
+              "add": "max(1, cha_mod)"
+            },
+            {
+              "target": "save.int",
+              "add": "max(1, cha_mod)"
+            },
+            {
+              "target": "save.wis",
+              "add": "max(1, cha_mod)"
+            },
+            {
+              "target": "save.cha",
+              "add": "max(1, cha_mod)"
+            }
+          ]
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11509,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-19T11:34:46+00:00"
+  },
+  "paladin-phb:aura-of-courage": {
+    "label": "Paladin (PHB) · Aura of Courage",
+    "hash": "0d4fb1ba04e1f298",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11413,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-19T11:34:52+00:00"
+  },
+  "paladin-phb:improved-divine-smite": {
+    "label": "Paladin (PHB) · Improved Divine Smite",
+    "hash": "7d23ccba9307adb1",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "improved-divine-smite",
+          "name": "Improved Divine Smite",
+          "level": 11,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "melee",
+              "damage": [
+                {
+                  "dice": "1d8",
+                  "type": "radiant"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11228,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-19T11:34:58+00:00"
+  },
+  "paladin-phb:cleansing-touch": {
+    "label": "Paladin (PHB) · Cleansing Touch",
+    "hash": "dd271002099f21be",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "cleansing-touch",
+          "name": "Cleansing Touch",
+          "level": 14,
+          "category": "actions",
+          "uses": {
+            "max": "max(1, cha_mod)",
+            "reset": "long"
+          },
+          "action": {
+            "range": "touch"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11219,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-19T11:35:02+00:00"
+  },
+  "paladin-phb:aura-improvements": {
+    "label": "Paladin (PHB) · Aura improvements",
+    "hash": "fd5e85bd79d92a88",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11192,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-19T11:35:05+00:00"
+  },
+  "paladin-phb:devotion-phb": {
+    "label": "Paladin (PHB) · Oath of Devotion (PHB)",
+    "hash": "2d77a799d3f1c83d",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "sacred-weapon",
+          "name": "Sacred Weapon",
+          "level": 3,
+          "category": "actions",
+          "toggle": {
+            "modifiers": [
+              {
+                "target": "attack",
+                "add": "max(1, cha_mod)"
+              }
+            ]
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "turn-the-unholy",
+          "name": "Turn the Unholy",
+          "level": 3,
+          "category": "actions",
+          "action": {
+            "range": "30 feet",
+            "save": {
+              "ability": "wis",
+              "dc": "8 + cha_mod + pb",
+              "on_success": "none"
+            }
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "aura-of-devotion",
+          "name": "Aura of Devotion",
+          "level": 7,
+          "category": "traits",
+          "grants": {
+            "defenses": {
+              "condition_immune": [
+                "charmed"
+              ]
+            }
+          }
+        },
+        {
+          "id": "holy-nimbus",
+          "name": "Holy Nimbus",
+          "level": 20,
+          "category": "actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "action": {
+            "area": "30-foot radius",
+            "damage": [
+              {
+                "bonus": 10,
+                "type": "radiant",
+                "condition": "enemy starts its turn in the bright light"
+              }
+            ]
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13744,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-19T11:35:08+00:00"
+  }
+}

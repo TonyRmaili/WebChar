@@ -177,10 +177,11 @@ def _money(v):
 
 
 def _dice_text(v):
-    """"{@dice 1d6 + 1}" -> "1d6 + 1"; 7 -> 7."""
+    """"{@dice 1d6 + 1}" -> "1d6 + 1"; 7 or "7" -> 7."""
     if isinstance(v, str):
         m = re.fullmatch(r"\s*\{@dice ([^}|]+)(?:\|[^}]*)?\}\s*", v)
-        return m.group(1).strip() if m else v.strip()
+        t = m.group(1).strip() if m else v.strip()
+        return int(t) if t.isdigit() else t
     return v
 
 
@@ -212,6 +213,8 @@ def weapon(e: dict, problems: list) -> dict | None:
         w["category"] = e["weaponCategory"]
     if code in WEAPON_TYPES:
         w["kind"] = WEAPON_TYPES[code]
+    elif e.get("staff") and e.get("dmg1"):
+        w["kind"] = "melee"          # magic staves have no type but fight as quarterstaffs
     if e.get("dmg1"):
         dt = e.get("dmgType")
         if dt and dt not in DMG_TYPES:

@@ -1,25 +1,24 @@
 import React, { useState } from "react";
 import useCharStore from "../../../../store/CharStore";
 import { Pips, blankNumber, note, stamp } from "./PlayParts";
+import { manualAdd, setManualAdd, useSheet } from "../sheetHelpers";
+import { castingRows } from "../spellbookHelpers";
 import {
   CONDITIONS,
   NO_DEATH_SAVES,
-  activeSaveDcs,
-  attackTotals,
   cap,
   concentrationDc,
   conditionsOf,
   deathSavesOf,
-  effectiveMaxHp,
   exhaustionOf,
   healthOf,
   hitDiceList,
+  hpToStore,
   hpTone,
-  initiativeTotal,
-  passivePerception,
   signedNum,
   speedSummary,
-} from "./playHelpers";
+  toStoredSaves,
+} from "./healthHelpers";
 
 /* Health section of the Play panel, written on the Play sheet
    (parchment): no boxes — each block is a small-caps heading with a
@@ -32,12 +31,11 @@ import {
    Status (toggles, concentration checks, conditions, exhaustion,
    hit dice, this character's rests).
 
-   Works on the character open in CharStore. Damage, healing and rests go
-   through the server's rules; everything else is a change to the
-   character, saved by the store (patchChar).
-
-   Character fields used here: death_saves {success, fail},
-   conditions [names], exhaustion 0-6. */
+   Works on the character open in CharStore (version-2 file). The numbers
+   come from utils/derive.js; live values sit in `state` (healthHelpers.js).
+   Damage, healing and rests go through the server's rules; everything
+   else is a change to `state`, saved by the store (patchChar). "Max ±"
+   is the player's own hp_max modifier in the manual layer. */
 
 /* ─── Small parts ────────────────────────────────────────────────── */
 
@@ -268,8 +266,7 @@ function Exhaustion({ level, onSet }) {
 /* ─── Section ────────────────────────────────────────────────────── */
 
 export default function HealthPlay() {
-  const charData = useCharStore((s) => s.charData);
-  const patchChar = useCharStore((s) => s.patchChar);
+  const { ch, d, patchChar } = useSheet();
   const applyHp = useCharStore((s) => s.changeHp);
   const restChar = useCharStore((s) => s.rest);
 
@@ -279,59 +276,56 @@ export default function HealthPlay() {
   // Concentration save DCs still to roll. Screen-only, never saved.
   const [concChecks, setConcChecks] = useState([]);
 
-  if (!charData) return null;
+  if (!ch || !d) return null;
 
-  const health = healthOf(charData);
-  const maxHp = effectiveMaxHp(health);
-  const cur = Math.max(0, Number(health.current_hp) || 0);
-  const temp = Math.max(0, Number(health.temp_hp) || 0);
-  const barrier = Math.max(0, Number(health.barrier) || 0);
+  const state = ch.state || {};
+  const { max: maxHp, cur, temp, barrier } = healthOf(ch, d);
   const tone = hpTone(cur, maxHp);
   const pct = maxHp > 0 ? Math.min(100, (cur / maxHp) * 100) : 0;
 
-  const ac = Number.isFinite(Number(charData.ac)) ? Number(charData.ac) : "—";
-  const init = initiativeTotal(charData);
-  const attacks = attackTotals(charData);
-  const dcs = activeSaveDcs(charData);
-  const hitDice = hitDiceList(charData.hit_dice);
-  const speed = speedSummary(charData);
-  const passive = passivePerception(charData);
-  const deathSaves = deathSavesOf(charData);
-  const conditions = conditionsOf(charData);
-  const exhaustion = exhaustionOf(charData);
+  const hitDice = hitDiceList(d, ch);
+  const speed = speedSummary(d);
+  const deathSaves = deathSavesOf(ch);
+  const conditions = conditionsOf(ch);
+  const exhaustion = exhaustionOf(ch);
   const hasDeathSaves = deathSaves.success > 0 || deathSaves.fail > 0;
+  const attacks = [
+    { type: "melee", base: "str", total: d.attacks.melee },
+    { type: "ranged", base: "dex", total: d.attacks.ranged },
+  ];
+  // Spellcasting: one line per ability (the classes that use it, or your own).
+  const casting = castingRows(d);
 
   /* ---- writers ---- */
 
   // Every change here is a click or a finished number: save right away.
+  // Always from the newest character, so a reply from the server in
+  // between (damage, a rest) is never written over.
+  const saveState = (patch) => {
+    const latest = useCharStore.getState().charData || ch;
+    return patchChar({ state: { ...(latest.state || {}), ...patch } }, { now: true });
+  };
   const save = (patch) => patchChar(patch, { now: true });
 
-  const patchHealth = (patch) => {
-    const updatedHealth = { ...health, ...patch };
-
-    // Keep current HP within the effective maximum.
-    updatedHealth.current_hp = Math.min(Number(updatedHealth.current_hp) || 0, effectiveMaxHp(updatedHealth));
-
+  const setCurrent = (v) => {
+    const patch = { hp_current: hpToStore(v, maxHp) };
     // Coming back above 0 HP clears the death saves.
-    const clearSaves = patch.current_hp > 0 && hasDeathSaves;
-    save(clearSaves ? { health: updatedHealth, death_saves: NO_DEATH_SAVES } : { health: updatedHealth });
+    if (v > 0 && hasDeathSaves) patch.death_saves = toStoredSaves(NO_DEATH_SAVES);
+    saveState(patch);
   };
 
-  // Damage and healing go through the server, which applies the temp HP
-  // and barrier rules and saves the file; the store shows the new health.
+  // Damage and healing go through the server, which applies the barrier
+  // and temp HP rules and saves the file; the store shows the new state.
   const changeHp = async (delta) => {
     if (!delta || busy) return;
     const wasDown = cur <= 0;
     setBusy(true);
     setProblem(null);
     try {
-      const newHealth = await applyHp(delta);
-
+      await applyHp(delta);
       if (delta < 0) {
-        if (charData.concentration) setConcChecks((list) => [...list, concentrationDc(delta)]);
-        if (wasDown) save({ death_saves: { ...deathSaves, fail: Math.min(3, deathSaves.fail + 1) } });
-      } else if (Number(newHealth?.current_hp) > 0 && hasDeathSaves) {
-        save({ death_saves: NO_DEATH_SAVES });
+        if (state.concentration) setConcChecks((list) => [...list, concentrationDc(delta)]);
+        if (wasDown) saveState({ death_saves: toStoredSaves({ ...deathSaves, fail: Math.min(3, deathSaves.fail + 1) }) });
       }
     } catch (e) {
       setProblem(`Couldn't change HP — ${e.message}`);
@@ -340,11 +334,11 @@ export default function HealthPlay() {
     }
   };
 
-  const toggleCondition = (name) => save({ conditions: conditions.includes(name) ? conditions.filter((c) => c !== name) : [...conditions, name] });
+  const toggleCondition = (name) => saveState({ conditions: conditions.includes(name) ? conditions.filter((c) => c !== name) : [...conditions, name] });
 
   const resolveConcentration = (kept) => {
     setConcChecks((list) => (kept ? list.slice(1) : []));
-    if (!kept) save({ concentration: false });
+    if (!kept) saveState({ concentration: null });
   };
 
   const applyAmount = (sign) => {
@@ -354,12 +348,13 @@ export default function HealthPlay() {
     setAmount("");
   };
 
-  const rest = async (restType) => {
+  const rest = async (kind) => {
     if (busy) return;
     setBusy(true);
     setProblem(null);
     try {
-      await restChar(restType);
+      await restChar(kind);
+      setConcChecks([]);
     } catch (e) {
       setProblem(`Couldn't rest — ${e.message}`);
     } finally {
@@ -367,10 +362,9 @@ export default function HealthPlay() {
     }
   };
 
-  const setHitDie = (die, value) => {
-    const row = charData.hit_dice?.[die] || {};
-    save({ hit_dice: { ...charData.hit_dice, [die]: { ...row, current: value } } });
-  };
+  // Spending a die raises the used count; the pips show what's left.
+  const setHitDie = (die, left, max) =>
+    saveState({ hit_dice_used: { ...(state.hit_dice_used || {}), [die]: Math.max(0, Math.min(max, max - left)) } });
 
   /* ---- render ---- */
 
@@ -388,7 +382,7 @@ export default function HealthPlay() {
                 value={cur}
                 min={0}
                 max={maxHp}
-                onCommit={(v) => patchHealth({ current_hp: v })}
+                onCommit={setCurrent}
                 ariaLabel="Current HP"
                 className={`w-[4.5rem] rounded-sm text-[2.6rem] font-semibold leading-none hover:bg-ink/[0.05] focus:bg-ink/[0.07] ${NUM[tone]}`}
               />
@@ -397,15 +391,15 @@ export default function HealthPlay() {
 
             <div className="flex flex-wrap gap-x-4 gap-y-1.5 pb-1">
               <SmallField label="Temp">
-                <NumberField value={temp} min={0} onCommit={(v) => patchHealth({ temp_hp: v })} ariaLabel="Temporary HP" className="w-10 text-[15px] font-semibold text-info" />
+                <NumberField value={temp} min={0} onCommit={(v) => saveState({ hp_temp: v })} ariaLabel="Temporary HP" className="w-10 text-[15px] font-semibold text-info" />
               </SmallField>
               <SmallField label="Barrier">
-                <NumberField value={barrier} min={0} onCommit={(v) => patchHealth({ barrier: v })} ariaLabel="Barrier" className="w-10 text-[15px] font-semibold text-magic" />
+                <NumberField value={barrier} min={0} onCommit={(v) => saveState({ hp_barrier: v })} ariaLabel="Barrier" className="w-10 text-[15px] font-semibold text-magic" />
               </SmallField>
               <SmallField label="Max ±">
                 <NumberField
-                  value={Number(health.max_hp_mod) || 0}
-                  onCommit={(v) => patchHealth({ max_hp_mod: v })}
+                  value={manualAdd(ch, "hp_max")}
+                  onCommit={(v) => save(setManualAdd(ch, "hp_max", v))}
                   ariaLabel="Max HP modifier"
                   className="w-10 text-[15px] text-ink"
                 />
@@ -447,41 +441,31 @@ export default function HealthPlay() {
           </div>
           <div className="mt-2 flex flex-wrap gap-1">
             {[-10, -5, -1].map((v) => (
-              <button key={v} type="button" onClick={() => changeHp(v)} disabled={busy}
-                className={`${quick} ${stamp("bad", true)}`}>
+              <button key={v} type="button" onClick={() => changeHp(v)} disabled={busy} className={`${quick} ${stamp("bad", true)}`}>
                 {v}
               </button>
             ))}
             <span className="mx-1 w-px self-stretch bg-rule/30" />
             {[1, 5, 10].map((v) => (
-              <button key={v} type="button" onClick={() => changeHp(v)} disabled={busy}
-                className={`${quick} ${stamp("good", true)}`}>
+              <button key={v} type="button" onClick={() => changeHp(v)} disabled={busy} className={`${quick} ${stamp("good", true)}`}>
                 +{v}
               </button>
             ))}
           </div>
 
-          {maxHp > 0 && (cur <= 0 || hasDeathSaves) && (
-            <DeathSaves saves={deathSaves} onChange={(v) => save({ death_saves: v })} />
-          )}
+          {maxHp > 0 && (cur <= 0 || hasDeathSaves) && <DeathSaves saves={deathSaves} onChange={(v) => saveState({ death_saves: toStoredSaves(v) })} />}
         </Block>
 
         {/* ── Combat ── */}
         <Block title="Combat">
           {/* 2 × 2, split by hairlines */}
           <div className="grid grid-cols-2 [&>*:nth-child(-n+2)]:border-b [&>*:nth-child(odd)]:border-r [&>*]:border-rule/25">
-            <StatTile label="Armor Class" value={ac} />
-            <StatTile label="Initiative" value={signedNum(init)} hint="DEX modifier + initiative modifier" />
-            <StatTile
-              label="Speed"
-              value={speed.walk ? `${speed.walk} ft` : "—"}
-              hint={speed.others.length ? speed.others.join(" · ") : "Walking speed"}
-            />
-            <StatTile label="Passive Perc." value={passive} hint="10 + Perception skill" />
+            <StatTile label="Armor Class" value={d.ac} />
+            <StatTile label="Initiative" value={signedNum(d.initiative)} hint="DEX modifier + any initiative bonus" />
+            <StatTile label="Speed" value={speed.walk ? `${speed.walk} ft` : "—"} hint={speed.others.length ? speed.others.join(" · ") : "Walking speed"} />
+            <StatTile label="Passive Perc." value={d.skills.perception?.passive ?? "—"} hint="10 + Perception skill" />
           </div>
-          {speed.others.length > 0 && (
-            <div className="mt-1.5 text-center text-xs italic text-ink-faded">{speed.others.join(" · ")}</div>
-          )}
+          {speed.others.length > 0 && <div className="mt-1.5 text-center text-xs italic text-ink-faded">{speed.others.join(" · ")}</div>}
 
           <div className="mt-3">
             {attacks.map((a) => (
@@ -495,12 +479,19 @@ export default function HealthPlay() {
             ))}
           </div>
 
-          {dcs.length > 0 && (
-            <div className="mt-2 flex flex-wrap gap-x-4 gap-y-0.5 border-t border-rule/20 pt-2">
-              {dcs.map((d) => (
-                <span key={d.base} className="text-sm text-magic">
-                  {d.base.toUpperCase()} save DC <span className="font-semibold">{d.dc}</span>
-                </span>
+          {casting.length > 0 && (
+            <div className="mt-2 border-t border-rule/20 pt-2">
+              {casting.map((c) => (
+                <div key={c.ability} className="flex items-baseline py-0.5 text-magic" title={`Spellcasting with ${c.ability.toUpperCase()}${c.names.length ? `: ${c.names.join(", ")}` : " (your own)"}`}>
+                  <span className="shrink-0 text-[15px]">
+                    Spells <span className="text-[10px] uppercase tracking-wider text-ink-faded">{c.ability}</span>
+                    <span className="ml-1.5 text-[11px] italic text-ink-faded">{c.names.length ? c.names.join(", ") : "your own"}</span>
+                  </span>
+                  <span aria-hidden="true" className="mx-1.5 min-w-[1rem] flex-1 translate-y-[-4px] border-b-2 border-dotted border-rule/35" />
+                  <span className="shrink-0 tabular-nums">
+                    <span className="font-semibold">{signedNum(c.attack)}</span> · DC <span className="font-semibold">{c.dc}</span>
+                  </span>
+                </div>
               ))}
             </div>
           )}
@@ -510,14 +501,14 @@ export default function HealthPlay() {
         <Block title="Status & Rest">
           <div className="flex flex-wrap gap-x-4 gap-y-1">
             {TOGGLES.map((t) => {
-              const on = Boolean(charData[t.field]);
+              const on = Boolean(state[t.field]);
               return (
                 <button
                   key={t.field}
                   type="button"
                   aria-pressed={on}
                   onClick={() => {
-                    save({ [t.field]: !on });
+                    saveState({ [t.field]: on ? (t.field === "concentration" ? null : false) : true });
                     if (t.field === "concentration" && on) setConcChecks([]);
                   }}
                   className={`group inline-flex items-center gap-1.5 text-sm transition ${on ? "font-semibold text-rubric" : "text-ink-faded hover:text-ink"}`}
@@ -533,37 +524,33 @@ export default function HealthPlay() {
             })}
           </div>
 
-          <ConcentrationChecks
-            checks={concChecks}
-            onKept={() => resolveConcentration(true)}
-            onLost={() => resolveConcentration(false)}
-          />
+          <ConcentrationChecks checks={concChecks} onKept={() => resolveConcentration(true)} onLost={() => resolveConcentration(false)} />
 
           <div className="mt-4 space-y-2">
             <Label className="!mb-1">Conditions</Label>
             <Conditions active={conditions} onToggle={toggleCondition} />
-            <Exhaustion level={exhaustion} onSet={(n) => save({ exhaustion: n })} />
+            <Exhaustion level={exhaustion} onSet={(n) => saveState({ exhaustion: n })} />
           </div>
 
           <div className="mt-4">
             <Label>Hit Dice</Label>
             {hitDice.length === 0 ? (
-              <p className="text-xs italic text-ink-faded">No hit dice. Set classes in General.</p>
+              <p className="text-xs italic text-ink-faded">No hit dice: the character has no class levels.</p>
             ) : (
               <div className="space-y-1">
-                {hitDice.map((d) => (
-                  <div key={d.die} className="flex items-center gap-2">
-                    <span className="w-8 text-sm font-semibold text-ink">{d.die}</span>
+                {hitDice.map((h) => (
+                  <div key={h.die} className="flex items-center gap-2">
+                    <span className="w-8 text-sm font-semibold text-ink">{h.die}</span>
                     <Pips
-                      cur={d.cur}
-                      max={d.max}
+                      cur={h.cur}
+                      max={h.max}
                       size="lg"
-                      onSpend={() => setHitDie(d.die, d.cur - 1)}
-                      onRestore={() => setHitDie(d.die, d.cur + 1)}
+                      onSpend={() => setHitDie(h.die, h.cur - 1, h.max)}
+                      onRestore={() => setHitDie(h.die, h.cur + 1, h.max)}
                       label="hit die"
                     />
                     <span className="ml-auto text-xs tabular-nums text-ink-faded">
-                      {d.cur}/{d.max}
+                      {h.cur}/{h.max}
                     </span>
                   </div>
                 ))}
@@ -572,22 +559,10 @@ export default function HealthPlay() {
           </div>
 
           <div className="mt-4 flex gap-2">
-            <button
-              type="button"
-              onClick={() => rest("short")}
-              disabled={busy}
-              title={`Short rest for ${charData.name} only`}
-              className={`h-8 flex-1 text-sm ${stamp("plain")}`}
-            >
+            <button type="button" onClick={() => rest("short")} disabled={busy} title={`Short rest for ${ch.name} only`} className={`h-8 flex-1 text-sm ${stamp("plain")}`}>
               Short Rest
             </button>
-            <button
-              type="button"
-              onClick={() => rest("long")}
-              disabled={busy}
-              title={`Long rest for ${charData.name} only`}
-              className={`h-8 flex-1 text-sm ${stamp("plain")}`}
-            >
+            <button type="button" onClick={() => rest("long")} disabled={busy} title={`Long rest for ${ch.name} only`} className={`h-8 flex-1 text-sm ${stamp("plain")}`}>
               Long Rest
             </button>
           </div>

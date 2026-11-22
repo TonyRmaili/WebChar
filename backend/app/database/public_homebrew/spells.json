@@ -1,0 +1,92 @@
+[
+    {
+        "id": "19028383-6313-464b-afb6-dca6cdef3198",
+        "kind": "spell",
+        "name": "Toll the Dude",
+        "source": "HOMEBREW",
+        "edition": "one",
+        "visibility": "public",
+        "text": "You point at one creature you can see within range, and the single chime of a dolorous bell is audible within 10 feet of the target. The target must succeed on a Wisdom saving throw or take 1d8 Necrotic damage. If the target is missing any of its Hit Points, it instead takes 1d12 Necrotic damage.\n\n**Cantrip Upgrade.** The damage increases by one die when you reach levels 5 (2d8 or 2d12), 11 (3d8 or 3d12), and 17 (4d8 or 4d12).",
+        "filters": {
+            "damage": [
+                "necrotic"
+            ],
+            "saves": [
+                "wis"
+            ],
+            "area": [
+                "single_target"
+            ],
+            "tags": [
+                "scaling_effects",
+                "requires_sight"
+            ]
+        },
+        "level": 0,
+        "school": "necromancy",
+        "ritual": false,
+        "time": [
+            {
+                "number": 1,
+                "unit": "action"
+            }
+        ],
+        "range": {
+            "type": "feet",
+            "amount": 60
+        },
+        "components": {
+            "v": true,
+            "s": true
+        },
+        "duration": [
+            {
+                "type": "instant",
+                "concentration": false
+            }
+        ],
+        "classes": [
+            "cleric-xphb",
+            "warlock-xphb",
+            "wizard-xphb"
+        ],
+        "features": [
+            {
+                "id": "toll-the-dead",
+                "name": "Toll the Dead",
+                "level": 1,
+                "category": "actions",
+                "action": {
+                    "range": "60 ft.",
+                    "save": {
+                        "ability": "wis",
+                        "dc": "8 + pb + spell_mod",
+                        "on_success": "none",
+                        "damage": [
+                            {
+                                "dice": {
+                                    "1": "1d8",
+                                    "5": "2d8",
+                                    "11": "3d8",
+                                    "17": "4d8"
+                                },
+                                "type": "necrotic"
+                            },
+                            {
+                                "dice": {
+                                    "1": "1d12",
+                                    "5": "2d12",
+                                    "11": "3d12",
+                                    "17": "4d12"
+                                },
+                                "type": "necrotic",
+                                "condition": "instead if the target is missing any of its Hit Points"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "created_by": "bisi"
+    }
+]

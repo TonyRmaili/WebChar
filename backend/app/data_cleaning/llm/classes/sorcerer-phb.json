@@ -1,0 +1,132 @@
+{
+  "sorcerer-phb:font-of-magic": {
+    "label": "Sorcerer (PHB) · Font of Magic",
+    "hash": "35db4b05909a5c3b",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "creating-spell-slots",
+          "name": "Creating Spell Slots",
+          "level": 2,
+          "category": "bonus_actions"
+        },
+        {
+          "id": "converting-a-spell-slot-to-sorcery-points",
+          "name": "Converting a Spell Slot to Sorcery Points",
+          "level": 2,
+          "category": "bonus_actions"
+        }
+      ],
+      "resources": [
+        {
+          "name": "Sorcery Points",
+          "max": "sorcery_points",
+          "reset": "long"
+        }
+      ]
+    },
+    "problems": [],
+    "tokens": 12348,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-19T11:40:36+00:00"
+  },
+  "sorcerer-phb:sorcerous-restoration": {
+    "label": "Sorcerer (PHB) · Sorcerous Restoration",
+    "hash": "2bc255a4b178d2b2",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11794,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-19T11:40:46+00:00"
+  },
+  "sorcerer-phb:draconic-phb": {
+    "label": "Sorcerer (PHB) · Draconic Bloodline (PHB)",
+    "hash": "254283226da36744",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "dragon-ancestor",
+          "name": "Dragon Ancestor",
+          "level": 1,
+          "category": "traits",
+          "grants": {
+            "languages": [
+              "draconic"
+            ]
+          }
+        },
+        {
+          "id": "draconic-resilience",
+          "name": "Draconic Resilience",
+          "level": 1,
+          "category": "traits",
+          "modifiers": [
+            {
+              "target": "hp_max",
+              "add": "class_level"
+            },
+            {
+              "target": "ac",
+              "base": "13 + dex_mod",
+              "requires": [
+                "no_armor"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "dragon-wings",
+          "name": "Dragon Wings",
+          "level": 14,
+          "category": "bonus_actions",
+          "toggle": {
+            "grants": {
+              "speed": {
+                "fly": "walk"
+              }
+            }
+          }
+        },
+        {
+          "id": "draconic-presence",
+          "name": "Draconic Presence",
+          "level": 18,
+          "category": "actions",
+          "action": {
+            "range": "60 feet",
+            "save": {
+              "ability": "wis",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "none",
+              "conditions": [
+                "charmed",
+                "frightened"
+              ]
+            }
+          },
+          "consumes": {
+            "resource": "sorcery_points",
+            "amount": 5
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13619,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-19T11:40:54+00:00"
+  }
+}

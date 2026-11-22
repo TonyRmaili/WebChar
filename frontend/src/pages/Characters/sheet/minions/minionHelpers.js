@@ -1,5 +1,6 @@
 // Pure logic for minions. Shape: claude/minion-contract.md in the project.
-import { EFFECT_SECTIONS, titleCase } from "../../../Catalogues/Monsters/monsterHelpers";
+import { SECTION_TITLES } from "../../../Catalogues/Monsters/monsterHelpers";
+import { actionWords, isNumber, regainWords, usesMax } from "../../../../utils/featureRuntime";
 
 export const newId = () =>
   globalThis.crypto?.randomUUID
@@ -28,28 +29,20 @@ export const monsterAc = (m) => {
 // "CR 1/4 · M undead" under a minion's name.
 export { monsterSummary as monsterSubtitle } from "../../../Catalogues/Monsters/catalogueMonsters";
 
-/* ─── Effects with limited uses ──────────────────────────────────── */
+/* ─── Features with limited uses ─────────────────────────────────── */
+// Every unit keeps its own uses: unit.charges[<feature id>] = uses left.
 
-export const chargeKey = (sectionKey, item) => `${sectionKey}:${item?.name}`;
+export const chargeKey = (feature) => feature?.id;
 
-// Uses an item starts with, or null if it isn't limited per unit.
-export const itemMaxUses = (item) => {
-  const c = item?.charges;
-  if (!c) return null;
-  const max = toInt(c.max_charges ?? c.per_rest_count, NaN);
-  return Number.isFinite(max) && max > 0 ? max : null;
-};
+// Uses a feature starts with, or null if it isn't limited per unit.
+export const itemMaxUses = (feature) => usesMax(feature?.uses);
 
-export const chargedItems = (monster) => {
-  const out = [];
-  for (const { key } of EFFECT_SECTIONS) {
-    for (const item of monster?.effects?.[key]?.items || []) {
-      const max = itemMaxUses(item);
-      if (max != null) out.push({ key: chargeKey(key, item), max });
-    }
-  }
-  return out;
-};
+const featuresOf = (monster) => (Array.isArray(monster?.features) ? monster.features : []);
+
+export const chargedItems = (monster) =>
+  featuresOf(monster)
+    .filter((f) => f?.active !== false && itemMaxUses(f) != null)
+    .map((f) => ({ key: chargeKey(f), max: itemMaxUses(f) }));
 
 const freshCharges = (monster) =>
   Object.fromEntries(chargedItems(monster).map(({ key, max }) => [key, max]));
@@ -64,8 +57,10 @@ export const makeUnit = (monster, hp) => ({
 
 // A new minion group, ready to POST. The server adds id and created_at.
 export const buildMinion = (monster, count = 1) => {
-  // The visibility flag is a catalogue concern, not part of the copy.
-  const { visibility, ...copy } = monster || {};
+  // The catalogue's own bookkeeping is not part of the copy. A variant's
+  // features start switched off (as on a campaign's copy).
+  const { visibility, filters, srd, ...rest } = structuredClone(monster || {});
+  const copy = { ...rest, features: featuresOf(rest).map((f) => ({ ...f, active: !f.variant })) };
   const hpMax = monsterHpAverage(copy);
   return {
     nickname: "",
@@ -159,56 +154,34 @@ export const restoreAll = (minion) => {
   };
 };
 
-/* ─── Effect summaries for the Play cards ────────────────────────── */
+/* ─── Feature summaries for the Play cards ───────────────────────── */
 
 // Sections shown at the table. Traits, lair and regional effects stay in
 // the statblock popup.
-export const PLAY_SECTIONS = EFFECT_SECTIONS.filter(({ key }) =>
-  ["actions", "bonus_actions", "reactions", "legendary_actions", "mythic_actions"].includes(key)
-);
+export const PLAY_SECTIONS = ["actions", "bonus_actions", "reactions", "legendary_actions", "mythic_actions"].map((key) => ({
+  key,
+  title: SECTION_TITLES[key],
+}));
 
-const signed = (n) => `${n >= 0 ? "+" : ""}${n}`;
+// The features of one section that are switched on.
+export const sectionFeatures = (monster, key) => featuresOf(monster).filter((f) => f && f.active !== false && (f.category || "traits") === key);
 
-export const formatDamages = (damages) =>
-  (damages || [])
-    .map((d) => {
-      const dice = d?.dice_count && d?.dice_size ? `${d.dice_count}${d.dice_size}` : d?.dice_size || "";
-      const mod = toInt(d?.mod, 0);
-      const base = `${dice}${mod ? signed(mod) : ""}` || (mod ? String(mod) : "");
-      return [base, d?.damage_type ? titleCase(d.damage_type) : ""].filter(Boolean).join(" ");
-    })
-    .filter(Boolean)
-    .join(" + ");
-
-// Short chips for one effect item: to-hit, save DC, range, damage.
-export const effectChips = (item) => {
+// Short chips for one feature: to-hit, save DC, range, damage (numbers still
+// in words are shown as words).
+export const effectChips = (feature) => {
+  const a = feature?.action;
+  if (!a) return [];
   const chips = [];
-  if (item?.attack) {
-    chips.push({ kind: "hit", text: `${signed(toInt(item.attack.hit_bonus, 0))} to hit` });
+  if (a.attack) {
+    const b = a.attack.bonus;
+    if (b != null) chips.push({ kind: "hit", text: `${isNumber(b) ? `${b >= 0 ? "+" : ""}${b}` : `+${b}`} to hit` });
   }
-  if (item?.save?.target) {
-    const dc = toInt(item.save.dc_bonus, 0);
-    chips.push({
-      kind: "save",
-      text: `${String(item.save.target).toUpperCase()}${dc ? ` DC ${dc}` : " save"}${
-        item.save.half_damage ? " · half" : ""
-      }`,
-    });
-  }
-  if (item?.range) chips.push({ kind: "range", text: `${item.range} ft` });
-
-  const dmg = formatDamages([...(item?.attack?.damages || []), ...(item?.save?.damages || [])]);
+  if (a.save) chips.push({ kind: "save", text: actionWords({ save: { ...a.save, damage: [] } }) });
+  if (a.range || a.area) chips.push({ kind: "range", text: [a.range, a.area].filter(Boolean).join(" · ") });
+  const dmg = actionWords({ damage: [...(a.attack?.damage || []), ...(a.save?.damage || []), ...(a.damage || [])] });
   if (dmg) chips.push({ kind: "damage", text: dmg });
   return chips;
 };
 
-export const rechargeLabel = (charges) => {
-  if (!charges) return "";
-  if (charges.reset_type === "recharge_dice") {
-    const d = String(charges.recharge_dice || "6");
-    return d === "6" ? "Recharge 6" : `Recharge ${d}–6`;
-  }
-  if (charges.reset_type === "long_rest") return "per day";
-  if (charges.reset_type === "short_rest") return "per short rest";
-  return "";
-};
+// "Recharge 5–6" · "per day" · "per short rest"
+export const rechargeLabel = (uses) => regainWords(uses);

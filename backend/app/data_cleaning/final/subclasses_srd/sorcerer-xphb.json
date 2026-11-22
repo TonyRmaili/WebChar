@@ -1,0 +1,178 @@
+[
+    {
+        "id": "sorcerer-xphb:draconic-xphb",
+        "kind": "subclass",
+        "name": "Draconic Sorcery",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Draconic Sorcery"
+        },
+        "text": "*Breathe the Magic of Dragons*\n\nYour innate magic comes from the gift of a dragon. Perhaps an ancient dragon facing death bequeathed some of its magical power to you or your ancestor. You might have absorbed magic from a site infused with dragons' power. Or perhaps you handled a treasure taken from a dragon's hoard that was steeped in draconic power. Or you might have a dragon for an ancestor.",
+        "class_id": "sorcerer-xphb",
+        "short_name": "Draconic",
+        "grants": {
+            "spells": [
+                {
+                    "spell": "alter-self-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "chromatic-orb-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "command-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "dragons-breath-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "fear-xphb",
+                    "how": "prepared",
+                    "at": 5
+                },
+                {
+                    "spell": "fly-xphb",
+                    "how": "prepared",
+                    "at": 5
+                },
+                {
+                    "spell": "arcane-eye-xphb",
+                    "how": "prepared",
+                    "at": 7
+                },
+                {
+                    "spell": "charm-monster-xphb",
+                    "how": "prepared",
+                    "at": 7
+                },
+                {
+                    "spell": "legend-lore-xphb",
+                    "how": "prepared",
+                    "at": 9
+                },
+                {
+                    "spell": "summon-dragon-xphb",
+                    "how": "prepared",
+                    "at": 9
+                }
+            ]
+        },
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "sorcerer-xphb:draconic-xphb:draconic-resilience",
+                    "sorcerer-xphb:draconic-xphb:draconic-spells"
+                ]
+            },
+            {
+                "level": 6,
+                "features": [
+                    "sorcerer-xphb:draconic-xphb:elemental-affinity"
+                ]
+            },
+            {
+                "level": 14,
+                "features": [
+                    "sorcerer-xphb:draconic-xphb:dragon-wings"
+                ]
+            },
+            {
+                "level": 18,
+                "features": [
+                    "sorcerer-xphb:draconic-xphb:dragon-companion"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "sorcerer-xphb:draconic-xphb:draconic-resilience",
+                "name": "Draconic Resilience",
+                "level": 3,
+                "text": "The magic in your body manifests physical traits of your draconic gift. Your Hit Point maximum increases by 3, and it increases by 1 whenever you gain another Sorcerer level.\n\nParts of you are also covered by dragon-like scales. While you aren't wearing armor, your base Armor Class equals 10 plus your Dexterity and Charisma modifiers.",
+                "srd": {
+                    "5.2": "Draconic Resilience"
+                },
+                "category": "traits",
+                "modifiers": [
+                    {
+                        "target": "hp_max",
+                        "add": "class_level"
+                    },
+                    {
+                        "target": "ac",
+                        "base": "10 + dex_mod + cha_mod",
+                        "requires": [
+                            "no_armor"
+                        ]
+                    }
+                ]
+            },
+            {
+                "id": "sorcerer-xphb:draconic-xphb:draconic-spells",
+                "name": "Draconic Spells",
+                "level": 3,
+                "text": "When you reach a Sorcerer level specified in the Draconic Spells table, you thereafter always have the listed spells prepared.\n\nDraconic Spells\n\nSorcerer Level | Spells\n--- | ---\n3 | Alter Self, Chromatic Orb, Command, Dragon's Breath\n5 | Fear, Fly\n7 | Arcane Eye, Charm Monster\n9 | Legend Lore, Summon Dragon",
+                "srd": {
+                    "5.2": "Draconic Spells"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "sorcerer-xphb:draconic-xphb:elemental-affinity",
+                "name": "Elemental Affinity",
+                "level": 6,
+                "text": "Your draconic magic has an affinity with a damage type associated with dragons. Choose one of those types: Acid, Cold, Fire, Lightning, or Poison.\n\nYou have Resistance to that damage type, and when you cast a spell that deals damage of that type, you can add your Charisma modifier to one damage roll of that spell.",
+                "srd": {
+                    "5.2": "Elemental Affinity"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "sorcerer-xphb:draconic-xphb:dragon-wings",
+                "name": "Dragon Wings",
+                "level": 14,
+                "text": "As a Bonus Action, you can cause draconic wings to appear on your back. The wings last for 1 hour or until you dismiss them (no action required). For the duration, you have a Fly Speed of 60 feet.\n\nOnce you use this feature, you can't use it again until you finish a Long Rest unless you spend 3 Sorcery Points (no action required) to restore your use of it.",
+                "consumes": {
+                    "resource": "sorcery_points",
+                    "amount": 3
+                },
+                "srd": {
+                    "5.2": "Dragon Wings"
+                },
+                "category": "bonus_actions",
+                "uses": {
+                    "max": 1,
+                    "reset": "long"
+                },
+                "toggle": {
+                    "uses_charge": true,
+                    "grants": {
+                        "speed": {
+                            "fly": 60
+                        }
+                    }
+                }
+            },
+            {
+                "id": "sorcerer-xphb:draconic-xphb:dragon-companion",
+                "name": "Dragon Companion",
+                "level": 18,
+                "text": "You can cast Summon Dragon without a Material component. You can also cast it once without a spell slot, and you regain the ability to cast it in this way when you finish a Long Rest.\n\nWhenever you start casting the spell, you can modify it so that it doesn't require Concentration. If you do so, the spell's duration becomes 1 minute for that casting.",
+                "srd": {
+                    "5.2": "Dragon Companion"
+                },
+                "category": "traits"
+            }
+        ],
+        "resources": []
+    }
+]

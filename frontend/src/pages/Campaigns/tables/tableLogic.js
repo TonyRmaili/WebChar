@@ -1,4 +1,4 @@
-import { idGen } from "../../Characters/sheet/define/effectEditor";
+import { newId as idGen } from "../../../utils/featureRuntime";
 
 /* ═══════════════════════════════════════════════════════════════════
    tableLogic.js — tables to roll on with real dice (no rolling here).

@@ -8,6 +8,7 @@ import Backgrounds from "./Backgrounds/Backgrounds";
 import Spells from "./Spells/Spells";
 import OptionalFeatures from "./OptionalFeatures/OptionalFeatures";
 import Monsters from "./Monsters/Monsters";
+import Rules from "./Rules/Rules"
 
 import { ParchmentSheet } from "../../styles/parchment";
 
@@ -24,6 +25,8 @@ const TOOLS = [
   { id: "spells", label: "Spells" },
   { id: "monsters", label: "Monsters" },
   { id: "optionalFeatures", label: "Optional Features" },
+  { id: "rules", label: "Rules" },
+  { id: "content", label: "Content" },
 ];
 
 function CataloguesMain() {
@@ -65,6 +68,7 @@ function CataloguesMain() {
           {activeTool === "spells" && <Spells />}
           {activeTool === "optionalFeatures" && <OptionalFeatures />}
           {activeTool === "monsters" && <Monsters />}
+          {activeTool === "rules" && <Rules />}
         </div>
       </ParchmentSheet>
     </div>

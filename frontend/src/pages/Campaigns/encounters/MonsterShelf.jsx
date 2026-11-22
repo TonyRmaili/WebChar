@@ -2,7 +2,8 @@ import React, { useMemo, useState } from "react";
 import { INK, InkButton, InkRemove, InkSelect, Leader } from "../../../styles/parchment";
 import { addBtn } from "../../../styles/parchmentForm";
 import CatalogueMonsterPicker from "../../Catalogues/Monsters/CatalogueMonsterPicker";
-import { CR_OPTIONS, crToNumber, formatCR, getMonsterMovements, getMonsterType, titleCase } from "../../Catalogues/Monsters/monsterHelpers";
+import { CR_OPTIONS, crNumber, formatCR, monsterDifficulty, monsterMovement, monsterTypes } from "../../Catalogues/Monsters/monsterHelpers";
+import { titleCase } from "../../Catalogues/catalogueHelpers";
 import { SIZES } from "../statblock/monsterStatblock";
 import CombatSection from "./CombatSection";
 
@@ -18,8 +19,9 @@ import CombatSection from "./CombatSection";
 
 const ANY = "";
 const asList = (v) => (Array.isArray(v) ? v : []);
-const sizeName = (s) => SIZES.find((x) => x.value === s)?.label || s;
-const crOf = (m) => (m?.cr?.base != null ? crToNumber(m.cr.base) : m?.cr?.level ?? null);
+const sizeName = (s) => SIZES.find((x) => x.value === s)?.label || titleCase(s);
+const crOf = (m) => monsterDifficulty(m || {});
+const typeOf = (m) => monsterTypes(m || {})[0] || "";
 const sortedUnique = (values) => [...new Set(values.filter(Boolean))].sort((a, b) => String(a).localeCompare(String(b)));
 
 const NO_FILTERS = { crMin: ANY, crMax: ANY, size: ANY, movement: ANY, type: ANY, environment: ANY };
@@ -49,35 +51,35 @@ export default function MonsterShelf({ shelf, loading, onAdd, onOpen, onRemove, 
   // Only what's on the shelf can be chosen.
   const options = useMemo(() => {
     const data = shelf.map((e) => e.data);
-    const crs = CR_OPTIONS.filter((c) => data.some((m) => m?.cr?.base != null && String(m.cr.base) === c));
+    const crs = CR_OPTIONS.filter((c) => data.some((m) => m?.cr?.cr != null && String(m.cr.cr) === c));
     return {
       cr: crs.map((c) => ({ value: c, label: c })),
       size: sortedUnique(data.flatMap((m) => asList(m?.size))).map((s) => ({ value: s, label: sizeName(s) })),
-      movement: sortedUnique(data.flatMap((m) => getMonsterMovements(m))).map((s) => ({ value: s, label: s })),
-      type: sortedUnique(data.map((m) => getMonsterType(m))).map((t) => ({ value: t, label: titleCase(t) })),
-      environment: sortedUnique(data.flatMap((m) => asList(m?.environment))).map((e) => ({ value: e, label: titleCase(e) })),
+      movement: sortedUnique(data.flatMap((m) => monsterMovement(m || {}))).map((s) => ({ value: s, label: s })),
+      type: sortedUnique(data.map((m) => typeOf(m))).map((t) => ({ value: t, label: titleCase(t) })),
+      environment: sortedUnique(data.flatMap((m) => asList(m?.filters?.environment))).map((e) => ({ value: e, label: titleCase(e) })),
     };
   }, [shelf]);
 
   const shown = useMemo(() => {
-    const min = filters.crMin === ANY ? null : crToNumber(filters.crMin);
-    const max = filters.crMax === ANY ? null : crToNumber(filters.crMax);
+    const min = filters.crMin === ANY ? null : crNumber(filters.crMin);
+    const max = filters.crMax === ANY ? null : crNumber(filters.crMax);
     return shelf
       .filter(({ data: m }) => {
         const cr = crOf(m);
         if (min != null && (cr == null || cr < min)) return false;
         if (max != null && (cr == null || cr > max)) return false;
         if (filters.size && !asList(m?.size).includes(filters.size)) return false;
-        if (filters.movement && !getMonsterMovements(m).includes(filters.movement)) return false;
-        if (filters.type && getMonsterType(m) !== filters.type) return false;
-        if (filters.environment && !asList(m?.environment).includes(filters.environment)) return false;
+        if (filters.movement && !monsterMovement(m || {}).includes(filters.movement)) return false;
+        if (filters.type && typeOf(m) !== filters.type) return false;
+        if (filters.environment && !asList(m?.filters?.environment).includes(filters.environment)) return false;
         return true;
       })
       .sort((a, b) => String(a.data?.name).localeCompare(String(b.data?.name)));
   }, [shelf, filters]);
 
   // Already on the shelf? (by the catalogue entry it came from)
-  const onShelf = (m) => shelf.some((e) => e.data?.catalogue?.name === m.name && e.data?.catalogue?.source === m.source);
+  const onShelf = (m) => shelf.some((e) => e.data?.catalogue?.id === m.id);
 
   return (
     <CombatSection
@@ -154,7 +156,7 @@ export default function MonsterShelf({ shelf, loading, onAdd, onOpen, onRemove, 
                   </button>
                   <Leader />
                   <span className={`shrink-0 text-xs italic ${INK.faded}`}>
-                    {[formatCR(entry.data?.cr), [asList(entry.data?.size).map(sizeName).join("/"), getMonsterType(entry.data)].filter(Boolean).join(" ")].filter(Boolean).join(" · ")}
+                    {[formatCR(entry.data), [asList(entry.data?.size).map(sizeName).join("/"), titleCase(typeOf(entry.data))].filter(Boolean).join(" ")].filter(Boolean).join(" · ")}
                   </span>
                   <InkRemove onClick={() => onRemove(entry)} label={`Take ${entry.data?.name || entry.file} off the shelf`} />
                 </div>

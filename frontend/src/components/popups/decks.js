@@ -23,6 +23,7 @@ export const DECKS = [
   { id: "items", label: "Items", part: "catalogue" },
   { id: "races", label: "Races", part: "catalogue" },
   { id: "optionalFeatures", label: "Optional features", part: "catalogue" },
+  { id: "features", label: "Character features", part: "catalogue" },
   // Cards from campaigns
   { id: "statblocks", label: "Statblocks", part: "campaign" },
   { id: "templates", label: "Templates", part: "campaign" },

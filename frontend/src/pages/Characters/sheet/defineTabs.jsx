@@ -1,9 +1,11 @@
 import React from "react";
 
-import Effects from "./define/EffectsDefine";
+import ClassTab from "./define/ClassDefine";
+import Features from "./define/FeaturesDefine";
 import Feats from "./define/FeatsDefine";
 import MinionsDefine from "./minions/MinionsDefine";
 import Spellbook from "./define/SpellbookDefine";
+import Resources from "./define/ResourcesDefine";
 import Inventory from "./define/InventoryDefine";
 import GeneralStats from "./define/GeneralDefine";
 import AbilityScore from "./define/AbilitiesDefine";
@@ -30,9 +32,21 @@ const Icon = ({ children }) => (
 
 export const DEFINE_TABS = [
   {
-    id: "effects",
-    label: "Effects",
-    Component: Effects,
+    id: "class",
+    label: "Class",
+    Component: ClassTab,
+    bare: true, // parchment style draws its own surface
+    icon: (
+      <Icon>
+        <path d="M12 3 5 6v5c0 4.5 3 8 7 10 4-2 7-5.5 7-10V6z" />
+        <path d="M9 12l2 2 4-4" />
+      </Icon>
+    ),
+  },
+  {
+    id: "features",
+    label: "Custom",
+    Component: Features,
     bare: true, // parchment style draws its own surface
     icon: (
       <Icon>
@@ -43,7 +57,7 @@ export const DEFINE_TABS = [
   
   {
     id: "feats",
-    label: "Feats",
+    label: "Feats & Options",
     Component: Feats,
     bare: true, // parchment style draws its own surface
     icon: (
@@ -77,6 +91,20 @@ export const DEFINE_TABS = [
         <path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z" />
         <path d="M4 19V5M19 19v2H6" />
         <path d="M12 7l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z" />
+      </Icon>
+    ),
+  },
+  {
+    id: "resources",
+    label: "Resources",
+    Component: Resources,
+    bare: true, // parchment style draws its own surface
+    icon: (
+      <Icon>
+        <circle cx="7" cy="12" r="2.5" />
+        <circle cx="12" cy="12" r="2.5" />
+        <circle cx="17" cy="12" r="2.5" />
+        <path d="M4 18h16M4 6h16" />
       </Icon>
     ),
   },

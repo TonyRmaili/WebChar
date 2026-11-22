@@ -1,0 +1,559 @@
+{
+  "monk-phb:unarmored-defense": {
+    "label": "Monk (PHB) · Unarmored Defense",
+    "hash": "27cfd0e680eed858",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "unarmored-defense",
+          "name": "Unarmored Defense",
+          "level": 1,
+          "category": "traits",
+          "modifiers": [
+            {
+              "target": "ac",
+              "base": "10 + dex_mod + wis_mod",
+              "requires": [
+                "no_armor",
+                "no_shield"
+              ]
+            }
+          ]
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11394,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:17:50+00:00"
+  },
+  "monk-phb:martial-arts": {
+    "label": "Monk (PHB) · Martial Arts",
+    "hash": "2dd344e3e31cb85b",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "martial-arts",
+          "name": "Martial Arts",
+          "level": 1,
+          "category": "bonus_actions",
+          "action": {
+            "attack": {
+              "kind": "melee",
+              "bonus": "dex_mod + pb",
+              "damage": [
+                {
+                  "dice": "martial_arts",
+                  "bonus": "dex_mod",
+                  "type": "bludgeoning",
+                  "condition": "unarmed strike"
+                },
+                {
+                  "dice": "martial_arts",
+                  "bonus": "dex_mod",
+                  "type": "weapon",
+                  "condition": "monk weapon"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 12855,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:17:53+00:00"
+  },
+  "monk-phb:ki": {
+    "label": "Monk (PHB) · Ki",
+    "hash": "9d6189b2493c949b",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "flurry-of-blows",
+          "name": "Flurry of Blows",
+          "level": 2,
+          "category": "bonus_actions",
+          "consumes": {
+            "resource": "focus_points",
+            "amount": 1
+          }
+        },
+        {
+          "id": "patient-defense",
+          "name": "Patient Defense",
+          "level": 2,
+          "category": "bonus_actions",
+          "consumes": {
+            "resource": "focus_points",
+            "amount": 1
+          }
+        },
+        {
+          "id": "step-of-the-wind",
+          "name": "Step of the Wind",
+          "level": 2,
+          "category": "bonus_actions",
+          "consumes": {
+            "resource": "focus_points",
+            "amount": 1
+          }
+        }
+      ],
+      "resources": [
+        {
+          "name": "Ki Points",
+          "max": "focus_points",
+          "reset": "short",
+          "short_rest": "all"
+        }
+      ]
+    },
+    "problems": [],
+    "tokens": 12043,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:18:08+00:00"
+  },
+  "monk-phb:unarmored-movement": {
+    "label": "Monk (PHB) · Unarmored Movement",
+    "hash": "de6fc67b682a9715",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "unarmored-movement",
+          "name": "Unarmored Movement",
+          "level": 2,
+          "category": "traits",
+          "modifiers": [
+            {
+              "target": "speed.walk",
+              "add": "unarmored_movement"
+            }
+          ]
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11945,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:18:13+00:00"
+  },
+  "monk-phb:deflect-missiles": {
+    "label": "Monk (PHB) · Deflect Missiles",
+    "hash": "e8c60b1726bebe8f",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "deflect-missiles",
+          "name": "Deflect Missiles",
+          "level": 3,
+          "category": "reactions"
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11983,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:18:22+00:00"
+  },
+  "monk-phb:slow-fall": {
+    "label": "Monk (PHB) · Slow Fall",
+    "hash": "f0efdc0e8a27dd32",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "slow-fall",
+          "name": "Slow Fall",
+          "level": 4,
+          "category": "reactions"
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11411,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:18:30+00:00"
+  },
+  "monk-phb:extra-attack": {
+    "label": "Monk (PHB) · Extra Attack",
+    "hash": "81b7dfe192488116",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11356,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:18:33+00:00"
+  },
+  "monk-phb:stunning-strike": {
+    "label": "Monk (PHB) · Stunning Strike",
+    "hash": "d728deee06c16ff7",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "stunning-strike",
+          "name": "Stunning Strike",
+          "level": 5,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "melee"
+            },
+            "save": {
+              "ability": "con",
+              "on_success": "none",
+              "conditions": [
+                "stunned"
+              ]
+            }
+          },
+          "consumes": {
+            "resource": "focus_points",
+            "amount": 1
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11543,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:18:36+00:00"
+  },
+  "monk-phb:ki-empowered-strikes": {
+    "label": "Monk (PHB) · Ki-Empowered Strikes",
+    "hash": "5797d79b3b7e324c",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11340,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:18:40+00:00"
+  },
+  "monk-phb:evasion": {
+    "label": "Monk (PHB) · Evasion",
+    "hash": "cfc6f189c5f971e4",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11372,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:18:42+00:00"
+  },
+  "monk-phb:stillness-of-mind": {
+    "label": "Monk (PHB) · Stillness of Mind",
+    "hash": "d0308d5aad102743",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "stillness-of-mind",
+          "name": "Stillness of Mind",
+          "level": 7,
+          "category": "actions"
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11419,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:18:45+00:00"
+  },
+  "monk-phb:unarmored-movement-improvement": {
+    "label": "Monk (PHB) · Unarmored Movement improvement",
+    "hash": "ed3ef855eb542e4d",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11301,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:18:48+00:00"
+  },
+  "monk-phb:purity-of-body": {
+    "label": "Monk (PHB) · Purity of Body",
+    "hash": "452f601d3d38a60c",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "purity-of-body",
+          "name": "Purity of Body",
+          "level": 10,
+          "category": "traits",
+          "grants": {
+            "defenses": {
+              "immune": [
+                "poison"
+              ],
+              "condition_immune": [
+                "poisoned"
+              ]
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11487,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:18:50+00:00"
+  },
+  "monk-phb:tongue-of-the-sun-and-moon": {
+    "label": "Monk (PHB) · Tongue of the Sun and Moon",
+    "hash": "1eba184d3f8d7ce0",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11340,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:18:54+00:00"
+  },
+  "monk-phb:diamond-soul": {
+    "label": "Monk (PHB) · Diamond Soul",
+    "hash": "82f26ac58701c92c",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "diamond-soul",
+          "name": "Diamond Soul",
+          "level": 14,
+          "category": "traits",
+          "consumes": {
+            "resource": "focus_points",
+            "amount": 1
+          },
+          "grants": {
+            "saves": [
+              "str",
+              "dex",
+              "con",
+              "int",
+              "wis",
+              "cha"
+            ]
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11499,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:18:56+00:00"
+  },
+  "monk-phb:timeless-body": {
+    "label": "Monk (PHB) · Timeless Body",
+    "hash": "0a8336f2e9a80f9a",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "timeless-body",
+          "name": "Timeless Body",
+          "level": 15,
+          "category": "traits"
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11385,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:19:00+00:00"
+  },
+  "monk-phb:empty-body": {
+    "label": "Monk (PHB) · Empty Body",
+    "hash": "40f8c9906564e6f4",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "empty-body",
+          "name": "Empty Body",
+          "level": 18,
+          "category": "actions",
+          "toggle": {
+            "grants": {
+              "defenses": {
+                "resist": [
+                  "acid",
+                  "bludgeoning",
+                  "cold",
+                  "fire",
+                  "lightning",
+                  "necrotic",
+                  "piercing",
+                  "poison",
+                  "psychic",
+                  "radiant",
+                  "slashing",
+                  "thunder"
+                ]
+              }
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 12366,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:19:03+00:00"
+  },
+  "monk-phb:perfect-self": {
+    "label": "Monk (PHB) · Perfect Self",
+    "hash": "6f7d365cbd9432b1",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "perfect-self",
+          "name": "Perfect Self",
+          "level": 20,
+          "category": "traits"
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11453,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:19:15+00:00"
+  },
+  "monk-phb:open-hand-phb": {
+    "label": "Monk (PHB) · Way of the Open Hand (PHB)",
+    "hash": "e05db7fadb5c75b6",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "open-hand-technique",
+          "name": "Open Hand Technique",
+          "level": 3,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "melee"
+            },
+            "save": {
+              "ability": "dex",
+              "on_success": "none",
+              "conditions": [
+                "prone"
+              ]
+            }
+          }
+        },
+        {
+          "id": "wholeness-of-body",
+          "name": "Wholeness of Body",
+          "level": 6,
+          "category": "actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "action": {
+            "heal": "3 * class_level"
+          }
+        },
+        {
+          "id": "quivering-palm",
+          "name": "Quivering Palm",
+          "level": 17,
+          "category": "actions",
+          "action": {
+            "save": {
+              "ability": "con",
+              "on_success": "none",
+              "damage": [
+                {
+                  "dice": "10d10",
+                  "type": "necrotic"
+                }
+              ]
+            }
+          },
+          "consumes": {
+            "resource": "focus_points",
+            "amount": 3
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13793,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-18T13:19:19+00:00"
+  }
+}

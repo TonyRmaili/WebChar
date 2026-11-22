@@ -1,23 +1,18 @@
 import React from "react";
 import { INK, InkButton, InkText } from "../../../styles/parchment";
-import { entityKey, sameEntity } from "./wizardHelpers";
 
 /* ═══════════════════════════════════════════════════════════════════
-   EntityList — the search line + list shared by the race, background
-   and class-feat pickers. Presentation only; every caller supplies its
-   own subtitle renderer and preview handler.
+   EntityList — the search line + list the race, background and class
+   pickers share. Presentation only; every caller supplies its own
+   subtitle renderer and preview handler.
 
    Written like a ledger: one entry per line, the book it comes from in
-   the margin, "view" opens the catalogue card.
-
-   `selected` accepts either a single entity (race/background — exactly
-   one or none picked) or an array of entities (class feat slots — zero
-   or more picked). Entries are matched on name AND source, so the two
-   "Alert"s (PHB and XPHB) are never confused.
+   the margin, "view" opens the catalogue card. Entries are told apart by
+   their id (the two Acolytes, PHB and XPHB, are "acolyte-phb" and
+   "acolyte-xphb"). `selected` is one id, or a list of ids.
    ═══════════════════════════════════════════════════════════════════ */
 
-const isPicked = (selected, item) =>
-  Array.isArray(selected) ? selected.some((s) => sameEntity(s, item)) : sameEntity(selected, item);
+const isPicked = (selected, item) => (Array.isArray(selected) ? selected.includes(item.id) : selected === item.id);
 
 export default function EntityList({
   items = [],
@@ -64,7 +59,7 @@ export default function EntityList({
             const subtitle = renderSubtitle?.(item);
 
             return (
-              <li key={entityKey(item)} className="flex items-start gap-2 border-b border-dotted border-rule/25 py-1.5">
+              <li key={`${item.id}-${item.visibility || ""}`} className="flex items-start gap-2 border-b border-dotted border-rule/25 py-1.5">
                 <button
                   type="button"
                   onClick={() => !disabled && onSelect(item)}

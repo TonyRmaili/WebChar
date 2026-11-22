@@ -1,0 +1,124 @@
+[
+    {
+        "id": "rogue-xphb:thief-xphb",
+        "kind": "subclass",
+        "name": "Thief",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Thief"
+        },
+        "text": "*Hunt for Treasure as a Classic Adventurer*\n\nA mix of burglar, treasure hunter, and explorer, you are the epitome of an adventurer. In addition to improving your agility and stealth, you gain abilities useful for delving into ruins and getting maximum benefit from the magic items you find there.",
+        "class_id": "rogue-xphb",
+        "short_name": "Thief",
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "rogue-xphb:thief-xphb:fast-hands",
+                    "rogue-xphb:thief-xphb:second-story-work"
+                ]
+            },
+            {
+                "level": 9,
+                "features": [
+                    "rogue-xphb:thief-xphb:supreme-sneak"
+                ]
+            },
+            {
+                "level": 13,
+                "features": [
+                    "rogue-xphb:thief-xphb:use-magic-device"
+                ]
+            },
+            {
+                "level": 17,
+                "features": [
+                    "rogue-xphb:thief-xphb:thiefs-reflexes"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "rogue-xphb:thief-xphb:fast-hands",
+                "name": "Fast Hands",
+                "level": 3,
+                "text": "As a Bonus Action, you can do one of the following.\n\n**Sleight of Hand.** Make a Dexterity (Sleight of Hand) check to pick a lock or disarm a trap with Thieves' Tools or to pick a pocket.\n\n**Use an Object.** Take the Utilize action, or take the Magic action to use a magic item that requires that action.",
+                "srd": {
+                    "5.2": "Fast Hands"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "rogue-xphb:thief-xphb:second-story-work",
+                "name": "Second-Story Work",
+                "level": 3,
+                "text": "You've trained to get into especially hard-to-reach places, granting you these benefits.\n\n**Climber.** You gain a Climb Speed equal to your Speed.\n\n**Jumper.** You can determine your jump distance using your Dexterity rather than your Strength.",
+                "srd": {
+                    "5.2": "Second-Story Work"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "rogue-xphb:thief-xphb:supreme-sneak",
+                "name": "Supreme Sneak",
+                "level": 9,
+                "text": "You gain the following Cunning Strike option.\n\n**Stealth Attack (Cost: 1d6).** If you have the Hide action's Invisible condition, this attack doesn't end that condition on you if you end the turn behind Three-Quarters Cover or Total Cover.",
+                "srd": {
+                    "5.2": "Supreme Sneak"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "rogue-xphb:thief-xphb:use-magic-device",
+                "name": "Use Magic Device",
+                "level": 13,
+                "text": "You've learned how to maximize use of magic items, granting you the following benefits.\n\n**Attunement.** You can attune to up to four magic items at once.\n\n**Charges.** Whenever you use a magic item property that expends charges, roll 1d6. On a roll of 6, you use the property without expending the charges.\n\n**Scrolls.** You can use any Spell Scroll, using Intelligence as your spellcasting ability for the spell. If the spell is a cantrip or a level 1 spell, you can cast it reliably. If the scroll contains a higher-level spell, you must first succeed on an Intelligence (Arcana) check (DC 10 plus the spell's level). On a successful check, you cast the spell from the scroll. On a failed check, the scroll disintegrates.",
+                "srd": {
+                    "5.2": "Use Magic Device"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "rogue-xphb:thief-xphb:thiefs-reflexes",
+                "name": "Thief's Reflexes",
+                "level": 17,
+                "text": "You are adept at laying ambushes and quickly escaping danger. You can take two turns during the first round of any combat. You take your first turn at your normal Initiative and your second turn at your Initiative minus 10.",
+                "srd": {
+                    "5.2": "Thief's Reflexes"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "rogue-xphb:thief-xphb:fast-hands:sleight-of-hand",
+                "name": "Sleight of Hand",
+                "level": 3,
+                "text": "**Sleight of Hand.** Make a Dexterity (Sleight of Hand) check to pick a lock or disarm a trap with Thieves' Tools or to pick a pocket.",
+                "parent": "rogue-xphb:thief-xphb:fast-hands",
+                "category": "bonus_actions"
+            },
+            {
+                "id": "rogue-xphb:thief-xphb:fast-hands:use-an-object",
+                "name": "Use an Object",
+                "level": 3,
+                "text": "**Use an Object.** Take the Utilize action, or take the Magic action to use a magic item that requires that action.",
+                "parent": "rogue-xphb:thief-xphb:fast-hands",
+                "category": "bonus_actions"
+            },
+            {
+                "id": "rogue-xphb:thief-xphb:second-story-work:climber",
+                "name": "Climber",
+                "level": 3,
+                "text": "**Climber.** You gain a Climb Speed equal to your Speed.",
+                "parent": "rogue-xphb:thief-xphb:second-story-work",
+                "category": "traits",
+                "grants": {
+                    "speed": {
+                        "climb": "walk"
+                    }
+                }
+            }
+        ],
+        "resources": []
+    }
+]

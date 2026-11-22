@@ -1,270 +1,127 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useCatalogueStore } from "../../../store/CatalogueStore";
-import FilterSection from "../FilterSection";
-import FilterPopup, { FilterButton } from "../FilterPopup";
-import {
-  formatSource,
-  titleCase,
-  crToNumber,
-  CR_OPTIONS,
-  getMonsterType,
-  getMonsterSenses,
-  getMonsterMovements,
-  getMonsterDifficulty,
-  getMonsterConditionInflict,
-  getMonsterForcedSaves,
-  formatSaveLabel,
-  monsterUsesLevel,
-} from "./monsterHelpers";
-import MonsterRow from "./MonsterRow";
-import MonsterCreatePopup from "./MonsterCreatePopup";
-import RowContextMenu from "../RowContextMenu";
 import { usePopupStore } from "../../../store/PopupStore";
 import useAuthStore from "../../../store/AuthStore";
-import { ErrorLine, LoadingLine, SortControl, Toolbar, chip, fieldCls, searchCls } from "../catalogueStyle";
+import FilterSection from "../FilterSection";
+import FilterPopup, { FilterButton } from "../FilterPopup";
+import MonsterCreatePopup from "./MonsterCreatePopup";
+import { ErrorLine, LoadingLine, SortControl, Toolbar, fieldCls, searchCls } from "../catalogueStyle";
+import { CatalogueRow, ChipToggles, FoldChips, useEntryMenu } from "../catalogueParts";
 import { addBtn } from "../../../styles/parchmentForm";
+import {
+  HOMEBREW, EDITIONS, ABILITY_SHORT, SIZES, formatEdition, formatSource, labelFromId, titleCase,
+  collectUnique, toggleIn, matchesQuery, passesAny, byName,
+} from "../catalogueHelpers";
+import {
+  CR_OPTIONS, HAS_LABELS, crNumber, monsterConditions, monsterDamageDealt, monsterDefenses, monsterDifficulty, monsterHas,
+  monsterMovement, monsterRowMeta, monsterSavesForced, monsterSenses, monsterTypes,
+} from "./monsterHelpers";
 
-// The CR min / max pickers in the filter popup: short dotted blanks.
-const challengeCls = `${fieldCls} !w-20 disabled:cursor-not-allowed disabled:opacity-40`;
+const crCls = `${fieldCls} !w-20`;
+const list = (m, key) => m.filters?.[key] || [];
 
+/* The Monsters catalogue. Every filter offers only values the loaded
+   monsters have; damage, conditions, saves, senses and movement are read
+   from the statblocks as well as from the book's tag lists, so homebrew
+   is found the same way. CR min / max also covers level-based statblocks
+   (sidekicks); sort by CR or by name. */
 export default function Monsters() {
-  const monstersData = useCatalogueStore((s) => s.monstersData);
+  const monsters = useCatalogueStore((s) => s.monsters);
   const loading = useCatalogueStore((s) => s.loadingMonsters);
-  const error = useCatalogueStore((s) => s.error);
+  const error = useCatalogueStore((s) => s.monstersError);
   const loadMonsters = useCatalogueStore((s) => s.loadMonsters);
-  const deleteMonsterAction = useCatalogueStore((s) => s.deleteMonster);
-
-  const monsters = useMemo(() => {
-    const root = monstersData?.monsters;
-    if (!root || typeof root !== "object") return [];
-    const out = [];
-    for (const list of Object.values(root)) {
-      if (Array.isArray(list)) out.push(...list);
-    }
-    return out;
-  }, [monstersData]);
-
-  const sources = useMemo(() => {
-    const base = Object.keys(monstersData?.monsters || {}).sort();
-    return base.includes("HOMEBREW") ? base : ["HOMEBREW", ...base];
-  }, [monstersData]);
-
-  const sizes = monstersData?.sizes || [];
-  const envs = monstersData?.environments || [];
-  const traits = monstersData?.traits || [];
-  const senses = monstersData?.senses || [];
-  const typesData = monstersData?.types || {};
-  const typePrefixes = useMemo(
-    () => [...(typesData.prefix || [])].sort(),
-    [typesData]
-  );
-
-  // Derive movement, conditions, forced saves from data.
-  const movements = useMemo(() => {
-    const set = new Set();
-    for (const m of monsters) {
-      for (const mv of getMonsterMovements(m)) set.add(mv);
-    }
-    return [...set].sort();
-  }, [monsters]);
-
-  const conditionInflictOptions = useMemo(() => {
-    const set = new Set();
-    for (const m of monsters) {
-      for (const c of getMonsterConditionInflict(m)) set.add(c);
-    }
-    return [...set].sort();
-  }, [monsters]);
-
-  const forcedSaveOptions = useMemo(() => {
-    const set = new Set();
-    for (const m of monsters) {
-      for (const s of getMonsterForcedSaves(m)) set.add(s);
-    }
-    return [...set].sort();
-  }, [monsters]);
-
-  const [selectedSources, setSelectedSources] = useState(["XMM"]);
-  const [selectedSizes, setSelectedSizes] = useState([]);
-  const [selectedMovements, setSelectedMovements] = useState([]);
-  const [selectedTypes, setSelectedTypes] = useState([]);
-  const [selectedEnvs, setSelectedEnvs] = useState([]);
-  const [selectedSenses, setSelectedSenses] = useState([]);
-  const [selectedTraits, setSelectedTraits] = useState([]);
-  const [selectedConditions, setSelectedConditions] = useState([]);
-  const [selectedForcedSaves, setSelectedForcedSaves] = useState([]);
-  const [crMin, setCrMin] = useState("");
-  const [crMax, setCrMax] = useState("");
-  const [levelOnly, setLevelOnly] = useState(false);
-  const [query, setQuery] = useState("");
-  const [filtersOpen, setFiltersOpen] = useState(false);
-
-  const [sortDir, setSortDir] = useState(null);
-
-  const [createOpen, setCreateOpen] = useState(false);
-  const [editingMonster, setEditingMonster] = useState(null);
-  const [copyFromMonster, setCopyFromMonster] = useState(null);
-  const [contextMenu, setContextMenu] = useState(null);
+  const deleteMonster = useCatalogueStore((s) => s.deleteMonster);
 
   const openPopup = usePopupStore((s) => s.open);
   const currentUser = useAuthStore((s) => s.userData?.name);
 
-  useEffect(() => { loadMonsters(); }, [loadMonsters]);
+  const [query, setQuery] = useState("");
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const [sortDir, setSortDir] = useState(null);
+  const [crMin, setCrMin] = useState("");
+  const [crMax, setCrMax] = useState("");
+  const [picked, setPicked] = useState({}); // filter key → selected values
 
-  const handleRowContextMenu = (e, monster) => {
-    const isHomebrew = monster.source === "HOMEBREW";
-    const isOwner = isHomebrew && monster.created_by === currentUser;
+  const [form, setForm] = useState(null); // null = closed · {} new · { editing } · { copyFrom }
+  const [openMenu, menu] = useEntryMenu({
+    user: currentUser,
+    onCopy: (m) => setForm({ copyFrom: m }),
+    onEdit: (m) => setForm({ editing: m }),
+    onDelete: deleteMonster,
+  });
 
-    const items = [
-      {
-        label: "Copy",
-        onClick: () => { setCopyFromMonster(monster); setCreateOpen(true); },
-      },
-    ];
+  useEffect(() => {
+    if (!monsters?.length) loadMonsters();
+  }, [loadMonsters]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    if (isOwner) {
-      items.push({
-        label: "Edit",
-        onClick: () => { setEditingMonster(monster); setCreateOpen(true); },
-      });
-      items.push({
-        label: "Delete",
-        danger: true,
-        onClick: async () => {
-          if (!window.confirm(`Delete "${monster.name}"? This cannot be undone.`)) return;
-          try {
-            await deleteMonsterAction(monster.id);
-          } catch (err) {
-            alert(`Delete failed: ${err.message}`);
-          }
-        },
-      });
+  /* Every chip filter: how to read its values from a monster, how to name
+     them, and whether its section starts open. Edition starts on "one". */
+  const FILTERS = useMemo(
+    () => [
+      { key: "edition", title: "Edition", read: (m) => [m.edition], options: () => EDITIONS, label: formatEdition, open: true },
+      { key: "source", title: "Sources", read: (m) => [m.source], label: formatSource, grid: true },
+      { key: "size", title: "Size", read: (m) => m.size, options: (found) => SIZES.filter((s) => found.includes(s)), label: titleCase, open: true },
+      { key: "type", title: "Type", read: monsterTypes, label: titleCase, open: true },
+      { key: "has", title: "Has", read: monsterHas, options: (found) => Object.keys(HAS_LABELS).filter((k) => found.includes(k)), label: (k) => HAS_LABELS[k], open: true },
+      { key: "movement", title: "Movement", read: monsterMovement, label: titleCase },
+      { key: "senses", title: "Senses", read: monsterSenses, label: labelFromId },
+      { key: "damage", title: "Damage Dealt", read: monsterDamageDealt, label: titleCase },
+      { key: "conditions", title: "Conditions Inflicted", read: monsterConditions, label: titleCase },
+      { key: "saves", title: "Saves Forced", read: monsterSavesForced, label: (a) => ABILITY_SHORT[a] || titleCase(a) },
+      { key: "resist", title: "Resists", read: (m) => monsterDefenses(m, "resist"), label: titleCase },
+      { key: "immune", title: "Immune To", read: (m) => [...monsterDefenses(m, "immune"), ...monsterDefenses(m, "condition_immune")], label: titleCase },
+      { key: "environment", title: "Habitat", read: (m) => list(m, "environment"), label: labelFromId },
+      { key: "tags", title: "Type Tags", read: (m) => m.creature_type?.tags, label: titleCase },
+      { key: "traits", title: "Traits", read: (m) => list(m, "traits"), label: labelFromId },
+      { key: "actions", title: "Actions", read: (m) => list(m, "actions"), label: labelFromId },
+      { key: "misc", title: "Attack Kinds", read: (m) => list(m, "misc"), label: labelFromId },
+      { key: "spellcasting", title: "Spellcasting", read: (m) => list(m, "spellcasting"), label: labelFromId },
+      { key: "groups", title: "Groups", read: (m) => list(m, "groups"), label: (g) => g },
+    ],
+    []
+  );
+
+  // What each filter offers: only values some monster has.
+  const options = useMemo(() => {
+    const out = {};
+    for (const f of FILTERS) {
+      const found = collectUnique(monsters, f.read);
+      out[f.key] = f.options ? f.options(found) : f.key === "source" && !found.includes(HOMEBREW) ? [HOMEBREW, ...found] : found;
     }
+    return out;
+  }, [monsters, FILTERS]);
 
-    setContextMenu({ x: e.clientX, y: e.clientY, items });
-  };
-
-  const handleCreateClose = () => {
-    setCreateOpen(false);
-    setEditingMonster(null);
-    setCopyFromMonster(null);
-  };
-
-  const toggle = (setter) => (val) =>
-    setter((prev) =>
-      prev.includes(val) ? prev.filter((x) => x !== val) : [...prev, val]
-    );
-
-  const toggleSource = toggle(setSelectedSources);
-  const toggleSize = toggle(setSelectedSizes);
-  const toggleMovement = toggle(setSelectedMovements);
-  const toggleType = toggle(setSelectedTypes);
-  const toggleEnv = toggle(setSelectedEnvs);
-  const toggleSense = toggle(setSelectedSenses);
-  const toggleTrait = toggle(setSelectedTraits);
-  const toggleCondition = toggle(setSelectedConditions);
-  const toggleForcedSave = toggle(setSelectedForcedSaves);
+  const selected = (key) => picked[key] ?? (key === "edition" ? ["one"] : []);
+  const toggle = (key) => (v) => setPicked((p) => ({ ...p, [key]: toggleIn(selected(key), v) }));
 
   const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    const minN = crMin ? crToNumber(crMin) : null;
-    const maxN = crMax ? crToNumber(crMax) : null;
-
-    return monsters.filter((m) => {
-      if (selectedSources.length && !selectedSources.includes(m.source)) return false;
-      if (selectedSizes.length) {
-        const ms = m.size || [];
-        if (!selectedSizes.some((s) => ms.includes(s))) return false;
+    const lo = crMin ? crNumber(crMin) : null;
+    const hi = crMax ? crNumber(crMax) : null;
+    const rows = (monsters || []).filter((m) => {
+      for (const f of FILTERS) if (!passesAny(selected(f.key), f.read(m))) return false;
+      if (lo != null || hi != null) {
+        const d = monsterDifficulty(m);
+        if (d == null || (lo != null && d < lo) || (hi != null && d > hi)) return false;
       }
-      if (selectedMovements.length) {
-        const mm = getMonsterMovements(m);
-        if (!selectedMovements.some((mv) => mm.includes(mv))) return false;
-      }
-      if (selectedTypes.length) {
-        const t = getMonsterType(m);
-        if (!selectedTypes.includes(t)) return false;
-      }
-      if (selectedEnvs.length) {
-        const me = m.environment || [];
-        if (!selectedEnvs.some((e) => me.includes(e))) return false;
-      }
-      if (selectedSenses.length) {
-        const ms = getMonsterSenses(m);
-        if (!selectedSenses.some((s) => ms.includes(s))) return false;
-      }
-      if (selectedTraits.length) {
-        const mt = m.traitTags || [];
-        if (!selectedTraits.some((t) => mt.includes(t))) return false;
-      }
-      if (selectedConditions.length) {
-        const mc = getMonsterConditionInflict(m);
-        if (!selectedConditions.some((c) => mc.includes(c))) return false;
-      }
-      if (selectedForcedSaves.length) {
-        const mf = getMonsterForcedSaves(m);
-        if (!selectedForcedSaves.some((s) => mf.includes(s))) return false;
-      }
-      if (levelOnly) {
-        if (!monsterUsesLevel(m)) return false;
-      } else if (minN != null || maxN != null) {
-        const n = crToNumber(m.cr?.base);
-        if (n == null) return false;
-        if (minN != null && n < minN) return false;
-        if (maxN != null && n > maxN) return false;
-      }
-      if (q && !m.name.toLowerCase().includes(q)) return false;
-      return true;
+      return matchesQuery(m, query);
     });
-  }, [
-    monsters, query,
-    selectedSources, selectedSizes, selectedMovements,
-    selectedTypes, selectedEnvs, selectedSenses, selectedTraits,
-    selectedConditions, selectedForcedSaves,
-    crMin, crMax, levelOnly,
-  ]);
-
-  const sorted = useMemo(() => {
-    if (!sortDir) return filtered;
+    if (!sortDir) return rows.sort(byName);
     const dir = sortDir === "asc" ? 1 : -1;
-    return [...filtered].sort((a, b) => {
-      const av = getMonsterDifficulty(a);
-      const bv = getMonsterDifficulty(b);
-      if (av == null && bv == null) return 0;
-      if (av == null) return 1;
-      if (bv == null) return -1;
-      return (av - bv) * dir;
+    return rows.sort((a, b) => {
+      const x = monsterDifficulty(a);
+      const y = monsterDifficulty(b);
+      if (x == null || y == null) return x == null && y == null ? byName(a, b) : x == null ? 1 : -1;
+      return (x - y) * dir || byName(a, b);
     });
-  }, [filtered, sortDir]);
+  }, [monsters, FILTERS, picked, crMin, crMax, query, sortDir]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  const activeCount = FILTERS.reduce((n, f) => n + selected(f.key).length, 0) + (crMin ? 1 : 0) + (crMax ? 1 : 0);
   const clearAll = () => {
-    setSelectedSources([]);
-    setSelectedSizes([]);
-    setSelectedMovements([]);
-    setSelectedTypes([]);
-    setSelectedEnvs([]);
-    setSelectedSenses([]);
-    setSelectedTraits([]);
-    setSelectedConditions([]);
-    setSelectedForcedSaves([]);
+    setPicked(Object.fromEntries(FILTERS.map((f) => [f.key, []])));
     setCrMin("");
     setCrMax("");
-    setLevelOnly(false);
     setQuery("");
   };
-
-  const activeCount =
-    selectedSources.length +
-    selectedSizes.length +
-    selectedMovements.length +
-    selectedTypes.length +
-    selectedEnvs.length +
-    selectedSenses.length +
-    selectedTraits.length +
-    selectedConditions.length +
-    selectedForcedSaves.length +
-    (crMin ? 1 : 0) +
-    (crMax ? 1 : 0) +
-    (levelOnly ? 1 : 0);
 
   return (
     <div className="min-h-[640px] w-full">
@@ -281,169 +138,60 @@ export default function Monsters() {
             right={
               <>
                 <span className="text-xs italic text-ink-faded">
-                  {sorted.length} of {monsters.length}
+                  {filtered.length} of {monsters.length}
                 </span>
-                <button onClick={() => setCreateOpen(true)} className={`${addBtn} !text-sm`}>
+                <button type="button" onClick={() => setForm({})} className={`${addBtn} !text-sm`}>
                   + create
                 </button>
               </>
             }
           />
 
-          <FilterPopup
-            open={filtersOpen}
-            onClose={() => setFiltersOpen(false)}
-            activeCount={activeCount}
-            onClear={clearAll}
-          >
-            <FilterSection title="Sources">
-              <div className="grid grid-cols-2 gap-x-6 gap-y-1.5 sm:grid-cols-3 lg:grid-cols-4">
-                {sources.map((src) => (
-                  <button
-                    key={src}
-                    onClick={() => toggleSource(src)}
-                    title={formatSource(src)}
-                    className={`${chip(selectedSources.includes(src))} truncate`}
-                  >
-                    {formatSource(src)}
-                  </button>
-                ))}
-              </div>
-            </FilterSection>
-
-            <FilterSection title="Size">
-              <div className="flex flex-wrap gap-x-4 gap-y-1.5">
-                {sizes.map((s) => (
-                  <button key={s} onClick={() => toggleSize(s)} className={chip(selectedSizes.includes(s))}>
-                    {s}
-                  </button>
-                ))}
-              </div>
-            </FilterSection>
-
-            <FilterSection title="Movement">
-              <div className="flex flex-wrap gap-x-4 gap-y-1.5">
-                {movements.map((mv) => (
-                  <button key={mv} onClick={() => toggleMovement(mv)} className={chip(selectedMovements.includes(mv))}>
-                    {titleCase(mv)}
-                  </button>
-                ))}
-              </div>
-            </FilterSection>
-
-            <FilterSection title="Senses">
-              <div className="flex flex-wrap gap-x-4 gap-y-1.5">
-                {senses.map((s) => (
-                  <button key={s} onClick={() => toggleSense(s)} className={chip(selectedSenses.includes(s))}>
-                    {titleCase(s)}
-                  </button>
-                ))}
-              </div>
-            </FilterSection>
-
-            {conditionInflictOptions.length > 0 && (
-              <FilterSection title="Conditions Inflicted">
-                <div className="flex flex-wrap gap-x-4 gap-y-1.5">
-                  {conditionInflictOptions.map((c) => (
-                    <button key={c} onClick={() => toggleCondition(c)} className={chip(selectedConditions.includes(c))}>
-                      {titleCase(c)}
-                    </button>
-                  ))}
-                </div>
-              </FilterSection>
-            )}
-
-            {forcedSaveOptions.length > 0 && (
-              <FilterSection title="Forced Saves">
-                <div className="flex flex-wrap gap-x-4 gap-y-1.5">
-                  {forcedSaveOptions.map((s) => (
-                    <button key={s} onClick={() => toggleForcedSave(s)} className={chip(selectedForcedSaves.includes(s))}>
-                      {formatSaveLabel(s)}
-                    </button>
-                  ))}
-                </div>
-              </FilterSection>
-            )}
-
-            <FilterSection title="Type">
-              <div className="flex flex-wrap gap-x-4 gap-y-1.5">
-                {typePrefixes.map((t) => (
-                  <button key={t} onClick={() => toggleType(t)} className={chip(selectedTypes.includes(t))}>
-                    {titleCase(t)}
-                  </button>
-                ))}
-              </div>
-            </FilterSection>
-
-            <FilterSection title="Environment">
-              <div className="flex flex-wrap gap-x-4 gap-y-1.5">
-                {envs.map((e) => (
-                  <button key={e} onClick={() => toggleEnv(e)} className={chip(selectedEnvs.includes(e))}>
-                    {titleCase(e)}
-                  </button>
-                ))}
-              </div>
-            </FilterSection>
-
-            <FilterSection title="Traits">
-              <div className="flex flex-wrap gap-x-4 gap-y-1.5">
-                {traits.map((t) => (
-                  <button key={t} onClick={() => toggleTrait(t)} className={chip(selectedTraits.includes(t))}>
-                    {t}
-                  </button>
-                ))}
-              </div>
-            </FilterSection>
-
+          <FilterPopup open={filtersOpen} onClose={() => setFiltersOpen(false)} activeCount={activeCount} onClear={clearAll}>
             <FilterSection title="Challenge">
               <div className="flex items-baseline gap-3">
-                <select value={crMin} onChange={(e) => setCrMin(e.target.value)} className={challengeCls} disabled={levelOnly}>
+                <select value={crMin} onChange={(e) => setCrMin(e.target.value)} className={crCls} aria-label="Lowest CR">
                   <option value="">min</option>
                   {CR_OPTIONS.map((c) => <option key={c} value={c}>{c}</option>)}
                 </select>
                 <span className="text-sm text-ink-faded">–</span>
-                <select value={crMax} onChange={(e) => setCrMax(e.target.value)} className={challengeCls} disabled={levelOnly}>
+                <select value={crMax} onChange={(e) => setCrMax(e.target.value)} className={crCls} aria-label="Highest CR">
                   <option value="">max</option>
                   {CR_OPTIONS.map((c) => <option key={c} value={c}>{c}</option>)}
                 </select>
-                <button
-                  onClick={() => setLevelOnly((v) => !v)}
-                  title="Show only monsters that use the level system instead of CR"
-                  className={`${chip(levelOnly)} ml-2`}
-                >
-                  Level
-                </button>
+                <span className="text-xs italic text-ink-faded">a level-based statblock counts its level</span>
               </div>
             </FilterSection>
+            {FILTERS.map((f) =>
+              options[f.key]?.length ? (
+                <FilterSection key={f.key} title={f.title} defaultOpen={!!f.open}>
+                  {options[f.key].length > 24 && !f.grid ? (
+                    <FoldChips label={`${options[f.key].length} to choose from`} options={options[f.key]} selected={selected(f.key)}
+                               labelOf={f.label} onToggle={toggle(f.key)} defaultOpen />
+                  ) : (
+                    <ChipToggles options={options[f.key]} selected={selected(f.key)} labelOf={f.label} onToggle={toggle(f.key)}
+                                 className={f.grid ? "!grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4" : ""} />
+                  )}
+                </FilterSection>
+              ) : null
+            )}
           </FilterPopup>
 
-          {sorted.length === 0 && <LoadingLine>No monsters match your filters.</LoadingLine>}
-          <div className="grid grid-cols-1 gap-x-8 md:grid-cols-2 xl:grid-cols-3">
-            {sorted.map((m, idx) => (
-              <MonsterRow
-                key={`${m.id || m.name}-${m.source}-${idx}`}
-                monster={m}
-                onOpen={(monster) => openPopup("monster", monster)}
-                onContextMenu={handleRowContextMenu}
-              />
-            ))}
-          </div>
-
-          {contextMenu && (
-            <RowContextMenu
-              x={contextMenu.x}
-              y={contextMenu.y}
-              items={contextMenu.items}
-              onClose={() => setContextMenu(null)}
-            />
+          {filtered.length === 0 ? (
+            <LoadingLine>No monsters match your filters.</LoadingLine>
+          ) : (
+            <div className="grid grid-cols-1 gap-x-8 md:grid-cols-2 xl:grid-cols-3">
+              {filtered.map((m) => (
+                <CatalogueRow key={`${m.id}-${m.visibility || ""}`} entry={m} meta={monsterRowMeta(m)}
+                              onOpen={(x) => openPopup("monster", x)} onContextMenu={openMenu} />
+              ))}
+            </div>
           )}
 
-          <MonsterCreatePopup
-            open={createOpen}
-            onClose={handleCreateClose}
-            editingMonster={editingMonster}
-            copyFromMonster={copyFromMonster}
-          />
+          {menu}
+
+          <MonsterCreatePopup open={form !== null} onClose={() => setForm(null)}
+                              editingMonster={form?.editing || null} copyFromMonster={form?.copyFrom || null} />
         </>
       )}
     </div>

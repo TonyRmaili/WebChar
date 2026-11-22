@@ -1,14 +1,15 @@
-import { ABILITY, ABILITY_ORDER, CR_OPTIONS, titleCase } from "../../Catalogues/Monsters/monsterHelpers";
-import { CONDITION_OPTIONS, DAMAGE_TYPES, LANGUAGE_OPTIONS, SKILL_OPTIONS } from "../../../utils/Constants";
+import { ABILITIES, CONDITIONS, DAMAGE_TYPES, SENSES, SKILLS, labelFromId, titleCase } from "../../Catalogues/catalogueHelpers";
+import { CR_OPTIONS, formatDefense } from "../../Catalogues/Monsters/monsterHelpers";
+import { LANGUAGE_OPTIONS } from "../../../utils/Constants";
 import { MONSTER_EDITS, SIZES, equipmentOf, sectionsOf, spellcastingOf } from "../statblock/monsterStatblock";
 
 /* ═══════════════════════════════════════════════════════════════════
    templateStatblock.js — a template on the statblock card.
 
    A template is "a statblock without a creature". Its grants are kept in
-   the same layout as a monster's (effects, spellcasting, gear,
-   resistances…), so the monster actions and row editor work on it as
-   they are. On top of that:
+   the same layout as a monster record's (features, spellcasting, items,
+   defenses { resist, immune, vulnerable, condition_immune }), so the
+   monster actions and row editor work on it as they are. On top of that:
 
      adjust  { ac, hp, hp_percent, initiative, to_hit, damage, save_dc,
                spell_dc, spell_attack,
@@ -16,7 +17,7 @@ import { MONSTER_EDITS, SIZES, equipmentOf, sectionsOf, spellcastingOf } from ".
      saves   ["wis"]                       save proficiencies it gives
      speed   { fly: 30, hover: true }      speeds it gives (higher wins)
      senses  { darkvision: 60 }            senses it gives (higher wins)
-     extra_damage { dice_count, dice_size, damage_type } on every attack
+     extra_damage { dice: "1d6", type: "fire" }   on every attack
      set     { type, size, alignment, cr } what the creature becomes
      affix   { prefix, suffix }            "Ghostly Goblin"
 
@@ -32,7 +33,7 @@ const toInt = (v, fallback = 0) => {
 };
 const sgn = (n) => (n ? `${n > 0 ? "+" : "−"}${Math.abs(n)}` : "—");
 
-export const newTemplate = (name = "New template") => ({ name, notes: "", adjust: {}, effects: {}, spellcasting: [], gear: [] });
+export const newTemplate = (name = "New template") => ({ name, notes: "", adjust: {}, features: [], spellcasting: [], items: [] });
 
 /* ─── reading nested numbers: "abilities.str", "speed.walk", "ac" ── */
 
@@ -61,11 +62,18 @@ const NUMBER = (key, label, path, opts = {}) => ({
   sub: opts.sub ?? null,
 });
 
-export function templateView(t, { editing = false } = {}) {
+const DEFENSES = [
+  { key: "resist", label: "Resistances", options: DAMAGE_TYPES },
+  { key: "immune", label: "Immunities", options: DAMAGE_TYPES },
+  { key: "vulnerable", label: "Vulnerabilities", options: DAMAGE_TYPES },
+  { key: "condition_immune", label: "Condition Immunities", options: CONDITIONS },
+];
+
+export function templateView(t, { editing = false, names } = {}) {
   const a = t?.adjust || {};
   const pct = toInt(a.hp_percent, 0);
   const extra = t?.extra_damage;
-  const hasExtra = extra && toInt(extra.dice_count, 0) > 0 && extra.dice_size;
+  const hasExtra = !!extra?.dice;
   const set = t?.set || {};
   const affix = t?.affix || {};
   const fields = (list) => ({ type: "fields", fields: list });
@@ -95,22 +103,19 @@ export function templateView(t, { editing = false } = {}) {
     },
     {
       label: "Save proficiencies",
-      text: asList(t?.saves).map((s) => ABILITY[s] || s).join(", "),
-      editor: { type: "chips", edit: "list", arg: "saves", options: ABILITY_ORDER },
+      text: asList(t?.saves).map((s) => s.toUpperCase()).join(", "),
+      editor: { type: "chips", edit: "list", arg: "saves", options: ABILITIES },
     },
-    { label: "Skill adjustments", text: editing ? null : skillAdj.map(([k, v]) => `${SKILL_OPTIONS[k]?.label || titleCase(k)} ${sgn(toInt(v, 0))}`).join(", ") },
-    { label: "Resistances", text: asList(t?.resistances?.types).join(", "), editor: { type: "chips", edit: "list", arg: "resistances", options: DAMAGE_TYPES } },
-    { label: "Immunities", text: asList(t?.immunities?.types).join(", "), editor: { type: "chips", edit: "list", arg: "immunities", options: DAMAGE_TYPES } },
-    { label: "Vulnerabilities", text: asList(t?.vulnerabilities?.types).join(", "), editor: { type: "chips", edit: "list", arg: "vulnerabilities", options: DAMAGE_TYPES } },
-    {
-      label: "Condition Immunities",
-      text: asList(t?.condition_immunities?.types).join(", "),
-      editor: { type: "chips", edit: "list", arg: "condition_immunities", options: CONDITION_OPTIONS.map((c) => c.toLowerCase()) },
-    },
+    { label: "Skill adjustments", text: editing ? null : skillAdj.map(([k, v]) => `${labelFromId(k)} ${sgn(toInt(v, 0))}`).join(", ") },
+    ...DEFENSES.map((d) => ({
+      label: d.label,
+      text: formatDefense(t?.defenses?.[d.key]),
+      editor: { type: "chips", edit: "list", arg: d.key, options: d.options },
+    })),
     {
       label: "Senses",
       text: Object.entries(t?.senses || {}).filter(([, v]) => toInt(v, 0) > 0).map(([k, v]) => `${titleCase(k)} ${v} ft`).join(", "),
-      editor: fields(["darkvision", "blindsight", "tremorsense", "truesight"].map((k) => ({ kind: "number", edit: "sense", arg: k, label: k, suffix: "ft" }))),
+      editor: fields(SENSES.map((k) => ({ kind: "number", edit: "sense", arg: k, label: k, suffix: "ft" }))),
     },
     {
       label: "Gains speeds",
@@ -120,11 +125,10 @@ export function templateView(t, { editing = false } = {}) {
     { label: "Languages", text: asList(t?.languages).join(", "), editor: { type: "chips", edit: "list", arg: "languages", options: LANGUAGE_OPTIONS, keepCase: true } },
     {
       label: "Extra damage on attacks",
-      text: hasExtra ? `+${extra.dice_count}${extra.dice_size} ${extra.damage_type || ""}`.trim() : "",
+      text: hasExtra ? `+${extra.dice} ${extra.type || ""}`.trim() : "",
       editor: fields([
-        { kind: "number", edit: "extra", arg: "dice_count", label: "dice", min: 0, max: 20 },
-        { kind: "select", edit: "extra", arg: "dice_size", label: "die", options: [{ value: "", label: "—" }, ...["d4", "d6", "d8", "d10", "d12"].map((d) => ({ value: d, label: d }))] },
-        { kind: "select", edit: "extra", arg: "damage_type", label: "type", options: [{ value: "", label: "—" }, ...DAMAGE_TYPES.map((d) => ({ value: d, label: d }))] },
+        { kind: "text", edit: "extra", arg: "dice", label: "dice", placeholder: "1d6" },
+        { kind: "select", edit: "extra", arg: "type", label: "type", options: [{ value: "", label: "—" }, ...DAMAGE_TYPES.map((d) => ({ value: d, label: d }))] },
       ]),
     },
   ].filter((l) => (editing ? l.editor : l.text));
@@ -157,21 +161,21 @@ export function templateView(t, { editing = false } = {}) {
       NUMBER("save_dc", "Save DCs", "save_dc", { t, editSub: "of its abilities" }),
       NUMBER("spell_dc", "Spell save DC", "spell_dc", { t }),
       NUMBER("spell_attack", "Spell attack", "spell_attack", { t }),
-      ...ABILITY_ORDER.map((ab) => NUMBER(ab, ABILITY[ab], `abilities.${ab}`, { t })),
+      ...ABILITIES.map((ab) => NUMBER(ab, ab.toUpperCase(), `abilities.${ab}`, { t })),
     ],
     abilities: [],
     skillMode: "bonus",
     skills: editing
-      ? Object.entries(SKILL_OPTIONS).map(([key, s]) => {
+      ? Object.entries(SKILLS).map(([key, ability]) => {
           const v = toInt(a.skills?.[key], 0);
-          return { key, label: s.label, ability: ABILITY[s.ability] || "", bonus: v || null, total: v ? sgn(v) : "" };
+          return { key, label: labelFromId(key), ability: ability.toUpperCase(), bonus: v || null, total: v ? sgn(v) : "" };
         })
       : [],
     skillsHint: "Skills — how much to add or take off (blank = no change)",
     lines,
     sections,
-    spellcasting: spellcastingOf(t),
-    equipment: equipmentOf(t),
+    spellcasting: spellcastingOf(t, names),
+    equipment: equipmentOf(t, names),
     about: [],
     notes: String(t?.notes || ""),
     notesPlaceholder: "What it is and when to use it…",
@@ -207,13 +211,18 @@ export const TEMPLATE_EDITS = {
     get: (t, key) => t?.affix?.[key] ?? "",
     set: (t, key, v) => ({ ...t, affix: { ...(t?.affix || {}), [key]: v } }),
   },
+  // Extra damage on every attack: { dice: "1d6", type }; no dice = none.
   extra: {
-    get: (t, key) => (key === "dice_count" ? toInt(t?.extra_damage?.dice_count, 0) || null : t?.extra_damage?.[key] ?? ""),
-    set: (t, key, v) => ({ ...t, extra_damage: { ...(t?.extra_damage || {}), [key]: v } }),
+    get: (t, key) => t?.extra_damage?.[key] ?? "",
+    set: (t, key, v) => {
+      const next = { ...(t?.extra_damage || {}), [key]: String(v || "").trim() || undefined };
+      return { ...t, extra_damage: next.dice || next.type ? next : undefined };
+    },
   },
+  // Save proficiencies and languages are plain lists; defenses go by kind.
   list: {
-    get: (t, key) => (key === "saves" || key === "languages" ? asList(t?.[key]) : asList(t?.[key]?.types)),
-    set: (t, key, values) => (key === "saves" || key === "languages" ? { ...t, [key]: values } : { ...t, [key]: { ...(t?.[key] || {}), types: values } }),
+    get: (t, key) => (key === "saves" ? asList(t?.saves) : MONSTER_EDITS.list.get(t, key)),
+    set: (t, key, values) => (key === "saves" ? { ...t, saves: values } : MONSTER_EDITS.list.set(t, key, values)),
   },
   sense: MONSTER_EDITS.sense,
   speedMode: MONSTER_EDITS.speedMode,

@@ -1,281 +1,279 @@
 import React, { useMemo } from "react";
 import useCharStore from "../../../../store/CharStore";
-import { SubSection, CardGrid, UseCard, Pips, Chip } from "./PlayParts";
-import {
-  ACTION_GROUPS,
-  INNATE_RESET,
-  asList,
-  chargedMagicItems,
-  consumables,
-  effectChips,
-  effectDamage,
-  groupEffects,
-  innateUses,
-  ordinal,
-  regainLabel,
-  replaceById,
-  slotUses,
-  sortSlots,
-  sorceryUses,
-  spellComponents,
-  spellMeta,
-  usesFromCharges,
-  withChargesCurrent,
-} from "./playHelpers";
+import { SubSection, CardGrid, UseCard, Pips } from "./PlayParts";
+import { actionDamage, partWords, regainWords } from "../../../../utils/featureRuntime";
+import { useSheet } from "../sheetHelpers";
+import { CATEGORIES, featureRows, resourceRows, setFeatureFlag, setResourceUsed, setUsesUsed, weaponAttack } from "../featureHelpers";
+import { ORDINAL, pactRows, setPactUsed, setSlotUsed, setSpellOn, slotRows, spellRows } from "../spellbookHelpers";
+import { chargesOf, inventoryOf, isConsumable, num, patchItem, regainText } from "../define/inventoryHelpers";
 
-/* "Actions & Charges" in the Play panel.
+/* "Actions & Charges" in the Play panel (version-2 file).
 
    Layout, top to bottom:
-   1. Spellcasting resources: slot levels, pact slots, sorcery points.
-   2. Your turn: Actions | Bonus Actions | Reactions, side by side when
-      there is room, stacked at half width.
-   3. Everything else that has uses: innate spells, magic items,
-      consumables, then passives.
+   1. Spellcasting: spell slots and pact slots by level, and the pools no
+      shown feature spends (a pool a feature spends shows on its card).
+   2. Your turn: Actions (equipped weapons first) | Bonus Actions |
+      Reactions, side by side when there is room, stacked at half width.
+      Spells with free casts or at will sit here too, by casting time.
+   3. Magic Items (with charges) and Consumables.
+   4. Passives.
 
-   Every block collapses and remembers it. Click a card to use it,
-   right-click to regain one; on dot tracks, click a filled dot to spend
-   and an empty one to regain.
+   One card per feature, with everything on it: its on/off diamond
+   (Rage, Mage Armor), its dots (its own uses, or the pool it spends,
+   shared with every other feature spending that pool), to hit, DC,
+   damage. Click a card to use it, right-click to regain one; on dot
+   tracks, click a filled dot to spend and an empty one to regain.
 
-   Spending and regaining is shown at once and saved by CharStore a moment
-   later, so clicking several dots quickly sends one save. */
+   Spent things are counts in `state` (and charges_used on an item):
+   shown at once and saved by CharStore a moment later. Rests (Health)
+   give them back. */
 
 const KEY = (k) => `sheet.play.charges.${k}`;
 
-// Section rows: stacked when the panel is narrow (half width), side by
-// side once it is wide. The column count follows how many sections there
-// are, so two sections share the row instead of leaving an empty third.
-// (Tailwind needs the full class names written out, hence the map.)
+// Section rows: stacked when the panel is narrow (half width), side by side once it is wide.
 const WIDE_COLS = { 1: "", 2: "@5xl:grid-cols-2", 3: "@5xl:grid-cols-3" };
 const sectionGrid = (n) => `grid grid-cols-1 items-start gap-x-8 gap-y-4 ${WIDE_COLS[Math.min(n, 3)] || ""}`;
+const signed = (n) => `${n >= 0 ? "+" : ""}${n}`;
 
-function SlotTrack({ label, uses, tone, onSpend, onRestore }) {
+// "+7 to hit", "DEX DC 14", "60-foot cone" from a worked-out action.
+function actionChips(a) {
+  if (!a) return [];
+  const chips = [];
+  if (a.attack) {
+    const b = a.attack.bonus;
+    chips.push({ tone: "hit", text: typeof b === "number" ? `${signed(b)} to hit` : b ? `+${b} to hit` : "attack" });
+  }
+  if (a.save) chips.push({ tone: "save", text: `${String(a.save.ability || "").toUpperCase()} ${typeof a.save.dc === "number" ? `DC ${a.save.dc}` : "save"}` });
+  if (a.range) chips.push({ tone: "plain", text: a.range });
+  if (a.area) chips.push({ tone: "plain", text: a.area });
+  return chips;
+}
+const damageText = (a) => (a ? actionDamage(a).map((p) => partWords(p)).filter(Boolean).join(" + ") : "");
+
+function Track({ label, cur, max, tone, onSpend, onRestore, note }) {
   return (
-    <div className="flex items-center gap-2.5 border-b border-dotted border-rule/35 py-1.5">
-      <span className={`min-w-[2.5rem] shrink-0 whitespace-nowrap text-sm font-semibold ${tone === "pact" ? "text-magic" : "text-rubric"}`}>
-        {label}
-      </span>
-      <Pips cur={uses.cur} max={uses.max} tone={tone} size="lg" onSpend={onSpend} onRestore={onRestore} label="slot" />
+    <div className="flex items-center gap-2.5 border-b border-dotted border-rule/35 py-1.5" title={note}>
+      <span className={`min-w-[2.5rem] shrink-0 whitespace-nowrap text-sm font-semibold ${tone === "pact" ? "text-magic" : tone === "spell" ? "text-rubric" : "text-ink"}`}>{label}</span>
+      {max <= 12 ? (
+        <Pips cur={cur} max={max} tone={tone} size="lg" onSpend={onSpend} onRestore={onRestore} label={tone === "default" ? "use" : "slot"} />
+      ) : (
+        <span className="flex items-center gap-1">
+          <button type="button" onClick={onSpend} disabled={cur <= 0} className="h-6 w-6 text-sm text-ink-faded hover:text-ink disabled:opacity-30" aria-label={`Spend one ${label}`}>
+            −
+          </button>
+          <button type="button" onClick={onRestore} disabled={cur >= max} className="h-6 w-6 text-sm text-ink-faded hover:text-ink disabled:opacity-30" aria-label={`Regain one ${label}`}>
+            +
+          </button>
+        </span>
+      )}
       <span className="ml-auto pl-2 text-xs tabular-nums text-ink-faded">
-        {uses.cur}/{uses.max}
+        {cur}/{max}
       </span>
     </div>
   );
 }
 
+const poolNote = (p) =>
+  p.reset === "short" ? "Back on a short rest" : typeof p.short_rest === "number" ? `${p.short_rest} back on a short rest, all on a long rest` : "Back on a long rest";
+
 export default function ActionsCharges() {
-  const charData = useCharStore((s) => s.charData);
-  const patchChar = useCharStore((s) => s.patchChar);
+  const { ch, d, patchChar } = useSheet();
 
-  const effects = charData?.effects;
-  // Feats are stored like effect rows (Feats tab), so they show up in the
-  // same groups.
-  const feats = charData?.feats;
-  const spellbook = charData?.spellbook;
-  const inventory = charData?.inventory;
+  const features = useMemo(() => featureRows(ch, d), [ch, d]);
+  const spells = useMemo(() => spellRows(ch, d), [ch, d]);
+  if (!ch || !d) return null;
 
-  const featRows = useMemo(() => asList(feats), [feats]);
-  const featIds = useMemo(() => new Set(featRows.map((f) => f.id)), [featRows]);
-  const groups = useMemo(() => groupEffects([...asList(effects), ...featRows]), [effects, featRows]);
-  const slots = useMemo(() => sortSlots(spellbook?.spellslots), [spellbook?.spellslots]);
-  const pact = useMemo(() => sortSlots(spellbook?.pactslots), [spellbook?.pactslots]);
-  const innate = useMemo(
-    () =>
-      asList(spellbook?.spells)
-        .filter(innateUses)
-        .sort((a, b) => (a.level ?? 0) - (b.level ?? 0) || String(a.name).localeCompare(String(b.name))),
-    [spellbook?.spells]
-  );
-  const items = useMemo(() => chargedMagicItems(inventory), [inventory]);
-  const goods = useMemo(() => consumables(inventory), [inventory]);
+  // Always change the newest character (several quick clicks in a row).
+  const latest = () => useCharStore.getState().charData || ch;
+  const save = (makePatch) => patchChar(makePatch(latest()));
 
-  if (!charData) return null;
+  const slots = slotRows(ch, d);
+  const pacts = pactRows(ch, d);
+  // An item with ◆ off (Inventory) has no cards here; equipped, it still counts.
+  const inv = inventoryOf(ch);
+  const inPlay = (it) => it.shown !== false;
+  const hiddenItems = new Set(inv.items.filter((it) => !inPlay(it)).map((it) => `item:${it.id}`));
+  const shown = features.filter((r) => r.active && !hiddenItems.has(r.from));
+  const spentPools = new Set(shown.map((r) => r.consumes?.id).filter(Boolean));
+  const loosePools = resourceRows(ch, d).filter((p) => p.max > 0 && !spentPools.has(p.id));
+  const weapons = inv.items.filter((it) => inPlay(it) && it.equipped && it.weapon).map((it) => ({ it, atk: weaponAttack(it, d) })).filter((w) => w.atk);
+  // Spells here: free casts (innate with casts per rest, at will) and any
+  // prepared spell that can be switched on (Mage Armor, Shield, Bless).
+  const freeSpells = spells.filter((r) => r.reached && ((r.mode === "innate" && r.uses) || r.mode === "at_will" || (r.isToggle && r.prepared)));
+  const charged = inv.items.filter((it) => inPlay(it) && chargesOf(it));
+  const goods = inv.items.filter((it) => inPlay(it) && isConsumable(it));
 
-  const save = (field, value) => patchChar({ [field]: value });
-
-  /* ---- writers ---- */
-
-  // A row is saved back to whichever list it came from.
-  const setEffectUses = (effect, value) =>
-    featIds.has(effect.id)
-      ? save("feats", replaceById(feats, effect.id, withChargesCurrent(effect, value)))
-      : save("effects", replaceById(effects, effect.id, withChargesCurrent(effect, value)));
-
-  const setSlot = (listKey, row, value) =>
-    save("spellbook", {
-      ...spellbook,
-      [listKey]: replaceById(spellbook[listKey], row.id, { ...row, slots_current: value }),
-    });
-
-  const setInnate = (spell, value) =>
-    save("spellbook", {
-      ...spellbook,
-      spells: replaceById(spellbook.spells, spell.id, { ...spell, uses: { ...spell.uses, current: value } }),
-    });
-
-  const setSorcery = (value) =>
-    save("spellbook", { ...spellbook, sorcery_points: { ...spellbook.sorcery_points, current_charges: value } });
-
-  const setItemUses = (item, value) =>
-    save("inventory", { ...inventory, magic: replaceById(inventory.magic, item.id, withChargesCurrent(item, value)) });
-
-  const setAmount = (item, value) =>
-    save("inventory", { ...inventory, mundane: replaceById(inventory.mundane, item.id, { ...item, amount: value }) });
-
-  /* ---- blocks ---- */
-
-  const sorcery = sorceryUses(spellbook?.sorcery_points);
-  const metamagic = asList(spellbook?.metamagic).map((m) => m?.name).filter(Boolean);
-  const hasResources = slots.length > 0 || pact.length > 0 || !!sorcery;
-
-  const effectCard = (e) => {
-    const uses = usesFromCharges(e.charges);
+  /* ---- one feature: everything on its card ---- */
+  const featureCard = (r) => {
+    const pool = r.consumes && !r.consumes.missing ? r.consumes : null;
+    const amount = pool?.amount || 1;
+    const uses = r.uses ? { cur: r.uses.cur, max: r.uses.max } : pool ? { cur: pool.cur, max: pool.max } : null;
+    const meta = [
+      r.uses ? regainWords(r.feature.uses) : "",
+      pool ? `${amount > 1 ? `${amount} ` : ""}${pool.name}` : "",
+      r.kind === "class" || r.kind === "race" || r.kind === "background" ? "" : r.owner,
+    ]
+      .filter(Boolean)
+      .join(" · ");
+    const spend = () => {
+      if (r.uses) save((c) => setUsesUsed(c, r.key, r.uses.used + 1));
+      else if (pool) save((c) => setResourceUsed(c, pool.id, Math.min(pool.max, pool.used + amount)));
+    };
+    const regain = () => {
+      if (r.uses) save((c) => setUsesUsed(c, r.key, Math.max(0, r.uses.used - 1)));
+      else if (pool) save((c) => setResourceUsed(c, pool.id, Math.max(0, pool.used - amount)));
+    };
     return (
       <UseCard
-        key={e.id}
-        title={e.name || "Unnamed effect"}
-        meta={uses ? regainLabel(e.charges?.reset_amount, uses.max) : ""}
-        chips={effectChips(charData, e)}
-        detail={effectDamage(charData, e)}
-        note={e.notes}
+        key={r.key}
+        title={r.feature.name || "Unnamed"}
+        meta={meta}
+        chips={actionChips(r.action)}
+        detail={damageText(r.action)}
+        note={typeof r.feature.text === "string" ? r.feature.text.slice(0, 400) : ""}
         uses={uses}
-        onSpend={() => setEffectUses(e, uses.cur - 1)}
-        onRestore={() => setEffectUses(e, uses.cur + 1)}
+        onSpend={uses ? spend : undefined}
+        onRestore={uses ? regain : undefined}
+        toggle={r.isToggle ? { on: r.on, onChange: (v) => save((c) => setFeatureFlag(c, r.from, r.feature.id, "on", v)) } : undefined}
       />
     );
   };
 
-  const otherCount = [innate, items, goods].filter((l) => l.length > 0).length;
-  const turnGroups = ACTION_GROUPS.filter((g) => g.key !== "passive" && groups[g.key].length > 0);
-  const passives = groups.passive;
+  const weaponCard = ({ it, atk }) => (
+    <UseCard
+      key={`w-${it.id}`}
+      title={it.name}
+      meta={[atk.range, atk.proficient ? "" : "not proficient"].filter(Boolean).join(" · ")}
+      chips={[{ tone: "hit", text: `${signed(atk.hit)} to hit` }, ...atk.mastery.map((m) => ({ tone: "plain", text: m }))]}
+      detail={[damageText({ damage: atk.damage }), atk.versatile ? `two-handed ${damageText({ damage: [atk.versatile] })}` : ""].filter(Boolean).join(" · ")}
+      note={it.notes}
+    />
+  );
 
-  const nothing =
-    !hasResources && turnGroups.length === 0 && passives.length === 0 && !innate.length && !items.length && !goods.length;
+  // A prepared or innate spell is cast with the lowest slot of its level or higher that's left.
+  const slotFor = (r) => (r.mode !== "at_will" && r.mode !== "ritual" && r.level > 0 ? slots.find((x) => x.level >= r.level && x.cur > 0) || slots.find((x) => x.level >= r.level) || null : null);
+  const spellCard = (r) => {
+    const slot = r.uses ? null : slotFor(r);
+    const how = r.mode === "at_will" ? "at will" : r.mode === "ritual" ? "as a ritual" : r.uses ? (r.uses.reset === "short" ? "per short rest" : "per day") : slot ? `${ORDINAL[slot.level]}-level slot` : "";
+    return (
+      <UseCard
+        key={r.key}
+        tone="spell"
+        title={r.spell.name}
+        meta={[r.level === 0 ? "cantrip" : `${ORDINAL[r.level]} level`, how, r.own ? "" : r.owner].filter(Boolean).join(" · ")}
+        chips={r.dc != null ? [{ tone: "save", text: `DC ${r.dc}` }, { tone: "hit", text: `${signed(r.attack)} spell attack` }] : []}
+        detail={r.actions.map((a) => damageText(a.action)).filter(Boolean)[0]}
+        uses={r.uses ? { cur: r.uses.cur, max: r.uses.max } : slot ? { cur: slot.cur, max: slot.max } : null}
+        onSpend={
+          r.uses ? () => save((c) => setUsesUsed(c, r.key, r.uses.used + 1)) : slot ? () => save((c) => setSlotUsed(c, slot.level, Math.min(slot.max, slot.max - slot.cur + 1))) : undefined
+        }
+        onRestore={
+          r.uses ? () => save((c) => setUsesUsed(c, r.key, Math.max(0, r.uses.used - 1))) : slot ? () => save((c) => setSlotUsed(c, slot.level, Math.max(0, slot.max - slot.cur - 1))) : undefined
+        }
+        toggle={r.isToggle ? { on: r.on, onChange: (v) => save((c) => setSpellOn(c, r.from, r.spell, v)) } : undefined}
+      />
+    );
+  };
 
-  if (nothing) {
+  const turn = CATEGORIES.filter((c) => c.value !== "traits")
+    .map((c) => ({
+      ...c,
+      rows: shown.filter((r) => r.category === c.value),
+      weapons: c.value === "actions" ? weapons : [],
+      spells: freeSpells.filter((r) => r.category === c.value),
+    }))
+    .filter((g) => g.rows.length || g.weapons.length || g.spells.length);
+  const passives = shown.filter((r) => r.category === "traits");
+  const hasStrip = slots.length > 0 || pacts.length > 0 || loosePools.length > 0;
+  const itemCount = [charged, goods].filter((l) => l.length > 0).length;
+
+  if (!hasStrip && !turn.length && !passives.length && !itemCount) {
     return (
       <p className="text-sm italic text-ink-faded">
-        Nothing to track yet. Active effects and feats, spell slots, limited spells and charged items from the Define tabs show up
-        here.
+        Nothing to track yet. Spell slots, pools, features, equipped weapons, spells you cast for free, charged items and consumables show up here.
       </p>
     );
   }
 
   return (
     <div className="@container space-y-4">
-      {/* 1. Spellcasting resources */}
-      {hasResources && (
+      {/* 1. Spellcasting: slots, pact slots, pools no feature spends */}
+      {hasStrip && (
         <SubSection title="Spellcasting" tone="spell" storageKey={KEY("resources")}>
           <div className="grid grid-cols-1 gap-x-6 @xl:grid-cols-2 @5xl:grid-cols-3">
-            {slots.map((r) => {
-              const u = slotUses(r);
-              return (
-                <SlotTrack
-                  key={r.id || `s${r.level}`}
-                  label={ordinal(r.level)}
-                  uses={u}
-                  tone="spell"
-                  onSpend={() => setSlot("spellslots", r, u.cur - 1)}
-                  onRestore={() => setSlot("spellslots", r, u.cur + 1)}
-                />
-              );
-            })}
-            {pact.map((r) => {
-              const u = slotUses(r);
-              return (
-                <SlotTrack
-                  key={r.id || `p${r.level}`}
-                  label={`Pact ${ordinal(r.level)}`}
-                  uses={u}
-                  tone="pact"
-                  onSpend={() => setSlot("pactslots", r, u.cur - 1)}
-                  onRestore={() => setSlot("pactslots", r, u.cur + 1)}
-                />
-              );
-            })}
+            {slots.map((s) => (
+              <Track
+                key={`s${s.level}`}
+                label={ORDINAL[s.level]}
+                cur={s.cur}
+                max={s.max}
+                tone="spell"
+                onSpend={() => save((c) => setSlotUsed(c, s.level, s.max - s.cur + 1))}
+                onRestore={() => save((c) => setSlotUsed(c, s.level, s.max - s.cur - 1))}
+              />
+            ))}
+            {pacts.map((p) => (
+              <Track
+                key={`p${p.level}`}
+                label={`Pact ${ORDINAL[p.level]}`}
+                cur={p.cur}
+                max={p.max}
+                tone="pact"
+                note="Back on a short rest"
+                onSpend={() => save((c) => setPactUsed(c, p.level, p.max - p.cur + 1))}
+                onRestore={() => save((c) => setPactUsed(c, p.level, p.max - p.cur - 1))}
+              />
+            ))}
+            {loosePools.map((p) => (
+              <Track
+                key={p.id}
+                label={`${p.name}${p.die ? ` (${p.die})` : ""}`}
+                cur={p.cur}
+                max={p.max}
+                tone="default"
+                note={poolNote(p)}
+                onSpend={() => save((c) => setResourceUsed(c, p.id, p.used + 1))}
+                onRestore={() => save((c) => setResourceUsed(c, p.id, Math.max(0, p.used - 1)))}
+              />
+            ))}
           </div>
-
-          {sorcery && (
-            <div className="mt-1 border-b border-dotted border-rule/35 py-1.5">
-              <div className="flex flex-wrap items-center gap-2.5">
-                <span className="text-sm font-semibold text-rubric">Sorcery Points</span>
-                <Pips
-                  cur={sorcery.cur}
-                  max={sorcery.max}
-                  tone="spell"
-                  onSpend={() => setSorcery(sorcery.cur - 1)}
-                  onRestore={() => setSorcery(sorcery.cur + 1)}
-                  label="sorcery point"
-                />
-                <span className="ml-auto text-xs tabular-nums text-ink-faded">
-                  {sorcery.cur}/{sorcery.max}
-                </span>
-              </div>
-              {metamagic.length > 0 && (
-                <div className="mt-1 flex flex-wrap gap-x-2.5">
-                  {metamagic.map((n) => (
-                    <Chip key={n} tone="comp">
-                      {n}
-                    </Chip>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
         </SubSection>
       )}
 
       {/* 2. Your turn */}
-      {turnGroups.length > 0 && (
-        <div className={sectionGrid(turnGroups.length)}>
-          {turnGroups.map((g) => (
-            <SubSection key={g.key} title={g.title} count={groups[g.key].length} storageKey={KEY(g.key)}>
-              <CardGrid>{groups[g.key].map(effectCard)}</CardGrid>
+      {turn.length > 0 && (
+        <div className={sectionGrid(turn.length)}>
+          {turn.map((g) => (
+            <SubSection key={g.value} title={g.title} count={g.rows.length + g.weapons.length + g.spells.length} storageKey={KEY(g.value)}>
+              <CardGrid>
+                {g.weapons.map(weaponCard)}
+                {g.rows.map(featureCard)}
+                {g.spells.map(spellCard)}
+              </CardGrid>
             </SubSection>
           ))}
         </div>
       )}
 
-      {/* 3. Limited spells, items, passives */}
-      {otherCount > 0 && (
-        <div className={sectionGrid(otherCount)}>
-          {innate.length > 0 && (
-            <SubSection title="Innate Spells" tone="spell" count={innate.length} storageKey={KEY("innate")}>
+      {/* 3. Items */}
+      {itemCount > 0 && (
+        <div className={sectionGrid(itemCount)}>
+          {charged.length > 0 && (
+            <SubSection title="Magic Items" tone="item" count={charged.length} storageKey={KEY("items")}>
               <CardGrid>
-                {innate.map((s) => {
-                  const u = innateUses(s);
-                  return (
-                    <UseCard
-                      key={s.id}
-                      tone="spell"
-                      title={s.name || "Innate spell"}
-                      meta={[spellMeta(s), INNATE_RESET[s.uses?.reset]].filter(Boolean).join(" · ")}
-                      chips={spellComponents(s).map((c) => ({ tone: "comp", text: c }))}
-                      uses={u}
-                      onSpend={() => setInnate(s, u.cur - 1)}
-                      onRestore={() => setInnate(s, u.cur + 1)}
-                    />
-                  );
-                })}
-              </CardGrid>
-            </SubSection>
-          )}
-
-          {items.length > 0 && (
-            <SubSection title="Magic Items" tone="item" count={items.length} storageKey={KEY("items")}>
-              <CardGrid>
-                {items.map((it) => {
-                  const u = usesFromCharges(it.charges);
+                {charged.map((it) => {
+                  const c = chargesOf(it);
                   return (
                     <UseCard
                       key={it.id}
                       tone="item"
                       title={it.name || "Unnamed item"}
-                      meta={regainLabel(it.charges?.reset_amount, u.max)}
+                      meta={regainText(c)}
                       chips={it.attuned ? [{ tone: "good", text: "Attuned" }] : []}
                       note={it.notes}
-                      uses={u}
-                      onSpend={() => setItemUses(it, u.cur - 1)}
-                      onRestore={() => setItemUses(it, u.cur + 1)}
+                      uses={{ cur: c.cur, max: c.max }}
+                      onSpend={() => save((x) => patchItem(x, it.id, { charges_used: c.max - c.cur + 1 }))}
+                      onRestore={() => save((x) => patchItem(x, it.id, { charges_used: Math.max(0, c.max - c.cur - 1) }))}
                     />
                   );
                 })}
@@ -287,17 +285,17 @@ export default function ActionsCharges() {
             <SubSection title="Consumables" tone="item" count={goods.length} storageKey={KEY("consumables")}>
               <CardGrid>
                 {goods.map((it) => {
-                  const amount = Math.max(0, Math.trunc(Number(it.amount) || 0));
+                  const qty = Math.max(0, Math.trunc(num(it.qty, 1)));
                   return (
                     <UseCard
                       key={it.id}
                       tone="item"
                       title={it.name || "Unnamed item"}
-                      meta={amount > 0 ? "" : "None left"}
+                      meta={qty > 0 ? "" : "None left"}
                       note={it.notes}
-                      uses={{ cur: amount, max: null }}
-                      onSpend={() => setAmount(it, amount - 1)}
-                      onRestore={() => setAmount(it, amount + 1)}
+                      uses={{ cur: qty, max: null }}
+                      onSpend={() => save((x) => patchItem(x, it.id, { qty: qty - 1 }))}
+                      onRestore={() => save((x) => patchItem(x, it.id, { qty: qty + 1 }))}
                     />
                   );
                 })}
@@ -307,9 +305,10 @@ export default function ActionsCharges() {
         </div>
       )}
 
+      {/* 4. Passives */}
       {passives.length > 0 && (
         <SubSection title="Passives" tone="passive" count={passives.length} storageKey={KEY("passive")}>
-          <CardGrid>{passives.map(effectCard)}</CardGrid>
+          <CardGrid>{passives.map(featureCard)}</CardGrid>
         </SubSection>
       )}
     </div>

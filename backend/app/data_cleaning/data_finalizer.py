@@ -284,24 +284,52 @@ def _srd_only(record: dict) -> dict:
     return record
 
 
+def _drop_features(record: dict, job_ids: set) -> list[str]:
+    """Leave out the features (and the blocks made from them) answered by
+    `job_ids`, and their ids in the progression rows. Returns their ids."""
+    gone = {f["id"] for f in record["features"] if _job_of(record, f) in job_ids}
+    record["features"] = [f for f in record["features"] if f["id"] not in gone]
+    for lvl in record.get("progression", []):
+        for k in ("features", "upgrades"):
+            if lvl.get(k):
+                lvl[k] = [x for x in lvl[k] if x not in gone]
+    return sorted(gone)
+
+
 def finalize_classes(srd_only: bool = False) -> dict:
     """cleaned/classes/<id>.json -> final/classes/<id>.json (the class) and
     final/subclasses/<id>.json (its subclasses). A class is written once
-    every one of its feature jobs has a good answer; a subclass once its
-    own job has."""
+    every one of its feature jobs it needs has a good answer; a subclass
+    once its own job has.
+
+    A class doesn't wait for jobs it can do without, which are left out of
+    it until they're answered (listed under "left out"):
+      - the optional features another book adds to it (`optional`: TCE's
+        Martial Versatility on the PHB Fighter);
+      - with --srd, every feature that isn't SRD (they're dropped from the
+        SRD set anyway), so the SRD classes need only their SRD jobs run."""
     import copy
     cleaned = read_list(CLEANED_PATH, "classes")
     cache = load_cache("classes")
     jobs = jobs_for("classes", waiting_only=False)
     all_ids = {j["id"] for j in jobs}
     good = {j["id"] for j in jobs if j["state"] in ("done", "old_prompt", "reviewed")}
-    classes, subclasses, waiting, problems = [], [], [], []
+    classes, subclasses, waiting, problems, left_out = [], [], [], [], []
     class_res = {}
     for e in cleaned:
         if srd_only and not e.get("srd"):
             continue
         e = copy.deepcopy(e)
         needed = {_job_of(e, f) for f in e["features"]} & all_ids
+        if e["kind"] == "class":
+            by_id = {f["id"]: f for f in e["features"]}
+            optional = {j for j in needed if by_id.get(j, {}).get("optional")}
+            if srd_only:
+                optional |= {j for j in needed if j in by_id and not by_id[j].get("srd")}
+            skip = optional - good
+            if skip:
+                left_out += [f"{e['id']}: {x}" for x in _drop_features(e, skip)]
+                needed -= skip
         missing = needed - good
         if missing:
             waiting.append(f"{e['id']} ({len(missing)} job(s))")
@@ -322,7 +350,7 @@ def finalize_classes(srd_only: bool = False) -> dict:
     write_list(FINAL_PATH, "classes", classes, suffix=suffix)
     write_list(FINAL_PATH, "subclasses", subclasses, suffix=suffix)
     return {"written": f"classes{suffix}/ ({len(classes)} classes) + subclasses{suffix}/ ({len(subclasses)} subclasses)",
-            "entries": len(classes) + len(subclasses), "waiting": waiting, "problems": problems,
+            "entries": len(classes) + len(subclasses), "waiting": waiting, "problems": problems, "left_out": left_out,
             "features_without_text": [], "no_subraces_yet": [], "grants_added_from_text": {}}
 
 
@@ -367,6 +395,8 @@ def main() -> int:
             print(f"  {'':<12} {jid}: added from text: {', '.join(added)}")
         for p in r.get("problems", []):
             print(f"  {'':<12} problem: {p}")
+        if r.get("left_out"):
+            print(f"  {'':<12} left out until their LLM step is done ({len(r['left_out'])}): {', '.join(r['left_out'])}")
     (FINAL_PATH / "_report.json").write_text(json.dumps(report, indent=2, ensure_ascii=False), encoding="utf-8")
     print()
     return 0

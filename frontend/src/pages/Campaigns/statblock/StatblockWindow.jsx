@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useCatalogueStore } from "../../../store/CatalogueStore";
+import { buildNameIndex } from "../../Catalogues/catalogueHelpers";
 import { usePopupStore } from "../../../store/PopupStore";
 import useEncounterStore from "../../../store/EncounterStore";
 import useGroupStore from "../../../store/GroupStore";
@@ -86,10 +87,10 @@ export function closeStatblock(data) {
 
 // Where each catalogue keeps its entries, and how to fetch it.
 const CATALOGUE = {
-  feat: { list: (s) => s.featsData?.feats, load: "loadFeats" },
-  spell: { list: (s) => s.spellsData?.spells, load: "loadSpells" },
+  feat: { list: (s) => s.feats, load: "loadFeats" },
+  spell: { list: (s) => s.spells, load: "loadSpells" },
   item: { list: (s) => s.items, load: "loadItems" },
-  optionalFeature: { list: (s) => s.optionalFeaturesData?.features, load: "loadOptionalFeatures" },
+  optionalFeature: { list: (s) => s.optionalFeatures, load: "loadOptionalFeatures" },
 };
 
 // `embedded`: drawn inside another window (the initiative tracker's turn
@@ -134,6 +135,19 @@ export default function StatblockWindow({ statblock, embedded = false }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [campaignName]);
 
+  // Spells and gear on a monster are kept as catalogue ids; their names
+  // come from the catalogues (fetched once, for monsters and templates).
+  const spells = useCatalogueStore((s) => s.spells);
+  const items = useCatalogueStore((s) => s.items);
+  const names = useMemo(() => buildNameIndex(spells, items), [spells, items]);
+  useEffect(() => {
+    if (adapter === CHARACTER) return;
+    const store = useCatalogueStore.getState();
+    if (!store.spells?.length && !store.loadingSpells) store.loadSpells();
+    if (!store.items?.length && !store.loadingItems) store.loadItems();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [kind]);
+
   const raw = source.raw;
   const editing = draft !== null;
   const current = draft ?? raw;
@@ -142,10 +156,10 @@ export default function StatblockWindow({ statblock, embedded = false }) {
   // statblock (what you change), with the templates named above it.
   const view = useMemo(() => {
     if (!current) return null;
-    if (!canTemplate || editing) return adapter.view(current, { editing });
+    if (!canTemplate || editing) return adapter.view(current, { editing, names });
     const templates = resolveTemplates(current, allTemplates, given);
-    return adapter.view(applyTemplates(kind, current, templates), { editing, templates });
-  }, [adapter, current, editing, allTemplates, canTemplate, kind, given]);
+    return adapter.view(applyTemplates(kind, current, templates), { editing, templates, names });
+  }, [adapter, current, editing, allTemplates, canTemplate, kind, given, names]);
   const attached = canTemplate && current ? attachedTemplates(current, allTemplates, given) : [];
 
   // Keep the window's title (and its footer button) on the name shown, e.g.
@@ -216,14 +230,16 @@ export default function StatblockWindow({ statblock, embedded = false }) {
     closeWindow(id);
   };
 
-  // Catalogue cards: the statblock only knows name + source, so look the entry up.
-  // Monster spells are kept in lower case and often without a source.
+  // Catalogue cards: the statblock keeps a catalogue id (a character's
+  // older rows only a name and book), so look the entry up.
   const viewCatalogue = async (type, ref) => {
     const cfg = CATALOGUE[type];
     if (!cfg) return;
     const same = (e) => String(e?.name || "").toLowerCase() === String(ref.name || "").toLowerCase();
     const find = () => {
-      const all = asList(cfg.list(useCatalogueStore.getState())).filter(same);
+      const list = asList(cfg.list(useCatalogueStore.getState()));
+      if (ref.id) return list.find((e) => e.id === ref.id);
+      const all = list.filter(same);
       return all.find((e) => ref.source && e.source === ref.source) || all.find((e) => e.source === "XPHB") || all[0];
     };
     let full = find();

@@ -1,0 +1,549 @@
+[
+    {
+        "id": "warlock-xphb",
+        "kind": "class",
+        "name": "Warlock",
+        "source": "XPHB",
+        "edition": "one",
+        "srd": {
+            "5.2": "Warlock"
+        },
+        "hit_die": "d8",
+        "hp": {
+            "first": "8 + con_mod",
+            "per_level": "5 + con_mod"
+        },
+        "primary_ability": [
+            [
+                "cha"
+            ]
+        ],
+        "saves": [
+            "wis",
+            "cha"
+        ],
+        "grants": {
+            "weapons": [
+                "simple_weapons"
+            ],
+            "armor": [
+                "light"
+            ],
+            "spells": [
+                {
+                    "spell": "contact-other-plane-xphb",
+                    "how": "prepared",
+                    "at": 9
+                }
+            ]
+        },
+        "choices": [
+            {
+                "type": "pool",
+                "id": "skills",
+                "label": "Skills",
+                "grant": "skills",
+                "count": 2,
+                "from": [
+                    "arcana",
+                    "deception",
+                    "history",
+                    "intimidation",
+                    "investigation",
+                    "nature",
+                    "religion"
+                ]
+            },
+            {
+                "type": "bundle",
+                "id": "starting_equipment",
+                "label": "Starting Equipment",
+                "options": [
+                    {
+                        "id": "a",
+                        "label": "Leather Armor, Sickle, 2 Dagger, Orb, Book, Scholar's Pack, 15 GP",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "leather-armor-xphb",
+                                    "qty": 1
+                                },
+                                {
+                                    "item": "sickle-xphb",
+                                    "qty": 1
+                                },
+                                {
+                                    "item": "dagger-xphb",
+                                    "qty": 2
+                                },
+                                {
+                                    "item": "orb-xphb",
+                                    "qty": 1
+                                },
+                                {
+                                    "item": "book-xphb",
+                                    "qty": 1
+                                },
+                                {
+                                    "item": "scholars-pack-xphb",
+                                    "qty": 1
+                                }
+                            ],
+                            "currency": {
+                                "gp": 15
+                            }
+                        }
+                    },
+                    {
+                        "id": "b",
+                        "label": "100 GP",
+                        "grants": {
+                            "currency": {
+                                "gp": 100
+                            }
+                        }
+                    }
+                ]
+            }
+        ],
+        "multiclass": {
+            "requires": [
+                {
+                    "cha": 13
+                }
+            ],
+            "grants": {
+                "armor": [
+                    "light"
+                ]
+            }
+        },
+        "subclass": {
+            "title": "Warlock Subclass",
+            "level": 3,
+            "text": "You gain a Warlock subclass of your choice. A subclass is a specialization that grants you features at certain Warlock levels. For the rest of your career, you gain each of your subclass's features that are of your Warlock level or lower."
+        },
+        "columns": [
+            {
+                "id": "invocations",
+                "name": "Invocations",
+                "values": {
+                    "1": 1,
+                    "2": 3,
+                    "5": 5,
+                    "7": 6,
+                    "9": 7,
+                    "12": 8,
+                    "15": 9,
+                    "18": 10
+                }
+            }
+        ],
+        "spellcasting": {
+            "ability": "cha",
+            "progression": "pact",
+            "list": "warlock-xphb",
+            "cantrips": {
+                "1": 2,
+                "4": 3,
+                "10": 4
+            },
+            "prepared": {
+                "1": 2,
+                "2": 3,
+                "3": 4,
+                "4": 5,
+                "5": 6,
+                "6": 7,
+                "7": 8,
+                "8": 9,
+                "9": 10,
+                "11": 11,
+                "13": 12,
+                "15": 13,
+                "17": 14,
+                "19": 15
+            },
+            "change": "level",
+            "pact": {
+                "slots": {
+                    "1": 1,
+                    "2": 2,
+                    "11": 3,
+                    "17": 4
+                },
+                "level": {
+                    "1": 1,
+                    "3": 2,
+                    "5": 3,
+                    "7": 4,
+                    "9": 5
+                }
+            },
+            "arcanum": {
+                "11": 6,
+                "13": 7,
+                "15": 8,
+                "17": 9
+            }
+        },
+        "progression": [
+            {
+                "level": 1,
+                "features": [
+                    "warlock-xphb:eldritch-invocations",
+                    "warlock-xphb:pact-magic",
+                    "warlock-xphb:eldritch-invocation-options"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "eldritch_invocations_1",
+                        "label": "Eldritch Invocations",
+                        "grant": "optional_features",
+                        "count": 1,
+                        "from": {
+                            "feature_type": [
+                                "eldritch_invocation"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 2,
+                "features": [
+                    "warlock-xphb:magical-cunning"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "eldritch_invocations_2",
+                        "label": "Eldritch Invocations",
+                        "grant": "optional_features",
+                        "count": 2,
+                        "from": {
+                            "feature_type": [
+                                "eldritch_invocation"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 3,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "warlock_subclass_3",
+                        "label": "Warlock Subclass",
+                        "grant": "subclass",
+                        "count": 1,
+                        "from": "warlock-xphb"
+                    }
+                ]
+            },
+            {
+                "level": 4,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "ability_score_improvement_4",
+                        "label": "Ability Score Improvement",
+                        "grant": "feats",
+                        "count": 1,
+                        "from": {
+                            "category": [
+                                "general"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 5,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "eldritch_invocations_5",
+                        "label": "Eldritch Invocations",
+                        "grant": "optional_features",
+                        "count": 2,
+                        "from": {
+                            "feature_type": [
+                                "eldritch_invocation"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 6,
+                "subclass_features": true
+            },
+            {
+                "level": 7,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "eldritch_invocations_7",
+                        "label": "Eldritch Invocations",
+                        "grant": "optional_features",
+                        "count": 1,
+                        "from": {
+                            "feature_type": [
+                                "eldritch_invocation"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 8,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "ability_score_improvement_8",
+                        "label": "Ability Score Improvement",
+                        "grant": "feats",
+                        "count": 1,
+                        "from": {
+                            "category": [
+                                "general"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 9,
+                "features": [
+                    "warlock-xphb:contact-patron"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "eldritch_invocations_9",
+                        "label": "Eldritch Invocations",
+                        "grant": "optional_features",
+                        "count": 1,
+                        "from": {
+                            "feature_type": [
+                                "eldritch_invocation"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 10,
+                "subclass_features": true
+            },
+            {
+                "level": 11,
+                "features": [
+                    "warlock-xphb:mystic-arcanum"
+                ]
+            },
+            {
+                "level": 12,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "ability_score_improvement_12",
+                        "label": "Ability Score Improvement",
+                        "grant": "feats",
+                        "count": 1,
+                        "from": {
+                            "category": [
+                                "general"
+                            ]
+                        }
+                    },
+                    {
+                        "type": "pool",
+                        "id": "eldritch_invocations_12",
+                        "label": "Eldritch Invocations",
+                        "grant": "optional_features",
+                        "count": 1,
+                        "from": {
+                            "feature_type": [
+                                "eldritch_invocation"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 13,
+                "upgrades": [
+                    "warlock-xphb:mystic-arcanum"
+                ]
+            },
+            {
+                "level": 14,
+                "subclass_features": true
+            },
+            {
+                "level": 15,
+                "upgrades": [
+                    "warlock-xphb:mystic-arcanum"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "eldritch_invocations_15",
+                        "label": "Eldritch Invocations",
+                        "grant": "optional_features",
+                        "count": 1,
+                        "from": {
+                            "feature_type": [
+                                "eldritch_invocation"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 16,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "ability_score_improvement_16",
+                        "label": "Ability Score Improvement",
+                        "grant": "feats",
+                        "count": 1,
+                        "from": {
+                            "category": [
+                                "general"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 17,
+                "upgrades": [
+                    "warlock-xphb:mystic-arcanum"
+                ]
+            },
+            {
+                "level": 18,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "eldritch_invocations_18",
+                        "label": "Eldritch Invocations",
+                        "grant": "optional_features",
+                        "count": 1,
+                        "from": {
+                            "feature_type": [
+                                "eldritch_invocation"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 19,
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "epic_boon_19",
+                        "label": "Epic Boon",
+                        "grant": "feats",
+                        "count": 1,
+                        "from": {
+                            "category": [
+                                "epic_boon"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 20,
+                "features": [
+                    "warlock-xphb:eldritch-master"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "warlock-xphb:eldritch-invocations",
+                "name": "Eldritch Invocations",
+                "level": 1,
+                "text": "You have unearthed Eldritch Invocations, pieces of forbidden knowledge that imbue you with an abiding magical ability or other lessons. You gain one invocation of your choice, such as Pact of the Tome. Invocations are described in the \"Eldritch Invocation Options\" section later in this class's description.\n\n**Prerequisites.** If an invocation has a prerequisite, you must meet it to learn that invocation. For example, if an invocation requires you to be a level 5+ Warlock, you can select the invocation once you reach Warlock level 5.\n\n**Replacing and Gaining Invocations.** Whenever you gain a Warlock level, you can replace one of your invocations with another one for which you qualify. You can't replace an invocation if it's a prerequisite for another invocation that you have.\n\nWhen you gain certain Warlock levels, you gain more invocations of your choice, as shown in the Invocations column of the Warlock Features table.\n\nYou can't pick the same invocation more than once unless its description says otherwise.",
+                "srd": {
+                    "5.2": "Eldritch Invocations"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "warlock-xphb:pact-magic",
+                "name": "Pact Magic",
+                "level": 1,
+                "text": "Through occult ceremony, you have formed a pact with a mysterious entity to gain magical powers. The entity is a voice in the shadows—its identity unclear—but its boon to you is concrete: the ability to cast spells. See chapter 7 for the rules on spellcasting. The information below details how you use those rules with Warlock spells, which appear in the Warlock spell list later in the class's description.\n\n**Cantrips.** You know two Warlock cantrips of your choice. Eldritch Blast and Prestidigitation are recommended. Whenever you gain a Warlock level, you can replace one of your cantrips from this feature with another Warlock cantrip of your choice.\n\nWhen you reach Warlock levels 4 and 10, you learn another Warlock cantrip of your choice, as shown in the Cantrips column of the Warlock Features table.\n\n**Spell Slots.** The Warlock Features table shows how many spell slots you have to cast your Warlock spells of levels 1–5. The table also shows the level of those slots, all of which are the same level. You regain all expended Pact Magic spell slots when you finish a Short or Long Rest.\n\nFor example, when you're a level 5 Warlock, you have two level 3 spell slots. To cast the level 1 spell Witch Bolt, you must spend one of those slots, and you cast it as a level 3 spell.\n\n**Prepared Spells of Level 1+.** You prepare the list of level 1+ spells that are available for you to cast with this feature. To start, choose two level 1 Warlock spells. Charm Person and Hex are recommended.\n\nThe number of spells on your list increases as you gain Warlock levels, as shown in the Prepared Spells column of the Warlock Features table. Whenever that number increases, choose additional Warlock spells until the number of spells on your list matches the number in the table. The chosen spells must be of a level no higher than what's shown in the table's Slot Level column for your level. When you reach level 6, for example, you learn a new Warlock spell, which can be of levels 1–3.\n\nIf another Warlock feature gives you spells that you always have prepared, those spells don't count against the number of spells you can prepare with this feature, but those spells otherwise count as Warlock spells for you.\n\n**Changing Your Prepared Spells.** Whenever you gain a Warlock level, you can replace one spell on your list with another Warlock spell of an eligible level.\n\n**Spellcasting Ability.** Charisma is the spellcasting ability for your Warlock spells.\n\n**Spellcasting Focus.** You can use an Arcane Focus as a Spellcasting Focus for your Warlock spells.",
+                "srd": {
+                    "5.2": "Pact Magic"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "warlock-xphb:eldritch-invocation-options",
+                "name": "Eldritch Invocation Options",
+                "level": 1,
+                "text": "Eldritch Invocation options appear in alphabetical order.\n\n- Agonizing Blast\n- Armor of Shadows\n- Ascendant Step\n- Call of the Void\n- Curse of Corruption\n- Devil's Sight\n- Devouring Blade\n- Eldritch Mind\n- Eldritch Smite\n- Eldritch Spear\n- Expendable Minions\n- Fiendish Vigor\n- Gaze of Two Minds\n- Gift of the Depths\n- Gift of the Protectors\n- Health Funnel\n- Investment of the Chain Master\n- Legion Summoning\n- Lessons of the First Ones\n- Lifedrinker\n- Mask of Many Faces\n- Master Demonologist\n- Master of Myriad Forms\n- Misty Visions\n- One with Shadows\n- Otherworldly Leap\n- Pact of the Blade\n- Pact of the Chain\n- Pact of the Legion\n- Pact of the Tome\n- Repelling Blast\n- Thirsting Blade\n- Visions of Distant Realms\n- Whispers of the Grave\n- Witch Sight",
+                "srd": {
+                    "5.2": "Eldritch Invocation Options"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "warlock-xphb:magical-cunning",
+                "name": "Magical Cunning",
+                "level": 2,
+                "text": "You can perform an esoteric rite for 1 minute. At the end of it, you regain expended Pact Magic spell slots but no more than a number equal to half your maximum (round up). Once you use this feature, you can't do so again until you finish a Long Rest.",
+                "srd": {
+                    "5.2": "Magical Cunning"
+                },
+                "category": "actions",
+                "uses": {
+                    "max": 1,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "warlock-xphb:contact-patron",
+                "name": "Contact Patron",
+                "level": 9,
+                "text": "In the past, you usually contacted your patron through intermediaries. Now you can communicate directly; you always have the Contact Other Plane spell prepared. With this feature, you can cast the spell without expending a spell slot to contact your patron, and you automatically succeed on the spell's saving throw.\n\nOnce you cast the spell with this feature, you can't do so in this way again until you finish a Long Rest.",
+                "srd": {
+                    "5.2": "Contact Patron"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "warlock-xphb:mystic-arcanum",
+                "name": "Mystic Arcanum",
+                "level": 11,
+                "text": "Your patron grants you a magical secret called an arcanum. Choose one level 6 Warlock spell as this arcanum.\n\nYou can cast your arcanum spell once without expending a spell slot, and you must finish a Long Rest before you can cast it in this way again.\n\nAs shown in the Warlock Features table, you gain another Warlock spell of your choice that can be cast in this way when you reach Warlock levels 13 (level 7 spell), 15 (level 8 spell), and 17 (level 9 spell). You regain all uses of your Mystic Arcanum when you finish a Long Rest.\n\nWhenever you gain a Warlock level, you can replace one of your arcanum spells with another Warlock spell of the same level.\n\n**Mystic Arcanum.** You gain a level 7 Warlock Spell of your choice.\n\n**Mystic Arcanum.** You gain a level 8 Warlock Spell of your choice.\n\n**Mystic Arcanum.** You gain a level 9 Warlock Spell of your choice.",
+                "srd": {
+                    "5.2": "Mystic Arcanum"
+                },
+                "category": "traits"
+            },
+            {
+                "id": "warlock-xphb:eldritch-master",
+                "name": "Eldritch Master",
+                "level": 20,
+                "text": "When you use your Magical Cunning feature, you regain all your expended Pact Magic spell slots.",
+                "srd": {
+                    "5.2": "Eldritch Master"
+                },
+                "category": "traits"
+            }
+        ],
+        "resources": []
+    }
+]

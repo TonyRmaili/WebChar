@@ -67,6 +67,7 @@ CATEGORIES = {
         "lists": ["class/class-*.json"],
         "split": True,
     },
+    "actions": {"lists": ["actions.json"]}
 }
 
 DROP_KEYS = {"_meta"}

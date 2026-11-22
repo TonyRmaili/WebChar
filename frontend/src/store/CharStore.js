@@ -18,8 +18,9 @@ import { api } from "../utils/api";
    If a save fails, `saveError` says why and the saved version is loaded
    back.
 
-   Combat goes through the server's rules (barrier and temp HP, rests…):
-   changeHp, rest, restAll, grantExperience.
+   Play goes through the server's rules (app/builder/play.py: barrier and
+   temp HP, rests…): changeHp, rest, restAll, grantExperience. They change
+   the character's `state` (and `exp`), version-2 file.
 
    Characters list, create, delete and "show in Sheets": createChar,
    deleteChar, toggleActive. They don't refresh the user's character list
@@ -131,44 +132,93 @@ const useCharStore = create((set, get) => {
 
     /* ── combat (the server applies the rules and saves) ── */
 
-    // delta < 0 is damage, > 0 is healing. Returns the new health block.
+    // delta < 0 is damage, > 0 is healing. Returns the new state block.
     changeHp: async (delta) => {
       const id = get().charId;
       if (!id || !delta) return null;
       await get().flushSaves();
-      const { health } = await api.post("/combat/health", { char_id: id, value: delta });
-      if (get().charId === id) set((s) => ({ charData: { ...s.charData, health } }));
-      return health;
+      const { state } = await api.post(`/character/${id}/hp`, { delta });
+      if (get().charId === id) set((s) => ({ charData: { ...s.charData, state } }));
+      return state;
     },
 
-    // This character only (the Health section's rest buttons).
-    rest: async (restType) => {
+    // This character only (the Health section's rest buttons). kind: "short" | "long".
+    rest: async (kind) => {
       const id = get().charId;
       if (!id) return;
       await get().flushSaves();
-      const data = await api.post("/combat/rest", { char_id: id, rest_type: restType });
+      const data = await api.post(`/character/${id}/rest`, { kind });
       if (get().charId === id) set({ charData: withPending(data) });
     },
 
+    /* ── leveling (the General tab; app/builder/level.py) ── */
+
+    // What the level-up form shows for one more level of `body.class_id`.
+    previewLevel: async (body) => {
+      const id = get().charId;
+      if (!id) return null;
+      await get().flushSaves();
+      return api.post(`/character/${id}/level/preview`, body);
+    },
+
+    // One more level: {class_id, layers, random, hp}. Returns {open, problems}.
+    levelUp: async (body) => {
+      const id = get().charId;
+      if (!id) return null;
+      await get().flushSaves();
+      const out = await api.post(`/character/${id}/level`, body);
+      if (get().charId === id) set({ charData: withPending(out.character) });
+      return out;
+    },
+
+    // The class's top level and everything it gave goes.
+    levelDown: async (classId) => {
+      const id = get().charId;
+      if (!id) return;
+      await get().flushSaves();
+      const data = await api.post(`/character/${id}/level/down`, { class_id: classId });
+      if (get().charId === id) set({ charData: withPending(data) });
+    },
+
+    /* ── a new race or background (the Biography tab; app/builder/origin.py) ── */
+
+    // What the swap form shows: {kind, layers, random, seed, gear}.
+    previewOrigin: async (body) => {
+      const id = get().charId;
+      if (!id) return null;
+      await get().flushSaves();
+      return api.post(`/character/${id}/origin/preview`, body);
+    },
+
+    // Swap it: the old one goes with all it gave. Returns {open, problems}.
+    swapOrigin: async (body) => {
+      const id = get().charId;
+      if (!id) return null;
+      await get().flushSaves();
+      const out = await api.post(`/character/${id}/origin`, body);
+      if (get().charId === id) set({ charData: withPending(out.character) });
+      return out;
+    },
+
     // Every character in `ids` (the party bar's rest buttons).
-    restAll: async (restType, ids) => {
+    restAll: async (kind, ids) => {
       if (!ids?.length) return;
       await get().flushSaves();
-      await api.post("/combat/rest_all", { char_ids: ids, rest_type: restType });
+      await api.post("/character/rest", { kind, ids });
       if (ids.includes(get().charId)) await get().reloadChar();
     },
 
-    // Known bug (backend): this gives the XP to every character of the user.
-    grantExperience: async (delta) => {
-      if (!delta) return;
+    // XP for the characters in `ids` only (the party bar's active ones).
+    grantExperience: async (delta, ids) => {
+      if (!delta || !ids?.length) return;
       await get().flushSaves();
-      await api.post("/combat/experience", { delta });
-      if (get().charId) await get().reloadChar();
+      await api.post("/character/experience", { delta, ids });
+      if (ids.includes(get().charId)) await get().reloadChar();
     },
 
     /* ── the character list ── */
 
-    // The Builder Wizard's payload. Returns { id, name }.
+    // The Builder Wizard's payload. Returns { id, name, campaign, open, problems }.
     createChar: (payload) => api.post("/character", payload),
 
     deleteChar: async (id) => {

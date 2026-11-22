@@ -51,6 +51,7 @@ CLEANERS = {
     # one file per class: the class and its subclasses together (see classes_cleaner)
     "classes": "books",
     "monsters": ("monster", clean_monster),     # one file per book
+   
 }
 
 

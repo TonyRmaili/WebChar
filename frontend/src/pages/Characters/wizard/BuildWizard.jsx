@@ -1,80 +1,68 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useCatalogueStore } from "../../../store/CatalogueStore";
 import { usePopupStore } from "../../../store/PopupStore";
 import useAuthStore from "../../../store/AuthStore";
 import useCharStore from "../../../store/CharStore";
-import { INK, InkSelect, InkText, Mark } from "../../../styles/parchment";
+import useCampaignStore from "../../../store/CampaignStore";
+import { INK, InkButton, InkSelect, InkText, Mark } from "../../../styles/parchment";
 
-import Summary from "../Summary";
 import AbilityScoreBoxes, { defaultsFor, rollPool } from "../AbilityScoreBoxes";
-
-import RaceStep from "./RaceStep";
-import BackgroundStep from "./BackgroundStep";
+import OriginStep from "./OriginStep";
 import ClassStep from "./ClassStep";
 import HitPointsStep from "./HitPointsStep";
-import {
-  raceChoices,
-  backgroundChoices,
-  collectGrants,
-  isResolved,
-  choiceTitle,
-  valueLabel,
-} from "./choiceEngine";
-import {
-  classChoices,
-  classFixedGrants,
-  derivedStats,
-  pendingOptionalFeatures,
-  makeClassEntry,
-  levelBudget,
-  availableEditions,
-  classVariant,
-  subclassUnlockLevel,
-  classFeatSlots,
-  rollHp,
-  computeHp,
-  isEpicBoonFeat,
-  totalLevel,
-  MAX_CHARACTER_LEVEL,
-} from "./classEngine";
-import { computeOverlap } from "./overlap";
-import { editionOf } from "./wizardHelpers";
-import { buildCharacterPayload } from "./characterPayload";
+import WizardSummary from "./WizardSummary";
+import usePreview from "./usePreview";
+import useViewOption from "./useViewOption";
 
 /* ═══════════════════════════════════════════════════════════════════
-   BuildWizard — state and layout only, on parchment.
+   BuildWizard — what the player picks, on parchment. The rules live in
+   the backend (app/builder, claude/character-plan.md):
 
-   Lives inside the Characters › Create sheet. Everything that decides
-   WHAT the choices are (choice detection, option pools, grants, labels)
-   lives in choiceEngine / classEngine / overlap, so adding a source
-   means writing one adapter there rather than growing this file.
+     POST /character/preview   while picking: every choice with its
+                               options, what's open, the numbers
+     POST /character           create, to the profile and/or a campaign
 
-   Layout: name and options at the top, a contents line of the five
-   steps (with how many choices each still needs), the active step, and
-   the running summary in the margin beside it on wide screens.
+   The wizard keeps only the picks, as the character file does:
+
+     race, subrace, background, classes [{id, level}]
+     picks   { "<layer from>": { "<choice path>": value } }
+             e.g. picks["background:acolyte-xphb"].starting_equipment = "a"
+     abilities, hp, name, the randomizer settings, where it goes
+
+   and sends them as layers ({from, picks}): one per race, subrace,
+   background, class level ("class:wizard-xphb@3") and feat a layer grants
+   ("feat:magic-initiate-xphb", via the layer that grants it).
+
+   With "fill in the rest at random" on, the preview shows the roll (drawn
+   lighter) and Create sends the same seed, so what you see is what you
+   get; "reroll" draws again. Anything the player picks is kept.
    ═══════════════════════════════════════════════════════════════════ */
 
 const EDITIONS = [
   { id: "one", label: "One D&D" },
   { id: "classic", label: "Classic" },
 ];
+const MAX_LEVEL = 20;
+const newSeed = () => Math.floor(Math.random() * 1e9);
 
 const SECTIONS = [
-  { id: "scores", numeral: "I", title: "Ability scores", scope: null },
-  { id: "race", numeral: "II", title: "Race", scope: "race" },
-  { id: "class", numeral: "III", title: "Class", scope: "class" },
-  { id: "background", numeral: "IV", title: "Background", scope: "background" },
-  { id: "hp", numeral: "V", title: "Hit points", scope: null },
+  { id: "scores", numeral: "I", title: "Ability scores" },
+  { id: "race", numeral: "II", title: "Race" },
+  { id: "class", numeral: "III", title: "Class" },
+  { id: "background", numeral: "IV", title: "Background" },
+  { id: "hp", numeral: "V", title: "Hit points" },
 ];
 
-// Contents line: I Ability scores · II Race ² · …  (the small number is
-// how many choices that step still needs).
+// The step a layer's choices belong to (a feat follows the layer that grants it).
+const stepOf = (root) =>
+  root?.startsWith("race:") ? "race" : root?.startsWith("background:") ? "background" : root?.startsWith("class:") ? "class" : null;
+
 function StepNav({ active, pending, onPick }) {
   return (
     <nav aria-label="Builder steps" className="flex flex-wrap items-baseline gap-x-6 gap-y-2 border-y border-rule/30 py-2">
       {SECTIONS.map((s) => {
         const on = active === s.id;
-        const left = s.scope ? pending[s.scope] : 0;
+        const left = pending[s.id] || 0;
         return (
           <button
             key={s.id}
@@ -96,341 +84,266 @@ function StepNav({ active, pending, onPick }) {
   );
 }
 
+// Where the new character goes: any combination of the three.
+function Destinations({ dest, onChange, campaigns }) {
+  const set = (k, v) => onChange({ ...dest, [k]: v });
+  const toCampaign = dest.npc || dest.party;
+  return (
+    <span className="flex flex-wrap items-center gap-x-4 gap-y-1">
+      <span className={`italic ${INK.faded}`}>Save as</span>
+      {[
+        ["character", "my character"],
+        ["npc", "NPC"],
+        ["party", "party member"],
+      ].map(([k, label]) => (
+        <span key={k} className="flex items-center gap-1">
+          <Mark on={dest[k]} onClick={() => set(k, !dest[k])} label={label} />
+          <span>{label}</span>
+        </span>
+      ))}
+      {toCampaign && (
+        <span className="flex items-baseline gap-2">
+          <span className={`italic ${INK.faded}`}>in</span>
+          <InkSelect value={dest.campaign || ""} onChange={(e) => set("campaign", e.target.value || null)} aria-label="Campaign" className="h-7 text-sm">
+            <option value="">pick a campaign…</option>
+            {campaigns.map((c) => (
+              <option key={c} value={c}>
+                {c}
+              </option>
+            ))}
+          </InkSelect>
+        </span>
+      )}
+    </span>
+  );
+}
+
 export default function BuildWizard({ onCreated }) {
-  /* ───────── stores ───────── */
+  /* ───────── catalogues ───────── */
   const races = useCatalogueStore((s) => s.races);
   const loadingRaces = useCatalogueStore((s) => s.loadingRaces);
-  const loadRaces = useCatalogueStore((s) => s.loadRaces);
-
-  const backgroundsData = useCatalogueStore((s) => s.backgroundsData);
+  const backgrounds = useCatalogueStore((s) => s.backgrounds);
   const loadingBackgrounds = useCatalogueStore((s) => s.loadingBackgrounds);
-  const loadBackgrounds = useCatalogueStore((s) => s.loadBackgrounds);
-
   const classes = useCatalogueStore((s) => s.classes);
   const loadingClasses = useCatalogueStore((s) => s.loadingClasses);
-  const loadClasses = useCatalogueStore((s) => s.loadClasses);
 
-  const featsData = useCatalogueStore((s) => s.featsData);
-  const loadingFeats = useCatalogueStore((s) => s.loadingFeats);
-  const loadFeats = useCatalogueStore((s) => s.loadFeats);
+  useEffect(() => {
+    const store = useCatalogueStore.getState();
+    if (!store.races?.length) store.loadRaces();
+    if (!store.backgrounds?.length) store.loadBackgrounds();
+    if (!store.classes?.length) store.loadClasses();
+  }, []);
 
   const openPopup = usePopupStore((s) => s.open);
   const createChar = useCharStore((s) => s.createChar);
   const fetchUser = useAuthStore((s) => s.fetchUser);
-  const [random, setRandom] = useState(false);
-  const [targetLevel, setTargetLevel] = useState("random"); // "random" | 1–20
+  const selectedCampaign = useAuthStore((s) => s.userData?.selected_campaign);
+  const campaigns = useCampaignStore((s) => s.campaignNames);
+  const listCampaigns = useCampaignStore((s) => s.listCampaigns);
+  useEffect(() => {
+    listCampaigns();
+  }, [listCampaigns]);
 
-  const backgrounds = backgroundsData?.backgrounds || [];
-  const feats = featsData?.feats || [];
+  const classById = useMemo(() => Object.fromEntries((classes || []).map((c) => [c.id, c])), [classes]);
 
-  /* ───────── identity ───────── */
+  /* ───────── what the player picked ───────── */
   const [name, setName] = useState("");
   const [editions, setEditions] = useState(["one"]);
+  const [random, setRandom] = useState(false);
+  const [seed, setSeed] = useState(newSeed);
+  const [targetLevel, setTargetLevel] = useState("random"); // "random" | 1–20
 
-  /* ───────── selections ───────── */
-  const [selectedRace, setSelectedRace] = useState(null);
-  const [subrace, setSubrace] = useState(null);
-  const [selectedBackground, setSelectedBackground] = useState(null);
-  /* Ordered — index 0 is the primary class and the only one that grants full
-     starting proficiencies and equipment. */
-  const [classEntries, setClassEntries] = useState([]);
-  const [choiceSel, setChoiceSel] = useState({}); // { [choiceId]: values | asiState }
-  /* HP is its own little config: average | roll | manual. Rolls are stored
-     so the number doesn't change on every render. */
-  const [hp, setHp] = useState({ mode: "average", manual: 0, rolls: {} });
-
-  /* ───────── ability scores ───────── */
   const [abilityMethod, setAbilityMethod] = useState("standard");
   const [abilityScores, setAbilityScores] = useState(() => defaultsFor("standard"));
   const [abilityPool, setAbilityPool] = useState([]);
+  const [hp, setHp] = useState({ mode: "average", manual: 0, rolls: {} });
+
+  const [race, setRace] = useState(null);
+  const [subrace, setSubrace] = useState(null);
+  const [background, setBackground] = useState(null);
+  const [classEntries, setClassEntries] = useState([]); // [{ id, level }], first = starting class
+  const [picks, setPicks] = useState({}); // { from: { path: value } }
+  const [dest, setDest] = useState({ character: true, npc: false, party: false, campaign: null });
 
   const [activeSection, setActiveSection] = useState("scores");
   const [creating, setCreating] = useState(false);
   const [err, setErr] = useState(null);
 
   useEffect(() => {
-    if (!Array.isArray(races) || races.length === 0) loadRaces();
-  }, [races, loadRaces]);
+    if (!dest.campaign && selectedCampaign) setDest((d) => ({ ...d, campaign: selectedCampaign }));
+  }, [selectedCampaign]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const assigned = classEntries.reduce((n, e) => n + e.level, 0);
+  const levelCap = random && targetLevel !== "random" ? Math.max(targetLevel, 1) : MAX_LEVEL;
+
+  /* ───────── picks ───────── */
+  const dropPicks = (test) => setPicks((p) => Object.fromEntries(Object.entries(p).filter(([from]) => !test(from))));
+  const own = useCallback((from, path) => picks[from]?.[path] ?? null, [picks]);
+  const setPick = useCallback(
+    (from, path, value) =>
+      setPicks((p) => {
+        const layer = { ...(p[from] || {}) };
+        if (value == null) delete layer[path];
+        else layer[path] = value;
+        return { ...p, [from]: layer };
+      }),
+    []
+  );
+
+  const chooseRace = (id) => {
+    setRace(id);
+    setSubrace(null);
+    dropPicks((f) => f.startsWith("race:"));
+  };
+  const chooseSubrace = (id) => {
+    setSubrace(id);
+    dropPicks((f) => f.includes("/subrace:"));
+  };
+  const chooseBackground = (id) => {
+    setBackground(id);
+    dropPicks((f) => f.startsWith("background:"));
+  };
+  const addClass = (id) =>
+    setClassEntries((prev) => (prev.some((e) => e.id === id) || assigned >= levelCap ? prev : [...prev, { id, level: 1 }]));
+  const removeClass = (id) => {
+    setClassEntries((prev) => prev.filter((e) => e.id !== id));
+    dropPicks((f) => f.startsWith(`class:${id}@`));
+    setHp((h) => ({ ...h, rolls: Object.fromEntries(Object.entries(h.rolls || {}).filter(([k]) => !k.startsWith(`class:${id}@`))) }));
+  };
+  const setClassLevel = (id, level) => {
+    setClassEntries((prev) => prev.map((e) => (e.id === id ? { ...e, level } : e)));
+    // levels taken away take their picks with them
+    dropPicks((f) => {
+      const m = /^class:([^@]+)@(\d+)$/.exec(f);
+      return m && m[1] === id && Number(m[2]) > level;
+    });
+  };
+
+  /* ───────── what the server makes of it ───────── */
+  const [viaOf, setViaOf] = useState({}); // feat layer -> the layer that grants it (from the last preview)
+
+  const layers = useMemo(() => {
+    const out = [];
+    const add = (from, extra = {}) => out.push({ from, picks: picks[from] || {}, ...extra });
+    if (race) add(`race:${race}`);
+    if (race && subrace) add(`race:${race}/subrace:${subrace}`);
+    if (background) add(`background:${background}`);
+    for (const e of classEntries) for (let n = 1; n <= e.level; n += 1) add(`class:${e.id}@${n}`);
+    // Picks for granted feats ride along with where they came from.
+    for (const from of Object.keys(picks)) if (from.startsWith("feat:") && viaOf[from]) add(from, { via: viaOf[from] });
+    return out;
+  }, [race, subrace, background, classEntries, picks, viaOf]);
+
+  const payload = useMemo(
+    () => ({
+      name: name.trim(),
+      random,
+      seed: random ? seed : undefined,
+      target_level: random ? targetLevel : null,
+      abilities: { method: abilityMethod, base: abilityScores },
+      // Rolls count only while "rolled" is picked (the sheet keeps per-level rolls).
+      hp: hp.mode === "roll" ? hp : { ...hp, rolls: {} },
+      layers,
+    }),
+    [name, random, seed, targetLevel, abilityMethod, abilityScores, hp, layers]
+  );
+
+  const { data: preview, loading: previewing, error: previewError } = usePreview(payload);
 
   useEffect(() => {
-    if (!Array.isArray(backgrounds) || backgrounds.length === 0) loadBackgrounds();
-    if (!classes || Object.keys(classes).length === 0) loadClasses();
-    if (!Array.isArray(feats) || feats.length === 0) loadFeats();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (!preview?.layers) return;
+    const via = {};
+    for (const l of preview.layers) if (l.via) via[l.from] = l.via;
+    setViaOf((old) => (JSON.stringify(old) === JSON.stringify(via) ? old : via));
+  }, [preview]);
 
-  /* ───────── derived ───────── */
-  const counts = useMemo(() => {
-    const tally = (list) =>
-      (list || []).reduce((acc, e) => (e ? ((acc[editionOf(e)] += 1), acc) : acc), { one: 0, classic: 0 });
-    const r = tally(races);
-    const b = tally(backgrounds);
-    return { one: r.one + b.one, classic: r.classic + b.classic, races: r, backgrounds: b };
-  }, [races, backgrounds]);
+  const rootOf = useCallback(
+    (from) => {
+      let f = from;
+      for (let i = 0; i < 6 && viaOf[f]; i += 1) f = viaOf[f];
+      return f;
+    },
+    [viaOf]
+  );
+  const labelOf = useMemo(() => Object.fromEntries((preview?.layers || []).map((l) => [l.from, l.label])), [preview]);
+  const ownerLabel = useCallback((from) => (from.startsWith("feat:") ? labelOf[from] : null), [labelOf]);
 
-  const choices = useMemo(
-    () => [
-      ...raceChoices(selectedRace, subrace),
-      ...classChoices(classEntries, classes, choiceSel),
-      ...backgroundChoices(selectedBackground),
-    ],
-    [selectedRace, subrace, selectedBackground, classEntries, classes, choiceSel]
+  const choicesFor = useCallback(
+    (step) => (preview?.choices || []).filter((c) => stepOf(rootOf(c.from)) === step),
+    [preview, rootOf]
   );
 
-  const grants = useMemo(
-    () =>
-      collectGrants({
-        race: selectedRace,
-        subrace,
-        background: selectedBackground,
-        extraFixed: classFixedGrants(classEntries, classes),
-        choices,
-        choiceSel,
-      }),
-    [selectedRace, subrace, selectedBackground, classEntries, classes, choices, choiceSel]
-  );
-
-  const stats = useMemo(() => derivedStats(classEntries, classes), [classEntries, classes]);
-  const optionalFeatures = useMemo(() => pendingOptionalFeatures(classEntries, classes), [classEntries, classes]);
-
-  /* CON after racial/background bonuses — what the HP maths needs. */
-  const conMod = useMemo(() => {
-    const base = abilityScores?.con;
-    if (base == null) return 0;
-    return Math.floor((base + (grants.abilities?.con || 0) - 10) / 2);
-  }, [abilityScores, grants.abilities]);
-
-  const hpResult = useMemo(() => computeHp({ entries: classEntries, classes, conMod, ...hp }), [classEntries, classes, conMod, hp]);
-
-  const overlap = useMemo(() => computeOverlap({ grants, choices, choiceSel }), [grants, choices, choiceSel]);
-
-  const unresolved = useMemo(
-    () => choices.filter((c) => !isResolved(c, choiceSel[c.id], subrace)),
-    [choices, choiceSel, subrace]
-  );
-
-  const pendingByScope = useMemo(() => {
-    const out = { race: 0, class: 0, background: 0 };
-    unresolved.forEach((c) => {
-      if (out[c.scope] != null) out[c.scope] += 1;
-    });
-    // Feat slots (including the Epic Boon bonus slot) aren't tracked by the
-    // generic choice engine — feats come from a catalogue classEngine has
-    // no access to, so they're counted directly here instead.
-    classEntries.forEach((entry, index) => {
-      const variant = classVariant(classes, entry.key, entry.edition);
-      const { slots } = classFeatSlots({ entry, index, variant, feats });
-      out.class += Math.max(0, slots - (entry.feats?.length || 0));
-    });
+  const pending = useMemo(() => {
+    const out = {};
+    for (const c of preview?.choices || []) {
+      const step = stepOf(rootOf(c.from));
+      if (step && c.missing > 0 && !own(c.from, c.path)) out[step] = (out[step] || 0) + 1;
+    }
+    const raceRec = (races || []).find((r) => r.id === race);
+    if (raceRec?.subraces?.length && !subrace) out.race = (out.race || 0) + 1;
+    if (!race) out.race = (out.race || 0) + 1;
+    if (!background) out.background = (out.background || 0) + 1;
+    if (!classEntries.length) out.class = (out.class || 0) + 1;
     return out;
-  }, [unresolved, classEntries, classes, feats]);
+  }, [preview, rootOf, own, races, race, subrace, background, classEntries]);
 
-  /* Creation is deliberately NOT gated on completeness. A half-built
-     character is useful while testing, and anything unresolved is simply
-     absent from the payload rather than invalid — `characterPayload` is
-     null-safe for a missing race, no classes and unmade choices. */
-  const incomplete = useMemo(() => {
-    const list = [];
-    if (!selectedRace) list.push("no race");
-    if (classEntries.length === 0) list.push("no class");
-    if (unresolved.length) list.push(`${unresolved.length} unmade choice${unresolved.length > 1 ? "s" : ""}`);
-    return list;
-  }, [selectedRace, classEntries, unresolved]);
-
-  const assignedLevels = totalLevel(classEntries);
-  const effectiveTarget = targetLevel === "random" ? "random" : Math.max(targetLevel, assignedLevels, 1);
-  const levelCap = random && effectiveTarget !== "random" ? effectiveTarget : MAX_CHARACTER_LEVEL;
-
-  /* ───────── selection handlers ─────────
-     Clearing scoped keys on re-selection stops stale picks from a
-     previous race/background leaking into the new one. */
-  const dropKeys = (prefix) =>
-    setChoiceSel((prev) => Object.fromEntries(Object.entries(prev).filter(([k]) => !k.startsWith(prefix))));
-
-  const chooseRace = (r) => {
-    setSelectedRace(r);
-    setSubrace(null);
-    dropKeys("race.");
-  };
-
-  const chooseSubrace = (sr) => {
-    setSubrace(sr);
-    dropKeys("race.sub");
-  };
-
-  const chooseBackground = (bg) => {
-    setSelectedBackground(bg);
-    dropKeys("bg.");
-  };
-
-  /* ───────── classes ───────── */
-  const addClass = (key, edition) => {
-    const ed = edition || availableEditions(classes, key)[0];
-    if (!ed) return;
-    setClassEntries((prev) => {
-      if (prev.some((e) => e.key === key)) return prev; // can't take the same class twice
-      const room = levelBudget(prev, key, levelCap);
-      if (room < 1) return prev;
-      return [...prev, makeClassEntry(key, ed, 1)];
-    });
-  };
-
-  const removeClass = (key) => {
-    setClassEntries((prev) => prev.filter((e) => e.key !== key));
-    dropKeys(`class.${key}.`);
-  };
-
-  const changeClassLevel = (key, level) =>
-    setClassEntries((prev) => {
-      const next = Math.max(1, Math.min(levelBudget(prev, key, levelCap), level));
-      const updated = prev.map((e) => (e.key === key ? { ...e, level: next } : e));
-      return updated.map((e) => {
-        if (e.key !== key) return e;
-        const variant = classVariant(classes, key, e.edition);
-        // Dropping below the unlock level must also clear the subclass.
-        // classChoices stops emitting that choice, so a kept value would be
-        // invisible in the UI yet still ride along in the payload.
-        const unlockSub = subclassUnlockLevel(variant);
-        const keepSub = unlockSub == null || next >= unlockSub;
-        // Same idea for feats — dropping level (or losing Epic Boon
-        // eligibility) can shrink the number of feat slots this class grants.
-        const { slots: maxFeats, epicBoonEligible } = classFeatSlots({ entry: e, variant });
-        const kept = (e.feats || []).filter((p) => {
-          if (epicBoonEligible) return true;
-          const full = feats.find((f) => f.name === p.name && f.source === p.source);
-          return !isEpicBoonFeat(full);
-        });
-        return { ...e, subclass: keepSub ? e.subclass : null, feats: kept.slice(0, maxFeats) };
-      });
-    });
-
-  const changeClassEdition = (key, edition) => {
-    setClassEntries((prev) => prev.map((e) => (e.key === key ? { ...e, edition, subclass: null, feats: [] } : e)));
-    // Subclass lists, proficiencies AND feat-slot progression differ per
-    // edition — old picks are void.
-    dropKeys(`class.${key}.`);
-  };
-
-  const changeSubclass = (key, subclass) => setClassEntries((prev) => prev.map((e) => (e.key === key ? { ...e, subclass } : e)));
-
-  const changeClassFeats = (key, picked) => setClassEntries((prev) => prev.map((e) => (e.key === key ? { ...e, feats: picked } : e)));
-
-  /* ───────── hit points ───────── */
-  const changeHpMode = (mode) =>
-    setHp((prev) => ({
-      ...prev,
-      mode,
-      // Entering roll mode with no rolls yet gets one automatically, so the
-      // number on screen is never a stale placeholder average.
-      rolls: mode === "roll" && !Object.keys(prev.rolls || {}).length ? rollHp(classEntries, classes) : prev.rolls,
-    }));
-
-  const changeHpManual = (manual) => setHp((prev) => ({ ...prev, manual }));
-  const rerollHp = () => setHp((prev) => ({ ...prev, rolls: rollHp(classEntries, classes) }));
-
-  const toggleChoiceValue = (id, value, count) =>
-    setChoiceSel((prev) => {
-      const cur = Array.isArray(prev[id]) ? prev[id] : [];
-      let next;
-      if (cur.includes(value)) next = cur.filter((v) => v !== value);
-      else if (cur.length >= count) next = count === 1 ? [value] : cur;
-      else next = [...cur, value];
-      return { ...prev, [id]: next };
-    });
-
-  const setAsi = (id, state) => setChoiceSel((prev) => ({ ...prev, [id]: state }));
-
-  const changeAbilityMethod = (m) => {
-    setAbilityMethod(m);
-    setAbilityScores(defaultsFor(m));
-    setAbilityPool([]);
-  };
-
-  const rollAbilityScores = () => {
-    setAbilityPool(rollPool());
-    setAbilityScores(defaultsFor("random"));
-  };
-
-  const toggleEdition = (id) =>
-    setEditions((prev) => {
-      const next = prev.includes(id) ? prev.filter((v) => v !== id) : [...prev, id];
-      return next.length ? next : prev; // never zero
-    });
+  /* ───────── create ───────── */
+  const toCampaign = dest.npc || dest.party;
+  const blocked = !dest.character && !toCampaign ? "Pick where the character goes." : toCampaign && !dest.campaign ? "Pick the campaign." : null;
 
   const resetAll = () => {
     setName("");
-    setSelectedRace(null);
+    setRace(null);
     setSubrace(null);
-    setSelectedBackground(null);
+    setBackground(null);
     setClassEntries([]);
-    setChoiceSel({});
+    setPicks({});
     setHp({ mode: "average", manual: 0, rolls: {} });
     setAbilityMethod("standard");
     setAbilityScores(defaultsFor("standard"));
     setAbilityPool([]);
     setActiveSection("scores");
     setTargetLevel("random");
+    setSeed(newSeed());
   };
 
-  /* ───────── payload ─────────
-     The player's raw selections only; the backend builds the sheet. */
-  const makePayload = () =>
-    buildCharacterPayload({
-      name,
-      random,
-      targetLevel: effectiveTarget,
-      abilityMethod,
-      abilityScores,
-      selectedRace,
-      subrace,
-      selectedBackground,
-      classEntries,
-      choices,
-      choiceSel,
-      hp,
-    });
-
   const handleCreate = async () => {
-    const payload = makePayload();
-    console.log("character payload →", payload);
+    if (blocked) return setErr(blocked);
     try {
       setCreating(true);
       setErr(null);
-      await createChar(payload);
-      await fetchUser();
-      onCreated?.(payload.name);
+      const result = await createChar({ ...payload, destinations: dest });
+      if (dest.character) await fetchUser();
+      onCreated?.(result?.name || payload.name, result);
       resetAll();
     } catch (e) {
       setErr(e.message);
-      console.error("create failed:", e);
     } finally {
       setCreating(false);
     }
   };
 
-  const minTarget = Math.max(1, assignedLevels);
+  const toggleEdition = (id) => setEditions((prev) => (prev.includes(id) ? (prev.length > 1 ? prev.filter((v) => v !== id) : prev) : [...prev, id]));
+  const open = (preview?.choices || []).filter((c) => c.missing > 0).length;
+  const onView = useViewOption();
+  const layerLabel = useCallback((from) => labelOf[from] || null, [labelOf]);
+  const stepProps = { own, onPick: setPick, ownerLabel, rolled: random, onView };
 
   /* ───────── render ───────── */
   return (
     <div className="space-y-6">
-      {/* name · ruleset · randomizer · create */}
       <div className="space-y-3">
         <div className="flex flex-wrap items-baseline gap-x-4 gap-y-2">
           <span className={`text-sm italic ${INK.faded}`}>Their name is</span>
-          <InkText
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="e.g. Thaldrin Brightaxe"
-            aria-label="Character name"
-            className="h-9 w-full max-w-xs text-xl"
-          />
+          <InkText value={name} onChange={(e) => setName(e.target.value)} placeholder="e.g. Thaldrin Brightaxe" aria-label="Character name" className="h-9 w-full max-w-xs text-xl" />
           <button
             type="button"
-            disabled={creating}
+            disabled={creating || !!blocked}
             onClick={handleCreate}
+            title={blocked || undefined}
             className="ml-auto rounded-full border border-rubric/70 px-4 py-1 text-[15px] italic text-rubric transition hover:bg-rubric hover:text-page-light disabled:cursor-not-allowed disabled:opacity-40"
           >
-            {creating ? "creating…" : incomplete.length ? "create anyway" : "create character"}
+            {creating ? "creating…" : open && !random ? "create anyway" : "create character"}
           </button>
         </div>
 
@@ -441,12 +354,11 @@ export default function BuildWizard({ onCreated }) {
               <span key={e.id} className="flex items-center gap-1">
                 <Mark on={editions.includes(e.id)} onClick={() => toggleEdition(e.id)} label={`Show ${e.label}`} />
                 <span>{e.label}</span>
-                <span className={`text-xs ${INK.faint}`}>{counts[e.id]}</span>
               </span>
             ))}
           </span>
 
-          <span className="flex items-center gap-1" title="Anything you leave open is decided at random when you create the character.">
+          <span className="flex items-center gap-1" title="Anything you leave open is decided at random. You see the roll before you create.">
             <Mark on={random} onClick={() => setRandom(!random)} label="Fill in the rest at random" />
             <span>Fill in the rest at random</span>
           </span>
@@ -455,39 +367,38 @@ export default function BuildWizard({ onCreated }) {
             <span className="flex items-baseline gap-2">
               <span className={`italic ${INK.faded}`}>up to level</span>
               <InkSelect
-                value={String(effectiveTarget)}
+                value={String(targetLevel)}
                 onChange={(e) => setTargetLevel(e.target.value === "random" ? "random" : Number(e.target.value))}
                 aria-label="Total level"
                 className="h-7 text-sm"
               >
                 <option value="random">any (random)</option>
-                {Array.from({ length: MAX_CHARACTER_LEVEL }, (_, i) => i + 1).map((n) => (
-                  <option key={n} value={n} disabled={n < minTarget}>
+                {Array.from({ length: MAX_LEVEL }, (_, i) => i + 1).map((n) => (
+                  <option key={n} value={n} disabled={n < Math.max(1, assigned)}>
                     {n}
                   </option>
                 ))}
               </InkSelect>
-              <span className={`text-xs italic ${INK.faint}`}>
-                {effectiveTarget === "random"
-                  ? `${assignedLevels} chosen · the rest decided on create`
-                  : effectiveTarget - assignedLevels > 0
-                  ? `${assignedLevels} chosen · ${effectiveTarget - assignedLevels} at random`
-                  : "all levels chosen"}
-              </span>
+              <InkButton onClick={() => setSeed(newSeed())} title="Roll everything left open again">
+                reroll
+              </InkButton>
             </span>
           )}
         </div>
 
-        {incomplete.length > 0 && name.trim() && (
+        <div className="text-sm">
+          <Destinations dest={dest} onChange={setDest} campaigns={campaigns || []} />
+        </div>
+
+        {open > 0 && !random && (
           <p className={`text-sm italic ${INK.faded}`}>
-            Still open: {incomplete.join(", ")}. You can create the character anyway — the open parts are left for you to fill in on the sheet
-            {random ? ", or decided at random" : ""}.
+            {open} choice{open > 1 ? "s are" : " is"} still open. You can create the character anyway and finish them on the sheet.
           </p>
         )}
-        {err && <p className={`text-sm italic ${INK.rubric}`}>Couldn't create the character — {err}</p>}
+        {err && <p className={`text-sm italic ${INK.rubric}`}>Couldn't create the character: {err}</p>}
       </div>
 
-      <StepNav active={activeSection} pending={pendingByScope} onPick={setActiveSection} />
+      <StepNav active={activeSection} pending={pending} onPick={setActiveSection} />
 
       <div className="flex flex-col gap-10 @5xl:flex-row @5xl:items-start">
         <div className="min-w-0 flex-1">
@@ -496,27 +407,32 @@ export default function BuildWizard({ onCreated }) {
               method={abilityMethod}
               scores={abilityScores}
               pool={abilityPool}
-              onMethodChange={changeAbilityMethod}
+              onMethodChange={(m) => {
+                setAbilityMethod(m);
+                setAbilityScores(defaultsFor(m));
+                setAbilityPool([]);
+              }}
               onScoresChange={setAbilityScores}
-              onRoll={rollAbilityScores}
+              onRoll={() => {
+                setAbilityPool(rollPool());
+                setAbilityScores(defaultsFor("random"));
+              }}
             />
           )}
 
           {activeSection === "race" && (
-            <RaceStep
-              races={races}
+            <OriginStep
+              kind="race"
+              entries={races}
               loading={loadingRaces}
               editions={editions}
-              selectedRace={selectedRace}
-              subrace={subrace}
-              choices={choices}
-              choiceSel={choiceSel}
-              overlap={overlap}
-              onSelectRace={chooseRace}
+              selectedId={race}
+              subraceId={subrace}
+              onSelect={chooseRace}
               onSelectSubrace={chooseSubrace}
-              onToggleChoice={toggleChoiceValue}
-              onAsiChange={setAsi}
               onPreview={(r) => openPopup("race", r)}
+              choices={choicesFor("race")}
+              {...stepProps}
             />
           )}
 
@@ -526,73 +442,47 @@ export default function BuildWizard({ onCreated }) {
               loading={loadingClasses}
               editions={editions}
               entries={classEntries}
-              choices={choices}
-              choiceSel={choiceSel}
-              overlap={overlap}
-              feats={feats}
-              loadingFeats={loadingFeats}
-              onAddClass={addClass}
-              onRemoveClass={removeClass}
-              onChangeLevel={changeClassLevel}
-              onChangeEdition={changeClassEdition}
-              onChangeSubclass={changeSubclass}
-              onChangeFeats={changeClassFeats}
-              onPreviewFeat={(f) => openPopup("feat", f)}
-              onToggleChoice={toggleChoiceValue}
-              onAsiChange={setAsi}
               levelCap={levelCap}
+              onAdd={addClass}
+              onRemove={removeClass}
+              onLevel={setClassLevel}
+              choices={choicesFor("class")}
+              rootOf={rootOf}
+              features={preview?.features}
+              spells={preview?.spells}
+              labelOf={layerLabel}
+              {...stepProps}
             />
           )}
 
           {activeSection === "background" && (
-            <BackgroundStep
-              backgrounds={backgrounds}
+            <OriginStep
+              kind="background"
+              entries={backgrounds}
               loading={loadingBackgrounds}
               editions={editions}
-              selectedBackground={selectedBackground}
-              choices={choices}
-              choiceSel={choiceSel}
-              overlap={overlap}
-              onSelectBackground={chooseBackground}
-              onToggleChoice={toggleChoiceValue}
-              onAsiChange={setAsi}
+              selectedId={background}
+              onSelect={chooseBackground}
               onPreview={(b) => openPopup("background", b)}
+              choices={choicesFor("background")}
+              {...stepProps}
             />
           )}
 
           {activeSection === "hp" && (
             <HitPointsStep
-              classes={classes}
               entries={classEntries}
-              conMod={conMod}
+              byId={classById}
               hp={hp}
-              onChangeMode={changeHpMode}
-              onChangeManual={changeHpManual}
-              onRoll={rerollHp}
+              onChange={setHp}
+              maxHp={preview?.derived?.hp_max}
+              conMod={preview?.derived?.abilities?.con?.mod ?? 0}
             />
           )}
         </div>
 
         <div className="@5xl:w-72 @5xl:shrink-0 @5xl:self-stretch @5xl:border-l @5xl:border-rule/25 @5xl:pl-6">
-          <Summary
-            editions={editions}
-            selectedRace={selectedRace}
-            subrace={subrace}
-            selectedBackground={selectedBackground}
-            classEntries={classEntries}
-            classes={classes}
-            stats={stats}
-            optionalFeatures={optionalFeatures}
-            maxHp={hpResult.total}
-            grants={grants}
-            choices={choices}
-            choiceSel={choiceSel}
-            overlap={overlap}
-            choiceTitle={choiceTitle}
-            valueLabel={valueLabel}
-            abilityMethod={abilityMethod}
-            abilityScores={abilityScores}
-          />
+          <WizardSummary preview={preview} loading={previewing} error={previewError} />
         </div>
       </div>
     </div>

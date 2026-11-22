@@ -1,7 +1,8 @@
-import { ABILITY_ORDER, EFFECT_SECTIONS, abilityMod, crStats } from "../../Catalogues/Monsters/monsterHelpers";
-import { SKILL_OPTIONS } from "../../../utils/Constants";
-import { effectiveMaxHp, healthOf } from "../../Characters/sheet/play/playHelpers";
-import { SKILL_KEY, entryFrom, initiativeOf, pbOf, skillBonus, speedNum, squash, withPassive } from "../statblock/monsterStatblock";
+import { ABILITIES, SKILLS } from "../../Catalogues/catalogueHelpers";
+import { abilityMod, crStats } from "../../Catalogues/Monsters/monsterHelpers";
+import { derivedOf } from "../../../utils/derive";
+import { isNumber } from "../../../utils/featureRuntime";
+import { MONSTER_SECTIONS, entryFrom, initiativeOf, modOf, pbOf, skillBonus } from "../statblock/monsterStatblock";
 
 /* ═══════════════════════════════════════════════════════════════════
    templateLogic.js — laying templates on a creature (layered, live).
@@ -13,14 +14,16 @@ import { SKILL_KEY, entryFrom, initiativeOf, pbOf, skillBonus, speedNum, squash,
    they were added. Nothing of the template is written into the
    creature, so a template can be switched off or removed at any time.
 
-   What a template does (shape: claude/templates-contract.md):
+   What a template does (its layout: templateStatblock.js):
      adjust   numbers up or down: AC, HP (flat and %), initiative, ability
               scores, speeds, skills, to-hit, damage, save DCs, spell DC
               and attack
      grant    save proficiencies, defenses, senses (higher wins), speeds
-              (higher wins), languages, extra damage on attacks, traits /
-              actions / …, spellcasting, gear
+              (higher wins), languages, extra damage on attacks, features
+              (traits, actions, …), spellcasting, gear
      set      name prefix / suffix, type, size, alignment, challenge
+   Its features, spellcasting and gear are in the monster record's own
+   layout, so the monster statblock actions edit them.
    Templates never take anything away, except that a resistance and a
    vulnerability to the same type cancel each other, and an immunity
    beats both.
@@ -157,7 +160,7 @@ export function templateMenuGroups(raw, all, change, given) {
 
 /* ─── shared bits ────────────────────────────────────────────────── */
 
-const DEFENSES = ["resistances", "immunities", "vulnerabilities", "condition_immunities"];
+export const DEFENSE_KEYS = ["resist", "immune", "vulnerable", "condition_immune"];
 
 // Resistance + vulnerability to the same type cancel; immunity beats both.
 function settleDamage(res, imm, vul) {
@@ -184,6 +187,7 @@ const union = (a, b) => {
 };
 
 const nsId = (t, id) => `${t.id}/${id}`;
+const speedNum = (v) => (isNumber(v) ? v : isNumber(v?.number) ? v.number : null);
 
 // Higher wins; numbers only.
 function mergeHigher(base, grant) {
@@ -219,68 +223,63 @@ const affixed = (name, t) => {
 
 const hpDelta = (max, adjust) => toInt(adjust?.hp, 0) + Math.round((max * toInt(adjust?.hp_percent, 0)) / 100);
 
+// Saves and skills are totals: they move with the score or proficiency under them.
+const shift = (obj, delta, keep = () => true) =>
+  Object.fromEntries(Object.entries(obj || {}).map(([k, v]) => [k, isNumber(v) && keep(k) ? v + delta : v]));
+
 /* ─── monsters ───────────────────────────────────────────────────── */
 
-function adjustAttacks(m, a, extra) {
+// To-hit, damage and save DCs on every feature that has them. A number
+// still in words (a summon's "3 + spell level") is left as it is.
+function adjustFeatures(features, a, extra) {
   const toHit = toInt(a.to_hit, 0);
   const dmg = toInt(a.damage, 0);
   const dc = toInt(a.save_dc, 0);
-  const addDice = extra && toInt(extra.dice_count, 0) > 0 && extra.dice_size ? extra : null;
-  if (!toHit && !dmg && !dc && !addDice) return m;
-  const effects = {};
-  for (const [key, block] of Object.entries(m.effects || {})) {
-    effects[key] = {
-      ...block,
-      items: asList(block?.items).map((it) => {
-        let row = it;
-        if (row.attack && (toHit || dmg || addDice)) {
-          const damages = asList(row.attack.damages).map((d, i) => (i === 0 && dmg ? { ...d, mod: toInt(d.mod, 0) + dmg } : d));
-          if (addDice) damages.push({ dice_count: toInt(addDice.dice_count, 1), dice_size: addDice.dice_size, mod: 0, damage_type: addDice.damage_type || null });
-          row = { ...row, attack: { ...row.attack, hit_bonus: toInt(row.attack.hit_bonus, 0) + toHit, damages } };
-        }
-        if (row.save && dc) row = { ...row, save: { ...row.save, dc_bonus: toInt(row.save.dc_bonus, 0) + dc } };
-        return row;
-      }),
-    };
-  }
-  return { ...m, effects };
+  const addPart = extra?.dice ? { dice: extra.dice, type: extra.type || undefined } : null;
+  if (!toHit && !dmg && !dc && !addPart) return features;
+  return asList(features).map((f) => {
+    const act = f?.action;
+    if (!act) return f;
+    let next = act;
+    if (act.attack && (toHit || dmg || addPart)) {
+      const damage = asList(act.attack.damage).map((p, i) =>
+        i === 0 && dmg && (p.bonus == null || isNumber(p.bonus)) ? { ...p, bonus: (p.bonus ?? 0) + dmg } : p
+      );
+      if (addPart) damage.push(addPart);
+      next = { ...next, attack: { ...act.attack, bonus: isNumber(act.attack.bonus) ? act.attack.bonus + toHit : act.attack.bonus, damage } };
+    }
+    if (act.save && dc && isNumber(act.save.dc)) next = { ...next, save: { ...act.save, dc: act.save.dc + dc } };
+    return next === act ? f : { ...f, action: next };
+  });
 }
 
-// The template's own rows, ready to sit next to the creature's.
-function grantedRows(t, uses) {
-  const effects = {};
-  for (const { key } of EFFECT_SECTIONS) {
-    const items = asList(t.effects?.[key]?.items).filter((it) => it && it.active !== false);
-    if (!items.length) continue;
-    effects[key] = items.map((it) => {
-      const id = nsId(t, it.id);
-      const row = { ...it, id, from_template: t.name || "template", active: true };
-      if (it.charges) {
-        const max = toInt(it.charges.max_charges ?? it.charges.per_rest_count, 0);
-        row.charges = { ...it.charges, current_charges: toInt(uses[id], max) };
-      }
+// The template's own features, ready to sit next to the creature's.
+function grantedFeatures(t, uses) {
+  return asList(t.features)
+    .filter((f) => f && f.active !== false)
+    .map((f) => {
+      const id = nsId(t, f.id);
+      const row = { ...f, id, from_template: t.name || "template", active: true };
+      if (isNumber(uses[id])) row.uses_left = uses[id];
+      else delete row.uses_left;
       return row;
     });
-  }
-  return effects;
 }
 
 function grantedSpells(t, uses) {
+  const left = (id) => (isNumber(uses[id]) ? uses[id] : undefined);
   return asList(t.spellcasting).map((b) => ({
     ...b,
     id: nsId(t, b.id),
     from_template: t.name,
     name: `${b.name || "Spellcasting"} (${t.name})`,
-    groups: asList(b.groups).map((g) => {
-      const gid = nsId(t, g.id);
-      return {
-        ...g,
-        id: gid,
-        from_template: t.name,
-        current: uses[gid],
-        spells: asList(g.spells).map((s) => ({ ...s, id: nsId(t, s.id), from_template: t.name, current: uses[nsId(t, s.id)] })),
-      };
-    }),
+    groups: asList(b.groups).map((g) => ({
+      ...g,
+      id: nsId(t, g.id),
+      from_template: t.name,
+      uses_left: left(nsId(t, g.id)),
+      spells: asList(g.spells).map((s) => ({ ...s, id: nsId(t, s.id), from_template: t.name, uses_left: left(nsId(t, s.id)) })),
+    })),
   }));
 }
 
@@ -290,51 +289,39 @@ function applyOneToMonster(m, t, uses) {
 
   // set
   const set = t.set || {};
-  if (set.type) out.type = typeof out.type === "object" && out.type ? { ...out.type, type: set.type } : set.type;
+  if (set.type) out.creature_type = { ...(out.creature_type || {}), type: lower(set.type) };
   if (set.size) out.size = [set.size];
-  if (set.alignment) out.alignment = [set.alignment];
+  if (set.alignment) out.alignment = [lower(set.alignment)];
   const oldPb = pbOf(out);
   if (set.cr) {
     const stats = crStats(set.cr);
-    out.cr = { base: set.cr, xp: stats?.xp ?? null, pb: stats?.pb ?? oldPb };
+    out.cr = { cr: set.cr, xp: stats?.xp ?? null, pb: stats?.pb ?? oldPb };
   }
   const pbDelta = pbOf(out) - oldPb;
+  let saves = shift(out.saves, pbDelta);
+  let skills = shift(out.skills, pbDelta);
 
-  // ability scores (and the saves that hang on them), save proficiencies
-  const scores = { ...(out.ability_scores || {}) };
-  let touched = false;
-  for (const ab of ABILITY_ORDER) {
-    const row = { ...(scores[ab] || { score: 10 }) };
+  // ability scores, and the saves, skills and initiative that hang on them
+  const abilities = { ...(out.abilities || {}) };
+  let initiative = out.initiative;
+  for (const ab of ABILITIES) {
     const d = toInt(a.abilities?.[ab], 0);
-    const hadSave = Number.isFinite(Number(row.save));
-    if (d) {
-      const before = abilityMod(row.score);
-      row.score = toInt(row.score, 10) + d;
-      row.mod = abilityMod(row.score);
-      if (hadSave) row.save = Number(row.save) + row.mod - before;
-      touched = true;
-    }
-    if (row.proficient && pbDelta && Number.isFinite(Number(row.save))) row.save = Number(row.save) + pbDelta;
-    if (asList(t.saves).includes(ab) && !row.proficient) {
-      row.save = (Number.isFinite(Number(row.save)) ? Number(row.save) : abilityMod(row.score)) + pbOf(out);
-      row.proficient = true;
-      touched = true;
-    }
-    scores[ab] = row;
+    if (!d) continue;
+    const score = toInt(abilities[ab], 10);
+    const delta = abilityMod(score + d) - abilityMod(score);
+    abilities[ab] = score + d;
+    saves = shift(saves, delta, (k) => k === ab);
+    skills = shift(skills, delta, (k) => SKILLS[k] === ab);
+    if (ab === "dex" && isNumber(initiative?.bonus)) initiative = { ...initiative, bonus: initiative.bonus + delta };
   }
-  out.ability_scores = scores;
+  out = { ...out, abilities, saves, skills, initiative };
+  for (const ab of asList(t.saves)) if (!isNumber(saves[ab])) saves[ab] = modOf(out, ab) + pbOf(out);
 
   // skills: listed ones move; unlisted ones start from the ability modifier
-  const skill = { ...(out.skill || {}) };
   for (const [key, d] of Object.entries(a.skills || {})) {
     if (!toInt(d, 0)) continue;
-    const have = Object.keys(skill).find((k) => squash(k) === squash(key));
-    const ability = SKILL_OPTIONS[SKILL_KEY[squash(key)]]?.ability;
-    const start = skillBonus(out, key) ?? abilityMod(scores[ability]?.score ?? 10);
-    skill[have || key] = signed(start + toInt(d, 0));
-    touched = true;
+    skills[key] = (skillBonus(out, key) ?? modOf(out, SKILLS[key] || "wis")) + toInt(d, 0);
   }
-  out.skill = skill;
 
   // AC, HP, initiative, speeds, senses
   if (toInt(a.ac, 0)) {
@@ -349,34 +336,35 @@ function applyOneToMonster(m, t, uses) {
     out.hp_current = toInt(out.hp_current, max) + delta;
     out._hp_delta = toInt(out._hp_delta, 0) + delta;
   }
-  if (toInt(a.initiative, 0)) out.initiative = { ...(out.initiative || {}), total: initiativeOf(out) + toInt(a.initiative, 0) };
+  if (toInt(a.initiative, 0)) out.initiative = { ...(out.initiative || {}), bonus: initiativeOf(out) + toInt(a.initiative, 0) };
   out.speed = mergeHigher(adjustSpeeds(out.speed, a.speed), t.speed);
   out.senses = mergeHigher(out.senses, t.senses);
   out.languages = union(out.languages, t.languages);
-  for (const key of DEFENSES) out[key] = { ...(out[key] || {}), types: union(out[key]?.types, t[key]?.types).map(lower) };
+  const defenses = { ...(out.defenses || {}) };
+  for (const key of DEFENSE_KEYS) {
+    const types = union(defenses[key]?.types, t.defenses?.[key]?.types).map(lower);
+    if (types.length) defenses[key] = { ...(defenses[key] || {}), types };
+  }
+  out.defenses = defenses;
 
   // attacks and save DCs, then the template's own rows on top
-  out = adjustAttacks(out, a, t.extra_damage);
+  out.features = [...adjustFeatures(out.features, a, t.extra_damage), ...grantedFeatures(t, uses)];
   const spellDc = toInt(a.spell_dc, 0);
   const spellAtk = toInt(a.spell_attack, 0);
   if (spellDc || spellAtk) {
     out.spellcasting = asList(out.spellcasting).map((b) => ({
       ...b,
-      save_dc: b.save_dc != null ? toInt(b.save_dc, 0) + spellDc : b.save_dc,
-      spell_attack_bonus: b.spell_attack_bonus != null ? toInt(b.spell_attack_bonus, 0) + spellAtk : b.spell_attack_bonus,
+      dc: isNumber(b.dc) ? b.dc + spellDc : b.dc,
+      attack: isNumber(b.attack) ? b.attack + spellAtk : b.attack,
     }));
-  }
-  const rows = grantedRows(t, uses);
-  if (Object.keys(rows).length) {
-    const effects = { ...(out.effects || {}) };
-    for (const [key, items] of Object.entries(rows)) effects[key] = { ...(effects[key] || {}), items: [...asList(effects[key]?.items), ...items] };
-    out.effects = effects;
   }
   const spells = grantedSpells(t, uses);
   if (spells.length) out.spellcasting = [...asList(out.spellcasting), ...spells];
-  if (asList(t.gear).length) out.gear = [...asList(out.gear), ...asList(t.gear).map((g) => ({ ...g, id: nsId(t, g.id), from_template: t.name }))];
+  if (asList(t.items).length) out.items = [...asList(out.items), ...t.items.map((it) => ({ ...it, id: nsId(t, it.id), from_template: t.name }))];
 
-  return touched ? withPassive(out) : out;
+  // Passive Perception follows Perception (or Wisdom).
+  out.passive_perception = 10 + (skillBonus(out, "perception") ?? modOf(out, "wis"));
+  return out;
 }
 
 export function applyToMonster(base, templates) {
@@ -384,10 +372,14 @@ export function applyToMonster(base, templates) {
   const uses = base.template_uses || {};
   let m = structuredClone(base);
   for (const t of templates) m = applyOneToMonster(m, t, uses);
-  const settled = settleDamage(asList(m.resistances?.types), asList(m.immunities?.types), asList(m.vulnerabilities?.types));
-  m.resistances = { ...(m.resistances || {}), types: settled.res };
-  m.immunities = { ...(m.immunities || {}), types: settled.imm };
-  m.vulnerabilities = { ...(m.vulnerabilities || {}), types: settled.vul };
+  const d = m.defenses || {};
+  const settled = settleDamage(asList(d.resist?.types), asList(d.immune?.types), asList(d.vulnerable?.types));
+  m.defenses = {
+    ...d,
+    resist: { ...(d.resist || {}), types: settled.res },
+    immune: { ...(d.immune || {}), types: settled.imm },
+    vulnerable: { ...(d.vulnerable || {}), types: settled.vul },
+  };
   m.applied_templates = templates.map((t) => t.name);
   return m;
 }
@@ -395,50 +387,58 @@ export function applyToMonster(base, templates) {
 /* ─── characters (party, NPCs) ───────────────────────────────────── */
 // Characters work out their attacks, DCs and spells from their own sheet,
 // so a template gives them: name, AC, HP, initiative, ability scores,
-// save proficiencies, speeds, senses, languages and defenses. Its traits
-// and actions are shown next to theirs (templateSections).
+// save proficiencies, speeds, senses, languages and defenses — as one
+// extra layer per template (from: "template:<id>"), which utils/derive.js
+// counts like any other. The layer is only on the card, never saved.
+// Its traits and actions are shown next to theirs (templateSections).
 
-function applyOneToCharacter(c, t) {
+const langId = (x) => lower(nameOf(x)).replace(/[^a-z0-9]+/g, "_").replace(/^_|_$/g, "");
+
+function templateLayer(c, t) {
   const a = t.adjust || {};
-  const out = { ...c, name: affixed(c.name, t) };
-  if (toInt(a.ac, 0)) out.ac = toInt(out.ac, 10) + toInt(a.ac, 0);
-  const health = healthOf(out);
-  const delta = hpDelta(effectiveMaxHp(health), a);
-  if (delta) {
-    out.health = { ...health, max_hp_mod: toInt(health.max_hp_mod, 0) + delta, current_hp: toInt(health.current_hp, 0) + delta };
-    out._hp_delta = toInt(out._hp_delta, 0) + delta;
+  const mods = [];
+  if (toInt(a.ac, 0)) mods.push({ target: "ac", add: toInt(a.ac, 0) });
+  if (toInt(a.initiative, 0)) mods.push({ target: "initiative", add: toInt(a.initiative, 0) });
+  for (const [k, v] of Object.entries(a.speed || {})) if (toInt(v, 0)) mods.push({ target: `speed.${k}`, add: toInt(v, 0) });
+  const delta = hpDelta(derivedOf(c)?.hp_max ?? 0, a);
+  if (delta) mods.push({ target: "hp_max", add: delta });
+  const ability = {};
+  for (const ab of ABILITIES) if (toInt(a.abilities?.[ab], 0)) ability[ab] = toInt(a.abilities[ab], 0);
+  const defenses = {};
+  for (const key of DEFENSE_KEYS) {
+    const types = asList(t.defenses?.[key]?.types).map((x) => lower(nameOf(x)));
+    if (types.length) defenses[key] = types;
   }
-  if (toInt(a.initiative, 0)) out.initiative = { ...(out.initiative || {}), mod: toInt(out.initiative?.mod, 0) + toInt(a.initiative, 0) };
-  const scores = { ...(out.ability_scores || {}) };
-  for (const ab of ABILITY_ORDER) {
-    const d = toInt(a.abilities?.[ab], 0);
-    const grant = asList(t.saves).includes(ab);
-    if (!d && !grant) continue;
-    const row = { ...(scores[ab] || {}) };
-    if (d && row.score != null) {
-      row.score = toInt(row.score, 10) + d;
-      row.mod = abilityMod(row.score);
-    }
-    if (grant) row.proficient = true;
-    scores[ab] = row;
+  const speed = {};
+  for (const [k, v] of Object.entries(t.speed || {})) {
+    const n = speedNum(v);
+    if (n != null) speed[k] = n;
+    else if (v === true) speed[k] = true;
   }
-  out.ability_scores = scores;
-  out.speed = mergeHigher(adjustSpeeds(out.speed, a.speed), t.speed);
-  out.senses = mergeHigher(out.senses, t.senses);
-  out.language_proficiencies = union(out.language_proficiencies, t.languages);
-  const def = { ...(out.defenses || {}) };
-  for (const key of DEFENSES) def[key] = union(def[key], t[key]?.types);
-  out.defenses = def;
-  return out;
+  return {
+    layer: {
+      from: `template:${t.id}`,
+      label: t.name,
+      grants: { ability, saves: asList(t.saves), speed, senses: { ...(t.senses || {}) }, languages: asList(t.languages).map(langId).filter(Boolean), defenses },
+      modifiers: mods,
+    },
+    delta,
+  };
 }
 
 export function applyToCharacter(base, templates) {
   if (!base || !templates.length) return base;
-  let c = structuredClone(base);
-  for (const t of templates) c = applyOneToCharacter(c, t);
-  const d = c.defenses || {};
-  const settled = settleDamage(asList(d.resistances).map(nameOf), asList(d.immunities).map(nameOf), asList(d.vulnerabilities).map(nameOf));
-  c.defenses = { ...d, resistances: settled.res, immunities: settled.imm, vulnerabilities: settled.vul };
+  let c = { ...base, layers: [...asList(base.layers)] };
+  let delta = 0;
+  for (const t of templates) {
+    const made = templateLayer(c, t);
+    c = { ...c, name: affixed(c.name, t), layers: [...c.layers, made.layer] };
+    delta += made.delta;
+  }
+  // Extra hit points from a template are there now, not only at full health.
+  const cur = base.state?.hp_current;
+  if (delta && cur != null) c.state = { ...(base.state || {}), hp_current: Math.max(0, cur + delta) };
+  c._hp_delta = delta;
   c.applied_templates = templates.map((t) => t.name);
   return c;
 }
@@ -448,11 +448,12 @@ export function applyToCharacter(base, templates) {
 export function templateSections(templates, uses = {}) {
   const out = [];
   for (const t of templates) {
-    for (const [key, items] of Object.entries(grantedRows(t, uses))) {
-      const title = EFFECT_SECTIONS.find((s) => s.key === key)?.title || key;
+    for (const f of grantedFeatures(t, uses)) {
+      const key = f.category || "traits";
+      const title = MONSTER_SECTIONS.find((s) => s.key === key)?.title || key;
       let section = out.find((s) => s.title === title);
       if (!section) out.push((section = { key, title, entries: [] }));
-      section.entries.push(...items.map((it) => entryFrom(key, it)));
+      section.entries.push(entryFrom(key, f));
     }
   }
   return out;
@@ -482,14 +483,14 @@ export function templateSummary(t) {
   if (n(a.ac)) parts.push(`${sg(n(a.ac))} AC`);
   if (n(a.hp)) parts.push(`${sg(n(a.hp))} HP`);
   if (n(a.hp_percent)) parts.push(`${sg(n(a.hp_percent))}% HP`);
-  for (const ab of ABILITY_ORDER) if (n(a.abilities?.[ab])) parts.push(`${ab.toUpperCase()} ${sg(n(a.abilities[ab]))}`);
+  for (const ab of ABILITIES) if (n(a.abilities?.[ab])) parts.push(`${ab.toUpperCase()} ${sg(n(a.abilities[ab]))}`);
   if (n(a.to_hit)) parts.push(`${sg(n(a.to_hit))} to hit`);
   if (n(a.damage)) parts.push(`${sg(n(a.damage))} damage`);
-  const res = asList(t?.resistances?.types);
+  const res = asList(t?.defenses?.resist?.types);
   if (res.length) parts.push(`resists ${res.join(", ")}`);
-  const vul = asList(t?.vulnerabilities?.types);
+  const vul = asList(t?.defenses?.vulnerable?.types);
   if (vul.length) parts.push(`vulnerable to ${vul.join(", ")}`);
-  const rows = EFFECT_SECTIONS.reduce((sum, s) => sum + asList(t?.effects?.[s.key]?.items).length, 0);
+  const rows = asList(t?.features).length;
   if (rows) parts.push(`${rows} ${rows === 1 ? "trait or action" : "traits & actions"}`);
   if (t?.set?.type) parts.push(`becomes ${t.set.type}`);
   return parts.join(" · ") || "nothing yet";

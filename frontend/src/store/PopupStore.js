@@ -18,6 +18,12 @@ export const usePopupStore = create(
 
       open: (type, data) => {
         const id = buildId(type, data);
+        // A card of a character's own copy (`_sheet`) shows it as it is
+        // now: opening it again brings the newest version along.
+        if (data?._sheet) {
+          const fresh = (list) => list.map((p) => (p.id === id ? { ...p, data } : p));
+          set((s) => ({ openPopups: fresh(s.openPopups), minimized: fresh(s.minimized) }));
+        }
         const state = get();
         if (state.minimized.some((p) => p.id === id)) {
           get().restore(id);

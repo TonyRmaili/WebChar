@@ -1,96 +1,104 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useCatalogueStore } from "../../../store/CatalogueStore";
 import { usePopupStore } from "../../../store/PopupStore";
 import useAuthStore from "../../../store/AuthStore";
 import FilterSection from "../FilterSection";
 import FilterPopup, { FilterButton } from "../FilterPopup";
-import RowContextMenu from "../RowContextMenu";
-import OptionalFeatureRow from "./OptionalFeatureRow";
 import OptionalFeatureCreatePopup from "./OptionalFeatureCreatePopup";
-import { ErrorLine, LoadingLine, Toolbar, chip, searchCls } from "../catalogueStyle";
+import { ErrorLine, LoadingLine, Toolbar, searchCls } from "../catalogueStyle";
+import { CatalogueRow, ChipToggles, useEntryMenu } from "../catalogueParts";
 import { addBtn } from "../../../styles/parchmentForm";
 import {
-  formatSource, formatFeatureType, collectUnique, FEATURE_TYPES,
-} from "./optionalFeatureHelpers";
+  HOMEBREW, EDITIONS, formatEdition, formatSource, formatFeatureType, labelFromId,
+  collectUnique, toggleIn, matchesQuery, passesAny, byName, offeredKinds, GIVES_LABELS,
+  prerequisiteKinds, PREREQUISITE_LABELS,
+} from "../catalogueHelpers";
+import { consumedResources, featureClasses, optionalFeatureRowMeta } from "./optionalFeatureHelpers";
 
+const REPEATABLE = [
+  { value: "yes", label: "Repeatable" },
+  { value: "no", label: "Once only" },
+];
+const NO_COST = "none";
+
+/* The Optional Features catalogue (invocations, maneuvers, metamagic,
+   fighting styles, …): a filterable list; a click opens the card, a
+   right-click copies (and, for your own homebrew, edits or deletes).
+   The filters offer only values the loaded features have. */
 export default function OptionalFeatures() {
-  const optionalFeaturesData = useCatalogueStore((s) => s.optionalFeaturesData);
+  const features = useCatalogueStore((s) => s.optionalFeatures);
   const loading = useCatalogueStore((s) => s.loadingOptionalFeatures);
-  const error = useCatalogueStore((s) => s.error);
+  const error = useCatalogueStore((s) => s.optionalFeaturesError);
   const loadOptionalFeatures = useCatalogueStore((s) => s.loadOptionalFeatures);
-  const deleteOptionalFeatureAction = useCatalogueStore((s) => s.deleteOptionalFeature);
-
-  const features = optionalFeaturesData?.features || [];
-
-  const [selectedTypes, setSelectedTypes] = useState([]);
-  const [selectedSources, setSelectedSources] = useState(["XPHB"]);
-  const [query, setQuery] = useState("");
-  const [filtersOpen, setFiltersOpen] = useState(false);
-
-  const [createOpen, setCreateOpen] = useState(false);
-  const [editingFeature, setEditingFeature] = useState(null);
-  const [copyFromFeature, setCopyFromFeature] = useState(null);
-  const [contextMenu, setContextMenu] = useState(null);
+  const deleteOptionalFeature = useCatalogueStore((s) => s.deleteOptionalFeature);
 
   const openPopup = usePopupStore((s) => s.open);
   const currentUser = useAuthStore((s) => s.userData?.name);
 
-  useEffect(() => { loadOptionalFeatures(); }, []);
+  const [query, setQuery] = useState("");
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const [editions, setEditions] = useState(["one"]);
+  const [sources, setSources] = useState([]);
+  const [types, setTypes] = useState([]);
+  const [classes, setClasses] = useState([]);
+  const [prereqs, setPrereqs] = useState([]);
+  const [costs, setCosts] = useState([]);
+  const [gives, setGives] = useState([]);
+  const [repeatable, setRepeatable] = useState([]);
 
-  const baseSources = useMemo(() => collectUnique(features, "source"), [features]);
-  const sources = useMemo(
-    () => (baseSources.includes("HOMEBREW") ? baseSources : ["HOMEBREW", ...baseSources]),
-    [baseSources]
+  const [form, setForm] = useState(null); // null = closed · {} new · { editing } · { copyFrom }
+  const [openMenu, menu] = useEntryMenu({
+    user: currentUser,
+    onCopy: (f) => setForm({ copyFrom: f }),
+    onEdit: (f) => setForm({ editing: f }),
+    onDelete: deleteOptionalFeature,
+  });
+
+  useEffect(() => {
+    loadOptionalFeatures();
+  }, [loadOptionalFeatures]);
+
+  const costOf = (f) => (consumedResources(f).length ? consumedResources(f) : [NO_COST]);
+
+  // What the filters offer: only values some feature has.
+  const options = useMemo(() => {
+    const found = collectUnique(features, "source");
+    return {
+      sources: found.includes(HOMEBREW) ? found : [HOMEBREW, ...found],
+      types: collectUnique(features, "feature_types"),
+      classes: collectUnique(features, featureClasses),
+      prereqs: collectUnique(features, prerequisiteKinds),
+      costs: collectUnique(features, costOf),
+      gives: collectUnique(features, offeredKinds),
+    };
+  }, [features]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const filtered = useMemo(
+    () =>
+      (features || [])
+        .filter(
+          (f) =>
+            passesAny(editions, [f.edition]) &&
+            passesAny(sources, [f.source]) &&
+            passesAny(types, f.feature_types) &&
+            passesAny(classes, featureClasses(f)) &&
+            passesAny(prereqs, prerequisiteKinds(f)) &&
+            passesAny(costs, costOf(f)) &&
+            passesAny(gives, offeredKinds(f)) &&
+            passesAny(repeatable, [f.repeatable ? "yes" : "no"]) &&
+            matchesQuery(f, query)
+        )
+        .sort(byName),
+    [features, editions, sources, types, classes, prereqs, costs, gives, repeatable, query] // eslint-disable-line react-hooks/exhaustive-deps
   );
 
-  const toggle = (setter) => (val) =>
-    setter((prev) => (prev.includes(val) ? prev.filter((x) => x !== val) : [...prev, val]));
-  const toggleType = toggle(setSelectedTypes);
-  const toggleSource = toggle(setSelectedSources);
-
-  const handleRowContextMenu = (e, feat) => {
-    const isHomebrew = feat.source === "HOMEBREW";
-    const isOwner = isHomebrew && feat.created_by === currentUser;
-    const items = [{
-      label: "Copy",
-      onClick: () => { setCopyFromFeature(feat); setCreateOpen(true); },
-    }];
-    if (isOwner) {
-      items.push({
-        label: "Edit",
-        onClick: () => { setEditingFeature(feat); setCreateOpen(true); },
-      });
-      items.push({
-        label: "Delete",
-        danger: true,
-        onClick: async () => {
-          if (!window.confirm(`Delete "${feat.name}"? This cannot be undone.`)) return;
-          try { await deleteOptionalFeatureAction(feat.id); }
-          catch (err) { alert(`Delete failed: ${err.message}`); }
-        },
-      });
-    }
-    setContextMenu({ x: e.clientX, y: e.clientY, items });
+  const all = [editions, sources, types, classes, prereqs, costs, gives, repeatable];
+  const activeCount = all.reduce((n, l) => n + l.length, 0);
+  const clearAll = () => {
+    [setEditions, setSources, setTypes, setClasses, setPrereqs, setCosts, setGives, setRepeatable].forEach((s) => s([]));
+    setQuery("");
   };
-
-  const handleCreateClose = () => {
-    setCreateOpen(false);
-    setEditingFeature(null);
-    setCopyFromFeature(null);
-  };
-
-  const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    return features.filter((f) => {
-      if (selectedTypes.length > 0 && !selectedTypes.includes(f.feature_type)) return false;
-      if (selectedSources.length > 0 && !selectedSources.includes(f.source)) return false;
-      if (q && !f.name?.toLowerCase().includes(q)) return false;
-      return true;
-    });
-  }, [features, query, selectedTypes, selectedSources]);
-
-  const clearAll = () => { setSelectedTypes([]); setSelectedSources([]); setQuery(""); };
-  const activeCount = selectedSources.length + selectedTypes.length;
+  const toggler = (setter) => (v) => setter((l) => toggleIn(l, v));
 
   return (
     <div className="min-h-[640px] w-full">
@@ -108,7 +116,7 @@ export default function OptionalFeatures() {
                 <span className="text-xs italic text-ink-faded">
                   {filtered.length} of {features.length}
                 </span>
-                <button onClick={() => setCreateOpen(true)} className={`${addBtn} !text-sm`}>
+                <button type="button" onClick={() => setForm({})} className={`${addBtn} !text-sm`}>
                   + create
                 </button>
               </>
@@ -116,25 +124,33 @@ export default function OptionalFeatures() {
           />
 
           <FilterPopup open={filtersOpen} onClose={() => setFiltersOpen(false)} activeCount={activeCount} onClear={clearAll}>
-            <FilterSection title="Sources">
-              <div className="grid grid-cols-2 gap-x-6 gap-y-1.5 sm:grid-cols-3 lg:grid-cols-4">
-                {sources.map((source) => (
-                  <button key={source} onClick={() => toggleSource(source)} title={formatSource(source)}
-                          className={`${chip(selectedSources.includes(source))} truncate`}>
-                    {formatSource(source)}
-                  </button>
-                ))}
-              </div>
+            <FilterSection title="Edition">
+              <ChipToggles options={EDITIONS} selected={editions} labelOf={formatEdition} onToggle={toggler(setEditions)} />
             </FilterSection>
-
-            <FilterSection title="Feature Type">
-              <div className="flex flex-wrap gap-x-4 gap-y-1.5">
-                {FEATURE_TYPES.map((t) => (
-                  <button key={t} onClick={() => toggleType(t)} className={chip(selectedTypes.includes(t))}>
-                    {formatFeatureType(t)}
-                  </button>
-                ))}
-              </div>
+            <FilterSection title="Sources">
+              <ChipToggles options={options.sources} selected={sources} labelOf={formatSource} onToggle={toggler(setSources)}
+                           className="!grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4" />
+            </FilterSection>
+            <FilterSection title="Type">
+              <ChipToggles options={options.types} selected={types} labelOf={formatFeatureType} onToggle={toggler(setTypes)} />
+            </FilterSection>
+            <FilterSection title="Class">
+              <ChipToggles options={options.classes} selected={classes} labelOf={labelFromId} onToggle={toggler(setClasses)} />
+            </FilterSection>
+            <FilterSection title="Prerequisite">
+              <ChipToggles options={options.prereqs} selected={prereqs} onToggle={toggler(setPrereqs)}
+                           labelOf={(k) => (k === "none" ? "None" : PREREQUISITE_LABELS[k] || k)} />
+            </FilterSection>
+            <FilterSection title="Cost">
+              <ChipToggles options={options.costs} selected={costs} onToggle={toggler(setCosts)}
+                           labelOf={(k) => (k === NO_COST ? "No cost" : labelFromId(k))} />
+            </FilterSection>
+            <FilterSection title="Gives" defaultOpen={false}>
+              <ChipToggles options={options.gives} selected={gives} labelOf={(k) => GIVES_LABELS[k] || k} onToggle={toggler(setGives)} />
+            </FilterSection>
+            <FilterSection title="Repeatable" defaultOpen={false}>
+              <ChipToggles options={REPEATABLE.map((r) => r.value)} selected={repeatable} onToggle={toggler(setRepeatable)}
+                           labelOf={(v) => REPEATABLE.find((r) => r.value === v).label} />
             </FilterSection>
           </FilterPopup>
 
@@ -142,28 +158,17 @@ export default function OptionalFeatures() {
             <LoadingLine>No optional features match your filters.</LoadingLine>
           ) : (
             <div className="grid grid-cols-1 gap-x-8 md:grid-cols-2 xl:grid-cols-3">
-              {filtered.map((f, idx) => (
-                <OptionalFeatureRow
-                  key={`${f.id || f.name}-${f.source}-${f.feature_type}-${idx}`}
-                  feature={f}
-                  onOpen={(of) => openPopup("optionalFeature", of)}
-                  onContextMenu={handleRowContextMenu}
-                />
+              {filtered.map((f) => (
+                <CatalogueRow key={`${f.id}-${f.visibility || ""}`} entry={f} meta={optionalFeatureRowMeta(f)}
+                              onOpen={(x) => openPopup("optionalFeature", x)} onContextMenu={openMenu} />
               ))}
             </div>
           )}
 
-          {contextMenu && (
-            <RowContextMenu x={contextMenu.x} y={contextMenu.y} items={contextMenu.items}
-                            onClose={() => setContextMenu(null)} />
-          )}
+          {menu}
 
-          <OptionalFeatureCreatePopup
-            open={createOpen}
-            onClose={handleCreateClose}
-            editingFeature={editingFeature}
-            copyFromFeature={copyFromFeature}
-          />
+          <OptionalFeatureCreatePopup open={form !== null} onClose={() => setForm(null)}
+                                      editingFeature={form?.editing || null} copyFromFeature={form?.copyFrom || null} />
         </>
       )}
     </div>

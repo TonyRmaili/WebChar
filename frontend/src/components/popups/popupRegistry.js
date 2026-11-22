@@ -5,6 +5,7 @@ import SpellPopup           from "../../pages/Catalogues/Spells/SpellPopup";
 import ItemPopup            from "../../pages/Catalogues/Items/ItemPopup";
 import BackgroundPopup      from "../../pages/Catalogues/Backgrounds/BackgroundPopup";
 import OptionalFeaturePopup from "../../pages/Catalogues/OptionalFeatures/OptionalFeaturePopup";
+import FeatureCardPopup     from "../../pages/Characters/sheet/FeatureCardPopup";
 import StatblockWindow, { statblockWindowId } from "../../pages/Campaigns/statblock/StatblockWindow";
 import TrackerWindow, { trackerWindowId } from "../../pages/Campaigns/tracker/TrackerWindow";
 import TableWindow, { tableWindowId } from "../../pages/Campaigns/tables/TableWindow";
@@ -52,6 +53,8 @@ export const POPUP_REGISTRY = {
     propName: "spell",
     defaultWidth: 520,
     defaultHeight: 620,
+    // A character's own copy (`_sheet`, keyed by its layer) is its own card.
+    buildId: (d) => (d._sheet ? `spell__sheet__${d._key}` : `spell__${d.name}__${d.source}`),
   },
   item: {
     deck: "items",
@@ -59,6 +62,19 @@ export const POPUP_REGISTRY = {
     propName: "item",
     defaultWidth: 520,
     defaultHeight: 620,
+    // A character's own copy (`_sheet`) is its own card, next to the
+    // catalogue's card of the same item.
+    buildId: (d) => (d._sheet ? `item__sheet__${d.id}` : `item__${d.name}__${d.source}`),
+  },
+  // A feature of a character (a racial trait, a class feature): its own
+  // copy, from the sheet. data: { key, name, owner, text, … } (_sheet).
+  feature: {
+    deck: "features",
+    component: FeatureCardPopup,
+    propName: "feature",
+    defaultWidth: 460,
+    defaultHeight: 520,
+    buildId: (d) => `feature__${d.key}`,
   },
   background: {
     deck: "backgrounds",
@@ -74,7 +90,7 @@ export const POPUP_REGISTRY = {
     defaultWidth: 520,
     defaultHeight: 620,
     // Disambiguate features with same name+source across feature types.
-    buildId: (d) => `optionalFeature__${d.name}__${d.source}__${d.feature_type}`,
+    buildId: (d) => `optionalFeature__${d.id}`,
   },
   // A campaign copy's statblock (Campaign › NPCs). The data is only a
   // reference { name, campaignName, kind, file }; openStatblock() in

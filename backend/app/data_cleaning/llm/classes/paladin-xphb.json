@@ -1,0 +1,359 @@
+{
+  "paladin-xphb:lay-on-hands": {
+    "label": "Paladin (XPHB) · Lay on Hands",
+    "hash": "c615adae44e97b3a",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "lay-on-hands",
+          "name": "Lay on Hands",
+          "level": 1,
+          "category": "bonus_actions",
+          "action": {
+            "range": "touch"
+          }
+        }
+      ],
+      "resources": [
+        {
+          "name": "Healing Power",
+          "max": "5 * class_level",
+          "reset": "long"
+        }
+      ]
+    },
+    "problems": [],
+    "tokens": 11904,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-19T11:35:26+00:00"
+  },
+  "paladin-xphb:paladins-smite": {
+    "label": "Paladin (XPHB) · Paladin's Smite",
+    "hash": "1d1413014021522c",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11169,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-19T11:35:35+00:00"
+  },
+  "paladin-xphb:channel-divinity": {
+    "label": "Paladin (XPHB) · Channel Divinity",
+    "hash": "fd3a3a01b198da22",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "divine-sense",
+          "name": "Divine Sense",
+          "level": 3,
+          "category": "bonus_actions",
+          "action": {
+            "range": "60 feet"
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        }
+      ],
+      "resources": [
+        {
+          "name": "Channel Divinity",
+          "max": "channel_divinity",
+          "reset": "long",
+          "short_rest": 1
+        }
+      ]
+    },
+    "problems": [],
+    "tokens": 11577,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-19T11:35:38+00:00"
+  },
+  "paladin-xphb:extra-attack": {
+    "label": "Paladin (XPHB) · Extra Attack",
+    "hash": "80531b65192b0382",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11119,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-19T11:35:42+00:00"
+  },
+  "paladin-xphb:faithful-steed": {
+    "label": "Paladin (XPHB) · Faithful Steed",
+    "hash": "55020770996839ca",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11162,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-19T11:35:45+00:00"
+  },
+  "paladin-xphb:aura-of-protection": {
+    "label": "Paladin (XPHB) · Aura of Protection",
+    "hash": "228bce7dfde4422d",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "aura-of-protection",
+          "name": "Aura of Protection",
+          "level": 6,
+          "category": "traits",
+          "modifiers": [
+            {
+              "target": "save.str",
+              "add": "max(1, cha_mod)"
+            },
+            {
+              "target": "save.dex",
+              "add": "max(1, cha_mod)"
+            },
+            {
+              "target": "save.con",
+              "add": "max(1, cha_mod)"
+            },
+            {
+              "target": "save.int",
+              "add": "max(1, cha_mod)"
+            },
+            {
+              "target": "save.wis",
+              "add": "max(1, cha_mod)"
+            },
+            {
+              "target": "save.cha",
+              "add": "max(1, cha_mod)"
+            }
+          ]
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11444,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-19T11:35:47+00:00"
+  },
+  "paladin-xphb:abjure-foes": {
+    "label": "Paladin (XPHB) · Abjure Foes",
+    "hash": "874e4e6fc6cc37e9",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "abjure-foes",
+          "name": "Abjure Foes",
+          "level": 9,
+          "category": "actions",
+          "action": {
+            "range": "60 feet",
+            "save": {
+              "ability": "wis",
+              "on_success": "none",
+              "conditions": [
+                "frightened"
+              ]
+            }
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11421,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-19T11:35:51+00:00"
+  },
+  "paladin-xphb:aura-of-courage": {
+    "label": "Paladin (XPHB) · Aura of Courage",
+    "hash": "fae39a8f6dda0c7d",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "aura-of-courage",
+          "name": "Aura of Courage",
+          "level": 10,
+          "category": "traits",
+          "grants": {
+            "defenses": {
+              "condition_immune": [
+                "frightened"
+              ]
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11332,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-19T11:35:55+00:00"
+  },
+  "paladin-xphb:radiant-strikes": {
+    "label": "Paladin (XPHB) · Radiant Strikes",
+    "hash": "36dc64e95c52cb8d",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "radiant-strikes",
+          "name": "Radiant Strikes",
+          "level": 11,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "melee",
+              "damage": [
+                {
+                  "dice": "1d8",
+                  "type": "radiant"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11276,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-19T11:36:02+00:00"
+  },
+  "paladin-xphb:restoring-touch": {
+    "label": "Paladin (XPHB) · Restoring Touch",
+    "hash": "7e88bd5f59b1b56e",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11296,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-19T11:36:06+00:00"
+  },
+  "paladin-xphb:aura-expansion": {
+    "label": "Paladin (XPHB) · Aura Expansion",
+    "hash": "9583510bf37d2b73",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11113,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-19T11:36:09+00:00"
+  },
+  "paladin-xphb:devotion-xphb": {
+    "label": "Paladin (XPHB) · Oath of Devotion (XPHB)",
+    "hash": "11ed4b69e56e3c04",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "sacred-weapon",
+          "name": "Sacred Weapon",
+          "level": 3,
+          "category": "traits",
+          "toggle": {
+            "modifiers": [
+              {
+                "target": "attack",
+                "add": "max(1, cha_mod)"
+              }
+            ]
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "aura-of-devotion",
+          "name": "Aura of Devotion",
+          "level": 7,
+          "category": "traits",
+          "grants": {
+            "defenses": {
+              "condition_immune": [
+                "charmed"
+              ]
+            }
+          }
+        },
+        {
+          "id": "holy-nimbus",
+          "name": "Holy Nimbus",
+          "level": 20,
+          "category": "bonus_actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "action": {
+            "damage": [
+              {
+                "bonus": "cha_mod + pb",
+                "type": "radiant",
+                "condition": "enemy starts its turn in the aura"
+              }
+            ]
+          },
+          "toggle": {
+            "uses_charge": true
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13337,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-19T11:36:12+00:00"
+  }
+}

@@ -15,9 +15,6 @@ import os
 import shutil
 from pathlib import Path
 
-from app.combat_functions import damage_health, heal_health, on_longrest, on_shortrest, grant_experience
-from app.character_files import edit_character, get_owned_character
-
 from app.routers.minions import router as minions_router
 from app.routers.campaigns import router as campaign_router
 from app.routers.encounters import router as encounter_router
@@ -31,11 +28,6 @@ from app.routers.characters import router as character_router
 from app.database.schemas import (
     UserSchema,
     UserOut,
-
-    HealthData,
-    TakeRestData,
-    TakeRestAllData,
-    GrantExperienceAll,
 )
 # uvicorn app.main:app --reload
 
@@ -176,55 +168,6 @@ def read_users_me(current_user: CurrentUser):
     return current_user
 
 
-# ------------------------Combat-----------------------------
-# Characters are found by their database id. Each change goes through
-# edit_character, which reads the file, lets the rule change it and saves
-# it, one request at a time per character (see app/character_files.py).
-
-@app.post("/combat/health", tags=["combat"])
-def change_health(form_data: HealthData, current_user: CurrentUser, db: Session = Depends(get_db)):
-    char = get_owned_character(db, current_user, form_data.char_id)
-
-    with edit_character(current_user.name, char.id) as data:
-        if form_data.value < 0:
-            damage_health(data, form_data.value)
-        elif form_data.value > 0:
-            heal_health(data, form_data.value)
-
-    return {"health": data["health"]}
-
-@app.post("/combat/rest", tags=["combat"])
-def take_rest(form_data: TakeRestData, current_user: CurrentUser, db: Session = Depends(get_db)):
-    char = get_owned_character(db, current_user, form_data.char_id)
-
-    with edit_character(current_user.name, char.id) as data:
-        if form_data.rest_type == "long":
-            on_longrest(data)
-        else:
-            on_shortrest(data)
-
-    # The rested character, so the sheet can show it without asking again.
-    return data
-
-@app.post("/combat/rest_all", tags=["combat"])
-def take_rest_all(form_data: TakeRestAllData, current_user: CurrentUser, db: Session = Depends(get_db)):
-    # Check every id first, so a wrong one rests nobody instead of half the party.
-    chars = [get_owned_character(db, current_user, char_id) for char_id in form_data.char_ids]
-    rest = on_longrest if form_data.rest_type == "long" else on_shortrest
-
-    for char in chars:
-        with edit_character(current_user.name, char.id) as data:
-            rest(data)
-
-    return {"ok": True, "rested": [char.id for char in chars]}
-
-@app.post("/combat/experience", tags=["combat"])
-def grant_all_exp(form_data: GrantExperienceAll, current_user: CurrentUser):
-    # Known bug, to fix later: this gives XP to EVERY character of the
-    # user, not only the active ones. The fix is to send char_ids, like
-    # rest_all does.
-    for character in current_user.characters:
-        with edit_character(current_user.name, character.id) as data:
-            grant_experience(data, form_data.delta)
-
-    return {"ok": True}
+# Damage, healing, rests and XP moved to app/routers/characters.py
+# (POST /character/{id}/hp, /character/{id}/rest, /character/rest,
+# /character/experience), with the rules in app/builder/play.py.
