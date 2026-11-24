@@ -1,4 +1,4 @@
-import { HOMEBREW, pruneEmpty, formatSize, titleCase } from "../catalogueHelpers";
+import { HOMEBREW, pruneEmpty, formatSize, titleCase, withFeatureTexts } from "../catalogueHelpers";
 import {
   emptyHeaderForm, headerToForm, formToHeader, emptyGrantsForm, grantsToForm, formToGrants,
 } from "../catalogueForms";
@@ -34,11 +34,11 @@ export const raceRowMeta = (race) => {
 /* ─── subraces ───────────────────────────────────────────────────── */
 
 export const emptySubrace = () => ({
-  name: "", text: "", size: [], grants: emptyGrantsForm(), replaces: [], replacesText: [], rest: {},
+  name: "", text: "", size: [], grants: emptyGrantsForm(), replaces: [], replacesText: [], features: [], rest: {},
 });
 
 const subraceToForm = (sr, copy) => {
-  const { id, kind, name, source, edition, text, size, grants, choices, replaces, replaces_text, srd, reprinted_as, ...rest } = sr;
+  const { id, kind, name, source, edition, text, size, grants, choices, replaces, replaces_text, srd, reprinted_as, features, ...rest } = sr;
   return {
     id: copy ? undefined : id,
     name: name || "",
@@ -47,6 +47,7 @@ const subraceToForm = (sr, copy) => {
     grants: grantsToForm(grants, choices),
     replaces: replaces || [],
     replacesText: replaces_text || [],
+    features: features || [],
     rest,
   };
 };
@@ -65,6 +66,7 @@ const formToSubrace = (sr, form) => {
       size: sr.size,
       replaces: sr.replaces,
       replaces_text: sr.replacesText,
+      features: withFeatureTexts(sr.features, sr.text, sr.name),
     }),
     grants,
     choices,
@@ -99,7 +101,7 @@ export function formToRace(form, original) {
     ...pruneEmpty({
       ...formToHeader(form, "race", original),
       subraces: form.subraces.filter((sr) => sr.name.trim()).map((sr) => formToSubrace(sr, form)),
-      features: form.features,
+      features: withFeatureTexts(form.features, form.text, form.name),
     }),
     size: form.size.length ? form.size : ["medium"],
     creature_types: form.creatureTypes.length ? form.creatureTypes : ["humanoid"],

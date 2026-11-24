@@ -1,10 +1,11 @@
 import React, { useEffect, useMemo, useState } from "react";
+import useStoredState from "../../../utils/useStoredState";
 import { useCatalogueStore } from "../../../store/CatalogueStore";
 import { usePopupStore } from "../../../store/PopupStore";
 import useAuthStore from "../../../store/AuthStore";
 import FilterSection from "../FilterSection";
 import FilterPopup, { FilterButton } from "../FilterPopup";
-import FeatCreatePopup from "./FeatCreatePopup";
+import FeatCardForm from "./FeatCardForm";
 import { ErrorLine, LoadingLine, Toolbar, searchCls } from "../catalogueStyle";
 import { CatalogueRow, ChipToggles, useEntryMenu } from "../catalogueParts";
 import { addBtn } from "../../../styles/parchmentForm";
@@ -36,13 +37,13 @@ export default function Feats() {
 
   const [query, setQuery] = useState("");
   const [filtersOpen, setFiltersOpen] = useState(false);
-  const [editions, setEditions] = useState(["one"]);
-  const [sources, setSources] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [abilities, setAbilities] = useState([]);
-  const [prereqs, setPrereqs] = useState([]);
-  const [gives, setGives] = useState([]);
-  const [repeatable, setRepeatable] = useState([]);
+  const [editions, setEditions] = useStoredState("catalogue.feats.editions", ["one"]);
+  const [sources, setSources] = useStoredState("catalogue.feats.sources", []);
+  const [categories, setCategories] = useStoredState("catalogue.feats.categories", []);
+  const [abilities, setAbilities] = useStoredState("catalogue.feats.abilities", []);
+  const [prereqs, setPrereqs] = useStoredState("catalogue.feats.prereqs", []);
+  const [gives, setGives] = useStoredState("catalogue.feats.gives", []);
+  const [repeatable, setRepeatable] = useStoredState("catalogue.feats.repeatable", []);
 
   const [form, setForm] = useState(null); // null = closed · {} new · { editing } · { copyFrom }
   const [openMenu, menu] = useEntryMenu({
@@ -158,8 +159,8 @@ export default function Feats() {
 
           {menu}
 
-          <FeatCreatePopup open={form !== null} onClose={() => setForm(null)}
-                           editingFeat={form?.editing || null} copyFromFeat={form?.copyFrom || null} />
+          <FeatCardForm open={form !== null} onClose={() => setForm(null)}
+                        editingFeat={form?.editing || null} copyFromFeat={form?.copyFrom || null} />
         </>
       )}
     </div>

@@ -1,13 +1,14 @@
 import React from "react";
 import { InkHeading } from "../../../styles/parchment";
 import { MechanicsRows } from "../catalogueParts";
-import { ABILITY_NAMES, formatFormula } from "../catalogueHelpers";
+import { ABILITY_NAMES, formatCurrency, formatItemGrant } from "../catalogueHelpers";
 import { formatAbilityGroups, formatRequires, isEquipment, resourceWords, spellcastingRows } from "./classHelpers";
 
-/* A class's traits down the left column: primary ability, hit points,
-   saves, proficiencies and picks, starting equipment, spellcasting,
+/* A class's traits down the left column: primary ability, hit point
+   die, saves, proficiencies and picks, starting equipment, spellcasting,
    resources and multiclassing. Grants and picks are written with the
-   catalogue's shared wording (MechanicsRows). */
+   catalogue's shared wording (MechanicsRows); the starting equipment is
+   written here: what's always given, then each "choose one of" A / B / C. */
 export default function ClassTraitsPanel({ cls, index }) {
   if (!cls) return <p className="text-sm italic text-ink-faded">Pick a class to see its traits.</p>;
 
@@ -16,6 +17,9 @@ export default function ClassTraitsPanel({ cls, index }) {
   const other = choices.filter((c) => !isEquipment(c));
   const sc = spellcastingRows(cls.spellcasting, index);
   const mc = cls.multiclass;
+  // Items and coins are starting equipment, not proficiencies.
+  const { items, currency, ...proficiencies } = cls.grants || {};
+  const always = itemWords({ items, currency }, index);
 
   return (
     <aside className="space-y-6">
@@ -25,20 +29,30 @@ export default function ClassTraitsPanel({ cls, index }) {
         <Trait label="Hit Point Die">
           <span className="font-semibold text-rubric">{cls.hit_die}</span> per {cls.name} level
         </Trait>
-        {cls.hp?.first && <Trait label="Hit Points at Level 1">{formatFormula(cls.hp.first)}</Trait>}
-        {cls.hp?.per_level && <Trait label="Hit Points per Level">{formatFormula(cls.hp.per_level)}</Trait>}
         {cls.saves?.length > 0 && <Trait label="Saving Throws">{cls.saves.map((a) => ABILITY_NAMES[a] || a).join(", ")}</Trait>}
       </section>
 
       <section className="space-y-2">
         <InkHeading>Proficiencies</InkHeading>
-        <MechanicsRows entry={{ grants: cls.grants, choices: other }} index={index} />
+        <MechanicsRows entry={{ grants: proficiencies, choices: other }} index={index} />
       </section>
 
-      {(equipment.length > 0 || cls.starting_gold) && (
+      {(always || equipment.length > 0 || cls.starting_gold) && (
         <section className="space-y-2">
           <InkHeading>Starting Equipment</InkHeading>
-          <MechanicsRows entry={{ choices: equipment }} index={index} />
+          {always && <Trait label="Always">{always}</Trait>}
+          {equipment.map((b, i) => (
+            <Trait key={b.id || i} label={equipment.length > 1 ? `Choose one of (${i + 1})` : "Choose one of"}>
+              <ol className="space-y-0.5">
+                {(b.options || []).map((o, j) => (
+                  <li key={o.id || j} className="flex gap-2">
+                    <span className="font-semibold text-rubric">{String.fromCharCode(65 + j)}</span>
+                    <span>{optionWords(o, index)}</span>
+                  </li>
+                ))}
+              </ol>
+            </Trait>
+          ))}
           {cls.starting_gold && <Trait label="Or gold instead">{cls.starting_gold} GP</Trait>}
         </section>
       )}
@@ -76,3 +90,10 @@ function Trait({ label, children }) {
     </div>
   );
 }
+
+// "Bag of Holding, Focus, 1 GP" — the items and coins of a grant.
+const itemWords = (g, index) =>
+  [...(g?.items || []).map((i) => formatItemGrant(i, index)), formatCurrency(g?.currency)].filter(Boolean).join(", ");
+
+// One "choose one of" option: its items and coins, else its label.
+const optionWords = (o, index) => itemWords(o.grants, index) || o.label || "—";

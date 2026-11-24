@@ -1,10 +1,11 @@
 import React, { useEffect, useMemo, useState } from "react";
+import useStoredState from "../../../utils/useStoredState";
 import { useCatalogueStore } from "../../../store/CatalogueStore";
 import { usePopupStore } from "../../../store/PopupStore";
 import useAuthStore from "../../../store/AuthStore";
 import FilterSection from "../FilterSection";
 import FilterPopup, { FilterButton } from "../FilterPopup";
-import BackgroundCreatePopup from "./BackgroundCreatePopup";
+import BackgroundCardForm from "./BackgroundCardForm";
 import { ErrorLine, LoadingLine, Toolbar, searchCls } from "../catalogueStyle";
 import { CatalogueRow, ChipToggles, useEntryMenu } from "../catalogueParts";
 import { addBtn } from "../../../styles/parchmentForm";
@@ -31,11 +32,11 @@ export default function Backgrounds() {
 
   const [query, setQuery] = useState("");
   const [filtersOpen, setFiltersOpen] = useState(false);
-  const [sources, setSources] = useState([]);
-  const [editions, setEditions] = useState(["one"]);
-  const [featPicks, setFeatPicks] = useState([]);
-  const [abilities, setAbilities] = useState([]);
-  const [skills, setSkills] = useState([]);
+  const [sources, setSources] = useStoredState("catalogue.backgrounds.sources", []);
+  const [editions, setEditions] = useStoredState("catalogue.backgrounds.editions", ["one"]);
+  const [featPicks, setFeatPicks] = useStoredState("catalogue.backgrounds.featPicks", []);
+  const [abilities, setAbilities] = useStoredState("catalogue.backgrounds.abilities", []);
+  const [skills, setSkills] = useStoredState("catalogue.backgrounds.skills", []);
 
   const [form, setForm] = useState(null); // null = closed · {} new · { editing } · { copyFrom }
   const [openMenu, menu] = useEntryMenu({
@@ -139,7 +140,7 @@ export default function Backgrounds() {
 
           {menu}
 
-          <BackgroundCreatePopup
+          <BackgroundCardForm
             open={form !== null}
             onClose={() => setForm(null)}
             editingBackground={form?.editing || null}

@@ -492,3 +492,65 @@ export const emptySpellBlock = () => ({
 
 export const SIZE_OPTIONS = ["tiny", "small", "medium", "large", "huge", "gargantuan"];
 export const ABILITY_LABELS = ABILITY_NAMES;
+
+// ─── Building to a challenge rating (the monster card's start) ─────
+// The DMG's "Monster Statistics by Challenge Rating" (2014, p. 274):
+// [AC, lowest HP, highest HP, attack bonus, lowest damage per round,
+// highest damage per round, save DC] for each CR in CR_OPTIONS' order.
+const DMG_BY_CR = [
+  [13, 1, 6, 3, 0, 1, 13], [13, 7, 35, 3, 2, 3, 13], [13, 36, 49, 3, 4, 5, 13], [13, 50, 70, 3, 6, 8, 13],
+  [13, 71, 85, 3, 9, 14, 13], [13, 86, 100, 3, 15, 20, 13], [13, 101, 115, 4, 21, 26, 13], [14, 116, 130, 5, 27, 32, 14],
+  [15, 131, 145, 6, 33, 38, 15], [15, 146, 160, 6, 39, 44, 15], [15, 161, 175, 6, 45, 50, 15], [16, 176, 190, 7, 51, 56, 16],
+  [16, 191, 205, 7, 57, 62, 16], [17, 206, 220, 7, 63, 68, 16], [17, 221, 235, 8, 69, 74, 17], [17, 236, 250, 8, 75, 80, 17],
+  [18, 251, 265, 8, 81, 86, 18], [18, 266, 280, 8, 87, 92, 18], [18, 281, 295, 8, 93, 98, 18], [18, 296, 310, 9, 99, 104, 18],
+  [19, 311, 325, 10, 105, 110, 19], [19, 326, 340, 10, 111, 116, 19], [19, 341, 355, 10, 117, 122, 19], [19, 356, 400, 10, 123, 140, 19],
+  [19, 401, 445, 11, 141, 158, 20], [19, 446, 490, 11, 159, 176, 20], [19, 491, 535, 11, 177, 194, 20], [19, 536, 580, 12, 195, 212, 21],
+  [19, 581, 625, 12, 213, 230, 21], [19, 626, 670, 12, 231, 248, 21], [19, 671, 715, 13, 249, 266, 22], [19, 716, 760, 13, 267, 284, 22],
+  [19, 761, 805, 13, 285, 302, 22], [19, 806, 850, 14, 303, 320, 23],
+];
+
+/* What a statblock of this CR usually has (the DMG table): { ac, hp, attack,
+   damage (per round), dc }, the middle of each range. */
+export const crTargets = (cr) => {
+  const row = DMG_BY_CR[CR_OPTIONS.indexOf(String(cr))];
+  if (!row) return null;
+  const [ac, hpLo, hpHi, attack, dmgLo, dmgHi, dc] = row;
+  return { ac, hp: Math.round((hpLo + hpHi) / 2), attack, damage: Math.round((dmgLo + dmgHi) / 2), dc };
+};
+
+const ABILITY_FOR = (mod) => 10 + 2 * mod;
+
+/* A new statblock with the numbers a monster of this CR usually has: AC,
+   HP, PB, a main ability that gives the table's attack bonus and save DC,
+   and one melee attack dealing the damage per round (a Multiattack of two
+   attacks from 30 damage a round, three from 90). Everything can be
+   changed after. */
+export function formForCR(cr) {
+  const f = emptyMonsterForm();
+  const t = crTargets(cr);
+  const stats = crStats(cr);
+  if (!t || !stats) return f;
+  const mod = Math.max(0, Math.min(10, t.attack - stats.pb)); // attack = PB + modifier
+  const con = Math.max(0, Math.min(5, Math.floor(Number(crNumber(cr)) / 4)));
+  const attacks = t.damage >= 90 ? 3 : t.damage >= 30 ? 2 : 1;
+  const perHit = Math.max(1, Math.round(t.damage / attacks));
+  const dice = Math.max(1, Math.round((perHit - mod) / 4.5));
+  const avg = Math.floor(dice * 4.5) + mod;
+  const hit = `${avg} (${dice}d8${mod ? ` + ${mod}` : ""}) Bludgeoning damage.`;
+  const strike = {
+    name: "Strike", category: "actions",
+    text: `Melee Attack Roll: +${t.attack}, reach 5 ft. Hit: ${hit}`,
+    action: { range: "reach 5 ft.", attack: { kind: "melee", bonus: t.attack, damage: [{ dice: `${dice}d8`, ...(mod ? { bonus: mod } : {}), type: "bludgeoning" }] } },
+  };
+  const features = attacks > 1
+    ? [{ name: "Multiattack", category: "actions", text: `The monster makes ${attacks === 3 ? "three" : "two"} Strike attacks.` }, strike]
+    : [strike];
+  return {
+    ...f,
+    cr: String(cr), xp: stats.xp, pb: stats.pb,
+    ac: [{ value: t.ac, from: "", condition: "", special: "" }],
+    hp: { average: t.hp, formula: "", special: "" },
+    abilities: { ...f.abilities, str: ABILITY_FOR(mod), con: ABILITY_FOR(con) },
+    features,
+  };
+}

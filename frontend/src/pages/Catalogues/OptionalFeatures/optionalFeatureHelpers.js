@@ -1,4 +1,4 @@
-import { pruneEmpty, formatFeatureType, labelFromId, entryParts } from "../catalogueHelpers";
+import { pruneEmpty, formatFeatureType, labelFromId, entryParts, withFeatureTexts } from "../catalogueHelpers";
 import {
   emptyHeaderForm, headerToForm, formToHeader, emptyGrantsForm, grantsToForm, formToGrants,
   prereqsToForm, formToPrereqs,
@@ -87,7 +87,7 @@ export function formToOptionalFeature(form, original) {
       classes: form.classes,
       consumes,
       prerequisites: formToPrereqs(form.prerequisites),
-      features: form.features,
+      features: withFeatureTexts(form.features, form.text, form.name),
     }),
     feature_types: form.featureTypes,
     repeatable: !!form.repeatable,

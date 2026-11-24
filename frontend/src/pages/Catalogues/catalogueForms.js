@@ -26,9 +26,10 @@ export const headerToForm = (entry, { copy = false } = {}) => ({
   edition: entry.edition || "one",
   visibility: copy ? "private" : entry.visibility || "private",
   text: entry.text || "",
-  // kept as they are: other names it goes by, and the book's trait tags
+  // kept as they are: other names it goes by, the book's trait tags, the settings it's for
   aliases: entry.aliases,
   tags: entry.tags,
+  campaigns: entry.campaigns,
 });
 
 // The record's header. An edit keeps the record's id; a new or copied
@@ -43,12 +44,13 @@ export const formToHeader = (form, kind, original) => ({
   text: form.text,
   aliases: form.aliases,
   tags: form.tags,
+  campaigns: form.campaigns,
 });
 
 // ─── Grants & choices ──────────────────────────────────────────────
 
 // The id lists the form edits as "always" + "choose N from" (PoolEditor).
-export const POOL_KINDS = ["skills", "expertise", "tools", "languages", "saves"];
+export const POOL_KINDS = ["skills", "expertise", "tools", "languages", "saves", "weapons", "armor"];
 
 // Ability bonus sets ("+2/+1 or +1/+1/+1" in 2024 backgrounds).
 export const BONUS_SETS = {

@@ -1,7 +1,7 @@
 import {
   pruneEmpty, labelFromId, titleCase, formatRarity, formatCurrency, nameFromId, formatValue, RESET_WORDS,
   ABILITY_NAMES, plural,
-} from "../catalogueHelpers";
+  withFeatureTexts } from "../catalogueHelpers";
 import { emptyHeaderForm, headerToForm, formToHeader, emptyGrantsForm, grantsToForm, formToGrants } from "../catalogueForms";
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -91,7 +91,11 @@ export const itemStats = (it, index) => {
   const add = (label, value) => value && rows.push({ label, value });
   const w = it.weapon;
   if (w) {
-    const dmg = w.damage ? `${w.damage.dice} ${labelFromId(w.damage.type || "")}`.trim() : "";
+    const part = (p) => `${p.dice} ${labelFromId(p.type || "")}`.trim();
+    // the extra damage on every hit (Thunderer's 2d10 thunder) reads after the weapon's own
+    const extra = (w.extra_damage || []).filter((p) => p?.dice).map(part);
+    // a variant's weapon may only add damage to its base's: "+1d6 cold"
+    const dmg = w.damage?.dice ? [part(w.damage), ...extra].join(" + ") : extra.length ? `+${extra.join(" + ")}` : "";
     add("Weapon", [w.category && titleCase(w.category), w.kind].filter(Boolean).join(" "));
     add("Damage", `${dmg}${w.versatile ? ` (two-handed ${w.versatile})` : ""}`);
     if (w.range) add("Range", `${w.range.normal}${w.range.long ? `/${w.range.long}` : ""} ft.`);
@@ -163,7 +167,7 @@ export const itemHas = (it) => {
 
 const emptyWeapon = () => ({
   on: false, category: "simple", kind: "melee", dice: "", type: "", versatile: "", normal: null, long: null,
-  properties: [], mastery: [], attack: 0, damage: 0, rest: {},
+  properties: [], mastery: [], attack: 0, damage: 0, extra: [], rest: {},
 });
 const emptyArmor = () => ({ on: false, category: "light", base: null, dexCap: null, strength: null, stealth: false });
 
@@ -209,7 +213,7 @@ export function itemToForm(it, { copy = false } = {}) {
   const w = it.weapon;
   const a = it.armor;
   const { required, note, ...attRest } = it.attunement || {};
-  const { category, kind, damage, versatile, range, properties, mastery, bonus, ...weaponRest } = w || {};
+  const { category, kind, damage, versatile, range, properties, mastery, bonus, extra_damage, ...weaponRest } = w || {};
   return {
     ...headerToForm(it, { copy }),
     kind: it.kind || "item",
@@ -245,6 +249,8 @@ export function itemToForm(it, { copy = false } = {}) {
           mastery: mastery || [],
           attack: bonus?.attack || 0,
           damage: bonus?.damage || 0,
+          // more damage on every hit: [{ dice, type }] (the weapon's own damage stays the first)
+          extra: extra_damage || [],
           rest: weaponRest,
         }
       : emptyWeapon(),
@@ -287,6 +293,7 @@ export function formToItem(form, original) {
         properties: w.properties,
         mastery: w.mastery,
         bonus: w.attack || w.damage ? { attack: Number(w.attack) || 0, damage: Number(w.damage) || 0 } : undefined,
+        extra_damage: (w.extra || []).filter((p) => p?.dice).map((p) => ({ dice: String(p.dice).trim(), type: p.type || undefined })),
       }
     : undefined;
   const a = f.armor;
@@ -320,7 +327,7 @@ export function formToItem(form, original) {
     item_tags: f.itemTags,
     weapon,
     armor,
-    features: f.features,
+    features: withFeatureTexts(f.features, f.text, f.name),
     ...(f.kind === "item"
       ? { base: f.base || undefined, base_item: f.baseItem || undefined }
       : {

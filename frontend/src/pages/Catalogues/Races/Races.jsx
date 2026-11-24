@@ -1,10 +1,11 @@
 import React, { useEffect, useMemo, useState } from "react";
+import useStoredState from "../../../utils/useStoredState";
 import { useCatalogueStore } from "../../../store/CatalogueStore";
 import { usePopupStore } from "../../../store/PopupStore";
 import useAuthStore from "../../../store/AuthStore";
 import FilterSection from "../FilterSection";
 import FilterPopup, { FilterButton } from "../FilterPopup";
-import RaceCreatePopup from "./RaceCreatePopup";
+import RaceCardForm from "./RaceCardForm";
 import { ErrorLine, LoadingLine, Toolbar, searchCls } from "../catalogueStyle";
 import { CatalogueRow, ChipToggles, useEntryMenu } from "../catalogueParts";
 import { addBtn } from "../../../styles/parchmentForm";
@@ -35,16 +36,16 @@ export default function Races() {
 
   const [query, setQuery] = useState("");
   const [filtersOpen, setFiltersOpen] = useState(false);
-  const [editions, setEditions] = useState(["one"]);
-  const [sources, setSources] = useState([]);
-  const [sizes, setSizes] = useState([]);
-  const [types, setTypes] = useState([]);
-  const [abilities, setAbilities] = useState([]);
-  const [senses, setSenses] = useState([]);
-  const [speeds, setSpeeds] = useState([]);
-  const [resists, setResists] = useState([]);
-  const [gives, setGives] = useState([]);
-  const [subraces, setSubraces] = useState([]);
+  const [editions, setEditions] = useStoredState("catalogue.races.editions", ["one"]);
+  const [sources, setSources] = useStoredState("catalogue.races.sources", []);
+  const [sizes, setSizes] = useStoredState("catalogue.races.sizes", []);
+  const [types, setTypes] = useStoredState("catalogue.races.types", []);
+  const [abilities, setAbilities] = useStoredState("catalogue.races.abilities", []);
+  const [senses, setSenses] = useStoredState("catalogue.races.senses", []);
+  const [speeds, setSpeeds] = useStoredState("catalogue.races.speeds", []);
+  const [resists, setResists] = useStoredState("catalogue.races.resists", []);
+  const [gives, setGives] = useStoredState("catalogue.races.gives", []);
+  const [subraces, setSubraces] = useStoredState("catalogue.races.subraces", []);
 
   const [form, setForm] = useState(null); // null = closed · {} new · { editing } · { copyFrom }
   const [openMenu, menu] = useEntryMenu({
@@ -172,8 +173,8 @@ export default function Races() {
 
           {menu}
 
-          <RaceCreatePopup open={form !== null} onClose={() => setForm(null)}
-                           editingRace={form?.editing || null} copyFromRace={form?.copyFrom || null} />
+          <RaceCardForm open={form !== null} onClose={() => setForm(null)}
+                        editingRace={form?.editing || null} copyFromRace={form?.copyFrom || null} />
         </>
       )}
     </div>

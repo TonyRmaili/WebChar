@@ -1,10 +1,11 @@
 import React, { useEffect, useMemo, useState } from "react";
+import useStoredState from "../../../utils/useStoredState";
 import { useCatalogueStore } from "../../../store/CatalogueStore";
 import { usePopupStore } from "../../../store/PopupStore";
 import useAuthStore from "../../../store/AuthStore";
 import FilterSection from "../FilterSection";
 import FilterPopup, { FilterButton } from "../FilterPopup";
-import MonsterCreatePopup from "./MonsterCreatePopup";
+import MonsterCardForm from "./MonsterCardForm";
 import { ErrorLine, LoadingLine, SortControl, Toolbar, fieldCls, searchCls } from "../catalogueStyle";
 import { CatalogueRow, ChipToggles, FoldChips, useEntryMenu } from "../catalogueParts";
 import { addBtn } from "../../../styles/parchmentForm";
@@ -38,9 +39,9 @@ export default function Monsters() {
   const [query, setQuery] = useState("");
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [sortDir, setSortDir] = useState(null);
-  const [crMin, setCrMin] = useState("");
-  const [crMax, setCrMax] = useState("");
-  const [picked, setPicked] = useState({}); // filter key → selected values
+  const [crMin, setCrMin] = useStoredState("catalogue.monsters.crMin", "");
+  const [crMax, setCrMax] = useStoredState("catalogue.monsters.crMax", "");
+  const [picked, setPicked] = useStoredState("catalogue.monsters.picked", {}); // filter key → selected values
 
   const [form, setForm] = useState(null); // null = closed · {} new · { editing } · { copyFrom }
   const [openMenu, menu] = useEntryMenu({
@@ -92,7 +93,8 @@ export default function Monsters() {
   }, [monsters, FILTERS]);
 
   const selected = (key) => picked[key] ?? (key === "edition" ? ["one"] : []);
-  const toggle = (key) => (v) => setPicked((p) => ({ ...p, [key]: toggleIn(selected(key), v) }));
+  // from the latest picks (a chip turned from "show" to "hide" changes two values at once)
+  const toggle = (key) => (v) => setPicked((p) => ({ ...p, [key]: toggleIn(p[key] ?? (key === "edition" ? ["one"] : []), v) }));
 
   const filtered = useMemo(() => {
     const lo = crMin ? crNumber(crMin) : null;
@@ -190,8 +192,8 @@ export default function Monsters() {
 
           {menu}
 
-          <MonsterCreatePopup open={form !== null} onClose={() => setForm(null)}
-                              editingMonster={form?.editing || null} copyFromMonster={form?.copyFrom || null} />
+          <MonsterCardForm open={form !== null} onClose={() => setForm(null)}
+                           editingMonster={form?.editing || null} copyFromMonster={form?.copyFrom || null} />
         </>
       )}
     </div>

@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+import useStoredState from "../../utils/useStoredState";
 
 import Items from "./Items/Items";
 import Races from "./Races/Races";
@@ -30,7 +31,8 @@ const TOOLS = [
 ];
 
 function CataloguesMain() {
-  const [activeTool, setActiveTool] = useState("races");
+  // the catalogue open last time (this browser)
+  const [activeTool, setActiveTool] = useStoredState("catalogues.tab", "races");
 
   return (
     <div className="mx-auto min-h-screen w-full max-w-[1800px] p-6 font-body">

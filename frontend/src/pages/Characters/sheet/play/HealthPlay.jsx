@@ -27,7 +27,8 @@ import {
 
    Three blocks that sit side by side at full width and stack at half:
    Vitals (HP, damage/heal, death saves at 0 HP) ·
-   Combat (AC, initiative, speed, passive perception, attacks, DCs) ·
+   Combat (AC, initiative, speed, passive perception, attacks, DCs,
+   resistances and immunities) ·
    Status (toggles, concentration checks, conditions, exhaustion,
    hit dice, this character's rests).
 
@@ -105,10 +106,13 @@ function Block({ title, children, className = "" }) {
 }
 
 // A big inked number with its name in small caps underneath.
-function StatTile({ label, value, hint }) {
+function StatTile({ label, value, hint, roll = null }) {
   return (
     <div className="flex flex-col items-center justify-center px-2 py-1.5" title={hint}>
-      <span className="text-[1.7rem] font-semibold leading-tight tabular-nums text-ink">{value}</span>
+      <span className="text-[1.7rem] font-semibold leading-tight tabular-nums text-ink">
+        {value}
+        {roll && <span className={`ml-1 text-xs italic ${roll === "adv" ? "text-rubric" : "text-ink-faded"}`} title={roll === "adv" ? "with advantage" : "with disadvantage"}>{roll}</span>}
+      </span>
       <span className="text-[10px] font-semibold uppercase tracking-wider text-ink-faded">{label}</span>
     </div>
   );
@@ -179,13 +183,14 @@ function DeathSaves({ saves, onChange }) {
   );
 }
 
-function ConcentrationChecks({ checks, onKept, onLost }) {
+function ConcentrationChecks({ checks, onKept, onLost, bonus = null, roll = null }) {
   if (checks.length === 0) return null;
   const dc = checks[0];
   return (
     <div className="mt-2 flex flex-wrap items-center gap-2 border-l-2 border-warn pl-2.5">
       <span className="text-sm text-ink">
         Concentration check: <span className="font-semibold text-warn">CON save DC {dc}</span>
+        {bonus != null && <span className="text-ink-faded"> · you roll {signedNum(bonus)}{roll ? ` with ${roll === "adv" ? "advantage" : "disadvantage"}` : ""}</span>}
         {checks.length > 1 && <span className="italic text-ink-faded"> (+{checks.length - 1} more)</span>}
       </span>
       <div className="ml-auto flex gap-1.5">
@@ -233,6 +238,34 @@ function Conditions({ active, onToggle }) {
             );
           })}
         </div>
+      )}
+    </div>
+  );
+}
+
+// Resistances, immunities, vulnerabilities and condition immunities, one
+// line each (only the kinds the character has). From Define → General,
+// grants, items and switched-on features (derive's `defenses`).
+const DEFENSE_LINES = [
+  { key: "resist", label: "Resistant", tone: "text-ink" },
+  { key: "immune", label: "Immune", tone: "font-semibold text-ink" },
+  { key: "vulnerable", label: "Vulnerable", tone: "text-bad" },
+  { key: "condition_immune", label: "Can't be", tone: "text-ink" },
+];
+const defenseWord = (id) => String(id).replace(/_/g, " ");
+function Defenses({ defenses = {} }) {
+  const lines = DEFENSE_LINES.filter((l) => (defenses[l.key] || []).length);
+  return (
+    <div className="mt-2 border-t border-rule/20 pt-2">
+      {lines.length === 0 ? (
+        <p className="text-xs italic text-ink-faded">No resistances or immunities.</p>
+      ) : (
+        lines.map((l) => (
+          <div key={l.key} className="flex items-baseline gap-2 py-0.5">
+            <span className="w-[5.5rem] shrink-0 text-[10px] font-semibold uppercase tracking-wider text-ink-faded">{l.label}</span>
+            <span className={`min-w-0 text-sm ${l.tone}`}>{defenses[l.key].map(defenseWord).join(" · ")}</span>
+          </div>
+        ))
       )}
     </div>
   );
@@ -461,9 +494,9 @@ export default function HealthPlay() {
           {/* 2 × 2, split by hairlines */}
           <div className="grid grid-cols-2 [&>*:nth-child(-n+2)]:border-b [&>*:nth-child(odd)]:border-r [&>*]:border-rule/25">
             <StatTile label="Armor Class" value={d.ac} />
-            <StatTile label="Initiative" value={signedNum(d.initiative)} hint="DEX modifier + any initiative bonus" />
+            <StatTile label="Initiative" value={signedNum(d.initiative)} hint="DEX modifier + any initiative bonus" roll={d.rolls?.initiative} />
             <StatTile label="Speed" value={speed.walk ? `${speed.walk} ft` : "—"} hint={speed.others.length ? speed.others.join(" · ") : "Walking speed"} />
-            <StatTile label="Passive Perc." value={d.skills.perception?.passive ?? "—"} hint="10 + Perception skill" />
+            <StatTile label="Passive Perc." value={d.skills.perception?.passive ?? "—"} hint={`10 + Perception skill${d.skills.perception?.roll === "adv" ? " + 5 (advantage)" : d.skills.perception?.roll === "dis" ? " − 5 (disadvantage)" : ""}`} />
           </div>
           {speed.others.length > 0 && <div className="mt-1.5 text-center text-xs italic text-ink-faded">{speed.others.join(" · ")}</div>}
 
@@ -495,6 +528,8 @@ export default function HealthPlay() {
               ))}
             </div>
           )}
+
+          <Defenses defenses={d.defenses} />
         </Block>
 
         {/* ── State ── */}
@@ -524,7 +559,8 @@ export default function HealthPlay() {
             })}
           </div>
 
-          <ConcentrationChecks checks={concChecks} onKept={() => resolveConcentration(true)} onLost={() => resolveConcentration(false)} />
+          <ConcentrationChecks checks={concChecks} onKept={() => resolveConcentration(true)} onLost={() => resolveConcentration(false)}
+                               bonus={d.concentration} roll={d.rolls?.concentration} />
 
           <div className="mt-4 space-y-2">
             <Label className="!mb-1">Conditions</Label>

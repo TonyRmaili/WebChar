@@ -37,9 +37,9 @@ import math
 import re
 
 try:
-    from app.formulas import evaluate
+    from app.formulas import evaluate, table_row
 except ImportError:  # run from this folder
-    from formulas import evaluate
+    from formulas import evaluate, table_row
 
 ABILITIES = ("str", "dex", "con", "int", "wis", "cha")
 SCORE_CAP = 20
@@ -97,7 +97,18 @@ def _union(a, b):
 
 
 def _layers(ch):
-    return [l for l in ch.get("layers") or [] if isinstance(l, dict)]
+    """The layers that count: a layer taken off the sheet (`removed`: a feat
+    from Feats & Options) doesn't, nor what came through it (`via`)."""
+    layers = [l for l in ch.get("layers") or [] if isinstance(l, dict)]
+    off = {l.get("from") for l in layers if l.get("removed")}
+    grew = bool(off)
+    while grew:
+        grew = False
+        for l in layers:
+            if l.get("via") in off and l.get("from") not in off:
+                off.add(l.get("from"))
+                grew = True
+    return [l for l in layers if l.get("from") not in off]
 
 
 def manual_layer(ch):
@@ -311,6 +322,46 @@ def _value(v, w):
     return got if isinstance(got, int) else None  # dice don't add to a fixed number
 
 
+def _roll_mode(mods, targets):
+    """Advantage or disadvantage from the modifiers aimed at `targets`
+    (`{"target": "check.acrobatics", "adv": true}` / `"dis": true`):
+    "adv", "dis", or None (neither, or both: they cancel)."""
+    adv = dis = False
+    for m, _w in mods:
+        if m.get("target") in targets:
+            adv = adv or bool(m.get("adv"))
+            dis = dis or bool(m.get("dis"))
+    return "adv" if adv and not dis else "dis" if dis and not adv else None
+
+
+ATTACK_KINDS = ("melee", "ranged", "spell")
+
+
+def _attack_abilities(mods):
+    """Which other ability each kind of attack can use, when an effect says
+    so (Bladework, Pact of the Blade, Shillelagh: usually a switch's "while
+    on"): {"target": "attack_ability.melee", "set": "int"}; plain
+    "attack_ability" is every kind. None = only the usual one. Later ones
+    win. The attack takes the better of the two (_better_mod)."""
+    out = {k: None for k in ATTACK_KINDS}
+    for m, _w in mods:
+        t, ab = str(m.get("target") or ""), m.get("set")
+        if ab not in ABILITIES:
+            continue
+        if t == "attack_ability":
+            out = {k: ab for k in ATTACK_KINDS}
+        elif t.startswith("attack_ability.") and t[15:] in ATTACK_KINDS:
+            out[t[15:]] = ab
+    return out
+
+
+def _better_mod(scores, usual, other):
+    """The modifier an attack uses: the usual ability's, or the other one an
+    effect allows when that's higher ("you can use Int instead")."""
+    best = mod(scores[usual])
+    return max(best, mod(scores[other])) if other in ABILITIES else best
+
+
 def _apply(total, mods, targets):
     """`add`s, then `min`s, then `set`s of the modifiers aimed at `targets`."""
     hits = [(m, w) for m, w in mods if m.get("target") in targets]
@@ -487,6 +538,14 @@ def spell_slots(ch, classes=None):
 
 # ─── resources (Rage, Focus Points, Superiority Dice…) ────────────
 
+def _reset_at(reset, lvl):
+    """A pool's refill at a class level: "long", or a level table when a
+    later feature changes it (Bardic Inspiration: {"1": "long", "5": "short"})."""
+    if isinstance(reset, dict):
+        reset = table_row(reset, lvl)
+    return reset if isinstance(reset, str) and reset else "long"
+
+
 def resources(ch, classes=None, scores=None):
     """Every class and subclass pool, worked out at that class's level, then
     the player's own pools and changes (the manual layer's `resources`):
@@ -514,7 +573,7 @@ def resources(ch, classes=None, scores=None):
                 out[r["id"]] = {
                     "id": r["id"], "name": r.get("name") or r["id"], "max": max(0, top),
                     "die": die if isinstance(die, str) else None,
-                    "reset": r.get("reset") or "long", "short_rest": r.get("short_rest", "all"),
+                    "reset": _reset_at(r.get("reset"), lvl), "short_rest": r.get("short_rest", "all"),
                     "owner": rec_id, "book_max": max(0, top), "own": False, "edited": False,
                 }
     # The player's pools: their own ones, and changes to the classes' ones
@@ -572,6 +631,8 @@ def derive(ch, classes=None):
             "check": _apply(m, mods, ("check", f"check.{a}")),
             "save": _apply(m + (pb if prof else 0), mods, ("save", f"save.{a}")),
             "save_prof": prof,
+            "check_roll": _roll_mode(mods, ("check", f"check.{a}")),
+            "save_roll": _roll_mode(mods, ("save", f"save.{a}")),
         }
 
     custom = manual_layer(ch).get("custom_skills") or {}
@@ -583,7 +644,8 @@ def derive(ch, classes=None):
     for k, d in skill_defs.items():
         prof = 2 if k in expertise and k in g["skills"] else 1 if k in g["skills"] else 0
         total = _apply(mod(scores[d["ability"]]) + pb * prof, mods, ("check", f"check.{d['ability']}", f"check.{k}"))
-        skills[k] = {**d, "prof": prof, "total": total, "passive": 10 + total}
+        roll = _roll_mode(mods, ("check", f"check.{d['ability']}", f"check.{k}"))
+        skills[k] = {**d, "prof": prof, "total": total, "passive": 10 + total + (5 if roll == "adv" else -5 if roll == "dis" else 0), "roll": roll}
 
     speed = {}
     for k, v in g["speed"].items():
@@ -599,6 +661,7 @@ def derive(ch, classes=None):
     for k in [k for k, v in senses.items() if _is_n(v)]:
         senses[k] = max(0, _apply(senses[k], mods, (f"senses.{k}",)))
 
+    use = _attack_abilities(mods)
     casting = []
     for cid, lvl, sub in class_levels(ch):
         for rec_id in (cid, sub):
@@ -608,7 +671,7 @@ def derive(ch, classes=None):
                 m = mod(scores[ab])
                 casting.append({
                     "owner": rec_id, "name": (classes.get(rec_id) or {}).get("name") or rec_id, "ability": ab,
-                    "attack": _apply(pb + m, mods, ("spell_attack",)),
+                    "attack": _apply(pb + _better_mod(scores, ab, use["spell"]), mods, ("spell_attack",)),
                     "dc": _apply(8 + pb + m, mods, ("spell_dc",)),
                 })
 
@@ -617,7 +680,7 @@ def derive(ch, classes=None):
         m = mod(scores[own_ab])
         casting.append({
             "owner": "manual", "name": "Your own", "ability": own_ab,
-            "attack": _apply(pb + m, mods, ("spell_attack",)),
+            "attack": _apply(pb + _better_mod(scores, own_ab, use["spell"]), mods, ("spell_attack",)),
             "dc": _apply(8 + pb + m, mods, ("spell_dc",)),
         })
 
@@ -649,10 +712,19 @@ def derive(ch, classes=None):
         "spell_slots": spell_slots(ch, classes),
         "spellcasting": casting,
         "attacks": {
-            "melee": _apply(pb + w["str_mod"], mods, ("attack",)),
-            "ranged": _apply(pb + w["dex_mod"], mods, ("attack",)),
+            "melee": _apply(pb + _better_mod(scores, "str", use["melee"]), mods, ("attack",)),
+            "ranged": _apply(pb + _better_mod(scores, "dex", use["ranged"]), mods, ("attack",)),
         },
+        # an effect making a kind of attack use another ability (None = the usual one)
+        "attack_ability": use,
         "concentration": _apply(abilities["con"]["save"], mods, ("concentration",)),
+        # advantage / disadvantage on the rolls that aren't an ability's or a skill's
+        "rolls": {
+            "initiative": _roll_mode(mods, ("initiative",)),
+            "concentration": _roll_mode(mods, ("save", "save.con", "concentration")),
+            "attack": _roll_mode(mods, ("attack",)),
+            "spell_attack": _roll_mode(mods, ("spell_attack",)),
+        },
         "bonuses": {  # what every attack / spell / hit gets on top (features and weapons use them)
             "attack": _apply(0, mods, ("attack",)),
             "spell_attack": _apply(0, mods, ("spell_attack",)),

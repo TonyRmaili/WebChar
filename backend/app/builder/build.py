@@ -94,12 +94,35 @@ def _part_at(grants, choices, n, joins):
     return g, [c for c in choices if ok(_at(c))]
 
 
-def _feature_copies(owner, ids, cat):
-    out = []
+def _feature_copies(owner, ids, cat, subclass=False):
+    """The features a level lists, each followed by its parts: the features
+    whose `parent` is it (Monk's Focus → Flurry of Blows, Patient Defense…;
+    Bladesong → Agility, Bladework, Focus), and theirs. A level never lists
+    the parts themselves. A subclass's copies say so (`subclass: True`):
+    the sheet sorts by it, whatever the ids look like."""
+    kids = {}
+    for f in (owner or {}).get("features") or []:
+        if f.get("parent"):
+            kids.setdefault(f["parent"], []).append(f)
+    listed = set(ids or [])
+    out, seen = [], set()
+
+    def add(f):
+        if f.get("id") in seen:
+            return
+        seen.add(f.get("id"))
+        c = deepcopy(f)
+        if subclass:
+            c["subclass"] = True
+        out.append(c)
+        for k in kids.get(f.get("id"), []):
+            if k.get("id") not in listed:  # a part the level also lists comes in its own place
+                add(k)
+
     for fid in ids or []:
         f = cat.feature(owner, fid)
         if f:
-            out.append(deepcopy(f))
+            add(f)
     return out
 
 
@@ -177,7 +200,8 @@ class _Builder:
             bg = cat.get("backgrounds", frm[11:])
             return bg, bg, None
         if frm.startswith("feat:"):
-            feat = cat.get("feats", frm[5:])
+            # The player's own version of this feat (feat_edit), else the catalogue's.
+            feat = (self.saved.get(frm) or {}).get("entry") or cat.get("feats", frm[5:])
             return feat, _feat_part(feat or {}), None
         m = _CLASS.match(frm)
         if m:
@@ -218,7 +242,7 @@ class _Builder:
             srow = _row(sub.get("progression"), n)
             merge_grants(part["grants"], srow.get("grants") or {})
             part["choices"] += list(srow.get("choices") or [])
-            part["features"] += _feature_copies(sub, srow.get("features"), self.cat)
+            part["features"] += _feature_copies(sub, srow.get("features"), self.cat, subclass=True)
         part["choices"] += self.spell_choices(cid, cls, sub, n, layer)
         return cls, part, n
 
@@ -227,10 +251,10 @@ class _Builder:
     # class level gets pool choices for what it adds there (the count at
     # this level minus the count at the last):
     #   class_cantrips   from `cantrips`
-    #   class_spells     from `known` (2014 known casters), else the
-    #                    spellbook (`spellbook: {first, per_level}`: a
-    #                    Wizard writes 6 spells at level 1 and 2 more each
-    #                    level), else `prepared`
+    #   class_spells     from the spellbook (`spellbook: {first,
+    #                    per_level}`: a Wizard writes 6 spells at level 1
+    #                    and 2 more each level), else `prepared` (a 2014
+    #                    "known" caster's count is `prepared` too)
     # Class spells land on the sheet prepared, up to the class's prepared
     # count (character.settle_prepared); the sheet's diamond changes any.
     # A count written as a formula (2014 Cleric, Druid, Paladin, Wizard:
@@ -255,9 +279,7 @@ class _Builder:
             add("class_cantrips", "Cantrips", _gained(sc.get("cantrips"), n), [0])
             levels = list(range(1, _max_spell_level(sc, n) + 1))
             book = sc.get("spellbook")
-            if isinstance(sc.get("known"), dict):
-                add("class_spells", "Spells", _gained(sc["known"], n), levels)
-            elif isinstance(book, dict):
+            if isinstance(book, dict):
                 add("class_spells", "Spellbook", (book.get("first") or 0) if n == 1 else (book.get("per_level") or 0), levels)
             elif isinstance(sc.get("prepared"), dict):
                 add("class_spells", "Spells", _gained(sc["prepared"], n), levels)
@@ -277,7 +299,7 @@ class _Builder:
                 sc = (rec or {}).get("spellcasting") or {}
                 if isinstance(sc.get("spellbook"), dict):  # a Wizard's picks follow its book, not the formula
                     continue
-                formula = next((sc[k] for k in ("known", "prepared") if isinstance(sc.get(k), str)), None)
+                formula = sc.get("prepared") if isinstance(sc.get("prepared"), str) else None
                 top = _max_spell_level(sc, lvl)
                 if not formula or top < 1:
                     continue
@@ -327,6 +349,8 @@ class _Builder:
         out = {"from": frm, "picks": picks, "grants": {k: v for k, v in grants.items() if k not in ("items", "currency")}}
         if layer.get("via"):
             out["via"] = layer["via"]
+        if (self.saved.get(frm) or {}).get("entry"):
+            out["entry"] = self.saved[frm]["entry"]
         if record.get("name"):
             out["label"] = record["name"] + (f" {class_level}" if class_level else "")
         # Feature copies: a class level's own; elsewhere up to the character level.

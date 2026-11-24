@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { INK, InkButton, InkChoice, InkHeading as Heading, InkNumber, InkRemove, InkText, Line, Mark, ParchmentSheet, Title } from "../../../../styles/parchment";
+import { INK, InkButton, InkChoice, InkHeading as Heading, InkNumber, InkRemove, InkSelect, InkText, Line, Mark, ParchmentSheet, Title } from "../../../../styles/parchment";
 import { wornArmor } from "../../../../utils/derive";
 import {
   labelOf,
@@ -29,6 +29,7 @@ import {
   toId,
   xpProgress,
 } from "./generalHelpers";
+import { CONDITIONS, DAMAGE_TYPES } from "../../../Catalogues/catalogueHelpers";
 
 /* Define tab: General — vitals, movement, senses, defenses,
    proficiencies, offense and experience, on parchment. Classes (leveling,
@@ -100,13 +101,18 @@ function Overridable({ value, own, onSet, label }) {
 
 // Chips: what the character has, ✕ to take it away; struck-out ones were
 // taken away by the player and can be given back; a blank to add one.
-function Chips({ have, removed = [], sources, onSet, placeholder, emptyText }) {
+// With `options` (damage types, conditions) the blank is a dropdown of the
+// ones not there yet; "other…" turns it back into a blank to type in.
+function Chips({ have, removed = [], sources, onSet, placeholder, emptyText, options = null }) {
   const [text, setText] = useState("");
+  const [typing, setTyping] = useState(false);
   const add = () => {
     const id = toId(text);
     if (id) onSet(id, true);
     setText("");
+    setTyping(false);
   };
+  const left = (options || []).filter((o) => !have.includes(o) && !removed.includes(o));
   return (
     <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1.5">
       {!have.length && !removed.length && <span className={`text-sm italic ${INK.faint}`}>{emptyText}</span>}
@@ -123,14 +129,32 @@ function Chips({ have, removed = [], sources, onSet, placeholder, emptyText }) {
           {labelOf(id)}
         </button>
       ))}
-      <InkText
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        onKeyDown={(e) => e.key === "Enter" && add()}
-        onBlur={add}
-        placeholder={placeholder}
-        className="h-7 w-32 text-sm"
-      />
+      {options && !typing ? (
+        <InkSelect
+          value=""
+          onChange={(e) => (e.target.value === "__other" ? setTyping(true) : onSet(e.target.value, true))}
+          aria-label={placeholder}
+          className={`h-7 text-sm ${INK.faded}`}
+        >
+          <option value="">{placeholder}</option>
+          {left.map((o) => (
+            <option key={o} value={o}>
+              {labelOf(o)}
+            </option>
+          ))}
+          <option value="__other">other…</option>
+        </InkSelect>
+      ) : (
+        <InkText
+          value={text}
+          autoFocus={typing}
+          onChange={(e) => setText(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && add()}
+          onBlur={add}
+          placeholder={typing ? "type it" : placeholder}
+          className="h-7 w-32 text-sm"
+        />
+      )}
     </div>
   );
 }
@@ -293,6 +317,7 @@ export default function GeneralDefine() {
                     have={d.defenses[k.key] || []}
                     removed={d.removed?.defenses?.[k.key] || []}
                     onSet={(id, want) => write(setDefense(ch, k.key, id, want))}
+                    options={k.key === "condition_immune" ? CONDITIONS : DAMAGE_TYPES}
                     placeholder="+ add"
                     emptyText="none"
                   />

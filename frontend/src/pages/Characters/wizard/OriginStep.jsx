@@ -2,6 +2,7 @@ import React, { useMemo, useState } from "react";
 import { INK } from "../../../styles/parchment";
 import { formatSource } from "../../Catalogues/catalogueHelpers";
 import { raceSubtitle } from "../../Catalogues/Races/raceHelpers";
+import { featSubtitle } from "../../Catalogues/Feats/featsHelpers";
 import EntityList from "./EntityList";
 import ChoiceList from "./ChoiceList";
 import { ChoiceHead, Pick, PickRow, Rule } from "./wizardInk";
@@ -17,7 +18,7 @@ import { ChoiceHead, Pick, PickRow, Rule } from "./wizardInk";
 const byName = (a, b) => String(a.name).localeCompare(String(b.name));
 
 export default function OriginStep({
-  kind, // "race" | "background"
+  kind, // "race" | "background" | "feat" (the sheet's Feats & Options: OriginSwap)
   entries,
   loading,
   editions,
@@ -32,6 +33,7 @@ export default function OriginStep({
   ownerLabel,
   rolled,
   onView,
+  fixed = false, // the entry is already picked and can't change (OriginSwap keepRace): no list
 }) {
   const [search, setSearch] = useState("");
   const filtered = useMemo(() => {
@@ -43,11 +45,11 @@ export default function OriginStep({
 
   const selected = (entries || []).find((e) => e.id === selectedId);
   const subraces = kind === "race" ? selected?.subraces || [] : [];
-  const word = kind === "race" ? "races" : "backgrounds";
+  const word = { race: "races", background: "backgrounds", feat: "feats" }[kind] || `${kind}s`;
 
   return (
     <div>
-      <EntityList
+      {!fixed && <EntityList
         items={filtered}
         selected={selectedId}
         onSelect={(e) => onSelect(e.id === selectedId ? null : e.id)}
@@ -58,13 +60,13 @@ export default function OriginStep({
         searchPlaceholder={`Search ${word}…`}
         loadingText={`Fetching ${word}…`}
         emptyText={`No ${word} match.`}
-        renderSubtitle={kind === "race" ? raceSubtitle : undefined}
+        renderSubtitle={kind === "race" ? raceSubtitle : kind === "feat" ? featSubtitle : undefined}
         sourceTitle={formatSource}
-      />
+      />}
 
       {selected && (
         <>
-          <Rule />
+          {!fixed && <Rule />}
           <div className="space-y-5">
             {subraces.length > 0 && (
               <div>

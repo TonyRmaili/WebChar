@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import useStoredState from "../../../utils/useStoredState";
 import { useCatalogueStore } from "../../../store/CatalogueStore";
 import useAuthStore from "../../../store/AuthStore";
 import { InkHeading } from "../../../styles/parchment";
@@ -37,11 +38,11 @@ export default function Classes() {
   const deleteSubclass = useCatalogueStore((s) => s.deleteSubclass);
   const currentUser = useAuthStore((s) => s.userData?.name);
 
-  const [edition, setEdition] = useState("one");
+  const [edition, setEdition] = useStoredState("catalogue.classes.edition", "one");
   const [classId, setClassId] = useState(null);
   const [picked, setPicked] = useState([]); // subclass ids
-  const [hideCore, setHideCore] = useState(false);
-  const [sideBySide, setSideBySide] = useState(false);
+  const [hideCore, setHideCore] = useStoredState("catalogue.classes.hideCore", false);
+  const [sideBySide, setSideBySide] = useStoredState("catalogue.classes.sideBySide", false);
   const [classForm, setClassForm] = useState(null); // null = closed · {} new · { editing } · { copyFrom }
   const [subForm, setSubForm] = useState(null);
 

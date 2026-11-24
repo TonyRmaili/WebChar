@@ -18,27 +18,23 @@
 17. variantrules; srd
 18. vehicles
 
+# Catalogue Create Forms
+
+
+
+
 
 # Fixes for the builder
 1. More than one epic boon can get randomized=?
 # Fixes for the define
--general: Can't delete any features that follow from the builder. 
+
 
 
 -Spells
-1. messy casting tags for always prepared and at will; all of those. 
-2. Some bug blocked loading spells from catalogue? after the define changes. Noticed after creating a spell from the define section. 
-
--Feats
-1. allow the remaining optional_features to be selected here? What happens when a class example warlock classic is selected? were will they land automatically. test this after some srd classic classes are in. After this perhaps change the tab name to Features.
-
--Features
-1. Now it just hosts player-made things. Name suggestions
-    Effects
+1. Some bug blocked loading spells from catalogue? after the define changes. Noticed after creating a spell from the define section. 
 
 -Inventory
-1. consumable section needs an amount stepper in the tag line, were edit is
-2. weapons like frost brand (group item) is not selectable from inventory "add from catalogue"
+1. weapons like frost brand (group item) is not selectable from inventory "add from catalogue"
 
 # New features
 random encounter builder and difficulty calculator

@@ -101,11 +101,11 @@ def class_copies(layers, cat):
 
 
 def prepared_max(ch, cid, lvl):
-    """How many spells class `cid` at `lvl` may have prepared, or None
-    when it has no limit (a 2014 known caster: every known spell is ready)."""
+    """How many spells class `cid` at `lvl` may have prepared (its
+    `prepared` table or formula), or None when it has none."""
     rec = (ch.get("classes") or {}).get(cid) or {}
     sc = rec.get("spellcasting") or {}
-    if sc.get("known") is not None or sc.get("prepared") is None:
+    if sc.get("prepared") is None:
         return None
     t = sc["prepared"]
     if isinstance(t, dict):

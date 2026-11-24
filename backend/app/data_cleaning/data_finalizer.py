@@ -5,7 +5,9 @@
 
 For every cleaned entry (cleaned/) that has a good LLM answer (llm/) for its
 current input:
-  - `text` and `features` come from the LLM answer;
+  - `features` come from the LLM answer, `text` from cleaned/ (code-made);
+    each feature gets its own part of that text (_feature_texts), so its
+    card on the sheet shows only that part;
   - the LLM's extra grants are added to `grants`, minus what code already
     gives (fixed grants, the parent race's grants, and anything listed in a
     choice), so nothing is granted twice.
@@ -96,14 +98,73 @@ def merge_extra(entry: dict, extra: dict, parent: dict | None = None) -> list[st
     return added
 
 
-def _lost_features(e: dict) -> list[str]:
-    """Features whose **Name.** isn't in the (code-made) text: the sheet
-    would show them without a description. Only happens to answers made
-    when the LLM still wrote the text, if it renamed a block."""
-    from .schemas.llm_schema import paragraph_names
-    names = paragraph_names(e.get("text") or "") | {str(e.get("name", "")).lower()}
-    names |= {a.lower() for a in e.get("aliases") or []}
-    return [f"{e['id']}: {f['name']}" for f in e.get("features") or [] if f["name"].strip().lower() not in names]
+def _feature_texts(e: dict, category: str) -> list[str]:
+    """Give each feature its own `text`, cut from the entry's (code-made) text,
+    so a feature's card on the sheet shows only its part:
+      - a feature named after a **Name.** paragraph (or - **Name.** list
+        item): that paragraph, plus the plain paragraphs after it up to the
+        next named one (llm_schema.feature_text);
+      - a feature named like the entry, alone: the whole text;
+      - a feature named like the entry next to features with their own
+        paragraphs (Demon Armor): the text none of them takes (the intro).
+    Class features already have their own text and spells show the spell's
+    card, so neither is touched. Returns the features left without text
+    (their name matches nothing in the text), for the report."""
+    from .schemas.llm_schema import feature_text, paragraph_names
+    text = e.get("text") or ""
+    names = paragraph_names(text)
+    own = {str(e.get("name", "")).strip().lower()} | {a.lower() for a in e.get("aliases") or []}
+    feats = [dict(f) for f in e.get("features") or []]
+    e["features"] = feats
+    claimed = [f["name"] for f in feats if f["name"].strip().lower() in names]
+    lost = []
+    for f in feats:
+        key = f["name"].strip().lower()
+        if key not in names and key not in own:
+            lost.append(f"{e['id']}: {f['name']}")
+            continue
+        if category == "spells" or f.get("text"):
+            continue
+        if key in names:
+            f["text"] = feature_text(text, f["name"])
+        else:
+            f["text"] = _unclaimed_text(text, claimed) if claimed else text.strip()
+        if not f["text"]:
+            del f["text"]
+            lost.append(f"{e['id']}: {f['name']}")
+    return lost
+
+
+def _drop_twin_modifiers(e: dict) -> list[str]:
+    """An item's own `modifiers` (code-made: "+2 to spell attack rolls")
+    already count while it's equipped; a feature modifier that says exactly
+    the same (the LLM read it from the text too) would count it twice
+    (+2 Wand of the War Mage, Robe of the Archmagi). Drops those from the
+    features (a switch's modifiers are left alone: they only count while
+    on). Returns what was dropped, for the report."""
+    own = {json.dumps(m, sort_keys=True) for m in e.get("modifiers") or []}
+    if not own:
+        return []
+    dropped = []
+    for f in e.get("features") or []:
+        keep = [m for m in f.get("modifiers") or [] if json.dumps(m, sort_keys=True) not in own]
+        if len(keep) < len(f.get("modifiers") or []):
+            dropped += [f"{e['id']}: {f['name']}: {m['target']}" for m in f["modifiers"] if m not in keep]
+            if keep:
+                f["modifiers"] = keep
+            else:
+                del f["modifiers"]
+    return dropped
+
+
+def _unclaimed_text(text: str, claimed: list[str]) -> str:
+    """The entry's text without the parts the named features take."""
+    from .schemas.llm_schema import feature_text
+    for name in claimed:
+        part = feature_text(text, name)
+        if part:
+            text = text.replace(part, "", 1)
+    return "\n\n".join(p.strip() for p in text.split("\n\n") if p.strip())
 
 
 def finalize(category: str, srd_only: bool = False) -> dict:
@@ -114,7 +175,7 @@ def finalize(category: str, srd_only: bool = False) -> dict:
     def answer(jid):
         return cache[jid]["output"] if jid in good else None
 
-    out, waiting, added_report, no_subraces, lost = [], [], {}, [], []
+    out, waiting, added_report, no_subraces, lost, twins = [], [], {}, [], [], []
     for e in cleaned:
         if srd_only and not e.get("srd"):
             continue
@@ -127,7 +188,8 @@ def finalize(category: str, srd_only: bool = False) -> dict:
             continue
         e = dict(e)
         e["features"] = a["features"]           # the text is the code-made one from cleaned/
-        lost += _lost_features(e)
+        lost += _feature_texts(e, category)
+        twins += _drop_twin_modifiers(e)
         added = [] if category in NO_EXTRA_GRANTS else merge_extra(e, a.get("extra_grants", {}))
         if added:
             added_report[e["id"]] = added
@@ -144,7 +206,7 @@ def finalize(category: str, srd_only: bool = False) -> dict:
                     continue
                 s = dict(s)
                 s["features"] = _drop_shared_uses(sa["features"], e.get("features", []))
-                lost += _lost_features(s)
+                lost += _feature_texts(s, category)
                 added = merge_extra(s, sa.get("extra_grants", {}), parent=e)
                 if added:
                     added_report[s["id"]] = added
@@ -171,7 +233,7 @@ def finalize(category: str, srd_only: bool = False) -> dict:
     out = kept
     files = write_list(FINAL_PATH, category, out, suffix="_srd" if srd_only else "")
     name = f"{category}{'_srd' if srd_only else ''}/ ({len(files)} books)" if is_split(category) else files[0]
-    return {"written": name, "features_without_text": lost, "entries": len(out), "waiting": waiting, "no_subraces_yet": no_subraces,
+    return {"written": name, "features_without_text": lost, "modifiers_counted_twice": twins, "entries": len(out), "waiting": waiting, "no_subraces_yet": no_subraces,
             "grants_added_from_text": added_report}
 
 
@@ -228,12 +290,16 @@ def _job_of(record: dict, feature: dict) -> str:
     return f["id"]
 
 
-def _merge_resources(record: dict, answers: list[dict], known_elsewhere: set, problems: list) -> None:
+def _merge_resources(record: dict, answers: list, known_elsewhere: set, problems: list) -> None:
     """Code resources (table numbers, ids from `consumes`) + the LLM's
-    (refills, pools only the text describes). Code wins on numbers."""
+    (refills, pools only the text describes). Code wins on numbers.
+    `answers`: [(level, output)], lowest level first. A later feature that
+    changes a pool's refill (Font of Inspiration at 5: Bardic Inspiration
+    back on a short rest) makes it a level table: {"1": "long", "5": "short"}."""
     from .cleaners.common_cleaner import resource_id
     res = {r["id"]: r for r in record.get("resources", [])}
-    for a in answers:
+    since = {}                              # pool id -> the level its refill was first set
+    for lvl, a in answers:
         for r in a.get("resources", []):
             rid = resource_id(r["name"])
             if rid in known_elsewhere and rid not in res:
@@ -242,7 +308,17 @@ def _merge_resources(record: dict, answers: list[dict], known_elsewhere: set, pr
             for k in ("max", "die"):
                 if have.get(k) is None and r.get(k) is not None:
                     have[k] = r[k]
-            have["reset"] = r.get("reset", have.get("reset"))
+            new = r.get("reset")
+            old = have.get("reset")
+            if new is None:
+                pass
+            elif isinstance(old, str) and old != new and rid in since and lvl > since[rid]:
+                have["reset"] = {str(since[rid]): old, str(lvl): new}
+            elif isinstance(old, dict) and old.get(max(old, key=int)) != new:
+                have["reset"] = {**old, str(lvl): new}
+            elif not isinstance(old, dict):
+                have["reset"] = new
+                since.setdefault(rid, lvl)
             if r.get("short_rest") is not None:
                 have["short_rest"] = r["short_rest"]
     for f in record["features"]:
@@ -263,6 +339,20 @@ def _merge_resources(record: dict, answers: list[dict], known_elsewhere: set, pr
         if not r.get("reset"):
             problems.append(f"{record['id']}: resource '{r['id']}' has no refill rule")
     record["resources"] = list(res.values())
+
+
+def _known_to_prepared(record: dict) -> None:
+    """One word for "how many spells": a 2014 known caster (Bard, Ranger,
+    Sorcerer, Warlock, Eldritch Knight, Arcane Trickster) keeps its count
+    as `prepared` and changes its spells when it gains a level. Nothing
+    else changes: every spell it picks is still ready."""
+    sc = record.get("spellcasting")
+    if not sc or sc.get("known") is None:
+        return
+    known = sc.pop("known")
+    if sc.get("prepared") is None:
+        sc["prepared"] = known
+    sc.setdefault("change", "level")
 
 
 def _srd_only(record: dict) -> dict:
@@ -334,7 +424,10 @@ def finalize_classes(srd_only: bool = False) -> dict:
         if missing:
             waiting.append(f"{e['id']} ({len(missing)} job(s))")
             continue
-        answers = [cache[j]["output"] for j in sorted(needed)]
+        # each answer with its feature's level, lowest first (a later feature
+        # can change a pool's refill from its level on: _merge_resources)
+        level_of = {f["id"]: f.get("level") or 1 for f in e["features"]}
+        answers = [(level_of.get(j, 1), cache[j]["output"]) for j in sorted(needed, key=lambda j: (level_of.get(j, 1), j))]
         for j in sorted(needed):
             _attach(e, cache[j]["output"], {j}, problems)
         for f in e["features"]:
@@ -343,6 +436,7 @@ def finalize_classes(srd_only: bool = False) -> dict:
         _merge_resources(e, answers, known, problems)
         if e["kind"] == "class":
             class_res[e["id"]] = {r["id"] for r in e["resources"]}
+        _known_to_prepared(e)
         if srd_only:
             e = _srd_only(e)
         (classes if e["kind"] == "class" else subclasses).append(e)
@@ -390,7 +484,9 @@ def main() -> int:
         for rid in r["no_subraces_yet"]:
             print(f"  {'':<12} {rid}: has subraces/options but none are finished yet (one must be picked)")
         for x in r["features_without_text"]:
-            print(f"  {'':<12} feature has no **Name.** in the text: {x}")
+            print(f"  {'':<12} feature without text (its name isn't in the entry's text): {x}")
+        for x in r.get("modifiers_counted_twice", []):
+            print(f"  {'':<12} dropped a feature modifier the item already has: {x}")
         for jid, added in r["grants_added_from_text"].items():
             print(f"  {'':<12} {jid}: added from text: {', '.join(added)}")
         for p in r.get("problems", []):

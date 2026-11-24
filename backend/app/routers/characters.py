@@ -26,9 +26,10 @@ Leveling (app/builder/level.py; the General tab):
     POST   /character/{id}/level           same body -> {"character", "open", "problems"} (saved)
     POST   /character/{id}/level/down      {"class_id"} -> the whole character (saved)
 
-Swapping race or background (app/builder/origin.py; the Biography tab):
+Swapping race or background (app/builder/origin.py; the Biography tab),
+and adding a feat from the catalogue (kind "feat"; the Feats & Options tab):
 
-    POST   /character/{id}/origin/preview  {"kind", "layers", "random", "seed", "gear"} -> the swap form
+    POST   /character/{id}/origin/preview  {"kind", "layers", "random", "seed", "gear", "subrace_only"} -> the swap form
     POST   /character/{id}/origin          same body -> {"character", "open", "problems"} (saved)
 
 Creating (app/builder, claude/character-plan.md): the payload says what
@@ -51,13 +52,14 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, Response, status
 from fictional_names import name_generator
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict, Field
 from sqlalchemy.orm import Session
 
 from app.builder.catalogue import Catalogue
 from app.builder.character import make, preview, unique_name
 from app.builder.level import apply_level, level_down, preview_level
 from app.builder.origin import apply_swap, preview_swap
+from app.builder.feat_edit import edit_feat
 from app.builder.play import change_hp, grant_experience, rest
 from app.character_files import (
     character_lock,
@@ -278,16 +280,17 @@ def level_down_char(char_id: int, body: LevelDown, current_user: CurrentUser, db
 # ---------------- race / background swap ----------------
 
 class SwapRequest(BaseModel):
-    kind: str  # "race" | "background"
+    kind: str  # "race" | "background" | "feat"
     layers: list[dict] = []
     random: bool = False
     seed: int | None = None
     gear: bool = False
+    subrace_only: bool = False  # race: keep the race, change only its subrace
 
 
 def _check_kind(kind: str):
-    if kind not in ("race", "background"):
-        raise HTTPException(status_code=400, detail="kind must be 'race' or 'background'")
+    if kind not in ("race", "background", "feat"):
+        raise HTTPException(status_code=400, detail="kind must be 'race', 'background' or 'feat'")
 
 
 @router.post("/{char_id}/origin/preview")
@@ -306,6 +309,28 @@ def swap_char_origin(char_id: int, body: SwapRequest, current_user: CurrentUser,
     rng = random.Random(body.seed) if body.seed is not None else None
     with edit_character(current_user.name, char.id) as data:
         out = apply_swap(data, body.kind, body.model_dump(), Catalogue(current_user.name), rng)
+        data.clear()
+        data.update(out["character"])
+    return {"character": data, "open": out["open"], "problems": out["problems"]}
+
+
+# ---------------- a feat of the player's own (Feats & Options: "edit") ----------------
+
+class FeatEditRequest(BaseModel):
+    from_: str = Field(alias="from")   # the feat's layer, "feat:grappler-xphb"
+    entry: dict | None = None          # the edited feat record; None = back to the catalogue's
+
+    model_config = ConfigDict(populate_by_name=True)
+
+
+@router.post("/{char_id}/feat")
+def edit_char_feat(char_id: int, body: FeatEditRequest, current_user: CurrentUser, db: Session = Depends(get_db)):
+    char = get_owned_character(db, current_user, char_id)
+    with edit_character(current_user.name, char.id) as data:
+        try:
+            out = edit_feat(data, body.from_, body.entry, Catalogue(current_user.name))
+        except ValueError as e:
+            raise HTTPException(status_code=400, detail=str(e))
         data.clear()
         data.update(out["character"])
     return {"character": data, "open": out["open"], "problems": out["problems"]}

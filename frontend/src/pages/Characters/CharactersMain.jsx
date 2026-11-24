@@ -14,7 +14,7 @@ import { WithViewRail } from "./ViewSwitch";
 function CharactersMain() {
   const token = useAuthStore((s) => s.token);
   const navigate = useNavigate();
-  const [view, setView] = useState("create");
+  const [view, setView] = useState("sheets");
 
   useEffect(() => {
     if (!token) navigate("/login");

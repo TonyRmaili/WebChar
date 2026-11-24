@@ -200,6 +200,18 @@ const useCharStore = create((set, get) => {
       return out;
     },
 
+    /* ── a feat of the player's own (Feats & Options; app/builder/feat_edit.py) ── */
+
+    // `entry`: the edited feat record for the layer `from`; null = back to the book's.
+    editFeat: async (from, entry) => {
+      const id = get().charId;
+      if (!id) return null;
+      await get().flushSaves();
+      const out = await api.post(`/character/${id}/feat`, { from, entry });
+      if (get().charId === id) set({ charData: withPending(out.character) });
+      return out;
+    },
+
     // Every character in `ids` (the party bar's rest buttons).
     restAll: async (kind, ids) => {
       if (!ids?.length) return;

@@ -1,14 +1,19 @@
 import React, { useState } from "react";
 import useMinionStore from "../../../../store/MinionStore";
+import useAuthStore from "../../../../store/AuthStore";
+import { useCatalogueStore } from "../../../../store/CatalogueStore";
 import { usePopupStore } from "../../../../store/PopupStore";
 import { INK, InkButton, InkRemove, ParchmentSheet, Title } from "../../../../styles/parchment";
-import { Field, Hint, NumberInput, addBtn, inputCls } from "../../../../styles/parchmentForm";
+import { Field, Hint, NumberInput, addBtn } from "../../../../styles/parchmentForm";
 import CatalogueMonsterPicker from "../../../Catalogues/Monsters/CatalogueMonsterPicker";
-import { buildMinion, displayName, hpMaxOf, monsterAc, monsterSubtitle, resizeUnits, setHpMax } from "./minionHelpers";
+import MonsterCardForm from "../../../Catalogues/Monsters/MonsterCardForm";
+import { buildMinion, displayName, hpMaxOf, monsterAc, monsterSubtitle, resizeUnits, setHpMax, withMonster } from "./minionHelpers";
 
 /* Define tab: which minions this character controls, on parchment.
-   Add from the catalogue, then set count, nickname and max HP.
-   Full statblock editing stays in the monster catalogue. */
+   "+ from the bestiary": a row's "add" adds one straight away (more with
+   the "How many" stepper). Each group: how many, max HP, and "edit": the
+   monster card (MonsterCardForm, sheet mode) for this group's own
+   statblock, its nickname, and whether the catalogue gets it too. */
 
 // −  n  +  for the number of units. The number can be typed; it's applied
 // on Enter or when leaving the field, so typing "12" doesn't first shrink
@@ -28,7 +33,7 @@ function Count({ value, onChange, label }) {
   );
 }
 
-function MinionEntry({ minion }) {
+function MinionEntry({ minion, onEdit }) {
   const saveMinion = useMinionStore((s) => s.saveMinion);
   const removeMinion = useMinionStore((s) => s.removeMinion);
   const openPopup = usePopupStore((s) => s.open);
@@ -52,15 +57,17 @@ function MinionEntry({ minion }) {
           {monsterSubtitle(m)}
           {ac != null ? ` · AC ${ac}` : ""}
         </span>
-        <span className="ml-auto opacity-0 transition group-hover:opacity-100 focus-within:opacity-100">
-          <InkRemove onClick={onRemove} label="Remove minion" />
+        <span className="ml-auto flex shrink-0 items-baseline gap-3">
+          <InkButton onClick={onEdit} title="Its statblock, nickname, and saving it to your catalogue">
+            edit
+          </InkButton>
+          <span className="opacity-0 transition group-hover:opacity-100 focus-within:opacity-100">
+            <InkRemove onClick={onRemove} label="Remove minion" />
+          </span>
         </span>
       </div>
 
       <div className="flex flex-wrap items-end gap-x-8 gap-y-2">
-        <Field label="Nickname" className="min-w-[10rem] flex-1">
-          <input type="text" value={minion.nickname || ""} placeholder={m.name} onChange={(e) => saveMinion({ ...minion, nickname: e.target.value })} className={inputCls} />
-        </Field>
         <Field label="How many">
           <Count value={count} onChange={(n) => saveMinion(resizeUnits(minion, n))} label="units" />
         </Field>
@@ -78,12 +85,45 @@ export default function MinionsDefine() {
   const error = useMinionStore((s) => s.error);
   const clearError = useMinionStore((s) => s.clearError);
   const addMinion = useMinionStore((s) => s.addMinion);
+  const saveMinion = useMinionStore((s) => s.saveMinion);
+  const catalogueMonsters = useCatalogueStore((s) => s.monsters);
+  const createMonster = useCatalogueStore((s) => s.createMonster);
+  const updateMonster = useCatalogueStore((s) => s.updateMonster);
+  const userName = useAuthStore((s) => s.userData?.name);
 
   const [pickerOpen, setPickerOpen] = useState(false);
+  const [editingId, setEditingId] = useState(null); // the group the monster card edits
 
-  const onAdd = async (monster, count) => {
-    const created = await addMinion(buildMinion(monster, count));
+  const onAdd = async (monster) => {
+    const created = await addMinion(buildMinion(monster, 1));
     return !!created;
+  };
+
+  // The player's own catalogue entry a group's statblock comes from (saving to the catalogue updates it).
+  const homebrewOf = (minion) => {
+    const id = minion?.monster?.id;
+    const entry = id ? (catalogueMonsters || []).find((c) => c.id === id) : null;
+    return entry && entry.visibility && entry.created_by === userName ? { id: entry.id, name: entry.name, visibility: entry.visibility } : null;
+  };
+  const startEdit = (minion) => {
+    // The catalogue tells whether the statblock is the player's own entry.
+    const store = useCatalogueStore.getState();
+    if (!store.monsters?.length && !store.loadingMonsters) store.loadMonsters();
+    setEditingId(minion.id);
+  };
+  const editing = minions.find((m) => m.id === editingId) || null;
+
+  // The card's save: this group's statblock and nickname, and the catalogue too if asked.
+  const submit = async (record, { catalogue, asNew, nickname }) => {
+    let rec = record;
+    if (catalogue) {
+      const target = homebrewOf(editing);
+      const entry = { ...record, visibility: record.visibility || "private" };
+      delete entry.id;
+      rec = target && !asNew ? await updateMonster(target.id, { ...entry, id: target.id }) : await createMonster(entry);
+    }
+    const latest = useMinionStore.getState().minions.find((m) => m.id === editing.id) || editing;
+    saveMinion(withMonster(latest, rec, nickname));
   };
 
   const unitCount = minions.reduce((n, m) => n + (m.units || []).length, 0);
@@ -116,7 +156,8 @@ export default function MinionsDefine() {
 
       {pickerOpen && (
         <div className="mb-8">
-          <CatalogueMonsterPicker title="Add minions" addLabel="add them" onAdd={onAdd} onClose={() => setPickerOpen(false)} />
+          <CatalogueMonsterPicker title="Add minions" oneAtATime onAdd={onAdd} onClose={() => setPickerOpen(false)}
+                                  has={(mon) => minions.some((g) => g.monster?.id === mon.id && g.monster?.name === mon.name)} />
         </div>
       )}
 
@@ -125,10 +166,17 @@ export default function MinionsDefine() {
       ) : (
         <div className="grid grid-cols-1 gap-x-12 gap-y-8 @4xl:grid-cols-2">
           {minions.map((m) => (
-            <MinionEntry key={m.id} minion={m} />
+            <MinionEntry key={m.id} minion={m} onEdit={() => startEdit(m)} />
           ))}
         </div>
       )}
+
+      <MonsterCardForm
+        open={!!editing}
+        onClose={() => setEditingId(null)}
+        editingMonster={editing ? { ...editing.monster, visibility: homebrewOf(editing)?.visibility } : null}
+        sheet={editing ? { onSubmit: submit, homebrew: homebrewOf(editing), nickname: editing.nickname || "" } : null}
+      />
     </ParchmentSheet>
   );
 }

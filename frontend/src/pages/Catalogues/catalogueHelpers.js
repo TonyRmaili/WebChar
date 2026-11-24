@@ -329,7 +329,18 @@ export const GROUP_LABELS = {
 export const isGroup = (id) => typeof id === "string" && id in GROUP_LABELS;
 
 // The groups a pool of each kind can use in a form.
+// Weapon and armor training ids (the data's: a group or a weapon's own id).
+export const WEAPON_IDS = [
+  "club", "dagger", "greatclub", "handaxe", "javelin", "light_hammer", "mace", "quarterstaff", "sickle", "spear",
+  "dart", "light_crossbow", "shortbow", "sling", "battleaxe", "flail", "glaive", "greataxe", "greatsword", "halberd",
+  "lance", "longsword", "maul", "morningstar", "pike", "rapier", "scimitar", "shortsword", "trident", "war_pick",
+  "warhammer", "whip", "blowgun", "hand_crossbow", "heavy_crossbow", "longbow", "musket", "pistol", "net",
+];
+export const ARMOR_TRAINING = ["light", "medium", "heavy", "shields"];
+
 export const POOL_GROUPS = {
+  weapons: ["simple_weapons", "martial_weapons", "all_weapons"],
+  armor: [],
   skills: ["all_skills"],
   expertise: ["proficient_skills"],
   tools: ["all_tools", "artisans_tools", "gaming_sets", "musical_instruments"],
@@ -403,7 +414,7 @@ export const describeConsumes = (c) => {
 };
 
 export const CATEGORY_LABELS = {
-  traits: "Trait", actions: "Action", bonus_actions: "Bonus Action", reactions: "Reaction",
+  traits: "Trait", actions: "Action", bonus_actions: "Bonus Action", reactions: "Reaction", riders: "Rider",
   legendary_actions: "Legendary Action", mythic_actions: "Mythic Action",
   lair_actions: "Lair Action", regional_effects: "Regional Effect",
 };
@@ -437,8 +448,18 @@ export const matchesQuery = (entry, query) => {
 export const byName = (a, b) => String(a?.name || "").localeCompare(String(b?.name || ""));
 
 // A filter row: empty selection = everything passes; otherwise any overlap.
-export const passesAny = (selected, values) =>
-  !selected?.length || (values || []).some((v) => selected.includes(v));
+/* A filter: `selected` are the values picked (any one is enough), and
+   "!value" the ones turned away (none may be there). A filter chip goes
+   off → picked (blue) → turned away (red) → off. */
+export const NOT = "!";
+export const passesAny = (selected, values) => {
+  if (!selected?.length) return true;
+  const vals = values || [];
+  const away = selected.filter((s) => typeof s === "string" && s.startsWith(NOT)).map((s) => s.slice(1));
+  const want = selected.filter((s) => !(typeof s === "string" && s.startsWith(NOT)));
+  if (away.length && vals.some((v) => away.includes(String(v)))) return false;
+  return !want.length || vals.some((v) => want.includes(v));
+};
 
 // ─── Text ──────────────────────────────────────────────────────────
 // Every entry's `text` is made by the pipeline's text_renderer, in one
@@ -560,6 +581,41 @@ export const featureText = (text, name) => {
   return "";
 };
 
+/* Features saved from a form get their text the way the finalizer gives
+   it (data_finalizer._feature_texts): a feature whose text is empty takes
+   its **Name.** paragraph of the entry's text; one named like the entry
+   takes the whole text, or, next to features with their own paragraphs,
+   the text none of them takes. A text the player wrote stays. A new
+   feature also gets its id here, from its name ("Fast Wrestler" →
+   "fast-wrestler"): the sheet finds its copies by id. */
+const featureSlug = (name) => String(name || "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || "feature";
+export const withFeatureTexts = (features, text, ownName) => {
+  const given = Array.isArray(features) ? features : [];
+  const used = new Set(given.map((f) => f?.id).filter(Boolean));
+  const list = given.map((f) => {
+    if (!f || typeof f !== "object") return f;
+    let id = f.id;
+    if (!id) {
+      const base = featureSlug(f.name);
+      id = base;
+      for (let n = 2; used.has(id); n++) id = `${base}-${n}`;
+      used.add(id);
+    }
+    return id === f.id ? f : { ...f, id };
+  });
+  if (typeof text !== "string" || !text.trim()) return list;
+  const own = String(ownName || "").trim().toLowerCase();
+  const claimed = list.map((f) => featureText(text, f?.name)).filter(Boolean);
+  return list.map((f) => {
+    if (!f || (typeof f.text === "string" && f.text.trim())) return f;
+    let t = featureText(text, f.name);
+    if (!t && String(f.name || "").trim().toLowerCase() === own) {
+      t = claimed.reduce((acc, part) => acc.replace(part, ""), text).split(/\n\s*\n/).map((x) => x.trim()).filter(Boolean).join("\n\n");
+    }
+    return t ? { ...f, text: t } : f;
+  });
+};
+
 // ─── Values ────────────────────────────────────────────────────────
 // A value is a number, a formula ("pb", "8 + con_mod + pb") or a level
 // table ({"1": "2d6", "5": "3d6"}).
@@ -636,7 +692,6 @@ export const SPELL_READY = [
 export const FREE_CAST_RESETS = [
   { value: "long", label: "per long rest" },
   { value: "short", label: "per short rest" },
-  { value: "dawn", label: "per day" },
 ];
 export function spellReady(g) {
   const u = g?.uses;
@@ -818,6 +873,324 @@ const formatDamage = (parts) =>
 
 // Short words for a feature's mechanics: ["1/long rest", "Action",
 // "DC 8 + Con mod + PB Dex save", "2d6 Fire", "toggle"].
+/* ─── Modifiers (a number on the sheet) ─────────────────────────────
+   { target, add | min | set | base, requires? } — the same shape on an
+   item, in a feature, and in a feature's switch (derive.js reads them).
+     add   added on top        min  at least this      set  becomes this
+     base  an AC formula without armor (Mage Armor): AC only
+   requires: AC only (no_armor, no_shield, armor, shield). */
+export const MOD_TARGET_GROUPS = [
+  { label: "Defense", options: [["ac", "Armor Class"], ["hp_max", "Hit point maximum"], ["initiative", "Initiative"], ["concentration", "Concentration saves"]] },
+  { label: "Attacks", options: [["attack", "Weapon attack rolls"], ["damage", "Weapon damage"], ["spell_attack", "Spell attack rolls"], ["spell_dc", "Spell save DC"], ["spell_damage", "Spell damage"]] },
+  // { target: "attack_ability.melee", set: "int" }: those attacks can use Int for to hit and damage, when it's better (Bladework)
+  { label: "Attacks use another ability", options: [["attack_ability", "All attacks can use"], ["attack_ability.melee", "Melee attacks can use"], ["attack_ability.ranged", "Ranged attacks can use"], ["attack_ability.spell", "Spell attacks can use"]] },
+  { label: "Saving throws", options: [["save", "All saving throws"], ...ABILITIES.map((a) => [`save.${a}`, `${ABILITY_NAMES[a]} saves`])] },
+  { label: "Checks", options: [["check", "All ability checks"], ...ABILITIES.map((a) => [`check.${a}`, `${ABILITY_NAMES[a]} checks`]), ...SKILL_IDS.map((k) => [`check.${k}`, titleCase(k.replace(/_/g, " "))])] },
+  { label: "Scores", options: ABILITIES.map((a) => [a, `${ABILITY_NAMES[a]} score`]) },
+  { label: "Speed", options: [["speed", "Speed (walking)"], ...SPEED_MODES.filter((m) => m !== "walk").map((m) => [`speed.${m}`, `${titleCase(m)} speed`])] },
+];
+export const MOD_TARGET_LABELS = Object.fromEntries(MOD_TARGET_GROUPS.flatMap((g) => g.options));
+export const MOD_HOW = [
+  { value: "add", label: "add" },
+  { value: "min", label: "at least" },
+  { value: "set", label: "becomes" },
+  { value: "base", label: "AC formula" },
+  { value: "adv", label: "advantage" },
+  { value: "dis", label: "disadvantage" },
+];
+// The rolls advantage can go on (a check, a save, an attack, initiative,
+// concentration); not AC, hit points, speed or a score.
+export const ROLL_TARGET = (t) =>
+  /^(check|save)(\.|$)/.test(t || "") || ["attack", "spell_attack", "initiative", "concentration"].includes(t);
+export const MOD_REQUIRES = [
+  { value: "no_armor", label: "no armor" },
+  { value: "no_shield", label: "no shield" },
+  { value: "armor", label: "wearing armor" },
+  { value: "shield", label: "with a shield" },
+];
+export const modHow = (m) => MOD_HOW.map((h) => h.value).find((k) => m?.[k] != null) || "add";
+// "Melee attacks use Int": the modifier picks an ability, not a number.
+export const ABILITY_TARGET = (t) => /^attack_ability(\.|$)/.test(t || "");
+// "Initiative + pb", "Constitution score at least 19", "AC formula 13 + dex_mod (no armor)"
+export const formatModifier = (m) => {
+  const how = modHow(m);
+  const label = MOD_TARGET_LABELS[m.target] || labelFromId(m.target || "");
+  const v = formulaWords(m[how]);
+  if (ABILITY_TARGET(m.target)) return `${label} ${ABILITY_SHORT[m.set] || m.set || "—"}`;
+  const req = (m.requires || []).length ? ` (${m.requires.map((r) => MOD_REQUIRES.find((x) => x.value === r)?.label || r).join(", ")})` : "";
+  if (how === "adv" || how === "dis") return `${how === "adv" ? "Advantage" : "Disadvantage"} on ${label.charAt(0).toLowerCase()}${label.slice(1)}${req}`;
+  return how === "add" ? `${label} ${String(v).startsWith("-") ? "" : "+"}${v}${req}` : `${label} ${MOD_HOW.find((h) => h.value === how).label} ${v}${req}`;
+};
+
+/* ─── A number built from a list, not typed ─────────────────────────
+   "PB", "PB + 2", "2 × PB", "Int mod (at least 1)": one word from
+   FORMULA_TERMS, + or × a number, and "at least 1". Stored as the
+   formula the engine reads: "pb", "pb + 2", "2 * pb", "max(1, int_mod)".
+   parseFormula → { term, op: "+" | "*", n, min1 }, or null when the
+   value is something else (a level table, two words) and stays text. */
+export const FORMULA_TERMS = [
+  { value: "", label: "fixed" },
+  { value: "pb", label: "proficiency bonus" },
+  ...["str", "dex", "con", "int", "wis", "cha"].map((a) => ({ value: `${a}_mod`, label: `${a[0].toUpperCase()}${a.slice(1)} mod` })),
+  { value: "spell_mod", label: "spellcasting mod" },
+  { value: "level", label: "character level" },
+  { value: "class_level", label: "class level" },
+];
+const TERMS = new Set(FORMULA_TERMS.map((t) => t.value).filter(Boolean));
+export const parseFormula = (v) => {
+  if (v == null || v === "") return { term: "", op: "+", n: null, min1: false };
+  if (typeof v === "number") return { term: "", op: "+", n: v, min1: false };
+  if (typeof v !== "string") return null;
+  let t = v.replace(/\s+/g, "");
+  let min1 = false;
+  const wrap = /^max\(1,(.+)\)$/.exec(t);
+  if (wrap) {
+    min1 = true;
+    t = wrap[1];
+  }
+  if (/^-?\d+$/.test(t)) return min1 ? null : { term: "", op: "+", n: Number(t), min1 };
+  if (TERMS.has(t)) return { term: t, op: "+", n: null, min1 };
+  let m = /^([a-z_]+)([+\-*])(\d+)$/.exec(t);
+  if (m && TERMS.has(m[1])) return { term: m[1], op: m[2] === "*" ? "*" : "+", n: m[2] === "-" ? -Number(m[3]) : Number(m[3]), min1 };
+  m = /^(\d+)([+*])([a-z_]+)$/.exec(t);
+  if (m && TERMS.has(m[3])) return { term: m[3], op: m[2], n: Number(m[1]), min1 };
+  return null;
+};
+// A value in words: "PB", "PB + 2", "2 × PB", "Int mod (at least 1)";
+// anything the list can't say as formatValue says it.
+const TERM_WORDS = { pb: "PB", spell_mod: "spellcasting mod", level: "level", class_level: "class level" };
+export const formulaWords = (v) => {
+  const p = parseFormula(v);
+  if (!p) return formatValue(v);
+  if (!p.term) return p.n == null ? "" : String(p.n);
+  const t = TERM_WORDS[p.term] || `${ABILITY_SHORT[p.term.replace("_mod", "")]} mod`;
+  let out = t;
+  if (p.n != null && !(p.op === "+" && p.n === 0) && !(p.op === "*" && p.n === 1)) {
+    out = p.op === "*" ? `${p.n} × ${t}` : p.n < 0 ? `${t} − ${-p.n}` : `${t} + ${p.n}`;
+  }
+  return p.min1 ? `${out} (at least 1)` : out;
+};
+
+/* ─── A feature's parts in a few words (the editor's summary lines) ── */
+
+// "PB per long rest" · "spends 1 Focus Points" (pools: [{ id, name }])
+export const usesSummary = (f, pools = []) => {
+  const out = [];
+  if (f.uses && typeof f.uses === "object") {
+    out.push(`${formulaWords(f.uses.max ?? 1) || 1} per ${f.uses.reset === "short" ? "short" : "long"} rest`);
+  }
+  if (f.consumes?.resource === "charges") {
+    const n = f.consumes.amount ?? 1;
+    out.push(`costs ${n} of the item's charge${n === 1 ? "" : "s"}`);
+  } else if (f.consumes) {
+    const name = f.consumes.resource ? pools.find((p) => p.id === f.consumes.resource)?.name || labelFromId(f.consumes.resource) : "from a pool";
+    const n = f.consumes.min != null ? `${f.consumes.min}–${f.consumes.max ?? "?"}` : f.consumes.amount ?? 1;
+    out.push(`spends ${n} ${name}`);
+  }
+  return out.join(" · ");
+};
+
+const KIND_WORDS = { melee: "melee attack", ranged: "ranged attack", melee_or_ranged: "melee or ranged attack", spell: "spell attack", any: "extra on an attack you make" };
+const damageWords = (list) => (list || []).map((d) => [formulaWords(d.dice), d.type].filter(Boolean).join(" ")).filter(Boolean).join(" + ");
+
+// Each part of an action in words (the editor's lines):
+//   attackWords  "melee attack (Int), 1d8 slashing"
+//   saveWords    "Dex save, 2d6 fire (half on a success), prone"
+//   auraWords    "2d6 fire, no roll"
+//   healWords    "heals 1d10 + level · 5 temporary HP"
+//   rangeWords   "reach 10 ft. · 20-foot sphere"
+export const attackWords = (a) => {
+  if (!a?.attack) return "";
+  const h = hitParts(a.attack.bonus);
+  const ab = h.mode === "auto" && h.ability ? ` (${h.ability === "spell" ? "spellcasting" : ABILITY_SHORT[h.ability]})` : "";
+  const dmg = damageWords(a.attack.damage);
+  return `${KIND_WORDS[a.attack.kind] || "attack"}${ab}${dmg ? `, ${dmg}` : ""}`;
+};
+export const saveWords = (a) => {
+  if (!a?.save) return "";
+  const dmg = damageWords(a.save.damage);
+  return `${ABILITY_SHORT[a.save.ability] || "a"} save${dmg ? `, ${dmg}` : ""}${a.save.on_success === "half" ? " (half on a success)" : ""}${(a.save.conditions || []).length ? `, ${a.save.conditions.join(", ")}` : ""}`;
+};
+export const auraWords = (a) => ((a?.damage || []).length ? `${damageWords(a.damage) || "damage"}, no roll` : "");
+// A rider (attack kind "any"): "+1d6 cold on an attack you make"
+/* A rider: extra damage (and conditions) added to an attack you make or a
+   save you force. Its own kind ("riders") made in Custom, or a part of
+   any feature (Flame Tongue's fire). Stored as `rider: { damage: [],
+   conditions: [], on: "attacks" | "saves" | "both" }`; the book's older
+   shape (`action.attack.kind: "any"`: Frost Brand, Hex) is read as one
+   on attacks. */
+export const riderOf = (f) =>
+  f?.rider && typeof f.rider === "object"
+    ? { damage: f.rider.damage || [], conditions: f.rider.conditions || [], on: f.rider.on || "attacks" }
+    : f?.action?.attack?.kind === "any" ? { damage: f.action.attack.damage || [], conditions: [], on: "attacks" } : null;
+export const RIDER_ON = [
+  { value: "attacks", label: "attacks" },
+  { value: "saves", label: "saves" },
+  { value: "both", label: "both" },
+];
+const RIDER_ON_WORDS = { attacks: "an attack you make", saves: "a save you force", both: "an attack or a save" };
+// "+1d6 cold on an attack you make · prone"
+export const riderWords = (f) => {
+  const r = riderOf(f);
+  if (!r) return "";
+  return [`+${damageWords(r.damage) || "damage"} on ${RIDER_ON_WORDS[r.on] || RIDER_ON_WORDS.attacks}`, r.conditions.map(labelFromId).join(", ")].filter(Boolean).join(" · ");
+};
+export const healWords = (a) =>
+  [
+    a?.heal != null && a.heal !== "" ? `heals ${healAmountWords(a.heal)}` : "",
+    a?.temp_hp != null && a.temp_hp !== "" ? `${healAmountWords(a.temp_hp)} temporary HP` : "",
+    a?.barrier != null && a.barrier !== "" ? `a ${healAmountWords(a.barrier)} HP barrier` : "",
+  ].filter(Boolean).join(" · ");
+
+/* Healing, temporary HP or a barrier, picked: dice + a modifier (from the
+   list, + or × a number) + the proficiency bonus (on or off). Stored as
+   one formula: "1d10 + class_level", "2d8 + wis_mod + pb", "5 * class_level".
+   parseHeal → { dice, mod, pb }, or null for what the picker can't show
+   (it stays text). */
+export const parseHeal = (v) => {
+  if (v == null || v === "") return { dice: undefined, mod: undefined, pb: false };
+  if (typeof v === "number") return { dice: undefined, mod: v, pb: false };
+  if (typeof v !== "string") return null;
+  let dice;
+  let pb = false;
+  const rest = [];
+  for (const t of v.replace(/\s+/g, "").split("+").filter(Boolean)) {
+    if (!dice && /^\d*d\d+$/.test(t)) dice = t.startsWith("d") ? `1${t}` : t;
+    else if (!pb && t === "pb") pb = true;
+    else rest.push(t);
+  }
+  const mod = rest.join(" + ");
+  if (mod && parseFormula(mod) == null) return null;
+  return { dice, mod: mod === "" ? undefined : /^-?\d+$/.test(mod) ? Number(mod) : buildFormula(parseFormula(mod)), pb };
+};
+export const buildHeal = ({ dice, mod, pb }) => {
+  if (!dice && !pb && typeof mod === "number") return mod; // a plain number stays one
+  const parts = [dice, mod == null || mod === "" ? "" : String(mod), pb ? "pb" : ""].filter(Boolean);
+  return parts.length ? parts.join(" + ") : undefined;
+};
+const healAmountWords = (v) => {
+  const p = parseHeal(v);
+  if (!p) return formatValue(v);
+  return [p.dice, p.mod != null ? formulaWords(p.mod) : "", p.pb ? "PB" : ""].filter(Boolean).join(" + ");
+};
+export const rangeWords = (a) => [a?.range, a?.area].filter(Boolean).join(" · ");
+
+// The whole action in one line.
+export const actionSummary = (a) => {
+  if (!a || typeof a !== "object") return "";
+  return [attackWords(a), saveWords(a), auraWords(a), healWords(a), rangeWords(a)].filter(Boolean).join(" · ");
+};
+
+/* Range and area, picked (RangeAreaEditor): a reach or a range in feet
+   ("reach 10 ft.", "30 ft.", "80/320 ft."), an area of a shape ("20-foot
+   sphere"). parseRange / parseArea → the parts, or null for words the
+   picker can't show ("self", "sight"), which stay text. */
+export const AREA_SHAPES = ["cone", "cube", "cylinder", "emanation", "line", "sphere"];
+export const parseRange = (t) => {
+  if (t == null || t === "") return { kind: "", n: null, long: null };
+  const s = String(t).trim();
+  let m = /^reach\s+(\d+)\s*(?:ft\.?|feet)$/i.exec(s);
+  if (m) return { kind: "reach", n: Number(m[1]), long: null };
+  m = /^(?:range\s+)?(\d+)(?:\s*\/\s*(\d+))?\s*(?:ft\.?|feet)$/i.exec(s);
+  if (m) return { kind: "range", n: Number(m[1]), long: m[2] ? Number(m[2]) : null };
+  return null;
+};
+export const buildRange = ({ kind, n, long }) =>
+  !kind || n == null ? undefined : kind === "reach" ? `reach ${n} ft.` : `${n}${long ? `/${long}` : ""} ft.`;
+export const parseArea = (t) => {
+  if (t == null || t === "") return { shape: "", n: null };
+  const m = /^(\d+)[- ]?(?:foot|feet|ft\.?)[- ]?(?:radius[- ])?([a-z]+)$/i.exec(String(t).trim());
+  if (m && AREA_SHAPES.includes(m[2].toLowerCase())) return { shape: m[2].toLowerCase(), n: Number(m[1]) };
+  return null;
+};
+export const buildArea = ({ shape, n }) => (!shape || n == null ? undefined : `${n}-foot ${shape}`);
+
+// The speed, senses and defenses a feature gives, as "Speed: fly 30 ft."
+export const grantsSummary = (g, index) => describeGrants(g, index).map((r) => `${r.label}: ${r.value}`).join(" · ");
+
+// "spends a use · AC +Int mod (at least 1) · Advantage on acrobatics"
+export const toggleSummary = (t, index) => {
+  if (!t) return "";
+  if (t === true) return "on or off, nothing else changes";
+  return [t.uses_charge ? "switching it on spends a use" : "", ...(t.modifiers || []).map(formatModifier), grantsSummary(t.grants, index)]
+    .filter(Boolean).join(" · ") || "on or off, nothing else changes";
+};
+
+// "Skills: 2 of Athletics, Acrobatics…" for each pick
+export const picksSummary = (choices, index) =>
+  (choices || []).map((c) => {
+    const d = describeChoice(c, index);
+    return d ? (d.value ? `${d.label}: ${d.value}` : d.label) : "a pick";
+  }).join(" · ");
+
+export const buildFormula = ({ term, op, n, min1 }) => {
+  if (!term) return n ?? undefined;
+  let out = term;
+  if (n != null && !(op === "+" && n === 0) && !(op === "*" && n === 1)) {
+    out = op === "*" ? `${n} * ${term}` : n < 0 ? `${term} - ${-n}` : `${term} + ${n}`;
+  }
+  return min1 ? `max(1, ${out})` : out;
+};
+
+/* ─── An attack's numbers, the way the forms show them ──────────────
+   To hit is stored as a formula. "Automatic" is pb + an ability's
+   modifier (+ anything extra): "pb + str_mod + 1" reads as automatic,
+   STR, extra 1. Damage adds the same ability's modifier when it says so
+   (its first part's bonus "str_mod + 2"). By the rules a spell attack
+   adds no modifier to damage unless a feature says so (Agonizing Blast).
+   A null to-hit is an effect that rides on an attack you already make
+   (a weapon's, Divine Smite): it has no roll of its own. */
+export const AUTO_ABILITY = { melee: "str", ranged: "dex", melee_or_ranged: "str", spell: "spell" };
+const MOD_TERM = /^(str|dex|con|int|wis|cha|spell)_mod$/;
+// What a damage part can add by name (the damage editor's list): an ability's
+// modifier, the spellcasting one, or the proficiency bonus.
+export const DAMAGE_MODS = [
+  { value: "", label: "—" },
+  ...["str", "dex", "con", "int", "wis", "cha"].map((a) => ({ value: a, label: `${a[0].toUpperCase()}${a.slice(1)} mod` })),
+  { value: "spell", label: "spellcasting mod" },
+  { value: "pb", label: "proficiency" },
+];
+const DAMAGE_TERM = /^((str|dex|con|int|wis|cha|spell)_mod|pb)$/;
+const termOf = (mod) => (mod === "pb" ? "pb" : `${mod}_mod`);
+const plusTerms = (v) => (typeof v === "string" && !/[-()*/]/.test(v) ? v.split("+").map((t) => t.trim()).filter(Boolean) : null);
+const joinTerms = (list) => list.filter((t) => t !== "" && t != null).join(" + ");
+const extraOf = (rest) => {
+  const t = joinTerms(rest);
+  return t === "" ? undefined : /^-?\d+$/.test(t) ? Number(t) : t;
+};
+// → { mode: "auto", ability, pb, extra } | { mode: "set", value } | { mode: "none" }
+// pb: the proficiency bonus is in it (on by default, can be left out).
+export function hitParts(bonus) {
+  if (bonus == null || bonus === "") return { mode: "none" };
+  const t = plusTerms(bonus);
+  const ab = t?.find((x) => MOD_TERM.test(x));
+  if (t && ab) return { mode: "auto", ability: ab.replace("_mod", ""), pb: t.includes("pb"), extra: extraOf(t.filter((x) => x !== "pb" && x !== ab)) };
+  return { mode: "set", value: bonus };
+}
+export const hitFormula = (ability, extra, pb = true) => joinTerms([pb ? "pb" : "", `${ability}_mod`, extra == null ? "" : String(extra)]);
+/* A save DC, worked out: "8 + pb + con_mod" → { mode: "auto", pb: true,
+   ability: "con" }; a plain number (an item's "DC 13") → { mode: "set" }. */
+export function dcParts(dc) {
+  if (dc == null || dc === "") return { mode: "auto", pb: true, ability: null };
+  const t = plusTerms(dc);
+  const ab = t?.find((x) => MOD_TERM.test(x));
+  if (t && t.includes("8") && t.every((x) => x === "8" || x === "pb" || x === ab)) return { mode: "auto", pb: t.includes("pb"), ability: ab ? ab.replace("_mod", "") : null };
+  return { mode: "set", value: dc };
+}
+export const dcFormula = (pb, ability) => joinTerms(["8", pb ? "pb" : "", ability ? `${ability}_mod` : ""]);
+
+// A damage part's bonus → { mod: "str" | "spell" | "pb" | null, extra }
+export function damageBonusParts(bonus) {
+  const t = plusTerms(bonus);
+  const term = t?.find((x) => DAMAGE_TERM.test(x));
+  if (term) return { mod: term === "pb" ? "pb" : term.replace("_mod", ""), extra: extraOf(t.filter((x) => x !== term)) };
+  return { mod: null, extra: bonus ?? undefined };
+}
+export const damageBonusFormula = (mod, extra) => {
+  const t = joinTerms([mod ? termOf(mod) : "", extra == null ? "" : String(extra)]);
+  return t === "" ? undefined : /^-?\d+$/.test(t) ? Number(t) : t;
+};
+
 export const describeFeature = (f) => {
   if (!f) return [];
   const out = [];
@@ -825,8 +1198,9 @@ export const describeFeature = (f) => {
   if (f.category && f.category !== "traits") out.push(CATEGORY_LABELS[f.category] || titleCase(f.category));
   const a = f.action;
   if (a?.attack) {
-    const hit = a.attack.bonus != null ? ` ${formatValue(a.attack.bonus)} to hit` : "";
-    out.push(`${titleCase(a.attack.kind)} attack${hit}`);
+    const hp = hitParts(a.attack.bonus);
+    const hit = hp.mode === "auto" ? ` (pb + ${hp.ability === "spell" ? "spellcasting" : ABILITY_SHORT[hp.ability]}${hp.extra != null ? ` + ${formatValue(hp.extra)}` : ""} to hit)` : hp.mode === "set" ? ` ${formatValue(a.attack.bonus)} to hit` : "";
+    out.push(`${a.attack.kind === "any" ? "On an attack you make" : `${titleCase(String(a.attack.kind).replace(/_/g, " "))} attack`}${hit}`);
     if (a.attack.damage?.length) out.push(formatDamage(a.attack.damage));
   }
   if (a?.save) {
@@ -836,11 +1210,9 @@ export const describeFeature = (f) => {
   if (a?.damage?.length) out.push(formatDamage(a.damage));
   if (a?.heal) out.push(`heals ${formatValue(a.heal)}${a.heal_per_slot ? ` (+${a.heal_per_slot} per slot level)` : ""}`);
   if (a?.temp_hp) out.push(`${formatValue(a.temp_hp)} temporary HP${a.temp_hp_per_slot ? ` (+${a.temp_hp_per_slot} per slot level)` : ""}`);
+  if (f.rider) out.push(riderWords(f));
   if (f.toggle) out.push("toggle");
-  for (const m of f.modifiers || []) {
-    const op = ["add", "base", "min", "set"].find((k) => k in m);
-    out.push(`${m.target} ${op === "add" ? "+" : `${op} `}${formatValue(m[op])}`);
-  }
+  for (const m of f.modifiers || []) out.push(formatModifier(m));
   return out;
 };
 

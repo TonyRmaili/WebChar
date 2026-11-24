@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { FilterChips } from "./catalogueParts";
 
 /* The catalogues' filter window: a parchment card with a thin leather
    edge over a darkened page. Escape or a click outside closes it. */
@@ -39,6 +40,11 @@ export default function FilterPopup({ open, onClose, activeCount, onClear, child
             <h2 className="text-xl tracking-wide">Filters</h2>
             {activeCount > 0 && <span className="text-sm italic text-rubric">{activeCount} active</span>}
           </div>
+          {/* the chips' three states (catalogueParts.ChipToggles) */}
+          <span className="text-xs italic text-ink-faded">
+            click a word: <span className="text-blue-800 underline decoration-dotted underline-offset-4">show only</span> · again:{" "}
+            <span className="text-red-700 line-through">hide</span> · again: off
+          </span>
           <button onClick={onClose} className="px-1 text-lg text-ink-faded transition hover:text-rubric" aria-label="Close filters">
             ×
           </button>
@@ -46,7 +52,9 @@ export default function FilterPopup({ open, onClose, activeCount, onClear, child
         <div className="mx-6 h-px bg-rule/30" />
 
         {/* Body */}
-        <div className="flex-1 overflow-y-auto px-6 py-4">{children}</div>
+        <div className="flex-1 overflow-y-auto px-6 py-4">
+          <FilterChips.Provider value>{children}</FilterChips.Provider>
+        </div>
 
         {/* Footer */}
         <div className="mx-6 h-px bg-rule/30" />

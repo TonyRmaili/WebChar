@@ -1,9 +1,15 @@
-import React, { useState } from "react";
+import React, { createContext, useContext, useState } from "react";
+
+/* Inside a create form's tab the tab already names the section: sections
+   there show their content only, no heading, no fold (FormTabs). */
+export const BareSections = createContext(false);
 
 /* A group of filters inside the filter popup: a small-caps heading with
    a chevron that folds it away, and a hairline to the right. */
 export default function FilterSection({ title, defaultOpen = true, children }) {
   const [open, setOpen] = useState(defaultOpen);
+  const bare = useContext(BareSections);
+  if (bare) return <div className="mb-4">{children}</div>;
 
   return (
     <div className="mb-4">

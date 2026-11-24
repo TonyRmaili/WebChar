@@ -82,17 +82,29 @@ function AbilityTable({ ch, d, showAdj, onScore, onPatch }) {
             <span className="text-center text-lg font-semibold">{signed(row.mod)}</span>
             <span className="flex items-baseline justify-center gap-1">
               <span className="tabular-nums">{signed(row.check)}</span>
+              <RollTag roll={row.check_roll} />
               {showAdj && <AdjInput value={manualAdd(ch, `check.${a}`)} onChange={(v) => onPatch(setManualAdd(ch, `check.${a}`, v))} label={`${NAMES[a]} check adjustment`} />}
             </span>
             <span className="flex items-center justify-center gap-1" title={from || undefined}>
               <Bubble level={level} onClick={() => onPatch(setHas(ch, "saves", a, !row.save_prof))} label={`${NAMES[a]} save`} />
               <span className={`w-7 tabular-nums ${row.save_prof ? `${INK.rubric} font-semibold` : ""}`}>{signed(row.save)}</span>
+              <RollTag roll={row.save_roll} />
               {showAdj && <AdjInput value={manualAdd(ch, `save.${a}`)} onChange={(v) => onPatch(setManualAdd(ch, `save.${a}`, v))} label={`${NAMES[a]} save adjustment`} />}
             </span>
           </React.Fragment>
         );
       })}
     </div>
+  );
+}
+
+// "adv" / "dis" beside a roll a feature gives advantage or disadvantage on.
+export function RollTag({ roll }) {
+  if (!roll) return null;
+  return (
+    <span className={`text-[10px] italic ${roll === "adv" ? INK.rubric : INK.faded}`} title={roll === "adv" ? "with advantage" : "with disadvantage"}>
+      {roll}
+    </span>
   );
 }
 
@@ -136,6 +148,7 @@ function SkillRow({ ch, skillKey, row, showAdj, onPatch, onRemove }) {
         )}
         <Leader />
       </div>
+      <RollTag roll={row.roll} />
       <span className={`w-8 shrink-0 text-right tabular-nums ${row.prof ? `${INK.rubric} font-semibold` : ""}`}>{signed(row.total)}</span>
       {showAdj && <AdjInput value={manualAdd(ch, `check.${skillKey}`)} onChange={(v) => onPatch(setManualAdd(ch, `check.${skillKey}`, v))} label={`${row.label} adjustment`} />}
     </div>

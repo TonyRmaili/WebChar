@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
+import { installNumberWheel } from "./utils/numberWheel";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 
 import Layout from "./pages/Layout";
@@ -33,4 +34,5 @@ function App() {
   );
 }
 
+installNumberWheel(); // the mouse wheel steps any focused number field
 ReactDOM.createRoot(document.getElementById("root")).render(<App />);

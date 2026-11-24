@@ -1,10 +1,11 @@
 import React, { useEffect, useMemo, useState } from "react";
+import useStoredState from "../../../utils/useStoredState";
 import { useCatalogueStore } from "../../../store/CatalogueStore";
 import { usePopupStore } from "../../../store/PopupStore";
 import useAuthStore from "../../../store/AuthStore";
 import FilterSection from "../FilterSection";
 import FilterPopup, { FilterButton } from "../FilterPopup";
-import SpellCreatePopup from "./SpellCreatePopup";
+import SpellCardForm from "./SpellCardForm";
 import { ErrorLine, LoadingLine, SortControl, Toolbar, searchCls } from "../catalogueStyle";
 import { CatalogueRow, ChipToggles, FoldChips, useEntryMenu } from "../catalogueParts";
 import { addBtn } from "../../../styles/parchmentForm";
@@ -37,7 +38,7 @@ export default function Spells() {
   const [query, setQuery] = useState("");
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [sortDir, setSortDir] = useState(null);
-  const [picked, setPicked] = useState({}); // filter key → selected values
+  const [picked, setPicked] = useStoredState("catalogue.spells.picked", {}); // filter key → selected values
 
   const [form, setForm] = useState(null); // null = closed · {} new · { editing } · { copyFrom }
   const [openMenu, menu] = useEntryMenu({
@@ -87,7 +88,8 @@ export default function Spells() {
   }, [spells, FILTERS]);
 
   const selected = (key) => picked[key] ?? (key === "edition" ? ["one"] : []);
-  const toggle = (key) => (v) => setPicked((p) => ({ ...p, [key]: toggleIn(selected(key), v) }));
+  // from the latest picks (a chip turned from "show" to "hide" changes two values at once)
+  const toggle = (key) => (v) => setPicked((p) => ({ ...p, [key]: toggleIn(p[key] ?? (key === "edition" ? ["one"] : []), v) }));
 
   const filtered = useMemo(() => {
     const rows = (spells || []).filter((sp) => FILTERS.every((f) => passesAny(selected(f.key), f.read(sp))) && matchesQuery(sp, query));
@@ -155,8 +157,8 @@ export default function Spells() {
 
           {menu}
 
-          <SpellCreatePopup open={form !== null} onClose={() => setForm(null)}
-                            editingSpell={form?.editing || null} copyFromSpell={form?.copyFrom || null} />
+          <SpellCardForm open={form !== null} onClose={() => setForm(null)}
+                         editingSpell={form?.editing || null} copyFromSpell={form?.copyFrom || null} />
         </>
       )}
     </div>

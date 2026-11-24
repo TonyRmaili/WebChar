@@ -119,7 +119,35 @@ export function actionWords(a) {
   if (a.area) bits.push(a.area);
   const dmg = actionDamage(a).map((p) => partWords(p) + (p.condition ? ` (${p.condition})` : "")).filter(Boolean).join(" + ");
   if (dmg) bits.push(dmg);
+  if (a.heal != null) bits.push(`heals ${formatValue(a.heal)}`);
+  if (a.temp_hp != null) bits.push(`${formatValue(a.temp_hp)} temporary HP`);
+  if (a.barrier != null) bits.push(`a ${formatValue(a.barrier)} HP barrier`);
   return bits.filter(Boolean).join(" · ");
+}
+
+/* The same numbers, short, for a ledger line: [{ tone, text }] —
+   "+10" (to hit), "DEX 15" (a save), "2d6 + 4 fire" (damage that always
+   applies; a part that only sometimes does is left out and marked "+…").
+   actionWords stays the full version (the line's hover text, the card). */
+export function actionTags(a) {
+  if (!a) return [];
+  const out = [];
+  if (a.attack && a.attack.bonus != null) {
+    const b = a.attack.bonus;
+    out.push({ tone: "hit", text: isNumber(b) ? signed(b) : `+${formatValue(b)}` });
+  }
+  if (a.save) {
+    const ab = ABILITY_SHORT[a.save.ability]?.toUpperCase() || String(a.save.ability || "").toUpperCase();
+    out.push({ tone: "save", text: a.save.dc == null ? `${ab} save` : `${ab} ${isNumber(a.save.dc) ? a.save.dc : formatValue(a.save.dc)}` });
+  }
+  const parts = actionDamage(a);
+  const always = parts.filter((p) => !p?.condition).map(partWords).filter(Boolean);
+  const sometimes = parts.some((p) => p?.condition);
+  if (always.length || sometimes) out.push({ tone: "damage", text: `${always.join(" + ") || partWords(parts[0])}${sometimes && always.length ? " +…" : sometimes ? "…" : ""}` });
+  if (a.heal != null) out.push({ tone: "heal", text: `heals ${formatValue(a.heal)}` });
+  if (a.temp_hp != null) out.push({ tone: "heal", text: `${formatValue(a.temp_hp)} temp HP` });
+  if (a.barrier != null) out.push({ tone: "heal", text: `${formatValue(a.barrier)} barrier` });
+  return out;
 }
 
 /* ─── limited uses ───────────────────────────────────────────────── */

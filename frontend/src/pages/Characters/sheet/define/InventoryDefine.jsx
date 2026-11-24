@@ -5,9 +5,9 @@ import { INK, InkButton, InkNumber, InkSelect, InkText, Leader, Mark, ParchmentS
 import { DefineSection, Field, Hint, PickerRow, PickerShell, Segmented, Tag, TextBlock, addBtn, dangerBtn, ghostBtn } from "../../../../styles/parchmentForm";
 import useAuthStore from "../../../../store/AuthStore";
 import useCharStore from "../../../../store/CharStore";
-import ItemCreatePopup from "../../../Catalogues/Items/ItemCreatePopup";
-import { asList, labelOf, useSheet } from "../sheetHelpers";
-import { weaponAttack } from "../featureHelpers";
+import ItemCardForm from "../../../Catalogues/Items/ItemCardForm";
+import { asList, labelOf, manualOf, useSheet } from "../sheetHelpers";
+import { exportItemAttack, weaponAttack } from "../featureHelpers";
 import { actionWords } from "../../../../utils/featureRuntime";
 import {
   COINS,
@@ -246,7 +246,7 @@ function WordToggle({ on, onClick, label, title, disabled = false }) {
   );
 }
 
-function ItemRow({ it, d, open, attuneFull, onToggle, onPatch, onRemove, onDuplicate, onView, onEdit, onRestore }) {
+function ItemRow({ it, d, open, attuneFull, onToggle, onPatch, onRemove, onDuplicate, onView, onEdit, onRestore, onExport, exported = 0 }) {
   const charges = chargesOf(it);
   const attack = it.equipped && it.weapon ? weaponAttack(it, d) : null;
   const ac = it.armor ? (it.armor.category === "shield" ? `+${it.armor.base ?? 2} AC` : `AC ${it.armor.base}${it.armor.dex_cap === 0 ? "" : " + Dex"}${it.armor.dex_cap ? ` (max ${it.armor.dex_cap})` : ""}`) : null;
@@ -267,6 +267,9 @@ function ItemRow({ it, d, open, attuneFull, onToggle, onPatch, onRemove, onDupli
         {it.edited && <span className={`shrink-0 text-[10px] italic ${INK.faint}`} title="You changed this item">edited</span>}
         {!it.item && <span className={`shrink-0 text-[10px] uppercase tracking-wider ${INK.faint}`} title="Made by you">yours</span>}
         <Leader />
+        <button type="button" onClick={onRemove} title="Remove it (and attacks exported from it)" aria-label={`Remove ${it.name || "item"}`} className={`shrink-0 px-0.5 text-xs leading-none ${INK.faint} hover:text-rubric`}>
+          ✕
+        </button>
         <span className="flex min-w-0 shrink flex-wrap items-baseline justify-end gap-x-2 text-xs">
           {ac && <span className={INK.faded}>{ac}</span>}
           {attack && (
@@ -323,6 +326,19 @@ function ItemRow({ it, d, open, attuneFull, onToggle, onPatch, onRemove, onDupli
                 onChange={(v) => onPatch({ consumable: v === "yes" })}
               />
             </Field>
+            {it.weapon?.versatile && (
+              <Field label="Held in">
+                <Segmented
+                  size="sm"
+                  options={[
+                    { value: "one", label: "one hand" },
+                    { value: "two", label: "two hands" },
+                  ]}
+                  value={it.two_handed ? "two" : "one"}
+                  onChange={(v) => onPatch({ two_handed: v === "two" || undefined })}
+                />
+              </Field>
+            )}
             {charges && (
               <Field label="Charges">
                 <span className="flex items-baseline gap-2 text-sm">
@@ -342,7 +358,6 @@ function ItemRow({ it, d, open, attuneFull, onToggle, onPatch, onRemove, onDupli
             <p className="text-sm">
               {attack.range} · {attack.hit >= 0 ? "+" : ""}
               {attack.hit} to hit{attack.proficient ? "" : " (not proficient)"} · {actionWords({ damage: attack.damage })}
-              {attack.versatile && ` · two-handed ${actionWords({ damage: [attack.versatile] })}`}
               {attack.mastery.length > 0 && <span className={INK.faded}> · mastery: {attack.mastery.map(labelOf).join(", ")}</span>}
             </p>
           )}
@@ -362,6 +377,11 @@ function ItemRow({ it, d, open, attuneFull, onToggle, onPatch, onRemove, onDupli
             <button type="button" onClick={onDuplicate} className={ghostBtn}>
               duplicate
             </button>
+            {it.weapon && (
+              <button type="button" onClick={onExport} className={ghostBtn} title="An attack in Custom made with this item: add your own extra damage to it; it follows the item when you change it">
+                export to Custom{exported ? ` (${exported} there)` : ""}
+              </button>
+            )}
             <button type="button" onClick={onRemove} className={`ml-auto ${dangerBtn}`}>
               remove
             </button>
@@ -422,10 +442,10 @@ export default function InventoryDefine() {
     const { patch } = addFromCatalogue(ch, entry);
     write(patch);
   };
+  // ✕: gone at once (with the attacks exported from it to Custom).
   const remove = (it) => {
-    if (!window.confirm(`Remove ${it.name || "this item"}${num(it.qty, 1) > 1 ? ` (all ${it.qty})` : ""}?`)) return;
     write(removeItem(ch, it.id));
-    setOpenId(null);
+    if (openId === it.id) setOpenId(null);
   };
   const patchRow = (it, p) => write(patchItem(ch, it.id, p), !("notes" in p));
 
@@ -463,6 +483,8 @@ export default function InventoryDefine() {
           onView={() => openPopup("item", { ...it, _sheet: true })}
           onEdit={() => setForm({ row: it })}
           onRestore={() => write(replaceItem(ch, restoredCopy(it)))}
+          onExport={() => write(exportItemAttack(ch, it))}
+          exported={asList(manualOf(ch).features).filter((f) => f?.link?.item === it.id).length}
         />
       ))}
     </div>
@@ -540,7 +562,7 @@ export default function InventoryDefine() {
         </DefineSection>
       </div>
 
-      <ItemCreatePopup
+      <ItemCardForm
         open={!!form}
         onClose={() => setForm(null)}
         editingItem={form?.row ? { ...itemRecord(form.row), visibility: homebrewOf(form.row)?.visibility } : null}

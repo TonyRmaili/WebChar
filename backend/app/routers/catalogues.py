@@ -51,6 +51,52 @@ def load_homebrew(visibility: str, username: str, category: str) -> list:
     except FileNotFoundError:
         return []
 
+
+# ── Fast list responses (2026-11-24) ──────────────────────────────────
+# The book data is big (monsters: 113 files, 16 MB as JSON). Reading and
+# parsing it on every request took ~1 s, and FastAPI's jsonable_encoder
+# another ~2.4 s. So the book part is kept here already written as JSON
+# bytes, made again only when one of its files changes (the finalizer
+# writes them), and the response is put together from bytes. The homebrew
+# lists are small and read fresh every time. (Responses are gzipped by the
+# middleware in main.py.)
+
+_FINAL_BYTES: dict = {}   # category -> (files' (name, mtime, size), JSON bytes)
+
+
+def _final_files(category: str) -> list:
+    folder = FINAL_PATH / category
+    if folder.is_dir():
+        return sorted(folder.glob("*.json"))
+    return [FINAL_PATH / f"{category}.json"]
+
+
+def final_bytes(category: str) -> bytes:
+    """final/<category> as compact JSON bytes, cached until a file changes."""
+    stamp = tuple((f.name, f.stat().st_mtime_ns, f.stat().st_size) for f in _final_files(category))
+    hit = _FINAL_BYTES.get(category)
+    if hit and hit[0] == stamp:
+        return hit[1]
+    raw = json.dumps(load_final(category), ensure_ascii=False, separators=(",", ":")).encode("utf-8")
+    _FINAL_BYTES[category] = (stamp, raw)
+    return raw
+
+
+def _dumps(value) -> bytes:
+    return json.dumps(value, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
+
+
+def catalogue_list(category: str, username: str) -> Response:
+    """{"original", "public_homebrew", "private_homebrew"} for a catalogue's page."""
+    hb = category
+    body = b"".join([
+        b'{"original":', final_bytes(category),
+        b',"public_homebrew":', _dumps(load_homebrew("public", username, hb)),
+        b',"private_homebrew":', _dumps(load_homebrew("private", username, hb)),
+        b"}",
+    ])
+    return Response(content=body, media_type="application/json")
+
     
     
 
@@ -58,28 +104,111 @@ def load_homebrew(visibility: str, username: str, category: str) -> list:
 #---------------------- Classes -----------------------
 @router.get("/classes")
 def get_classes(current_user: CurrentUser):
-    return {
-        "original": load_final("classes"),
-        "public_homebrew": load_homebrew("public", current_user.name, "classes"),
-        "private_homebrew": load_homebrew("private", current_user.name, "classes"),
-    }
+    return catalogue_list("classes", current_user.name)
 
 @router.get("/subclasses")
 def get_subclasses(current_user: CurrentUser):
-    return {
-        "original": load_final("subclasses"),
-        "public_homebrew": load_homebrew("public", current_user.name, "subclasses"),
-        "private_homebrew": load_homebrew("private", current_user.name, "subclasses"),
-    }
+    return catalogue_list("subclasses", current_user.name)
+
+# Classes and subclasses are saved like every homebrew catalogue (see
+# races): POST stamps a new id and the owner, PUT keeps them and may
+# move the record between public and private, DELETE only your own.
+# A class's subclass pick ({"grant": "subclass"}) lists the subclasses
+# whose class_id is the class's own id, which a new class only gets here.
+
+def _point_subclass_pick(cls: dict) -> None:
+    for row in cls.get("progression") or []:
+        for choice in row.get("choices") or []:
+            if choice.get("grant") == "subclass":
+                choice["from"] = cls["id"]
+
+
+def _create_homebrew(category: str, payload: dict, user: str) -> dict:
+    visibility = payload.get("visibility", "private")
+    if visibility not in ("public", "private"):
+        raise HTTPException(status_code=400, detail="visibility must be 'public' or 'private'")
+    payload["id"] = str(uuid.uuid4())
+    payload["created_by"] = user
+    if category == "classes":
+        _point_subclass_pick(payload)
+    path = _resolve_homebrew_path(visibility, user, category)
+    data = _load_or_empty(path)
+    data.append(payload)
+    FileHandler().save_json(path, data)
+    return payload
+
+
+def _update_homebrew(category: str, entry_id: str, payload: dict, user: str, what: str) -> dict:
+    new_visibility = payload.get("visibility", "private")
+    if new_visibility not in ("public", "private"):
+        raise HTTPException(status_code=400, detail="visibility must be 'public' or 'private'")
+    filehandler = FileHandler()
+    found = None
+    for visibility in ("public", "private"):
+        path = _resolve_homebrew_path(visibility, user, category)
+        data = _load_or_empty(path)
+        entry = next((e for e in data if e.get("id") == entry_id), None)
+        if entry is not None:
+            found = (path, data, entry)
+            break
+    if found is None:
+        raise HTTPException(status_code=404, detail=f"{what} not found")
+    path, data, entry = found
+    if entry.get("created_by") != user:
+        raise HTTPException(status_code=403, detail="You can only edit your own homebrew")
+    payload["id"] = entry_id
+    payload["created_by"] = user
+    if category == "classes":
+        _point_subclass_pick(payload)
+    filehandler.save_json(path, [e for e in data if e.get("id") != entry_id])
+    target = _resolve_homebrew_path(new_visibility, user, category)
+    target_data = _load_or_empty(target)
+    target_data.append(payload)
+    filehandler.save_json(target, target_data)
+    return payload
+
+
+def _delete_homebrew(category: str, entry_id: str, user: str, what: str) -> Response:
+    for visibility in ("public", "private"):
+        path = _resolve_homebrew_path(visibility, user, category)
+        data = _load_or_empty(path)
+        entry = next((e for e in data if e.get("id") == entry_id), None)
+        if entry is not None:
+            if entry.get("created_by") != user:
+                raise HTTPException(status_code=403, detail="You can only delete your own homebrew")
+            FileHandler().save_json(path, [e for e in data if e.get("id") != entry_id])
+            return Response(status_code=status.HTTP_204_NO_CONTENT)
+    raise HTTPException(status_code=404, detail=f"{what} not found")
+
+
+@router.post("/classes", status_code=status.HTTP_201_CREATED)
+def create_class(payload: dict, current_user: CurrentUser):
+    return _create_homebrew("classes", payload, current_user.name)
+
+@router.put("/classes/{class_id}")
+def update_class(class_id: str, payload: dict, current_user: CurrentUser):
+    return _update_homebrew("classes", class_id, payload, current_user.name, "Class")
+
+@router.delete("/classes/{class_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_class(class_id: str, current_user: CurrentUser):
+    return _delete_homebrew("classes", class_id, current_user.name, "Class")
+
+@router.post("/subclasses", status_code=status.HTTP_201_CREATED)
+def create_subclass(payload: dict, current_user: CurrentUser):
+    return _create_homebrew("subclasses", payload, current_user.name)
+
+@router.put("/subclasses/{subclass_id}")
+def update_subclass(subclass_id: str, payload: dict, current_user: CurrentUser):
+    return _update_homebrew("subclasses", subclass_id, payload, current_user.name, "Subclass")
+
+@router.delete("/subclasses/{subclass_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_subclass(subclass_id: str, current_user: CurrentUser):
+    return _delete_homebrew("subclasses", subclass_id, current_user.name, "Subclass")
 
 #----------------------- Feats ---------------------------
 @router.get("/feats")
 def get_feats(current_user: CurrentUser):
-    return {
-        "original": load_final("feats"),
-        "public_homebrew": load_homebrew("public", current_user.name, "feats"),
-        "private_homebrew": load_homebrew("private", current_user.name, "feats"),
-    }
+    return catalogue_list("feats", current_user.name)
 
 @router.post("/feats", status_code=status.HTTP_201_CREATED)
 def create_feat(
@@ -185,11 +314,7 @@ def delete_feat(
 #----------------------- Backgrounds ------------------------------
 @router.get("/backgrounds")
 def get_backgrounds(current_user: CurrentUser):
-    return {
-        "original": load_final("backgrounds"),
-        "public_homebrew": load_homebrew("public", current_user.name, "backgrounds"),
-        "private_homebrew": load_homebrew("private", current_user.name, "backgrounds"),
-    }
+    return catalogue_list("backgrounds", current_user.name)
   
     
 @router.post("/backgrounds", status_code=status.HTTP_201_CREATED)
@@ -296,11 +421,7 @@ def delete_background(
 #----------------------- Optional Features ------------------------------
 @router.get("/optionalfeatures")
 def get_optional_features(current_user: CurrentUser):
-    return {
-        "original": load_final("optionalfeatures"),
-        "public_homebrew": load_homebrew("public", current_user.name, "optionalfeatures"),
-        "private_homebrew": load_homebrew("private", current_user.name, "optionalfeatures"),
-    }
+    return catalogue_list("optionalfeatures", current_user.name)
 
 @router.post("/optional_features", status_code=status.HTTP_201_CREATED)
 def create_optional_feature(
@@ -396,11 +517,7 @@ def delete_optional_feature(
 #----------------------- Spells ------------------------------
 @router.get("/spells")
 def get_spells(current_user: CurrentUser):
-    return {
-        "original": load_final("spells"),
-        "public_homebrew": load_homebrew("public", current_user.name, "spells"),
-        "private_homebrew": load_homebrew("private", current_user.name, "spells"),
-    }
+    return catalogue_list("spells", current_user.name)
 
 
 @router.post("/spells", status_code=status.HTTP_201_CREATED)
@@ -510,11 +627,7 @@ def delete_spell(
 #----------------------- Monsters ------------------------------
 @router.get("/monsters")
 def get_monsters(current_user: CurrentUser):
-    return {
-            "original": load_final("monsters"),
-            "public_homebrew": load_homebrew("public", current_user.name, "monsters"),
-            "private_homebrew": load_homebrew("private", current_user.name, "monsters"),
-        }
+    return catalogue_list("monsters", current_user.name)
     
 @router.post("/monsters", status_code=status.HTTP_201_CREATED)
 def create_monster(
@@ -625,11 +738,7 @@ def delete_monster(
 #----------------------- Items ------------------------------
 @router.get("/items")
 def get_items(current_user: CurrentUser):
-   return {
-        "original": load_final("items"),
-        "public_homebrew": load_homebrew("public", current_user.name, "items"),
-        "private_homebrew": load_homebrew("private", current_user.name, "items"),
-    }
+    return catalogue_list("items", current_user.name)
 
 @router.post("/items", status_code=status.HTTP_201_CREATED)
 def create_item(
@@ -735,11 +844,7 @@ def delete_item(
 #----------------------- Races ------------------------------
 @router.get("/races")
 def get_races(current_user: CurrentUser):
-    return {
-        "original": load_final("races"),
-        "public_homebrew": load_homebrew("public", current_user.name, "races"),
-        "private_homebrew": load_homebrew("private", current_user.name, "races"),
-    }
+    return catalogue_list("races", current_user.name)
 
 
 @router.post("/races", status_code=status.HTTP_201_CREATED)

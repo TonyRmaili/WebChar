@@ -6,7 +6,7 @@ import useCharStore from "../../../../store/CharStore";
 import { INK, InkButton, InkNumber, InkText, Leader, ParchmentSheet, Title } from "../../../../styles/parchment";
 import { Chevron, DefineSection, Field, Hint, PickerRow, PickerShell, Segmented, Switch, Tag, TextBlock, addBtn, chipBtn, dangerBtn, ghostBtn, inputCls } from "../../../../styles/parchmentForm";
 import { RichText } from "../../../Catalogues/catalogueParts";
-import SpellCreatePopup from "../../../Catalogues/Spells/SpellCreatePopup";
+import SpellCardForm from "../../../Catalogues/Spells/SpellCardForm";
 import { formatComponents, formatDuration, formatRange, formatTime } from "../../../Catalogues/Spells/spellHelpers";
 import { actionWords } from "../../../../utils/featureRuntime";
 import { asList, labelOf, manualOf, signed, useSheet } from "../sheetHelpers";
@@ -19,7 +19,8 @@ import {
   castingClasses,
   classFor,
   componentMarks,
-  hiddenSpells,
+  playsSpell,
+  setSpellInPlay,
   setSpellClass,
   setSpellOn,
   setSpellRemoved,
@@ -39,7 +40,7 @@ import {
   spellRows,
 } from "../spellbookHelpers";
 import { ABILITIES as ABILITY_KEYS } from "../../../../utils/derive";
-import FeatureList, { TakenOff } from "./FeatureList";
+import FeatureList from "./FeatureList";
 import OptionPicker from "./OptionPicker";
 
 /* Define tab: Spellbook, on parchment.
@@ -177,7 +178,7 @@ function matches(r, tokens) {
 
 /* ─── One spell ──────────────────────────────────────────────────── */
 
-function SpellLine({ r, open, onToggle, onPrepare, onView }) {
+function SpellLine({ r, open, onToggle, onPrepare, onView, onPlay, onRemove }) {
   const s = r.spell;
   const preparable = r.mode === "slots"; // innate and at-will spells are always ready
   const { marks, material } = componentMarks(s);
@@ -187,7 +188,7 @@ function SpellLine({ r, open, onToggle, onPrepare, onView }) {
       : r.mode === "ritual"
         ? "ritual only"
         : r.uses
-          ? `innate · ${r.uses.max}× ${r.uses.reset === "short" ? "short rest" : r.uses.reset === "dawn" ? "day" : "long rest"}`
+          ? `innate · ${r.uses.max}× ${r.uses.reset === "short" ? "short rest" : "long rest"}`
           : r.resource
             ? `${r.resource.cost ?? 1} ${labelOf(String(r.resource.resource))}`
             : r.mode === "innate"
@@ -197,7 +198,13 @@ function SpellLine({ r, open, onToggle, onPrepare, onView }) {
   return (
     <div className={`flex items-baseline gap-1.5 py-[3px] ${r.reached ? "" : "opacity-50"} ${preparable && !r.prepared ? "opacity-60" : ""}`}>
       <span className="self-center">
-        {preparable ? <Switch checked={r.prepared} onChange={onPrepare} label={r.prepared ? "Prepared" : "Not prepared"} /> : <span className="inline-block w-5" />}
+        {preparable ? (
+          <Switch checked={r.prepared} onChange={onPrepare} label={r.prepared ? "Prepared" : "Not prepared"} />
+        ) : playsSpell(r) ? (
+          <Switch checked={r.inPlay} onChange={onPlay} label={r.inPlay ? "Shown in Play" : "Hidden in Play"} />
+        ) : (
+          <span className="inline-block w-5" />
+        )}
       </span>
       <button type="button" onClick={onView} title="Open its card" className="truncate text-left text-[15px] hover:underline hover:decoration-dotted hover:underline-offset-4">
         {s.name}
@@ -206,6 +213,9 @@ function SpellLine({ r, open, onToggle, onPrepare, onView }) {
       {s.edited && <span className={`shrink-0 text-[10px] italic ${INK.faint}`}>edited</span>}
       {!r.reached && <span className={`shrink-0 text-xs italic ${INK.faded}`}>from level {r.unlock}</span>}
       <Leader />
+      <button type="button" onClick={onRemove} title={r.own ? "Delete it" : "Take it off the sheet"} aria-label={`Remove ${s.name}`} className={`shrink-0 px-0.5 text-xs leading-none ${INK.faint} hover:text-rubric`}>
+        ✕
+      </button>
       <span className="flex shrink-0 items-center gap-1 text-xs">
         {r.isToggle && r.on && <span className={`mr-1 text-[10px] font-semibold uppercase tracking-wider ${INK.rubric}`} title="Switched on: it counts on the sheet">on</span>}
         {mode && <span className={`mr-1 italic ${INK.faded}`}>{mode}</span>}
@@ -237,7 +247,7 @@ function SpellLine({ r, open, onToggle, onPrepare, onView }) {
   );
 }
 
-function SpellDetail({ r, classes, onNote, onRemove, onCast, onAbility, onClass, onOn, onEdit, onRestore, onDone }) {
+function SpellDetail({ r, classes, onNote, onRemove, onCast, onAbility, onClass, onOn, onPlay, onEdit, onRestore, onDone }) {
   const s = r.spell;
   const uses = s.granted?.uses;
   const cantrip = r.level === 0;
@@ -270,7 +280,6 @@ function SpellDetail({ r, classes, onNote, onRemove, onCast, onAbility, onClass,
                       options={[
                         { value: "long", label: "per long rest" },
                         { value: "short", label: "per short rest" },
-                        { value: "dawn", label: "per day" },
                       ]}
                       value={uses.reset || "long"}
                       onChange={(reset) => onCast("innate", uses.max, reset)}
@@ -284,6 +293,14 @@ function SpellDetail({ r, classes, onNote, onRemove, onCast, onAbility, onClass,
         {r.mode === "slots" && classes.length > 1 && (
           <Field label="Counts toward">
             <Segmented size="sm" options={classes.map((c) => ({ value: c.id, label: c.name }))} value={r.counts || ""} onChange={onClass} />
+          </Field>
+        )}
+        {playsSpell(r) && (
+          <Field label="In Play">
+            <span className="flex items-center gap-1.5 text-sm">
+              <Switch checked={r.inPlay} onChange={onPlay} label="Shown in Play" />
+              {r.inPlay ? "shown" : "hidden"}
+            </span>
           </Field>
         )}
         {r.isToggle && (
@@ -330,7 +347,7 @@ function SpellDetail({ r, classes, onNote, onRemove, onCast, onAbility, onClass,
             back to the book's
           </button>
         )}
-        <button type="button" onClick={onRemove} className={`ml-auto ${dangerBtn}`} title={r.own ? "Delete this spell" : "Take it off the sheet (you can bring it back below the spells)"}>
+        <button type="button" onClick={onRemove} className={`ml-auto ${dangerBtn}`} title={r.own ? "Delete this spell" : "Take it off the sheet"}>
           remove
         </button>
       </div>
@@ -430,7 +447,6 @@ export default function SpellbookDefine() {
 
   const limits = preparedLimits(ch, d, rows);
   const classes = castingClasses(ch);
-  const hidden = hiddenSpells(ch);
   // Room to prepare one more of this level for a class (its number, yours or the book's).
   const room = (cid, level) => {
     const lim = limits.find((l) => l.classId === cid);
@@ -697,6 +713,11 @@ export default function SpellbookDefine() {
                                 onToggle={() => setOpenKey(isOpen ? null : r.key)}
                                 onView={() => openPopup("spell", cardOf(r))}
                                 onPrepare={(v) => prepare(r, v)}
+                                onPlay={(v) => now(setSpellInPlay(ch, r.from, r.spell, v))}
+                                onRemove={() => {
+                                  now(r.own ? removeSpell(ch, r.spell.id) : setSpellRemoved(ch, r.from, r.spell.id, true));
+                                  if (isOpen) setOpenKey(null);
+                                }}
                               />
                               {isOpen && (
                                 <SpellDetail
@@ -704,6 +725,7 @@ export default function SpellbookDefine() {
                                   classes={classes}
                                   onClass={(cid) => cid !== r.counts && now(placed(r, setSpellClass(ch, r.from, r.spell, cid), cid))}
                                   onOn={(v) => now(setSpellOn(ch, r.from, r.spell, v))}
+                                  onPlay={(v) => now(setSpellInPlay(ch, r.from, r.spell, v))}
                                   onCast={(mode, max, reset) => {
                                     const patch = setCastMode(ch, r.from, r.spell, mode, max, reset);
                                     if (mode !== "slots" || r.mode === "slots") return now(patch);
@@ -716,7 +738,6 @@ export default function SpellbookDefine() {
                                   onRestore={() => now(replaceSpell(ch, r.from, restoredSpell(r.spell)))}
                                   onDone={() => setOpenKey(null)}
                                   onRemove={() => {
-                                    if (!window.confirm(r.own ? `Delete ${r.spell.name}?` : `Take ${r.spell.name} off the sheet? You can bring it back below the spells.`)) return;
                                     now(r.own ? removeSpell(ch, r.spell.id) : setSpellRemoved(ch, r.from, r.spell.id, true));
                                     setOpenKey(null);
                                   }}
@@ -730,18 +751,8 @@ export default function SpellbookDefine() {
                   </div>
                 );
               })}
-              {hidden.length > 0 && (
-                <p className={`flex flex-wrap items-baseline gap-x-3 text-xs italic ${INK.faded}`}>
-                  taken off:
-                  {hidden.map((h) => (
-                    <InkButton key={`${h.from}#${h.spell.id}`} onClick={() => now(setSpellRemoved(ch, h.from, h.spell.id, false))} title={`From ${h.owner}. Bring it back`}>
-                      {h.spell.name}
-                    </InkButton>
-                  ))}
-                </p>
-              )}
               <p className={`text-xs italic ${INK.faint}`}>
-                ◆ = prepared · innate and at-will spells are always prepared · click a name for its card · ⋯ for how it's ready, its ability, your note and editing · M* = a material with a cost (hover it)
+                ◆ = prepared (at will and free casts: shown in Play) · innate and at-will spells are always prepared · click a name for its card · ⋯ for how it's ready, its ability, your note and editing · ✕ removes it · M* = a material with a cost (hover it)
               </p>
             </div>
           )}
@@ -788,13 +799,13 @@ export default function SpellbookDefine() {
             patchChar={patchChar}
             openKey={optionKey}
             setOpenKey={setOptionKey}
+            restorable={false}
             empty="None yet: your class levels pick them (a Warlock's invocations, a Sorcerer's metamagic), or add them from the catalogue."
           />
-          <TakenOff ch={ch} patchChar={patchChar} test={(from, f) => isSpellOption(f)} />
         </DefineSection>
       </div>
 
-      <SpellCreatePopup
+      <SpellCardForm
         open={!!form}
         onClose={() => setForm(null)}
         editingSpell={form?.row ? { ...spellRecord(form.row.spell), visibility: homebrewOf(form.row)?.visibility } : null}

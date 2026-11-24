@@ -23,6 +23,35 @@ except ImportError:  # run from this folder
     from derive import max_hp, resources
 
 
+import random
+import re
+
+LONG_RESETS = (None, "", "long", "long_rest", "dawn", "dusk", "midnight")   # all a long rest now
+DICE = re.compile(r"^\s*(\d*)d(\d+)\s*(?:([+-])\s*(\d+))?\s*$")
+
+
+def _regain_charges(item):
+    """An item's charges come back by its `regain`: all (none said), a
+    number, or rolled dice ("1d6 + 1")."""
+    used = _num(item.get("charges_used"))
+    if not used:
+        return
+    regain = (item.get("charges") or {}).get("regain")
+    if regain in (None, "", "all"):
+        item["charges_used"] = 0
+        return
+    if isinstance(regain, int) and not isinstance(regain, bool):
+        back = regain
+    else:
+        m = DICE.match(str(regain))
+        if not m:
+            item["charges_used"] = 0
+            return
+        n, die, sign, add = int(m.group(1) or 1), int(m.group(2)), m.group(3), int(m.group(4) or 0)
+        back = sum(random.randint(1, die) for _ in range(n)) + (add if sign != "-" else -add)
+    item["charges_used"] = max(0, used - max(0, back))
+
+
 def _num(v, default=0):
     return v if isinstance(v, int) and not isinstance(v, bool) else default
 
@@ -68,17 +97,29 @@ def change_hp(ch, delta):
 
 # ─── rests ────────────────────────────────────────────────────────
 
-def _uses_keys(ch, short_only):
-    """The uses_used keys of every feature and spell a rest gives back."""
+def _uses_of(row):
+    """A feature's uses, or a spell's free casts (they sit in `granted`)."""
+    uses = row.get("uses")
+    if not isinstance(uses, dict):
+        uses = (row.get("granted") or {}).get("uses")
+    return uses if isinstance(uses, dict) else None
+
+
+def _uses_keys(ch, short_only, never=False):
+    """The uses_used keys of every feature and spell a rest gives back
+    (with `never`: the ones nothing gives back, "once, then it's gone")."""
     keys = []
     for layer in ch.get("layers") or []:
         frm = layer.get("from")
         for row in (layer.get("features") or []) + (layer.get("spells") or []):
-            uses = row.get("uses")
-            if not isinstance(uses, dict):
+            uses = _uses_of(row)
+            if not uses:
                 continue
             reset = uses.get("reset")
-            if short_only and reset not in ("short", "turn", "recharge"):
+            if never:
+                if reset != "never":
+                    continue
+            elif short_only and reset not in ("short", "turn", "recharge"):
                 continue
             rid = row.get("id") or row.get("spell")
             if rid:
@@ -106,24 +147,28 @@ def short_rest(ch):
     st["uses_used"] = uses
     for item in (ch.get("inventory") or {}).get("items") or []:
         if (item.get("charges") or {}).get("reset") == "short":
-            item["charges_used"] = 0
+            _regain_charges(item)
     return ch
 
 
 def long_rest(ch):
-    """Everything back: HP (temp HP ends), every hit die, slots, pools,
-    uses and item charges; death saves cleared; exhaustion goes down by 1."""
+    """Everything back: HP (temp HP ends), every hit die, slots, pools and
+    uses; item charges by their regain (dawn, dusk, midnight count as a
+    long rest); death saves cleared; exhaustion goes down by 1."""
     st = _state(ch)
     st.update({
         "hp_current": None, "hp_temp": 0,
         "hit_dice_used": {}, "slots_used": {}, "pact_slots_used": {},
-        "resources_used": {}, "uses_used": {},
+        "resources_used": {},
+        # a long rest gives back every use but "once, then it's gone"
+        "uses_used": {k: v for k, v in (st.get("uses_used") or {}).items() if k in set(_uses_keys(ch, False, never=True))},
         "death_saves": {"ok": 0, "fail": 0},
         "exhaustion": max(0, _num(st.get("exhaustion")) - 1),
     })
+    # charges back by the item's regain; dawn, dusk and midnight are a long rest
     for item in (ch.get("inventory") or {}).get("items") or []:
-        if item.get("charges_used"):
-            item["charges_used"] = 0
+        if (item.get("charges") or {}).get("reset") in LONG_RESETS:
+            _regain_charges(item)
     return ch
 
 

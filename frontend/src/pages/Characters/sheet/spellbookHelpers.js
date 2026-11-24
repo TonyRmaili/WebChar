@@ -1,7 +1,8 @@
 import { evaluate, tableRow } from "../../../utils/formulas";
-import { classLevels, wordsFor, words } from "../../../utils/derive";
+import { classLevels, layersOf, wordsFor, words } from "../../../utils/derive";
 import { asList, manualOf, stateOf, withManual } from "./sheetHelpers";
 import { scoresOf, usesKey, workAction } from "./featureHelpers";
+import { riderOf } from "../../Catalogues/catalogueHelpers";
 
 /* ═══════════════════════════════════════════════════════════════════
    spellbookHelpers — the character's spells, slots and spellcasting, as
@@ -77,7 +78,7 @@ export function spellRows(ch, d) {
   const scores = scoresOf(d);
   const levels = Object.fromEntries(classLevels(ch).map(([c, l]) => [c, l]));
   const out = [];
-  for (const layer of asList(ch.layers)) {
+  for (const layer of layersOf(ch)) {
     const m = CLASS_FROM.exec(String(layer?.from || ""));
     const layerClass = m ? m[1] : null;
     for (const s of asList(layer?.spells)) {
@@ -108,7 +109,7 @@ export function spellRows(ch, d) {
       out.push({
         key,
         from: layer.from,
-        owner: layer.label || layer.from,
+        owner: layer.from === "manual" ? "" : layer.label || layer.from, // your own: no owner shown
         spell: s,
         level: isN(s.level) ? s.level : 0,
         how: g.how || "known",
@@ -126,6 +127,8 @@ export function spellRows(ch, d) {
         attack: ability ? d.pb + mod + (d.bonuses?.spell_attack || 0) : null,
         dc: ability ? 8 + d.pb + mod + (d.bonuses?.spell_dc || 0) : null,
         atWill: g.uses === "at_will",
+        // shown in Play (at will, free casts, a switch): the player can hide it (`active: false`)
+        inPlay: s.active !== false,
         mode,
         // its switches (Mage Armor, Shield, Bless): on while the spell is up
         toggles: asList(s.features).filter((f) => isObj(f) && f.toggle).map((f) => ({ id: f.id, name: f.name, on: !!f.on })),
@@ -136,6 +139,11 @@ export function spellRows(ch, d) {
         resource: isObj(g.uses) && g.uses.resource ? g.uses : null,
         uses,
         actions: asList(s.features).filter((f) => f?.action).map((f) => ({ name: f.name, action: workAction(f.action, w, d.bonuses) })),
+        // its riders (Hex, Hunter's Mark), in either shape: worked out, for the "+ rider" lists in Play
+        riders: asList(s.features)
+          .map((f, i) => [f, i, riderOf(f)])
+          .filter(([, , r]) => r)
+          .map(([f, i, r]) => ({ id: f.id || String(i), name: f.name, damage: workAction({ attack: { kind: "any", damage: r.damage } }, w, d.bonuses).attack.damage, conditions: r.conditions, on: r.on })),
         own: layer.from === "manual",
       });
     }
@@ -198,7 +206,7 @@ export function preparedLimits(ch, d, rows) {
     if (!sc?.ability) continue;
     const w = words(ch, scores, classes[cid], lvl, sc.ability);
     const pick = (t) => (t == null ? null : isObj(t) ? tableRow(t, lvl) : evaluate(t, w, lvl));
-    const bookSpells = pick(sc.known ?? sc.prepared);
+    const bookSpells = pick(sc.prepared);
     const bookCantrips = pick(sc.cantrips);
     const mine = rows.filter((r) => r.counts === cid);
     const o = isObj(own[cid]) ? own[cid] : {};
@@ -342,6 +350,12 @@ export function setCastMode(ch, from, spell, mode, max = null, reset = "long") {
   return patchSpell(ch, from, spell.id, { granted: g });
 }
 
+// Show a spell in Play or not (at will, free casts, a switch go there by default).
+export const setSpellInPlay = (ch, from, spell, v) => patchSpell(ch, from, spell.id, { active: v ? undefined : false });
+
+// Does a spell go to Play: free to cast (at will, innate with free casts) or switched on and off.
+export const playsSpell = (r) => r.reached && (r.mode === "at_will" || (r.mode === "innate" && !!r.uses) || (r.isToggle && r.prepared));
+
 // Switch a spell's toggles (Mage Armor, Shield…) on or off together.
 export function setSpellOn(ch, from, spell, on) {
   return patchSpell(ch, from, spell.id, { features: asList(spell.features).map((f) => (isObj(f) && f.toggle ? { ...f, on: on || undefined } : f)) });
@@ -355,7 +369,7 @@ export const setOwnSpellAbility = (ch, ability) => withManual(ch, (m) => ({ ...m
 /* ─── the spell itself: edit, back to the book's, save to the catalogue ─── */
 
 // What the character does with a spell, kept through any edit of it.
-export const SPELL_SHEET_KEYS = ["id", "granted", "prepared", "notes", "edited", "book", "catalogue_id"];
+export const SPELL_SHEET_KEYS = ["id", "granted", "prepared", "notes", "edited", "book", "catalogue_id", "riders"];
 const pickKeys = (o, keys) => Object.fromEntries(keys.filter((k) => o?.[k] !== undefined).map((k) => [k, o[k]]));
 const dropKeys = (o, keys) => Object.fromEntries(Object.entries(o || {}).filter(([k]) => !keys.includes(k)));
 

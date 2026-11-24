@@ -22,17 +22,21 @@ import { evaluate, tableRow } from "./formulas";
                    ones only when they need it), worn armour and shield
      classes       the file's copy of each class and subclass record
 
-   A modifier is { target, add | set | min | base, requires? }:
+   A modifier is { target, add | set | min | base | adv | dis, requires? }:
      add  added on top     set  the final value     min  at least this
      base an unarmoured AC option (AC only)
+     adv / dis  advantage / disadvantage on that roll (true); both cancel
    Targets: ac, hp_max, pb, initiative, str…cha, save, save.<ab>, check,
    check.<ab>, check.<skill>, speed, speed.<type>, senses.<type>, attack, spell_attack,
    spell_dc, concentration, damage, spell_damage.
 
    derive(ch) → { level, pb, classes, abilities, skills, initiative,
      hp_max, ac, speed, senses, defenses, proficiencies, hit_dice,
-     spell_slots, spellcasting, attacks, concentration, bonuses,
+     spell_slots, spellcasting, attacks, concentration, rolls, bonuses,
      resources, removed }
+   Rolls with advantage say so: abilities[a].check_roll / save_roll,
+   skills[k].roll ("adv" | "dis" | null; a passive score ±5), and
+   rolls.{initiative, concentration, attack, spell_attack}.
    ═══════════════════════════════════════════════════════════════════ */
 
 export const ABILITIES = ["str", "dex", "con", "int", "wis", "cha"];
@@ -88,7 +92,23 @@ const union = (a, b) => {
   return out;
 };
 
-const layersOf = (ch) => asList(ch?.layers).filter(isObj);
+// The layers that count: a layer taken off the sheet (`removed`: a feat
+// from Feats & Options) doesn't, nor what came through it (`via`).
+export const layersOf = (ch) => {
+  const layers = asList(ch?.layers).filter(isObj);
+  const off = new Set(layers.filter((l) => l.removed).map((l) => l.from));
+  let grew = off.size > 0;
+  while (grew) {
+    grew = false;
+    for (const l of layers) {
+      if (off.has(l.via) && !off.has(l.from)) {
+        off.add(l.from);
+        grew = true;
+      }
+    }
+  }
+  return layers.filter((l) => !off.has(l.from));
+};
 
 // The player's own layer (an empty one when there is none yet).
 export const manualLayer = (ch) => layersOf(ch).find((l) => l.from === "manual") || { from: "manual" };
@@ -279,6 +299,40 @@ const value = (v, w) => {
   return isN(got) ? got : null; // dice don't add to a fixed number
 };
 
+/* Advantage or disadvantage from the modifiers aimed at `targets`
+   ({ target: "check.acrobatics", adv: true } / dis: true): "adv", "dis",
+   or null (neither, or both: they cancel). */
+function rollMode(mods, targets) {
+  let adv = false;
+  let dis = false;
+  for (const [m] of mods) {
+    if (!targets.includes(m.target)) continue;
+    adv = adv || !!m.adv;
+    dis = dis || !!m.dis;
+  }
+  return adv && !dis ? "adv" : dis && !adv ? "dis" : null;
+}
+
+/* Which other ability each kind of attack can use, when an effect says so
+   (Bladework, Pact of the Blade, Shillelagh: usually a switch's "while
+   on"): { target: "attack_ability.melee", set: "int" }; plain
+   "attack_ability" is every kind. null = only the usual one. Later ones
+   win. The attack takes the better of the two (betterMod). */
+const ATTACK_KINDS = ["melee", "ranged", "spell"];
+function attackAbilities(mods) {
+  let out = Object.fromEntries(ATTACK_KINDS.map((k) => [k, null]));
+  for (const [m] of mods) {
+    const t = String(m.target || "");
+    if (!ABILITIES.includes(m.set)) continue;
+    if (t === "attack_ability") out = Object.fromEntries(ATTACK_KINDS.map((k) => [k, m.set]));
+    else if (t.startsWith("attack_ability.") && ATTACK_KINDS.includes(t.slice(15))) out[t.slice(15)] = m.set;
+  }
+  return out;
+}
+
+// The modifier an attack uses: the usual ability's, or the other one an effect allows when higher.
+const betterMod = (scores, usual, other) => (ABILITIES.includes(other) ? Math.max(mod(scores[usual]), mod(scores[other])) : mod(scores[usual]));
+
 // `add`s, then `min`s, then `set`s of the modifiers aimed at `targets`.
 function apply(total, mods, targets) {
   const hits = mods.filter(([m]) => targets.includes(m.target));
@@ -445,6 +499,12 @@ export function spellSlots(ch, classes = null) {
 
 /* ─── resources ──────────────────────────────────────────────────── */
 
+// A pool's refill at a class level: "long", or a level table (see derive.py _reset_at).
+function resetAt(reset, lvl) {
+  const r = isObj(reset) ? tableRow(reset, lvl) : reset;
+  return typeof r === "string" && r ? r : "long";
+}
+
 export function resources(ch, classes = null, scores = null) {
   classes = classesOf(ch, classes);
   scores = scores || abilityScores(ch, classes);
@@ -467,7 +527,8 @@ export function resources(ch, classes = null, scores = null) {
           name: r.name || r.id,
           max: Math.max(0, top),
           die: typeof die === "string" ? die : null,
-          reset: r.reset || "long",
+          // a level table when a later feature changes it (Bardic Inspiration: {"1": "long", "5": "short"})
+          reset: resetAt(r.reset, lvl),
           short_rest: r.short_rest === undefined ? "all" : r.short_rest,
           owner: recId,
           book_max: Math.max(0, top),
@@ -530,6 +591,8 @@ export function derive(ch, classes = null) {
       check: apply(m, mods, ["check", `check.${a}`]),
       save: apply(m + (prof ? pb : 0), mods, ["save", `save.${a}`]),
       save_prof: prof,
+      check_roll: rollMode(mods, ["check", `check.${a}`]),
+      save_roll: rollMode(mods, ["save", `save.${a}`]),
     };
   }
 
@@ -542,7 +605,8 @@ export function derive(ch, classes = null) {
   for (const [k, d] of Object.entries(skillDefs)) {
     const prof = expertise.has(k) && g.skills.includes(k) ? 2 : g.skills.includes(k) ? 1 : 0;
     const total = apply(mod(scores[d.ability]) + pb * prof, mods, ["check", `check.${d.ability}`, `check.${k}`]);
-    skills[k] = { ...d, prof, total, passive: 10 + total };
+    const roll = rollMode(mods, ["check", `check.${d.ability}`, `check.${k}`]);
+    skills[k] = { ...d, prof, total, passive: 10 + total + (roll === "adv" ? 5 : roll === "dis" ? -5 : 0), roll };
   }
 
   const speed = { ...g.speed };
@@ -554,6 +618,7 @@ export function derive(ch, classes = null) {
   for (const [k, n] of Object.entries(g.senses_bonus)) senses[k] = num(senses[k]) + n;
   for (const k of Object.keys(senses).filter((k) => isN(senses[k]))) senses[k] = Math.max(0, apply(senses[k], mods, [`senses.${k}`]));
 
+  const use = attackAbilities(mods);
   const spellcasting = [];
   for (const [cid, , sub] of classLevels(ch)) {
     for (const recId of [cid, sub]) {
@@ -565,7 +630,7 @@ export function derive(ch, classes = null) {
         owner: recId,
         name: classes[recId]?.name || recId,
         ability: ab,
-        attack: apply(pb + m, mods, ["spell_attack"]),
+        attack: apply(pb + betterMod(scores, ab, use.spell), mods, ["spell_attack"]),
         dc: apply(8 + pb + m, mods, ["spell_dc"]),
       });
     }
@@ -575,7 +640,7 @@ export function derive(ch, classes = null) {
   if (ABILITIES.includes(ownAb)) {
     // spells with no class (anyone can have them)
     const m = mod(scores[ownAb]);
-    spellcasting.push({ owner: "manual", name: "Your own", ability: ownAb, attack: apply(pb + m, mods, ["spell_attack"]), dc: apply(8 + pb + m, mods, ["spell_dc"]) });
+    spellcasting.push({ owner: "manual", name: "Your own", ability: ownAb, attack: apply(pb + betterMod(scores, ownAb, use.spell), mods, ["spell_attack"]), dc: apply(8 + pb + m, mods, ["spell_dc"]) });
   }
 
   const classRows = [];
@@ -612,10 +677,19 @@ export function derive(ch, classes = null) {
     spell_slots: spellSlots(ch, classes),
     spellcasting,
     attacks: {
-      melee: apply(pb + w.str_mod, mods, ["attack"]),
-      ranged: apply(pb + w.dex_mod, mods, ["attack"]),
+      melee: apply(pb + betterMod(scores, "str", use.melee), mods, ["attack"]),
+      ranged: apply(pb + betterMod(scores, "dex", use.ranged), mods, ["attack"]),
     },
+    // an effect making a kind of attack use another ability (null = the usual one)
+    attack_ability: use,
     concentration: apply(abilities.con.save, mods, ["concentration"]),
+    // advantage / disadvantage on the rolls that aren't an ability's or a skill's
+    rolls: {
+      initiative: rollMode(mods, ["initiative"]),
+      concentration: rollMode(mods, ["save", "save.con", "concentration"]),
+      attack: rollMode(mods, ["attack"]),
+      spell_attack: rollMode(mods, ["spell_attack"]),
+    },
     bonuses: {
       // what every attack / spell / hit gets on top (features and weapons use them)
       attack: apply(0, mods, ["attack"]),

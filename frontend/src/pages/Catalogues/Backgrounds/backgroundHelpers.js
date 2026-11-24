@@ -1,4 +1,4 @@
-import { pruneEmpty, nameFromId, titleCase, FEAT_CATEGORIES, describeChoice } from "../catalogueHelpers";
+import { pruneEmpty, nameFromId, titleCase, FEAT_CATEGORIES, describeChoice, withFeatureTexts } from "../catalogueHelpers";
 import {
   emptyHeaderForm, headerToForm, formToHeader, emptyGrantsForm, grantsToForm, formToGrants,
   bundleToForm, formToBundle,
@@ -43,7 +43,7 @@ export function formToBackground(form, original) {
   const { grants, choices } = formToGrants(form.grants);
   const bundle = formToBundle(form.equipment, { id: form.equipmentId, label: form.equipmentLabel });
   return {
-    ...pruneEmpty({ ...formToHeader(form, "background", original), features: form.features }),
+    ...pruneEmpty({ ...formToHeader(form, "background", original), features: withFeatureTexts(form.features, form.text, form.name) }),
     grants,
     choices: bundle ? [...choices, bundle] : choices,
   };

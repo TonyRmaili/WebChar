@@ -70,6 +70,28 @@ export const buildMinion = (monster, count = 1) => {
   };
 };
 
+/* The group with an edited statblock (the monster card's "edit", sheet
+   mode). The copy drops the catalogue's bookkeeping like buildMinion; a
+   feature keeps its switch (`active`) by id, a new one starts on unless
+   it's a variant's. Max HP follows the new average when it was the old
+   one; every unit gets the uses of new limited features and loses those
+   that are gone. `nickname`: shown instead of the name ("" = the name). */
+export const withMonster = (minion, record, nickname = minion?.nickname || "") => {
+  const { visibility, filters, srd, ...rest } = structuredClone(record || {});
+  const old = Object.fromEntries(featuresOf(minion?.monster).filter((f) => f?.id).map((f) => [f.id, f]));
+  const monster = { ...rest, features: featuresOf(rest).map((f) => ({ ...f, active: f.id && old[f.id] ? old[f.id].active : !f.variant })) };
+  let next = { ...minion, nickname: (nickname || "").trim(), monster };
+  const oldAvg = monsterHpAverage(minion?.monster);
+  const newAvg = monsterHpAverage(monster);
+  if (newAvg !== oldAvg && hpMaxOf(minion) === oldAvg) next = setHpMax(next, newAvg);
+  const limited = chargedItems(monster);
+  next.units = (next.units || []).map((u) => ({
+    ...u,
+    charges: Object.fromEntries(limited.map(({ key, max }) => [key, u.charges?.[key] ?? max])),
+  }));
+  return next;
+};
+
 export const displayName = (minion) =>
   (minion?.nickname || "").trim() || minion?.monster?.name || "Minion";
 

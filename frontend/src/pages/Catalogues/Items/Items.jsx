@@ -1,10 +1,11 @@
 import React, { useEffect, useMemo, useState } from "react";
+import useStoredState from "../../../utils/useStoredState";
 import { useCatalogueStore } from "../../../store/CatalogueStore";
 import { usePopupStore } from "../../../store/PopupStore";
 import useAuthStore from "../../../store/AuthStore";
 import FilterSection from "../FilterSection";
 import FilterPopup, { FilterButton } from "../FilterPopup";
-import ItemCreatePopup from "./ItemCreatePopup";
+import ItemCardForm from "./ItemCardForm";
 import { ErrorLine, LoadingLine, Toolbar, chip, searchCls } from "../catalogueStyle";
 import { CatalogueRow, ChipToggles, useEntryMenu } from "../catalogueParts";
 import { addBtn } from "../../../styles/parchmentForm";
@@ -30,18 +31,18 @@ export default function Items() {
 
   const [query, setQuery] = useState("");
   const [filtersOpen, setFiltersOpen] = useState(false);
-  const [showMembers, setShowMembers] = useState(false);
-  const [editions, setEditions] = useState(["one"]);
-  const [sources, setSources] = useState([]);
-  const [kinds, setKinds] = useState([]);
-  const [rarities, setRarities] = useState([]);
-  const [types, setTypes] = useState([]);
-  const [tags, setTags] = useState([]);
-  const [tiers, setTiers] = useState([]);
-  const [has, setHas] = useState([]);
-  const [properties, setProperties] = useState([]);
-  const [masteries, setMasteries] = useState([]);
-  const [damageTypes, setDamageTypes] = useState([]);
+  const [showMembers, setShowMembers] = useStoredState("catalogue.items.showMembers", false);
+  const [editions, setEditions] = useStoredState("catalogue.items.editions", ["one"]);
+  const [sources, setSources] = useStoredState("catalogue.items.sources", []);
+  const [kinds, setKinds] = useStoredState("catalogue.items.kinds", []);
+  const [rarities, setRarities] = useStoredState("catalogue.items.rarities", []);
+  const [types, setTypes] = useStoredState("catalogue.items.types", []);
+  const [tags, setTags] = useStoredState("catalogue.items.tags", []);
+  const [tiers, setTiers] = useStoredState("catalogue.items.tiers", []);
+  const [has, setHas] = useStoredState("catalogue.items.has", []);
+  const [properties, setProperties] = useStoredState("catalogue.items.properties", []);
+  const [masteries, setMasteries] = useStoredState("catalogue.items.masteries", []);
+  const [damageTypes, setDamageTypes] = useStoredState("catalogue.items.damageTypes", []);
 
   const [form, setForm] = useState(null); // null = closed · {} new · { editing } · { copyFrom }
   const [openMenu, menu] = useEntryMenu({
@@ -187,8 +188,8 @@ export default function Items() {
 
           {menu}
 
-          <ItemCreatePopup open={form !== null} onClose={() => setForm(null)}
-                           editingItem={form?.editing || null} copyFromItem={form?.copyFrom || null} />
+          <ItemCardForm open={form !== null} onClose={() => setForm(null)}
+                        editingItem={form?.editing || null} copyFromItem={form?.copyFrom || null} />
         </>
       )}
     </div>

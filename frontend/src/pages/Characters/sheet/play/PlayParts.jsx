@@ -169,7 +169,8 @@ function CardToggle({ toggle }) {
   );
 }
 
-export function UseCard({ title, meta, chips = [], detail, uses, note, tone = "default", onSpend, onRestore, toggle }) {
+// metaWrap: the line under the title may wrap (a spell's level, school, components) instead of being cut.
+export function UseCard({ title, meta, chips = [], detail, uses, note, tone = "default", onSpend, onRestore, toggle, metaWrap = false }) {
   const trackable = !!uses;
   const empty = trackable && uses.cur <= 0;
   const canRestore = trackable && (uses.max == null || uses.cur < uses.max);
@@ -187,7 +188,7 @@ export function UseCard({ title, meta, chips = [], detail, uses, note, tone = "d
         {toggle && <CardToggle toggle={toggle} />}
         <div className="min-w-0 flex-1">
           <div className={`truncate text-[15px] font-semibold ${empty ? "text-ink-faded" : "text-ink"}`}>{title}</div>
-          {meta && <div className="truncate text-xs italic text-ink-faded">{meta}</div>}
+          {meta && <div className={`${metaWrap ? "" : "truncate "}text-xs italic text-ink-faded`}>{meta}</div>}
         </div>
         {trackable && badgeInline && (
           <div className={`shrink-0 pt-0.5 ${empty ? "opacity-60" : ""}`}>

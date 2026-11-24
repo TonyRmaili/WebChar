@@ -54,13 +54,15 @@ def _built(layer):
 
 def recipe(ch):
     """The picks the character was built from: every layer the builder
-    makes, as {from, via?, picks}."""
+    makes, as {from, via?, picks, entry?}."""
     out = []
     for l in ch.get("layers") or []:
         if _built(l):
             r = {"from": l["from"], "picks": deepcopy(l.get("picks") or {})}
             if l.get("via"):
                 r["via"] = l["via"]
+            if l.get("entry"):
+                r["entry"] = deepcopy(l["entry"])   # the player's own version of the feat (feat_edit)
             out.append(r)
     return out
 

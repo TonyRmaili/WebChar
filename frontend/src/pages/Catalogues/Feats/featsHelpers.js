@@ -1,4 +1,4 @@
-import { HOMEBREW, pruneEmpty, FEAT_CATEGORIES, titleCase, describePrerequisites } from "../catalogueHelpers";
+import { HOMEBREW, pruneEmpty, FEAT_CATEGORIES, titleCase, describePrerequisites, withFeatureTexts } from "../catalogueHelpers";
 import {
   emptyHeaderForm, headerToForm, formToHeader, emptyGrantsForm, grantsToForm, formToGrants,
   prereqsToForm, formToPrereqs,
@@ -26,11 +26,11 @@ export const featRowMeta = (feat, index) => categoryLabel(feat.category) || desc
 
 /* ─── options ────────────────────────────────────────────────────── */
 
-export const emptyFeatOption = () => ({ name: "", text: "", grants: emptyGrantsForm(), rest: {} });
+export const emptyFeatOption = () => ({ name: "", text: "", grants: emptyGrantsForm(), features: [], rest: {} });
 
 const optionToForm = (o) => {
-  const { id, kind, name, source, edition, text, grants, choices, srd, ...rest } = o;
-  return { id, name: name || "", text: text || "", grants: grantsToForm(grants, choices), rest };
+  const { id, kind, name, source, edition, text, grants, choices, srd, features, ...rest } = o;
+  return { id, name: name || "", text: text || "", grants: grantsToForm(grants, choices), features: features || [], rest };
 };
 
 const formToOption = (o, form) => {
@@ -43,6 +43,7 @@ const formToOption = (o, form) => {
     source: HOMEBREW,
     edition: form.edition,
     text: o.text || undefined,
+    features: (o.features || []).length ? withFeatureTexts(o.features, o.text, o.name) : undefined,
     grants,
     choices,
   };
@@ -81,7 +82,7 @@ export function formToFeat(form, original) {
       category: form.category || undefined,
       prerequisites: formToPrereqs(form.prerequisites),
       options: form.options.filter((o) => o.name.trim()).map((o) => formToOption(o, form)),
-      features: form.features,
+      features: withFeatureTexts(form.features, form.text, form.name),
     }),
     repeatable: !!form.repeatable,
     grants,

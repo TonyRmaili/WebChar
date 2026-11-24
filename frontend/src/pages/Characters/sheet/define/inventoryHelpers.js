@@ -106,7 +106,7 @@ export const patchItem = (ch, id, patch) => withItems(ch, (items) => items.map((
 /* ─── The item itself: edit, back to the book's, save to the catalogue ─── */
 
 // What the character does with an item, kept through any edit of it.
-export const SHEET_KEYS = ["id", "item", "from", "qty", "equipped", "attuned", "shown", "charges_used", "notes", "consumable", "edited", "book"];
+export const SHEET_KEYS = ["id", "item", "from", "qty", "equipped", "attuned", "shown", "charges_used", "notes", "consumable", "edited", "book", "two_handed", "riders"];
 const pick = (o, keys) => Object.fromEntries(keys.filter((k) => o?.[k] !== undefined).map((k) => [k, o[k]]));
 const drop = (o, keys) => Object.fromEntries(Object.entries(o || {}).filter(([k]) => !keys.includes(k)));
 
@@ -133,7 +133,13 @@ export const restoredCopy = (it) => (it.book ? { ...it.book, ...pick(it, SHEET_K
 
 export const replaceItem = (ch, row) => withItems(ch, (items) => items.map((i) => (i?.id === row.id ? row : i)));
 
-export const removeItem = (ch, id) => withItems(ch, (items) => items.filter((i) => i?.id !== id));
+// An item goes with the attacks exported from it to Custom (`link.item`).
+export const removeItem = (ch, id) => {
+  const patch = withItems(ch, (items) => items.filter((i) => i?.id !== id));
+  const linked = (l) => l?.from === "manual" && asList(l.features).some((f) => f?.link?.item === id);
+  if (!asList(ch?.layers).some(linked)) return patch;
+  return { ...patch, layers: asList(ch.layers).map((l) => (linked(l) ? { ...l, features: asList(l.features).filter((f) => f?.link?.item !== id) } : l)) };
+};
 
 // A catalogue item: a copy with a row id. Plain gear you already carry
 // gets its count raised instead (magic items stay one row each).

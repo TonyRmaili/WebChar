@@ -1,10 +1,11 @@
 import React, { useEffect, useMemo, useState } from "react";
+import useStoredState from "../../../utils/useStoredState";
 import { useCatalogueStore } from "../../../store/CatalogueStore";
 import { usePopupStore } from "../../../store/PopupStore";
 import useAuthStore from "../../../store/AuthStore";
 import FilterSection from "../FilterSection";
 import FilterPopup, { FilterButton } from "../FilterPopup";
-import OptionalFeatureCreatePopup from "./OptionalFeatureCreatePopup";
+import OptionalFeatureCardForm from "./OptionalFeatureCardForm";
 import { ErrorLine, LoadingLine, Toolbar, searchCls } from "../catalogueStyle";
 import { CatalogueRow, ChipToggles, useEntryMenu } from "../catalogueParts";
 import { addBtn } from "../../../styles/parchmentForm";
@@ -37,14 +38,14 @@ export default function OptionalFeatures() {
 
   const [query, setQuery] = useState("");
   const [filtersOpen, setFiltersOpen] = useState(false);
-  const [editions, setEditions] = useState(["one"]);
-  const [sources, setSources] = useState([]);
-  const [types, setTypes] = useState([]);
-  const [classes, setClasses] = useState([]);
-  const [prereqs, setPrereqs] = useState([]);
-  const [costs, setCosts] = useState([]);
-  const [gives, setGives] = useState([]);
-  const [repeatable, setRepeatable] = useState([]);
+  const [editions, setEditions] = useStoredState("catalogue.optionalFeatures.editions", ["one"]);
+  const [sources, setSources] = useStoredState("catalogue.optionalFeatures.sources", []);
+  const [types, setTypes] = useStoredState("catalogue.optionalFeatures.types", []);
+  const [classes, setClasses] = useStoredState("catalogue.optionalFeatures.classes", []);
+  const [prereqs, setPrereqs] = useStoredState("catalogue.optionalFeatures.prereqs", []);
+  const [costs, setCosts] = useStoredState("catalogue.optionalFeatures.costs", []);
+  const [gives, setGives] = useStoredState("catalogue.optionalFeatures.gives", []);
+  const [repeatable, setRepeatable] = useStoredState("catalogue.optionalFeatures.repeatable", []);
 
   const [form, setForm] = useState(null); // null = closed · {} new · { editing } · { copyFrom }
   const [openMenu, menu] = useEntryMenu({
@@ -167,8 +168,8 @@ export default function OptionalFeatures() {
 
           {menu}
 
-          <OptionalFeatureCreatePopup open={form !== null} onClose={() => setForm(null)}
-                                      editingFeature={form?.editing || null} copyFromFeature={form?.copyFrom || null} />
+          <OptionalFeatureCardForm open={form !== null} onClose={() => setForm(null)}
+                                   editingFeature={form?.editing || null} copyFromFeature={form?.copyFrom || null} />
         </>
       )}
     </div>

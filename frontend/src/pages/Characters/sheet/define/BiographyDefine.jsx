@@ -200,7 +200,19 @@ export default function BiographyDefine() {
           <div className="space-y-2">
             <OriginLine label="Race" layer={origin.race} entry={raceEntry} popupType="race" changing={swapping === "race"} onChange={() => setSwapping(swapping === "race" ? null : "race")} />
             {swapping === "race" && <OriginSwap kind="race" entries={asList(races)} loading={loadingRaces} currentId={origin.race?.id} onClose={() => setSwapping(null)} />}
-            {origin.subrace && <OriginLine label="Subrace" layer={origin.subrace} entry={null} note={subEntry?.source && subEntry.source !== raceEntry?.source ? subEntry.source : null} />}
+            {(origin.subrace || asList(raceEntry?.subraces).length > 0) && (
+              <OriginLine
+                label="Subrace"
+                layer={origin.subrace}
+                entry={null}
+                note={subEntry?.source && subEntry.source !== raceEntry?.source ? subEntry.source : null}
+                changing={swapping === "subrace"}
+                onChange={raceEntry && asList(raceEntry.subraces).length > 0 ? () => setSwapping(swapping === "subrace" ? null : "subrace") : undefined}
+              />
+            )}
+            {swapping === "subrace" && raceEntry && (
+              <OriginSwap kind="race" entries={[raceEntry]} loading={false} keepRace={{ id: raceEntry.id }} onClose={() => setSwapping(null)} />
+            )}
             <OriginLine
               label="Background"
               layer={origin.background}

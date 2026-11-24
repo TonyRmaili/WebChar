@@ -1,9 +1,9 @@
 import React from "react";
 import { INK } from "../../../../styles/parchment";
 import { Field, Segmented, Switch, TextBlock, dangerBtn, ghostBtn, inputCls } from "../../../../styles/parchmentForm";
-import { ActionEditor, RichText } from "../../../Catalogues/catalogueParts";
-import { textFromValue, valueFromText } from "../../../Catalogues/catalogueHelpers";
-import { actionWords, regainWords } from "../../../../utils/featureRuntime";
+import { DamageEditor, FeatureParts, RichText } from "../../../Catalogues/catalogueParts";
+import { riderOf, riderWords, textFromValue, valueFromText } from "../../../Catalogues/catalogueHelpers";
+import { actionTags, actionWords, partWords, regainWords } from "../../../../utils/featureRuntime";
 import { CATEGORIES } from "../featureHelpers";
 
 /* One feature on the Features or Feats tab: a ledger line with the
@@ -14,23 +14,18 @@ import { CATEGORIES } from "../featureHelpers";
 
    `row` comes from featureHelpers.featureRows. */
 
-const USE_MODES = [
-  { value: "none", label: "no limit" },
-  { value: "own", label: "its own" },
-  { value: "pool", label: "from a pool" },
-];
-const RESETS = [
-  { value: "long", label: "per long rest" },
-  { value: "short", label: "per short rest" },
-];
 
 /* `onView` (optional): the name opens the feature's card and a small
    "edit" opens the editor (`onToggle`); without it the name opens the
    editor. `hideOwner`: leave out where it came from ("Wizard 1"), for a
    list that already says so. */
-export function FeatureLine({ row, open, onToggle, onActive, onView, hideOwner = false }) {
+const TAG_INK = { hit: INK.rubric, save: "text-indigo-800", damage: "", heal: "text-emerald-800" };
+
+export function FeatureLine({ row, open, onToggle, onActive, onView, onRemove, hideOwner = false }) {
   const f = row.feature;
-  const words = actionWords(row.action);
+  const riderTag = row.rider ? `+${row.rider.damage.map(partWords).filter(Boolean).join(" + ") || "damage"}${row.rider.conditions.length ? `, ${row.rider.conditions.join(", ")}` : ""}` : "";
+  const words = [actionWords(row.action), riderTag ? `rider: ${riderTag} on ${row.rider.on === "saves" ? "saves" : row.rider.on === "both" ? "attacks and saves" : "attacks"}` : ""].filter(Boolean).join(" · ");
+  const tags = [...actionTags(row.action).filter((t) => !(row.rider && row.action?.attack?.kind === "any")), ...(riderTag ? [{ tone: "damage", text: riderTag }] : [])];
   return (
     <div className={`group flex items-baseline gap-1.5 py-[3px] ${row.active ? "" : "opacity-60"}`}>
       <span className="self-center">
@@ -41,20 +36,35 @@ export function FeatureLine({ row, open, onToggle, onActive, onView, hideOwner =
         onClick={onView || onToggle}
         aria-expanded={onView ? undefined : open}
         title={onView ? "Open its card" : undefined}
-        className={`truncate text-left text-[15px] hover:underline hover:decoration-dotted hover:underline-offset-4 ${f.name ? "" : `italic ${INK.faint}`} ${open ? "underline decoration-dotted underline-offset-4" : ""}`}
+        className={`min-w-[4rem] max-w-[60%] shrink-0 truncate text-left text-[15px] hover:underline hover:decoration-dotted hover:underline-offset-4 ${f.name ? "" : `italic ${INK.faint}`} ${open ? "underline decoration-dotted underline-offset-4" : ""}`}
       >
         {f.name || "unnamed"}
       </button>
       {f.edited && <span className={`shrink-0 text-[10px] italic ${INK.faint}`} title="You changed this copy">edited</span>}
       {f.own && <span className={`shrink-0 text-[10px] uppercase tracking-wider ${INK.faint}`} title="You added this one">yours</span>}
-      {!hideOwner && <span className={`shrink-0 text-[10px] uppercase tracking-wider ${INK.faint}`}>{row.owner}</span>}
+      {!hideOwner && row.owner && <span className={`shrink-0 text-[10px] uppercase tracking-wider ${INK.faint}`}>{row.owner}</span>}
+      {row.linked && (
+        <span className={`shrink-0 text-[10px] italic ${INK.faint}`} title="An attack made with this item: its numbers follow the item">
+          ⇢ {row.linked.item?.name || "item gone"}
+          {row.linked.item && !row.linked.item.equipped ? " (not equipped)" : ""}
+        </span>
+      )}
       <span aria-hidden="true" className="mx-1 min-w-[0.75rem] flex-1 translate-y-[-4px] border-b-2 border-dotted border-rule/35" />
-      <span className="flex min-w-0 shrink flex-wrap items-baseline justify-end gap-x-2 text-xs">
+      {onRemove && (
+        <button type="button" onClick={onRemove} title="Delete it" aria-label={`Delete ${f.name || "this feature"}`} className={`shrink-0 px-0.5 text-xs leading-none ${INK.faint} hover:text-rubric`}>
+          ✕
+        </button>
+      )}
+      <span className="flex min-w-0 shrink items-baseline justify-end gap-x-2 overflow-hidden whitespace-nowrap text-xs" title={words || undefined}>
         {row.isToggle && <span className={row.on ? INK.rubric : INK.faded}>{row.on ? "on" : "toggle"}</span>}
-        {words && <span className={`truncate ${INK.rubric}`}>{words}</span>}
+        {tags.map((t, i) => (
+          <span key={i} className={`truncate ${TAG_INK[t.tone] || ""}`}>
+            {t.text}
+          </span>
+        ))}
         {row.uses && (
           <span className={`italic ${INK.faded}`}>
-            {row.uses.max} {regainWords(f.uses) || (row.uses.max === 1 ? "use" : "uses")}
+            {row.uses.max}/{f.uses?.reset === "short" ? "short" : "long"}
           </span>
         )}
         {row.consumes && <span className={`italic ${INK.faded}`}>{row.consumes.amount} {row.consumes.name}</span>}
@@ -68,13 +78,63 @@ export function FeatureLine({ row, open, onToggle, onActive, onView, hideOwner =
   );
 }
 
+/* An attack exported from the Inventory (`link.item`): to hit and damage
+   come from the item; this adds what comes on top (Booming Blade, a
+   Smite, a bonus to hit). */
+function LinkedAttackEditor({ row, onPatch }) {
+  const f = row.feature;
+  const atk = f.action?.attack || { kind: row.linked.item?.weapon?.kind || "melee", damage: [] };
+  const setAttack = (p) => onPatch({ action: { ...(f.action || {}), attack: { ...atk, ...p } } });
+  const a = row.linked.attack;
+  return (
+    <div className="space-y-2 text-sm">
+      {a ? (
+        <p className={`italic ${INK.faded}`}>
+          From the item: {a.hit >= 0 ? "+" : ""}
+          {a.hit} to hit · {actionWords({ damage: a.damage })}
+          {a.twoHanded ? " (two-handed)" : ""} · {a.range}. Change the item and this follows.
+        </p>
+      ) : (
+        <p className={`italic ${INK.rubric}`}>{row.linked.item ? "The item has no weapon numbers." : "The item is gone from your inventory."}</p>
+      )}
+      <span className="flex flex-wrap items-baseline gap-2">
+        <span className="text-xs text-ink-faded">Extra to hit +</span>
+        <input
+          type="text"
+          value={textFromValue(atk.bonus)}
+          onChange={(e) => setAttack({ bonus: valueFromText(e.target.value) })}
+          placeholder="0"
+          aria-label="Extra to hit"
+          className={`${inputCls} !w-24`}
+        />
+      </span>
+      <DamageEditor parts={atk.damage} onChange={(damage) => setAttack({ damage })} label="Extra damage on a hit" />
+    </div>
+  );
+}
+
 /* `pools`: the character's pools (featureHelpers.resourceRows), to pick
    one this feature spends from. `onTurnIntoPool`: make its own uses a
    pool (Resources tab), so other features can share them. */
-export function FeatureEditor({ row, pools = [], onPatch, onRemove, onDone, onTurnIntoPool, onRestore }) {
+/* pb: the character's proficiency bonus (shown as PB(3) in the attack and
+   save windows). */
+export function FeatureEditor({ row, pools = [], pb = null, onPatch, onRemove, onDone, onTurnIntoPool, onRestore }) {
   const f = row.feature;
-  const uses = f.uses && typeof f.uses === "object" ? f.uses : null;
-  const mode = f.consumes?.resource ? "pool" : uses?.reset ? "own" : "none";
+  // The parts write `undefined` for "take it off"; the sheet keeps null.
+  const patch = (p) => onPatch(Object.fromEntries(Object.entries(p).map(([k, v]) => [k, v === undefined ? null : v])));
+  const usesExtra = (row.uses || (f.uses && onTurnIntoPool) || row.consumes?.missing) && (
+    <div className="flex flex-wrap items-baseline gap-x-4 text-xs italic text-ink-faded">
+      {row.uses && <span>for this character: {row.uses.max} per {row.uses.reset === "short" ? "short" : "long"} rest</span>}
+      {row.consumes?.missing && (
+        <span className={INK.rubric}>{row.consumes.unpicked ? "pick the pool it spends from" : "no such pool: add it in Resources"}</span>
+      )}
+      {f.uses && onTurnIntoPool && (
+        <button type="button" onClick={onTurnIntoPool} className={`not-italic ${ghostBtn}`} title="Make these uses a pool in Resources, so other features can spend them too">
+          turn into a pool
+        </button>
+      )}
+    </div>
+  );
   return (
     <div className="@container mb-4 ml-[26px] mt-2 space-y-4 border-l-2 border-rubric/40 pl-4">
       <div className="grid grid-cols-1 gap-x-6 gap-y-3 @2xl:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
@@ -82,84 +142,22 @@ export function FeatureEditor({ row, pools = [], onPatch, onRemove, onDone, onTu
           <input type="text" value={f.name ?? ""} autoFocus={!f.name} onChange={(e) => onPatch({ name: e.target.value })} placeholder="e.g. Second Wind" className={`${inputCls} text-[17px]`} />
         </Field>
         <Field label="Used as">
-          <Segmented size="sm" options={CATEGORIES.map((c) => ({ value: c.value, label: c.label }))} value={row.category} onChange={(category) => onPatch({ category })} />
+          <Segmented size="sm" options={CATEGORIES.map((c) => ({ value: c.value, label: c.label }))} value={row.category} onChange={(category) =>
+                       onPatch(category === "riders" && !riderOf(f) ? { category, rider: { damage: [{ dice: "1d6", type: "" }], on: "attacks" } } : { category })} />
         </Field>
       </div>
 
-      <div className="flex flex-wrap items-baseline gap-x-6 gap-y-2">
-        <Field label="Uses">
-          <span className="flex flex-wrap items-baseline gap-2">
-            <Segmented
-              size="sm"
-              options={USE_MODES}
-              value={mode}
-              onChange={(m) =>
-                onPatch(
-                  m === "none"
-                    ? { uses: null, consumes: null }
-                    : m === "own"
-                      ? { uses: { max: uses?.max ?? 1, reset: uses?.reset || "long" }, consumes: null }
-                      : { uses: null, consumes: { resource: f.consumes?.resource || pools[0]?.id || "", amount: f.consumes?.amount ?? 1 } }
-                )
-              }
-            />
-            {mode === "own" && (
-              <>
-                <input
-                  type="text"
-                  value={textFromValue(uses.max)}
-                  onChange={(e) => onPatch({ uses: { ...uses, max: valueFromText(e.target.value) } })}
-                  placeholder="1, pb, wis_mod…"
-                  aria-label="How many uses"
-                  className={`${inputCls} !w-28`}
-                />
-                {row.uses && <span className={`text-xs italic ${INK.faded}`}>= {row.uses.max}</span>}
-                <Segmented size="sm" options={RESETS} value={uses.reset || "long"} onChange={(reset) => onPatch({ uses: { ...uses, reset } })} />
-                {onTurnIntoPool && (
-                  <button type="button" onClick={onTurnIntoPool} className={ghostBtn} title="Make these uses a pool in Resources, so other features can spend them too">
-                    turn into a pool
-                  </button>
-                )}
-              </>
-            )}
-            {mode === "pool" && (
-              <>
-                <select value={f.consumes?.resource || ""} onChange={(e) => onPatch({ consumes: { ...(f.consumes || {}), resource: e.target.value } })} aria-label="Pool" className={`${inputCls} !w-44 cursor-pointer`}>
-                  {!pools.some((p) => p.id === f.consumes?.resource) && <option value={f.consumes?.resource || ""}>{f.consumes?.resource || "— pick a pool —"}</option>}
-                  {pools.map((p) => (
-                    <option key={p.id} value={p.id}>
-                      {p.name}
-                    </option>
-                  ))}
-                </select>
-                <span className="text-xs text-ink-faded">×</span>
-                <input
-                  type="number"
-                  min={1}
-                  value={f.consumes?.amount ?? 1}
-                  onChange={(e) => onPatch({ consumes: { ...(f.consumes || {}), amount: Math.max(1, Number(e.target.value) || 1) } })}
-                  aria-label="How many it spends"
-                  className={`${inputCls} !w-14`}
-                />
-                {row.consumes && !row.consumes.missing && (
-                  <span className={`text-xs italic ${INK.faded}`}>
-                    {row.consumes.cur} of {row.consumes.max} left
-                  </span>
-                )}
-                {row.consumes?.missing && <span className={`text-xs italic ${INK.rubric}`}>no such pool: add it in Resources</span>}
-              </>
-            )}
-          </span>
-        </Field>
-        <label className="flex items-center gap-1 text-sm">
-          <Switch checked={!!f.toggle} onChange={(v) => onPatch({ toggle: v ? f.toggle || true : null, on: v ? f.on : false })} label="Can be switched on and off" />
-          switched on and off
-        </label>
-      </div>
-
-      <Field label="What it does">
-        <ActionEditor value={f.action} onChange={(action) => onPatch({ action: action && Object.keys(action).length ? action : null })} spell={false} />
-      </Field>
+      <FeatureParts
+        f={f}
+        onPatch={patch}
+        pools={pools.map((p) => ({ id: p.id, name: p.name }))}
+        actionMode="auto"
+        pb={pb}
+        traitGrants={false}
+        usesExtra={usesExtra}
+        itemCharges={row.itemCharges}
+        action={row.linked ? { words: `made with your ${row.linked.item?.name || "item"}: its numbers follow the item`, editor: <LinkedAttackEditor row={row} onPatch={onPatch} /> } : null}
+      />
 
       <Field label="Text">
         {row.kind === "manual" || f.own || f.edited_text ? (
@@ -176,12 +174,6 @@ export function FeatureEditor({ row, pools = [], onPatch, onRemove, onDone, onTu
         )}
       </Field>
 
-      {(f.modifiers?.length > 0 || (f.toggle && typeof f.toggle === "object")) && (
-        <p className={`text-xs italic ${INK.faint}`}>
-          Its numbers on the sheet ({[...(f.modifiers || []), ...(f.toggle?.modifiers || [])].map((m) => m.target).join(", ") || "grants"}) are kept and counted
-          {f.toggle ? " while it's switched on" : ""}.
-        </p>
-      )}
 
       <div className="flex flex-wrap items-baseline gap-x-5">
         <button type="button" onClick={onDone} className={ghostBtn}>

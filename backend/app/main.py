@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.gzip import GZipMiddleware
 from typing import Annotated
 from app.database.models import User
 from app.security import hash_password, verify_password, create_access_token, get_current_user
@@ -66,6 +67,10 @@ app.add_middleware(
     allow_headers=["Authorization", "Content-Type", "Accept"],
     # allow_headers=["*"]
 )
+
+# Big responses (the catalogues: monsters are 16 MB of JSON) go out gzipped:
+# about 2.6 MB. Level 5 is fast (~0.3 s on the monsters) and nearly as small as 9.
+app.add_middleware(GZipMiddleware, minimum_size=1024, compresslevel=5)
 
 app.include_router(minions_router)
 app.include_router(campaign_router)
