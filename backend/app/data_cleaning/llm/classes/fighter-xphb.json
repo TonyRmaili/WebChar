@@ -231,5 +231,410 @@
     "reviewed": false,
     "reasoning": "low",
     "at": "2026-11-15T00:19:15+00:00"
+  },
+  "fighter-xphb:battle-master-xphb": {
+    "label": "Fighter (XPHB) · Battle Master (XPHB)",
+    "hash": "6ee42be106dc5cfe",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "student-of-war",
+          "name": "Student of War",
+          "level": 3,
+          "category": "traits",
+          "picks": [
+            {
+              "grant": "tools",
+              "count": 1,
+              "from": [
+                "artisans_tools"
+              ]
+            },
+            {
+              "grant": "skills",
+              "count": 1,
+              "from": [
+                "acrobatics",
+                "animal_handling",
+                "athletics",
+                "history",
+                "insight",
+                "intimidation",
+                "persuasion",
+                "perception",
+                "survival"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "know-your-enemy",
+          "name": "Know Your Enemy",
+          "level": 7,
+          "category": "bonus_actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "action": {
+            "range": "30 feet"
+          }
+        }
+      ],
+      "resources": [
+        {
+          "name": "Superiority Dice",
+          "max": {
+            "1": 4,
+            "7": 5,
+            "15": 6
+          },
+          "die": {
+            "1": "d8",
+            "10": "d10",
+            "18": "d12"
+          },
+          "reset": "short",
+          "short_rest": "all"
+        }
+      ]
+    },
+    "problems": [],
+    "tokens": 12164,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:32:43+00:00"
+  },
+  "fighter-xphb:eldritch-knight-xphb": {
+    "label": "Fighter (XPHB) · Eldritch Knight (XPHB)",
+    "hash": "93281cc8d24cb868",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "war-bond",
+          "name": "War Bond",
+          "level": 3,
+          "category": "bonus_actions"
+        },
+        {
+          "id": "arcane-charge",
+          "name": "Arcane Charge",
+          "level": 15,
+          "category": "actions",
+          "action": {
+            "range": "30 feet"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13377,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:32:46+00:00"
+  },
+  "fighter-xphb:psi-warrior-xphb": {
+    "label": "Fighter (XPHB) · Psi Warrior (XPHB)",
+    "hash": "a31cf70d24f58e1a",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "protective-field",
+          "name": "Protective Field",
+          "level": 3,
+          "category": "reactions",
+          "action": {
+            "range": "30 feet"
+          },
+          "consumes": {
+            "resource": "psionic_energy_dice",
+            "amount": 1
+          }
+        },
+        {
+          "id": "psionic-strike",
+          "name": "Psionic Strike",
+          "level": 3,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": "psionic_energy_die_size",
+                  "bonus": "int_mod",
+                  "type": "force"
+                }
+              ]
+            }
+          },
+          "consumes": {
+            "resource": "psionic_energy_dice",
+            "amount": 1
+          }
+        },
+        {
+          "id": "telekinetic-movement",
+          "name": "Telekinetic Movement",
+          "level": 3,
+          "category": "actions",
+          "uses": {
+            "max": 1,
+            "reset": "short"
+          },
+          "action": {
+            "range": "30 feet"
+          }
+        },
+        {
+          "id": "psi-powered-leap",
+          "name": "Psi-Powered Leap",
+          "level": 7,
+          "category": "bonus_actions",
+          "uses": {
+            "max": 1,
+            "reset": "short"
+          }
+        },
+        {
+          "id": "telekinetic-thrust",
+          "name": "Telekinetic Thrust",
+          "level": 7,
+          "category": "traits",
+          "action": {
+            "save": {
+              "ability": "str",
+              "dc": "8 + int_mod + pb",
+              "on_success": "none",
+              "conditions": [
+                "prone"
+              ]
+            }
+          }
+        },
+        {
+          "id": "guarded-mind",
+          "name": "Guarded Mind",
+          "level": 10,
+          "category": "traits",
+          "consumes": {
+            "resource": "psionic_energy_dice",
+            "amount": 1
+          },
+          "grants": {
+            "defenses": {
+              "resist": [
+                "psychic"
+              ]
+            }
+          }
+        },
+        {
+          "id": "bulwark-of-force",
+          "name": "Bulwark of Force",
+          "level": 15,
+          "category": "bonus_actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "action": {
+            "range": "30 feet"
+          }
+        },
+        {
+          "id": "telekinetic-master",
+          "name": "Telekinetic Master",
+          "level": 18,
+          "category": "bonus_actions"
+        }
+      ],
+      "resources": [
+        {
+          "name": "Psionic Energy Dice",
+          "max": "psionic_energy_die_number",
+          "die": "psionic_energy_die_size",
+          "reset": "long",
+          "short_rest": 1
+        }
+      ]
+    },
+    "problems": [],
+    "tokens": 15071,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:32:56+00:00"
+  },
+  "fighter-xphb:banneret-frhof": {
+    "label": "Fighter (XPHB) · Banneret (FRHoF)",
+    "hash": "a71d4bae83312438",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "comprehension",
+          "name": "Comprehension",
+          "level": 3,
+          "category": "traits"
+        },
+        {
+          "id": "polyglot",
+          "name": "Polyglot",
+          "level": 3,
+          "category": "traits",
+          "picks": [
+            {
+              "grant": "languages",
+              "count": 1,
+              "from": [
+                "all_languages"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "well-spoken",
+          "name": "Well Spoken",
+          "level": 3,
+          "category": "traits",
+          "picks": [
+            {
+              "grant": "skills",
+              "count": 1,
+              "from": [
+                "insight",
+                "intimidation",
+                "persuasion",
+                "performance"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "group-recovery",
+          "name": "Group Recovery",
+          "level": 3,
+          "category": "bonus_actions",
+          "uses": {
+            "max": 1,
+            "reset": "short"
+          },
+          "action": {
+            "area": "30-foot Emanation",
+            "heal": "1d4 + class_level"
+          }
+        },
+        {
+          "id": "rallying-surge",
+          "name": "Rallying Surge",
+          "level": 10,
+          "category": "actions",
+          "action": {
+            "area": "30-foot Emanation"
+          }
+        },
+        {
+          "id": "shared-resilience",
+          "name": "Shared Resilience",
+          "level": 15,
+          "category": "reactions",
+          "action": {
+            "range": "60 feet"
+          },
+          "consumes": {
+            "resource": "indomitable",
+            "amount": 1
+          }
+        },
+        {
+          "id": "unshakable-bravery",
+          "name": "Unshakable Bravery",
+          "level": 18,
+          "category": "traits",
+          "grants": {
+            "defenses": {
+              "condition_immune": [
+                "charmed",
+                "frightened"
+              ]
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 15020,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:33:18+00:00"
+  },
+  "fighter-xphb:arcane-archer-au": {
+    "label": "Fighter (XPHB) · Arcane Archer (AU)",
+    "hash": "8066fed0578abd30",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "arcane-archer-lore",
+          "name": "Arcane Archer Lore",
+          "level": 3,
+          "category": "traits",
+          "grants": {
+            "skills": [
+              "arcana",
+              "nature"
+            ]
+          }
+        },
+        {
+          "id": "arcane-shot",
+          "name": "Arcane Shot",
+          "level": 3,
+          "category": "traits",
+          "uses": {
+            "max": "max(1, int_mod)",
+            "reset": "short"
+          }
+        },
+        {
+          "id": "curving-shot",
+          "name": "Curving Shot",
+          "level": 7,
+          "category": "bonus_actions"
+        },
+        {
+          "id": "magical-ammunition",
+          "name": "Magical Ammunition",
+          "level": 7,
+          "category": "actions",
+          "uses": {
+            "max": 1,
+            "reset": "short"
+          }
+        },
+        {
+          "id": "masterful-shots",
+          "name": "Masterful Shots",
+          "level": 18,
+          "category": "reactions"
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 14946,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:33:40+00:00"
   }
 }

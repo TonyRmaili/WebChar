@@ -300,5 +300,635 @@
     "reviewed": false,
     "reasoning": "medium",
     "at": "2026-11-18T13:15:11+00:00"
+  },
+  "cleric-xphb:light-xphb": {
+    "label": "Cleric (XPHB) · Light Domain (XPHB)",
+    "hash": "adb9fc3690edcd42",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "radiance-of-the-dawn",
+          "name": "Radiance of the Dawn",
+          "level": 3,
+          "category": "actions",
+          "action": {
+            "area": "30-foot Emanation",
+            "save": {
+              "ability": "con",
+              "on_success": "half",
+              "damage": [
+                {
+                  "dice": "2d10",
+                  "bonus": "class_level",
+                  "type": "radiant"
+                }
+              ]
+            }
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "warding-flare",
+          "name": "Warding Flare",
+          "level": 3,
+          "category": "reactions",
+          "uses": {
+            "max": "max(1, wis_mod)",
+            "reset": "short"
+          },
+          "action": {
+            "range": "30 feet"
+          }
+        },
+        {
+          "id": "improved-warding-flare",
+          "name": "Improved Warding Flare",
+          "level": 6,
+          "category": "reactions",
+          "action": {
+            "temp_hp": "2d6 + wis_mod"
+          }
+        },
+        {
+          "id": "corona-of-light",
+          "name": "Corona of Light",
+          "level": 17,
+          "category": "actions",
+          "uses": {
+            "max": "max(1, wis_mod)",
+            "reset": "long"
+          },
+          "toggle": {
+            "uses_charge": true
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13195,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:23:16+00:00"
+  },
+  "cleric-xphb:trickery-xphb": {
+    "label": "Cleric (XPHB) · Trickery Domain (XPHB)",
+    "hash": "647831c75bdfa7ed",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "blessing-of-the-trickster",
+          "name": "Blessing of the Trickster",
+          "level": 3,
+          "category": "actions",
+          "action": {
+            "range": "30 feet"
+          }
+        },
+        {
+          "id": "invoke-duplicity",
+          "name": "Invoke Duplicity",
+          "level": 3,
+          "category": "bonus_actions",
+          "action": {
+            "range": "30 feet"
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "move",
+          "name": "Move",
+          "level": 3,
+          "category": "bonus_actions",
+          "action": {
+            "range": "120 feet"
+          }
+        },
+        {
+          "id": "trickster-s-transposition",
+          "name": "Trickster's Transposition",
+          "level": 6,
+          "category": "bonus_actions"
+        },
+        {
+          "id": "healing-illusion",
+          "name": "Healing Illusion",
+          "level": 17,
+          "category": "traits",
+          "action": {
+            "range": "5 feet",
+            "heal": "class_level"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13377,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:23:27+00:00"
+  },
+  "cleric-xphb:war-xphb": {
+    "label": "Cleric (XPHB) · War Domain (XPHB)",
+    "hash": "087b9c673731ff18",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "war-priest",
+          "name": "War Priest",
+          "level": 3,
+          "category": "bonus_actions",
+          "uses": {
+            "max": "max(1, wis_mod)",
+            "reset": "short"
+          }
+        },
+        {
+          "id": "guided-strike",
+          "name": "Guided Strike",
+          "level": 3,
+          "category": "traits",
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "war-god-s-blessing",
+          "name": "War God's Blessing",
+          "level": 6,
+          "category": "traits",
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "avatar-of-battle",
+          "name": "Avatar of Battle",
+          "level": 17,
+          "category": "traits",
+          "grants": {
+            "defenses": {
+              "resist": [
+                "bludgeoning",
+                "piercing",
+                "slashing"
+              ]
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 12910,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:23:39+00:00"
+  },
+  "cleric-xphb:knowledge-frhof": {
+    "label": "Cleric (XPHB) · Knowledge Domain (FRHoF)",
+    "hash": "92de55f997a8e96b",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "blessings-of-knowledge",
+          "name": "Blessings of Knowledge",
+          "level": 3,
+          "category": "traits",
+          "picks": [
+            {
+              "grant": "tools",
+              "count": 1,
+              "from": [
+                "artisans_tools"
+              ]
+            },
+            {
+              "grant": "skills",
+              "count": 2,
+              "from": [
+                "arcana",
+                "history",
+                "nature",
+                "religion"
+              ]
+            },
+            {
+              "grant": "expertise",
+              "count": 2,
+              "from": [
+                "arcana",
+                "history",
+                "nature",
+                "religion"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "mind-magic",
+          "name": "Mind Magic",
+          "level": 3,
+          "category": "actions",
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "unfettered-mind",
+          "name": "Unfettered Mind",
+          "level": 6,
+          "category": "traits",
+          "grants": {
+            "saves": [
+              "int"
+            ]
+          }
+        },
+        {
+          "id": "divine-foreknowledge",
+          "name": "Divine Foreknowledge",
+          "level": 17,
+          "category": "bonus_actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 12992,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:23:51+00:00"
+  },
+  "cleric-xphb:grave-rhw": {
+    "label": "Cleric (XPHB) · Grave Domain (RHW)",
+    "hash": "a478f0cb8b08a290",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "pull-of-death",
+          "name": "Pull of Death",
+          "level": 3,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": {
+                    "1": "1d4",
+                    "11": "1d6"
+                  },
+                  "type": "necrotic",
+                  "condition": "target is missing any Hit Points"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "path-to-the-grave",
+          "name": "Path to the Grave",
+          "level": 3,
+          "category": "bonus_actions",
+          "action": {
+            "range": "30 feet"
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "sentinel-at-death-s-door",
+          "name": "Sentinel at Death's Door",
+          "level": 6,
+          "category": "reactions",
+          "uses": {
+            "max": "max(1, wis_mod)",
+            "reset": "long"
+          }
+        },
+        {
+          "id": "enhanced-necromancy",
+          "name": "Enhanced Necromancy",
+          "level": 17,
+          "category": "traits",
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "keeper-of-souls",
+          "name": "Keeper of Souls",
+          "level": 17,
+          "category": "traits",
+          "uses": {
+            "max": 1,
+            "reset": "short"
+          },
+          "action": {
+            "range": "60 feet",
+            "heal": "2 * class_level"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 14112,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:24:02+00:00"
+  },
+  "cleric-xphb:arcana-au": {
+    "label": "Cleric (XPHB) · Arcana Domain (AU)",
+    "hash": "4371f47a27243ea3",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "fortifying-spell",
+          "name": "Fortifying Spell",
+          "level": 3,
+          "category": "traits",
+          "action": {
+            "temp_hp": "2d8 + class_level"
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "tenacious-spell",
+          "name": "Tenacious Spell",
+          "level": 3,
+          "category": "traits",
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "magical-knowledge",
+          "name": "Magical Knowledge",
+          "level": 3,
+          "category": "traits",
+          "picks": [
+            {
+              "grant": "skills",
+              "count": 1,
+              "from": [
+                "arcana",
+                "history",
+                "insight",
+                "medicine",
+                "persuasion",
+                "religion"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "cantrips",
+          "name": "Cantrips",
+          "level": 3,
+          "category": "traits"
+        },
+        {
+          "id": "dispelling-recovery",
+          "name": "Dispelling Recovery",
+          "level": 6,
+          "category": "traits"
+        },
+        {
+          "id": "magical-mastery",
+          "name": "Magical Mastery",
+          "level": 17,
+          "category": "traits"
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13549,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:24:18+00:00"
+  },
+  "cleric-xphb:discipline-wow": {
+    "label": "Cleric (XPHB) · Discipline Domain (WoW)",
+    "hash": "037f2e1fea70c701",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "holy-bolt",
+          "name": "Holy Bolt",
+          "level": 3,
+          "category": "bonus_actions",
+          "action": {
+            "range": "60 feet",
+            "heal": "1d10 + wis_mod",
+            "attack": {
+              "kind": "spell",
+              "bonus": "pb + wis_mod",
+              "damage": [
+                {
+                  "dice": "2d10",
+                  "bonus": "wis_mod",
+                  "type": "radiant"
+                }
+              ]
+            }
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "luminous-barrier",
+          "name": "Luminous Barrier",
+          "level": 6,
+          "category": "bonus_actions",
+          "action": {
+            "temp_hp": "class_level + wis_mod"
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          },
+          "grants": {
+            "defenses": {
+              "resist": [
+                "acid",
+                "bludgeoning",
+                "cold",
+                "fire",
+                "force",
+                "lightning",
+                "necrotic",
+                "piercing",
+                "poison",
+                "psychic",
+                "radiant",
+                "slashing",
+                "thunder"
+              ]
+            }
+          }
+        },
+        {
+          "id": "ascending-step",
+          "name": "Ascending Step",
+          "level": 17,
+          "category": "bonus_actions",
+          "action": {
+            "range": "30 feet"
+          }
+        },
+        {
+          "id": "ascending-volley",
+          "name": "Ascending Volley",
+          "level": 17,
+          "category": "bonus_actions"
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13655,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:24:32+00:00"
+  },
+  "cleric-xphb:shadow-wow": {
+    "label": "Cleric (XPHB) · Shadow Domain (WoW)",
+    "hash": "24283458d5c62bdc",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "shadowform",
+          "name": "Shadowform",
+          "level": 3,
+          "category": "bonus_actions",
+          "toggle": {
+            "uses_charge": true
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "shadow-stealth",
+          "name": "Shadow Stealth",
+          "level": 3,
+          "category": "bonus_actions"
+        },
+        {
+          "id": "devouring-plague",
+          "name": "Devouring Plague",
+          "level": 3,
+          "category": "traits",
+          "uses": {
+            "max": "max(1, wis_mod)",
+            "reset": "long"
+          },
+          "action": {
+            "range": "30 feet",
+            "heal": "1d10",
+            "damage": [
+              {
+                "dice": "1d10",
+                "type": "necrotic"
+              }
+            ]
+          }
+        },
+        {
+          "id": "dispersion",
+          "name": "Dispersion",
+          "level": 6,
+          "category": "reactions",
+          "uses": {
+            "max": 1,
+            "reset": "short"
+          },
+          "toggle": {
+            "uses_charge": true,
+            "grants": {
+              "speed": {
+                "fly": 40
+              },
+              "defenses": {
+                "resist": [
+                  "acid",
+                  "bludgeoning",
+                  "cold",
+                  "fire",
+                  "force",
+                  "lightning",
+                  "necrotic",
+                  "piercing",
+                  "poison",
+                  "psychic",
+                  "radiant",
+                  "slashing",
+                  "thunder"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "id": "vampiric-embrace",
+          "name": "Vampiric Embrace",
+          "level": 17,
+          "category": "traits",
+          "action": {
+            "range": "30 feet",
+            "heal": "1d6"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 14410,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:24:47+00:00"
   }
 }

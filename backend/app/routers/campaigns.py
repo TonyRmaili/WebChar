@@ -1,4 +1,5 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, Form, HTTPException, Query, UploadFile
+from fastapi.responses import FileResponse
 from pydantic import BaseModel, Field
 from app.database.models import User
 from app.security import get_current_user
@@ -9,15 +10,17 @@ from app.db_setup import get_db
 from datetime import datetime, timezone
 import json
 import os
+import re
+import secrets
 import shutil
+import time
 from pathlib import Path
-from app.open_ai_api import OpenAIApi
+from app import notes
 from app.character_files import character_path, get_owned_character, read_character
 from app.database.schemas import (
     CreateFileRequest,
     DeleteFileRequest,
     UpdateFileRequest,
-    DMAssistantRequest,
     RenameRequest,
     MoveRequest,
     CopyRequest,
@@ -40,7 +43,8 @@ BAD_NAME_CHARS = set('\\/:*?"<>|')
 # A campaign folder looks like this:
 #
 #   <campaign>/
-#     _files/     the DM's own notes: whatever files and folders they make
+#     _files/     the DM's own notes (<name>.json) and pictures, in their own folders
+#     note_images/ pictures shown inside notes (random names; see "pictures")
 #     prompts/    assistant prompts (default.md is created for you)
 #     party/      copies of player characters  (the app writes these)
 #     npcs/       NPCs                         (the app writes these)
@@ -61,7 +65,8 @@ ENCOUNTERS_DIR = "encounters"
 GROUPS_DIR = "groups"
 TEMPLATES_DIR = "templates"  # also save_files/<user>/templates for "all campaigns"
 TABLES_DIR = "tables"  # also save_files/<user>/tables for "all campaigns"
-APP_FOLDERS = ("party", "npcs", "monsters", ENCOUNTERS_DIR, GROUPS_DIR, TEMPLATES_DIR, TABLES_DIR)
+NOTE_IMAGES_DIR = "note_images"
+APP_FOLDERS = ("party", "npcs", "monsters", ENCOUNTERS_DIR, GROUPS_DIR, TEMPLATES_DIR, TABLES_DIR, NOTE_IMAGES_DIR)
 
 
 def _ensure_layout(campaign_path: Path) -> None:
@@ -194,16 +199,100 @@ def delete_campaign(current_user: CurrentUser, campaign_name: str, db: Session =
 @router.get("/data")
 def get_campaign_data(current_user: CurrentUser, campaign_name: str):
     # The file tree starts at _files, so the DM sees their own notes only.
-    files_path = _campaign_dir(current_user, campaign_name) / FILES_DIR
-    data = FileHandler().build_dir_tree(files_path)
-    return data.get("children", [])
+    campaign_path = _campaign_dir(current_user, campaign_name)
+    _tidy_note_images(campaign_path)
+    tree = _tree(campaign_path / FILES_DIR)
+    return {"root": tree["path"], "children": tree["children"]}
 
 
 @router.get("/prompts")
 def get_campaign_prompts(current_user: CurrentUser, campaign_name: str):
-    prompts_path = _campaign_dir(current_user, campaign_name) / PROMPTS_DIR
-    data = FileHandler().build_dir_tree(prompts_path)
-    return data.get("children", [])
+    tree = _tree(_campaign_dir(current_user, campaign_name) / PROMPTS_DIR, prompts=True)
+    return {"root": tree["path"], "children": tree["children"]}
+
+
+# ---------- the file tree ----------
+# _files holds notes (<name>.json, see app/notes.py) and pictures
+# (<name>.png/.jpg/.gif/.webp); prompts holds plain-text .md files. The tree
+# only says what is where ("kind"): a note is fetched when it is opened, and
+# a picture is fetched as an image. Prompts are small and the assistant
+# needs them all at hand, so their text comes along.
+# GET /data and GET /prompts answer { root, children }: root is the folder
+# itself, for "create / move to the top level".
+
+NOTE_SUFFIX = ".json"
+PROMPT_SUFFIX = ".md"
+
+
+def _kind(path: Path, prompts: bool) -> str | None:
+    suffix = path.suffix.lower()
+    if prompts:
+        return "prompt" if suffix == PROMPT_SUFFIX else None
+    if suffix == NOTE_SUFFIX:
+        return "note"
+    if suffix in notes.IMAGE_SUFFIXES or suffix == ".jpeg":
+        return "image"
+    return None
+
+
+def _tree(path: Path, prompts: bool = False) -> dict:
+    children = []
+    for child in sorted(path.iterdir(), key=lambda p: (p.is_file(), p.name.lower())):
+        if child.is_dir():
+            children.append(_tree(child, prompts))
+            continue
+        kind = _kind(child, prompts)
+        if kind is None:
+            continue  # anything else in the folder is not shown
+        node = {"name": child.name, "type": "file", "kind": kind, "path": str(child)}
+        if kind == "prompt":
+            node["content"] = child.read_text(encoding="utf-8")
+        children.append(node)
+    return {"name": path.name, "type": "folder", "path": str(path), "children": children}
+
+
+# ---------- search ----------
+# The Files tree's search box: notes whose name or text holds the words
+# (any case), pictures whose name does. Each match brings a short piece of
+# the text around the first hit, so the DM sees why it matched.
+
+SNIPPET_BEFORE = 40
+SNIPPET_AFTER = 70
+
+
+def _snippet(text: str, at: int, length: int) -> str:
+    start = max(0, at - SNIPPET_BEFORE)
+    end = min(len(text), at + length + SNIPPET_AFTER)
+    piece = " ".join(text[start:end].split())
+    return ("…" if start > 0 else "") + piece + ("…" if end < len(text) else "")
+
+
+def _note_text(path: Path) -> str:
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+        return data.get("text", "") if isinstance(data, dict) else ""
+    except (OSError, json.JSONDecodeError):
+        return ""
+
+
+@router.get("/search")
+def search_files(current_user: CurrentUser, campaign_name: str, q: str = Query(max_length=200)):
+    needle = q.strip().lower()
+    if not needle:
+        return {"matches": []}
+    matches = []
+    for path in sorted((_campaign_dir(current_user, campaign_name) / FILES_DIR).rglob("*")):
+        kind = _kind(path, prompts=False) if path.is_file() else None
+        if kind is None:
+            continue
+        name = path.stem if kind == "note" else path.name
+        text = _note_text(path) if kind == "note" else ""
+        hit = text.lower().find(needle)
+        if hit >= 0:
+            matches.append({"path": str(path), "snippet": _snippet(text, hit, len(needle))})
+        elif needle in name.lower():
+            matches.append({"path": str(path), "snippet": ""})
+    return {"matches": matches}
 
 
 # ---------- files and folders ----------
@@ -218,15 +307,26 @@ def _create_base(current_user: User, payload: CreateFileRequest) -> Path:
     return _campaign_dir(current_user, payload.campaign_name) / FILES_DIR
 
 
+def _in_prompts(area: Path) -> bool:
+    return area.name == PROMPTS_DIR
+
+
 @router.post("/create_file")
 def create_file(payload: CreateFileRequest, current_user: CurrentUser):
+    """A new empty note in _files, or a new empty prompt in prompts."""
     base_path = _create_base(current_user, payload)
-    target_path = base_path / f"{_clean_name(payload.file_name, 'file name')}.md"
+    _, area = _user_path(current_user, str(base_path), allow_area_root=True)
+    prompt = _in_prompts(area)
+    name = _clean_name(payload.file_name, "file name")
+    target_path = base_path / f"{name}{PROMPT_SUFFIX if prompt else NOTE_SUFFIX}"
     if target_path.exists():
         raise HTTPException(status_code=400, detail="File already exists")
 
-    target_path.touch()
-    return {"message": "File created", "path": str(target_path)}
+    if prompt:
+        target_path.write_text("", encoding="utf-8")
+    else:
+        _write_json(target_path, notes.note_file(notes.EMPTY_DOC))
+    return {"message": "File created", "path": str(target_path), "name": target_path.name, "kind": "prompt" if prompt else "note"}
 
 
 @router.post("/create_folder")
@@ -250,30 +350,205 @@ def delete_file(payload: DeleteFileRequest, current_user: CurrentUser):
     return {"message": "Deleted", "path": str(path)}
 
 
+def _prompt_path(user: User, raw_path: str) -> Path:
+    path, area = _user_path(user, raw_path)
+    if not _in_prompts(area) or path.suffix != PROMPT_SUFFIX:
+        raise HTTPException(status_code=400, detail="Not a prompt")
+    if not path.is_file():
+        raise HTTPException(status_code=404, detail="That prompt is not there any more")
+    return path
+
+
+@router.get("/prompt")
+def get_prompt(current_user: CurrentUser, path: str):
+    return {"content": _prompt_path(current_user, path).read_text(encoding="utf-8")}
+
+
 @router.put("/update_file")
 def update_file(payload: UpdateFileRequest, current_user: CurrentUser):
-    file_path, _ = _user_path(current_user, payload.path)
-    if not file_path.is_file():
-        raise HTTPException(status_code=404, detail="File not found")
-
+    """Saves a prompt (plain text). Notes are saved with PUT /note."""
+    file_path = _prompt_path(current_user, payload.path)
     file_path.write_text(payload.content, encoding="utf-8")
     return {"message": "File saved", "path": str(file_path)}
 
 
-# ---------- assistant ----------
+# ---------- notes ----------
 
-@router.post("/dm_assistant")
-def handle_dm_assistant(payload: DMAssistantRequest, current_user: CurrentUser):
-    # Only logged-in users may spend the OpenAI key, and only files from
-    # their own campaigns may be sent along with the chat.
-    files = [str(_user_path(current_user, p)[0]) for p in (payload.active_files or [])]
-    messages = [m.model_dump() for m in payload.messages]
+class SaveNoteRequest(BaseModel):
+    path: str
+    doc: dict
 
-    return OpenAIApi().chat_log(
-        instructions=payload.instructions,
-        files=files,
-        messages=messages,
+
+def _note_path(user: User, raw_path: str) -> Path:
+    path, area = _user_path(user, raw_path)
+    if _in_prompts(area) or path.suffix != NOTE_SUFFIX:
+        raise HTTPException(status_code=400, detail="Not a note")
+    if not path.is_file():
+        raise HTTPException(status_code=404, detail="That note is not there any more")
+    return path
+
+
+def _read_note(path: Path) -> dict:
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        raise HTTPException(status_code=500, detail="That note could not be read")
+    if not isinstance(data, dict) or not isinstance(data.get("doc"), dict):
+        raise HTTPException(status_code=500, detail="That note could not be read")
+    return data
+
+
+@router.get("/note")
+def get_note(current_user: CurrentUser, path: str):
+    data = _read_note(_note_path(current_user, path))
+    return {"doc": data["doc"], "text": data.get("text", "")}
+
+
+@router.put("/note")
+def save_note(payload: SaveNoteRequest, current_user: CurrentUser):
+    """The editor sends the document; the plain text is made here."""
+    if payload.doc.get("type") != "doc":
+        raise HTTPException(status_code=400, detail="Not a document")
+    path = _note_path(current_user, payload.path)
+    data = notes.note_file(payload.doc)
+    _write_json(path, data)
+    return {"message": "Saved", "path": str(path), "text": data["text"]}
+
+
+# ---------- pictures ----------
+# Two kinds, the same checks:
+#   - pictures inside notes live in <campaign>/note_images/ under a random
+#     name the server picks; the note's image only holds that name.
+#   - picture files in the tree live in _files like notes, named by the DM.
+# An upload is only kept if its first bytes say it is a PNG, JPEG, GIF or
+# WebP (the file's name and the browser's "type" are easy to fake), and if
+# it is at most 10 MB. SVG is not accepted: it can carry scripts.
+
+NOTE_IMAGE_NAME = re.compile(r"^[0-9a-f]{32}\.(png|jpg|gif|webp)$")
+ORPHAN_AGE = 24 * 60 * 60  # seconds
+
+
+def _note_image_name(suffix: str) -> str:
+    """A random name nobody can guess or choose: 32 hex letters + suffix."""
+    return f"{secrets.token_hex(16)}{suffix}"
+
+
+def _files_folder(user: User, campaign_name: str, folder: str) -> Path:
+    """A folder of the campaign's Files ("" = the top), checked."""
+    files_root = _campaign_dir(user, campaign_name) / FILES_DIR
+    if not folder:
+        return files_root
+    target, area = _user_path(user, folder, allow_area_root=True)
+    if area != files_root or not target.is_dir():
+        raise HTTPException(status_code=400, detail="Target folder not found")
+    return target
+
+
+async def _read_image(upload: UploadFile) -> tuple[bytes, str]:
+    data = await upload.read(notes.MAX_IMAGE_BYTES + 1)
+    if len(data) > notes.MAX_IMAGE_BYTES:
+        raise HTTPException(status_code=413, detail="Pictures can be at most 10 MB")
+    suffix = notes.image_suffix(data)
+    if suffix is None:
+        raise HTTPException(status_code=400, detail="That file is not a PNG, JPEG, GIF or WebP picture")
+    return data, suffix
+
+
+def _image_response(path: Path) -> FileResponse:
+    suffix = ".jpg" if path.suffix.lower() == ".jpeg" else path.suffix.lower()
+    return FileResponse(
+        path,
+        media_type=notes.MEDIA_TYPES[suffix],
+        # nosniff: the browser must treat it as the picture type we say, never guess "page".
+        headers={"X-Content-Type-Options": "nosniff", "Cache-Control": "private, max-age=3600"},
     )
+
+
+@router.post("/note_images")
+async def upload_note_image(current_user: CurrentUser, campaign_name: Annotated[str, Form()], file: UploadFile):
+    folder = _campaign_dir(current_user, campaign_name) / NOTE_IMAGES_DIR
+    data, suffix = await _read_image(file)
+    name = _note_image_name(suffix)
+    FileHandler().save_bytes(folder / name, data)
+    return {"file": name}
+
+
+@router.get("/note_images/{file}")
+def get_note_image(current_user: CurrentUser, campaign_name: str, file: str):
+    if not NOTE_IMAGE_NAME.match(file):
+        raise HTTPException(status_code=400, detail="Invalid picture name")
+    path = _campaign_dir(current_user, campaign_name) / NOTE_IMAGES_DIR / file
+    if not path.is_file():
+        raise HTTPException(status_code=404, detail="Picture not found")
+    return _image_response(path)
+
+
+def _tidy_note_images(campaign_path: Path) -> None:
+    """Delete note pictures no note and no assistant chat shows any more.
+    Only ones older than a day: a picture removed a minute ago may come back
+    with undo."""
+    folder = campaign_path / NOTE_IMAGES_DIR
+    files = list(folder.glob("*"))
+    if not files:
+        return
+    used: set[str] = chat_images(campaign_path)
+    for note in (campaign_path / FILES_DIR).rglob(f"*{NOTE_SUFFIX}"):
+        try:
+            used |= notes.images_in(json.loads(note.read_text(encoding="utf-8")).get("doc"))
+        except (OSError, json.JSONDecodeError, AttributeError):
+            return  # a note we can't read might use any of them: keep all
+    now = time.time()
+    for path in files:
+        if path.is_file() and path.name not in used and now - path.stat().st_mtime > ORPHAN_AGE:
+            path.unlink(missing_ok=True)
+
+
+@router.post("/image_file")
+async def upload_image_file(
+    current_user: CurrentUser,
+    campaign_name: Annotated[str, Form()],
+    file: UploadFile,
+    folder: Annotated[str, Form()] = "",
+):
+    """A picture as a file of its own in the tree, named after the upload."""
+    target = _files_folder(current_user, campaign_name, folder)
+    data, suffix = await _read_image(file)
+    stem = Path(file.filename or "").stem.strip()
+    if not stem or stem in (".", "..") or any(c in BAD_NAME_CHARS for c in stem):
+        stem = "picture"
+    dest = FileHandler().unique_destination(target / f"{stem[:80]}{suffix}")
+    FileHandler().save_bytes(dest, data)
+    return {"message": "Uploaded", "path": str(dest), "name": dest.name, "kind": "image"}
+
+
+@router.get("/image_file")
+def get_image_file(current_user: CurrentUser, path: str):
+    file_path, area = _user_path(current_user, path)
+    if _in_prompts(area) or _kind(file_path, prompts=False) != "image" or not file_path.is_file():
+        raise HTTPException(status_code=404, detail="Picture not found")
+    return _image_response(file_path)
+
+
+# ---------- assistant chat pictures ----------
+# The assistant (routers/assistant.py) keeps a campaign's chat in
+# <campaign>/assistant_chat.json, and the pictures it paints in note_images.
+# The tidy-up above keeps the ones the chat still shows.
+
+CHAT_FILE = "assistant_chat.json"
+
+
+def chat_images(folder: Path) -> set[str]:
+    """The pictures the assistant chat kept in `folder` shows."""
+    try:
+        data = json.loads((folder / CHAT_FILE).read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return set()
+    return {
+        m["image"]["file"]
+        for thread in ("words", "pictures")
+        for m in data.get(thread, [])
+        if isinstance(m, dict) and isinstance(m.get("image"), dict) and m["image"].get("file")
+    }
 
 
 # ---------- rename / move / copy / save ----------
@@ -321,6 +596,7 @@ def move_node(payload: MoveRequest, current_user: CurrentUser):
 
 @router.post("/copy")
 def copy_node(payload: CopyRequest, current_user: CurrentUser):
+    # A copied note shows the same pictures; they stay while any note uses them.
     src, _ = _user_path(current_user, payload.path)
     if not src.is_file():
         raise HTTPException(status_code=400, detail="Only files can be copied")
@@ -332,21 +608,15 @@ def copy_node(payload: CopyRequest, current_user: CurrentUser):
 
 @router.post("/save_response")
 def save_response(payload: SaveResponseRequest, current_user: CurrentUser):
+    """An assistant answer (Markdown) saved as a note."""
     file_handler = FileHandler()
-    files_root = _campaign_dir(current_user, payload.campaign_name) / FILES_DIR
-
-    if payload.folder_path:
-        target_folder, area = _user_path(current_user, payload.folder_path, allow_area_root=True)
-        if area != files_root or not target_folder.is_dir():
-            raise HTTPException(status_code=400, detail="Target folder not found")
-    else:
-        target_folder = files_root
+    target_folder = _files_folder(current_user, payload.campaign_name, payload.folder_path)
 
     name = payload.file_name.strip() or file_handler.slugify_response(payload.content)
     name = _clean_name(name, "file name")
 
-    dest = file_handler.unique_destination(target_folder / f"{name}.md")
-    dest.write_text(payload.content, encoding="utf-8")
+    dest = file_handler.unique_destination(target_folder / f"{name}{NOTE_SUFFIX}")
+    _write_json(dest, notes.note_file(notes.markdown_to_doc(payload.content)))
     return {"message": "Saved", "path": str(dest), "name": dest.name}
 
 
@@ -538,4 +808,4 @@ def add_campaign_monsters(payload: AddCampaignMonstersRequest, current_user: Cur
         data = {**payload.monster, "name": dest.stem, "_added": {"added_at": added_at}}
         _write_json(dest, data)
         out.append({"file": dest.name, "data": data})
-    return out
+    return out

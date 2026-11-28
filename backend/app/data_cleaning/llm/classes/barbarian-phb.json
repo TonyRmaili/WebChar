@@ -300,5 +300,702 @@
     "reviewed": false,
     "reasoning": "medium",
     "at": "2026-11-18T13:09:58+00:00"
+  },
+  "barbarian-phb:primal-knowledge": {
+    "label": "Barbarian (PHB) · Primal Knowledge",
+    "hash": "da0d283430dd20e4",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "primal-knowledge",
+          "name": "Primal Knowledge",
+          "level": 3,
+          "category": "traits",
+          "picks": [
+            {
+              "grant": "skills",
+              "count": 1,
+              "from": [
+                "animal_handling",
+                "athletics",
+                "intimidation",
+                "nature",
+                "perception",
+                "survival"
+              ]
+            },
+            {
+              "grant": "skills",
+              "count": 1,
+              "from": [
+                "animal_handling",
+                "athletics",
+                "intimidation",
+                "nature",
+                "perception",
+                "survival"
+              ],
+              "at": 10
+            }
+          ]
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11302,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-26T17:46:58+00:00"
+  },
+  "barbarian-phb:instinctive-pounce": {
+    "label": "Barbarian (PHB) · Instinctive Pounce",
+    "hash": "26b945edd14caccc",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "instinctive-pounce",
+          "name": "Instinctive Pounce",
+          "level": 7,
+          "category": "bonus_actions"
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11358,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-26T17:47:00+00:00"
+  },
+  "barbarian-phb:totem-warrior-phb": {
+    "label": "Barbarian (PHB) · Path of the Totem Warrior (PHB)",
+    "hash": "190f31799fddb473",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "spirit-seeker",
+          "name": "Spirit Seeker",
+          "level": 3,
+          "category": "traits"
+        },
+        {
+          "id": "bear",
+          "name": "Bear",
+          "level": 3,
+          "category": "traits",
+          "toggle": {
+            "grants": {
+              "defenses": {
+                "resist": [
+                  "acid",
+                  "bludgeoning",
+                  "cold",
+                  "fire",
+                  "force",
+                  "lightning",
+                  "necrotic",
+                  "piercing",
+                  "poison",
+                  "radiant",
+                  "slashing",
+                  "thunder"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "id": "eagle",
+          "name": "Eagle",
+          "level": 3,
+          "category": "bonus_actions",
+          "toggle": true
+        },
+        {
+          "id": "elk",
+          "name": "Elk",
+          "level": 3,
+          "category": "traits",
+          "toggle": {
+            "modifiers": [
+              {
+                "target": "speed.walk",
+                "add": 15
+              }
+            ]
+          }
+        },
+        {
+          "id": "tiger",
+          "name": "Tiger",
+          "level": 6,
+          "category": "bonus_actions",
+          "picks": [
+            {
+              "grant": "skills",
+              "count": 2,
+              "from": [
+                "athletics",
+                "acrobatics",
+                "stealth",
+                "survival"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "spirit-walker",
+          "name": "Spirit Walker",
+          "level": 10,
+          "category": "traits"
+        },
+        {
+          "id": "eagle",
+          "name": "Eagle",
+          "level": 14,
+          "category": "traits",
+          "toggle": {
+            "grants": {
+              "speed": {
+                "fly": "walk"
+              }
+            }
+          }
+        },
+        {
+          "id": "elk",
+          "name": "Elk",
+          "level": 14,
+          "category": "bonus_actions",
+          "action": {
+            "save": {
+              "ability": "str",
+              "dc": "8 + str_mod + pb",
+              "on_success": "none",
+              "damage": [
+                {
+                  "dice": "1d12",
+                  "bonus": "str_mod",
+                  "type": "bludgeoning"
+                }
+              ],
+              "conditions": [
+                "prone"
+              ]
+            }
+          }
+        },
+        {
+          "id": "wolf",
+          "name": "Wolf",
+          "level": 14,
+          "category": "bonus_actions"
+        }
+      ],
+      "resources": []
+    },
+    "problems": [
+      "feature 'Eagle': name used twice",
+      "feature 'Elk': name used twice"
+    ],
+    "tokens": 30433,
+    "tries": 2,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-26T17:47:04+00:00"
+  },
+  "barbarian-phb:battlerager-scag": {
+    "label": "Barbarian (PHB) · Path of the Battlerager (SCAG)",
+    "hash": "c3b5d6b29eca37e8",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "battlerager-armor",
+          "name": "Battlerager Armor",
+          "level": 3,
+          "category": "bonus_actions",
+          "action": {
+            "range": "5 feet",
+            "attack": {
+              "kind": "melee",
+              "bonus": "pb + str_mod",
+              "damage": [
+                {
+                  "dice": "1d4",
+                  "bonus": "str_mod",
+                  "type": "piercing"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "reckless-abandon",
+          "name": "Reckless Abandon",
+          "level": 6,
+          "category": "traits",
+          "action": {
+            "temp_hp": "max(1, con_mod)"
+          }
+        },
+        {
+          "id": "battlerager-charge",
+          "name": "Battlerager Charge",
+          "level": 10,
+          "category": "bonus_actions"
+        },
+        {
+          "id": "spiked-retribution",
+          "name": "Spiked Retribution",
+          "level": 14,
+          "category": "traits",
+          "action": {
+            "damage": [
+              {
+                "bonus": 3,
+                "type": "piercing",
+                "condition": "when a creature within 5 feet hits you with a melee attack, if you are raging, aren't incapacitated, and are wearing spiked armor"
+              }
+            ]
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13121,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-26T17:47:40+00:00"
+  },
+  "barbarian-phb:ancestral-guardian-xge": {
+    "label": "Barbarian (PHB) · Path of the Ancestral Guardian (XGE)",
+    "hash": "28243b9172e25d60",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "spirit-shield",
+          "name": "Spirit Shield",
+          "level": 6,
+          "category": "reactions",
+          "action": {
+            "range": "30 feet"
+          }
+        },
+        {
+          "id": "consult-the-spirits",
+          "name": "Consult the Spirits",
+          "level": 10,
+          "category": "traits"
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 12508,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-26T17:47:51+00:00"
+  },
+  "barbarian-phb:storm-herald-xge": {
+    "label": "Barbarian (PHB) · Path of the Storm Herald (XGE)",
+    "hash": "debb5d8b383d959f",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "desert",
+          "name": "Desert",
+          "level": 3,
+          "category": "bonus_actions",
+          "action": {
+            "area": "10-foot aura",
+            "damage": [
+              {
+                "bonus": {
+                  "1": 2,
+                  "5": 3,
+                  "10": 4,
+                  "15": 5,
+                  "20": 6
+                },
+                "type": "fire"
+              }
+            ]
+          }
+        },
+        {
+          "id": "sea",
+          "name": "Sea",
+          "level": 3,
+          "category": "bonus_actions",
+          "action": {
+            "area": "10-foot aura",
+            "save": {
+              "ability": "dex",
+              "dc": "8 + pb + con_mod",
+              "on_success": "half",
+              "damage": [
+                {
+                  "dice": {
+                    "1": "1d6",
+                    "10": "2d6",
+                    "15": "3d6",
+                    "20": "4d6"
+                  },
+                  "type": "lightning"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "tundra",
+          "name": "Tundra",
+          "level": 3,
+          "category": "bonus_actions",
+          "action": {
+            "area": "10-foot aura",
+            "temp_hp": {
+              "1": 2,
+              "5": 3,
+              "10": 4,
+              "15": 5,
+              "20": 6
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 29462,
+    "tries": 2,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-26T17:47:59+00:00"
+  },
+  "barbarian-phb:zealot-xge": {
+    "label": "Barbarian (PHB) · Path of the Zealot (XGE)",
+    "hash": "982ea892d68fff86",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "divine-fury",
+          "name": "Divine Fury",
+          "level": 3,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": "1d6",
+                  "bonus": "class_level / 2",
+                  "type": "necrotic",
+                  "condition": "if necrotic chosen"
+                },
+                {
+                  "dice": "1d6",
+                  "bonus": "class_level / 2",
+                  "type": "radiant",
+                  "condition": "if radiant chosen"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "zealous-presence",
+          "name": "Zealous Presence",
+          "level": 10,
+          "category": "bonus_actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "action": {
+            "range": "60 feet"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 12847,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-26T17:48:34+00:00"
+  },
+  "barbarian-phb:beast-tce": {
+    "label": "Barbarian (PHB) · Path of the Beast (TCE)",
+    "hash": "03091a7c1a6950f5",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "bite",
+          "name": "Bite",
+          "level": 3,
+          "category": "actions",
+          "action": {
+            "heal": "pb",
+            "attack": {
+              "kind": "melee",
+              "bonus": "str_mod + pb",
+              "damage": [
+                {
+                  "dice": "1d8",
+                  "bonus": "str_mod",
+                  "type": "piercing"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "claws",
+          "name": "Claws",
+          "level": 3,
+          "category": "actions",
+          "action": {
+            "attack": {
+              "kind": "melee",
+              "bonus": "str_mod + pb",
+              "damage": [
+                {
+                  "dice": "1d6",
+                  "bonus": "str_mod",
+                  "type": "slashing"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "tail",
+          "name": "Tail",
+          "level": 3,
+          "category": "actions",
+          "action": {
+            "attack": {
+              "kind": "melee",
+              "bonus": "str_mod + pb",
+              "damage": [
+                {
+                  "dice": "1d8",
+                  "bonus": "str_mod",
+                  "type": "piercing"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "infectious-fury",
+          "name": "Infectious Fury",
+          "level": 10,
+          "category": "traits",
+          "uses": {
+            "max": "pb",
+            "reset": "long"
+          },
+          "action": {
+            "attack": {
+              "kind": "melee"
+            },
+            "save": {
+              "ability": "wis",
+              "dc": "8 + con_mod + pb",
+              "on_success": "none",
+              "damage": [
+                {
+                  "dice": "2d12",
+                  "type": "psychic"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "call-the-hunt",
+          "name": "Call the Hunt",
+          "level": 14,
+          "category": "traits",
+          "uses": {
+            "max": "pb",
+            "reset": "long"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 14612,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-26T17:48:43+00:00"
+  },
+  "barbarian-phb:wild-magic-tce": {
+    "label": "Barbarian (PHB) · Path of Wild Magic (TCE)",
+    "hash": "e35fcf7a3f91ec50",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "magic-awareness",
+          "name": "Magic Awareness",
+          "level": 3,
+          "category": "actions",
+          "uses": {
+            "max": "pb",
+            "reset": "long"
+          },
+          "action": {
+            "range": "60 feet"
+          }
+        },
+        {
+          "id": "bolstering-magic",
+          "name": "Bolstering Magic",
+          "level": 6,
+          "category": "actions",
+          "uses": {
+            "max": "pb",
+            "reset": "long"
+          },
+          "action": {
+            "range": "touch"
+          }
+        },
+        {
+          "id": "unstable-backlash",
+          "name": "Unstable Backlash",
+          "level": 10,
+          "category": "reactions"
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13319,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-26T17:49:01+00:00"
+  },
+  "barbarian-phb:giant-bgg": {
+    "label": "Barbarian (PHB) · Path of the Giant (BGG)",
+    "hash": "0bcc766f35c5e322",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "crushing-throw",
+          "name": "Crushing Throw",
+          "level": 3,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "ranged",
+              "damage": [
+                {
+                  "bonus": "rage_damage",
+                  "type": "weapon",
+                  "condition": "while raging, on a ranged attack with a thrown weapon using Strength"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "elemental-cleaver",
+          "name": "Elemental Cleaver",
+          "level": 6,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": {
+                    "1": "1d6",
+                    "14": "2d6"
+                  },
+                  "type": "acid",
+                  "condition": "if acid is chosen, while wielding the infused weapon during your rage"
+                },
+                {
+                  "dice": {
+                    "1": "1d6",
+                    "14": "2d6"
+                  },
+                  "type": "cold",
+                  "condition": "if cold is chosen, while wielding the infused weapon during your rage"
+                },
+                {
+                  "dice": {
+                    "1": "1d6",
+                    "14": "2d6"
+                  },
+                  "type": "fire",
+                  "condition": "if fire is chosen, while wielding the infused weapon during your rage"
+                },
+                {
+                  "dice": {
+                    "1": "1d6",
+                    "14": "2d6"
+                  },
+                  "type": "thunder",
+                  "condition": "if thunder is chosen, while wielding the infused weapon during your rage"
+                },
+                {
+                  "dice": {
+                    "1": "1d6",
+                    "14": "2d6"
+                  },
+                  "type": "lightning",
+                  "condition": "if lightning is chosen, while wielding the infused weapon during your rage"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "mighty-impel",
+          "name": "Mighty Impel",
+          "level": 10,
+          "category": "bonus_actions",
+          "action": {
+            "range": "within your reach",
+            "save": {
+              "ability": "str",
+              "dc": "8 + pb + str_mod",
+              "on_success": "none"
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 29073,
+    "tries": 2,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-26T17:49:10+00:00"
   }
 }

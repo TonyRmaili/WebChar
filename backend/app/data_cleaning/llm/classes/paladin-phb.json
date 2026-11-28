@@ -352,5 +352,702 @@
     "reviewed": false,
     "reasoning": "medium",
     "at": "2026-11-19T11:35:08+00:00"
+  },
+  "paladin-phb:martial-versatility": {
+    "label": "Paladin (PHB) · Martial Versatility",
+    "hash": "46b8a1a5456539c2",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11131,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:05:36+00:00"
+  },
+  "paladin-phb:ancients-phb": {
+    "label": "Paladin (PHB) · Oath of the Ancients (PHB)",
+    "hash": "d909e908842804d5",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "nature-s-wrath",
+          "name": "Nature's Wrath",
+          "level": 3,
+          "category": "actions",
+          "action": {
+            "range": "10 feet"
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "turn-the-faithless",
+          "name": "Turn the Faithless",
+          "level": 3,
+          "category": "actions",
+          "action": {
+            "range": "30 feet",
+            "save": {
+              "ability": "wis",
+              "on_success": "none"
+            }
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "undying-sentinel",
+          "name": "Undying Sentinel",
+          "level": 15,
+          "category": "traits",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          }
+        },
+        {
+          "id": "elder-champion",
+          "name": "Elder Champion",
+          "level": 20,
+          "category": "actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "toggle": {
+            "uses_charge": true
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13251,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:05:38+00:00"
+  },
+  "paladin-phb:vengeance-phb": {
+    "label": "Paladin (PHB) · Oath of Vengeance (PHB)",
+    "hash": "e16de4334a8c0c17",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "abjure-enemy",
+          "name": "Abjure Enemy",
+          "level": 3,
+          "category": "actions",
+          "action": {
+            "range": "60 feet",
+            "save": {
+              "ability": "wis",
+              "on_success": "none",
+              "conditions": [
+                "frightened"
+              ]
+            }
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "vow-of-enmity",
+          "name": "Vow of Enmity",
+          "level": 3,
+          "category": "bonus_actions",
+          "action": {
+            "range": "10 feet"
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "relentless-avenger",
+          "name": "Relentless Avenger",
+          "level": 7,
+          "category": "reactions"
+        },
+        {
+          "id": "soul-of-vengeance",
+          "name": "Soul of Vengeance",
+          "level": 15,
+          "category": "reactions"
+        },
+        {
+          "id": "avenging-angel",
+          "name": "Avenging Angel",
+          "level": 20,
+          "category": "actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "toggle": {
+            "uses_charge": true,
+            "grants": {
+              "speed": {
+                "fly": 60
+              }
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13518,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:05:48+00:00"
+  },
+  "paladin-phb:oathbreaker-dmg": {
+    "label": "Paladin (PHB) · Oathbreaker (DMG)",
+    "hash": "aedbeb38abe61374",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "control-undead",
+          "name": "Control Undead",
+          "level": 3,
+          "category": "actions",
+          "action": {
+            "range": "30 feet",
+            "save": {
+              "ability": "wis",
+              "on_success": "none"
+            }
+          }
+        },
+        {
+          "id": "dreadful-aspect",
+          "name": "Dreadful Aspect",
+          "level": 3,
+          "category": "actions",
+          "action": {
+            "range": "30 feet",
+            "save": {
+              "ability": "wis",
+              "on_success": "none",
+              "conditions": [
+                "frightened"
+              ]
+            }
+          }
+        },
+        {
+          "id": "aura-of-hate",
+          "name": "Aura of Hate",
+          "level": 7,
+          "category": "traits",
+          "modifiers": [
+            {
+              "target": "damage",
+              "add": "max(1, cha_mod)"
+            }
+          ]
+        },
+        {
+          "id": "supernatural-resistance",
+          "name": "Supernatural Resistance",
+          "level": 15,
+          "category": "traits",
+          "grants": {
+            "defenses": {
+              "resist": [
+                "bludgeoning",
+                "piercing",
+                "slashing"
+              ]
+            }
+          }
+        },
+        {
+          "id": "dread-lord",
+          "name": "Dread Lord",
+          "level": 20,
+          "category": "actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "action": {
+            "attack": {
+              "kind": "spell",
+              "bonus": "pb + spell_mod",
+              "damage": [
+                {
+                  "dice": "3d10",
+                  "bonus": "cha_mod",
+                  "type": "necrotic"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 14070,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:06:00+00:00"
+  },
+  "paladin-phb:crown-scag": {
+    "label": "Paladin (PHB) · Oath of the Crown (SCAG)",
+    "hash": "3ae16c86b168c0cc",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "champion-challenge",
+          "name": "Champion Challenge",
+          "level": 3,
+          "category": "bonus_actions",
+          "action": {
+            "range": "30 feet",
+            "save": {
+              "ability": "wis",
+              "on_success": "none"
+            }
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "turn-the-tide",
+          "name": "Turn the Tide",
+          "level": 3,
+          "category": "bonus_actions",
+          "action": {
+            "range": "30 feet",
+            "heal": "max(1, 1d6 + cha_mod)"
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "divine-allegiance",
+          "name": "Divine Allegiance",
+          "level": 7,
+          "category": "reactions"
+        },
+        {
+          "id": "exalted-champion",
+          "name": "Exalted Champion",
+          "level": 20,
+          "category": "actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "toggle": {
+            "uses_charge": true,
+            "grants": {
+              "defenses": {
+                "resist": [
+                  "weapon"
+                ]
+              }
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13467,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:06:17+00:00"
+  },
+  "paladin-phb:conquest-xge": {
+    "label": "Paladin (PHB) · Oath of Conquest (XGE)",
+    "hash": "4bc28f734190c97f",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "conquering-presence",
+          "name": "Conquering Presence",
+          "level": 3,
+          "category": "actions",
+          "action": {
+            "range": "30 feet",
+            "save": {
+              "ability": "wis",
+              "on_success": "none",
+              "conditions": [
+                "frightened"
+              ]
+            }
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "guided-strike",
+          "name": "Guided Strike",
+          "level": 3,
+          "category": "traits",
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "scornful-rebuke",
+          "name": "Scornful Rebuke",
+          "level": 15,
+          "category": "traits",
+          "action": {
+            "damage": [
+              {
+                "bonus": "max(1, cha_mod)",
+                "type": "psychic",
+                "condition": "when a creature hits you with an attack, if you're not incapacitated"
+              }
+            ]
+          }
+        },
+        {
+          "id": "invincible-conqueror",
+          "name": "Invincible Conqueror",
+          "level": 20,
+          "category": "actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "toggle": {
+            "uses_charge": true,
+            "grants": {
+              "defenses": {
+                "resist": [
+                  "acid",
+                  "bludgeoning",
+                  "cold",
+                  "fire",
+                  "force",
+                  "lightning",
+                  "necrotic",
+                  "piercing",
+                  "poison",
+                  "psychic",
+                  "radiant",
+                  "slashing",
+                  "thunder",
+                  "weapon"
+                ]
+              }
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13955,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:06:30+00:00"
+  },
+  "paladin-phb:redemption-xge": {
+    "label": "Paladin (PHB) · Oath of Redemption (XGE)",
+    "hash": "1dd7a0e483dc99cd",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "emissary-of-peace",
+          "name": "Emissary of Peace",
+          "level": 3,
+          "category": "bonus_actions",
+          "toggle": {
+            "modifiers": [
+              {
+                "target": "check.persuasion",
+                "add": 5
+              }
+            ]
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "rebuke-the-violent",
+          "name": "Rebuke the Violent",
+          "level": 3,
+          "category": "reactions",
+          "action": {
+            "range": "30 feet",
+            "save": {
+              "ability": "wis",
+              "on_success": "half"
+            }
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "aura-of-the-guardian",
+          "name": "Aura of the Guardian",
+          "level": 7,
+          "category": "reactions",
+          "action": {
+            "range": "10 feet"
+          }
+        },
+        {
+          "id": "protective-spirit",
+          "name": "Protective Spirit",
+          "level": 15,
+          "category": "traits",
+          "action": {
+            "heal": "1d6 + class_level / 2"
+          }
+        },
+        {
+          "id": "emissary-of-redemption",
+          "name": "Emissary of Redemption",
+          "level": 20,
+          "category": "traits",
+          "grants": {
+            "defenses": {
+              "resist": [
+                "acid",
+                "bludgeoning",
+                "cold",
+                "fire",
+                "force",
+                "lightning",
+                "necrotic",
+                "piercing",
+                "poison",
+                "psychic",
+                "radiant",
+                "slashing",
+                "thunder",
+                "weapon"
+              ]
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 14092,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:06:46+00:00"
+  },
+  "paladin-phb:glory-tce": {
+    "label": "Paladin (PHB) · Oath of Glory (TCE)",
+    "hash": "14c439932fcf9178",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "peerless-athlete",
+          "name": "Peerless Athlete",
+          "level": 3,
+          "category": "bonus_actions",
+          "toggle": true,
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "inspiring-smite",
+          "name": "Inspiring Smite",
+          "level": 3,
+          "category": "bonus_actions",
+          "action": {
+            "range": "30 feet",
+            "temp_hp": "2d8 + class_level"
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "aura-of-alacrity",
+          "name": "Aura of Alacrity",
+          "level": 7,
+          "category": "traits",
+          "modifiers": [
+            {
+              "target": "speed.walk",
+              "add": 10
+            }
+          ]
+        },
+        {
+          "id": "glorious-defense",
+          "name": "Glorious Defense",
+          "level": 15,
+          "category": "reactions",
+          "uses": {
+            "max": "max(1, cha_mod)",
+            "reset": "long"
+          }
+        },
+        {
+          "id": "living-legend",
+          "name": "Living Legend",
+          "level": 20,
+          "category": "bonus_actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "toggle": {
+            "uses_charge": true
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13716,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:07:02+00:00"
+  },
+  "paladin-phb:watchers-tce": {
+    "label": "Paladin (PHB) · Oath of the Watchers (TCE)",
+    "hash": "0819f37469520976",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "watcher-s-will",
+          "name": "Watcher's Will",
+          "level": 3,
+          "category": "actions",
+          "action": {
+            "range": "30 feet"
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "abjure-the-extraplanar",
+          "name": "Abjure the Extraplanar",
+          "level": 3,
+          "category": "actions",
+          "action": {
+            "range": "30 feet",
+            "save": {
+              "ability": "wis",
+              "on_success": "none"
+            }
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "aura-of-the-sentinel",
+          "name": "Aura of the Sentinel",
+          "level": 7,
+          "category": "traits",
+          "modifiers": [
+            {
+              "target": "initiative",
+              "add": "pb"
+            }
+          ]
+        },
+        {
+          "id": "vigilant-rebuke",
+          "name": "Vigilant Rebuke",
+          "level": 15,
+          "category": "reactions",
+          "action": {
+            "damage": [
+              {
+                "dice": "2d8",
+                "bonus": "cha_mod",
+                "type": "force"
+              }
+            ]
+          }
+        },
+        {
+          "id": "mortal-bulwark",
+          "name": "Mortal Bulwark",
+          "level": 20,
+          "category": "bonus_actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "action": {
+            "attack": {
+              "kind": "any"
+            },
+            "save": {
+              "ability": "cha",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "none"
+            }
+          },
+          "toggle": {
+            "uses_charge": true,
+            "grants": {
+              "senses": {
+                "truesight": 120
+              }
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13970,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:07:15+00:00"
   }
 }

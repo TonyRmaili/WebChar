@@ -180,5 +180,900 @@
             }
         ],
         "resources": []
+    },
+    {
+        "id": "paladin-xphb:glory-xphb",
+        "kind": "subclass",
+        "name": "Oath of Glory",
+        "source": "XPHB",
+        "edition": "one",
+        "text": "*Strive for the Heights of Heroism*\n\nPaladins who take the Oath of Glory believe they and their companions are destined to achieve glory through deeds of heroism. They train diligently and encourage their companions, so they're all ready when destiny calls.\n\nThese paladins share the following tenets:\n\n- Endeavor to be known by your deeds.\n- Face hardships with courage.\n- Inspire others to strive for glory.",
+        "class_id": "paladin-xphb",
+        "short_name": "Glory",
+        "grants": {
+            "spells": [
+                {
+                    "spell": "guiding-bolt-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "heroism-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "enhance-ability-xphb",
+                    "how": "prepared",
+                    "at": 5
+                },
+                {
+                    "spell": "magic-weapon-xphb",
+                    "how": "prepared",
+                    "at": 5
+                },
+                {
+                    "spell": "haste-xphb",
+                    "how": "prepared",
+                    "at": 9
+                },
+                {
+                    "spell": "protection-from-energy-xphb",
+                    "how": "prepared",
+                    "at": 9
+                },
+                {
+                    "spell": "compulsion-xphb",
+                    "how": "prepared",
+                    "at": 13
+                },
+                {
+                    "spell": "freedom-of-movement-xphb",
+                    "how": "prepared",
+                    "at": 13
+                },
+                {
+                    "spell": "legend-lore-xphb",
+                    "how": "prepared",
+                    "at": 17
+                },
+                {
+                    "spell": "yolandes-regal-presence-xphb",
+                    "how": "prepared",
+                    "at": 17
+                }
+            ]
+        },
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "paladin-xphb:glory-xphb:oath-of-glory-spells",
+                    "paladin-xphb:glory-xphb:inspiring-smite",
+                    "paladin-xphb:glory-xphb:peerless-athlete"
+                ]
+            },
+            {
+                "level": 7,
+                "features": [
+                    "paladin-xphb:glory-xphb:aura-of-alacrity"
+                ]
+            },
+            {
+                "level": 15,
+                "features": [
+                    "paladin-xphb:glory-xphb:glorious-defense"
+                ]
+            },
+            {
+                "level": 20,
+                "features": [
+                    "paladin-xphb:glory-xphb:living-legend"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "paladin-xphb:glory-xphb:oath-of-glory-spells",
+                "name": "Oath of Glory Spells",
+                "level": 3,
+                "text": "The magic of your oath ensures you always have certain spells ready; when you reach a Paladin level specified in the Oath of Glory Spells table, you thereafter always have the listed spells prepared.\n\nOath of Glory Spells\n\nPaladin Level | Spells\n--- | ---\n3 | Guiding Bolt, Heroism\n5 | Enhance Ability, Magic Weapon\n9 | Haste, Protection from Energy\n13 | Compulsion, Freedom of Movement\n17 | Legend Lore, Yolande's Regal Presence",
+                "category": "traits"
+            },
+            {
+                "id": "paladin-xphb:glory-xphb:inspiring-smite",
+                "name": "Inspiring Smite",
+                "level": 3,
+                "text": "Immediately after you cast Divine Smite, you can expend one use of your Channel Divinity and distribute Temporary Hit Points to creatures of your choice within 30 feet of yourself, which can include you. The total number of Temporary Hit Points equals 2d8 plus your Paladin level, divided among the chosen creatures however you like.",
+                "consumes": {
+                    "resource": "channel_divinity",
+                    "amount": 1
+                },
+                "category": "traits",
+                "action": {
+                    "range": "30 feet",
+                    "temp_hp": "2d8 + class_level"
+                }
+            },
+            {
+                "id": "paladin-xphb:glory-xphb:peerless-athlete",
+                "name": "Peerless Athlete",
+                "level": 3,
+                "text": "As a Bonus Action, you can expend one use of your Channel Divinity to augment your athleticism. For 1 hour, you have Advantage on Strength (Athletics) and Dexterity (Acrobatics) checks, and the distance of your Long and High Jumps increases by 10 feet (this extra distance costs movement as normal).",
+                "consumes": {
+                    "resource": "channel_divinity",
+                    "amount": 1
+                },
+                "category": "bonus_actions",
+                "toggle": true
+            },
+            {
+                "id": "paladin-xphb:glory-xphb:aura-of-alacrity",
+                "name": "Aura of Alacrity",
+                "level": 7,
+                "text": "Your Speed increases by 10 feet.\n\nIn addition, whenever an ally enters your Aura of Protection for the first time on a turn or starts their turn there, the ally's Speed increases by 10 feet until the end of their next turn.",
+                "category": "traits",
+                "modifiers": [
+                    {
+                        "target": "speed.walk",
+                        "add": 10
+                    }
+                ]
+            },
+            {
+                "id": "paladin-xphb:glory-xphb:glorious-defense",
+                "name": "Glorious Defense",
+                "level": 15,
+                "text": "You can turn defense into a sudden strike. When you or another creature you can see within 10 feet of you is hit by an attack roll, you can take a Reaction to grant a bonus to the target's AC against that attack, potentially causing it to miss. The bonus equals your Charisma modifier (minimum of +1). If the attack misses, you can make one attack with a weapon against the attacker as part of this Reaction if the attacker is within your weapon's range.\n\nYou can use this feature a number of times equal to your Charisma modifier (minimum of once), and you regain all expended uses when you finish a Long Rest.",
+                "category": "reactions",
+                "uses": {
+                    "max": "max(1, cha_mod)",
+                    "reset": "long"
+                },
+                "modifiers": [
+                    {
+                        "target": "ac",
+                        "add": "max(1, cha_mod)"
+                    }
+                ]
+            },
+            {
+                "id": "paladin-xphb:glory-xphb:living-legend",
+                "name": "Living Legend",
+                "level": 20,
+                "text": "You can empower yourself with the legends—whether true or exaggerated—of your great deeds. As a Bonus Action, you gain the benefits below for 10 minutes. Once you use this feature, you can't use it again until you finish a Long Rest. You can also restore your use of it by expending a level 5 spell slot (no action required).\n\n**Charismatic.** You are blessed with an otherworldly presence and have Advantage on all Charisma checks.\n\n**Saving Throw Reroll.** If you fail a saving throw, you can take a Reaction to reroll it. You must use this new roll.\n\n**Unerring Strike.** Once on each of your turns when you make an attack roll with a weapon and miss, you can cause that attack to hit instead.",
+                "category": "bonus_actions",
+                "uses": {
+                    "max": 1,
+                    "reset": "long"
+                },
+                "toggle": {
+                    "uses_charge": true
+                }
+            }
+        ],
+        "resources": []
+    },
+    {
+        "id": "paladin-xphb:ancients-xphb",
+        "kind": "subclass",
+        "name": "Oath of the Ancients",
+        "source": "XPHB",
+        "edition": "one",
+        "text": "*Preserve Life and Light in the World*\n\nThe Oath of the Ancients is as old as the first elves. Paladins who swear this oath cherish the light; they love the beautiful and life-giving things of the world more than any principles of honor, courage, and justice. They often adorn their armor and clothing with images of growing things—leaves, antlers, or flowers—to reflect their commitment to preserving life and light.\n\nThese paladins share the following tenets:\n\n- Kindle the light of hope.\n- Shelter life.\n- Delight in art and laughter.",
+        "class_id": "paladin-xphb",
+        "short_name": "Ancients",
+        "grants": {
+            "spells": [
+                {
+                    "spell": "ensnaring-strike-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "speak-with-animals-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "misty-step-xphb",
+                    "how": "prepared",
+                    "at": 5
+                },
+                {
+                    "spell": "moonbeam-xphb",
+                    "how": "prepared",
+                    "at": 5
+                },
+                {
+                    "spell": "plant-growth-xphb",
+                    "how": "prepared",
+                    "at": 9
+                },
+                {
+                    "spell": "protection-from-energy-xphb",
+                    "how": "prepared",
+                    "at": 9
+                },
+                {
+                    "spell": "ice-storm-xphb",
+                    "how": "prepared",
+                    "at": 13
+                },
+                {
+                    "spell": "stoneskin-xphb",
+                    "how": "prepared",
+                    "at": 13
+                },
+                {
+                    "spell": "commune-with-nature-xphb",
+                    "how": "prepared",
+                    "at": 17
+                },
+                {
+                    "spell": "tree-stride-xphb",
+                    "how": "prepared",
+                    "at": 17
+                }
+            ]
+        },
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "paladin-xphb:ancients-xphb:oath-of-the-ancients-spells",
+                    "paladin-xphb:ancients-xphb:natures-wrath"
+                ]
+            },
+            {
+                "level": 7,
+                "features": [
+                    "paladin-xphb:ancients-xphb:aura-of-warding"
+                ]
+            },
+            {
+                "level": 15,
+                "features": [
+                    "paladin-xphb:ancients-xphb:undying-sentinel"
+                ]
+            },
+            {
+                "level": 20,
+                "features": [
+                    "paladin-xphb:ancients-xphb:elder-champion"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "paladin-xphb:ancients-xphb:oath-of-the-ancients-spells",
+                "name": "Oath of the Ancients Spells",
+                "level": 3,
+                "text": "The magic of your oath ensures you always have certain spells ready; when you reach a Paladin level specified in the Oath of the Ancients Spells table, you thereafter always have the listed spells prepared.\n\nOath of the Ancients Spells\n\nPaladin Level | Spells\n--- | ---\n3 | Ensnaring Strike, Speak with Animals\n5 | Misty Step, Moonbeam\n9 | Plant Growth, Protection from Energy\n13 | Ice Storm, Stoneskin\n17 | Commune with Nature, Tree Stride",
+                "category": "traits"
+            },
+            {
+                "id": "paladin-xphb:ancients-xphb:natures-wrath",
+                "name": "Nature's Wrath",
+                "level": 3,
+                "text": "As a Magic action, you can expend one use of your Channel Divinity to conjure spectral vines around nearby creatures. Each creature of your choice that you can see within 15 feet of yourself must succeed on a Strength saving throw or have the Restrained condition for 1 minute. A Restrained creature repeats the save at the end of each of its turns, ending the effect on itself on a success.",
+                "consumes": {
+                    "resource": "channel_divinity",
+                    "amount": 1
+                },
+                "category": "actions",
+                "action": {
+                    "range": "15 feet",
+                    "save": {
+                        "ability": "str",
+                        "on_success": "none",
+                        "conditions": [
+                            "restrained"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "paladin-xphb:ancients-xphb:aura-of-warding",
+                "name": "Aura of Warding",
+                "level": 7,
+                "text": "Ancient magic lies so heavily upon you that it forms an eldritch ward, blunting energy from beyond the Material Plane; you and your allies have Resistance to Necrotic, Psychic, and Radiant damage while in your Aura of Protection.",
+                "category": "traits",
+                "grants": {
+                    "defenses": {
+                        "resist": [
+                            "necrotic",
+                            "psychic",
+                            "radiant"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "paladin-xphb:ancients-xphb:undying-sentinel",
+                "name": "Undying Sentinel",
+                "level": 15,
+                "text": "When you are reduced to 0 Hit Points and not killed outright, you can drop to 1 Hit Point instead, and you regain a number of Hit Points equal to three times your Paladin level. Once you use this feature, you can't do so again until you finish a Long Rest.\n\nAdditionally, you can't be aged magically, and you cease visibly aging.",
+                "category": "traits",
+                "uses": {
+                    "max": 1,
+                    "reset": "long"
+                },
+                "action": {
+                    "heal": "3 * class_level"
+                }
+            },
+            {
+                "id": "paladin-xphb:ancients-xphb:elder-champion",
+                "name": "Elder Champion",
+                "level": 20,
+                "text": "As a Bonus Action, you can imbue your Aura of Protection with primal power, granting the benefits below for 1 minute or until you end them (no action required). Once you use this feature, you can't use it again until you finish a Long Rest. You can also restore your use of it by expending a level 5 spell slot (no action required).\n\n**Diminish Defiance.** Enemies in the aura have Disadvantage on saving throws against your spells and Channel Divinity options.\n\n**Regeneration.** At the start of each of your turns, you regain 10 Hit Points.\n\n**Swift Spells.** Whenever you cast a spell that has a casting time of an action, you can cast it using a Bonus Action instead.",
+                "category": "bonus_actions",
+                "uses": {
+                    "max": 1,
+                    "reset": "long"
+                },
+                "toggle": {
+                    "uses_charge": true
+                }
+            }
+        ],
+        "resources": []
+    },
+    {
+        "id": "paladin-xphb:vengeance-xphb",
+        "kind": "subclass",
+        "name": "Oath of Vengeance",
+        "source": "XPHB",
+        "edition": "one",
+        "text": "*Punish Evildoers at Any Cost*\n\nThe Oath of Vengeance is a solemn commitment to punish those who have committed grievously evil acts. When evil armies slaughter helpless villagers, when a tyrant defies the will of the gods, when a thieves' guild grows too violent, when a dragon rampages through the countryside—at times like these, paladins arise and swear an Oath of Vengeance to set right what has gone wrong.\n\nThese paladins share the following tenets:\n\n- Show the wicked no mercy.\n- Fight injustice and its causes.\n- Aid those harmed by injustice.",
+        "class_id": "paladin-xphb",
+        "short_name": "Vengeance",
+        "grants": {
+            "spells": [
+                {
+                    "spell": "bane-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "hunters-mark-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "hold-person-xphb",
+                    "how": "prepared",
+                    "at": 5
+                },
+                {
+                    "spell": "misty-step-xphb",
+                    "how": "prepared",
+                    "at": 5
+                },
+                {
+                    "spell": "haste-xphb",
+                    "how": "prepared",
+                    "at": 9
+                },
+                {
+                    "spell": "protection-from-energy-xphb",
+                    "how": "prepared",
+                    "at": 9
+                },
+                {
+                    "spell": "banishment-xphb",
+                    "how": "prepared",
+                    "at": 13
+                },
+                {
+                    "spell": "dimension-door-xphb",
+                    "how": "prepared",
+                    "at": 13
+                },
+                {
+                    "spell": "hold-monster-xphb",
+                    "how": "prepared",
+                    "at": 17
+                },
+                {
+                    "spell": "scrying-xphb",
+                    "how": "prepared",
+                    "at": 17
+                }
+            ]
+        },
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "paladin-xphb:vengeance-xphb:oath-of-vengeance-spells",
+                    "paladin-xphb:vengeance-xphb:vow-of-enmity"
+                ]
+            },
+            {
+                "level": 7,
+                "features": [
+                    "paladin-xphb:vengeance-xphb:relentless-avenger"
+                ]
+            },
+            {
+                "level": 15,
+                "features": [
+                    "paladin-xphb:vengeance-xphb:soul-of-vengeance"
+                ]
+            },
+            {
+                "level": 20,
+                "features": [
+                    "paladin-xphb:vengeance-xphb:avenging-angel"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "paladin-xphb:vengeance-xphb:oath-of-vengeance-spells",
+                "name": "Oath of Vengeance Spells",
+                "level": 3,
+                "text": "The magic of your oath ensures you always have certain spells ready; when you reach a Paladin level specified in the Oath of Vengeance Spells table, you thereafter always have the listed spells prepared.\n\nOath of Vengeance Spells\n\nPaladin Level | Spells\n--- | ---\n3 | Bane, Hunter's Mark\n5 | Hold Person, Misty Step\n9 | Haste, Protection from Energy\n13 | Banishment, Dimension Door\n17 | Hold Monster, Scrying",
+                "category": "traits"
+            },
+            {
+                "id": "paladin-xphb:vengeance-xphb:vow-of-enmity",
+                "name": "Vow of Enmity",
+                "level": 3,
+                "text": "When you take the Attack action, you can expend one use of your Channel Divinity to utter a vow of enmity against a creature you can see within 30 feet of yourself. You have Advantage on attack rolls against the creature for 1 minute or until you use this feature again.\n\nIf the creature drops to 0 Hit Points before the vow ends, you can transfer the vow to a different creature within 30 feet of yourself (no action required).",
+                "consumes": {
+                    "resource": "channel_divinity",
+                    "amount": 1
+                },
+                "category": "traits",
+                "toggle": true
+            },
+            {
+                "id": "paladin-xphb:vengeance-xphb:relentless-avenger",
+                "name": "Relentless Avenger",
+                "level": 7,
+                "text": "Your supernatural focus helps you close off a foe's retreat. When you hit a creature with an Opportunity Attack, you can reduce the creature's Speed to 0 until the end of the current turn. You can then move up to half your Speed as part of the same Reaction. This movement doesn't provoke Opportunity Attacks.",
+                "category": "reactions"
+            },
+            {
+                "id": "paladin-xphb:vengeance-xphb:soul-of-vengeance",
+                "name": "Soul of Vengeance",
+                "level": 15,
+                "text": "Immediately after a creature under the effect of your Vow of Enmity hits or misses with an attack roll, you can take a Reaction to make a melee attack against that creature if it's within range.",
+                "category": "reactions"
+            },
+            {
+                "id": "paladin-xphb:vengeance-xphb:avenging-angel",
+                "name": "Avenging Angel",
+                "level": 20,
+                "text": "As a Bonus Action, you gain the benefits below for 10 minutes or until you end them (no action required). Once you use this feature, you can't use it again until you finish a Long Rest. You can also restore your use of it by expending a level 5 spell slot (no action required).\n\n**Flight.** You sprout spectral wings on your back, have a Fly Speed of 60 feet, and can hover.\n\n**Frightful Aura.** Whenever an enemy starts its turn in your Aura of Protection, that creature must succeed on a Wisdom saving throw or have the Frightened condition for 1 minute or until it takes any damage. Attack rolls against the Frightened creature have Advantage.",
+                "category": "bonus_actions",
+                "uses": {
+                    "max": 1,
+                    "reset": "long"
+                },
+                "toggle": {
+                    "uses_charge": true,
+                    "grants": {
+                        "speed": {
+                            "fly": 60
+                        }
+                    }
+                }
+            }
+        ],
+        "resources": []
+    },
+    {
+        "id": "paladin-xphb:noble-genies-frhof",
+        "kind": "subclass",
+        "name": "Oath of the Noble Genies",
+        "source": "FRHoF",
+        "edition": "one",
+        "text": "*Brandish the Elemental Splendor of Genies*\n\nPaladins sworn to the Oath of the Noble Genies revere the forces of the Elemental Planes. Through taking this oath, Paladins draw power from the four different types of genies—dao, masters of earth; djinn, masters of air; efreet, masters of fire; and marids, masters of water. In Faerûn, many Paladins who swear this oath hail from Calimshan, a land teeming with genies.\n\nPaladins who swear this oath often undertake quests that take them all over the Realms and across the multiverse—including the Elemental Planes. These paladins share the following tenets:\n\n- Sow the seeds of creation amid the ashes of destruction.\n- Lead with splendor and grace.\n- Respect the elements, and fear their wrath.",
+        "class_id": "paladin-xphb",
+        "short_name": "Noble Genies",
+        "grants": {
+            "spells": [
+                {
+                    "spell": "chromatic-orb-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "elementalism-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "thunderous-smite-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "mirror-image-xphb",
+                    "how": "prepared",
+                    "at": 5
+                },
+                {
+                    "spell": "phantasmal-force-xphb",
+                    "how": "prepared",
+                    "at": 5
+                },
+                {
+                    "spell": "fly-xphb",
+                    "how": "prepared",
+                    "at": 9
+                },
+                {
+                    "spell": "gaseous-form-xphb",
+                    "how": "prepared",
+                    "at": 9
+                },
+                {
+                    "spell": "conjure-minor-elementals-xphb",
+                    "how": "prepared",
+                    "at": 13
+                },
+                {
+                    "spell": "summon-elemental-xphb",
+                    "how": "prepared",
+                    "at": 13
+                },
+                {
+                    "spell": "banishing-smite-xphb",
+                    "how": "prepared",
+                    "at": 17
+                },
+                {
+                    "spell": "contact-other-plane-xphb",
+                    "how": "prepared",
+                    "at": 17
+                }
+            ]
+        },
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "paladin-xphb:noble-genies-frhof:elemental-smite",
+                    "paladin-xphb:noble-genies-frhof:genie-spells",
+                    "paladin-xphb:noble-genies-frhof:genies-splendor"
+                ]
+            },
+            {
+                "level": 7,
+                "features": [
+                    "paladin-xphb:noble-genies-frhof:aura-of-elemental-shielding"
+                ]
+            },
+            {
+                "level": 15,
+                "features": [
+                    "paladin-xphb:noble-genies-frhof:elemental-rebuke"
+                ]
+            },
+            {
+                "level": 20,
+                "features": [
+                    "paladin-xphb:noble-genies-frhof:noble-scion"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "paladin-xphb:noble-genies-frhof:elemental-smite",
+                "name": "Elemental Smite",
+                "level": 3,
+                "text": "Immediately after you cast Divine Smite, you can expend one use of your Channel Divinity and invoke one of the following effects.",
+                "category": "traits"
+            },
+            {
+                "id": "paladin-xphb:noble-genies-frhof:daos-crush",
+                "name": "Dao's Crush",
+                "level": 3,
+                "text": "Earth rises up around the target of your Divine Smite. The target has the Grappled condition (escape DC equal to your spell save DC). While Grappled, the target has the Restrained condition.",
+                "parent": "paladin-xphb:noble-genies-frhof:elemental-smite",
+                "consumes": {
+                    "resource": "channel_divinity",
+                    "amount": 1
+                },
+                "category": "traits"
+            },
+            {
+                "id": "paladin-xphb:noble-genies-frhof:djinnis-escape",
+                "name": "Djinni's Escape",
+                "level": 3,
+                "text": "You teleport to an unoccupied space you can see within 30 feet of yourself and take on a semi-incorporeal form, which lasts until the end of your next turn. While in this form, you have Resistance to Bludgeoning, Piercing, and Slashing damage, and you have Immunity to the Grappled, Prone, and Restrained conditions.",
+                "parent": "paladin-xphb:noble-genies-frhof:elemental-smite",
+                "consumes": {
+                    "resource": "channel_divinity",
+                    "amount": 1
+                },
+                "category": "traits"
+            },
+            {
+                "id": "paladin-xphb:noble-genies-frhof:efreetis-fury",
+                "name": "Efreeti's Fury",
+                "level": 3,
+                "text": "The target of your Divine Smite takes an extra 2d4 Fire damage, and fire jumps from the target to another creature you can see within 30 feet of yourself. The second creature also takes 2d4 Fire damage.",
+                "parent": "paladin-xphb:noble-genies-frhof:elemental-smite",
+                "consumes": {
+                    "resource": "channel_divinity",
+                    "amount": 1
+                },
+                "category": "traits",
+                "action": {
+                    "damage": [
+                        {
+                            "dice": "2d4",
+                            "type": "fire"
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "paladin-xphb:noble-genies-frhof:marids-surge",
+                "name": "Marid's Surge",
+                "level": 3,
+                "text": "The target of your Divine Smite and each creature of your choice in a 10-foot Emanation originating from you make a Strength saving throw against your spell save DC. On a failed save, a creature is pushed 15 feet straight away from you and has the Prone condition.",
+                "parent": "paladin-xphb:noble-genies-frhof:elemental-smite",
+                "consumes": {
+                    "resource": "channel_divinity",
+                    "amount": 1
+                },
+                "category": "traits",
+                "action": {
+                    "area": "10-foot Emanation originating from you",
+                    "save": {
+                        "ability": "str",
+                        "dc": "8 + pb + spell_mod",
+                        "on_success": "none",
+                        "conditions": [
+                            "prone"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "paladin-xphb:noble-genies-frhof:genie-spells",
+                "name": "Genie Spells",
+                "level": 3,
+                "text": "When you reach a Paladin level specified in the Genie Spells table, you thereafter always have the listed spells prepared.\n\nPaladin Level | Spells\n--- | ---\n3 | Chromatic Orb, Elementalism, Thunderous Smite\n5 | Mirror Image, Phantasmal Force\n9 | Fly, Gaseous Form\n13 | Conjure Minor Elementals, Summon Elemental\n17 | Banishing Smite, Contact Other Plane",
+                "category": "traits"
+            },
+            {
+                "id": "paladin-xphb:noble-genies-frhof:genies-splendor",
+                "name": "Genie's Splendor",
+                "level": 3,
+                "text": "When you aren't wearing any armor, your base Armor Class equals 10 plus your Dexterity and Charisma modifiers. You can use a Shield and still gain this benefit.\n\nYou also gain proficiency in one of the following skills of your choice: Acrobatics, Intimidation, Performance, or Persuasion.",
+                "category": "traits",
+                "modifiers": [
+                    {
+                        "target": "ac",
+                        "base": "10 + dex_mod + cha_mod",
+                        "requires": [
+                            "no_armor"
+                        ]
+                    }
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "skills_1",
+                        "label": "Skills",
+                        "grant": "skills",
+                        "count": 1,
+                        "from": [
+                            "acrobatics",
+                            "intimidation",
+                            "performance",
+                            "persuasion"
+                        ]
+                    }
+                ]
+            },
+            {
+                "id": "paladin-xphb:noble-genies-frhof:aura-of-elemental-shielding",
+                "name": "Aura of Elemental Shielding",
+                "level": 7,
+                "text": "Choose one of the following damage types: Acid, Cold, Fire, Lightning, or Thunder. You and your allies have Resistance to that damage type while in your Aura of Protection.\n\nAt the start of each of your turns, you can change the damage type affected by this feature to one of the other listed options (no action required).",
+                "category": "traits"
+            },
+            {
+                "id": "paladin-xphb:noble-genies-frhof:elemental-rebuke",
+                "name": "Elemental Rebuke",
+                "level": 15,
+                "text": "When you are hit by an attack roll, you can take a Reaction to halve the attack's damage against yourself (round down) and force the attacker to make a Dexterity saving throw against your spell save DC. On a failed save, the attacker takes damage equal to 2d10 plus your Charisma modifier of one of the following types (your choice): Acid, Cold, Fire, Lightning, or Thunder. On a successful save, the attacker takes half as much damage.\n\nYou can use this feature a number of times equal to your Charisma modifier (minimum of once), and you regain all expended uses when you finish a Long Rest.",
+                "category": "reactions",
+                "uses": {
+                    "max": "max(1, cha_mod)",
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "paladin-xphb:noble-genies-frhof:noble-scion",
+                "name": "Noble Scion",
+                "level": 20,
+                "text": "As a Bonus Action, you gain the benefits below for 10 minutes or until you end them (no action required). Once you use this feature, you can't use it again until you finish a Long Rest. You can also restore your use of it by expending a level 5 spell slot (no action required).\n\n**Flight.** You have a Fly Speed of 60 feet and can hover.\n\n**Minor Wish.** When you or an ally in your Aura of Protection fails a D20 Test, you can take a Reaction to make the D20 Test succeed instead.",
+                "category": "bonus_actions",
+                "uses": {
+                    "max": 1,
+                    "reset": "long"
+                },
+                "toggle": {
+                    "uses_charge": true,
+                    "grants": {
+                        "speed": {
+                            "fly": 60
+                        }
+                    }
+                }
+            },
+            {
+                "id": "paladin-xphb:noble-genies-frhof:noble-scion:minor-wish",
+                "name": "Minor Wish",
+                "level": 20,
+                "text": "**Minor Wish.** When you or an ally in your Aura of Protection fails a D20 Test, you can take a Reaction to make the D20 Test succeed instead.",
+                "parent": "paladin-xphb:noble-genies-frhof:noble-scion",
+                "category": "reactions"
+            }
+        ],
+        "resources": []
+    },
+    {
+        "id": "paladin-xphb:holy-wow",
+        "kind": "subclass",
+        "name": "Oath of the Holy",
+        "source": "WoW",
+        "edition": "one",
+        "text": "*Serve as a Beacon of the Light*\n\nThe Oath of the Holy unites Paladins who nurture life and use the power of the Light for healing and support. They combine great piety and virtue with martial skill, aspiring to the highest standards of morality, service to others, and self-sacrifice.\n\nThese paladins share the following tenets:\n\n- Live your life in service to others of goodwill.\n- Do all in your power to ease the suffering of the innocent.\n- Let the Light shine through you to banish the darkness.",
+        "class_id": "paladin-xphb",
+        "short_name": "Holy",
+        "grants": {
+            "spells": [
+                {
+                    "spell": "cure-wounds-xphb",
+                    "how": "prepared",
+                    "at": 3,
+                    "ability": "cha"
+                },
+                {
+                    "spell": "healing-word-xphb",
+                    "how": "prepared",
+                    "at": 3,
+                    "ability": "cha"
+                },
+                {
+                    "spell": "lesser-restoration-xphb",
+                    "how": "prepared",
+                    "at": 5,
+                    "ability": "cha"
+                },
+                {
+                    "spell": "prayer-of-healing-xphb",
+                    "how": "prepared",
+                    "at": 5,
+                    "ability": "cha"
+                },
+                {
+                    "spell": "dispel-magic-xphb",
+                    "how": "prepared",
+                    "at": 9,
+                    "ability": "cha"
+                },
+                {
+                    "spell": "mass-healing-word-xphb",
+                    "how": "prepared",
+                    "at": 9,
+                    "ability": "cha"
+                },
+                {
+                    "spell": "aura-of-life-xphb",
+                    "how": "prepared",
+                    "at": 13,
+                    "ability": "cha"
+                },
+                {
+                    "spell": "death-ward-xphb",
+                    "how": "prepared",
+                    "at": 13,
+                    "ability": "cha"
+                },
+                {
+                    "spell": "greater-restoration-xphb",
+                    "how": "prepared",
+                    "at": 17,
+                    "ability": "cha"
+                },
+                {
+                    "spell": "mass-cure-wounds-xphb",
+                    "how": "prepared",
+                    "at": 17,
+                    "ability": "cha"
+                }
+            ]
+        },
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "paladin-xphb:holy-wow:oath-of-the-holy-spells",
+                    "paladin-xphb:holy-wow:beacon-of-light"
+                ]
+            },
+            {
+                "level": 7,
+                "features": [
+                    "paladin-xphb:holy-wow:lightbringers-aura"
+                ]
+            },
+            {
+                "level": 15,
+                "features": [
+                    "paladin-xphb:holy-wow:infusion-of-light"
+                ]
+            },
+            {
+                "level": 20,
+                "features": [
+                    "paladin-xphb:holy-wow:holy-deliverance"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "paladin-xphb:holy-wow:oath-of-the-holy-spells",
+                "name": "Oath of the Holy Spells",
+                "level": 3,
+                "text": "The magic of your oath ensures you always have certain spells ready; when you reach a Paladin level specified in the Oath of the Holy Spells table, you thereafter always have the listed spells prepared.\n\nOath of the Holy Spells\n\nPaladin Level | Spells\n--- | ---\n3 | Cure Wounds, Healing Word\n5 | Lesser Restoration, Prayer of Healing\n9 | Dispel Magic, Mass Healing Word\n13 | Aura of Life, Death Ward\n17 | Greater Restoration, Mass Cure Wounds",
+                "category": "traits"
+            },
+            {
+                "id": "paladin-xphb:holy-wow:beacon-of-light",
+                "name": "Beacon of Light",
+                "level": 3,
+                "text": "As a Magic action, you can expend one use of your Channel Divinity to wrap an ally within 60 feet in holy energy. For 1 minute, anytime you heal a creature other than the affected ally with a spell or your Lay On Hands, the chosen ally also regains half as many Hit Points.",
+                "consumes": {
+                    "resource": "channel_divinity",
+                    "amount": 1
+                },
+                "category": "actions",
+                "action": {
+                    "range": "60 feet"
+                }
+            },
+            {
+                "id": "paladin-xphb:holy-wow:lightbringers-aura",
+                "name": "Lightbringer's Aura",
+                "level": 7,
+                "text": "Whenever you cast a spell or use Lay On Hands to restore Hit Points to a Bloodied creature within your Aura of Protection, the creature regains an extra 1d6 Hit Points.",
+                "category": "traits"
+            },
+            {
+                "id": "paladin-xphb:holy-wow:infusion-of-light",
+                "name": "Infusion of Light",
+                "level": 15,
+                "text": "Whenever you cast a spell that deals Radiant damage, you refresh the pool of healing power that fuels your Lay On Hands feature. Your pool of healing power regains a number of Hit Points equal to the total number rolled for the spell's Radiant damage, to a maximum of five times your Paladin level.",
+                "category": "traits"
+            },
+            {
+                "id": "paladin-xphb:holy-wow:holy-deliverance",
+                "name": "Holy Deliverance",
+                "level": 20,
+                "text": "As a Bonus Action, you can imbue your Aura of Protection with holy power, granting the benefits below for 10 minutes or until you end them (no action required). Once you use this feature, you can't use it again until you finish a Long Rest. You can also restore your use of it by expending a level 5 spell slot (no action required).\n\n**Healing Power.** Whenever an ally starts its turn Bloodied and in the aura, that creature regains Hit Points equal to your Charisma modifier plus your Proficiency Bonus.\n\n**Sunlight.** The aura is filled with Bright Light that is sunlight.",
+                "category": "bonus_actions",
+                "uses": {
+                    "max": 1,
+                    "reset": "long"
+                },
+                "toggle": {
+                    "uses_charge": true
+                }
+            }
+        ],
+        "resources": []
     }
 ]

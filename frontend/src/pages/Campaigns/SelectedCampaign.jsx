@@ -1,26 +1,35 @@
-import React, { useEffect, useRef, useState } from "react";
-import { PlusIcon, FolderPlusIcon } from "./CampaignWidgets";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { Search, X } from "lucide-react";
+import { PlusIcon, FolderPlusIcon, ImageIcon } from "./CampaignWidgets";
 import useCampaignStore from "../../store/CampaignStore";
 import CampaignNode from "./CampaignNode";
-import FilePopup from "./FilePopup";
+import { openCampaignFile } from "./notes/fileCards";
+import { searchFiles } from "./notes/notesApi";
 import CampaignContextMenu from "./CampaignContextMenu";
 import MoveToModal from "./MoveToModal";
-import DMAssistant from "./DMAssistant";
+import { useAssistantStore } from "../../store/AssistantStore";
 import CampaignNpcs from "./npcs/CampaignNpcs";
 import Tables from "./tables/Tables";
 import { INK, InkHeading, ParchmentSheet } from "../../styles/parchment";
 import { addBtn } from "../../styles/parchmentForm";
 
-// Buttons on a file window's leather title bar (as on the card windows).
-const barBtn = "rounded px-2 leading-6 text-desk-ink-faded transition-colors hover:bg-desk-deep/60 hover:text-desk-accent";
-// "+ file", "+ folder", "+ prompt" next to a heading.
-const addNote = `${addBtn} inline-flex items-center gap-1`;
+// "+ note", "+ picture", "+ folder", "+ prompt" next to a heading.
+const addNoteBtn = `${addBtn} inline-flex items-center gap-1`;
 
-
-
+// The Files tree while searching: files the server found (by name or by
+// what they say), folders whose name matches (with all inside), and the
+// folders on the way to them.
+export function filterTree(nodes, found) {
+  const q = found.query.toLowerCase();
+  return (nodes || []).flatMap((n) => {
+    if (n.type !== "folder") return n.path in found.snippets ? [n] : [];
+    if (n.name.toLowerCase().includes(q)) return [n];
+    const children = filterTree(n.children, found);
+    return children.length ? [{ ...n, children }] : [];
+  });
+}
 
 const TOOLS = [
-  { id: "assistant", label: "Assistant" },
   { id: "combat", label: "Combat" },
   { id: "tables", label: "Tables" }, 
 ];
@@ -31,43 +40,48 @@ function SelectedCampaign({ campaignName }) {
   const campaignData = useCampaignStore((s) => s.campaignData);
   const createFile = useCampaignStore((s) => s.createFile);
   const createFolder = useCampaignStore((s) => s.createFolder);
-  const saveFile = useCampaignStore((s) => s.saveFile);
+  const uploadPicture = useCampaignStore((s) => s.uploadPicture);
+  const filesRoot = useCampaignStore((s) => s.filesRoot);
+  const promptsRoot = useCampaignStore((s) => s.promptsRoot);
   const loading = useCampaignStore((s) => s.loading);
   const error = useCampaignStore((s) => s.error);
   const fetchPromptsData = useCampaignStore((s) => s.fetchPromptsData);
   const promptsData = useCampaignStore((s) => s.promptsData);
   const activePrompts = useCampaignStore((s) => s.activePrompts);
   const toggleActivePrompt = useCampaignStore((s) => s.toggleActivePrompt);
-  const activeFiles = useCampaignStore((s) => s.activeFiles);
-  const toggleActiveFiles = useCampaignStore((s) => s.toggleActiveFiles);
   const renameNode = useCampaignStore((s) => s.renameNode);
   const moveNode = useCampaignStore((s) => s.moveNode);
   const copyNode = useCampaignStore((s) => s.copyNode);
   const deleteFile = useCampaignStore((s) => s.deleteFile);
-
-
-
-
-  const {
-    openWindows,
-    minimizedWindows,
-    openWindow,
-    restoreWindow,
-    minimizeWindow,
-    closeWindow,
-    focusWindow,
-    moveWindow,
-    resizeWindow,
-    updateWindowContent,
-  } = FilePopup();
+  const clearError = useCampaignStore((s) => s.clearError);
 
   const [hasLoadedOnce, setHasLoadedOnce] = useState(false);
+  // Searching the Files: what's typed, and what the server found for it.
+  const [search, setSearch] = useState("");
+  const [found, setFound] = useState(null); // { query, snippets } | null
 
-  // autosave bookkeeping
-  const saveTimers = useRef({});
-  const lastSaved = useRef({});
-  const [saveStatus, setSaveStatus] = useState({});
+  useEffect(() => {
+    const query = search.trim();
+    if (!query) {
+      setFound(null);
+      return undefined;
+    }
+    let live = true;
+    const wait = setTimeout(async () => {
+      const r = await searchFiles(campaignName, query);
+      if (live && r.ok) setFound({ query, snippets: Object.fromEntries(r.matches.map((m) => [m.path, m.snippet])) });
+    }, 250);
+    return () => {
+      live = false;
+      clearTimeout(wait);
+    };
+  }, [search, campaignName, campaignData]);
 
+  const shownFiles = useMemo(() => (found ? filterTree(campaignData, found) : campaignData), [found, campaignData]);
+  // A picture that couldn't be added, said under the Files heading.
+  const [pictureNote, setPictureNote] = useState(null);
+  const picker = useRef(null);
+  const pickerFolder = useRef("");
 
   const [contextMenu, setContextMenu] = useState(null);
   // { x, y, node, treeKind: "files" | "prompts" }
@@ -76,7 +90,13 @@ function SelectedCampaign({ campaignName }) {
   // { node, treeKind }
 
   // Right-column tool selection
-  const [activeTool, setActiveTool] = useState("assistant");
+  const [activeTool, setActiveTool] = useState("combat");
+
+  // The footer's assistant offers to switch to the campaign open here.
+  useEffect(() => {
+    useAssistantStore.getState().setPageCampaign(campaignName);
+    return () => useAssistantStore.getState().setPageCampaign(null);
+  }, [campaignName]);
 
   useEffect(() => {
     if (!campaignName) return;
@@ -86,64 +106,47 @@ function SelectedCampaign({ campaignName }) {
     ]).then(() => setHasLoadedOnce(true));
   }, [campaignName, fetchCampaignData, fetchPromptsData]);
 
-  // Debounced autosave
-  useEffect(() => {
-    openWindows.forEach((win) => {
-      if (lastSaved.current[win.id] === undefined) {
-        lastSaved.current[win.id] = win.content;
-        return;
-      }
-      if (lastSaved.current[win.id] === win.content) return;
-
-      setSaveStatus((s) => ({ ...s, [win.id]: "unsaved" }));
-
-      clearTimeout(saveTimers.current[win.id]);
-      saveTimers.current[win.id] = setTimeout(async () => {
-        setSaveStatus((s) => ({ ...s, [win.id]: "saving" }));
-        await saveFile(win.path, win.content);
-        lastSaved.current[win.id] = win.content;
-        setSaveStatus((s) => ({ ...s, [win.id]: "saved" }));
-      }, 1000);
-    });
-  }, [openWindows, saveFile]);
-
-  useEffect(() => {
-    return () => {
-      Object.values(saveTimers.current).forEach(clearTimeout);
-    };
-  }, []);
-
-  const handleAddFileRoot = () => {
-    const fileName = prompt("Enter file name");
+  // A new note opens straight away, ready to write in.
+  const addNote = async (folder) => {
+    const fileName = prompt("Name of the new note");
     if (!fileName) return;
-    createFile(fileName, campaignName, "");
+    const made = await createFile(fileName, campaignName, folder);
+    if (made?.path) openCampaignFile({ kind: made.kind, name: made.name, path: made.path }, campaignName);
+  };
+
+  const handleAddFileRoot = () => addNote("");
+
+  // Pictures as files of their own: pick one or more, into a folder or the top.
+  const pickPictures = (folder) => {
+    pickerFolder.current = folder;
+    picker.current?.click();
+  };
+
+  const handlePicked = async (e) => {
+    const files = [...(e.target.files || [])];
+    e.target.value = "";
+    setPictureNote(null);
+    for (const file of files) {
+      const r = await uploadPicture(campaignName, file, pickerFolder.current);
+      if (!r.ok) setPictureNote(`"${file.name}": ${r.message}`);
+    }
   };
 
   const handleAddFolderRoot = () => {
-    const folderName = prompt("Enter folder name");
+    const folderName = prompt("Name of the new folder");
     if (!folderName) return;
     createFolder(folderName, campaignName, "");
   };
 
 
-  const getPromptsRootPath = () => {
-    if (promptsData.length === 0) return null;
-    // Any top-level prompt node's parent is the prompts folder
-    const firstPath = promptsData[0].path;
-    // Strip the filename/foldername to get the parent dir
-    return firstPath.replace(/[/\\][^/\\]+$/, "");
+  const addPrompt = async (folder) => {
+    const fileName = prompt("Name of the new prompt");
+    if (!fileName || !folder) return;
+    const made = await createFile(fileName, campaignName, folder);
+    if (made?.path) openCampaignFile({ kind: made.kind, name: made.name, path: made.path }, campaignName);
   };
 
-  const handleAddPromptRoot = () => {
-    const fileName = prompt("Enter prompt name");
-    if (!fileName) return;
-    const root = getPromptsRootPath();
-    if (!root) {
-      alert("Cannot determine prompts folder — try refreshing");
-      return;
-    }
-    createFile(fileName, campaignName, root);
-  };
+  const handleAddPromptRoot = () => addPrompt(promptsRoot);
 
   const handleContextMenu = (treeKind) => (x, y, node) => {
     setContextMenu({ x, y, node, treeKind });
@@ -182,103 +185,15 @@ function SelectedCampaign({ campaignName }) {
     await moveNode(src, targetFolder);
   };
 
-  // For the Move modal: figure out the root path of each tree
-  const getTreeRoot = (treeKind) => {
-    const tree = treeKind === "prompts" ? promptsData : campaignData;
-    if (tree.length === 0) return null;
-    const firstPath = tree[0].path;
-    return firstPath.replace(/[/\\][^/\\]+$/, "");
-  };
+  // For the Move modal: the folder at the top of each tree
+  const getTreeRoot = (treeKind) => (treeKind === "prompts" ? promptsRoot : filesRoot);
 
-  const handleOpenFile = (fileNode) => {
-    openWindow({
-      id: fileNode.path,
-      title: fileNode.name,
-      content: fileNode.content ?? "",
-      path: fileNode.path,
-      type: "file",
-    });
-  };
-
-  const handleCloseWindow = async (win) => {
-    if (saveTimers.current[win.id]) {
-      clearTimeout(saveTimers.current[win.id]);
-      delete saveTimers.current[win.id];
-    }
-    if (lastSaved.current[win.id] !== win.content) {
-      await saveFile(win.path, win.content);
-      lastSaved.current[win.id] = win.content;
-    }
-    delete lastSaved.current[win.id];
-    setSaveStatus((s) => {
-      const next = { ...s };
-      delete next[win.id];
-      return next;
-    });
-    closeWindow(win.id);
-  };
-
-  // --- Drag ---
-  const handleDragStart = (e, win) => {
-    if (e.target.closest("button")) return;
-    e.preventDefault();
-    focusWindow(win.id);
-
-    const startX = e.clientX;
-    const startY = e.clientY;
-    const originX = win.x;
-    const originY = win.y;
-
-    const onMove = (ev) => {
-      moveWindow(
-        win.id,
-        originX + (ev.clientX - startX),
-        originY + (ev.clientY - startY),
-      );
-    };
-    const onUp = () => {
-      window.removeEventListener("mousemove", onMove);
-      window.removeEventListener("mouseup", onUp);
-    };
-
-    window.addEventListener("mousemove", onMove);
-    window.addEventListener("mouseup", onUp);
-  };
-
-  // --- Resize ---
-  const handleResizeStart = (e, win) => {
-    e.preventDefault();
-    e.stopPropagation();
-    focusWindow(win.id);
-
-    const startX = e.clientX;
-    const startY = e.clientY;
-    const originW = win.width;
-    const originH = win.height;
-
-    const onMove = (ev) => {
-      resizeWindow(
-        win.id,
-        originW + (ev.clientX - startX),
-        originH + (ev.clientY - startY),
-      );
-    };
-    const onUp = () => {
-      window.removeEventListener("mousemove", onMove);
-      window.removeEventListener("mouseup", onUp);
-    };
-
-    window.addEventListener("mousemove", onMove);
-    window.addEventListener("mouseup", onUp);
-  };
+  const handleOpenFile = (fileNode) => openCampaignFile(fileNode, campaignName);
 
   if (!hasLoadedOnce && loading) {
     return <div className="ml-2 font-body text-sm italic text-desk-ink-faded">Loading…</div>;
   }
 
-  if (error) {
-    return <div className="ml-2 font-body text-sm italic text-bad">{error}</div>;
-  }
 
   return (
     <div className="relative min-h-[700px]">
@@ -312,14 +227,27 @@ function SelectedCampaign({ campaignName }) {
         {/* LEFT COLUMN — file handlers */}
         <div className="w-[380px] shrink-0">
           <ParchmentSheet>
+            {/* Something went wrong (a name already taken, the server away…): said here, the page stays. */}
+            {error && (
+              <p className="mb-3 text-sm italic text-bad">
+                {error}{" "}
+                <button className="text-xs text-ink-faded underline decoration-dotted underline-offset-4 hover:text-ink" onClick={clearError}>
+                  ok
+                </button>
+              </p>
+            )}
             <InkHeading
               right={
                 <span className="flex items-baseline gap-3">
-                  <button className={addNote} onClick={handleAddFileRoot} title="New file">
+                  <button className={addNoteBtn} onClick={handleAddFileRoot} title="New note">
                     <PlusIcon className="h-3 w-3" />
-                    file
+                    note
                   </button>
-                  <button className={addNote} onClick={handleAddFolderRoot} title="New folder">
+                  <button className={addNoteBtn} onClick={() => pickPictures("")} title="Add pictures (PNG, JPEG, GIF, WebP)">
+                    <ImageIcon className="h-3.5 w-3.5" />
+                    picture
+                  </button>
+                  <button className={addNoteBtn} onClick={handleAddFolderRoot} title="New folder">
                     <FolderPlusIcon className="h-3.5 w-3.5" />
                     folder
                   </button>
@@ -328,33 +256,63 @@ function SelectedCampaign({ campaignName }) {
             >
               Files
             </InkHeading>
+            {pictureNote && (
+              <p className="-mt-2 mb-2 text-xs italic text-bad">
+                {pictureNote}{" "}
+                <button className="text-ink-faded underline decoration-dotted underline-offset-4 hover:text-ink" onClick={() => setPictureNote(null)}>
+                  ok
+                </button>
+              </p>
+            )}
+            <input ref={picker} type="file" accept="image/png,image/jpeg,image/gif,image/webp" multiple hidden onChange={handlePicked} />
 
-            {campaignData?.length ? (
+            {campaignData?.length > 0 && (
+              <label className="mb-2 flex items-center gap-2 border-b border-rule/50 pb-1 text-ink-faded focus-within:border-rubric/60">
+                <Search size={14} className="shrink-0" />
+                <input
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  onKeyDown={(e) => e.key === "Escape" && setSearch("")}
+                  placeholder="Search names and what the notes say…"
+                  className="min-w-0 flex-1 border-0 bg-transparent p-0 font-body text-sm text-ink placeholder:italic placeholder:text-ink-faint focus:outline-none focus:ring-0"
+                />
+                {search && (
+                  <button type="button" onClick={() => setSearch("")} title="Clear the search (Esc)" className="shrink-0 hover:text-ink">
+                    <X size={14} />
+                  </button>
+                )}
+              </label>
+            )}
+
+            {found && shownFiles.length === 0 ? (
+              <p className={`py-4 text-sm italic ${INK.faded}`}>Nothing in the files says "{found.query}".</p>
+            ) : shownFiles?.length ? (
               <div className="-mx-1 flex flex-col">
-                {campaignData.map((node) => (
+                {shownFiles.map((node) => (
                   <CampaignNode
                     key={node.path}
                     campaignName={campaignName}
                     node={node}
                     onOpenFile={handleOpenFile}
-                    activePaths={activeFiles}
-                    onToggleActive={toggleActiveFiles}
+                    onAddNote={addNote}
+                    onAddPicture={pickPictures}
                     onContextMenu={handleContextMenu("files")}
                     renamingPath={renamingPath}
                     onRenameCommit={handleRenameCommit}
                     onRenameCancel={handleRenameCancel}
+                    found={found}
                   />
                 ))}
               </div>
             ) : (
-              <p className={`py-4 text-sm italic ${INK.faded}`}>No files yet. Create one above to get started.</p>
+              <p className={`py-4 text-sm italic ${INK.faded}`}>No notes yet. Make one above, or add a picture.</p>
             )}
 
             {/* System Prompts */}
             <div className="mt-8">
               <InkHeading
                 right={
-                  <button className={addNote} onClick={handleAddPromptRoot} title="New prompt">
+                  <button className={addNoteBtn} onClick={handleAddPromptRoot} title="New prompt">
                     <PlusIcon className="h-3 w-3" />
                     prompt
                   </button>
@@ -372,6 +330,7 @@ function SelectedCampaign({ campaignName }) {
                       node={node}
                       campaignName={campaignName}
                       onOpenFile={handleOpenFile}
+                      onAddNote={addPrompt}
                       activePaths={activePrompts}
                       onToggleActive={toggleActivePrompt}
                       onContextMenu={handleContextMenu("prompts")}
@@ -390,82 +349,12 @@ function SelectedCampaign({ campaignName }) {
 
         {/* RIGHT COLUMN — tools */}
         <div className="min-w-0 max-w-6xl flex-1">
-          {activeTool === "assistant" && <DMAssistant campaignName={campaignName} />}
-
           {activeTool === "combat" && <CampaignNpcs campaignName={campaignName} />}
 
           {activeTool === "tables" && <Tables campaignName={campaignName} />}
         </div>
       </div>
 
-      {/* File windows: a leather title bar over lined parchment, like the card windows */}
-      {openWindows.map((win) => (
-        <div
-          key={win.id}
-          onMouseDown={() => focusWindow(win.id)}
-          className="absolute flex flex-col overflow-hidden rounded-md bg-desk-deep shadow-2xl ring-1 ring-desk"
-          style={{
-            left: win.x,
-            top: win.y,
-            width: win.width,
-            height: win.height,
-            zIndex: win.zIndex,
-          }}
-        >
-          <div
-            onMouseDown={(e) => handleDragStart(e, win)}
-            className="wc-desk flex cursor-move select-none items-center justify-between border-b border-stitch/30 px-2 py-1 font-body"
-          >
-            <span className="truncate text-sm font-semibold tracking-wide text-desk-ink">{win.title}</span>
-
-            <div className="flex items-center gap-2">
-              <span className="text-xs italic text-desk-ink-faded">
-                {saveStatus[win.id] === "saving" && "Saving…"}
-                {saveStatus[win.id] === "saved" && "Saved"}
-                {saveStatus[win.id] === "unsaved" && "Unsaved"}
-              </span>
-
-              <div className="flex gap-1">
-                <button className={barBtn} onClick={() => minimizeWindow(win.id)} title="Minimize">
-                  −
-                </button>
-                <button className={`${barBtn} hover:!bg-bad/70 hover:!text-desk-ink`} onClick={() => handleCloseWindow(win)} title="Close">
-                  ×
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div className="wc-page flex min-h-0 flex-1 !rounded-none">
-            <textarea
-              className="wc-lined h-full w-full resize-none border-0 bg-transparent px-4 py-1 font-body text-[15px] leading-7 text-ink outline-none focus:ring-0"
-              value={win.content}
-              onChange={(e) => updateWindowContent(win.id, e.target.value)}
-            />
-          </div>
-
-          <div
-            onMouseDown={(e) => handleResizeStart(e, win)}
-            className="absolute bottom-0 right-0 h-4 w-4 cursor-nwse-resize"
-            style={{
-              background: "linear-gradient(135deg, transparent 50%, rgb(var(--c-desk-accent)) 50%, rgb(var(--c-desk-accent)) 70%, transparent 70%)",
-            }}
-          />
-        </div>
-      ))}
-
-      {/* Minimized file windows: small leather tabs in the bottom-left corner */}
-      <div className="fixed bottom-2 left-2 flex gap-2">
-        {minimizedWindows.map((win) => (
-          <button
-            key={win.id}
-            onClick={() => restoreWindow(win.id)}
-            className="wc-desk rounded-md border border-stitch/30 px-2.5 py-1 font-body text-sm text-desk-ink shadow-lg transition-colors hover:text-desk-accent"
-          >
-            {win.title}
-          </button>
-        ))}
-      </div>
       {contextMenu && (
         <CampaignContextMenu
           x={contextMenu.x}
@@ -489,4 +378,4 @@ function SelectedCampaign({ campaignName }) {
   );
 }
 
-export default SelectedCampaign;
+export default SelectedCampaign;

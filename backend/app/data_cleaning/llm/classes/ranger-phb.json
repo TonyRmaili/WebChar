@@ -331,5 +331,732 @@
     "reviewed": false,
     "reasoning": "medium",
     "at": "2026-11-19T11:37:13+00:00"
+  },
+  "ranger-phb:favored-foe": {
+    "label": "Ranger (PHB) · Favored Foe",
+    "hash": "4ffc0cabdfcd2d42",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "favored-foe",
+          "name": "Favored Foe",
+          "level": 1,
+          "category": "traits",
+          "uses": {
+            "max": "pb",
+            "reset": "long"
+          },
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": {
+                    "1": "1d4",
+                    "6": "1d6",
+                    "14": "1d8"
+                  },
+                  "type": "weapon",
+                  "condition": "first time on each of your turns that you hit the favored enemy and deal damage to it, including when you mark it."
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11554,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:08:50+00:00"
+  },
+  "ranger-phb:deft-explorer": {
+    "label": "Ranger (PHB) · Deft Explorer",
+    "hash": "1d05fc305c20f2c5",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "canny",
+          "name": "Canny",
+          "level": 1,
+          "category": "traits",
+          "picks": [
+            {
+              "grant": "expertise",
+              "count": 1,
+              "from": [
+                "proficient_skills"
+              ]
+            },
+            {
+              "grant": "languages",
+              "count": 2,
+              "from": [
+                "all_languages"
+              ]
+            }
+          ]
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11384,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:08:53+00:00"
+  },
+  "ranger-phb:spellcasting-focus": {
+    "label": "Ranger (PHB) · Spellcasting Focus",
+    "hash": "8432ac07ce0e3dab",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11203,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:08:56+00:00"
+  },
+  "ranger-phb:primal-awareness": {
+    "label": "Ranger (PHB) · Primal Awareness",
+    "hash": "2e7adee7ca718268",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11254,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:08:59+00:00"
+  },
+  "ranger-phb:martial-versatility": {
+    "label": "Ranger (PHB) · Martial Versatility",
+    "hash": "2f6dc23e4d96e927",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11143,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:09:01+00:00"
+  },
+  "ranger-phb:deft-explorer-improvement": {
+    "label": "Ranger (PHB) · Deft Explorer Improvement",
+    "hash": "3343f79371cc6817",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "roving",
+          "name": "Roving",
+          "level": 6,
+          "category": "traits",
+          "modifiers": [
+            {
+              "target": "speed.walk",
+              "add": 5
+            }
+          ],
+          "grants": {
+            "speed": {
+              "swim": "walk",
+              "climb": "walk"
+            }
+          }
+        },
+        {
+          "id": "tireless",
+          "name": "Tireless",
+          "level": 10,
+          "category": "actions",
+          "uses": {
+            "max": "pb",
+            "reset": "long"
+          },
+          "action": {
+            "temp_hp": "max(1, 1d8 + wis_mod)"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11953,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:09:03+00:00"
+  },
+  "ranger-phb:natures-veil": {
+    "label": "Ranger (PHB) · Nature's Veil",
+    "hash": "4168452451fea5b0",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "nature-s-veil",
+          "name": "Nature's Veil",
+          "level": 10,
+          "category": "bonus_actions",
+          "uses": {
+            "max": "pb",
+            "reset": "long"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11296,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:09:10+00:00"
+  },
+  "ranger-phb:beast-master-phb": {
+    "label": "Ranger (PHB) · Beast Master (PHB)",
+    "hash": "8ea735578c7b3a12",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "ranger-s-companion",
+          "name": "Ranger's Companion",
+          "level": 3,
+          "category": "actions"
+        },
+        {
+          "id": "primal-companion",
+          "name": "Primal Companion",
+          "level": 3,
+          "category": "bonus_actions"
+        },
+        {
+          "id": "exceptional-training",
+          "name": "Exceptional Training",
+          "level": 7,
+          "category": "bonus_actions"
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13364,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:09:12+00:00"
+  },
+  "ranger-phb:gloom-stalker-xge": {
+    "label": "Ranger (PHB) · Gloom Stalker (XGE)",
+    "hash": "e80c88f52ab6ade7",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "dread-ambusher",
+          "name": "Dread Ambusher",
+          "level": 3,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": "1d8",
+                  "type": "weapon"
+                }
+              ]
+            }
+          },
+          "modifiers": [
+            {
+              "target": "initiative",
+              "add": "wis_mod"
+            }
+          ]
+        },
+        {
+          "id": "umbral-sight",
+          "name": "Umbral Sight",
+          "level": 3,
+          "category": "traits",
+          "grants": {
+            "senses": {
+              "darkvision": 60
+            }
+          }
+        },
+        {
+          "id": "iron-mind",
+          "name": "Iron Mind",
+          "level": 7,
+          "category": "traits",
+          "grants": {
+            "saves": [
+              "wis"
+            ]
+          }
+        },
+        {
+          "id": "shadowy-dodge",
+          "name": "Shadowy Dodge",
+          "level": 15,
+          "category": "reactions"
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13172,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:09:25+00:00"
+  },
+  "ranger-phb:horizon-walker-xge": {
+    "label": "Ranger (PHB) · Horizon Walker (XGE)",
+    "hash": "943b181a5ec96915",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "detect-portal",
+          "name": "Detect Portal",
+          "level": 3,
+          "category": "actions",
+          "uses": {
+            "max": 1,
+            "reset": "short"
+          },
+          "action": {
+            "range": "1 mile"
+          }
+        },
+        {
+          "id": "planar-warrior",
+          "name": "Planar Warrior",
+          "level": 3,
+          "category": "bonus_actions",
+          "action": {
+            "range": "30 feet",
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": {
+                    "1": "1d8",
+                    "11": "2d8"
+                  },
+                  "type": "force"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "ethereal-step",
+          "name": "Ethereal Step",
+          "level": 7,
+          "category": "traits"
+        },
+        {
+          "id": "distant-strike",
+          "name": "Distant Strike",
+          "level": 11,
+          "category": "actions",
+          "action": {
+            "range": "10 feet"
+          }
+        },
+        {
+          "id": "spectral-defense",
+          "name": "Spectral Defense",
+          "level": 15,
+          "category": "reactions"
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13634,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:09:38+00:00"
+  },
+  "ranger-phb:monster-slayer-xge": {
+    "label": "Ranger (PHB) · Monster Slayer (XGE)",
+    "hash": "2e2a840078cecacc",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "hunter-s-sense",
+          "name": "Hunter's Sense",
+          "level": 3,
+          "category": "actions",
+          "uses": {
+            "max": "max(1, wis_mod)",
+            "reset": "long"
+          },
+          "action": {
+            "range": "60 feet"
+          }
+        },
+        {
+          "id": "slayer-s-prey",
+          "name": "Slayer's Prey",
+          "level": 3,
+          "category": "bonus_actions",
+          "action": {
+            "range": "60 feet",
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": "1d6",
+                  "type": "weapon",
+                  "condition": "first time each turn"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "magic-user-s-nemesis",
+          "name": "Magic-User's Nemesis",
+          "level": 11,
+          "category": "reactions",
+          "uses": {
+            "max": 1,
+            "reset": "short"
+          },
+          "action": {
+            "range": "60 feet",
+            "save": {
+              "ability": "wis",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "none"
+            }
+          }
+        },
+        {
+          "id": "slayer-s-counter",
+          "name": "Slayer's Counter",
+          "level": 15,
+          "category": "reactions"
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13489,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:09:55+00:00"
+  },
+  "ranger-phb:fey-wanderer-tce": {
+    "label": "Ranger (PHB) · Fey Wanderer (TCE)",
+    "hash": "6ebf4014e45a2952",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "dreadful-strikes",
+          "name": "Dreadful Strikes",
+          "level": 3,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": {
+                    "1": "1d4",
+                    "11": "1d6"
+                  },
+                  "type": "psychic"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "otherworldly-glamour",
+          "name": "Otherworldly Glamour",
+          "level": 3,
+          "category": "traits",
+          "picks": [
+            {
+              "grant": "skills",
+              "count": 1,
+              "from": [
+                "deception",
+                "performance",
+                "persuasion"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "beguiling-twist",
+          "name": "Beguiling Twist",
+          "level": 7,
+          "category": "reactions",
+          "action": {
+            "range": "120 feet",
+            "save": {
+              "ability": "wis",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "none",
+              "conditions": [
+                "charmed",
+                "frightened"
+              ]
+            }
+          }
+        },
+        {
+          "id": "fey-reinforcements",
+          "name": "Fey Reinforcements",
+          "level": 11,
+          "category": "traits"
+        },
+        {
+          "id": "misty-wanderer",
+          "name": "Misty Wanderer",
+          "level": 15,
+          "category": "traits"
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13337,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:10:09+00:00"
+  },
+  "ranger-phb:swarmkeeper-tce": {
+    "label": "Ranger (PHB) · Swarmkeeper (TCE)",
+    "hash": "7377ef9b764f673f",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "gathered-swarm",
+          "name": "Gathered Swarm",
+          "level": 3,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": {
+                    "1": "1d6",
+                    "11": "1d8"
+                  },
+                  "type": "piercing"
+                }
+              ]
+            },
+            "save": {
+              "ability": "str",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "none"
+            }
+          }
+        },
+        {
+          "id": "writhing-tide",
+          "name": "Writhing Tide",
+          "level": 7,
+          "category": "bonus_actions",
+          "uses": {
+            "max": "pb",
+            "reset": "long"
+          },
+          "toggle": {
+            "uses_charge": true,
+            "grants": {
+              "speed": {
+                "fly": 10
+              }
+            }
+          }
+        },
+        {
+          "id": "mighty-swarm",
+          "name": "Mighty Swarm",
+          "level": 11,
+          "category": "traits",
+          "action": {
+            "save": {
+              "ability": "str",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "none",
+              "conditions": [
+                "prone"
+              ]
+            }
+          }
+        },
+        {
+          "id": "swarming-dispersal",
+          "name": "Swarming Dispersal",
+          "level": 15,
+          "category": "reactions",
+          "uses": {
+            "max": "pb",
+            "reset": "long"
+          },
+          "action": {
+            "range": "30 feet"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13883,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:10:19+00:00"
+  },
+  "ranger-phb:drakewarden-ftd": {
+    "label": "Ranger (PHB) · Drakewarden (FTD)",
+    "hash": "6c31bbe4761c5f7e",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "tongue-of-dragons",
+          "name": "Tongue of Dragons",
+          "level": 3,
+          "category": "traits",
+          "picks": [
+            {
+              "grant": "languages",
+              "count": 1,
+              "from": [
+                "all_languages"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "drake-companion",
+          "name": "Drake Companion",
+          "level": 3,
+          "category": "actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "action": {
+            "range": "30 feet"
+          }
+        },
+        {
+          "id": "drake-s-breath",
+          "name": "Drake's Breath",
+          "level": 11,
+          "category": "actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "action": {
+            "area": "30-foot cone",
+            "save": {
+              "ability": "dex",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "half",
+              "damage": [
+                {
+                  "dice": {
+                    "1": "8d6",
+                    "15": "10d6"
+                  },
+                  "type": "acid",
+                  "condition": "if acid is chosen"
+                },
+                {
+                  "dice": {
+                    "1": "8d6",
+                    "15": "10d6"
+                  },
+                  "type": "cold",
+                  "condition": "if cold is chosen"
+                },
+                {
+                  "dice": {
+                    "1": "8d6",
+                    "15": "10d6"
+                  },
+                  "type": "fire",
+                  "condition": "if fire is chosen"
+                },
+                {
+                  "dice": {
+                    "1": "8d6",
+                    "15": "10d6"
+                  },
+                  "type": "lightning",
+                  "condition": "if lightning is chosen"
+                },
+                {
+                  "dice": {
+                    "1": "8d6",
+                    "15": "10d6"
+                  },
+                  "type": "poison",
+                  "condition": "if poison is chosen"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "reflexive-resistance",
+          "name": "Reflexive Resistance",
+          "level": 15,
+          "category": "reactions",
+          "uses": {
+            "max": "pb",
+            "reset": "long"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 14168,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:10:34+00:00"
   }
 }

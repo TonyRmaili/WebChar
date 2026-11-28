@@ -5,11 +5,19 @@ import SpellPopup           from "../../pages/Catalogues/Spells/SpellPopup";
 import ItemPopup            from "../../pages/Catalogues/Items/ItemPopup";
 import BackgroundPopup      from "../../pages/Catalogues/Backgrounds/BackgroundPopup";
 import OptionalFeaturePopup from "../../pages/Catalogues/OptionalFeatures/OptionalFeaturePopup";
+import ReferencePopup       from "../../pages/Catalogues/Reference/ReferencePopup";
+import { catalogueOf }      from "../../pages/Catalogues/Reference/referenceHelpers";
 import FeatureCardPopup     from "../../pages/Characters/sheet/FeatureCardPopup";
 import StatblockWindow, { statblockWindowId } from "../../pages/Campaigns/statblock/StatblockWindow";
 import TrackerWindow, { trackerWindowId } from "../../pages/Campaigns/tracker/TrackerWindow";
 import TableWindow, { tableWindowId } from "../../pages/Campaigns/tables/TableWindow";
 import DiceTowerWindow, { diceWindowId } from "../dice/DiceTowerWindow";
+import AssistantWindow, { assistantWindowId } from "../assistant/AssistantWindow";
+import NoteCard from "../../pages/Campaigns/notes/NoteCard";
+import PictureCard from "../../pages/Campaigns/notes/PictureCard";
+import PromptCard from "../../pages/Campaigns/notes/PromptCard";
+import HandoutCard from "../../pages/Campaigns/notes/HandoutCard";
+import { fileCardId, handoutId } from "../../pages/Campaigns/notes/fileCards";
 import useStatblockDrafts from "../../pages/Campaigns/statblock/statblockDrafts";
 
 // Closing a card from the deck also drops its unsaved edits, if any.
@@ -23,7 +31,7 @@ const forgetDraft = (id) => useStatblockDrafts.getState().clearDraft(id);
 //
 // Every type says which deck its minimized cards go to (components/popups/decks.js):
 // a deck id, or a function of the card's data — or null for a tool with a
-// footer button of its own (the dice tower), which stays out of the deck.
+// footer button of its own (the dice tower, the assistant), which stays out of the deck.
 // `forget(id)` (optional) runs when a minimized card is closed from the deck.
 export const POPUP_REGISTRY = {
   feat: {
@@ -33,6 +41,15 @@ export const POPUP_REGISTRY = {
     defaultWidth: 520,
     defaultHeight: 620,
   },
+  // Rules, Lore and Toolkit entries: one card type, each catalogue its own deck.
+  reference: {
+    deck: (d) => catalogueOf(d),
+    component: ReferencePopup,
+    propName: "entry",
+    defaultWidth: 520,
+    defaultHeight: 620,
+  },
+
   monster: {
     deck: "monsters",
     component: MonsterPopup,
@@ -133,10 +150,57 @@ export const POPUP_REGISTRY = {
     buildId: (d) => tableWindowId(d),
     forget: forgetDraft,
   },
+  // A campaign's files ({ name, path, campaignName }); openCampaignFile()
+  // in notes/fileCards.js opens them. A note is a document, a picture is
+  // just the picture, a prompt is plain text for the assistant.
+  note: {
+    deck: "notes",
+    get component() {
+      return NoteCard;
+    },
+    propName: "note",
+    defaultWidth: 820,
+    defaultHeight: 720,
+    buildId: (d) => fileCardId("note", d),
+  },
+  picture: {
+    deck: "pictures",
+    get component() {
+      return PictureCard;
+    },
+    propName: "picture",
+    defaultWidth: 720,
+    defaultHeight: 560,
+    buildId: (d) => fileCardId("picture", d),
+  },
+  prompt: {
+    deck: "notes",
+    get component() {
+      return PromptCard;
+    },
+    propName: "prompt",
+    defaultWidth: 620,
+    defaultHeight: 560,
+    buildId: (d) => fileCardId("prompt", d),
+  },
+  // A note's handout on its own ({ name, campaignName, notePath, content });
+  // fileCards.showHandout() opens it.
+  handout: {
+    deck: "notes",
+    get component() {
+      return HandoutCard;
+    },
+    propName: "handout",
+    defaultWidth: 680,
+    defaultHeight: 760,
+    buildId: handoutId,
+  },
   // The dice tower (one window); openDiceTower() in DiceTowerWindow places it.
-  // No deck: minimized, it waits behind the footer's DiceTower button.
+  // A footer window: no deck. ×, a right-click or its footer button puts it
+  // away behind that button (it keeps its place); there's no − to minimize.
   dice: {
     deck: null,
+    footer: true,
     get component() {
       return DiceTowerWindow;
     },
@@ -144,5 +208,18 @@ export const POPUP_REGISTRY = {
     defaultWidth: 1040,
     defaultHeight: 760,
     buildId: (d) => diceWindowId(d),
+  },
+  // The assistant (one window), a footer window like the dice tower;
+  // openAssistant() in AssistantWindow places it.
+  assistant: {
+    deck: null,
+    footer: true,
+    get component() {
+      return AssistantWindow;
+    },
+    propName: "assistant",
+    defaultWidth: 760,
+    defaultHeight: 760,
+    buildId: () => assistantWindowId(),
   },
 };

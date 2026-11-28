@@ -96,5 +96,620 @@
     "reviewed": false,
     "reasoning": "medium",
     "at": "2026-11-19T11:42:04+00:00"
+  },
+  "warlock-phb:eldritch-versatility": {
+    "label": "Warlock (PHB) · Eldritch Versatility",
+    "hash": "f008bb56e9a584d6",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11331,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:22:01+00:00"
+  },
+  "warlock-phb:archfey-phb": {
+    "label": "Warlock (PHB) · The Archfey (PHB)",
+    "hash": "b9e7b4b182a41161",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "fey-presence",
+          "name": "Fey Presence",
+          "level": 1,
+          "category": "actions",
+          "uses": {
+            "max": 1,
+            "reset": "short"
+          },
+          "action": {
+            "area": "10-foot cube originating from you",
+            "save": {
+              "ability": "wis",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "none",
+              "conditions": [
+                "charmed",
+                "frightened"
+              ]
+            }
+          }
+        },
+        {
+          "id": "misty-escape",
+          "name": "Misty Escape",
+          "level": 6,
+          "category": "reactions",
+          "uses": {
+            "max": 1,
+            "reset": "short"
+          },
+          "action": {
+            "range": "60 feet"
+          }
+        },
+        {
+          "id": "beguiling-defenses",
+          "name": "Beguiling Defenses",
+          "level": 10,
+          "category": "reactions",
+          "action": {
+            "save": {
+              "ability": "wis",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "none",
+              "conditions": [
+                "charmed"
+              ]
+            }
+          },
+          "grants": {
+            "defenses": {
+              "condition_immune": [
+                "charmed"
+              ]
+            }
+          }
+        },
+        {
+          "id": "dark-delirium",
+          "name": "Dark Delirium",
+          "level": 14,
+          "category": "actions",
+          "uses": {
+            "max": 1,
+            "reset": "short"
+          },
+          "action": {
+            "range": "60 feet",
+            "save": {
+              "ability": "wis",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "none",
+              "conditions": [
+                "charmed",
+                "frightened"
+              ]
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 12561,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:22:04+00:00"
+  },
+  "warlock-phb:great-old-one-phb": {
+    "label": "Warlock (PHB) · The Great Old One (PHB)",
+    "hash": "34f45d3e959a741c",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "entropic-ward",
+          "name": "Entropic Ward",
+          "level": 6,
+          "category": "reactions",
+          "uses": {
+            "max": 1,
+            "reset": "short"
+          }
+        },
+        {
+          "id": "thought-shield",
+          "name": "Thought Shield",
+          "level": 10,
+          "category": "traits",
+          "grants": {
+            "defenses": {
+              "resist": [
+                "psychic"
+              ]
+            }
+          }
+        },
+        {
+          "id": "create-thrall",
+          "name": "Create Thrall",
+          "level": 14,
+          "category": "actions",
+          "action": {
+            "range": "touch"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 12312,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:22:11+00:00"
+  },
+  "warlock-phb:undying-scag": {
+    "label": "Warlock (PHB) · The Undying (SCAG)",
+    "hash": "7b083b858265a3d5",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "defy-death",
+          "name": "Defy Death",
+          "level": 6,
+          "category": "traits",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "action": {
+            "heal": "max(1, 1d8 + con_mod)"
+          }
+        },
+        {
+          "id": "indestructible-life",
+          "name": "Indestructible Life",
+          "level": 14,
+          "category": "bonus_actions",
+          "uses": {
+            "max": 1,
+            "reset": "short"
+          },
+          "action": {
+            "heal": "1d8 + class_level"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 12928,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:22:18+00:00"
+  },
+  "warlock-phb:celestial-xge": {
+    "label": "Warlock (PHB) · The Celestial (XGE)",
+    "hash": "ee5fa5cf0851b453",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "healing-light",
+          "name": "Healing Light",
+          "level": 1,
+          "category": "bonus_actions",
+          "action": {
+            "range": "60 feet"
+          }
+        },
+        {
+          "id": "radiant-soul",
+          "name": "Radiant Soul",
+          "level": 6,
+          "category": "traits",
+          "grants": {
+            "defenses": {
+              "resist": [
+                "radiant"
+              ]
+            }
+          }
+        },
+        {
+          "id": "celestial-resilience",
+          "name": "Celestial Resilience",
+          "level": 10,
+          "category": "traits",
+          "action": {
+            "temp_hp": "class_level + cha_mod"
+          }
+        },
+        {
+          "id": "searing-vengeance",
+          "name": "Searing Vengeance",
+          "level": 14,
+          "category": "traits",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "action": {
+            "range": "30 feet",
+            "damage": [
+              {
+                "dice": "2d8",
+                "bonus": "cha_mod",
+                "type": "radiant"
+              }
+            ]
+          }
+        }
+      ],
+      "resources": [
+        {
+          "name": "Healing Light",
+          "max": "1 + class_level",
+          "die": "d6",
+          "reset": "long"
+        }
+      ]
+    },
+    "problems": [],
+    "tokens": 27980,
+    "tries": 2,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:22:30+00:00"
+  },
+  "warlock-phb:hexblade-xge": {
+    "label": "Warlock (PHB) · The Hexblade (XGE)",
+    "hash": "8d80697dd46ee935",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "hexblade-s-curse",
+          "name": "Hexblade's Curse",
+          "level": 1,
+          "category": "bonus_actions",
+          "uses": {
+            "max": 1,
+            "reset": "short"
+          },
+          "action": {
+            "range": "30 feet"
+          }
+        },
+        {
+          "id": "hex-warrior",
+          "name": "Hex Warrior",
+          "level": 1,
+          "category": "traits",
+          "grants": {
+            "weapons": [
+              "martial_weapons"
+            ],
+            "armor": [
+              "medium",
+              "shields"
+            ]
+          }
+        },
+        {
+          "id": "accursed-specter",
+          "name": "Accursed Specter",
+          "level": 6,
+          "category": "traits",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          }
+        },
+        {
+          "id": "armor-of-hexes",
+          "name": "Armor of Hexes",
+          "level": 10,
+          "category": "reactions"
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13513,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:23:03+00:00"
+  },
+  "warlock-phb:fathomless-tce": {
+    "label": "Warlock (PHB) · The Fathomless (TCE)",
+    "hash": "ff9af752576058d2",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "tentacle-of-the-deeps",
+          "name": "Tentacle of the Deeps",
+          "level": 1,
+          "category": "bonus_actions",
+          "uses": {
+            "max": "pb",
+            "reset": "long"
+          },
+          "action": {
+            "range": "60 feet",
+            "attack": {
+              "kind": "spell",
+              "bonus": "spell_mod + pb",
+              "damage": [
+                {
+                  "dice": {
+                    "1": "1d8",
+                    "10": "2d8"
+                  },
+                  "type": "cold"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "gift-of-the-sea",
+          "name": "Gift of the Sea",
+          "level": 1,
+          "category": "traits",
+          "grants": {
+            "speed": {
+              "swim": 40
+            }
+          }
+        },
+        {
+          "id": "oceanic-soul",
+          "name": "Oceanic Soul",
+          "level": 6,
+          "category": "traits",
+          "grants": {
+            "defenses": {
+              "resist": [
+                "cold"
+              ]
+            }
+          }
+        },
+        {
+          "id": "guardian-coil",
+          "name": "Guardian Coil",
+          "level": 6,
+          "category": "reactions"
+        },
+        {
+          "id": "grasping-tentacles",
+          "name": "Grasping Tentacles",
+          "level": 10,
+          "category": "traits",
+          "action": {
+            "temp_hp": "class_level"
+          }
+        },
+        {
+          "id": "fathomless-plunge",
+          "name": "Fathomless Plunge",
+          "level": 14,
+          "category": "actions",
+          "uses": {
+            "max": 1,
+            "reset": "short"
+          },
+          "action": {
+            "range": "30 feet"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 14209,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:23:16+00:00"
+  },
+  "warlock-phb:genie-tce": {
+    "label": "Warlock (PHB) · The Genie (TCE)",
+    "hash": "bf27e9ec90a75f0a",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "bottled-respite",
+          "name": "Bottled Respite",
+          "level": 1,
+          "category": "actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          }
+        },
+        {
+          "id": "genie-s-wrath",
+          "name": "Genie's Wrath",
+          "level": 1,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "bonus": "pb",
+                  "type": "bludgeoning",
+                  "condition": "dao"
+                },
+                {
+                  "bonus": "pb",
+                  "type": "thunder",
+                  "condition": "djinni"
+                },
+                {
+                  "bonus": "pb",
+                  "type": "fire",
+                  "condition": "efreeti"
+                },
+                {
+                  "bonus": "pb",
+                  "type": "cold",
+                  "condition": "marid"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "elemental-gift",
+          "name": "Elemental Gift",
+          "level": 6,
+          "category": "bonus_actions",
+          "uses": {
+            "max": "pb",
+            "reset": "long"
+          },
+          "toggle": {
+            "uses_charge": true,
+            "grants": {
+              "speed": {
+                "fly": 30
+              }
+            }
+          }
+        },
+        {
+          "id": "sanctuary-vessel",
+          "name": "Sanctuary Vessel",
+          "level": 10,
+          "category": "bonus_actions"
+        },
+        {
+          "id": "limited-wish",
+          "name": "Limited Wish",
+          "level": 14,
+          "category": "actions"
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 14180,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:23:33+00:00"
+  },
+  "warlock-phb:undead-vrgr": {
+    "label": "Warlock (PHB) · The Undead (VRGR)",
+    "hash": "ed572226cc15251f",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "form-of-dread",
+          "name": "Form of Dread",
+          "level": 1,
+          "category": "bonus_actions",
+          "uses": {
+            "max": "pb",
+            "reset": "long"
+          },
+          "action": {
+            "temp_hp": "1d10 + class_level",
+            "attack": {
+              "kind": "any"
+            },
+            "save": {
+              "ability": "wis",
+              "on_success": "none",
+              "conditions": [
+                "frightened"
+              ]
+            }
+          },
+          "toggle": {
+            "uses_charge": true,
+            "grants": {
+              "defenses": {
+                "condition_immune": [
+                  "frightened"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "id": "necrotic-husk",
+          "name": "Necrotic Husk",
+          "level": 10,
+          "category": "reactions",
+          "action": {
+            "range": "30 feet",
+            "damage": [
+              {
+                "dice": "2d10",
+                "bonus": "class_level",
+                "type": "necrotic"
+              }
+            ]
+          },
+          "grants": {
+            "defenses": {
+              "resist": [
+                "necrotic"
+              ]
+            }
+          }
+        },
+        {
+          "id": "spirit-projection",
+          "name": "Spirit Projection",
+          "level": 14,
+          "category": "actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "toggle": {
+            "uses_charge": true,
+            "grants": {
+              "speed": {
+                "fly": "walk"
+              },
+              "defenses": {
+                "resist": [
+                  "bludgeoning",
+                  "piercing",
+                  "slashing"
+                ]
+              }
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 14134,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:23:47+00:00"
   }
 }

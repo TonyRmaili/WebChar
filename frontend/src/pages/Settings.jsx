@@ -1,5 +1,8 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import useAuthStore from "../store/AuthStore";
+import { tokens, untilMidnight, useAiStore } from "../store/AiStore";
+import { useAssistantStore } from "../store/AssistantStore";
+import { textareaCls } from "./Catalogues/catalogueStyle";
 import deleteSkull from "../assets/deleteSkull.svg";
 import { INK, InkHeading, ParchmentSheet, Title } from "../styles/parchment";
 import { ghostBtn } from "../styles/parchmentForm";
@@ -11,7 +14,8 @@ import { THEMES, TOKENS, contrast, getAppearance, loadAppearance, saveAppearance
      Appearance     pick a theme (a small preview of each)
      Colours        recolour single slots of the chosen theme, with a
                     readability check against the page
-     AI & API keys  empty for now — to be filled in later
+     AI & API keys  the daily token limit and today's use, and the
+                    assistant's instructions without a campaign (API keys later)
      Account        who's logged in; delete the account
 
    The look is saved in this browser (theme.js → saveAppearance) and
@@ -154,11 +158,12 @@ function Settings() {
           </div>
         </section>
 
-        {/* ─── AI & API keys (to be built) ─── */}
+        {/* ─── AI & API keys ─── */}
         <section className="mb-10">
-          <InkHeading right={<span className={`text-xs italic ${INK.faint}`}>coming soon</span>}>AI &amp; API Keys</InkHeading>
-          <p className={`text-sm italic ${INK.faded}`}>API keys and the DM assistant's settings will be configured here.</p>
-          {/* Add the API key fields and AI settings here. */}
+          <InkHeading>AI &amp; API Keys</InkHeading>
+          <AiBudget />
+          <AssistantInstructions />
+          <p className={`mt-4 text-xs italic ${INK.faint}`}>API keys: the server's own OpenAI key is used for now; your own keys come later.</p>
         </section>
 
         {/* ─── Account ─── */}
@@ -188,6 +193,152 @@ function Settings() {
   );
 }
 
+/* The daily token limit, and what today has used. Tokens are what OpenAI
+   counts and bills; the assistant stops (until midnight here) once the
+   day's are used up. Empty = no limit. */
+function AiBudget() {
+  const usage = useAiStore((s) => s.usage);
+  const refresh = useAiStore((s) => s.refresh);
+  const setLimit = useAiStore((s) => s.setLimit);
+  const [draft, setDraft] = useState(null); // what's typed, until saved
+  const [note, setNote] = useState(null);
+
+  useEffect(() => {
+    refresh();
+  }, [refresh]);
+
+  const saved = usage?.daily_limit == null ? "" : String(usage.daily_limit);
+  const value = draft ?? saved;
+  const changed = draft !== null && draft.trim() !== saved;
+
+  const save = async () => {
+    const text = value.trim().replace(/[\s,.]/g, "");
+    if (text && !/^\d+$/.test(text)) {
+      setNote({ bad: true, text: "A whole number of tokens, or empty for no limit" });
+      return;
+    }
+    const r = await setLimit(text ? Number(text) : null);
+    setNote(r.ok ? { text: "Saved" } : { bad: true, text: r.message });
+    if (r.ok) setDraft(null);
+  };
+
+  return (
+    <div>
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+        <label htmlFor="ai-daily-limit" className="w-40 text-[15px] text-ink">
+          Daily token limit
+        </label>
+        <input
+          id="ai-daily-limit"
+          inputMode="numeric"
+          value={value}
+          placeholder="no limit"
+          onChange={(e) => {
+            setDraft(e.target.value);
+            setNote(null);
+          }}
+          onKeyDown={(e) => e.key === "Enter" && changed && save()}
+          className="w-36 border-0 border-b border-rule/60 bg-transparent px-0 py-0.5 font-body text-[15px] text-ink placeholder:italic placeholder:text-ink-faint focus:border-rubric focus:outline-none focus:ring-0"
+        />
+        {changed && (
+          <button type="button" onClick={save} className={ghostBtn}>
+            save
+          </button>
+        )}
+        {note && <span className={`text-xs italic ${note.bad ? "text-bad" : "text-good"}`}>{note.text}</span>}
+      </div>
+
+      {usage && (
+        <p className={`mt-3 text-sm ${INK.faded}`}>
+          Today: <span className="text-ink">{tokens(usage.used)}</span> tokens
+          {usage.daily_limit != null && (
+            <>
+              {" "}
+              of {tokens(usage.daily_limit)},{" "}
+              <span className={usage.left === 0 ? "text-bad" : "text-ink"}>{tokens(usage.left)} left</span>
+            </>
+          )}{" "}
+          <span className="italic">
+            (words {tokens(usage.words)} · pictures {tokens(usage.pictures)} · notes search {tokens(usage.search)})
+          </span>
+          <br />
+          <span className="text-xs italic">A new day starts at midnight on this computer's clock, in {untilMidnight(usage.resets_in_minutes)}.</span>
+        </p>
+      )}
+      <p className={`mt-2 text-xs italic ${INK.faint}`}>
+        Tokens are what OpenAI counts and bills. Every question sends the ticked prompts and the notes found for it along, so those count too; a picture usually costs more than an answer. The notes search costs very little: changed notes are read again, and each question once.
+      </p>
+    </div>
+  );
+}
+
+/* What the assistant is told when it's on no campaign (with a campaign,
+   its ticked prompts are sent instead). Empty = the default, shown here so
+   it can be changed. Saved on the server (routers/assistant.py). */
+function AssistantInstructions() {
+  const instructions = useAssistantStore((s) => s.instructions);
+  const own = useAssistantStore((s) => s.ownInstructions);
+  const { refreshSettings, setInstructions } = useAssistantStore.getState();
+  const [draft, setDraft] = useState(null); // what's typed, until saved
+  const [note, setNote] = useState(null);
+
+  useEffect(() => {
+    refreshSettings();
+  }, [refreshSettings]);
+
+  const value = draft ?? instructions;
+  const changed = draft !== null && draft.trim() !== instructions.trim();
+
+  const save = async (text) => {
+    const r = await setInstructions(text);
+    setNote(r.ok ? { text: text ? "Saved" : "Back to the default" } : { bad: true, text: r.message });
+    if (r.ok) setDraft(null);
+  };
+
+  return (
+    <div className="mt-6">
+      <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+        <label htmlFor="assistant-instructions" className="text-[15px] text-ink">
+          The assistant without a campaign
+        </label>
+        <span className={`text-xs italic ${INK.faded}`}>{own ? "your own instructions" : "the default instructions"}</span>
+        <span className="ml-auto flex items-baseline gap-4">
+          {note && <span className={`text-xs italic ${note.bad ? "text-bad" : "text-good"}`}>{note.text}</span>}
+          {own && !changed && (
+            <button type="button" onClick={() => save("")} className={ghostBtn} title="Forget your own instructions and use the default">
+              back to the default
+            </button>
+          )}
+          {changed && (
+            <>
+              <button type="button" onClick={() => setDraft(null)} className={ghostBtn}>
+                cancel
+              </button>
+              <button type="button" onClick={() => save(value.trim())} className={`${ghostBtn} !text-rubric`}>
+                save
+              </button>
+            </>
+          )}
+        </span>
+      </div>
+      <textarea
+        id="assistant-instructions"
+        value={value}
+        onChange={(e) => {
+          setDraft(e.target.value);
+          setNote(null);
+        }}
+        rows={10}
+        maxLength={20000}
+        className={`${textareaCls} mt-2 resize-y font-mono text-[13px]`}
+      />
+      <p className={`mt-1 text-xs italic ${INK.faint}`}>
+        Sent with every question when the assistant is on no campaign. With a campaign, its ticked prompts are sent instead.
+      </p>
+    </div>
+  );
+}
+
 /* A small picture of a theme: its desk, a page, writing, a label and an
    emphasised word. data-theme on the box switches the colours inside it
    to that theme's, so both previews show at once. */
@@ -208,4 +359,4 @@ function ThemePreview({ id }) {
   );
 }
 
-export default Settings;
+export default Settings;

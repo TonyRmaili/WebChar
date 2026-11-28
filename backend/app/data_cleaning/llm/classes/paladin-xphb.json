@@ -355,5 +355,399 @@
     "reviewed": false,
     "reasoning": "medium",
     "at": "2026-11-19T11:36:12+00:00"
+  },
+  "paladin-xphb:glory-xphb": {
+    "label": "Paladin (XPHB) · Oath of Glory (XPHB)",
+    "hash": "b845a64eaa0fe405",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "inspiring-smite",
+          "name": "Inspiring Smite",
+          "level": 3,
+          "category": "traits",
+          "action": {
+            "range": "30 feet",
+            "temp_hp": "2d8 + class_level"
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "peerless-athlete",
+          "name": "Peerless Athlete",
+          "level": 3,
+          "category": "bonus_actions",
+          "toggle": true,
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "aura-of-alacrity",
+          "name": "Aura of Alacrity",
+          "level": 7,
+          "category": "traits",
+          "modifiers": [
+            {
+              "target": "speed.walk",
+              "add": 10
+            }
+          ]
+        },
+        {
+          "id": "glorious-defense",
+          "name": "Glorious Defense",
+          "level": 15,
+          "category": "reactions",
+          "uses": {
+            "max": "max(1, cha_mod)",
+            "reset": "long"
+          },
+          "modifiers": [
+            {
+              "target": "ac",
+              "add": "max(1, cha_mod)"
+            }
+          ]
+        },
+        {
+          "id": "living-legend",
+          "name": "Living Legend",
+          "level": 20,
+          "category": "bonus_actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "toggle": {
+            "uses_charge": true
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13725,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:07:29+00:00"
+  },
+  "paladin-xphb:ancients-xphb": {
+    "label": "Paladin (XPHB) · Oath of the Ancients (XPHB)",
+    "hash": "929ac2fbc5efbaba",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "nature-s-wrath",
+          "name": "Nature's Wrath",
+          "level": 3,
+          "category": "actions",
+          "action": {
+            "range": "15 feet",
+            "save": {
+              "ability": "str",
+              "on_success": "none",
+              "conditions": [
+                "restrained"
+              ]
+            }
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "aura-of-warding",
+          "name": "Aura of Warding",
+          "level": 7,
+          "category": "traits",
+          "grants": {
+            "defenses": {
+              "resist": [
+                "necrotic",
+                "psychic",
+                "radiant"
+              ]
+            }
+          }
+        },
+        {
+          "id": "undying-sentinel",
+          "name": "Undying Sentinel",
+          "level": 15,
+          "category": "traits",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "action": {
+            "heal": "3 * class_level"
+          }
+        },
+        {
+          "id": "elder-champion",
+          "name": "Elder Champion",
+          "level": 20,
+          "category": "bonus_actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "toggle": {
+            "uses_charge": true
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13769,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:07:44+00:00"
+  },
+  "paladin-xphb:vengeance-xphb": {
+    "label": "Paladin (XPHB) · Oath of Vengeance (XPHB)",
+    "hash": "53a2391dad7b42e8",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "vow-of-enmity",
+          "name": "Vow of Enmity",
+          "level": 3,
+          "category": "traits",
+          "toggle": true,
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "relentless-avenger",
+          "name": "Relentless Avenger",
+          "level": 7,
+          "category": "reactions"
+        },
+        {
+          "id": "soul-of-vengeance",
+          "name": "Soul of Vengeance",
+          "level": 15,
+          "category": "reactions"
+        },
+        {
+          "id": "avenging-angel",
+          "name": "Avenging Angel",
+          "level": 20,
+          "category": "bonus_actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "toggle": {
+            "uses_charge": true,
+            "grants": {
+              "speed": {
+                "fly": 60
+              }
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13337,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:08:01+00:00"
+  },
+  "paladin-xphb:noble-genies-frhof": {
+    "label": "Paladin (XPHB) · Oath of the Noble Genies (FRHoF)",
+    "hash": "0208cee4627ba8c6",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "dao-s-crush",
+          "name": "Dao's Crush",
+          "level": 3,
+          "category": "traits",
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "djinni-s-escape",
+          "name": "Djinni's Escape",
+          "level": 3,
+          "category": "traits",
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "efreeti-s-fury",
+          "name": "Efreeti's Fury",
+          "level": 3,
+          "category": "traits",
+          "action": {
+            "damage": [
+              {
+                "dice": "2d4",
+                "type": "fire"
+              }
+            ]
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "marid-s-surge",
+          "name": "Marid's Surge",
+          "level": 3,
+          "category": "traits",
+          "action": {
+            "area": "10-foot Emanation originating from you",
+            "save": {
+              "ability": "str",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "none",
+              "conditions": [
+                "prone"
+              ]
+            }
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "genie-s-splendor",
+          "name": "Genie's Splendor",
+          "level": 3,
+          "category": "traits",
+          "modifiers": [
+            {
+              "target": "ac",
+              "base": "10 + dex_mod + cha_mod",
+              "requires": [
+                "no_armor"
+              ]
+            }
+          ],
+          "picks": [
+            {
+              "grant": "skills",
+              "count": 1,
+              "from": [
+                "acrobatics",
+                "intimidation",
+                "performance",
+                "persuasion"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "elemental-rebuke",
+          "name": "Elemental Rebuke",
+          "level": 15,
+          "category": "reactions",
+          "uses": {
+            "max": "max(1, cha_mod)",
+            "reset": "long"
+          }
+        },
+        {
+          "id": "noble-scion",
+          "name": "Noble Scion",
+          "level": 20,
+          "category": "bonus_actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "toggle": {
+            "uses_charge": true,
+            "grants": {
+              "speed": {
+                "fly": 60
+              }
+            }
+          }
+        },
+        {
+          "id": "minor-wish",
+          "name": "Minor Wish",
+          "level": 20,
+          "category": "reactions"
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 15400,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:08:14+00:00"
+  },
+  "paladin-xphb:holy-wow": {
+    "label": "Paladin (XPHB) · Oath of the Holy (WoW)",
+    "hash": "7384651fd9e6fa0b",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "beacon-of-light",
+          "name": "Beacon of Light",
+          "level": 3,
+          "category": "actions",
+          "action": {
+            "range": "60 feet"
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "holy-deliverance",
+          "name": "Holy Deliverance",
+          "level": 20,
+          "category": "bonus_actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "toggle": {
+            "uses_charge": true
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 12760,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:08:39+00:00"
   }
 }

@@ -583,5 +583,425 @@
     "reviewed": false,
     "reasoning": "medium",
     "at": "2026-11-18T13:21:24+00:00"
+  },
+  "monk-xphb:mercy-xphb": {
+    "label": "Monk (XPHB) · Warrior of Mercy (XPHB)",
+    "hash": "e7b32040f8cdc7da",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "hand-of-harm",
+          "name": "Hand of Harm",
+          "level": 3,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "melee",
+              "damage": [
+                {
+                  "dice": "martial_arts",
+                  "bonus": "wis_mod",
+                  "type": "necrotic"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "hand-of-healing",
+          "name": "Hand of Healing",
+          "level": 3,
+          "category": "actions",
+          "action": {
+            "range": "touch",
+            "heal": "martial_arts + wis_mod"
+          }
+        },
+        {
+          "id": "implements-of-mercy",
+          "name": "Implements of Mercy",
+          "level": 3,
+          "category": "traits",
+          "grants": {
+            "skills": [
+              "insight",
+              "medicine"
+            ],
+            "tools": [
+              "herbalism_kit"
+            ]
+          }
+        },
+        {
+          "id": "flurry-of-healing-and-harm",
+          "name": "Flurry of Healing and Harm",
+          "level": 11,
+          "category": "traits",
+          "uses": {
+            "max": "max(1, wis_mod)",
+            "reset": "long"
+          }
+        },
+        {
+          "id": "hand-of-ultimate-mercy",
+          "name": "Hand of Ultimate Mercy",
+          "level": 17,
+          "category": "actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "action": {
+            "range": "touch",
+            "heal": "4d10 + wis_mod"
+          },
+          "consumes": {
+            "resource": "focus_points",
+            "amount": 5
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13565,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:37:02+00:00"
+  },
+  "monk-xphb:shadow-xphb": {
+    "label": "Monk (XPHB) · Warrior of Shadow (XPHB)",
+    "hash": "f1b59b660047bde1",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "darkness",
+          "name": "Darkness",
+          "level": 3,
+          "category": "traits",
+          "consumes": {
+            "resource": "focus_points",
+            "amount": 1
+          }
+        },
+        {
+          "id": "darkvision",
+          "name": "Darkvision",
+          "level": 3,
+          "category": "traits",
+          "grants": {
+            "senses": {
+              "darkvision": 60
+            }
+          }
+        },
+        {
+          "id": "shadow-step",
+          "name": "Shadow Step",
+          "level": 6,
+          "category": "bonus_actions",
+          "action": {
+            "range": "60 feet"
+          }
+        },
+        {
+          "id": "improved-shadow-step",
+          "name": "Improved Shadow Step",
+          "level": 11,
+          "category": "bonus_actions",
+          "consumes": {
+            "resource": "focus_points",
+            "amount": 1
+          }
+        },
+        {
+          "id": "cloak-of-shadows",
+          "name": "Cloak of Shadows",
+          "level": 17,
+          "category": "actions",
+          "toggle": true,
+          "consumes": {
+            "resource": "focus_points",
+            "amount": 3
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13476,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:37:14+00:00"
+  },
+  "monk-xphb:elements-xphb": {
+    "label": "Monk (XPHB) · Warrior of the Elements (XPHB)",
+    "hash": "b6f26278c65af456",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "elemental-attunement",
+          "name": "Elemental Attunement",
+          "level": 3,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "melee"
+            },
+            "save": {
+              "ability": "str",
+              "on_success": "none"
+            }
+          },
+          "toggle": true,
+          "consumes": {
+            "resource": "focus_points",
+            "amount": 1
+          }
+        },
+        {
+          "id": "elemental-burst",
+          "name": "Elemental Burst",
+          "level": 6,
+          "category": "actions",
+          "action": {
+            "range": "120 feet",
+            "area": "20-foot-radius Sphere",
+            "save": {
+              "ability": "dex",
+              "on_success": "half",
+              "damage": [
+                {
+                  "dice": {
+                    "1": "3d8",
+                    "11": "3d10",
+                    "17": "3d12"
+                  },
+                  "type": "acid",
+                  "condition": "if Acid is chosen"
+                },
+                {
+                  "dice": {
+                    "1": "3d8",
+                    "11": "3d10",
+                    "17": "3d12"
+                  },
+                  "type": "cold",
+                  "condition": "if Cold is chosen"
+                },
+                {
+                  "dice": {
+                    "1": "3d8",
+                    "11": "3d10",
+                    "17": "3d12"
+                  },
+                  "type": "fire",
+                  "condition": "if Fire is chosen"
+                },
+                {
+                  "dice": {
+                    "1": "3d8",
+                    "11": "3d10",
+                    "17": "3d12"
+                  },
+                  "type": "lightning",
+                  "condition": "if Lightning is chosen"
+                },
+                {
+                  "dice": {
+                    "1": "3d8",
+                    "11": "3d10",
+                    "17": "3d12"
+                  },
+                  "type": "thunder",
+                  "condition": "if Thunder is chosen"
+                }
+              ]
+            }
+          },
+          "consumes": {
+            "resource": "focus_points",
+            "amount": 2
+          }
+        },
+        {
+          "id": "stride-of-the-elements",
+          "name": "Stride of the Elements",
+          "level": 11,
+          "category": "traits",
+          "toggle": {
+            "grants": {
+              "speed": {
+                "fly": "walk",
+                "swim": "walk"
+              }
+            }
+          }
+        },
+        {
+          "id": "elemental-epitome",
+          "name": "Elemental Epitome",
+          "level": 17,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "melee",
+              "damage": [
+                {
+                  "dice": "martial_arts",
+                  "type": "weapon",
+                  "condition": "once on each of your turns when you hit with an Unarmed Strike"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 30023,
+    "tries": 2,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:37:27+00:00"
+  },
+  "monk-xphb:mystic-arts-au": {
+    "label": "Monk (XPHB) · Warrior of the Mystic Arts (AU)",
+    "hash": "8231f30e6ace4512",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "mystic-fighting-style",
+          "name": "Mystic Fighting Style",
+          "level": 6,
+          "category": "actions"
+        },
+        {
+          "id": "improved-mystic-fighting-style",
+          "name": "Improved Mystic Fighting Style",
+          "level": 17,
+          "category": "bonus_actions"
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13478,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:38:09+00:00"
+  },
+  "monk-xphb:mystic-brews-wow": {
+    "label": "Monk (XPHB) · Warrior of Mystic Brews (WoW)",
+    "hash": "466690934206ca77",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "bonus-proficiencies",
+          "name": "Bonus Proficiencies",
+          "level": 3,
+          "category": "traits",
+          "grants": {
+            "skills": [
+              "performance"
+            ],
+            "tools": [
+              "brewers_supplies"
+            ]
+          }
+        },
+        {
+          "id": "redirect-attack",
+          "name": "Redirect Attack",
+          "level": 6,
+          "category": "reactions",
+          "consumes": {
+            "resource": "focus_points",
+            "amount": 1
+          }
+        },
+        {
+          "id": "cinnamon-dragon",
+          "name": "Cinnamon Dragon",
+          "level": 6,
+          "category": "actions",
+          "action": {
+            "area": "30-foot Cone",
+            "save": {
+              "ability": "dex",
+              "dc": "8 + wis_mod + pb",
+              "on_success": "half",
+              "damage": [
+                {
+                  "dice": "4d martial_arts",
+                  "type": "fire"
+                }
+              ],
+              "conditions": [
+                "poisoned"
+              ]
+            }
+          }
+        },
+        {
+          "id": "enhancing-a-magical-beverage",
+          "name": "Enhancing a Magical Beverage",
+          "level": 6,
+          "category": "traits",
+          "consumes": {
+            "resource": "focus_points",
+            "amount": 1
+          }
+        },
+        {
+          "id": "blue-lightning",
+          "name": "Blue Lightning",
+          "level": 11,
+          "category": "reactions"
+        },
+        {
+          "id": "stumbling-monk",
+          "name": "Stumbling Monk",
+          "level": 11,
+          "category": "bonus_actions"
+        },
+        {
+          "id": "intoxicated-frenzy",
+          "name": "Intoxicated Frenzy",
+          "level": 17,
+          "category": "bonus_actions",
+          "action": {
+            "attack": {
+              "kind": "melee"
+            },
+            "save": {
+              "ability": "dex",
+              "on_success": "none",
+              "conditions": [
+                "prone"
+              ]
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [
+      "feature 'Cinnamon Dragon'.save.damage[0].dice: '4d martial_arts' is not dice like '2d6'"
+    ],
+    "tokens": 31307,
+    "tries": 2,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:38:19+00:00"
   }
 }

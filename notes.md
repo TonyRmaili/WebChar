@@ -1,4 +1,4 @@
-# intersting extra data material
+# extra data material used
 1. actions ; srd
 2. bastions
 3. conditionsdiseases; srd
@@ -8,7 +8,7 @@
 7. languages; srd
 8. encounters (table)
 9. loot (table)
-10. names; perhaps replaces fantasynames generator in python?
+10. names; perhaps replaces fantasynames generator in python? also table
 11. objects
 12. rewards
 13. senses ;srd
@@ -18,10 +18,27 @@
 17. variantrules; srd
 18. vehicles
 
+
+<CLEANING PROCCESS>
+Remember to scan for all failed attempts
+--SRD all done--
+
+-- Rest --
+
+
+
+
+
+When all those are done we can finaly start looking at wrapping this project into a desktop app with electron or whatever is recommended. For that we need a new branch and remove non relevant things such as auth token, login (stuff that makes sense for a web application). Would also need to some name ideas for the app; WebChar wont hold. 
+
+
+# Campaign
+
+<File system>
+
+
+
 # Catalogue Create Forms
-
-
-
 
 
 # Fixes for the builder
@@ -33,8 +50,6 @@
 -Spells
 1. Some bug blocked loading spells from catalogue? after the define changes. Noticed after creating a spell from the define section. 
 
--Inventory
-1. weapons like frost brand (group item) is not selectable from inventory "add from catalogue"
 
 # New features
 random encounter builder and difficulty calculator
@@ -105,10 +120,7 @@ either which way some optianl features needs home
 
 # Catalogues
 
-
-1. Exclude filter option? 2 clicks and color change
-2. strip all None values from every catalogue object, even for created ones
-3. implement a randomizer
+1. implement a randomizer
 
     # Races 
     1. increase size tag to all sizes
@@ -119,10 +131,6 @@ either which way some optianl features needs home
 
     # Feats
     allow more filter options like resistance 
-
-
-
-
 
 
 # popup bug storage reseter in console

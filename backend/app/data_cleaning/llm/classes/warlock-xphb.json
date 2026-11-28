@@ -141,5 +141,421 @@
     "reviewed": false,
     "reasoning": "medium",
     "at": "2026-11-19T11:42:34+00:00"
+  },
+  "warlock-xphb:archfey-xphb": {
+    "label": "Warlock (XPHB) · Archfey Patron (XPHB)",
+    "hash": "e495032132509263",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "refreshing-step",
+          "name": "Refreshing Step",
+          "level": 3,
+          "category": "traits",
+          "action": {
+            "temp_hp": "1d10"
+          }
+        },
+        {
+          "id": "taunting-step",
+          "name": "Taunting Step",
+          "level": 3,
+          "category": "traits",
+          "action": {
+            "area": "within 5 feet of the space you left",
+            "save": {
+              "ability": "wis",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "none"
+            }
+          }
+        },
+        {
+          "id": "misty-escape",
+          "name": "Misty Escape",
+          "level": 6,
+          "category": "traits"
+        },
+        {
+          "id": "disappearing-step",
+          "name": "Disappearing Step",
+          "level": 6,
+          "category": "traits"
+        },
+        {
+          "id": "dreadful-step",
+          "name": "Dreadful Step",
+          "level": 6,
+          "category": "traits",
+          "action": {
+            "area": "within 5 feet of the space you left or the space you appear in",
+            "save": {
+              "ability": "wis",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "none",
+              "damage": [
+                {
+                  "dice": "2d10",
+                  "type": "psychic"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "beguiling-defenses",
+          "name": "Beguiling Defenses",
+          "level": 10,
+          "category": "reactions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "grants": {
+            "defenses": {
+              "condition_immune": [
+                "charmed"
+              ]
+            }
+          }
+        },
+        {
+          "id": "bewitching-magic",
+          "name": "Bewitching Magic",
+          "level": 14,
+          "category": "traits"
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 14295,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:24:03+00:00"
+  },
+  "warlock-xphb:celestial-xphb": {
+    "label": "Warlock (XPHB) · Celestial Patron (XPHB)",
+    "hash": "e13746d22e04f744",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "healing-light",
+          "name": "Healing Light",
+          "level": 3,
+          "category": "bonus_actions",
+          "action": {
+            "range": "60 feet"
+          }
+        },
+        {
+          "id": "radiant-soul",
+          "name": "Radiant Soul",
+          "level": 6,
+          "category": "traits",
+          "grants": {
+            "defenses": {
+              "resist": [
+                "radiant"
+              ]
+            }
+          }
+        },
+        {
+          "id": "searing-vengeance",
+          "name": "Searing Vengeance",
+          "level": 14,
+          "category": "reactions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "action": {
+            "range": "60 feet",
+            "area": "30 feet",
+            "damage": [
+              {
+                "dice": "2d8",
+                "bonus": "cha_mod",
+                "type": "radiant"
+              }
+            ]
+          }
+        }
+      ],
+      "resources": [
+        {
+          "name": "Healing Light",
+          "max": "1 + class_level",
+          "die": "d6",
+          "reset": "long"
+        }
+      ]
+    },
+    "problems": [],
+    "tokens": 13366,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:24:21+00:00"
+  },
+  "warlock-xphb:great-old-one-xphb": {
+    "label": "Warlock (XPHB) · Great Old One Patron (XPHB)",
+    "hash": "e7570e94d1bb9c7d",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "awakened-mind",
+          "name": "Awakened Mind",
+          "level": 3,
+          "category": "bonus_actions",
+          "action": {
+            "range": "30 feet"
+          }
+        },
+        {
+          "id": "psychic-spells",
+          "name": "Psychic Spells",
+          "level": 3,
+          "category": "traits"
+        },
+        {
+          "id": "clairvoyant-combatant",
+          "name": "Clairvoyant Combatant",
+          "level": 6,
+          "category": "bonus_actions",
+          "uses": {
+            "max": 1,
+            "reset": "short"
+          },
+          "action": {
+            "range": "30 feet",
+            "save": {
+              "ability": "wis",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "none"
+            }
+          }
+        },
+        {
+          "id": "eldritch-hex",
+          "name": "Eldritch Hex",
+          "level": 10,
+          "category": "traits"
+        },
+        {
+          "id": "thought-shield",
+          "name": "Thought Shield",
+          "level": 10,
+          "category": "traits",
+          "grants": {
+            "defenses": {
+              "resist": [
+                "psychic"
+              ]
+            }
+          }
+        },
+        {
+          "id": "create-thrall",
+          "name": "Create Thrall",
+          "level": 14,
+          "category": "traits"
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 14034,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:24:33+00:00"
+  },
+  "warlock-xphb:undead-rhw": {
+    "label": "Warlock (XPHB) · Undead Patron (RHW)",
+    "hash": "4173c3bead8731c5",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "form-of-dread",
+          "name": "Form of Dread",
+          "level": 3,
+          "category": "bonus_actions",
+          "uses": {
+            "max": "max(1, cha_mod)",
+            "reset": "long"
+          },
+          "action": {
+            "temp_hp": "1d10 + class_level",
+            "attack": {
+              "kind": "any"
+            },
+            "save": {
+              "ability": "wis",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "none",
+              "conditions": [
+                "frightened"
+              ]
+            }
+          },
+          "toggle": {
+            "uses_charge": true,
+            "grants": {
+              "defenses": {
+                "condition_immune": [
+                  "frightened"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "id": "necrotic-resilience",
+          "name": "Necrotic Resilience",
+          "level": 10,
+          "category": "traits",
+          "toggle": {
+            "grants": {
+              "defenses": {
+                "immune": [
+                  "necrotic"
+                ]
+              }
+            }
+          },
+          "grants": {
+            "defenses": {
+              "resist": [
+                "necrotic"
+              ]
+            }
+          }
+        },
+        {
+          "id": "unholy-resuscitation",
+          "name": "Unholy Resuscitation",
+          "level": 10,
+          "category": "traits",
+          "uses": {
+            "max": 1,
+            "reset": "short"
+          },
+          "action": {
+            "area": "30-foot Emanation",
+            "save": {
+              "ability": "con",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "half",
+              "damage": [
+                {
+                  "dice": "2d10",
+                  "bonus": "cha_mod",
+                  "type": "necrotic"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "dread-resistance",
+          "name": "Dread Resistance",
+          "level": 14,
+          "category": "traits",
+          "toggle": {
+            "grants": {
+              "defenses": {
+                "resist": [
+                  "bludgeoning",
+                  "piercing",
+                  "slashing"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "id": "ghostly-flight",
+          "name": "Ghostly Flight",
+          "level": 14,
+          "category": "traits",
+          "toggle": {
+            "grants": {
+              "speed": {
+                "fly": "walk"
+              }
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 14527,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:24:50+00:00"
+  },
+  "warlock-xphb:vestige-au": {
+    "label": "Warlock (XPHB) · Vestige Patron (AU)",
+    "hash": "362cb7ff0f0eb9d4",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "the-vestige-in-combat",
+          "name": "The Vestige in Combat",
+          "level": 3,
+          "category": "bonus_actions"
+        },
+        {
+          "id": "disappearance-of-the-vestige",
+          "name": "Disappearance of the Vestige",
+          "level": 3,
+          "category": "actions"
+        },
+        {
+          "id": "vestige-recovery",
+          "name": "Vestige Recovery",
+          "level": 10,
+          "category": "reactions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "consumes": {
+            "resource": "pact_magic_spell_slots",
+            "amount": 1
+          }
+        },
+        {
+          "id": "semblance-of-life",
+          "name": "Semblance of Life",
+          "level": 14,
+          "category": "actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "action": {
+            "range": "90 feet"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 14349,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:25:08+00:00"
   }
 }

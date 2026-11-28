@@ -451,16 +451,17 @@ def finalize_classes(srd_only: bool = False) -> dict:
 # ---------- monsters ----------
 
 # Categories made by code alone: the cleaned entries are the final ones.
-CODE_ONLY = ("monsters",)
+CODE_ONLY = ("monsters", "rules", "lore", "toolkit")
 
 
 def finalize_code_only(category: str, srd_only: bool = False) -> dict:
-    """Monsters have no LLM step: cleaned/ is copied to final/ (with --srd,
-    only SRD entries)."""
+    """Monsters and the reference catalogues have no LLM step: cleaned/ is
+    copied to final/ (with --srd, only SRD entries)."""
     out = [e for e in read_list(CLEANED_PATH, category) if not srd_only or e.get("srd")]
     suffix = "_srd" if srd_only else ""
     files = write_list(FINAL_PATH, category, out, suffix=suffix)
-    return {"written": f"{category}{suffix}/ ({len(files)} books)", "entries": len(out), "waiting": [],
+    written = f"{category}{suffix}/ ({len(files)} books)" if len(files) > 1 else f"{category}{suffix}.json"
+    return {"written": written, "entries": len(out), "waiting": [],
             "features_without_text": [], "no_subraces_yet": [], "grants_added_from_text": {}}
 
 

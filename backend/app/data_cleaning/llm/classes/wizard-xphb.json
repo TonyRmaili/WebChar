@@ -155,5 +155,505 @@
     "reviewed": false,
     "reasoning": "low",
     "at": "2026-11-16T13:19:58+00:00"
+  },
+  "wizard-xphb:abjurer-xphb": {
+    "label": "Wizard (XPHB) · Abjurer (XPHB)",
+    "hash": "a9ec40f37724b46f",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "arcane-ward",
+          "name": "Arcane Ward",
+          "level": 3,
+          "category": "bonus_actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          }
+        },
+        {
+          "id": "projected-ward",
+          "name": "Projected Ward",
+          "level": 6,
+          "category": "reactions",
+          "action": {
+            "range": "30 feet"
+          }
+        },
+        {
+          "id": "spell-breaker",
+          "name": "Spell Breaker",
+          "level": 10,
+          "category": "traits"
+        },
+        {
+          "id": "spell-resistance",
+          "name": "Spell Resistance",
+          "level": 14,
+          "category": "traits"
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13185,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:27:37+00:00"
+  },
+  "wizard-xphb:diviner-xphb": {
+    "label": "Wizard (XPHB) · Diviner (XPHB)",
+    "hash": "613445ed3180c44d",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "portent",
+          "name": "Portent",
+          "level": 3,
+          "category": "traits",
+          "uses": {
+            "max": {
+              "1": 2,
+              "14": 3
+            },
+            "reset": "long"
+          }
+        },
+        {
+          "id": "the-third-eye",
+          "name": "The Third Eye",
+          "level": 10,
+          "category": "bonus_actions",
+          "uses": {
+            "max": 1,
+            "reset": "short"
+          },
+          "toggle": {
+            "uses_charge": true,
+            "grants": {
+              "senses": {
+                "darkvision": 120
+              }
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 12786,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:27:49+00:00"
+  },
+  "wizard-xphb:illusionist-xphb": {
+    "label": "Wizard (XPHB) · Illusionist (XPHB)",
+    "hash": "4296612e2a54c592",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "improved-illusions",
+          "name": "Improved Illusions",
+          "level": 3,
+          "category": "traits"
+        },
+        {
+          "id": "phantasmal-creatures",
+          "name": "Phantasmal Creatures",
+          "level": 6,
+          "category": "traits"
+        },
+        {
+          "id": "illusory-self",
+          "name": "Illusory Self",
+          "level": 10,
+          "category": "reactions",
+          "uses": {
+            "max": 1,
+            "reset": "short"
+          }
+        },
+        {
+          "id": "illusory-reality",
+          "name": "Illusory Reality",
+          "level": 14,
+          "category": "bonus_actions"
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 12583,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:28:00+00:00"
+  },
+  "wizard-xphb:bladesinger-frhof": {
+    "label": "Wizard (XPHB) · Bladesinger (FRHoF)",
+    "hash": "1aa79b754ad49ad4",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "bladesong",
+          "name": "Bladesong",
+          "level": 3,
+          "category": "bonus_actions",
+          "uses": {
+            "max": "max(1, int_mod)",
+            "reset": "long"
+          },
+          "toggle": {
+            "uses_charge": true,
+            "modifiers": [
+              {
+                "target": "ac",
+                "add": "max(1, int_mod)"
+              },
+              {
+                "target": "speed.walk",
+                "add": 10
+              }
+            ]
+          }
+        },
+        {
+          "id": "training-in-war-and-song",
+          "name": "Training in War and Song",
+          "level": 3,
+          "category": "traits",
+          "picks": [
+            {
+              "grant": "skills",
+              "count": 1,
+              "from": [
+                "acrobatics",
+                "athletics",
+                "performance",
+                "persuasion"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "song-of-defense",
+          "name": "Song of Defense",
+          "level": 10,
+          "category": "reactions"
+        },
+        {
+          "id": "song-of-victory",
+          "name": "Song of Victory",
+          "level": 14,
+          "category": "bonus_actions"
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13036,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:28:09+00:00"
+  },
+  "wizard-xphb:conjurer-au": {
+    "label": "Wizard (XPHB) · Conjurer (AU)",
+    "hash": "82216eec18a4b1a1",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "benign-transposition",
+          "name": "Benign Transposition",
+          "level": 3,
+          "category": "bonus_actions",
+          "uses": {
+            "max": "max(1, int_mod)",
+            "reset": "long"
+          },
+          "action": {
+            "range": "30 feet"
+          }
+        },
+        {
+          "id": "splintered-summons",
+          "name": "Splintered Summons",
+          "level": 14,
+          "category": "traits",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13118,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:28:20+00:00"
+  },
+  "wizard-xphb:enchanter-au": {
+    "label": "Wizard (XPHB) · Enchanter (AU)",
+    "hash": "f129bea74868ac6a",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "enchanting-conversationalist",
+          "name": "Enchanting Conversationalist",
+          "level": 3,
+          "category": "traits",
+          "picks": [
+            {
+              "grant": "skills",
+              "count": 1,
+              "from": [
+                "deception",
+                "intimidation",
+                "persuasion"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "hypnotic-presence",
+          "name": "Hypnotic Presence",
+          "level": 3,
+          "category": "actions",
+          "uses": {
+            "max": "max(1, int_mod)",
+            "reset": "long"
+          },
+          "action": {
+            "range": "10 feet",
+            "save": {
+              "ability": "wis",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "none",
+              "conditions": [
+                "charmed",
+                "incapacitated"
+              ]
+            }
+          }
+        },
+        {
+          "id": "split-enchantment",
+          "name": "Split Enchantment",
+          "level": 6,
+          "category": "traits",
+          "uses": {
+            "max": "int_mod",
+            "reset": "long"
+          }
+        },
+        {
+          "id": "instinctive-charm",
+          "name": "Instinctive Charm",
+          "level": 10,
+          "category": "reactions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "action": {
+            "range": "30 feet",
+            "save": {
+              "ability": "wis",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "none"
+            }
+          }
+        },
+        {
+          "id": "alter-memories",
+          "name": "Alter Memories",
+          "level": 14,
+          "category": "actions",
+          "action": {
+            "save": {
+              "ability": "int",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "none"
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13168,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:28:32+00:00"
+  },
+  "wizard-xphb:necromancer-au": {
+    "label": "Wizard (XPHB) · Necromancer (AU)",
+    "hash": "0b331d11ca5ede59",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "necrotic-resistance",
+          "name": "Necrotic Resistance",
+          "level": 3,
+          "category": "traits",
+          "grants": {
+            "defenses": {
+              "resist": [
+                "necrotic"
+              ]
+            }
+          }
+        },
+        {
+          "id": "undead-familiar",
+          "name": "Undead Familiar",
+          "level": 3,
+          "category": "reactions"
+        },
+        {
+          "id": "undead-thralls",
+          "name": "Undead Thralls",
+          "level": 6,
+          "category": "traits"
+        },
+        {
+          "id": "withering-strike",
+          "name": "Withering Strike",
+          "level": 6,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "bonus": "max(1, int_mod)",
+                  "type": "necrotic"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "harvest-undead",
+          "name": "Harvest Undead",
+          "level": 10,
+          "category": "reactions",
+          "action": {
+            "heal": "class_level"
+          }
+        },
+        {
+          "id": "bolster-undead",
+          "name": "Bolster Undead",
+          "level": 14,
+          "category": "bonus_actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "action": {
+            "range": "60 feet",
+            "temp_hp": "class_level"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 15291,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:28:43+00:00"
+  },
+  "wizard-xphb:transmuter-au": {
+    "label": "Wizard (XPHB) · Transmuter (AU)",
+    "hash": "16626986245c8efb",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "transmuter-s-stone",
+          "name": "Transmuter's Stone",
+          "level": 3,
+          "category": "traits",
+          "grants": {
+            "saves": [
+              "con"
+            ]
+          }
+        },
+        {
+          "id": "aquatic-adaptation",
+          "name": "Aquatic Adaptation",
+          "level": 3,
+          "category": "bonus_actions"
+        },
+        {
+          "id": "empowered-transmutation",
+          "name": "Empowered Transmutation",
+          "level": 6,
+          "category": "traits",
+          "uses": {
+            "max": "max(1, int_mod)",
+            "reset": "long"
+          }
+        },
+        {
+          "id": "shape-shifter",
+          "name": "Shape-Shifter",
+          "level": 10,
+          "category": "traits",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          }
+        },
+        {
+          "id": "major-transformation",
+          "name": "Major Transformation",
+          "level": 14,
+          "category": "actions"
+        },
+        {
+          "id": "panacea",
+          "name": "Panacea",
+          "level": 14,
+          "category": "actions",
+          "action": {
+            "range": "touch"
+          }
+        },
+        {
+          "id": "restore-youth",
+          "name": "Restore Youth",
+          "level": 14,
+          "category": "actions",
+          "action": {
+            "range": "touch"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 15328,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:29:06+00:00"
   }
 }

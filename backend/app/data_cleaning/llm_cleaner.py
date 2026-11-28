@@ -1,6 +1,7 @@
 # Run from backend/:
 #   py -m app.data_cleaning.llm_cleaner status                         what's done / waiting, per category
 #   py -m app.data_cleaning.llm_cleaner run races --srd --max-tokens 500000
+#   py -m app.data_cleaning.llm_cleaner run classes --max-tokens 1500000
 #   py -m app.data_cleaning.llm_cleaner run backgrounds --only "Acolyte|PHB" --only "Acolyte|XPHB"
 #   py -m app.data_cleaning.llm_cleaner run races --limit 10 --dry-run   show what would be sent, no cost
 #   py -m app.data_cleaning.llm_cleaner run races --only "Dragonborn|PHB" --no-subraces

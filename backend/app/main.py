@@ -25,6 +25,8 @@ from app.routers.tables import router as table_router
 from app.routers.dice import router as dice_router
 from app.routers.catalogues import router as catalogue_router
 from app.routers.characters import router as character_router
+from app.routers.ai import router as ai_router
+from app.routers.assistant import router as assistant_router
 
 from app.database.schemas import (
     UserSchema,
@@ -70,7 +72,21 @@ app.add_middleware(
 
 # Big responses (the catalogues: monsters are 16 MB of JSON) go out gzipped:
 # about 2.6 MB. Level 5 is fast (~0.3 s on the monsters) and nearly as small as 9.
-app.add_middleware(GZipMiddleware, minimum_size=1024, compresslevel=5)
+class GZipExceptStreams(GZipMiddleware):
+    """GZip for everything but streamed answers: compression collects text
+    into big blocks before sending, which would hold a streamed answer back
+    until the end."""
+
+    STREAMED = {"/assistant/ask"}
+
+    async def __call__(self, scope, receive, send):
+        if scope["type"] == "http" and scope["path"] in self.STREAMED:
+            await self.app(scope, receive, send)
+            return
+        await super().__call__(scope, receive, send)
+
+
+app.add_middleware(GZipExceptStreams, minimum_size=1024, compresslevel=5)
 
 app.include_router(minions_router)
 app.include_router(campaign_router)
@@ -81,6 +97,8 @@ app.include_router(table_router)
 app.include_router(dice_router)
 app.include_router(catalogue_router)
 app.include_router(character_router)
+app.include_router(ai_router)
+app.include_router(assistant_router)
 
 
 @app.middleware("http")

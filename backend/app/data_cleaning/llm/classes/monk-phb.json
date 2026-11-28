@@ -555,5 +555,898 @@
     "reviewed": false,
     "reasoning": "medium",
     "at": "2026-11-18T13:19:19+00:00"
+  },
+  "monk-phb:dedicated-weapon": {
+    "label": "Monk (PHB) · Dedicated Weapon",
+    "hash": "2cbdaef2af59fe25",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11422,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:33:59+00:00"
+  },
+  "monk-phb:ki-fueled-attack": {
+    "label": "Monk (PHB) · Ki-Fueled Attack",
+    "hash": "60dae1e8a5d2fcef",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "ki-fueled-attack",
+          "name": "Ki-Fueled Attack",
+          "level": 3,
+          "category": "bonus_actions"
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11467,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:34:02+00:00"
+  },
+  "monk-phb:quickened-healing": {
+    "label": "Monk (PHB) · Quickened Healing",
+    "hash": "a67d2fe4f79a0d5c",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "quickened-healing",
+          "name": "Quickened Healing",
+          "level": 4,
+          "category": "actions",
+          "action": {
+            "heal": "martial_arts + pb"
+          },
+          "consumes": {
+            "resource": "focus_points",
+            "amount": 2
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11554,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:34:05+00:00"
+  },
+  "monk-phb:focused-aim": {
+    "label": "Monk (PHB) · Focused Aim",
+    "hash": "126419acdd162200",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "focused-aim",
+          "name": "Focused Aim",
+          "level": 5,
+          "category": "traits",
+          "consumes": {
+            "resource": "focus_points",
+            "amount": 1
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 12296,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:34:08+00:00"
+  },
+  "monk-phb:shadow-phb": {
+    "label": "Monk (PHB) · Way of Shadow (PHB)",
+    "hash": "935d174625dcf161",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "shadow-arts",
+          "name": "Shadow Arts",
+          "level": 3,
+          "category": "traits"
+        },
+        {
+          "id": "shadow-step",
+          "name": "Shadow Step",
+          "level": 6,
+          "category": "bonus_actions",
+          "action": {
+            "range": "60 feet"
+          }
+        },
+        {
+          "id": "cloak-of-shadows",
+          "name": "Cloak of Shadows",
+          "level": 11,
+          "category": "actions",
+          "toggle": true
+        },
+        {
+          "id": "opportunist",
+          "name": "Opportunist",
+          "level": 17,
+          "category": "reactions"
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 12672,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:34:17+00:00"
+  },
+  "monk-phb:four-elements-phb": {
+    "label": "Monk (PHB) · Way of the Four Elements (PHB)",
+    "hash": "37a94fcdbe14195d",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 12504,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:34:26+00:00"
+  },
+  "monk-phb:long-death-scag": {
+    "label": "Monk (PHB) · Way of the Long Death (SCAG)",
+    "hash": "4079d79e89c783e1",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "touch-of-death",
+          "name": "Touch of Death",
+          "level": 3,
+          "category": "traits",
+          "action": {
+            "range": "5 feet",
+            "temp_hp": "max(1, wis_mod + class_level)"
+          }
+        },
+        {
+          "id": "hour-of-reaping",
+          "name": "Hour of Reaping",
+          "level": 6,
+          "category": "actions",
+          "action": {
+            "range": "30 feet",
+            "save": {
+              "ability": "wis",
+              "on_success": "none",
+              "conditions": [
+                "frightened"
+              ]
+            }
+          }
+        },
+        {
+          "id": "mastery-of-death",
+          "name": "Mastery of Death",
+          "level": 11,
+          "category": "traits",
+          "consumes": {
+            "resource": "focus_points",
+            "amount": 1
+          }
+        },
+        {
+          "id": "touch-of-the-long-death",
+          "name": "Touch of the Long Death",
+          "level": 17,
+          "category": "actions",
+          "action": {
+            "range": "5 feet",
+            "save": {
+              "ability": "con",
+              "on_success": "half",
+              "damage": [
+                {
+                  "dice": "2d10",
+                  "type": "necrotic"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 12860,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:34:30+00:00"
+  },
+  "monk-phb:drunken-master-xge": {
+    "label": "Monk (PHB) · Way of the Drunken Master (XGE)",
+    "hash": "26754eea4ebc6755",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "bonus-proficiencies",
+          "name": "Bonus Proficiencies",
+          "level": 3,
+          "category": "traits",
+          "grants": {
+            "skills": [
+              "performance"
+            ],
+            "tools": [
+              "brewers_supplies"
+            ]
+          }
+        },
+        {
+          "id": "redirect-attack",
+          "name": "Redirect Attack",
+          "level": 6,
+          "category": "reactions",
+          "action": {
+            "range": "5 feet"
+          },
+          "consumes": {
+            "resource": "focus_points",
+            "amount": 1
+          }
+        },
+        {
+          "id": "drunkard-s-luck",
+          "name": "Drunkard's Luck",
+          "level": 11,
+          "category": "traits",
+          "consumes": {
+            "resource": "focus_points",
+            "amount": 2
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 12910,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:34:40+00:00"
+  },
+  "monk-phb:kensei-xge": {
+    "label": "Monk (PHB) · Way of the Kensei (XGE)",
+    "hash": "37b15258b335f520",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "way-of-the-brush",
+          "name": "Way of the Brush",
+          "level": 3,
+          "category": "traits",
+          "picks": [
+            {
+              "grant": "tools",
+              "count": 1,
+              "from": [
+                "artisans_tools"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "agile-parry",
+          "name": "Agile Parry",
+          "level": 3,
+          "category": "traits",
+          "modifiers": [
+            {
+              "target": "ac",
+              "add": 2
+            }
+          ]
+        },
+        {
+          "id": "kensei-s-shot",
+          "name": "Kensei's Shot",
+          "level": 3,
+          "category": "bonus_actions",
+          "action": {
+            "attack": {
+              "kind": "ranged",
+              "damage": [
+                {
+                  "dice": "1d4",
+                  "type": "weapon"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "deft-strike",
+          "name": "Deft Strike",
+          "level": 6,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": "martial_arts",
+                  "type": "weapon"
+                }
+              ]
+            }
+          },
+          "consumes": {
+            "resource": "focus_points",
+            "amount": 1
+          }
+        },
+        {
+          "id": "sharpen-the-blade",
+          "name": "Sharpen the Blade",
+          "level": 11,
+          "category": "bonus_actions"
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 14264,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:34:48+00:00"
+  },
+  "monk-phb:sun-soul-xge": {
+    "label": "Monk (PHB) · Way of the Sun Soul (XGE)",
+    "hash": "24200c581d099ebf",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "radiant-sun-bolt",
+          "name": "Radiant Sun Bolt",
+          "level": 3,
+          "category": "actions",
+          "action": {
+            "range": "30 feet",
+            "attack": {
+              "kind": "spell",
+              "bonus": "pb + dex_mod",
+              "damage": [
+                {
+                  "dice": "martial_arts",
+                  "bonus": "dex_mod",
+                  "type": "radiant"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "searing-arc-strike",
+          "name": "Searing Arc Strike",
+          "level": 6,
+          "category": "traits",
+          "consumes": {
+            "resource": "focus_points",
+            "amount": 2
+          }
+        },
+        {
+          "id": "searing-sunburst",
+          "name": "Searing Sunburst",
+          "level": 11,
+          "category": "actions",
+          "action": {
+            "range": "150 feet",
+            "area": "20-foot-radius sphere",
+            "save": {
+              "ability": "con",
+              "on_success": "none",
+              "damage": [
+                {
+                  "dice": "2d6",
+                  "type": "radiant"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "sun-shield",
+          "name": "Sun Shield",
+          "level": 17,
+          "category": "reactions",
+          "action": {
+            "damage": [
+              {
+                "bonus": "5 + wis_mod",
+                "type": "radiant"
+              }
+            ]
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13766,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:35:04+00:00"
+  },
+  "monk-phb:mercy-tce": {
+    "label": "Monk (PHB) · Way of Mercy (TCE)",
+    "hash": "82ddb36decb190a1",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "implements-of-mercy",
+          "name": "Implements of Mercy",
+          "level": 3,
+          "category": "traits",
+          "grants": {
+            "skills": [
+              "insight",
+              "medicine"
+            ],
+            "tools": [
+              "herbalism_kit"
+            ]
+          }
+        },
+        {
+          "id": "hand-of-healing",
+          "name": "Hand of Healing",
+          "level": 3,
+          "category": "actions",
+          "action": {
+            "range": "touch",
+            "heal": "martial_arts + wis_mod"
+          }
+        },
+        {
+          "id": "hand-of-harm",
+          "name": "Hand of Harm",
+          "level": 3,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "melee",
+              "damage": [
+                {
+                  "dice": "martial_arts",
+                  "bonus": "wis_mod",
+                  "type": "necrotic"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "hand-of-ultimate-mercy",
+          "name": "Hand of Ultimate Mercy",
+          "level": 17,
+          "category": "actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "action": {
+            "range": "touch",
+            "heal": "4d10 + wis_mod"
+          },
+          "consumes": {
+            "resource": "focus_points",
+            "amount": 5
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13819,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:35:17+00:00"
+  },
+  "monk-phb:astral-self-tce": {
+    "label": "Monk (PHB) · Way of the Astral Self (TCE)",
+    "hash": "5b437bd4464f6637",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "arms-of-the-astral-self",
+          "name": "Arms of the Astral Self",
+          "level": 3,
+          "category": "bonus_actions",
+          "action": {
+            "range": "10 feet",
+            "save": {
+              "ability": "dex",
+              "on_success": "none",
+              "damage": [
+                {
+                  "dice": "martial_arts",
+                  "type": "force"
+                },
+                {
+                  "dice": "martial_arts",
+                  "type": "force"
+                }
+              ]
+            }
+          },
+          "toggle": true,
+          "consumes": {
+            "resource": "focus_points",
+            "amount": 1
+          }
+        },
+        {
+          "id": "visage-of-the-astral-self",
+          "name": "Visage of the Astral Self",
+          "level": 6,
+          "category": "bonus_actions",
+          "toggle": {
+            "grants": {
+              "senses": {
+                "darkvision": 120
+              }
+            }
+          },
+          "consumes": {
+            "resource": "focus_points",
+            "amount": 1
+          }
+        },
+        {
+          "id": "deflect-energy",
+          "name": "Deflect Energy",
+          "level": 11,
+          "category": "reactions"
+        },
+        {
+          "id": "empowered-arms",
+          "name": "Empowered Arms",
+          "level": 11,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "melee",
+              "damage": [
+                {
+                  "dice": "martial_arts",
+                  "type": "force"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "awakened-astral-self",
+          "name": "Awakened Astral Self",
+          "level": 17,
+          "category": "bonus_actions",
+          "toggle": {
+            "modifiers": [
+              {
+                "target": "ac",
+                "add": 2
+              }
+            ]
+          },
+          "consumes": {
+            "resource": "focus_points",
+            "amount": 5
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 30434,
+    "tries": 2,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:35:30+00:00"
+  },
+  "monk-phb:ascendant-dragon-ftd": {
+    "label": "Monk (PHB) · Way of the Ascendant Dragon (FTD)",
+    "hash": "ef86a7e5c45fd88c",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "draconic-presence",
+          "name": "Draconic Presence",
+          "level": 3,
+          "category": "reactions"
+        },
+        {
+          "id": "tongue-of-dragons",
+          "name": "Tongue of Dragons",
+          "level": 3,
+          "category": "traits",
+          "picks": [
+            {
+              "grant": "languages",
+              "count": 1,
+              "from": [
+                "all_languages"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "breath-of-the-dragon",
+          "name": "Breath of the Dragon",
+          "level": 3,
+          "category": "actions",
+          "uses": {
+            "max": "pb",
+            "reset": "long"
+          },
+          "action": {
+            "area": "20-foot cone or 30-foot line that is 5 feet wide",
+            "save": {
+              "ability": "dex",
+              "on_success": "half",
+              "damage": [
+                {
+                  "dice": {
+                    "1": "2d4",
+                    "5": "2d6",
+                    "11": "3d8",
+                    "17": "3d10"
+                  },
+                  "type": "acid",
+                  "condition": "if acid is chosen"
+                },
+                {
+                  "dice": {
+                    "1": "2d4",
+                    "5": "2d6",
+                    "11": "3d8",
+                    "17": "3d10"
+                  },
+                  "type": "cold",
+                  "condition": "if cold is chosen"
+                },
+                {
+                  "dice": {
+                    "1": "2d4",
+                    "5": "2d6",
+                    "11": "3d8",
+                    "17": "3d10"
+                  },
+                  "type": "fire",
+                  "condition": "if fire is chosen"
+                },
+                {
+                  "dice": {
+                    "1": "2d4",
+                    "5": "2d6",
+                    "11": "3d8",
+                    "17": "3d10"
+                  },
+                  "type": "lightning",
+                  "condition": "if lightning is chosen"
+                },
+                {
+                  "dice": {
+                    "1": "2d4",
+                    "5": "2d6",
+                    "11": "3d8",
+                    "17": "3d10"
+                  },
+                  "type": "poison",
+                  "condition": "if poison is chosen"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "wings-unfurled",
+          "name": "Wings Unfurled",
+          "level": 6,
+          "category": "traits",
+          "uses": {
+            "max": "pb",
+            "reset": "long"
+          },
+          "toggle": {
+            "uses_charge": true,
+            "grants": {
+              "speed": {
+                "fly": "walk"
+              }
+            }
+          }
+        },
+        {
+          "id": "aspect-of-the-wyrm",
+          "name": "Aspect of the Wyrm",
+          "level": 11,
+          "category": "bonus_actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "action": {
+            "area": "10-foot radius aura"
+          }
+        },
+        {
+          "id": "frightful-presence",
+          "name": "Frightful Presence",
+          "level": 11,
+          "category": "bonus_actions",
+          "action": {
+            "save": {
+              "ability": "wis",
+              "on_success": "none",
+              "conditions": [
+                "frightened"
+              ]
+            }
+          }
+        },
+        {
+          "id": "augment-breath",
+          "name": "Augment Breath",
+          "level": 17,
+          "category": "traits",
+          "action": {
+            "area": "60-foot cone or 90-foot line that is 5 feet wide",
+            "save": {
+              "ability": "dex",
+              "on_success": "half",
+              "damage": [
+                {
+                  "dice": {
+                    "1": "4d4",
+                    "5": "4d6",
+                    "11": "4d8",
+                    "17": "4d10"
+                  },
+                  "type": "acid",
+                  "condition": "if acid is chosen"
+                },
+                {
+                  "dice": {
+                    "1": "4d4",
+                    "5": "4d6",
+                    "11": "4d8",
+                    "17": "4d10"
+                  },
+                  "type": "cold",
+                  "condition": "if cold is chosen"
+                },
+                {
+                  "dice": {
+                    "1": "4d4",
+                    "5": "4d6",
+                    "11": "4d8",
+                    "17": "4d10"
+                  },
+                  "type": "fire",
+                  "condition": "if fire is chosen"
+                },
+                {
+                  "dice": {
+                    "1": "4d4",
+                    "5": "4d6",
+                    "11": "4d8",
+                    "17": "4d10"
+                  },
+                  "type": "lightning",
+                  "condition": "if lightning is chosen"
+                },
+                {
+                  "dice": {
+                    "1": "4d4",
+                    "5": "4d6",
+                    "11": "4d8",
+                    "17": "4d10"
+                  },
+                  "type": "poison",
+                  "condition": "if poison is chosen"
+                }
+              ]
+            }
+          },
+          "consumes": {
+            "resource": "focus_points",
+            "amount": 1
+          }
+        },
+        {
+          "id": "blindsight",
+          "name": "Blindsight",
+          "level": 17,
+          "category": "traits",
+          "grants": {
+            "senses": {
+              "blindsight": 10
+            }
+          }
+        },
+        {
+          "id": "explosive-fury",
+          "name": "Explosive Fury",
+          "level": 17,
+          "category": "traits",
+          "action": {
+            "area": "your aura",
+            "save": {
+              "ability": "dex",
+              "on_success": "none",
+              "damage": [
+                {
+                  "dice": "3d10",
+                  "type": "acid",
+                  "condition": "if acid is chosen"
+                },
+                {
+                  "dice": "3d10",
+                  "type": "cold",
+                  "condition": "if cold is chosen"
+                },
+                {
+                  "dice": "3d10",
+                  "type": "fire",
+                  "condition": "if fire is chosen"
+                },
+                {
+                  "dice": "3d10",
+                  "type": "lightning",
+                  "condition": "if lightning is chosen"
+                },
+                {
+                  "dice": "3d10",
+                  "type": "poison",
+                  "condition": "if poison is chosen"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 33178,
+    "tries": 2,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:36:11+00:00"
   }
 }

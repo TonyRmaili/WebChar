@@ -306,5 +306,518 @@
     "reviewed": false,
     "reasoning": "medium",
     "at": "2026-11-19T11:38:19+00:00"
+  },
+  "ranger-xphb:pet-specialization": {
+    "label": "Ranger (XPHB) · Pet Specialization",
+    "hash": "535efe595e978d1f",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "cunning",
+          "name": "Cunning",
+          "level": 6,
+          "category": "traits",
+          "modifiers": [
+            {
+              "target": "speed.walk",
+              "add": 10
+            }
+          ]
+        },
+        {
+          "id": "ferocity",
+          "name": "Ferocity",
+          "level": 6,
+          "category": "traits",
+          "action": {
+            "heal": "wis_mod"
+          }
+        },
+        {
+          "id": "tenacity",
+          "name": "Tenacity",
+          "level": 6,
+          "category": "traits",
+          "modifiers": [
+            {
+              "target": "hp_max",
+              "add": "6 + class_level"
+            }
+          ]
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13135,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:10:50+00:00"
+  },
+  "ranger-xphb:beast-master-xphb": {
+    "label": "Ranger (XPHB) · Beast Master (XPHB)",
+    "hash": "3ba2c02c009176d9",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "the-beast-in-combat",
+          "name": "The Beast in Combat",
+          "level": 3,
+          "category": "bonus_actions"
+        },
+        {
+          "id": "restoring-or-replacing-the-beast",
+          "name": "Restoring or Replacing the Beast",
+          "level": 3,
+          "category": "actions",
+          "action": {
+            "range": "touch"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13194,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:11:04+00:00"
+  },
+  "ranger-xphb:fey-wanderer-xphb": {
+    "label": "Ranger (XPHB) · Fey Wanderer (XPHB)",
+    "hash": "dd0e29947a2ddae6",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "dreadful-strikes",
+          "name": "Dreadful Strikes",
+          "level": 3,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": {
+                    "1": "1d4",
+                    "11": "1d6"
+                  },
+                  "type": "psychic",
+                  "condition": "once per turn"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "otherworldly-glamour",
+          "name": "Otherworldly Glamour",
+          "level": 3,
+          "category": "traits",
+          "picks": [
+            {
+              "grant": "skills",
+              "count": 1,
+              "from": [
+                "deception",
+                "performance",
+                "persuasion"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "beguiling-twist",
+          "name": "Beguiling Twist",
+          "level": 7,
+          "category": "reactions",
+          "action": {
+            "range": "120 feet",
+            "save": {
+              "ability": "wis",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "none",
+              "conditions": [
+                "charmed",
+                "frightened"
+              ]
+            }
+          }
+        },
+        {
+          "id": "fey-reinforcements",
+          "name": "Fey Reinforcements",
+          "level": 11,
+          "category": "traits"
+        },
+        {
+          "id": "misty-wanderer",
+          "name": "Misty Wanderer",
+          "level": 15,
+          "category": "traits"
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13250,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:11:17+00:00"
+  },
+  "ranger-xphb:gloom-stalker-xphb": {
+    "label": "Ranger (XPHB) · Gloom Stalker (XPHB)",
+    "hash": "5a1dc9e4034117d6",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "ambusher-s-leap",
+          "name": "Ambusher's Leap",
+          "level": 3,
+          "category": "traits"
+        },
+        {
+          "id": "dreadful-strike",
+          "name": "Dreadful Strike",
+          "level": 3,
+          "category": "traits",
+          "uses": {
+            "max": "max(1, wis_mod)",
+            "reset": "long"
+          },
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": {
+                    "1": "2d6",
+                    "11": "2d8"
+                  },
+                  "type": "psychic"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "initiative-bonus",
+          "name": "Initiative Bonus",
+          "level": 3,
+          "category": "traits",
+          "modifiers": [
+            {
+              "target": "initiative",
+              "add": "wis_mod"
+            }
+          ]
+        },
+        {
+          "id": "umbral-sight",
+          "name": "Umbral Sight",
+          "level": 3,
+          "category": "traits",
+          "grants": {
+            "senses": {
+              "darkvision": 60
+            }
+          }
+        },
+        {
+          "id": "iron-mind",
+          "name": "Iron Mind",
+          "level": 7,
+          "category": "traits",
+          "grants": {
+            "saves": [
+              "wis"
+            ]
+          }
+        },
+        {
+          "id": "mass-fear",
+          "name": "Mass Fear",
+          "level": 11,
+          "category": "traits",
+          "action": {
+            "save": {
+              "ability": "wis",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "none",
+              "conditions": [
+                "frightened"
+              ]
+            }
+          }
+        },
+        {
+          "id": "shadowy-dodge",
+          "name": "Shadowy Dodge",
+          "level": 15,
+          "category": "reactions",
+          "action": {
+            "range": "30 feet"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 15091,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:11:29+00:00"
+  },
+  "ranger-xphb:winter-walker-frhof": {
+    "label": "Ranger (XPHB) · Winter Walker (FRHoF)",
+    "hash": "c53bff3352a23096",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "frigid-explorer",
+          "name": "Frigid Explorer",
+          "level": 3,
+          "category": "traits",
+          "grants": {
+            "defenses": {
+              "resist": [
+                "cold"
+              ]
+            }
+          }
+        },
+        {
+          "id": "polar-strikes",
+          "name": "Polar Strikes",
+          "level": 3,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": {
+                    "1": "1d4",
+                    "11": "1d6"
+                  },
+                  "type": "cold"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "hunter-s-rime",
+          "name": "Hunter's Rime",
+          "level": 3,
+          "category": "traits",
+          "action": {
+            "temp_hp": "1d10 + class_level"
+          }
+        },
+        {
+          "id": "fortifying-soul",
+          "name": "Fortifying Soul",
+          "level": 7,
+          "category": "actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "action": {
+            "heal": "1d10 + class_level"
+          }
+        },
+        {
+          "id": "chilling-retribution",
+          "name": "Chilling Retribution",
+          "level": 11,
+          "category": "reactions",
+          "uses": {
+            "max": "max(1, wis_mod)",
+            "reset": "long"
+          },
+          "action": {
+            "save": {
+              "ability": "wis",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "none",
+              "conditions": [
+                "stunned"
+              ]
+            }
+          }
+        },
+        {
+          "id": "frozen-haunt",
+          "name": "Frozen Haunt",
+          "level": 15,
+          "category": "traits",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "action": {
+            "area": "15-foot Emanation",
+            "damage": [
+              {
+                "dice": "2d4",
+                "type": "cold"
+              }
+            ]
+          },
+          "toggle": {
+            "uses_charge": true,
+            "grants": {
+              "defenses": {
+                "immune": [
+                  "cold"
+                ],
+                "condition_immune": [
+                  "grappled",
+                  "prone",
+                  "restrained"
+                ]
+              }
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 14874,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:11:55+00:00"
+  },
+  "ranger-xphb:hollow-warden-rhw": {
+    "label": "Ranger (XPHB) · Hollow Warden (RHW)",
+    "hash": "3a5f4d372927f901",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "wrath-of-the-wild",
+          "name": "Wrath of the Wild",
+          "level": 3,
+          "category": "bonus_actions",
+          "toggle": {
+            "modifiers": [
+              {
+                "target": "ac",
+                "add": {
+                  "1": 1,
+                  "11": 2
+                }
+              }
+            ]
+          },
+          "consumes": {
+            "resource": "favored_enemy",
+            "amount": 1
+          }
+        },
+        {
+          "id": "prowling-retribution",
+          "name": "Prowling Retribution",
+          "level": 3,
+          "category": "reactions"
+        },
+        {
+          "id": "unnerving-aura",
+          "name": "Unnerving Aura",
+          "level": 3,
+          "category": "traits",
+          "action": {
+            "area": "10-foot Emanation",
+            "save": {
+              "ability": "wis",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "none",
+              "conditions": [
+                "frightened"
+              ]
+            }
+          }
+        },
+        {
+          "id": "hungering-might",
+          "name": "Hungering Might",
+          "level": 7,
+          "category": "traits",
+          "action": {
+            "heal": "1d10 + wis_mod",
+            "attack": {
+              "kind": "any"
+            }
+          },
+          "modifiers": [
+            {
+              "target": "save.con",
+              "add": "max(1, wis_mod)"
+            }
+          ]
+        },
+        {
+          "id": "ominous-strikes",
+          "name": "Ominous Strikes",
+          "level": 15,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "bonus": "wis_mod",
+                  "type": "weapon",
+                  "condition": "target has the Frightened condition"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "persistent-wrath",
+          "name": "Persistent Wrath",
+          "level": 15,
+          "category": "traits",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          }
+        },
+        {
+          "id": "timeless",
+          "name": "Timeless",
+          "level": 15,
+          "category": "traits",
+          "grants": {
+            "defenses": {
+              "condition_immune": [
+                "exhaustion"
+              ]
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 15617,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:12:17+00:00"
   }
 }

@@ -2,6 +2,8 @@ import React, { useMemo, useState } from "react";
 import { usePopupStore } from "../store/PopupStore";
 import { DeckPanel, DeckStacks, closeAll } from "./CardDeck";
 import { DICE_WINDOW, toggleDiceTower } from "./dice/DiceTowerWindow";
+import { ASSISTANT_WINDOW, toggleAssistant } from "./assistant/AssistantWindow";
+import { useAssistantStore } from "../store/AssistantStore";
 import { deckCards } from "./popups/decks";
 import OmniSearch from "./OmniSearch";
 
@@ -25,6 +27,11 @@ const Icon = ({ name, className = "h-5 w-5" }) => {
       </svg>);
     case "dice": // faceted die
       return (<svg {...p}><path d="M12 2.5 4 7v10l8 4.5 8-4.5V7z" /><path d="M4 7l8 4.5L20 7M12 11.5V22" /></svg>);
+    case "assistant": // a speech bubble with a spark
+      return (<svg {...p}>
+        <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3h11A2.5 2.5 0 0 1 20 5.5v8a2.5 2.5 0 0 1-2.5 2.5H10l-4.5 4v-4h0A2.5 2.5 0 0 1 3 13.5" />
+        <path d="M12 6.5l.9 2.3 2.3.9-2.3.9-.9 2.3-.9-2.3-2.3-.9 2.3-.9z" />
+      </svg>);
     case "cards": // stacked cards
       return (<svg {...p}><rect x="8" y="3" width="12" height="16" rx="2" /><path d="M5 7v11a2 2 0 0 0 2 2h9" /></svg>);
     case "trash":
@@ -51,8 +58,8 @@ const ToolButton = ({ icon, label, onClick, active = false, badge, ...rest }) =>
 
 /* ---------------- Footer ----------------
    A leather bar (wc-desk). Slides up when the mouse reaches the bottom
-   edge. The DiceTower button
-   opens the tower or puts it away — minimized, it waits behind the button
+   edge. The DiceTower and Assistant buttons
+   open their window or put it away — minimized, it waits behind the button
    rather than in a deck. Minimized cards sit in decks (CardDeck.jsx); the CardDeck button, or a deck, opens the
    deck panel above the footer, and the footer stays up while it's open.
    It sits above every card window (their z-index counts up from 100) and
@@ -61,11 +68,14 @@ function Footer() {
   const [open, setOpen] = useState(false);
   const [deckPanel, setDeckPanel] = useState(null); // null | "all" | a deck id
 
-  // The dice tower minimizes behind its own button, not into the deck.
+  // The dice tower and the assistant minimize behind their own buttons, not into the deck.
   const allMinimized = usePopupStore((s) => s.minimized);
   const minimized = useMemo(() => deckCards(allMinimized), [allMinimized]);
   const hasMinimized = minimized.length > 0;
   const towerOpen = usePopupStore((s) => s.openPopups.some((p) => p.id === DICE_WINDOW));
+  const assistantOpen = usePopupStore((s) => s.openPopups.some((p) => p.id === ASSISTANT_WINDOW));
+  // Put away while it writes or paints: a mark on the button.
+  const assistantBusy = useAssistantStore((s) => s.busy.words || s.busy.pictures);
 
   const showPanel = (panel) => {
     setDeckPanel(panel);
@@ -99,13 +109,20 @@ function Footer() {
 
             {/* tools (popups / features — wired later via PopupStore) */}
             <div className="flex items-center gap-1">
-              <ToolButton icon="embedder" label="Embedder" onClick={() => {/* TODO: embedder prompt */}} />
               <ToolButton
                 icon="dice"
                 label="DiceTower"
                 active={towerOpen}
                 onClick={toggleDiceTower}
                 title={towerOpen ? "Put the dice tower away (it keeps everything)" : "Open the dice tower"}
+              />
+              <ToolButton
+                icon="assistant"
+                label="Assistant"
+                active={assistantOpen}
+                badge={assistantBusy && !assistantOpen ? "…" : null}
+                onClick={toggleAssistant}
+                title={assistantOpen ? "Put the assistant away (it keeps everything)" : "Open the assistant"}
               />
               <ToolButton
                 icon="cards"

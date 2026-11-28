@@ -1,0 +1,194 @@
+{
+  "death-knight-wow:death-coil": {
+    "label": "Death Knight (WoW) · Death Coil",
+    "hash": "6039131d9ac82294",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "death-coil",
+          "name": "Death Coil",
+          "level": 1,
+          "category": "bonus_actions",
+          "action": {
+            "range": "60 feet",
+            "save": {
+              "ability": "con",
+              "on_success": "half",
+              "damage": [
+                {
+                  "dice": "1d8",
+                  "type": "necrotic"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "resources": [
+        {
+          "name": "Negative Energy Dice",
+          "max": "max(1, 1 + cha_mod)",
+          "die": "d8",
+          "reset": "long"
+        }
+      ]
+    },
+    "problems": [],
+    "tokens": 24518,
+    "tries": 2,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:25:06+00:00"
+  },
+  "death-knight-wow:runic-smite": {
+    "label": "Death Knight (WoW) · Runic Smite",
+    "hash": "2fb92571c07d712a",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11149,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:25:21+00:00"
+  },
+  "death-knight-wow:faithful-steed": {
+    "label": "Death Knight (WoW) · Faithful Steed",
+    "hash": "bd29dd551a40aa86",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "ghostly-stride-undead-only-recharges-after-a-long-rest",
+          "name": "Ghostly Stride (Undead Only; Recharges After a Long Rest)",
+          "level": 5,
+          "category": "bonus_actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 12110,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:25:23+00:00"
+  },
+  "death-knight-wow:runic-strikes": {
+    "label": "Death Knight (WoW) · Runic Strikes",
+    "hash": "1ba60dded5f85cf0",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "runic-strikes",
+          "name": "Runic Strikes",
+          "level": 11,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "melee",
+              "damage": [
+                {
+                  "dice": "1d8",
+                  "type": "necrotic"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11282,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:25:31+00:00"
+  },
+  "death-knight-wow:improved-death-coil": {
+    "label": "Death Knight (WoW) · Improved Death Coil",
+    "hash": "d1e978d9953c2574",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 12056,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:25:33+00:00"
+  },
+  "death-knight-wow:ebon-blade-wow": {
+    "label": "Death Knight (WoW) · Oath of the Ebon Blade (WoW)",
+    "hash": "c96b4729409b1961",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "runic-power",
+          "name": "Runic Power",
+          "level": 3,
+          "category": "traits",
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "aura-of-deathly-endurance",
+          "name": "Aura of Deathly Endurance",
+          "level": 7,
+          "category": "traits",
+          "grants": {
+            "defenses": {
+              "resist": [
+                "cold",
+                "necrotic",
+                "psychic"
+              ]
+            }
+          }
+        },
+        {
+          "id": "runic-mastery",
+          "name": "Runic Mastery",
+          "level": 15,
+          "category": "traits",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          }
+        },
+        {
+          "id": "aspect-of-the-horsemen",
+          "name": "Aspect of the Horsemen",
+          "level": 20,
+          "category": "bonus_actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 31090,
+    "tries": 2,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:25:41+00:00"
+  }
+}

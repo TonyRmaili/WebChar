@@ -92,7 +92,10 @@ CATEGORIES = {
     # own; a legendary group (lair actions, regional effects) goes inside
     # each monster that uses it.
     "monsters": {"lists": ["monster", "legendaryGroup"], "monsters": True},
-    "actions": {"lists":["action"]}
+    # The reference catalogues: plain lists (copies resolved, the rest passes through).
+    "rules": {"lists": ["action", "condition", "disease", "status", "sense", "skill", "variantrule"]},
+    "lore": {"lists": ["deity", "language", "cult", "boon"]},
+    "toolkit": {"lists": ["trap", "hazard", "object", "vehicle", "vehicleUpgrade", "reward", "facility", "charoption"]},
 }
 
 # Keys a copy does not take from its base unless `_preserve` names them.

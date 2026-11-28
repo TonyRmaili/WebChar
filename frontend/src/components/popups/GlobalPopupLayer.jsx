@@ -4,7 +4,9 @@ import { POPUP_REGISTRY } from "./popupRegistry";
 
 /* The card windows. Each has a leather title bar (drag it to move,
    right-click anywhere to minimize) and a gold corner to resize. What's
-   inside is the popup type's own component. Colours are theme slots. */
+   inside is the popup type's own component. Colours are theme slots.
+   Footer windows (the dice tower: `footer: true` in the registry) have only
+   ×; it and a right-click put them away behind their footer button. */
 
 class PopupErrorBoundary extends Component {
   constructor(props) {
@@ -95,10 +97,13 @@ function PopupFrame({ win, onClose, onMinimize, onFocus, onMove, onResize }) {
     window.addEventListener("mouseup", onMouseUp);
   };
 
-  // Right-click anywhere on the card minimizes it. Buttons (close /
-  // minimize) and the resize corner stop propagation so their own clicks
-  // aren't hijacked.
+  // Right-click anywhere on the card minimizes it (a footer window: puts it
+  // away, which is the same thing). A menu inside the card that stops the
+  // event keeps its own right-click. In a text box, or on text you've
+  // selected, the browser's own menu opens instead (copy, paste…).
   const handleContextMenu = (e) => {
+    if (e.target.closest?.("input, textarea, [contenteditable='true']")) return;
+    if (String(window.getSelection?.() || "").trim()) return;
     e.preventDefault();
     onMinimize(win.id);
   };
@@ -113,10 +118,16 @@ function PopupFrame({ win, onClose, onMinimize, onFocus, onMove, onResize }) {
       <div onMouseDown={beginDrag} className="wc-desk flex cursor-move select-none items-center justify-between border-b border-stitch/30 px-2 py-1 font-body">
         <span className="truncate text-sm font-semibold tracking-wide text-desk-ink">{win.data.name}</span>
         <div className="flex gap-1">
-          <button className={barBtn} onClick={() => onMinimize(win.id)} title="Minimize">
-            −
-          </button>
-          <button className={`${barBtn} hover:!bg-bad/70 hover:!text-desk-ink`} onClick={() => onClose(win.id)} title="Close">
+          {!entry.footer && (
+            <button className={barBtn} onClick={() => onMinimize(win.id)} title="Minimize">
+              −
+            </button>
+          )}
+          <button
+            className={`${barBtn} hover:!bg-bad/70 hover:!text-desk-ink`}
+            onClick={() => (entry.footer ? onMinimize : onClose)(win.id)}
+            title={entry.footer ? "Put it away (it keeps everything)" : "Close"}
+          >
             ×
           </button>
         </div>

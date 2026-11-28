@@ -410,5 +410,394 @@
     "reviewed": false,
     "reasoning": "medium",
     "at": "2026-11-18T13:11:16+00:00"
+  },
+  "barbarian-xphb:wild-heart-xphb": {
+    "label": "Barbarian (XPHB) · Path of the Wild Heart (XPHB)",
+    "hash": "91804a239db00e95",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "bear",
+          "name": "Bear",
+          "level": 3,
+          "category": "traits",
+          "toggle": {
+            "grants": {
+              "defenses": {
+                "resist": [
+                  "acid",
+                  "bludgeoning",
+                  "cold",
+                  "fire",
+                  "lightning",
+                  "piercing",
+                  "poison",
+                  "slashing",
+                  "thunder"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "id": "eagle",
+          "name": "Eagle",
+          "level": 3,
+          "category": "bonus_actions"
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 14098,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-26T17:49:48+00:00"
+  },
+  "barbarian-xphb:world-tree-xphb": {
+    "label": "Barbarian (XPHB) · Path of the World Tree (XPHB)",
+    "hash": "bd4a7cbd8fa65448",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "vitality-surge",
+          "name": "Vitality Surge",
+          "level": 3,
+          "category": "traits",
+          "action": {
+            "temp_hp": "class_level"
+          }
+        },
+        {
+          "id": "life-giving-force",
+          "name": "Life-Giving Force",
+          "level": 3,
+          "category": "traits",
+          "action": {
+            "range": "10 feet",
+            "temp_hp": {
+              "1": "2d6",
+              "9": "3d6",
+              "16": "4d6"
+            }
+          }
+        },
+        {
+          "id": "branches-of-the-tree",
+          "name": "Branches of the Tree",
+          "level": 6,
+          "category": "reactions",
+          "action": {
+            "range": "30 feet",
+            "save": {
+              "ability": "str",
+              "dc": "8 + str_mod + pb",
+              "on_success": "none"
+            }
+          }
+        },
+        {
+          "id": "travel-along-the-tree",
+          "name": "Travel Along the Tree",
+          "level": 14,
+          "category": "bonus_actions",
+          "action": {
+            "range": "60 feet"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 27139,
+    "tries": 2,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-26T17:50:05+00:00"
+  },
+  "barbarian-xphb:zealot-xphb": {
+    "label": "Barbarian (XPHB) · Path of the Zealot (XPHB)",
+    "hash": "23b1b3d57c8949c5",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "divine-fury",
+          "name": "Divine Fury",
+          "level": 3,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": "1d6",
+                  "bonus": "class_level / 2",
+                  "type": "necrotic",
+                  "condition": "if you choose Necrotic"
+                },
+                {
+                  "dice": "1d6",
+                  "bonus": "class_level / 2",
+                  "type": "radiant",
+                  "condition": "if you choose Radiant"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "warrior-of-the-gods",
+          "name": "Warrior of the Gods",
+          "level": 3,
+          "category": "bonus_actions"
+        },
+        {
+          "id": "zealous-presence",
+          "name": "Zealous Presence",
+          "level": 10,
+          "category": "bonus_actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "action": {
+            "range": "60 feet"
+          }
+        },
+        {
+          "id": "rage-of-the-gods",
+          "name": "Rage of the Gods",
+          "level": 14,
+          "category": "traits",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "toggle": {
+            "uses_charge": true,
+            "grants": {
+              "speed": {
+                "fly": "walk"
+              },
+              "defenses": {
+                "resist": [
+                  "necrotic",
+                  "psychic",
+                  "radiant"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "id": "revivification",
+          "name": "Revivification",
+          "level": 14,
+          "category": "reactions",
+          "action": {
+            "range": "30 feet"
+          },
+          "consumes": {
+            "resource": "rage",
+            "amount": 1
+          }
+        }
+      ],
+      "resources": [
+        {
+          "name": "Warrior of the Gods",
+          "max": {
+            "1": 4,
+            "6": 5,
+            "12": 6,
+            "17": 7
+          },
+          "die": "d12",
+          "reset": "long"
+        }
+      ]
+    },
+    "problems": [],
+    "tokens": 28934,
+    "tries": 2,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-26T17:50:32+00:00"
+  },
+  "barbarian-xphb:elements-wow": {
+    "label": "Barbarian (XPHB) · Path of the Elements (WoW)",
+    "hash": "30320328d668afa5",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "icefury",
+          "name": "Icefury",
+          "level": 3,
+          "category": "bonus_actions",
+          "action": {
+            "range": "30 feet",
+            "attack": {
+              "kind": "spell",
+              "bonus": "con_mod + pb",
+              "damage": [
+                {
+                  "dice": {
+                    "1": "2d8",
+                    "9": "3d8",
+                    "16": "4d8"
+                  },
+                  "type": "cold"
+                },
+                {
+                  "dice": "1d10",
+                  "type": "fire",
+                  "condition": "next time the target takes Fire damage before the end of your next turn"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "lava-burst",
+          "name": "Lava Burst",
+          "level": 3,
+          "category": "bonus_actions",
+          "action": {
+            "range": "30 feet",
+            "save": {
+              "ability": "dex",
+              "dc": "8 + con_mod + pb",
+              "on_success": "half",
+              "damage": [
+                {
+                  "dice": {
+                    "1": "2d4",
+                    "9": "3d4",
+                    "16": "4d4"
+                  },
+                  "type": "fire"
+                },
+                {
+                  "dice": "1d8",
+                  "type": "lightning",
+                  "condition": "on a failed save; next time the target takes Lightning damage before the end of your next turn"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "lightning-bolt",
+          "name": "Lightning Bolt",
+          "level": 3,
+          "category": "bonus_actions",
+          "action": {
+            "range": "30 feet",
+            "save": {
+              "ability": "dex",
+              "dc": "8 + con_mod + pb",
+              "on_success": "half",
+              "damage": [
+                {
+                  "dice": {
+                    "1": "2d6",
+                    "9": "3d6",
+                    "16": "4d6"
+                  },
+                  "type": "lightning"
+                },
+                {
+                  "dice": "1d6",
+                  "type": "cold",
+                  "condition": "on a failed save; next time the target takes Cold damage before the end of your next turn"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "primordial-bond",
+          "name": "Primordial Bond",
+          "level": 10,
+          "category": "traits",
+          "toggle": {
+            "grants": {
+              "defenses": {
+                "resist": [
+                  "cold",
+                  "fire",
+                  "lightning"
+                ]
+              }
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 15436,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-26T17:51:09+00:00"
+  },
+  "barbarian-xphb:spiritual-guardian-wow": {
+    "label": "Barbarian (XPHB) · Path of the Spiritual Guardian (WoW)",
+    "hash": "e121e2c7a957b323",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "spiritual-protectors",
+          "name": "Spiritual Protectors",
+          "level": 3,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": "1d4",
+                  "type": "cold",
+                  "condition": "if you choose Strike and Cold damage"
+                },
+                {
+                  "dice": "1d4",
+                  "type": "fire",
+                  "condition": "if you choose Strike and Fire damage"
+                },
+                {
+                  "dice": "1d4",
+                  "type": "lightning",
+                  "condition": "if you choose Strike and Lightning damage"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "spirit-shield",
+          "name": "Spirit Shield",
+          "level": 6,
+          "category": "reactions",
+          "action": {
+            "range": "30 feet"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13103,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-26T17:51:32+00:00"
   }
 }

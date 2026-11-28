@@ -31,6 +31,7 @@ from .cleaners.items_cleaner import clean_base_item, clean_group, clean_item, cl
 from .cleaners.monsters_cleaner import clean_monster
 from .cleaners.optionalfeatures_cleaner import clean_optionalfeature
 from .cleaners.races_cleaner import clean_race
+from .cleaners.reference_cleaner import REFERENCE_CLEANERS
 from .cleaners.spells_cleaner import clean_spell
 from .data_files import book_files, exists, load_json, read_entries, read_list, write_list
 
@@ -51,7 +52,8 @@ CLEANERS = {
     # one file per class: the class and its subclasses together (see classes_cleaner)
     "classes": "books",
     "monsters": ("monster", clean_monster),     # one file per book
-   
+    # The reference catalogues (Rules, Lore, Toolkit tabs): text only.
+    **REFERENCE_CLEANERS,
 }
 
 

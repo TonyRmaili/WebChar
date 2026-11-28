@@ -1,5 +1,447 @@
 [
     {
+        "id": "monk-xphb:mercy-xphb",
+        "kind": "subclass",
+        "name": "Warrior of Mercy",
+        "source": "XPHB",
+        "edition": "one",
+        "text": "*Manipulate Forces of Life and Death*\n\nWarriors of Mercy manipulate the life force of others. These Monks are wandering physicians, but they bring a swift end to their enemies. They often wear masks, presenting themselves as faceless bringers of life and death.",
+        "class_id": "monk-xphb",
+        "short_name": "Mercy",
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "monk-xphb:mercy-xphb:hand-of-harm",
+                    "monk-xphb:mercy-xphb:hand-of-healing",
+                    "monk-xphb:mercy-xphb:implements-of-mercy"
+                ]
+            },
+            {
+                "level": 6,
+                "features": [
+                    "monk-xphb:mercy-xphb:physicians-touch"
+                ]
+            },
+            {
+                "level": 11,
+                "features": [
+                    "monk-xphb:mercy-xphb:flurry-of-healing-and-harm"
+                ]
+            },
+            {
+                "level": 17,
+                "features": [
+                    "monk-xphb:mercy-xphb:hand-of-ultimate-mercy"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "monk-xphb:mercy-xphb:hand-of-harm",
+                "name": "Hand of Harm",
+                "level": 3,
+                "text": "Once per turn when you hit a creature with an Unarmed Strike and deal damage, you can expend 1 Focus Point to deal extra Necrotic damage equal to one roll of your Martial Arts die plus your Wisdom modifier.",
+                "consumes": {
+                    "resource": "focus_points",
+                    "amount": 1
+                },
+                "category": "traits",
+                "action": {
+                    "attack": {
+                        "kind": "melee",
+                        "damage": [
+                            {
+                                "dice": "martial_arts",
+                                "bonus": "wis_mod",
+                                "type": "necrotic"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "monk-xphb:mercy-xphb:hand-of-healing",
+                "name": "Hand of Healing",
+                "level": 3,
+                "text": "As a Magic action, you can expend 1 Focus Point to touch a creature and restore a number of Hit Points equal to a roll of your Martial Arts die plus your Wisdom modifier. When you use your Flurry of Blows, you can replace one of the Unarmed Strikes with a use of this feature without expending a Focus Point for the healing.",
+                "consumes": {
+                    "resource": "focus_points",
+                    "amount": 1
+                },
+                "category": "actions",
+                "action": {
+                    "range": "touch",
+                    "heal": "martial_arts + wis_mod"
+                }
+            },
+            {
+                "id": "monk-xphb:mercy-xphb:implements-of-mercy",
+                "name": "Implements of Mercy",
+                "level": 3,
+                "text": "You gain proficiency in the Insight and Medicine skills and proficiency with the Herbalism Kit.",
+                "category": "traits",
+                "grants": {
+                    "skills": [
+                        "insight",
+                        "medicine"
+                    ],
+                    "tools": [
+                        "herbalism_kit"
+                    ]
+                }
+            },
+            {
+                "id": "monk-xphb:mercy-xphb:physicians-touch",
+                "name": "Physician's Touch",
+                "level": 6,
+                "text": "Your Hand of Harm and Hand of Healing improve, as detailed below.\n\n**Hand of Harm.** When you use Hand of Harm on a creature, you can also give that creature the Poisoned condition until the end of your next turn.\n\n**Hand of Healing.** When you use Hand of Healing, you can also end one of the following conditions on the creature you heal: Blinded, Deafened, Paralyzed, Poisoned, or Stunned.",
+                "category": "traits"
+            },
+            {
+                "id": "monk-xphb:mercy-xphb:flurry-of-healing-and-harm",
+                "name": "Flurry of Healing and Harm",
+                "level": 11,
+                "text": "When you use Flurry of Blows, you can replace each of the Unarmed Strikes with a use of Hand of Healing without expending Focus Points for the healing.\n\nIn addition, when you make an Unarmed Strike with Flurry of Blows and deal damage, you can use Hand of Harm with that strike without expending a Focus Point for Hand of Harm. You can still use Hand of Harm only once per turn.\n\nYou can use these benefits a total number of times equal to your Wisdom modifier (minimum of once). You regain all expended uses when you finish a Long Rest.",
+                "category": "traits",
+                "uses": {
+                    "max": "max(1, wis_mod)",
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "monk-xphb:mercy-xphb:hand-of-ultimate-mercy",
+                "name": "Hand of Ultimate Mercy",
+                "level": 17,
+                "text": "Your mastery of life energy opens the door to the ultimate mercy. As a Magic action, you can touch the corpse of a creature that died within the past 24 hours and expend 5 Focus Points. The creature then returns to life with a number of Hit Points equal to 4d10 plus your Wisdom modifier. If the creature died with any of the following conditions, the creature revives with the conditions removed: Blinded, Deafened, Paralyzed, Poisoned, and Stunned.\n\nOnce you use this feature, you can't use it again until you finish a Long Rest.",
+                "consumes": {
+                    "resource": "focus_points",
+                    "amount": 5
+                },
+                "category": "actions",
+                "uses": {
+                    "max": 1,
+                    "reset": "long"
+                },
+                "action": {
+                    "range": "touch",
+                    "heal": "4d10 + wis_mod"
+                }
+            }
+        ],
+        "resources": []
+    },
+    {
+        "id": "monk-xphb:shadow-xphb",
+        "kind": "subclass",
+        "name": "Warrior of Shadow",
+        "source": "XPHB",
+        "edition": "one",
+        "text": "*Harness Shadow Power for Stealth and Subterfuge*\n\nWarriors of Shadow practice stealth and subterfuge, harnessing the power of the Shadowfell. They are at home in darkness, able to draw gloom around themselves to hide, leap from shadow to shadow, and take on a wraithlike form.",
+        "class_id": "monk-xphb",
+        "short_name": "Shadow",
+        "grants": {
+            "spells": [
+                {
+                    "spell": "minor-illusion-xphb",
+                    "how": "known",
+                    "at": 3,
+                    "ability": "wis"
+                },
+                {
+                    "spell": "darkness-xphb",
+                    "how": "prepared",
+                    "at": 3,
+                    "uses": {
+                        "resource": "focus_points",
+                        "cost": 1
+                    },
+                    "ability": "wis"
+                }
+            ]
+        },
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "monk-xphb:shadow-xphb:shadow-arts"
+                ]
+            },
+            {
+                "level": 6,
+                "features": [
+                    "monk-xphb:shadow-xphb:shadow-step"
+                ]
+            },
+            {
+                "level": 11,
+                "features": [
+                    "monk-xphb:shadow-xphb:improved-shadow-step"
+                ]
+            },
+            {
+                "level": 17,
+                "features": [
+                    "monk-xphb:shadow-xphb:cloak-of-shadows"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "monk-xphb:shadow-xphb:shadow-arts",
+                "name": "Shadow Arts",
+                "level": 3,
+                "text": "You have learned to draw on the power of the Shadowfell, gaining the following benefits.",
+                "category": "traits"
+            },
+            {
+                "id": "monk-xphb:shadow-xphb:darkness",
+                "name": "Darkness",
+                "level": 3,
+                "text": "You can expend 1 Focus Point to cast the Darkness spell without spell components. You can see within the spell's area when you cast it with this feature. While the spell persists, you can move its area of Darkness to a space within 60 feet of yourself at the start of each of your turns.",
+                "parent": "monk-xphb:shadow-xphb:shadow-arts",
+                "consumes": {
+                    "resource": "focus_points",
+                    "amount": 1
+                },
+                "category": "traits"
+            },
+            {
+                "id": "monk-xphb:shadow-xphb:darkvision",
+                "name": "Darkvision",
+                "level": 3,
+                "text": "You gain Darkvision with a range of 60 feet. If you already have Darkvision, its range increases by 60 feet.",
+                "parent": "monk-xphb:shadow-xphb:shadow-arts",
+                "category": "traits",
+                "grants": {
+                    "senses": {
+                        "darkvision": 60
+                    }
+                }
+            },
+            {
+                "id": "monk-xphb:shadow-xphb:shadowy-figments",
+                "name": "Shadowy Figments",
+                "level": 3,
+                "text": "You know the Minor Illusion spell. Wisdom is your spellcasting ability for it.",
+                "parent": "monk-xphb:shadow-xphb:shadow-arts",
+                "category": "traits"
+            },
+            {
+                "id": "monk-xphb:shadow-xphb:shadow-step",
+                "name": "Shadow Step",
+                "level": 6,
+                "text": "While entirely within Dim Light or Darkness, you can use a Bonus Action to teleport up to 60 feet to an unoccupied space you can see that is also in Dim Light or Darkness. You then have Advantage on the next melee attack you make before the end of the current turn.",
+                "category": "bonus_actions",
+                "action": {
+                    "range": "60 feet"
+                }
+            },
+            {
+                "id": "monk-xphb:shadow-xphb:improved-shadow-step",
+                "name": "Improved Shadow Step",
+                "level": 11,
+                "text": "You can draw on your Shadowfell connection to empower your teleportation. When you use your Shadow Step, you can expend 1 Focus Point to remove the requirement that you must start and end in Dim Light or Darkness for that use of the feature. As part of this Bonus Action, you can make an Unarmed Strike immediately after you teleport.",
+                "consumes": {
+                    "resource": "focus_points",
+                    "amount": 1
+                },
+                "category": "bonus_actions"
+            },
+            {
+                "id": "monk-xphb:shadow-xphb:cloak-of-shadows",
+                "name": "Cloak of Shadows",
+                "level": 17,
+                "text": "As a Magic action while entirely within Dim Light or Darkness, you can expend 3 Focus Points to shroud yourself with shadows for 1 minute, until you have the Incapacitated condition, or until you end your turn in Bright Light. While shrouded by these shadows, you gain the following benefits.\n\n**Invisibility.** You have the Invisible condition.\n\n**Partially Incorporeal.** You can move through occupied spaces as if they were Difficult Terrain. If you end your turn in such a space, you are shunted to the last unoccupied space you were in.\n\n**Shadow Flurry.** You can use your Flurry of Blows without expending any Focus Points.",
+                "consumes": {
+                    "resource": "focus_points",
+                    "amount": 3
+                },
+                "category": "actions",
+                "toggle": true
+            }
+        ],
+        "resources": []
+    },
+    {
+        "id": "monk-xphb:elements-xphb",
+        "kind": "subclass",
+        "name": "Warrior of the Elements",
+        "source": "XPHB",
+        "edition": "one",
+        "text": "*Wield Strikes and Bursts of Elemental Power*\n\nWarriors of the Elements tap into the power of the Elemental Planes. Harnessing their supernatural focus, these Monks momentarily tame the energy of the Elemental Chaos to empower themselves in and out of battle.",
+        "class_id": "monk-xphb",
+        "short_name": "Elements",
+        "grants": {
+            "spells": [
+                {
+                    "spell": "elementalism-xphb",
+                    "how": "known",
+                    "at": 3,
+                    "ability": "wis"
+                }
+            ]
+        },
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "monk-xphb:elements-xphb:elemental-attunement",
+                    "monk-xphb:elements-xphb:manipulate-elements"
+                ]
+            },
+            {
+                "level": 6,
+                "features": [
+                    "monk-xphb:elements-xphb:elemental-burst"
+                ]
+            },
+            {
+                "level": 11,
+                "features": [
+                    "monk-xphb:elements-xphb:stride-of-the-elements"
+                ]
+            },
+            {
+                "level": 17,
+                "features": [
+                    "monk-xphb:elements-xphb:elemental-epitome"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "monk-xphb:elements-xphb:elemental-attunement",
+                "name": "Elemental Attunement",
+                "level": 3,
+                "text": "At the start of your turn, you can expend 1 Focus Point to imbue yourself with elemental energy. The energy lasts for 10 minutes or until you have the Incapacitated condition. You gain the following benefits while this feature is active.\n\n**Reach.** When you make an Unarmed Strike, your reach is 10 feet greater than normal, as elemental energy extends from you.\n\n**Elemental Strikes.** Whenever you hit with your Unarmed Strike, you can cause it to deal your choice of Acid, Cold, Fire, Lightning, or Thunder damage rather than its normal damage type. When you deal one of these types with it, you can also force the target to make a Strength saving throw. On a failed save, you can move the target up to 10 feet toward or away from you, as elemental energy swirls around it.",
+                "consumes": {
+                    "resource": "focus_points",
+                    "amount": 1
+                },
+                "category": "traits",
+                "action": {
+                    "attack": {
+                        "kind": "melee"
+                    },
+                    "save": {
+                        "ability": "str",
+                        "on_success": "none"
+                    }
+                },
+                "toggle": true
+            },
+            {
+                "id": "monk-xphb:elements-xphb:manipulate-elements",
+                "name": "Manipulate Elements",
+                "level": 3,
+                "text": "You know the Elementalism spell. Wisdom is your spellcasting ability for it.",
+                "category": "traits"
+            },
+            {
+                "id": "monk-xphb:elements-xphb:elemental-burst",
+                "name": "Elemental Burst",
+                "level": 6,
+                "text": "As a Magic action, you can expend 2 Focus Points to cause elemental energy to burst in a 20-foot-radius Sphere centered on a point within 120 feet of yourself. Choose a damage type: Acid, Cold, Fire, Lightning, or Thunder.\n\nEach creature in the Sphere must make a Dexterity saving throw. On a failed save, a creature takes damage of the chosen type equal to three rolls of your Martial Arts die. On a successful save, a creature takes half as much damage.",
+                "consumes": {
+                    "resource": "focus_points",
+                    "amount": 2
+                },
+                "category": "actions",
+                "action": {
+                    "range": "120 feet",
+                    "area": "20-foot-radius Sphere",
+                    "save": {
+                        "ability": "dex",
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": {
+                                    "1": "3d8",
+                                    "11": "3d10",
+                                    "17": "3d12"
+                                },
+                                "type": "acid",
+                                "condition": "if Acid is chosen"
+                            },
+                            {
+                                "dice": {
+                                    "1": "3d8",
+                                    "11": "3d10",
+                                    "17": "3d12"
+                                },
+                                "type": "cold",
+                                "condition": "if Cold is chosen"
+                            },
+                            {
+                                "dice": {
+                                    "1": "3d8",
+                                    "11": "3d10",
+                                    "17": "3d12"
+                                },
+                                "type": "fire",
+                                "condition": "if Fire is chosen"
+                            },
+                            {
+                                "dice": {
+                                    "1": "3d8",
+                                    "11": "3d10",
+                                    "17": "3d12"
+                                },
+                                "type": "lightning",
+                                "condition": "if Lightning is chosen"
+                            },
+                            {
+                                "dice": {
+                                    "1": "3d8",
+                                    "11": "3d10",
+                                    "17": "3d12"
+                                },
+                                "type": "thunder",
+                                "condition": "if Thunder is chosen"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "monk-xphb:elements-xphb:stride-of-the-elements",
+                "name": "Stride of the Elements",
+                "level": 11,
+                "text": "While your Elemental Attunement is active, you also have a Fly Speed and a Swim Speed equal to your Speed.",
+                "category": "traits",
+                "toggle": {
+                    "grants": {
+                        "speed": {
+                            "fly": "walk",
+                            "swim": "walk"
+                        }
+                    }
+                }
+            },
+            {
+                "id": "monk-xphb:elements-xphb:elemental-epitome",
+                "name": "Elemental Epitome",
+                "level": 17,
+                "text": "While your Elemental Attunement is active, you also gain the following benefits.\n\n**Damage Resistance.** You gain Resistance to one of the following damage types of your choice: Acid, Cold, Fire, Lightning, or Thunder. At the start of each of your turns, you can change this choice.\n\n**Destructive Stride.** When you use your Step of the Wind, your Speed increases by 20 feet until the end of the turn. For that duration, any creature of your choice takes damage equal to one roll of your Martial Arts die when you enter a space within 5 feet of it. The damage type is your choice of Acid, Cold, Fire, Lightning, or Thunder. A creature can take this damage only once per turn.\n\n**Empowered Strikes.** Once on each of your turns, you can deal extra damage to a target equal to one roll of your Martial Arts die when you hit it with an Unarmed Strike. The extra damage is the same type dealt by that strike.",
+                "category": "traits",
+                "action": {
+                    "attack": {
+                        "kind": "melee",
+                        "damage": [
+                            {
+                                "dice": "martial_arts",
+                                "type": "weapon",
+                                "condition": "once on each of your turns when you hit with an Unarmed Strike"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "resources": []
+    },
+    {
         "id": "monk-xphb:open-hand-xphb",
         "kind": "subclass",
         "name": "Warrior of the Open Hand",
@@ -105,6 +547,174 @@
                         ]
                     }
                 }
+            }
+        ],
+        "resources": []
+    },
+    {
+        "id": "monk-xphb:mystic-arts-au",
+        "kind": "subclass",
+        "name": "Warrior of the Mystic Arts",
+        "source": "AU",
+        "edition": "one",
+        "text": "*Weave Martial and Mystic Arts*\n\nWarriors of the Mystic Arts wield magic to supplement their martial skill. They harness mystical focus to enhance their magical and physical abilities.",
+        "class_id": "monk-xphb",
+        "short_name": "Mystic Arts",
+        "grants": {
+            "spell_lists": [
+                {
+                    "filter": {
+                        "spell_level": 0,
+                        "class": "sorcerer"
+                    },
+                    "at": 3
+                },
+                {
+                    "filter": {
+                        "spell_level": 1,
+                        "class": "sorcerer"
+                    },
+                    "at": 3
+                },
+                {
+                    "filter": {
+                        "spell_level": 2,
+                        "class": "sorcerer"
+                    },
+                    "at": 7
+                },
+                {
+                    "filter": {
+                        "spell_level": 3,
+                        "class": "sorcerer"
+                    },
+                    "at": 13
+                },
+                {
+                    "filter": {
+                        "spell_level": 4,
+                        "class": "sorcerer"
+                    },
+                    "at": 19
+                }
+            ]
+        },
+        "spellcasting": {
+            "ability": "wis",
+            "progression": "third",
+            "cantrips": {
+                "3": 2,
+                "10": 3
+            },
+            "prepared": {
+                "3": 3,
+                "4": 4,
+                "7": 5,
+                "8": 6,
+                "10": 7,
+                "11": 8,
+                "13": 9,
+                "14": 10,
+                "16": 11,
+                "19": 12,
+                "20": 13
+            },
+            "change": "level",
+            "slots": {
+                "3": [
+                    2
+                ],
+                "4": [
+                    3
+                ],
+                "7": [
+                    4,
+                    2
+                ],
+                "10": [
+                    4,
+                    3
+                ],
+                "13": [
+                    4,
+                    3,
+                    2
+                ],
+                "16": [
+                    4,
+                    3,
+                    3
+                ],
+                "19": [
+                    4,
+                    3,
+                    3,
+                    1
+                ]
+            }
+        },
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "monk-xphb:mystic-arts-au:spellcasting"
+                ]
+            },
+            {
+                "level": 6,
+                "features": [
+                    "monk-xphb:mystic-arts-au:mystic-fighting-style",
+                    "monk-xphb:mystic-arts-au:mystic-focus"
+                ]
+            },
+            {
+                "level": 11,
+                "features": [
+                    "monk-xphb:mystic-arts-au:focused-strike"
+                ]
+            },
+            {
+                "level": 17,
+                "features": [
+                    "monk-xphb:mystic-arts-au:improved-mystic-fighting-style"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "monk-xphb:mystic-arts-au:spellcasting",
+                "name": "Spellcasting",
+                "level": 3,
+                "text": "You have learned to cast spells. See the Player's Handbook for the rules on spellcasting. The information below details how you use those rules as a Warrior of the Mystic Arts.\n\n**Cantrips.** You know two cantrips of your choice from the Sorcerer spell list. Blade Ward and Thunderclap are recommended. Whenever you gain a Monk level, you can replace one of these cantrips with another cantrip of your choice from the Sorcerer spell list.\n\nWhen you reach Monk level 10, you learn another Sorcerer cantrip of your choice.\n\n**Spell Slots.** The Warrior of the Mystic Arts Spellcasting table shows how many spell slots you have to cast your level 1+ spells. You regain all expended slots when you finish a Long Rest.\n\n**Prepared Spells of Level 1+.** You prepare the list of level 1+ spells that are available for you to cast with this feature. To start, choose three level 1 spells from the Sorcerer spell list. Jump, Magic Missile, and Shield are recommended.\n\nThe number of spells on your list increases as you gain Monk levels, as shown in the Prepared Spells column of the Warrior of the Mystic Arts Spellcasting table. Whenever that number increases, choose additional spells from the Sorcerer spell list until the number of spells on your list matches the number on the table. The chosen spells must be of a level for which you have spell slots. For example, if you're a level 7 Monk, your list of prepared spells can include five Sorcerer spells of levels 1 and 2 in any combination.\n\n**Changing Your Prepared Spells.** Whenever you gain a Monk level, you can replace one spell on your list with another Sorcerer spell for which you have spell slots.\n\n**Spellcasting Ability.** Wisdom is your spellcasting ability for your Sorcerer spells.\n\n**Spellcasting Focus.** You can use an Arcane Focus as a Spellcasting Focus for your Sorcerer spells.\n\n**Multiclassing.** If you multiclass and have the Spellcasting feature from more than one class, add one third of your Monk levels (round down) to determine your available spell slots.",
+                "category": "traits"
+            },
+            {
+                "id": "monk-xphb:mystic-arts-au:mystic-fighting-style",
+                "name": "Mystic Fighting Style",
+                "level": 6,
+                "text": "When you take the Attack action on your turn, you can replace one Unarmed Strike with a casting of one of your Sorcerer cantrips that has a casting time of an action.",
+                "category": "actions"
+            },
+            {
+                "id": "monk-xphb:mystic-arts-au:mystic-focus",
+                "name": "Mystic Focus",
+                "level": 6,
+                "text": "You keep your magical power and martial focus in perfect balance, allowing you to convert spell slots into Focus Points, or convert Focus Points into spell slots.\n\n**Converting Spell Slots to Focus Points.** You can expend a spell slot to regain a number of expended Focus Points equal to the slot's level (no action required).\n\n**Recovering Spell Slots.** When you finish a Short Rest or use Uncanny Metabolism, you can transform unexpended Focus Points to recover one expended spell slot. The Recovering Spell Slots table shows the cost of recovering a spell slot of a given level, and it lists the minimum Monk level you must be to recover a slot. You can recover a spell slot no higher than level 4.\n\nRecovering Spell Slots\n\nSpell Slot Level | Focus Point Cost | Min. Monk Level\n--- | --- | ---\n1 | 2 | 6\n2 | 3 | 7\n3 | 5 | 13\n4 | 6 | 19",
+                "category": "traits"
+            },
+            {
+                "id": "monk-xphb:mystic-arts-au:focused-strike",
+                "name": "Focused Strike",
+                "level": 11,
+                "text": "When you use your Stunning Strike, whether the target succeeds or fails on the saving throw, the target has Disadvantage on saving throws against your spells until the start of your next turn.",
+                "category": "traits"
+            },
+            {
+                "id": "monk-xphb:mystic-arts-au:improved-mystic-fighting-style",
+                "name": "Improved Mystic Fighting Style",
+                "level": 17,
+                "text": "When you use Flurry of Blows, you can replace two of the Unarmed Strikes with a casting of one of your level 1 or 2 Sorcerer spells that has a casting time of an action, and you cast it as part of the same Bonus Action you use to activate Flurry of Blows.",
+                "category": "bonus_actions"
             }
         ],
         "resources": []

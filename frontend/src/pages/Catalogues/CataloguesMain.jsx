@@ -9,7 +9,7 @@ import Backgrounds from "./Backgrounds/Backgrounds";
 import Spells from "./Spells/Spells";
 import OptionalFeatures from "./OptionalFeatures/OptionalFeatures";
 import Monsters from "./Monsters/Monsters";
-import Rules from "./Rules/Rules"
+import ReferencePage from "./Reference/ReferencePage";
 
 import { ParchmentSheet } from "../../styles/parchment";
 
@@ -27,7 +27,8 @@ const TOOLS = [
   { id: "monsters", label: "Monsters" },
   { id: "optionalFeatures", label: "Optional Features" },
   { id: "rules", label: "Rules" },
-  { id: "content", label: "Content" },
+  { id: "lore", label: "Lore" },
+  { id: "toolkit", label: "Toolkit" },
 ];
 
 function CataloguesMain() {
@@ -70,7 +71,7 @@ function CataloguesMain() {
           {activeTool === "spells" && <Spells />}
           {activeTool === "optionalFeatures" && <OptionalFeatures />}
           {activeTool === "monsters" && <Monsters />}
-          {activeTool === "rules" && <Rules />}
+          {["rules", "lore", "toolkit"].includes(activeTool) && <ReferencePage key={activeTool} catalogue={activeTool} />}
         </div>
       </ParchmentSheet>
     </div>

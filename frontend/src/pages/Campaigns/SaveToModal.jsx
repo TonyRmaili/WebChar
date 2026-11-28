@@ -14,9 +14,10 @@ function flattenFolders(nodes, depth = 0) {
   return out;
 }
 
-/* "Save response" — a file name and a destination folder for an assistant
-   reply. Enter saves, Escape closes. */
-function SaveToModal({ initialName, tree, rootPath, onConfirm, onClose }) {
+/* "Save as a note" — a file name and a destination folder for something
+   from the assistant: an answer (saved as a note) or a picture (saved as a
+   picture file). Enter saves, Escape closes. */
+function SaveToModal({ initialName, tree, rootPath, onConfirm, onClose, title = "Save as a note", hint = "Saved as a note you can open and edit" }) {
   const [name, setName] = useState(initialName);
   const [selected, setSelected] = useState(rootPath ?? null);
 
@@ -42,7 +43,7 @@ function SaveToModal({ initialName, tree, rootPath, onConfirm, onClose }) {
   return (
     <CreateModal
       open
-      title="Save response"
+      title={title}
       onClose={onClose}
       onSave={handleConfirm}
       saveDisabled={!name.trim() || selected === null}
@@ -51,7 +52,7 @@ function SaveToModal({ initialName, tree, rootPath, onConfirm, onClose }) {
       <div className="mb-4">
         <label className={labelCls}>File name</label>
         <input autoFocus value={name} onChange={(e) => setName(e.target.value)} onKeyDown={handleKeyDown} className={fieldCls} />
-        <p className={`${hintCls} mt-1`}>.md will be appended automatically</p>
+        <p className={`${hintCls} mt-1`}>{hint}</p>
       </div>
 
       <label className={labelCls}>Destination folder</label>
@@ -79,4 +80,4 @@ function SaveToModal({ initialName, tree, rootPath, onConfirm, onClose }) {
   );
 }
 
-export default SaveToModal;
+export default SaveToModal;

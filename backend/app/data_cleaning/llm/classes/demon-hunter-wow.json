@@ -1,0 +1,172 @@
+{
+  "demon-hunter-wow:deft-explorer": {
+    "label": "Demon Hunter (WoW) · Deft Explorer",
+    "hash": "1a1a9bcd4cbf1141",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "expertise",
+          "name": "Expertise",
+          "level": 2,
+          "category": "traits",
+          "picks": [
+            {
+              "grant": "expertise",
+              "count": 1,
+              "from": [
+                "proficient_skills"
+              ]
+            }
+          ]
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11355,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:26:27+00:00"
+  },
+  "demon-hunter-wow:improved-spectral-sight": {
+    "label": "Demon Hunter (WoW) · Improved Spectral Sight",
+    "hash": "8aa2022878bedd9a",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "improved-spectral-sight",
+          "name": "Improved Spectral Sight",
+          "level": 18,
+          "category": "traits",
+          "grants": {
+            "senses": {
+              "truesight": 30
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11268,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:26:30+00:00"
+  },
+  "demon-hunter-wow:demon-hunter-wow": {
+    "label": "Demon Hunter (WoW) · Demon Hunter (WoW)",
+    "hash": "339a59bfd47b70ea",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "regaining-soul-fragments",
+          "name": "Regaining Soul Fragments",
+          "level": 3,
+          "category": "reactions",
+          "action": {
+            "range": "30 feet"
+          }
+        },
+        {
+          "id": "soul-cleave",
+          "name": "Soul Cleave",
+          "level": 3,
+          "category": "actions",
+          "action": {
+            "area": "10-foot Emanation originating from you",
+            "heal": "wis_mod",
+            "save": {
+              "ability": "dex",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "none",
+              "damage": [
+                {
+                  "dice": {
+                    "1": "1d12",
+                    "15": "2d12"
+                  },
+                  "bonus": "wis_mod",
+                  "type": "psychic"
+                }
+              ]
+            }
+          },
+          "consumes": {
+            "resource": "soul_fragments",
+            "amount": 1
+          }
+        },
+        {
+          "id": "spectral-sight",
+          "name": "Spectral Sight",
+          "level": 3,
+          "category": "traits",
+          "grants": {
+            "senses": {
+              "blindsight": 10
+            }
+          }
+        },
+        {
+          "id": "chaos-strike",
+          "name": "Chaos Strike",
+          "level": 7,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": "1d8",
+                  "type": "fire"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "disrupt",
+          "name": "Disrupt",
+          "level": 11,
+          "category": "traits",
+          "consumes": {
+            "resource": "soul_fragments",
+            "amount": 2
+          }
+        },
+        {
+          "id": "warglaive-mastery",
+          "name": "Warglaive Mastery",
+          "level": 11,
+          "category": "traits",
+          "consumes": {
+            "resource": "soul_fragments",
+            "amount": 1
+          }
+        }
+      ],
+      "resources": [
+        {
+          "name": "Soul Fragment",
+          "max": {
+            "1": "max(1, wis_mod)",
+            "13": "max(1, wis_mod + 1)",
+            "17": "max(1, wis_mod + 2)"
+          },
+          "reset": "long"
+        }
+      ]
+    },
+    "problems": [],
+    "tokens": 15634,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:26:33+00:00"
+  }
+}

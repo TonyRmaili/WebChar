@@ -67,7 +67,11 @@ CATEGORIES = {
         "lists": ["class/class-*.json"],
         "split": True,
     },
-    "actions": {"lists": ["actions.json"]}
+    # The reference catalogues (text only, no LLM step; cleaners/reference_cleaner.py).
+    "rules": {"lists": ["actions.json", "conditionsdiseases.json", "senses.json", "skills.json", "variantrules.json"]},
+    "lore": {"lists": ["deities.json", "languages.json", "cultsboons.json"]},
+    "toolkit": {"lists": ["trapshazards.json", "objects.json", "vehicles.json", "rewards.json", "bastions.json",
+                          "charcreationoptions.json"]},
 }
 
 DROP_KEYS = {"_meta"}

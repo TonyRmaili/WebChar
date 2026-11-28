@@ -27,8 +27,7 @@ class ChatMessage(BaseModel):
 class DMAssistantRequest(BaseModel):
     messages: list[ChatMessage]
     instructions: str
-    campaign_name: str
-    active_files: list[str] = []
+    campaign_name: str = ""  # its notes are searched for each question (app/rag); "" = no campaign
 
 
 class UpdateFileRequest(BaseModel):

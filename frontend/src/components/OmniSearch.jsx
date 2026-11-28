@@ -1,6 +1,7 @@
 import React, { useMemo, useRef, useState, useEffect } from "react";
 import { useCatalogueStore } from "../store/CatalogueStore";
 import { usePopupStore } from "../store/PopupStore";
+import { kindLabel } from "../pages/Catalogues/Reference/referenceHelpers";
 
 /* label + ink colour per catalogue type (theme slots) */
 const CATALOGUES = {
@@ -11,6 +12,8 @@ const CATALOGUES = {
   background:      { label: "Background", badge: "text-rubric" },
   optionalFeature: { label: "Optional",   badge: "text-ink-faded" },
   monster:         { label: "Monster",    badge: "text-bad" },
+  // Rules, Lore, Toolkit: the label is the entry's type (Action, Deity, Trap…)
+  reference:       { label: "Reference",  badge: "text-ink" },
 };
 
 // The results card: parchment with a thin leather edge, like the right-click menus.
@@ -35,6 +38,9 @@ export default function OmniSearch() {
   const spells           = useCatalogueStore((s) => s.spells);
   const optionalFeatures = useCatalogueStore((s) => s.optionalFeatures);
   const monsters         = useCatalogueStore((s) => s.monsters);
+  const rules            = useCatalogueStore((s) => s.rules);
+  const lore             = useCatalogueStore((s) => s.lore);
+  const toolkit          = useCatalogueStore((s) => s.toolkit);
 
   /* ---- loaders (lazy, on first focus) ---- */
   const loadItems            = useCatalogueStore((s) => s.loadItems);
@@ -44,6 +50,9 @@ export default function OmniSearch() {
   const loadSpells           = useCatalogueStore((s) => s.loadSpells);
   const loadOptionalFeatures = useCatalogueStore((s) => s.loadOptionalFeatures);
   const loadMonsters         = useCatalogueStore((s) => s.loadMonsters);
+  const loadRules            = useCatalogueStore((s) => s.loadRules);
+  const loadLore             = useCatalogueStore((s) => s.loadLore);
+  const loadToolkit          = useCatalogueStore((s) => s.loadToolkit);
 
   const ensureLoaded = () => {
     if (loadedRef.current) return;
@@ -57,6 +66,9 @@ export default function OmniSearch() {
     if (!s.backgrounds?.length) loadBackgrounds();
     if (!s.optionalFeatures?.length) loadOptionalFeatures();
     if (!s.monsters?.length) loadMonsters();
+    if (!s.rules?.length) loadRules();
+    if (!s.lore?.length) loadLore();
+    if (!s.toolkit?.length) loadToolkit();
   };
 
   /* ---- flat search index across all catalogues ---- */
@@ -74,8 +86,11 @@ export default function OmniSearch() {
     push("background", backgrounds);
     push("optionalFeature", optionalFeatures);
     push("monster", monsters);
+    push("reference", rules);
+    push("reference", lore);
+    push("reference", toolkit);
     return out;
-  }, [spells, items, races, feats, backgrounds, optionalFeatures, monsters]);
+  }, [spells, items, races, feats, backgrounds, optionalFeatures, monsters, rules, lore, toolkit]);
 
   /* ---- filter + rank (prefix matches first), capped ---- */
   const results = useMemo(() => {
@@ -137,8 +152,8 @@ export default function OmniSearch() {
                         i === active ? "bg-ink/[0.08]" : "hover:bg-ink/[0.05]"
                       }`}
                     >
-                      <span className={`w-[4.5rem] shrink-0 text-[10px] font-semibold uppercase tracking-wider ${cat?.badge || "text-ink-faded"}`}>
-                        {cat?.label || r.type}
+                      <span className={`w-[5.5rem] shrink-0 truncate text-[10px] font-semibold uppercase tracking-wider ${cat?.badge || "text-ink-faded"}`}>
+                        {r.type === "reference" ? kindLabel(r.data.kind) : cat?.label || r.type}
                       </span>
                       <span className={`min-w-0 flex-1 truncate text-[15px] ${i === active ? "text-rubric" : ""}`}>{r.name}</span>
                       {r.source && (

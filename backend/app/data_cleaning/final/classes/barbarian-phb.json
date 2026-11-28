@@ -201,7 +201,9 @@
             },
             {
                 "level": 3,
-                "features": [],
+                "features": [
+                    "barbarian-phb:primal-knowledge"
+                ],
                 "choices": [
                     {
                         "type": "pool",
@@ -281,7 +283,8 @@
             {
                 "level": 7,
                 "features": [
-                    "barbarian-phb:feral-instinct"
+                    "barbarian-phb:feral-instinct",
+                    "barbarian-phb:instinctive-pounce"
                 ]
             },
             {
@@ -623,6 +626,48 @@
                 "category": "traits"
             },
             {
+                "id": "barbarian-phb:primal-knowledge",
+                "name": "Primal Knowledge",
+                "level": 3,
+                "source": "TCE",
+                "text": "*3rd-level barbarian optional feature*\n\nWhen you reach 3rd level and again at 10th level, you gain proficiency in one skill of your choice from the list of skills available to barbarians at 1st level.",
+                "optional": true,
+                "category": "traits",
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "skills_1",
+                        "label": "Skills",
+                        "grant": "skills",
+                        "count": 1,
+                        "from": [
+                            "animal_handling",
+                            "athletics",
+                            "intimidation",
+                            "nature",
+                            "perception",
+                            "survival"
+                        ]
+                    },
+                    {
+                        "type": "pool",
+                        "id": "skills_2",
+                        "label": "Skills",
+                        "grant": "skills",
+                        "count": 1,
+                        "from": [
+                            "animal_handling",
+                            "athletics",
+                            "intimidation",
+                            "nature",
+                            "perception",
+                            "survival"
+                        ],
+                        "at": 10
+                    }
+                ]
+            },
+            {
                 "id": "barbarian-phb:extra-attack",
                 "name": "Extra Attack",
                 "level": 5,
@@ -657,6 +702,15 @@
                     "5.1": "Feral Instinct"
                 },
                 "category": "traits"
+            },
+            {
+                "id": "barbarian-phb:instinctive-pounce",
+                "name": "Instinctive Pounce",
+                "level": 7,
+                "source": "TCE",
+                "text": "*7th-level barbarian optional feature*\n\nAs part of the bonus action you take to enter your rage, you can move up to half your speed.",
+                "optional": true,
+                "category": "bonus_actions"
             },
             {
                 "id": "barbarian-phb:brutal-critical-1-die",

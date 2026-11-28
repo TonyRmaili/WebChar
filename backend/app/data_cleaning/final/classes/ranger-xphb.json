@@ -325,7 +325,8 @@
             {
                 "level": 6,
                 "features": [
-                    "ranger-xphb:roving"
+                    "ranger-xphb:roving",
+                    "ranger-xphb:pet-specialization"
                 ]
             },
             {
@@ -529,6 +530,15 @@
                 }
             },
             {
+                "id": "ranger-xphb:pet-specialization",
+                "name": "Pet Specialization",
+                "level": 6,
+                "source": "WoW",
+                "text": "This feature replaces the Roving feature for a Hunter with the WoW subclass.\n\nWhile the beast from your Primal Companion feature is within 60 feet of you, you gain one of the following benefits, depending on the beast's pet family and its specialization (see \"Hunter Pets\").\n\n**Cunning.** Your Speed and all of your primal beast's speeds increase by 10 feet. In addition, your primal beast can use its action to cast Freedom of Movement without any spell components, affecting itself and you (if you are within range). Once it does so, it can't do so again until you finish a Long Rest.\n\n**Ferocity.** When your primal beast is Bloodied and it hits with its Beast's Strike attack, you and your primal beast each regain Hit Points equal to your Wisdom modifier. In addition, your primal beast can use its action to cast Haste without any spell components, affecting itself and you (if you are within range). Once it does so, it can't do so again until you finish a Long Rest.\n\n**Tenacity.** Your Hit Point maximum increases by 6. Whenever you gain a Ranger level, your Hit Point maximum increases by an additional 1 Hit Point. Your primal beast's Hit Point maximum also increases by your Ranger level. In addition, your primal beast can use its action to cast Stoneskin without any spell components, affecting itself and you (if you are within range). Once it does so, it can't do so again until you finish a Long Rest.",
+                "optional": true,
+                "category": "traits"
+            },
+            {
                 "id": "ranger-xphb:expertise",
                 "name": "Expertise",
                 "level": 9,
@@ -650,6 +660,45 @@
                         "grant": "languages",
                         "count": 2,
                         "from": "all_languages"
+                    }
+                ]
+            },
+            {
+                "id": "ranger-xphb:pet-specialization:cunning",
+                "name": "Cunning",
+                "level": 6,
+                "text": "**Cunning.** Your Speed and all of your primal beast's speeds increase by 10 feet. In addition, your primal beast can use its action to cast Freedom of Movement without any spell components, affecting itself and you (if you are within range). Once it does so, it can't do so again until you finish a Long Rest.",
+                "parent": "ranger-xphb:pet-specialization",
+                "category": "traits",
+                "modifiers": [
+                    {
+                        "target": "speed.walk",
+                        "add": 10
+                    }
+                ]
+            },
+            {
+                "id": "ranger-xphb:pet-specialization:ferocity",
+                "name": "Ferocity",
+                "level": 6,
+                "text": "**Ferocity.** When your primal beast is Bloodied and it hits with its Beast's Strike attack, you and your primal beast each regain Hit Points equal to your Wisdom modifier. In addition, your primal beast can use its action to cast Haste without any spell components, affecting itself and you (if you are within range). Once it does so, it can't do so again until you finish a Long Rest.",
+                "parent": "ranger-xphb:pet-specialization",
+                "category": "traits",
+                "action": {
+                    "heal": "wis_mod"
+                }
+            },
+            {
+                "id": "ranger-xphb:pet-specialization:tenacity",
+                "name": "Tenacity",
+                "level": 6,
+                "text": "**Tenacity.** Your Hit Point maximum increases by 6. Whenever you gain a Ranger level, your Hit Point maximum increases by an additional 1 Hit Point. Your primal beast's Hit Point maximum also increases by your Ranger level. In addition, your primal beast can use its action to cast Stoneskin without any spell components, affecting itself and you (if you are within range). Once it does so, it can't do so again until you finish a Long Rest.",
+                "parent": "ranger-xphb:pet-specialization",
+                "category": "traits",
+                "modifiers": [
+                    {
+                        "target": "hp_max",
+                        "add": "6 + class_level"
                     }
                 ]
             },

@@ -7,32 +7,63 @@ import {
   FolderIcon,
   FolderOpenIcon,
   FileIcon,
+  ImageIcon,
+  PromptIcon,
   ChevronRightIcon,
 } from "./CampaignWidgets";
+
+/* One row of a campaign tree (a folder, a note, a picture or a prompt), and
+   the rows inside it. The box ticks what the DM Assistant reads; pictures
+   have none, since the assistant can't look at pictures yet. */
+
+// Notes and prompts show without ".json" / ".md"; pictures keep theirs.
+const shownName = (node) => (node.type === "folder" || node.kind === "image" ? node.name : node.name.replace(/\.[^.]+$/, ""));
+const readable = (n) => n.type !== "folder" && n.kind !== "image";
+
+// Under a file the search found: the words around the hit, the hit in ink.
+function Snippet({ text, query, depth }) {
+  const at = text.toLowerCase().indexOf(query.toLowerCase());
+  return (
+    <p className="truncate pb-1 pr-2 text-xs italic text-ink-faded" style={{ paddingLeft: `${depth * 16 + 52}px` }} title={text}>
+      {at < 0 ? (
+        text
+      ) : (
+        <>
+          {text.slice(0, at)}
+          <span className="font-semibold not-italic text-ink">{text.slice(at, at + query.length)}</span>
+          {text.slice(at + query.length)}
+        </>
+      )}
+    </p>
+  );
+}
 
 function CampaignNode({
   node,
   campaignName,
   depth = 0,
   onOpenFile,
+  onAddNote,
+  onAddPicture,
   activePaths,
   onToggleActive,
   onContextMenu,
   renamingPath,
   onRenameCommit,
   onRenameCancel,
+  found, // while searching: { query, snippets: { path: words around the hit } }; folders stay open
 }) {
   const [collapsed, setCollapsed] = useState(false);
+  const shut = !found && collapsed;
   const isFolder = node.type === "folder";
   const showCheckbox = typeof onToggleActive === "function";
   const isRenaming = renamingPath === node.path;
 
-  const createFile = useCampaignStore((s) => s.createFile);
   const createFolder = useCampaignStore((s) => s.createFolder);
 
   const filePaths = useMemo(() => {
     const collect = (n) => {
-      if (n.type !== "folder") return [n.path];
+      if (n.type !== "folder") return readable(n) ? [n.path] : [];
       return (n.children ?? []).flatMap(collect);
     };
     return collect(node);
@@ -61,15 +92,19 @@ function CampaignNode({
 
   const handleAddFile = (e) => {
     e.stopPropagation();
-    const fileName = prompt(`Enter file name for "${node.name}"`);
-    if (!fileName) return;
-    createFile(fileName, campaignName, node.path);
     setCollapsed(false);
+    onAddNote?.(node.path);
+  };
+
+  const handleAddPicture = (e) => {
+    e.stopPropagation();
+    setCollapsed(false);
+    onAddPicture?.(node.path);
   };
 
   const handleAddFolder = (e) => {
     e.stopPropagation();
-    const folderName = prompt(`Enter folder name for "${node.name}"`);
+    const folderName = prompt(`Name of the new folder in "${node.name}"`);
     if (!folderName) return;
     createFolder(folderName, campaignName, node.path);
     setCollapsed(false);
@@ -132,7 +167,8 @@ function CampaignNode({
         className="group flex h-7 cursor-pointer select-none items-center rounded-sm pr-1 transition-colors hover:bg-ink/[0.06]"
         style={{ paddingLeft: `${8 + depth * 14}px` }}
       >
-        {showCheckbox && (
+        {showCheckbox && !isFolder && !readable(node) && <span className="mr-2 w-3.5 shrink-0" aria-hidden="true" />}
+        {showCheckbox && (isFolder || readable(node)) && (
           <input
             type="checkbox"
             checked={!!isActive}
@@ -148,7 +184,7 @@ function CampaignNode({
 
         <span className="flex w-4 shrink-0 items-center justify-center text-ink-faded">
           {isFolder &&
-            (collapsed ? (
+            (shut ? (
               <ChevronRightIcon className="w-3.5 h-3.5" />
             ) : (
               <DownArrowIcon className="w-3.5 h-3.5" />
@@ -157,11 +193,15 @@ function CampaignNode({
 
         <span className={`ml-1 mr-2 shrink-0 ${isFolder ? "text-rubric" : "text-ink-faded"}`}>
           {isFolder ? (
-            collapsed ? (
+            shut ? (
               <FolderIcon className="w-4 h-4" />
             ) : (
               <FolderOpenIcon className="w-4 h-4" />
             )
+          ) : node.kind === "image" ? (
+            <ImageIcon className="w-4 h-4" />
+          ) : node.kind === "prompt" ? (
+            <PromptIcon className="w-4 h-4" />
           ) : (
             <FileIcon className="w-4 h-4" />
           )}
@@ -187,20 +227,29 @@ function CampaignNode({
                 : "text-ink"
             }`}
           >
-            {node.name}
+            {shownName(node)}
           </span>
         )}
 
-        {/* Hover actions: only add-file / add-folder now, no delete */}
+        {/* Hover actions on a folder: add a note (or prompt), pictures, a folder */}
         {!isRenaming && isFolder && (
           <div className="ml-auto flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
             <button
               onClick={handleAddFile}
               className="flex h-6 w-6 items-center justify-center rounded text-ink-faded transition hover:text-rubric"
-              title="New file"
+              title={onAddPicture ? "New note" : "New prompt"}
             >
               <PlusIcon className="w-3.5 h-3.5" />
             </button>
+            {onAddPicture && (
+              <button
+                onClick={handleAddPicture}
+                className="flex h-6 w-6 items-center justify-center rounded text-ink-faded transition hover:text-rubric"
+                title="Add pictures"
+              >
+                <ImageIcon className="w-3.5 h-3.5" />
+              </button>
+            )}
             <button
               onClick={handleAddFolder}
               className="flex h-6 w-6 items-center justify-center rounded text-ink-faded transition hover:text-rubric"
@@ -212,7 +261,9 @@ function CampaignNode({
         )}
       </div>
 
-      {isFolder && !collapsed && node.children?.length > 0 && (
+      {!isFolder && found?.snippets[node.path] && <Snippet text={found.snippets[node.path]} query={found.query} depth={depth} />}
+
+      {isFolder && !shut && node.children?.length > 0 && (
         <div>
           {node.children.map((child) => (
             <CampaignNode
@@ -221,12 +272,15 @@ function CampaignNode({
               depth={depth + 1}
               campaignName={campaignName}
               onOpenFile={onOpenFile}
+              onAddNote={onAddNote}
+              onAddPicture={onAddPicture}
               activePaths={activePaths}
               onToggleActive={onToggleActive}
               onContextMenu={onContextMenu}
               renamingPath={renamingPath}
               onRenameCommit={onRenameCommit}
               onRenameCancel={onRenameCancel}
+              found={found}
             />
           ))}
         </div>
@@ -235,4 +289,4 @@ function CampaignNode({
   );
 }
 
-export default CampaignNode;
+export default CampaignNode;

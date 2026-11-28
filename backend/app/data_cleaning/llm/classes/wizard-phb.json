@@ -82,5 +82,718 @@
     "reviewed": false,
     "reasoning": "medium",
     "at": "2026-11-19T11:43:06+00:00"
+  },
+  "wizard-phb:cantrip-formulas": {
+    "label": "Wizard (PHB) · Cantrip Formulas",
+    "hash": "157630d7ffaaf720",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "cantrip-formulas",
+          "name": "Cantrip Formulas",
+          "level": 3,
+          "category": "traits"
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11180,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:25:24+00:00"
+  },
+  "wizard-phb:abjuration-phb": {
+    "label": "Wizard (PHB) · School of Abjuration (PHB)",
+    "hash": "01c4f711a928c56e",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "arcane-ward",
+          "name": "Arcane Ward",
+          "level": 2,
+          "category": "traits",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          }
+        },
+        {
+          "id": "projected-ward",
+          "name": "Projected Ward",
+          "level": 6,
+          "category": "reactions",
+          "action": {
+            "range": "30 feet"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 12001,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:25:26+00:00"
+  },
+  "wizard-phb:conjuration-phb": {
+    "label": "Wizard (PHB) · School of Conjuration (PHB)",
+    "hash": "8f8c67d71ff5d9df",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "minor-conjuration",
+          "name": "Minor Conjuration",
+          "level": 2,
+          "category": "actions",
+          "action": {
+            "range": "10 feet"
+          }
+        },
+        {
+          "id": "benign-transposition",
+          "name": "Benign Transposition",
+          "level": 6,
+          "category": "actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "action": {
+            "range": "30 feet"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11951,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:25:31+00:00"
+  },
+  "wizard-phb:divination-phb": {
+    "label": "Wizard (PHB) · School of Divination (PHB)",
+    "hash": "f838480c03fa8fe2",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "portent",
+          "name": "Portent",
+          "level": 2,
+          "category": "traits",
+          "uses": {
+            "max": {
+              "1": 2,
+              "14": 3
+            },
+            "reset": "long"
+          }
+        },
+        {
+          "id": "the-third-eye",
+          "name": "The Third Eye",
+          "level": 10,
+          "category": "actions",
+          "uses": {
+            "max": 1,
+            "reset": "short"
+          },
+          "toggle": {
+            "uses_charge": true
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 12937,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:25:36+00:00"
+  },
+  "wizard-phb:enchantment-phb": {
+    "label": "Wizard (PHB) · School of Enchantment (PHB)",
+    "hash": "0809ef94ec4a1cfb",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "hypnotic-gaze",
+          "name": "Hypnotic Gaze",
+          "level": 2,
+          "category": "actions",
+          "action": {
+            "range": "5 feet",
+            "save": {
+              "ability": "wis",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "none",
+              "conditions": [
+                "charmed",
+                "incapacitated"
+              ]
+            }
+          }
+        },
+        {
+          "id": "instinctive-charm",
+          "name": "Instinctive Charm",
+          "level": 6,
+          "category": "reactions",
+          "action": {
+            "range": "30 feet",
+            "save": {
+              "ability": "wis",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "none"
+            }
+          }
+        },
+        {
+          "id": "alter-memories",
+          "name": "Alter Memories",
+          "level": 14,
+          "category": "actions",
+          "action": {
+            "save": {
+              "ability": "int",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "none"
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 12682,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:25:46+00:00"
+  },
+  "wizard-phb:illusion-phb": {
+    "label": "Wizard (PHB) · School of Illusion (PHB)",
+    "hash": "b71659d4761f11a6",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "improved-minor-illusion",
+          "name": "Improved Minor Illusion",
+          "level": 2,
+          "category": "traits"
+        },
+        {
+          "id": "malleable-illusions",
+          "name": "Malleable Illusions",
+          "level": 6,
+          "category": "actions"
+        },
+        {
+          "id": "illusory-self",
+          "name": "Illusory Self",
+          "level": 10,
+          "category": "reactions",
+          "uses": {
+            "max": 1,
+            "reset": "short"
+          }
+        },
+        {
+          "id": "illusory-reality",
+          "name": "Illusory Reality",
+          "level": 14,
+          "category": "bonus_actions"
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 12226,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:25:54+00:00"
+  },
+  "wizard-phb:necromancy-phb": {
+    "label": "Wizard (PHB) · School of Necromancy (PHB)",
+    "hash": "301c29f74701720a",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "inured-to-undeath",
+          "name": "Inured to Undeath",
+          "level": 10,
+          "category": "traits",
+          "grants": {
+            "defenses": {
+              "resist": [
+                "necrotic"
+              ]
+            }
+          }
+        },
+        {
+          "id": "command-undead",
+          "name": "Command Undead",
+          "level": 14,
+          "category": "actions",
+          "action": {
+            "range": "60 feet",
+            "save": {
+              "ability": "cha",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "none"
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 12297,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:26:00+00:00"
+  },
+  "wizard-phb:transmutation-phb": {
+    "label": "Wizard (PHB) · School of Transmutation (PHB)",
+    "hash": "ed80291b6a49a0c5",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "minor-alchemy",
+          "name": "Minor Alchemy",
+          "level": 2,
+          "category": "actions"
+        },
+        {
+          "id": "shapechanger",
+          "name": "Shapechanger",
+          "level": 10,
+          "category": "traits"
+        },
+        {
+          "id": "master-transmuter",
+          "name": "Master Transmuter",
+          "level": 14,
+          "category": "actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          }
+        },
+        {
+          "id": "major-transformation",
+          "name": "Major Transformation",
+          "level": 14,
+          "category": "actions"
+        },
+        {
+          "id": "panacea",
+          "name": "Panacea",
+          "level": 14,
+          "category": "actions",
+          "action": {
+            "range": "touch"
+          }
+        },
+        {
+          "id": "restore-life",
+          "name": "Restore Life",
+          "level": 14,
+          "category": "actions",
+          "action": {
+            "range": "touch"
+          }
+        },
+        {
+          "id": "restore-youth",
+          "name": "Restore Youth",
+          "level": 14,
+          "category": "actions",
+          "action": {
+            "range": "touch"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 15622,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:26:06+00:00"
+  },
+  "wizard-phb:war-xge": {
+    "label": "Wizard (PHB) · War Magic (XGE)",
+    "hash": "a1052b859be4e017",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "arcane-deflection",
+          "name": "Arcane Deflection",
+          "level": 2,
+          "category": "reactions"
+        },
+        {
+          "id": "tactical-wit",
+          "name": "Tactical Wit",
+          "level": 2,
+          "category": "traits",
+          "modifiers": [
+            {
+              "target": "initiative",
+              "add": "int_mod"
+            }
+          ]
+        },
+        {
+          "id": "power-surge",
+          "name": "Power Surge",
+          "level": 6,
+          "category": "traits",
+          "action": {
+            "damage": [
+              {
+                "bonus": "class_level / 2",
+                "type": "force"
+              }
+            ]
+          },
+          "consumes": {
+            "resource": "power_surges",
+            "amount": 1
+          }
+        },
+        {
+          "id": "deflecting-shroud",
+          "name": "Deflecting Shroud",
+          "level": 14,
+          "category": "reactions",
+          "action": {
+            "range": "60 feet",
+            "damage": [
+              {
+                "bonus": "class_level / 2",
+                "type": "force"
+              }
+            ]
+          }
+        }
+      ],
+      "resources": [
+        {
+          "name": "Power Surges",
+          "max": "max(1, int_mod)",
+          "reset": "long",
+          "short_rest": 1
+        }
+      ]
+    },
+    "problems": [],
+    "tokens": 13665,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:26:32+00:00"
+  },
+  "wizard-phb:chronurgy-egw": {
+    "label": "Wizard (PHB) · Chronurgy Magic (EGW)",
+    "hash": "e75fec0b40549d3a",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "chronal-shift",
+          "name": "Chronal Shift",
+          "level": 2,
+          "category": "reactions",
+          "uses": {
+            "max": 2,
+            "reset": "long"
+          },
+          "action": {
+            "range": "30 feet"
+          }
+        },
+        {
+          "id": "temporal-awareness",
+          "name": "Temporal Awareness",
+          "level": 2,
+          "category": "traits",
+          "modifiers": [
+            {
+              "target": "initiative",
+              "add": "int_mod"
+            }
+          ]
+        },
+        {
+          "id": "momentary-stasis",
+          "name": "Momentary Stasis",
+          "level": 6,
+          "category": "actions",
+          "uses": {
+            "max": "max(1, int_mod)",
+            "reset": "long"
+          },
+          "action": {
+            "range": "60 feet",
+            "save": {
+              "ability": "con",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "none",
+              "conditions": [
+                "incapacitated"
+              ]
+            }
+          }
+        },
+        {
+          "id": "arcane-abeyance",
+          "name": "Arcane Abeyance",
+          "level": 10,
+          "category": "traits",
+          "uses": {
+            "max": 1,
+            "reset": "short"
+          }
+        },
+        {
+          "id": "convergent-future",
+          "name": "Convergent Future",
+          "level": 14,
+          "category": "reactions",
+          "action": {
+            "range": "60 feet"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 12849,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:26:48+00:00"
+  },
+  "wizard-phb:graviturgy-egw": {
+    "label": "Wizard (PHB) · Graviturgy Magic (EGW)",
+    "hash": "2ddcf317b7382ed6",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "adjust-density",
+          "name": "Adjust Density",
+          "level": 2,
+          "category": "actions",
+          "action": {
+            "range": "30 feet"
+          }
+        },
+        {
+          "id": "violent-attraction",
+          "name": "Violent Attraction",
+          "level": 10,
+          "category": "reactions",
+          "uses": {
+            "max": "max(1, int_mod)",
+            "reset": "long"
+          },
+          "action": {
+            "range": "60 feet",
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": "1d10",
+                  "type": "weapon"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "event-horizon",
+          "name": "Event Horizon",
+          "level": 14,
+          "category": "actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "action": {
+            "area": "within 30 feet",
+            "save": {
+              "ability": "str",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "half",
+              "damage": [
+                {
+                  "dice": "2d10",
+                  "type": "force"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13092,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:26:56+00:00"
+  },
+  "wizard-phb:bladesinging-tce": {
+    "label": "Wizard (PHB) · Bladesinging (TCE)",
+    "hash": "7ac880f2cf331efe",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "training-in-war-and-song-bladesinging",
+          "name": "Training in War and Song (Bladesinging)",
+          "level": 2,
+          "category": "traits",
+          "grants": {
+            "skills": [
+              "performance"
+            ],
+            "armor": [
+              "light"
+            ]
+          }
+        },
+        {
+          "id": "bladesong",
+          "name": "Bladesong",
+          "level": 2,
+          "category": "bonus_actions",
+          "uses": {
+            "max": "pb",
+            "reset": "long"
+          },
+          "toggle": {
+            "uses_charge": true,
+            "modifiers": [
+              {
+                "target": "ac",
+                "add": "max(1, int_mod)"
+              },
+              {
+                "target": "speed.walk",
+                "add": 10
+              }
+            ]
+          }
+        },
+        {
+          "id": "song-of-defense",
+          "name": "Song of Defense",
+          "level": 10,
+          "category": "reactions",
+          "consumes": {
+            "resource": "spell_slots",
+            "amount": 1
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13612,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:27:11+00:00"
+  },
+  "wizard-phb:scribes-tce": {
+    "label": "Wizard (PHB) · Order of Scribes (TCE)",
+    "hash": "c36a45cf3a8b6f63",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "wizardly-quill",
+          "name": "Wizardly Quill",
+          "level": 2,
+          "category": "bonus_actions",
+          "action": {
+            "range": "5 feet"
+          }
+        },
+        {
+          "id": "awakened-spellbook",
+          "name": "Awakened Spellbook",
+          "level": 2,
+          "category": "traits",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          }
+        },
+        {
+          "id": "manifest-mind",
+          "name": "Manifest Mind",
+          "level": 6,
+          "category": "bonus_actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "action": {
+            "range": "60 feet"
+          }
+        },
+        {
+          "id": "master-scrivener",
+          "name": "Master Scrivener",
+          "level": 10,
+          "category": "traits",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          }
+        },
+        {
+          "id": "one-with-the-word",
+          "name": "One with the Word",
+          "level": 14,
+          "category": "reactions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 14131,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:27:24+00:00"
   }
 }

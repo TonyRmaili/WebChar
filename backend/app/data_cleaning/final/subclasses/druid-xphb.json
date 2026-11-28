@@ -299,5 +299,336 @@
             }
         ],
         "resources": []
+    },
+    {
+        "id": "druid-xphb:moon-xphb",
+        "kind": "subclass",
+        "name": "Circle of the Moon",
+        "source": "XPHB",
+        "edition": "one",
+        "text": "*Adopt Animal Forms to Guard the Wilds*\n\nDruids of the Circle of the Moon draw on lunar magic to transform themselves. Their order gathers under the moon to share news and perform rituals.\n\nChangeable as the moon, a Druid of this circle might prowl as a great cat one night, soar over the treetops as an eagle the next day, and then crash through undergrowth as a bear to drive off a trespassing monster. The wild is in the Druid's blood.",
+        "class_id": "druid-xphb",
+        "short_name": "Moon",
+        "grants": {
+            "spells": [
+                {
+                    "spell": "cure-wounds-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "moonbeam-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "starry-wisp-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "conjure-animals-xphb",
+                    "how": "prepared",
+                    "at": 5
+                },
+                {
+                    "spell": "fount-of-moonlight-xphb",
+                    "how": "prepared",
+                    "at": 7
+                },
+                {
+                    "spell": "mass-cure-wounds-xphb",
+                    "how": "prepared",
+                    "at": 9
+                }
+            ]
+        },
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "druid-xphb:moon-xphb:circle-of-the-moon-spells",
+                    "druid-xphb:moon-xphb:circle-forms"
+                ]
+            },
+            {
+                "level": 6,
+                "features": [
+                    "druid-xphb:moon-xphb:improved-circle-forms"
+                ]
+            },
+            {
+                "level": 10,
+                "features": [
+                    "druid-xphb:moon-xphb:moonlight-step"
+                ]
+            },
+            {
+                "level": 14,
+                "features": [
+                    "druid-xphb:moon-xphb:lunar-form"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "druid-xphb:moon-xphb:circle-of-the-moon-spells",
+                "name": "Circle of the Moon Spells",
+                "level": 3,
+                "text": "When you reach a Druid level specified in the Circle of the Moon Spells table, you thereafter always have the listed spells prepared.\n\nIn addition, you can cast the spells from this feature while you're in a Wild Shape form.\n\nCircle of the Moon Spells\n\nDruid Level | Prepared Spells\n--- | ---\n3 | Cure Wounds, Moonbeam, Starry Wisp\n5 | Conjure Animals\n7 | Fount of Moonlight\n9 | Mass Cure Wounds",
+                "category": "traits"
+            },
+            {
+                "id": "druid-xphb:moon-xphb:circle-forms",
+                "name": "Circle Forms",
+                "level": 3,
+                "text": "You can channel lunar magic when you assume a Wild Shape form, granting you the benefits below.\n\n**Challenge Rating.** The maximum Challenge Rating for the form equals your Druid level divided by 3 (round down).\n\n**Armor Class.** Until you leave the form, your AC equals 13 plus your Wisdom modifier if that total is higher than the Beast's AC.\n\n**Temporary Hit Points.** You gain a number of Temporary Hit Points equal to three times your Druid level.",
+                "category": "traits",
+                "action": {
+                    "temp_hp": "3 * class_level"
+                },
+                "toggle": {
+                    "modifiers": [
+                        {
+                            "target": "ac",
+                            "min": "13 + wis_mod"
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "druid-xphb:moon-xphb:improved-circle-forms",
+                "name": "Improved Circle Forms",
+                "level": 6,
+                "text": "While in a Wild Shape form, you gain the following benefits.\n\n**Lunar Radiance.** Each of your attacks in a Wild Shape form can deal its normal damage type or Radiant damage. You make this choice each time you hit with those attacks.\n\n**Increased Toughness.** You can add your Wisdom modifier to your Constitution saving throws.",
+                "category": "traits"
+            },
+            {
+                "id": "druid-xphb:moon-xphb:moonlight-step",
+                "name": "Moonlight Step",
+                "level": 10,
+                "text": "You magically transport yourself, reappearing amid a burst of moonlight. As a Bonus Action, you teleport up to 30 feet to an unoccupied space you can see, and you have Advantage on the next attack roll you make before the end of this turn.\n\nYou can use this feature a number of times equal to your Wisdom modifier (minimum of once), and you regain all expended uses when you finish a Long Rest. You can also regain uses by expending a level 2+ spell slot for each use you want to restore (no action required).",
+                "category": "bonus_actions",
+                "uses": {
+                    "max": "max(1, wis_mod)",
+                    "reset": "long"
+                },
+                "action": {
+                    "range": "30 feet"
+                }
+            },
+            {
+                "id": "druid-xphb:moon-xphb:lunar-form",
+                "name": "Lunar Form",
+                "level": 14,
+                "text": "The power of the moon suffuses you, granting you the following benefits.\n\n**Improved Lunar Radiance.** Once per turn, you can deal an extra 2d10 Radiant damage to a target you hit with a Wild Shape form's attack.\n\n**Shared Moonlight.** Whenever you use Moonlight Step, you can also teleport one willing creature. That creature must be within 10 feet of you, and you teleport it to an unoccupied space you can see within 10 feet of your destination space.",
+                "category": "traits"
+            },
+            {
+                "id": "druid-xphb:moon-xphb:improved-circle-forms:increased-toughness",
+                "name": "Increased Toughness",
+                "level": 6,
+                "text": "**Increased Toughness.** You can add your Wisdom modifier to your Constitution saving throws.",
+                "parent": "druid-xphb:moon-xphb:improved-circle-forms",
+                "category": "traits",
+                "toggle": {
+                    "modifiers": [
+                        {
+                            "target": "save.con",
+                            "add": "wis_mod"
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "druid-xphb:moon-xphb:lunar-form:improved-lunar-radiance",
+                "name": "Improved Lunar Radiance",
+                "level": 14,
+                "text": "**Improved Lunar Radiance.** Once per turn, you can deal an extra 2d10 Radiant damage to a target you hit with a Wild Shape form's attack.",
+                "parent": "druid-xphb:moon-xphb:lunar-form",
+                "category": "traits",
+                "action": {
+                    "attack": {
+                        "kind": "any",
+                        "damage": [
+                            {
+                                "dice": "2d10",
+                                "type": "radiant"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "resources": []
+    },
+    {
+        "id": "druid-xphb:stars-xphb",
+        "kind": "subclass",
+        "name": "Circle of the Stars",
+        "source": "XPHB",
+        "edition": "one",
+        "text": "*Harness Secrets Hidden in Constellations*\n\nThe Circle of the Stars has tracked heavenly patterns since time immemorial, discovering secrets hidden amid the constellations. By understanding these secrets, the Druids of this circle seek to harness the powers of the cosmos.",
+        "class_id": "druid-xphb",
+        "short_name": "Stars",
+        "grants": {
+            "spells": [
+                {
+                    "spell": "guidance-xphb",
+                    "how": "known",
+                    "at": 3
+                },
+                {
+                    "spell": "guiding-bolt-xphb",
+                    "how": "prepared",
+                    "at": 3
+                }
+            ]
+        },
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "druid-xphb:stars-xphb:star-map",
+                    "druid-xphb:stars-xphb:starry-form"
+                ]
+            },
+            {
+                "level": 6,
+                "features": [
+                    "druid-xphb:stars-xphb:cosmic-omen"
+                ]
+            },
+            {
+                "level": 10,
+                "features": [
+                    "druid-xphb:stars-xphb:twinkling-constellations"
+                ]
+            },
+            {
+                "level": 14,
+                "features": [
+                    "druid-xphb:stars-xphb:full-of-stars"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "druid-xphb:stars-xphb:star-map",
+                "name": "Star Map",
+                "level": 3,
+                "text": "You've created a star chart as part of your heavenly studies. It is a Tiny object, and you can use it as a Spellcasting Focus for your Druid spells. You determine its form by rolling on the Star Map table or by choosing one.\n\nWhile holding the map, you have the Guidance and Guiding Bolt spells prepared, and you can cast Guiding Bolt without expending a spell slot. You can cast it in that way a number of times equal to your Wisdom modifier (minimum of once), and you regain all expended uses when you finish a Long Rest.\n\nIf you lose the map, you can perform a 1-hour ceremony to magically create a replacement. This ceremony can be performed during a Short or Long Rest, and it destroys the previous map.\n\nStar Map\n\n1d6 | Map Form\n--- | ---\n1 | A scroll bearing depictions of constellations\n2 | A stone tablet with fine holes drilled through it\n3 | An owlbear hide tooled with stellar symbols\n4 | A collection of maps bound in an ebony cover\n5 | A crystal engraved with starry patterns\n6 | A glass disk etched with constellations",
+                "category": "traits"
+            },
+            {
+                "id": "druid-xphb:stars-xphb:starry-form",
+                "name": "Starry Form",
+                "level": 3,
+                "text": "As a Bonus Action, you can expend a use of your Wild Shape feature to take on a starry form rather than shape-shifting.\n\nWhile in your starry form, you retain your game statistics, but your body becomes luminous, your joints glimmer like stars, and glowing lines connect them as on a star chart. This form sheds Bright Light in a 10-foot radius and Dim Light for an additional 10 feet. The form lasts for 10 minutes. It ends early if you dismiss it (no action required), have the Incapacitated condition, or use this feature again.\n\nWhenever you assume your starry form, choose which of the following constellations glimmers on your body; your choice gives you certain benefits while in the form.",
+                "consumes": {
+                    "resource": "wild_shape",
+                    "amount": 1
+                },
+                "category": "bonus_actions",
+                "toggle": {
+                    "uses_charge": true
+                }
+            },
+            {
+                "id": "druid-xphb:stars-xphb:archer",
+                "name": "Archer",
+                "level": 3,
+                "text": "A constellation of an archer appears on you. When you activate this form and as a Bonus Action on your subsequent turns while it lasts, you can make a ranged spell attack, hurling a luminous arrow that targets one creature within 60 feet of yourself. On a hit, the attack deals Radiant damage equal to 1d8 plus your Wisdom modifier.",
+                "parent": "druid-xphb:stars-xphb:starry-form",
+                "category": "bonus_actions",
+                "action": {
+                    "range": "60 feet",
+                    "attack": {
+                        "kind": "spell",
+                        "bonus": "spell_mod + pb",
+                        "damage": [
+                            {
+                                "dice": {
+                                    "1": "1d8",
+                                    "10": "2d8"
+                                },
+                                "bonus": "wis_mod",
+                                "type": "radiant"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "druid-xphb:stars-xphb:chalice",
+                "name": "Chalice",
+                "level": 3,
+                "text": "A constellation of a life-giving goblet appears on you. Whenever you cast a spell using a spell slot that restores Hit Points to a creature, you or another creature within 30 feet of you can regain Hit Points equal to 1d8 plus your Wisdom modifier.",
+                "parent": "druid-xphb:stars-xphb:starry-form",
+                "category": "traits",
+                "action": {
+                    "range": "30 feet",
+                    "heal": {
+                        "1": "1d8 + wis_mod",
+                        "10": "2d8 + wis_mod"
+                    }
+                }
+            },
+            {
+                "id": "druid-xphb:stars-xphb:dragon",
+                "name": "Dragon",
+                "level": 3,
+                "text": "A constellation of a wise dragon appears on you. When you make an Intelligence or a Wisdom check or a Constitution saving throw to maintain Concentration, you can treat a roll of 9 or lower on the d20 as a 10.",
+                "parent": "druid-xphb:stars-xphb:starry-form",
+                "category": "traits"
+            },
+            {
+                "id": "druid-xphb:stars-xphb:cosmic-omen",
+                "name": "Cosmic Omen",
+                "level": 6,
+                "text": "Whenever you finish a Long Rest, you can consult your Star Map for omens and roll a die. Until you finish your next Long Rest, you gain access to a special Reaction based on whether you rolled an even or an odd number on the die:\n\n- **Weal (even).** Whenever a creature you can see within 30 feet of you is about to make a D20 Test, you can take a Reaction to roll 1d6 and add the number rolled to the total.\n- **Woe (odd).** Whenever a creature you can see within 30 feet of you is about to make a D20 Test, you can take a Reaction to roll 1d6 and subtract the number rolled from the total.\n\nYou can use this Reaction a number of times equal to your Wisdom modifier (minimum of once), and you regain all expended uses when you finish a Long Rest.",
+                "category": "reactions",
+                "uses": {
+                    "max": "max(1, wis_mod)",
+                    "reset": "long"
+                },
+                "action": {
+                    "range": "30 feet"
+                }
+            },
+            {
+                "id": "druid-xphb:stars-xphb:twinkling-constellations",
+                "name": "Twinkling Constellations",
+                "level": 10,
+                "text": "The constellations of your Starry Form improve. The 1d8 of the Archer and the Chalice becomes 2d8, and while the Dragon is active, you have a Fly Speed of 20 feet and can hover.\n\nMoreover, at the start of each of your turns while in your Starry Form, you can change which constellation glimmers on your body.",
+                "category": "traits",
+                "toggle": {
+                    "grants": {
+                        "speed": {
+                            "fly": 20
+                        }
+                    }
+                }
+            },
+            {
+                "id": "druid-xphb:stars-xphb:full-of-stars",
+                "name": "Full of Stars",
+                "level": 14,
+                "text": "While in your Starry Form, you become partially incorporeal, giving you Resistance to Bludgeoning, Piercing, and Slashing damage.",
+                "category": "traits",
+                "toggle": {
+                    "grants": {
+                        "defenses": {
+                            "resist": [
+                                "bludgeoning",
+                                "piercing",
+                                "slashing"
+                            ]
+                        }
+                    }
+                }
+            }
+        ],
+        "resources": []
     }
 ]

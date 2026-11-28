@@ -1,0 +1,374 @@
+{
+  "shaman-wow:totems": {
+    "label": "Shaman (WoW) · Totems",
+    "hash": "c3f8563c43833dda",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "earthbind-totem",
+          "name": "Earthbind Totem",
+          "level": 3,
+          "category": "bonus_actions",
+          "action": {
+            "range": "10 feet",
+            "area": "30-foot Emanation"
+          }
+        },
+        {
+          "id": "primal-knowledge-totem",
+          "name": "Primal Knowledge Totem",
+          "level": 3,
+          "category": "bonus_actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "action": {
+            "range": "10 feet",
+            "area": "30-foot Emanation"
+          }
+        },
+        {
+          "id": "tremor-totem",
+          "name": "Tremor Totem",
+          "level": 3,
+          "category": "bonus_actions",
+          "action": {
+            "range": "10 feet",
+            "area": "30-foot Emanation"
+          }
+        },
+        {
+          "id": "wind-rush-totem",
+          "name": "Wind Rush Totem",
+          "level": 3,
+          "category": "bonus_actions",
+          "action": {
+            "range": "10 feet",
+            "area": "30-foot Emanation"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13714,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:16:43+00:00"
+  },
+  "shaman-wow:berserker-wow": {
+    "label": "Shaman (WoW) · Path of the Berserker (WoW)",
+    "hash": "025839976d5ca97b",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "frenzy",
+          "name": "Frenzy",
+          "level": 3,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "melee",
+              "damage": [
+                {
+                  "dice": {
+                    "1": "2d6",
+                    "9": "3d6",
+                    "16": "4d6"
+                  },
+                  "type": "weapon",
+                  "condition": "while Rage is active and after using Reckless Attack; first target hit on your turn with a Strength-based attack"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "mindless-rage",
+          "name": "Mindless Rage",
+          "level": 6,
+          "category": "traits",
+          "grants": {
+            "defenses": {
+              "condition_immune": [
+                "charmed",
+                "frightened"
+              ]
+            }
+          }
+        },
+        {
+          "id": "retaliation",
+          "name": "Retaliation",
+          "level": 10,
+          "category": "reactions"
+        },
+        {
+          "id": "intimidating-presence",
+          "name": "Intimidating Presence",
+          "level": 14,
+          "category": "bonus_actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "action": {
+            "area": "30-foot Emanation",
+            "save": {
+              "ability": "wis",
+              "dc": "8 + str_mod + pb",
+              "on_success": "none",
+              "conditions": [
+                "frightened"
+              ]
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13688,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:17:02+00:00"
+  },
+  "shaman-wow:elements-wow": {
+    "label": "Shaman (WoW) · Path of the Elements (WoW)",
+    "hash": "b04dbdc7456e7805",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "icefury",
+          "name": "Icefury",
+          "level": 3,
+          "category": "bonus_actions",
+          "action": {
+            "range": "30 feet",
+            "attack": {
+              "kind": "spell",
+              "bonus": "pb + con_mod",
+              "damage": [
+                {
+                  "dice": {
+                    "1": "2d8",
+                    "9": "3d8",
+                    "16": "4d8"
+                  },
+                  "type": "cold"
+                },
+                {
+                  "dice": "1d10",
+                  "type": "fire",
+                  "condition": "the next time the target takes Fire damage before the end of your next turn"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "lava-burst",
+          "name": "Lava Burst",
+          "level": 3,
+          "category": "bonus_actions",
+          "action": {
+            "range": "30 feet",
+            "save": {
+              "ability": "dex",
+              "dc": "8 + con_mod + pb",
+              "on_success": "half",
+              "damage": [
+                {
+                  "dice": {
+                    "1": "2d4",
+                    "9": "3d4",
+                    "16": "4d4"
+                  },
+                  "type": "fire"
+                },
+                {
+                  "dice": "1d8",
+                  "type": "lightning",
+                  "condition": "the next time the target takes Lightning damage before the end of your next turn, on a failed save"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "lightning-bolt",
+          "name": "Lightning Bolt",
+          "level": 3,
+          "category": "bonus_actions",
+          "action": {
+            "range": "30 feet",
+            "save": {
+              "ability": "dex",
+              "dc": "8 + con_mod + pb",
+              "on_success": "half",
+              "damage": [
+                {
+                  "dice": {
+                    "1": "2d6",
+                    "9": "3d6",
+                    "16": "4d6"
+                  },
+                  "type": "lightning"
+                },
+                {
+                  "dice": "1d6",
+                  "type": "cold",
+                  "condition": "the next time the target takes Cold damage before the end of your next turn, on a failed save"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "primordial-bond",
+          "name": "Primordial Bond",
+          "level": 10,
+          "category": "traits",
+          "toggle": {
+            "grants": {
+              "defenses": {
+                "resist": [
+                  "cold",
+                  "fire",
+                  "lightning"
+                ]
+              }
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 28944,
+    "tries": 2,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:17:18+00:00"
+  },
+  "shaman-wow:spiritual-guardian-wow": {
+    "label": "Shaman (WoW) · Path of the Spiritual Guardian (WoW)",
+    "hash": "274dff2783b7882e",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "spiritual-protectors",
+          "name": "Spiritual Protectors",
+          "level": 3,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": "1d4",
+                  "type": "cold",
+                  "condition": "if you choose Cold damage"
+                },
+                {
+                  "dice": "1d4",
+                  "type": "fire",
+                  "condition": "if you choose Fire damage"
+                },
+                {
+                  "dice": "1d4",
+                  "type": "lightning",
+                  "condition": "if you choose Lightning damage"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "spirit-shield",
+          "name": "Spirit Shield",
+          "level": 6,
+          "category": "reactions"
+        },
+        {
+          "id": "consult-the-spirits",
+          "name": "Consult the Spirits",
+          "level": 10,
+          "category": "traits"
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13519,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:17:53+00:00"
+  },
+  "shaman-wow:world-tree-wow": {
+    "label": "Shaman (WoW) · Path of the World Tree (WoW)",
+    "hash": "40679eded9bdae0c",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "vitality-surge",
+          "name": "Vitality Surge",
+          "level": 3,
+          "category": "traits",
+          "action": {
+            "temp_hp": "class_level"
+          }
+        },
+        {
+          "id": "life-giving-force",
+          "name": "Life-Giving Force",
+          "level": 3,
+          "category": "traits",
+          "action": {
+            "range": "10 feet",
+            "temp_hp": "rage_damage * 1d6"
+          }
+        },
+        {
+          "id": "branches-of-the-tree",
+          "name": "Branches of the Tree",
+          "level": 6,
+          "category": "reactions",
+          "action": {
+            "range": "30 feet",
+            "save": {
+              "ability": "str",
+              "dc": "8 + str_mod + pb",
+              "on_success": "none"
+            }
+          }
+        },
+        {
+          "id": "travel-along-the-tree",
+          "name": "Travel Along the Tree",
+          "level": 14,
+          "category": "bonus_actions",
+          "action": {
+            "range": "60 feet"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 26999,
+    "tries": 2,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:18:09+00:00"
+  }
+}

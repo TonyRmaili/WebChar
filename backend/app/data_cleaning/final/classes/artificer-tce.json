@@ -1,0 +1,769 @@
+[
+    {
+        "id": "artificer-tce",
+        "kind": "class",
+        "name": "Artificer",
+        "source": "TCE",
+        "edition": "classic",
+        "reprinted_as": [
+            "artificer-efa"
+        ],
+        "hit_die": "d8",
+        "hp": {
+            "first": "8 + con_mod",
+            "per_level": "5 + con_mod"
+        },
+        "saves": [
+            "con",
+            "int"
+        ],
+        "grants": {
+            "tools": [
+                "thieves_tools",
+                "tinkers_tools"
+            ],
+            "weapons": [
+                "simple_weapons"
+            ],
+            "armor": [
+                "light",
+                "medium",
+                "shields"
+            ],
+            "items": [
+                {
+                    "item": "light-crossbow-phb",
+                    "qty": 1
+                },
+                {
+                    "item": "crossbow-bolts-20-phb",
+                    "qty": 1
+                },
+                {
+                    "item": "thieves-tools-phb",
+                    "qty": 1
+                },
+                {
+                    "item": "dungeoneers-pack-phb",
+                    "qty": 1
+                }
+            ]
+        },
+        "choices": [
+            {
+                "type": "pool",
+                "id": "tools",
+                "label": "Tools",
+                "grant": "tools",
+                "count": 1,
+                "from": "artisans_tools"
+            },
+            {
+                "type": "pool",
+                "id": "skills",
+                "label": "Skills",
+                "grant": "skills",
+                "count": 2,
+                "from": [
+                    "arcana",
+                    "history",
+                    "investigation",
+                    "medicine",
+                    "nature",
+                    "perception",
+                    "sleight_of_hand"
+                ]
+            },
+            {
+                "type": "pool",
+                "id": "items",
+                "label": "Simple Weapons",
+                "grant": "items",
+                "count": 2,
+                "from": "simple_weapons"
+            },
+            {
+                "type": "bundle",
+                "id": "starting_equipment",
+                "label": "Starting Equipment",
+                "options": [
+                    {
+                        "id": "a",
+                        "label": "Studded Leather Armor",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "studded-leather-armor-phb",
+                                    "qty": 1
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "id": "b",
+                        "label": "Scale Mail",
+                        "grants": {
+                            "items": [
+                                {
+                                    "item": "scale-mail-phb",
+                                    "qty": 1
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        ],
+        "starting_gold": "5d4 × 10",
+        "multiclass": {
+            "requires": [
+                {
+                    "int": 13
+                }
+            ],
+            "grants": {
+                "tools": [
+                    "thieves_tools",
+                    "tinkers_tools"
+                ],
+                "armor": [
+                    "light",
+                    "medium",
+                    "shields"
+                ]
+            }
+        },
+        "subclass": {
+            "title": "Artificer Specialist",
+            "level": 3,
+            "text": "*3rd-level artificer feature*\n\nChoose the type of specialist you are, each of which is detailed at the end of the class's description. Your choice grants you features at 5th level and again at 9th and 15th level."
+        },
+        "columns": [
+            {
+                "id": "infusions_known",
+                "name": "Infusions Known",
+                "values": {
+                    "2": 4,
+                    "6": 6,
+                    "10": 8,
+                    "14": 10,
+                    "18": 12
+                }
+            },
+            {
+                "id": "infused_items",
+                "name": "Infused Items",
+                "values": {
+                    "2": 2,
+                    "6": 3,
+                    "10": 4,
+                    "14": 5,
+                    "18": 6
+                }
+            }
+        ],
+        "spellcasting": {
+            "ability": "int",
+            "progression": "half_up",
+            "list": "artificer-tce",
+            "cantrips": {
+                "1": 2,
+                "10": 3,
+                "14": 4
+            },
+            "prepared": "max(1, class_level / 2 + int_mod)",
+            "change": "long_rest",
+            "slots": {
+                "1": [
+                    2
+                ],
+                "3": [
+                    3
+                ],
+                "5": [
+                    4,
+                    2
+                ],
+                "7": [
+                    4,
+                    3
+                ],
+                "9": [
+                    4,
+                    3,
+                    2
+                ],
+                "11": [
+                    4,
+                    3,
+                    3
+                ],
+                "13": [
+                    4,
+                    3,
+                    3,
+                    1
+                ],
+                "15": [
+                    4,
+                    3,
+                    3,
+                    2
+                ],
+                "17": [
+                    4,
+                    3,
+                    3,
+                    3,
+                    1
+                ],
+                "19": [
+                    4,
+                    3,
+                    3,
+                    3,
+                    2
+                ]
+            }
+        },
+        "progression": [
+            {
+                "level": 1,
+                "features": [
+                    "artificer-tce:optional-rule-firearm-proficiency",
+                    "artificer-tce:magical-tinkering",
+                    "artificer-tce:spellcasting"
+                ]
+            },
+            {
+                "level": 2,
+                "features": [
+                    "artificer-tce:infuse-item"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "infusions_2",
+                        "label": "Infusions",
+                        "grant": "optional_features",
+                        "count": 4,
+                        "from": {
+                            "feature_type": [
+                                "artificer_infusion"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 3,
+                "features": [
+                    "artificer-tce:the-right-tool-for-the-job"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "artificer_specialist_3",
+                        "label": "Artificer Specialist",
+                        "grant": "subclass",
+                        "count": 1,
+                        "from": "artificer-tce"
+                    }
+                ]
+            },
+            {
+                "level": 4,
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_4",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_4",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_4",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 5,
+                "subclass_features": true
+            },
+            {
+                "level": 6,
+                "features": [
+                    "artificer-tce:tool-expertise"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "infusions_6",
+                        "label": "Infusions",
+                        "grant": "optional_features",
+                        "count": 2,
+                        "from": {
+                            "feature_type": [
+                                "artificer_infusion"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 7,
+                "features": [
+                    "artificer-tce:flash-of-genius"
+                ]
+            },
+            {
+                "level": 8,
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_8",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_8",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_8",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 9,
+                "subclass_features": true
+            },
+            {
+                "level": 10,
+                "features": [
+                    "artificer-tce:magic-item-adept"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "infusions_10",
+                        "label": "Infusions",
+                        "grant": "optional_features",
+                        "count": 2,
+                        "from": {
+                            "feature_type": [
+                                "artificer_infusion"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 11,
+                "features": [
+                    "artificer-tce:spell-storing-item"
+                ]
+            },
+            {
+                "level": 12,
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_12",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_12",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_12",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 14,
+                "features": [
+                    "artificer-tce:magic-item-savant"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "infusions_14",
+                        "label": "Infusions",
+                        "grant": "optional_features",
+                        "count": 2,
+                        "from": {
+                            "feature_type": [
+                                "artificer_infusion"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 15,
+                "subclass_features": true
+            },
+            {
+                "level": 16,
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_16",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_16",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_16",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 18,
+                "features": [
+                    "artificer-tce:magic-item-master"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "infusions_18",
+                        "label": "Infusions",
+                        "grant": "optional_features",
+                        "count": 2,
+                        "from": {
+                            "feature_type": [
+                                "artificer_infusion"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 19,
+                "choices": [
+                    {
+                        "type": "bundle",
+                        "id": "ability_score_improvement_19",
+                        "label": "Ability Score Improvement",
+                        "options": [
+                            {
+                                "id": "ability",
+                                "label": "+2 to one ability or +1 to two",
+                                "choices": [
+                                    {
+                                        "type": "ability",
+                                        "id": "ability_19",
+                                        "label": "Ability Scores",
+                                        "from": [
+                                            "str",
+                                            "dex",
+                                            "con",
+                                            "int",
+                                            "wis",
+                                            "cha"
+                                        ],
+                                        "bonus_sets": [
+                                            [
+                                                2
+                                            ],
+                                            [
+                                                1,
+                                                1
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "feat",
+                                "label": "A feat",
+                                "choices": [
+                                    {
+                                        "type": "pool",
+                                        "id": "feat_19",
+                                        "label": "Feat",
+                                        "grant": "feats",
+                                        "count": 1,
+                                        "from": "all_feats"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "level": 20,
+                "features": [
+                    "artificer-tce:soul-of-artifice"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "artificer-tce:optional-rule-firearm-proficiency",
+                "name": "Optional Rule: Firearm Proficiency",
+                "level": 1,
+                "text": "The secrets of creating and operating gunpowder weapons have been discovered in various corners of the D&D multiverse. If your Dungeon Master uses the rules on firearms in chapter 9 of the Dungeon Master's Guide and your artificer has been exposed to the operation of such weapons, your artificer is proficient with them.",
+                "category": "traits",
+                "grants": {
+                    "weapons": [
+                        "firearms"
+                    ]
+                }
+            },
+            {
+                "id": "artificer-tce:magical-tinkering",
+                "name": "Magical Tinkering",
+                "level": 1,
+                "text": "*1st-level artificer feature*\n\nYou've learned how to invest a spark of magic into mundane objects. To use this ability, you must have thieves' tools or artisan's tools in hand. You then touch a Tiny nonmagical object as an action and give it one of the following magical properties of your choice:\n\n- The object sheds bright light in a 5-foot radius and dim light for an additional 5 feet.\n- Whenever tapped by a creature, the object emits a recorded message that can be heard up to 10 feet away. You utter the message when you bestow this property on the object, and the recording can be no more than 6 seconds long.\n- The object continuously emits your choice of an odor or a nonverbal sound (wind, waves, chirping, or the like). The chosen phenomenon is perceivable up to 10 feet away.\n- A static visual effect appears on one of the object's surfaces. This effect can be a picture, up to 25 words of text, lines and shapes, or a mixture of these elements, as you like.\n\nThe chosen property lasts indefinitely. As an action, you can touch the object and end the property early.\n\nYou can bestow magic on multiple objects, touching one object each time you use this feature, though a single object can only bear one property at a time. The maximum number of objects you can affect with this feature at one time is equal to your Intelligence modifier (minimum of one object). If you try to exceed your maximum, the oldest property immediately ends, and then the new property applies.",
+                "category": "actions",
+                "action": {
+                    "range": "touch"
+                }
+            },
+            {
+                "id": "artificer-tce:spellcasting",
+                "name": "Spellcasting",
+                "level": 1,
+                "text": "*1st-level artificer feature*\n\nYou've studied the workings of magic and how to cast spells, channeling the magic through objects. To observers, you don't appear to be casting spells in a conventional way; you appear to produce wonders from mundane items and outlandish inventions.\n\n**Tools Required.** You produce your artificer spell effects through your tools. You must have a spellcasting focus—specifically thieves' tools or some kind of artisan's tool—in hand when you cast any spell with this Spellcasting feature (meaning the spell has an 'M' component when you cast it). You must be proficient with the tool to use it in this way. See chapter 5, \"Equipment,\" in the Player's Handbook for descriptions of these tools.\n\nAfter you gain the Infuse Item feature at 2nd level, you can also use any item bearing one of your infusions as a spellcasting focus.\n\n**The Magic of Artifice.** As an artificer, you use tools when you cast your spells. When describing your spellcasting, think about how you're using a tool to perform the spell effect. If you cast Cure Wounds using alchemist's supplies, you could be quickly producing a salve. If you cast it using tinker's tools, you might have a miniature mechanical spider that binds wounds. When you cast Poison Spray, you could fling foul chemicals or use a wand that spits venom. The effect of the spell is the same as for a spellcaster of any other class, but your method of spellcasting is special.\n\nThe same principle applies when you prepare your spells. As an artificer, you don't study a spellbook or pray to prepare your spells. Instead, you work with your tools and create the specialized items you'll use to produce your effects. If you replace Cure Wounds with Heat Metal, you might be altering the device you use to heal—perhaps modifying a tool so that it channels heat instead of healing energy.\n\nSuch details don't limit you in any way or provide you with any benefit beyond the spell's effects. You don't have to justify how you're using tools to cast a spell. But describing your spellcasting creatively is a fun way to distinguish yourself from other spellcasters.\n\n**Cantrips (0-Level Spells).** At 1st level, you know two cantrips of your choice from the artificer spell list. At higher levels, you learn additional artificer cantrips of your choice, as shown in the Cantrips Known column of the Artificer table.\n\nWhen you gain a level in this class, you can replace one of the artificer cantrips you know with another cantrip from the artificer spell list.\n\n**Preparing and Casting Spells.** The Artificer table shows how many spell slots you have to cast your artificer spells. To cast one of your artificer spells of 1st level or higher, you must expend a slot of the spell's level or higher. You regain all expended spell slots when you finish a long rest.\n\nYou prepare the list of artificer spells that are available for you to cast, choosing from the artificer spell list. When you do so, choose a number of artificer spells equal to your Intelligence modifier + half your artificer level, rounded down (minimum of one spell). The spells must be of a level for which you have spell slots.\n\nFor example, if you are a 5th-level artificer, you have four 1st-level and two 2nd-level spell slots. With an Intelligence of 14, your list of prepared spells can include four spells of 1st or 2nd level, in any combination. If you prepare the 1st-level spell Cure Wounds, you can cast it using a 1st-level or a 2nd-level slot. Casting the spell doesn't remove it from your list of prepared spells.\n\nYou can change your list of prepared spells when you finish a long rest. Preparing a new list of artificer spells requires time spent tinkering with your spellcasting focuses: at least 1 minute per spell level for each spell on your list.\n\n**Spellcasting Ability.** Intelligence is your spellcasting ability for your artificer spells; your understanding of the theory behind magic allows you to wield these spells with superior skill. You use your Intelligence whenever an artificer spell refers to your spellcasting ability. In addition, you use your Intelligence modifier when setting the saving throw DC for an artificer spell you cast and when making an attack roll with one.\n\n**Spell save DC** = 8 + your proficiency bonus + your Intelligence modifier\n\n**Spell attack modifier** = your proficiency bonus + your Intelligence modifier\n\n**Ritual Casting.** You can cast an artificer spell as a ritual if that spell has the ritual tag and you have the spell prepared.",
+                "category": "traits"
+            },
+            {
+                "id": "artificer-tce:infuse-item",
+                "name": "Infuse Item",
+                "level": 2,
+                "text": "*2nd-level artificer feature*\n\nYou've gained the ability to imbue mundane items with certain magical infusions, turning those objects into magic items.\n\n**Artificer Infusions.** Artificers have invented numerous magical infusions, extraordinary processes that rapidly create magic items. To many, artificers seem like wonderworkers, accomplishing in hours what others need weeks to complete.\n\nThe description of each of the following infusions details the type of item that can receive it, along with whether the resulting magic item requires attunement.\n\nSome infusions specify a minimum artificer level. You can't learn such an infusion until you are at least that level.\n\nUnless an infusion's description says otherwise, you can't learn an infusion more than once.\n\n**Infusing an Item.** Whenever you finish a long rest, you can touch a nonmagical object and imbue it with one of your artificer infusions, turning it into a magic item. An infusion works on only certain kinds of objects, as specified in the infusion's description. If the item requires attunement, you can attune yourself to it the instant you infuse the item. If you decide to attune to the item later, you must do so using the normal process for attunement (see \"Attunement\" in chapter 7 of the Dungeon Master's Guide).\n\nYour infusion remains in an item indefinitely, but when you die, the infusion vanishes after a number of days have passed equal to your Intelligence modifier (minimum of 1 day). The infusion also vanishes if you give up your knowledge of the infusion for another one.\n\nYou can infuse more than one nonmagical object at the end of a long rest; the maximum number of objects appears in the Infused Items column of the Artificer table. You must touch each of the objects, and each of your infusions can be in only one object at a time. Moreover, no object can bear more than one of your infusions at a time. If you try to exceed your maximum number of infusions, the oldest infusion immediately ends, and then the new infusion applies.\n\nIf an infusion ends on an item that contains other things, like a bag of holding, its contents harmlessly appear in and around its space.",
+                "category": "traits"
+            },
+            {
+                "id": "artificer-tce:infusions-known",
+                "name": "Infusions Known",
+                "level": 2,
+                "text": "When you gain this feature, pick four artificer infusions to learn, choosing from the \"Artificer Infusions\" section at the end of the class's description. You learn additional infusions of your choice when you reach certain levels in this class, as shown in the Infusions Known column of the Artificer table.\n\nWhenever you gain a level in this class, you can replace one of the artificer infusions you learned with a new one.",
+                "parent": "artificer-tce:infuse-item",
+                "category": "traits"
+            },
+            {
+                "id": "artificer-tce:the-right-tool-for-the-job",
+                "name": "The Right Tool for the Job",
+                "level": 3,
+                "text": "*3rd-level artificer feature*\n\nYou've learned how to produce exactly the tool you need: with thieves' tools or artisan's tools in hand, you can magically create one set of artisan's tools in an unoccupied space within 5 feet of you. This creation requires 1 hour of uninterrupted work, which can coincide with a short or long rest. Though the product of magic, the tools are nonmagical, and they vanish when you use this feature again.",
+                "category": "actions",
+                "action": {
+                    "range": "5 feet"
+                }
+            },
+            {
+                "id": "artificer-tce:tool-expertise",
+                "name": "Tool Expertise",
+                "level": 6,
+                "text": "*6th-level artificer feature*\n\nYour proficiency bonus is now doubled for any ability check you make that uses your proficiency with a tool.",
+                "category": "traits"
+            },
+            {
+                "id": "artificer-tce:flash-of-genius",
+                "name": "Flash of Genius",
+                "level": 7,
+                "text": "*7th-level artificer feature*\n\nYou've gained the ability to come up with solutions under pressure. When you or another creature you can see within 30 feet of you makes an ability check or a saving throw, you can use your reaction to add your Intelligence modifier to the roll.\n\nYou can use this feature a number of times equal to your Intelligence modifier (minimum of once). You regain all expended uses when you finish a long rest.",
+                "category": "reactions",
+                "uses": {
+                    "max": "max(1, int_mod)",
+                    "reset": "long"
+                },
+                "action": {
+                    "range": "30 feet"
+                }
+            },
+            {
+                "id": "artificer-tce:magic-item-adept",
+                "name": "Magic Item Adept",
+                "level": 10,
+                "text": "*10th-level artificer feature*\n\nYou've achieved a profound understanding of how to use and make magic items:\n\n- You can attune to up to four magic items at once.\n- If you craft a magic item with a rarity of common or uncommon, it takes you a quarter of the normal time, and it costs you half as much of the usual gold.",
+                "category": "traits"
+            },
+            {
+                "id": "artificer-tce:spell-storing-item",
+                "name": "Spell-Storing Item",
+                "level": 11,
+                "text": "*11th-level artificer feature*\n\nYou can now store a spell in an object. Whenever you finish a long rest, you can touch one simple or martial weapon or one item that you can use as a spellcasting focus, and you store a spell in it, choosing a 1st- or 2nd-level spell from the artificer spell list that requires 1 action to cast (you needn't have it prepared).\n\nWhile holding the object, a creature can take an action to produce the spell's effect from it, using your spellcasting ability modifier. If the spell requires concentration, the creature must concentrate. The spell stays in the object until it's been used a number of times equal to twice your Intelligence modifier (minimum of twice) or until you use this feature again to store a spell in an object.",
+                "category": "traits"
+            },
+            {
+                "id": "artificer-tce:magic-item-savant",
+                "name": "Magic Item Savant",
+                "level": 14,
+                "text": "*14th-level artificer feature*\n\nYour skill with magic items deepens:\n\n- You can attune to up to five magic items at once.\n- You ignore all class, race, spell, and level requirements on attuning to or using a magic item.",
+                "category": "traits"
+            },
+            {
+                "id": "artificer-tce:magic-item-master",
+                "name": "Magic Item Master",
+                "level": 18,
+                "text": "*18th-level artificer feature*\n\nYou can now attune to up to six magic items at once.",
+                "category": "traits"
+            },
+            {
+                "id": "artificer-tce:soul-of-artifice",
+                "name": "Soul of Artifice",
+                "level": 20,
+                "text": "*20th-level artificer feature*\n\nYou have developed a mystical connection to your magic items, which you can draw on for protection:\n\n- You gain a +1 bonus to all saving throws per magic item you are currently attuned to.\n- If you're reduced to 0 hit points but not killed outright, you can use your reaction to end one of your artificer infusions, causing you to drop to 1 hit point instead of 0.",
+                "category": "reactions"
+            }
+        ],
+        "resources": []
+    }
+]

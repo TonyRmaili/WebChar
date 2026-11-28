@@ -20,7 +20,8 @@ const API_BASE = "http://localhost:8000/catalogue";
 
    Every catalogue uses it: backgrounds, feats, races, optional features,
    items, monsters, spells, classes and subclasses (two catalogues: a
-   subclass never changes its class).
+   subclass never changes its class), and the text-only rules, lore and
+   toolkit (pages/Catalogues/Reference).
    ═══════════════════════════════════════════════════════════════════ */
 
 const authHeaders = (json = false) => {
@@ -141,4 +142,6 @@ export const useCatalogueStore = create((set, get) => ({
   ...catalogueSlice(set, { list: "classes", one: "Class" }),
   ...catalogueSlice(set, { list: "subclasses", one: "Subclass" }),
   ...catalogueSlice(set, { list: "rules", one: "Rules" }),
+  ...catalogueSlice(set, { list: "lore", one: "Lore" }),
+  ...catalogueSlice(set, { list: "toolkit", one: "Toolkit" }),
 }));

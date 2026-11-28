@@ -274,14 +274,17 @@
                 "level": 1,
                 "features": [
                     "ranger-phb:favored-enemy",
-                    "ranger-phb:natural-explorer"
+                    "ranger-phb:favored-foe",
+                    "ranger-phb:natural-explorer",
+                    "ranger-phb:deft-explorer"
                 ]
             },
             {
                 "level": 2,
                 "features": [
                     "ranger-phb:fighting-style",
-                    "ranger-phb:spellcasting"
+                    "ranger-phb:spellcasting",
+                    "ranger-phb:spellcasting-focus"
                 ],
                 "choices": [
                     {
@@ -304,7 +307,8 @@
             {
                 "level": 3,
                 "features": [
-                    "ranger-phb:primeval-awareness"
+                    "ranger-phb:primeval-awareness",
+                    "ranger-phb:primal-awareness"
                 ],
                 "choices": [
                     {
@@ -319,7 +323,9 @@
             },
             {
                 "level": 4,
-                "features": [],
+                "features": [
+                    "ranger-phb:martial-versatility"
+                ],
                 "choices": [
                     {
                         "type": "bundle",
@@ -381,7 +387,8 @@
             {
                 "level": 6,
                 "features": [
-                    "ranger-phb:favored-enemy-and-natural-explorer-improvements"
+                    "ranger-phb:favored-enemy-and-natural-explorer-improvements",
+                    "ranger-phb:deft-explorer-improvement"
                 ]
             },
             {
@@ -449,9 +456,12 @@
                 "level": 10,
                 "features": [
                     "ranger-phb:hide-in-plain-sight",
+                    "ranger-phb:natures-veil",
                     "ranger-phb:natural-explorer-improvement"
                 ],
-                "upgrades": []
+                "upgrades": [
+                    "ranger-phb:deft-explorer-improvement"
+                ]
             },
             {
                 "level": 11,
@@ -683,6 +693,35 @@
                 ]
             },
             {
+                "id": "ranger-phb:favored-foe",
+                "name": "Favored Foe",
+                "level": 1,
+                "source": "TCE",
+                "text": "*1st-level ranger optional feature, which replaces the Favored Enemy feature and works with the Foe Slayer feature*\n\nWhen you hit a creature with an attack roll, you can call on your mystical bond with nature to mark the target as your favored enemy for 1 minute or until you lose your concentration (as if you were concentrating on a spell).\n\nThe first time on each of your turns that you hit the favored enemy and deal damage to it, including when you mark it, you can increase that damage by 1d4.\n\nYou can use this feature to mark a favored enemy a number of times equal to your proficiency bonus, and you regain all expended uses when you finish a long rest.\n\nThis feature's extra damage increases when you reach certain levels in this class: to 1d6 at 6th level and to 1d8 at 14th level.",
+                "optional": true,
+                "category": "traits",
+                "uses": {
+                    "max": "pb",
+                    "reset": "long"
+                },
+                "action": {
+                    "attack": {
+                        "kind": "any",
+                        "damage": [
+                            {
+                                "dice": {
+                                    "1": "1d4",
+                                    "6": "1d6",
+                                    "14": "1d8"
+                                },
+                                "type": "weapon",
+                                "condition": "first time on each of your turns that you hit the favored enemy and deal damage to it, including when you mark it."
+                            }
+                        ]
+                    }
+                }
+            },
+            {
                 "id": "ranger-phb:natural-explorer",
                 "name": "Natural Explorer",
                 "level": 1,
@@ -690,6 +729,15 @@
                 "srd": {
                     "5.1": "Natural Explorer"
                 },
+                "category": "traits"
+            },
+            {
+                "id": "ranger-phb:deft-explorer",
+                "name": "Deft Explorer",
+                "level": 1,
+                "source": "TCE",
+                "text": "*1st-level ranger optional feature, which replaces the Natural Explorer feature*\n\nYou are an unsurpassed explorer and survivor, both in the wilderness and in dealing with others on your travels. You gain the Canny benefit below, and you gain an additional benefit below when you reach 6th level and 10th level in this class.\n\n**Canny.** Choose one of your skill proficiencies. Your proficiency bonus is doubled for any ability check you make that uses the chosen skill.\n\nYou can also speak, read, and write two additional languages of your choice.",
+                "optional": true,
                 "category": "traits"
             },
             {
@@ -713,6 +761,15 @@
                 "category": "traits"
             },
             {
+                "id": "ranger-phb:spellcasting-focus",
+                "name": "Spellcasting Focus",
+                "level": 2,
+                "source": "TCE",
+                "text": "*2nd-level ranger optional feature*\n\nYou can use a druidic focus as a spellcasting focus for your ranger spells. A druidic focus might be a sprig of mistletoe or holly, a wand or rod made of yew or another special wood, a staff drawn whole from a living tree, or an object incorporating feathers, fur, bones, and teeth from sacred animals.",
+                "optional": true,
+                "category": "traits"
+            },
+            {
                 "id": "ranger-phb:primeval-awareness",
                 "name": "Primeval Awareness",
                 "level": 3,
@@ -724,6 +781,24 @@
                 "action": {
                     "range": "1 mile (up to 6 miles in favored terrain)"
                 }
+            },
+            {
+                "id": "ranger-phb:primal-awareness",
+                "name": "Primal Awareness",
+                "level": 3,
+                "source": "TCE",
+                "text": "*3rd-level ranger optional feature, which replaces the Primeval Awareness feature*\n\nYou can focus your awareness through the interconnections of nature: you learn additional spells when you reach certain levels in this class if you don't already know them, as shown in the Primal Awareness Spells table. These spells don't count against the number of ranger spells you know.\n\nPrimal Awareness Spells\n\nRanger Level | Spell\n--- | ---\n3rd | Speak with Animals\n5th | Beast Sense\n9th | Speak with Plants\n13th | Locate Creature\n17th | Commune with Nature\n\nYou can cast each of these spells once without expending a spell slot. Once you cast a spell in this way, you can't do so again until you finish a long rest.",
+                "optional": true,
+                "category": "traits"
+            },
+            {
+                "id": "ranger-phb:martial-versatility",
+                "name": "Martial Versatility",
+                "level": 4,
+                "source": "TCE",
+                "text": "*4th-level ranger optional feature*\n\nWhenever you reach a level in this class that grants the Ability Score Improvement feature, you can replace a fighting style you know with another fighting style available to rangers. This replacement represents a shift of focus in your martial practice.",
+                "optional": true,
+                "category": "traits"
             },
             {
                 "id": "ranger-phb:extra-attack",
@@ -743,6 +818,15 @@
                 "srd": {
                     "5.1": "Favored Enemy and Natural Explorer improvements"
                 },
+                "category": "traits"
+            },
+            {
+                "id": "ranger-phb:deft-explorer-improvement",
+                "name": "Deft Explorer Improvement",
+                "level": 6,
+                "source": "TCE",
+                "text": "You gain an additional benefit when you reach 6th level in this class.\n\n**Roving.** Your walking speed increases by 5, and you gain a climbing speed and a swimming speed equal to your walking speed.\n\n**Deft Explorer Improvement.** You gain an additional benefit when you reach 10th level in this class.\n\n**Tireless.** As an action, you can give yourself a number of temporary hit points equal to 1d8 + your Wisdom modifier (minimum of 1 temporary hit point). You can use this action a number of times equal to your proficiency bonus, and you regain all expended uses when you finish a long rest.\n\nIn addition, whenever you finish a short rest, your exhaustion level, if any, is decreased by 1.",
+                "optional": true,
                 "category": "traits"
             },
             {
@@ -771,6 +855,19 @@
                             "add": 10
                         }
                     ]
+                }
+            },
+            {
+                "id": "ranger-phb:natures-veil",
+                "name": "Nature's Veil",
+                "level": 10,
+                "source": "TCE",
+                "text": "*10th-level ranger optional feature, which replaces the Hide in Plain Sight feature*\n\nYou draw on the powers of nature to hide yourself from view briefly. As a bonus action, you can magically become invisible, along with any equipment you are wearing or carrying, until the start of your next turn.\n\nYou can use this feature a number of times equal to your proficiency bonus, and you regain all expended uses when you finish a long rest.",
+                "optional": true,
+                "category": "bonus_actions",
+                "uses": {
+                    "max": "pb",
+                    "reset": "long"
                 }
             },
             {
@@ -832,6 +929,67 @@
                     "5.1": "Foe Slayer"
                 },
                 "category": "traits"
+            },
+            {
+                "id": "ranger-phb:deft-explorer:canny",
+                "name": "Canny",
+                "level": 1,
+                "text": "**Canny.** Choose one of your skill proficiencies. Your proficiency bonus is doubled for any ability check you make that uses the chosen skill.\n\nYou can also speak, read, and write two additional languages of your choice.",
+                "parent": "ranger-phb:deft-explorer",
+                "category": "traits",
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "expertise_1",
+                        "label": "Expertise",
+                        "grant": "expertise",
+                        "count": 1,
+                        "from": "proficient_skills"
+                    },
+                    {
+                        "type": "pool",
+                        "id": "languages_2",
+                        "label": "Languages",
+                        "grant": "languages",
+                        "count": 2,
+                        "from": "all_languages"
+                    }
+                ]
+            },
+            {
+                "id": "ranger-phb:deft-explorer-improvement:roving",
+                "name": "Roving",
+                "level": 6,
+                "text": "**Roving.** Your walking speed increases by 5, and you gain a climbing speed and a swimming speed equal to your walking speed.",
+                "parent": "ranger-phb:deft-explorer-improvement",
+                "category": "traits",
+                "modifiers": [
+                    {
+                        "target": "speed.walk",
+                        "add": 5
+                    }
+                ],
+                "grants": {
+                    "speed": {
+                        "swim": "walk",
+                        "climb": "walk"
+                    }
+                }
+            },
+            {
+                "id": "ranger-phb:deft-explorer-improvement:tireless",
+                "name": "Tireless",
+                "level": 6,
+                "text": "**Tireless.** As an action, you can give yourself a number of temporary hit points equal to 1d8 + your Wisdom modifier (minimum of 1 temporary hit point). You can use this action a number of times equal to your proficiency bonus, and you regain all expended uses when you finish a long rest.\n\nIn addition, whenever you finish a short rest, your exhaustion level, if any, is decreased by 1.",
+                "parent": "ranger-phb:deft-explorer-improvement",
+                "category": "actions",
+                "uses": {
+                    "max": "pb",
+                    "reset": "long"
+                },
+                "action": {
+                    "temp_hp": "max(1, 1d8 + wis_mod)"
+                }
             }
         ],
         "resources": []

@@ -432,5 +432,388 @@
     "reviewed": false,
     "reasoning": "medium",
     "at": "2026-11-19T11:40:24+00:00"
+  },
+  "rogue-xphb:arcane-trickster-xphb": {
+    "label": "Rogue (XPHB) · Arcane Trickster (XPHB)",
+    "hash": "c7b939e6408728ff",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "mage-hand-legerdemain",
+          "name": "Mage Hand Legerdemain",
+          "level": 3,
+          "category": "bonus_actions"
+        },
+        {
+          "id": "spell-thief",
+          "name": "Spell Thief",
+          "level": 17,
+          "category": "reactions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "action": {
+            "save": {
+              "ability": "int",
+              "dc": "8 + pb + int_mod",
+              "on_success": "none"
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 12998,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:14:38+00:00"
+  },
+  "rogue-xphb:assassin-xphb": {
+    "label": "Rogue (XPHB) · Assassin (XPHB)",
+    "hash": "f4344856c3ecae72",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "surprising-strikes",
+          "name": "Surprising Strikes",
+          "level": 3,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "bonus": "class_level",
+                  "type": "weapon",
+                  "condition": "during the first round of each combat"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "assassin-s-tools",
+          "name": "Assassin's Tools",
+          "level": 3,
+          "category": "traits",
+          "grants": {
+            "tools": [
+              "disguise_kit",
+              "poisoners_kit"
+            ]
+          }
+        },
+        {
+          "id": "death-strike",
+          "name": "Death Strike",
+          "level": 17,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any"
+            },
+            "save": {
+              "ability": "con",
+              "dc": "8 + dex_mod + pb",
+              "on_success": "none"
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13157,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:14:48+00:00"
+  },
+  "rogue-xphb:soulknife-xphb": {
+    "label": "Rogue (XPHB) · Soulknife (XPHB)",
+    "hash": "e304b90613faa2a3",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "psychic-blades",
+          "name": "Psychic Blades",
+          "level": 3,
+          "category": "bonus_actions"
+        },
+        {
+          "id": "psychic-whispers",
+          "name": "Psychic Whispers",
+          "level": 3,
+          "category": "actions"
+        },
+        {
+          "id": "psychic-teleportation",
+          "name": "Psychic Teleportation",
+          "level": 9,
+          "category": "bonus_actions",
+          "action": {
+            "range": "10 times the number rolled feet"
+          },
+          "consumes": {
+            "resource": "psionic_energy_dice",
+            "amount": 1
+          }
+        },
+        {
+          "id": "psychic-veil",
+          "name": "Psychic Veil",
+          "level": 13,
+          "category": "actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "toggle": {
+            "uses_charge": true
+          }
+        },
+        {
+          "id": "rend-mind",
+          "name": "Rend Mind",
+          "level": 17,
+          "category": "traits",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "action": {
+            "attack": {
+              "kind": "any"
+            },
+            "save": {
+              "ability": "wis",
+              "dc": "8 + dex_mod + pb",
+              "on_success": "none",
+              "conditions": [
+                "stunned"
+              ]
+            }
+          }
+        }
+      ],
+      "resources": [
+        {
+          "name": "Psionic Energy Dice",
+          "max": "soulknife_energy_die_number",
+          "die": "soulknife_energy_die_size",
+          "reset": "long",
+          "short_rest": 1
+        }
+      ]
+    },
+    "problems": [],
+    "tokens": 15774,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:15:01+00:00"
+  },
+  "rogue-xphb:scion-of-the-three-frhof": {
+    "label": "Rogue (XPHB) · Scion of the Three (FRHoF)",
+    "hash": "bdb27f873c74d529",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "bloodthirst",
+          "name": "Bloodthirst",
+          "level": 3,
+          "category": "reactions",
+          "uses": {
+            "max": "max(1, int_mod)",
+            "reset": "long"
+          }
+        },
+        {
+          "id": "terrify-cost-1d6",
+          "name": "Terrify (Cost: 1d6)",
+          "level": 9,
+          "category": "traits",
+          "action": {
+            "save": {
+              "ability": "wis",
+              "on_success": "none",
+              "conditions": [
+                "frightened"
+              ]
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13156,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:15:26+00:00"
+  },
+  "rogue-xphb:phantom-rhw": {
+    "label": "Rogue (XPHB) · Phantom (RHW)",
+    "hash": "b4ebd74a288d49fc",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "wails-from-the-grave",
+          "name": "Wails from the Grave",
+          "level": 3,
+          "category": "traits",
+          "uses": {
+            "max": "max(1, dex_mod)",
+            "reset": "long"
+          },
+          "action": {
+            "range": "30 feet",
+            "damage": [
+              {
+                "dice": {
+                  "1": "1d6",
+                  "5": "2d6",
+                  "9": "3d6",
+                  "13": "4d6",
+                  "17": "5d6"
+                },
+                "type": "necrotic"
+              }
+            ]
+          }
+        },
+        {
+          "id": "spirit-query",
+          "name": "Spirit Query",
+          "level": 9,
+          "category": "actions"
+        },
+        {
+          "id": "gaining-additional-soul-trinkets",
+          "name": "Gaining Additional Soul Trinkets",
+          "level": 9,
+          "category": "reactions"
+        },
+        {
+          "id": "voice-of-death",
+          "name": "Voice of Death",
+          "level": 9,
+          "category": "traits"
+        },
+        {
+          "id": "ghost-walk",
+          "name": "Ghost Walk",
+          "level": 13,
+          "category": "bonus_actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "toggle": {
+            "uses_charge": true,
+            "grants": {
+              "speed": {
+                "fly": 10
+              }
+            }
+          }
+        },
+        {
+          "id": "death-s-lament",
+          "name": "Death's Lament",
+          "level": 17,
+          "category": "traits",
+          "action": {
+            "damage": [
+              {
+                "dice": "5d6",
+                "type": "necrotic"
+              }
+            ]
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 15330,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:15:38+00:00"
+  },
+  "rogue-xphb:swashbuckler-wow": {
+    "label": "Rogue (XPHB) · Swashbuckler (WoW)",
+    "hash": "1add7758079377c4",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "rakish-audacity",
+          "name": "Rakish Audacity",
+          "level": 3,
+          "category": "traits",
+          "modifiers": [
+            {
+              "target": "initiative",
+              "add": "cha_mod"
+            }
+          ]
+        },
+        {
+          "id": "goad-cost-1d6",
+          "name": "Goad (Cost: 1d6)",
+          "level": 9,
+          "category": "traits",
+          "action": {
+            "save": {
+              "ability": "wis",
+              "on_success": "none"
+            }
+          }
+        },
+        {
+          "id": "awe-cost-3d6",
+          "name": "Awe (Cost: 3d6)",
+          "level": 9,
+          "category": "traits",
+          "action": {
+            "range": "30 feet",
+            "save": {
+              "ability": "wis",
+              "on_success": "none",
+              "conditions": [
+                "charmed"
+              ]
+            }
+          }
+        },
+        {
+          "id": "master-duelist",
+          "name": "Master Duelist",
+          "level": 17,
+          "category": "actions",
+          "action": {
+            "range": "5 feet"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 28789,
+    "tries": 2,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:16:01+00:00"
   }
 }

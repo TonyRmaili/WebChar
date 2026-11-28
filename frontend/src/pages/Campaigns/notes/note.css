@@ -1,0 +1,515 @@
+/* ═══════════════════════════════════════════════════════════════════
+   note.css — how a campaign note looks inside its card (NoteCard).
+   Tailwind clears the browser's own list and heading styles, so they are
+   given back here, in the theme's inks (themes.css): no fixed colours.
+   ═══════════════════════════════════════════════════════════════════ */
+
+.wc-note-doc {
+  min-height: 100%;
+  padding: 0.75rem 1.5rem 3rem 2.25rem;
+  outline: none;
+  font-size: 16px;
+  line-height: 1.6;
+  color: rgb(var(--c-ink));
+  /* Tab gaps line up like tab stops. */
+  tab-size: 3em;
+  -moz-tab-size: 3em;
+  /* Pictures on the left or right stay inside the note. */
+  display: flow-root;
+}
+
+.wc-note-doc p {
+  margin: 0.3em 0;
+}
+
+.wc-note-doc h1,
+.wc-note-doc h2,
+.wc-note-doc h3 {
+  line-height: 1.25;
+  font-weight: 700;
+  margin: 0.9em 0 0.3em;
+}
+.wc-note-doc h1 {
+  font-size: 1.75em;
+  color: rgb(var(--c-rubric));
+}
+.wc-note-doc h2 {
+  font-size: 1.4em;
+  border-bottom: 1px solid rgb(var(--c-rule) / 0.4);
+}
+.wc-note-doc h3 {
+  font-size: 1.15em;
+}
+.wc-note-doc > :first-child {
+  margin-top: 0.3em;
+}
+
+.wc-note-doc a {
+  color: rgb(var(--c-info));
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.wc-note-doc code {
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 0.9em;
+  background: rgb(var(--c-ink) / 0.07);
+  border-radius: 3px;
+  padding: 0 0.25em;
+}
+.wc-note-doc pre {
+  background: rgb(var(--c-ink) / 0.07);
+  border-radius: 4px;
+  padding: 0.5em 0.75em;
+  white-space: pre-wrap;
+}
+.wc-note-doc pre code {
+  background: none;
+  padding: 0;
+}
+
+/* ─── lists ─── */
+
+.wc-note-doc ul,
+.wc-note-doc ol {
+  padding-left: 1.5em;
+  margin: 0.3em 0;
+}
+.wc-note-doc ul {
+  list-style: disc;
+}
+.wc-note-doc ol {
+  list-style: decimal;
+}
+.wc-note-doc li > p {
+  margin: 0.1em 0;
+}
+.wc-note-doc li::marker {
+  color: rgb(var(--c-ink-faded));
+}
+
+.wc-note-doc ul[data-type="taskList"] {
+  list-style: none;
+  padding-left: 0.2em;
+}
+.wc-note-doc ul[data-type="taskList"] li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5em;
+}
+.wc-note-doc ul[data-type="taskList"] li > label {
+  flex: none;
+  margin-top: 0.3em;
+  user-select: none;
+}
+.wc-note-doc ul[data-type="taskList"] li > div {
+  flex: 1;
+  min-width: 0;
+}
+.wc-note-doc ul[data-type="taskList"] input[type="checkbox"] {
+  accent-color: rgb(var(--c-rubric));
+  cursor: pointer;
+}
+.wc-note-doc ul[data-type="taskList"] li[data-checked="true"] > div {
+  color: rgb(var(--c-ink-faded));
+  text-decoration: line-through;
+}
+
+/* ─── quotes and lines ─── */
+
+.wc-note-doc blockquote {
+  margin: 0.5em 0;
+  padding-left: 1em;
+  border-left: 3px solid rgb(var(--c-rubric) / 0.5);
+  color: rgb(var(--c-ink-faded));
+  font-style: italic;
+}
+.wc-note-doc hr {
+  border: none;
+  border-top: 1px solid rgb(var(--c-rule) / 0.6);
+  margin: 1em 0;
+}
+.wc-note-doc hr.ProseMirror-selectednode {
+  border-top-color: rgb(var(--c-rubric));
+}
+
+/* ─── tables ─── */
+
+.wc-note-doc .tableWrapper {
+  overflow-x: auto;
+  margin: 0.6em 0;
+}
+.wc-note-doc table {
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 100%;
+  overflow: hidden;
+}
+.wc-note-doc td,
+.wc-note-doc th {
+  position: relative;
+  min-width: 3em;
+  border: 1px solid rgb(var(--c-rule) / 0.55);
+  padding: 0.2em 0.5em;
+  vertical-align: top;
+  text-align: left;
+}
+.wc-note-doc th {
+  font-weight: 700;
+  background: rgb(var(--c-ink) / 0.06);
+}
+.wc-note-doc td > p,
+.wc-note-doc th > p {
+  margin: 0;
+}
+.wc-note-doc .selectedCell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgb(var(--c-rubric) / 0.12);
+  pointer-events: none;
+}
+.wc-note-doc .column-resize-handle {
+  position: absolute;
+  top: 0;
+  right: -2px;
+  bottom: -2px;
+  width: 4px;
+  background: rgb(var(--c-rubric) / 0.5);
+  pointer-events: none;
+}
+.wc-note-doc.resize-cursor,
+.resize-cursor .wc-note-doc {
+  cursor: col-resize;
+}
+
+/* ─── folding sections ─── */
+
+.wc-note-doc .details {
+  display: flex;
+  gap: 0.25em;
+  margin: 0.5em 0;
+  padding: 0.2em 0.5em;
+  border: 1px dashed rgb(var(--c-rule) / 0.5);
+  border-radius: 4px;
+}
+.wc-note-doc .details > button {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25em;
+  height: 1.6em;
+  font-size: 0.7em;
+  color: rgb(var(--c-rubric));
+  background: transparent;
+}
+.wc-note-doc .details > button::before {
+  content: "\25B6";
+  transition: transform 0.15s;
+}
+.wc-note-doc .details.is-open > button::before {
+  transform: rotate(90deg);
+}
+.wc-note-doc .details > div {
+  flex: 1;
+  min-width: 0;
+}
+.wc-note-doc .details summary {
+  font-weight: 700;
+  list-style: none;
+}
+.wc-note-doc .details summary::-webkit-details-marker {
+  display: none;
+}
+.wc-note-doc [data-type="detailsContent"][hidden] {
+  display: none;
+}
+
+/* ─── two columns ─── */
+
+.wc-note-doc .note-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25em;
+  margin: 0.5em 0;
+}
+.wc-note-doc .note-column {
+  min-width: 0;
+  padding: 0 0.4em;
+  outline: 1px dashed rgb(var(--c-rule) / 0.3);
+  border-radius: 2px;
+}
+
+/* ─── pictures ─── */
+
+.wc-note-doc .note-image {
+  position: relative;
+  max-width: 100%;
+  width: fit-content;
+  margin: 0.5em 0;
+}
+.wc-note-doc .note-image--left {
+  float: left;
+  margin-right: 1.25em;
+}
+.wc-note-doc .note-image--right {
+  float: right;
+  margin-left: 1.25em;
+}
+.wc-note-doc .note-image--center {
+  margin-left: auto;
+  margin-right: auto;
+}
+.wc-note-doc .note-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 2px;
+}
+.wc-note-doc .note-image.is-selected img,
+.wc-note-doc .note-image.is-selected .note-image-missing {
+  outline: 2px solid rgb(var(--c-rubric));
+  outline-offset: 2px;
+}
+.wc-note-doc .note-image-missing {
+  min-width: 12em;
+  padding: 2em 1em;
+  text-align: center;
+  font-size: 0.85em;
+  font-style: italic;
+  color: rgb(var(--c-ink-faded));
+  border: 1px dashed rgb(var(--c-rule) / 0.6);
+}
+.wc-note-doc .note-image-bar {
+  position: absolute;
+  left: 0;
+  top: -2.2em;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  min-width: 16em;
+  padding: 2px 4px;
+  border-radius: 4px;
+  background: rgb(var(--c-page-light));
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.25), 0 0 0 1px rgb(var(--c-rule) / 0.4);
+  font-size: 13px;
+}
+.wc-note-doc .note-image--right .note-image-bar {
+  left: auto;
+  right: 0;
+}
+.wc-note-doc .note-image-alt {
+  flex: 1;
+  min-width: 8em;
+  height: 1.6em;
+  margin-left: 4px;
+  padding: 0;
+  border: 0;
+  border-bottom: 1px dotted rgb(var(--c-rule) / 0.7);
+  background: transparent;
+  color: rgb(var(--c-ink));
+  font-style: italic;
+  font-size: 13px;
+}
+.wc-note-doc .note-image-alt:focus {
+  outline: none;
+  box-shadow: none;
+  border-bottom-style: solid;
+}
+.wc-note-doc .note-image-resize {
+  position: absolute;
+  right: -5px;
+  bottom: -5px;
+  width: 12px;
+  height: 12px;
+  cursor: nwse-resize;
+  border-radius: 2px;
+  background: rgb(var(--c-desk-accent));
+  box-shadow: 0 0 0 1px rgb(var(--c-desk));
+}
+.wc-note-doc .note-image--right .note-image-resize {
+  right: auto;
+  left: -5px;
+  cursor: nesw-resize;
+}
+
+/* ─── empty note, drag handle ─── */
+
+.wc-note-doc p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  color: rgb(var(--c-ink-faint));
+  font-style: italic;
+  pointer-events: none;
+}
+
+.note-grip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 22px;
+  margin-right: 2px;
+  border-radius: 3px;
+  color: rgb(var(--c-ink-faint));
+  cursor: grab;
+}
+.note-grip:hover {
+  background: rgb(var(--c-ink) / 0.07);
+  color: rgb(var(--c-ink));
+}
+
+.wc-note-doc .ProseMirror-selectednode:not(.note-image) {
+  outline: 2px solid rgb(var(--c-rubric) / 0.5);
+}
+.wc-note-doc .ProseMirror-gapcursor::after {
+  border-top-color: rgb(var(--c-ink));
+}
+
+/* ─── read-aloud boxes ─── */
+
+.wc-note-doc .note-read-aloud {
+  position: relative;
+  margin: 0.8em 0;
+  padding: 0.9em 1em 0.6em;
+  border-left: 4px solid rgb(var(--c-rubric) / 0.7);
+  border-radius: 2px;
+  background: rgb(var(--c-desk-accent) / 0.12);
+  box-shadow: inset 0 0 0 1px rgb(var(--c-rule) / 0.35);
+  font-style: italic;
+}
+.wc-note-doc .note-read-aloud::before {
+  content: "Read aloud";
+  position: absolute;
+  top: -0.7em;
+  left: 0.6em;
+  padding: 0 0.4em;
+  font-size: 0.7em;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgb(var(--c-rubric));
+  background: rgb(var(--c-page));
+}
+.wc-note-doc .note-read-aloud > :first-child {
+  margin-top: 0;
+}
+
+/* ─── handouts ─── */
+
+.wc-note-doc .note-handout {
+  margin: 1em 0;
+  padding: 0.4em 1em 0.8em;
+  border: 1px solid rgb(var(--c-rule) / 0.6);
+  border-radius: 3px;
+  background: rgb(var(--c-page-light) / 0.7);
+  box-shadow: 0 2px 6px rgb(0 0 0 / 0.12), inset 0 0 18px rgb(var(--c-desk-accent) / 0.12);
+}
+.wc-note-doc .note-handout-head {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  margin-bottom: 0.3em;
+  padding-bottom: 0.25em;
+  border-bottom: 1px dotted rgb(var(--c-rule) / 0.6);
+  font-size: 13px;
+}
+.wc-note-doc .note-handout-tag {
+  cursor: pointer;
+  font-size: 0.75em;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgb(var(--c-rubric));
+}
+.wc-note-doc .note-handout-title {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: rgb(var(--c-ink));
+  font-size: 15px;
+  font-weight: 700;
+}
+.wc-note-doc .note-handout-title:focus {
+  outline: none;
+  box-shadow: none;
+}
+.wc-note-doc .note-handout-show {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  padding: 0.1em 0.5em;
+  border-radius: 3px;
+  font-style: italic;
+  color: rgb(var(--c-ink-faded));
+}
+.wc-note-doc .note-handout-show:hover {
+  background: rgb(var(--c-ink) / 0.07);
+  color: rgb(var(--c-rubric));
+}
+
+/* The handout on its own (HandoutCard): bigger, nothing around it. */
+.note-handout-sheet {
+  padding: 1.5rem 2rem 2rem;
+}
+.note-handout-sheet-title {
+  margin: 0 0 0.5em;
+  font-size: 1.9rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  color: rgb(var(--c-ink));
+}
+.wc-note-doc.wc-note-doc--handout {
+  padding: 0;
+  font-size: 19px;
+  line-height: 1.7;
+}
+
+/* ─── links (@… and [[…]]) ─── */
+
+.wc-note-doc .note-link {
+  padding: 0 0.15em;
+  border-radius: 2px;
+  color: rgb(var(--c-rubric));
+  background: rgb(var(--c-rubric) / 0.08);
+  text-decoration: underline dotted rgb(var(--c-rubric) / 0.6);
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.wc-note-doc .note-link[data-kind="note"],
+.wc-note-doc .note-link[data-kind="image"] {
+  color: rgb(var(--c-info));
+  background: rgb(var(--c-info) / 0.08);
+  text-decoration-color: rgb(var(--c-info) / 0.6);
+}
+.wc-note-doc .note-link[data-kind="party"] {
+  color: rgb(var(--c-good));
+  background: rgb(var(--c-good) / 0.1);
+  text-decoration-color: rgb(var(--c-good) / 0.6);
+}
+.wc-note-doc .note-link[data-kind="monster"] {
+  color: rgb(var(--c-bad));
+  background: rgb(var(--c-bad) / 0.08);
+}
+.wc-note-doc .note-link[data-kind="spell"] {
+  color: rgb(var(--c-magic));
+  background: rgb(var(--c-magic) / 0.08);
+}
+.wc-note-doc .note-link[data-kind="item"] {
+  color: rgb(var(--c-warn));
+  background: rgb(var(--c-warn) / 0.1);
+}
+.wc-note-doc .note-link:hover {
+  text-decoration-style: solid;
+}
+/* What's typed after @ or [[ while the menu is open: not a link yet. */
+.wc-note-doc .suggestion {
+  border-bottom: 1px dashed rgb(var(--c-ink-faded) / 0.7);
+}

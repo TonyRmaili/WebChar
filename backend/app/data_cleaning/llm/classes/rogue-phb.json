@@ -290,5 +290,472 @@
     "reviewed": false,
     "reasoning": "medium",
     "at": "2026-11-19T11:39:14+00:00"
+  },
+  "rogue-phb:steady-aim": {
+    "label": "Rogue (PHB) · Steady Aim",
+    "hash": "333f05c11436369e",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "steady-aim",
+          "name": "Steady Aim",
+          "level": 3,
+          "category": "bonus_actions"
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11406,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:12:46+00:00"
+  },
+  "rogue-phb:arcane-trickster-phb": {
+    "label": "Rogue (PHB) · Arcane Trickster (PHB)",
+    "hash": "745b7901c605a5fc",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "mage-hand-legerdemain",
+          "name": "Mage Hand Legerdemain",
+          "level": 3,
+          "category": "bonus_actions"
+        },
+        {
+          "id": "versatile-trickster",
+          "name": "Versatile Trickster",
+          "level": 13,
+          "category": "bonus_actions",
+          "action": {
+            "range": "5 feet"
+          }
+        },
+        {
+          "id": "spell-thief",
+          "name": "Spell Thief",
+          "level": 17,
+          "category": "reactions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13588,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:12:49+00:00"
+  },
+  "rogue-phb:assassin-phb": {
+    "label": "Rogue (PHB) · Assassin (PHB)",
+    "hash": "abe04790d11aa835",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11949,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:13:00+00:00"
+  },
+  "rogue-phb:inquisitive-xge": {
+    "label": "Rogue (PHB) · Inquisitive (XGE)",
+    "hash": "ec43171788f409be",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "eye-for-detail",
+          "name": "Eye for Detail",
+          "level": 3,
+          "category": "bonus_actions"
+        },
+        {
+          "id": "insightful-fighting",
+          "name": "Insightful Fighting",
+          "level": 3,
+          "category": "bonus_actions"
+        },
+        {
+          "id": "unerring-eye",
+          "name": "Unerring Eye",
+          "level": 13,
+          "category": "actions",
+          "uses": {
+            "max": "max(1, wis_mod)",
+            "reset": "long"
+          },
+          "action": {
+            "range": "30 feet"
+          }
+        },
+        {
+          "id": "eye-for-weakness",
+          "name": "Eye for Weakness",
+          "level": 17,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": "3d6",
+                  "type": "weapon",
+                  "condition": "when Sneak Attack applies and Insightful Fighting applies to the target"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 12794,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:13:05+00:00"
+  },
+  "rogue-phb:mastermind-xge": {
+    "label": "Rogue (PHB) · Mastermind (XGE)",
+    "hash": "7e0d1506dfd22da2",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "master-of-intrigue",
+          "name": "Master of Intrigue",
+          "level": 3,
+          "category": "traits",
+          "picks": [
+            {
+              "grant": "languages",
+              "count": 2,
+              "from": [
+                "all_languages"
+              ]
+            }
+          ],
+          "grants": {
+            "tools": [
+              "disguise_kit",
+              "forgery_kit"
+            ]
+          }
+        },
+        {
+          "id": "master-of-tactics",
+          "name": "Master of Tactics",
+          "level": 3,
+          "category": "bonus_actions",
+          "action": {
+            "range": "30 feet"
+          }
+        },
+        {
+          "id": "misdirection",
+          "name": "Misdirection",
+          "level": 13,
+          "category": "reactions"
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 12714,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:13:14+00:00"
+  },
+  "rogue-phb:scout-xge": {
+    "label": "Rogue (PHB) · Scout (XGE)",
+    "hash": "b11207aab5d8a008",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "skirmisher",
+          "name": "Skirmisher",
+          "level": 3,
+          "category": "reactions",
+          "action": {
+            "range": "5 feet"
+          }
+        },
+        {
+          "id": "survivalist",
+          "name": "Survivalist",
+          "level": 3,
+          "category": "traits",
+          "modifiers": [
+            {
+              "target": "check.nature",
+              "add": "pb"
+            },
+            {
+              "target": "check.survival",
+              "add": "pb"
+            }
+          ],
+          "grants": {
+            "skills": [
+              "nature",
+              "survival"
+            ]
+          }
+        },
+        {
+          "id": "superior-mobility",
+          "name": "Superior Mobility",
+          "level": 9,
+          "category": "traits",
+          "modifiers": [
+            {
+              "target": "speed.walk",
+              "add": 10
+            },
+            {
+              "target": "speed.climb",
+              "add": 10
+            },
+            {
+              "target": "speed.swim",
+              "add": 10
+            }
+          ]
+        },
+        {
+          "id": "sudden-strike",
+          "name": "Sudden Strike",
+          "level": 17,
+          "category": "bonus_actions"
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 12776,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:13:23+00:00"
+  },
+  "rogue-phb:swashbuckler-xge": {
+    "label": "Rogue (PHB) · Swashbuckler (XGE)",
+    "hash": "2d61e8307e40534b",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "rakish-audacity",
+          "name": "Rakish Audacity",
+          "level": 3,
+          "category": "traits",
+          "modifiers": [
+            {
+              "target": "initiative",
+              "add": "cha_mod"
+            }
+          ]
+        },
+        {
+          "id": "panache",
+          "name": "Panache",
+          "level": 9,
+          "category": "actions"
+        },
+        {
+          "id": "elegant-maneuver",
+          "name": "Elegant Maneuver",
+          "level": 13,
+          "category": "bonus_actions"
+        },
+        {
+          "id": "master-duelist",
+          "name": "Master Duelist",
+          "level": 17,
+          "category": "traits",
+          "uses": {
+            "max": 1,
+            "reset": "short"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 12395,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:13:34+00:00"
+  },
+  "rogue-phb:phantom-tce": {
+    "label": "Rogue (PHB) · Phantom (TCE)",
+    "hash": "b7b605b6b712a55c",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "wails-from-the-grave",
+          "name": "Wails from the Grave",
+          "level": 3,
+          "category": "traits",
+          "uses": {
+            "max": "pb",
+            "reset": "long"
+          },
+          "action": {
+            "range": "30 feet",
+            "damage": [
+              {
+                "dice": {
+                  "1": "1d6",
+                  "5": "2d6",
+                  "9": "3d6",
+                  "13": "4d6",
+                  "17": "5d6"
+                },
+                "type": "necrotic"
+              }
+            ]
+          }
+        },
+        {
+          "id": "tokens-of-the-departed",
+          "name": "Tokens of the Departed",
+          "level": 9,
+          "category": "reactions",
+          "action": {
+            "range": "30 feet"
+          }
+        },
+        {
+          "id": "ghost-walk",
+          "name": "Ghost Walk",
+          "level": 13,
+          "category": "bonus_actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "toggle": {
+            "uses_charge": true,
+            "grants": {
+              "speed": {
+                "fly": 10
+              }
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 28895,
+    "tries": 2,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:13:40+00:00"
+  },
+  "rogue-phb:soulknife-tce": {
+    "label": "Rogue (PHB) · Soulknife (TCE)",
+    "hash": "b169b0b29d838b0d",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "psionic-power",
+          "name": "Psionic Power",
+          "level": 3,
+          "category": "bonus_actions",
+          "uses": {
+            "max": 1,
+            "reset": "short"
+          }
+        },
+        {
+          "id": "psychic-whispers",
+          "name": "Psychic Whispers",
+          "level": 3,
+          "category": "actions"
+        },
+        {
+          "id": "psychic-teleportation",
+          "name": "Psychic Teleportation",
+          "level": 9,
+          "category": "bonus_actions",
+          "consumes": {
+            "resource": "psionic_energy_dice",
+            "amount": 1
+          }
+        },
+        {
+          "id": "psychic-veil",
+          "name": "Psychic Veil",
+          "level": 13,
+          "category": "actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "toggle": {
+            "uses_charge": true
+          }
+        },
+        {
+          "id": "rend-mind",
+          "name": "Rend Mind",
+          "level": 17,
+          "category": "traits",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "action": {
+            "save": {
+              "ability": "wis",
+              "dc": "8 + pb + dex_mod",
+              "on_success": "none",
+              "conditions": [
+                "stunned"
+              ]
+            }
+          }
+        }
+      ],
+      "resources": [
+        {
+          "name": "Psionic Energy Die",
+          "max": "2 * pb",
+          "die": {
+            "1": "d6",
+            "5": "d8",
+            "11": "d10",
+            "17": "d12"
+          },
+          "reset": "long"
+        }
+      ]
+    },
+    "problems": [],
+    "tokens": 15408,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:14:16+00:00"
   }
 }

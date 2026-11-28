@@ -1,8 +1,10 @@
 import { create } from "zustand";
+import { closeFileCards, retargetFileCards } from "../pages/Campaigns/notes/fileCards";
+import { flushNoteSaves, isUnder, uploadImageFile } from "../pages/Campaigns/notes/notesApi";
 
 const API_BASE_CAMPAIGN = "http://localhost:8000/campaign";
 
-// Recursively update a node's content in the tree by path
+// Recursively update a node's content in the tree by path (prompts carry their text)
 const patchNodeContent = (nodes, path, content) =>
   nodes.map((n) => {
     if (n.path === path) return { ...n, content };
@@ -11,7 +13,6 @@ const patchNodeContent = (nodes, path, content) =>
   });
 
 const ACTIVE_PROMPTS_KEY = (campaignName) => `activePrompts_${campaignName}`;
-const ACTIVE_FILES_KEY = (campaignName) => `activeFiles_${campaignName}`;
 
 const loadActivePrompts = (campaignName) => {
   try {
@@ -26,19 +27,6 @@ const saveActivePrompts = (campaignName, paths) => {
   localStorage.setItem(ACTIVE_PROMPTS_KEY(campaignName), JSON.stringify(paths));
 };
 
-const loadActiveFiles = (campaignName) => {
-  try {
-    const raw = localStorage.getItem(ACTIVE_FILES_KEY(campaignName));
-    return raw ? JSON.parse(raw) : [];
-  } catch {
-    return [];
-  }
-};
-
-const saveActiveFiles = (campaignName, paths) => {
-  localStorage.setItem(ACTIVE_FILES_KEY(campaignName), JSON.stringify(paths));
-};
-
 // Walk a tree to find a node by path and return its content
 const findNodeContent = (nodes, path) => {
   for (const n of nodes) {
@@ -50,6 +38,13 @@ const findNodeContent = (nodes, path) => {
   }
   return null;
 };
+
+// The ticked prompts' text, one after another.
+const promptText = (nodes, ticked) =>
+  ticked
+    .map((path) => findNodeContent(nodes, path))
+    .filter((c) => c !== null && c !== "")
+    .join("\n\n---\n\n");
 
 // Collect all file paths from a tree (skips folders)
 const collectFilePaths = (nodes) => {
@@ -67,6 +62,18 @@ const collectFilePaths = (nodes) => {
   return paths;
 };
 
+// A file or folder was renamed or moved: ticked prompts inside it stay ticked.
+// (Notes aren't ticked: the assistant searches them, backend app/rag.)
+const followPaths = (paths, oldPath, newPath) => paths.map((p) => (isUnder(p, oldPath) ? newPath + p.slice(oldPath.length) : p));
+
+function followActive(get, set, oldPath, newPath) {
+  const name = get().currentCampaignName;
+  if (!name || !newPath) return;
+  const activePrompts = followPaths(get().activePrompts, oldPath, newPath);
+  saveActivePrompts(name, activePrompts);
+  set({ activePrompts });
+}
+
 /* ── campaign copies (Party / NPCs) ── */
 
 // One list per campaign and kind: campaignCharacters["Saltmarsh|npc"].
@@ -83,11 +90,16 @@ const detailOf = (body, status) => (typeof body?.detail === "string" && body.det
 const useCampaignStore = create((set, get) => ({
   loading: false,
   error: null,
+  // The two trees of the campaign page: the DM's files (notes and
+  // pictures, `kind` "note" / "image") and the assistant's prompts (`kind`
+  // "prompt", with their text in `content`). The roots are the folders
+  // themselves, for "create / move to the top level".
   campaignData: [],
+  filesRoot: null,
   currentCampaignName: null,
   promptsData: [],
+  promptsRoot: null,
   activePrompts: [],
-  activeFiles: [],
 
   // Names of the user's campaigns, for pickers outside the campaign page
   // (e.g. "Add to the party of…" on the Characters page). Has its own
@@ -338,20 +350,12 @@ const useCampaignStore = create((set, get) => ({
         headers: { Authorization: `Bearer ${token}` },
       });
       if (!res.ok) throw new Error(`Failed to fetch campaign data: ${res.status}`);
-      const data = await res.json();
-
-      // Prune active files that no longer exist on disk
-      const existingPaths = new Set(collectFilePaths(data));
-      const stored = loadActiveFiles(campaignName);
-      const pruned = stored.filter((p) => existingPaths.has(p));
-      if (pruned.length !== stored.length) {
-        saveActiveFiles(campaignName, pruned);
-      }
+      const { root, children: data } = await res.json();
 
       set({
         campaignData: data,
+        filesRoot: root,
         currentCampaignName: campaignName,
-        activeFiles: pruned,
         loading: false,
       });
       return data;
@@ -420,6 +424,7 @@ const useCampaignStore = create((set, get) => ({
 
   deleteFile: async (fileName, path) => {
     set({ error: null });
+    closeFileCards(path);
     try {
       const token = localStorage.getItem("token");
       const res = await fetch(`${API_BASE_CAMPAIGN}/delete_file`, {
@@ -437,29 +442,16 @@ const useCampaignStore = create((set, get) => ({
     }
   },
 
-  saveFile: async (path, content) => {
-    try {
-      const token = localStorage.getItem("token");
-      const res = await fetch(`${API_BASE_CAMPAIGN}/update_file`, {
-        method: "PUT",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ path, content }),
-      });
-      if (!res.ok) throw new Error(`Failed to save file: ${res.status}`);
-      const data = await res.json();
+  // A prompt card saved its text (notes/PromptCard.jsx): keep the tree's
+  // copy the same, since the assistant reads prompts from it.
+  patchPrompt: (path, content) => set((s) => ({ promptsData: patchNodeContent(s.promptsData, path, content) })),
 
-      set({
-        campaignData: patchNodeContent(get().campaignData, path, content),
-        promptsData: patchNodeContent(get().promptsData, path, content),
-      });
-
-      return data;
-    } catch (err) {
-      set({ error: err.message || "Unknown error" });
-    }
+  // A picture as a file of its own, into a folder of the files (or the top).
+  // Returns { ok, path, name } or { ok: false, message }.
+  uploadPicture: async (campaignName, file, folder = "") => {
+    const r = await uploadImageFile(campaignName, file, folder);
+    if (r.ok) await get().refreshCampaignData();
+    return r;
   },
 
   fetchPromptsData: async (campaignName) => {
@@ -471,7 +463,7 @@ const useCampaignStore = create((set, get) => ({
         headers: { Authorization: `Bearer ${token}` },
       });
       if (!res.ok) throw new Error(`Failed to fetch prompts: ${res.status}`);
-      const data = await res.json();
+      const { root, children: data } = await res.json();
 
       // Prune active prompts that no longer exist on disk
       const existingPaths = new Set(collectFilePaths(data));
@@ -483,6 +475,7 @@ const useCampaignStore = create((set, get) => ({
 
       set({
         promptsData: data,
+        promptsRoot: root,
         activePrompts: pruned,
       });
       return data;
@@ -512,59 +505,29 @@ const useCampaignStore = create((set, get) => ({
     set({ activePrompts: arr });
   },
 
-  toggleActiveFiles: (paths) => {
-    const campaignName = get().currentCampaignName;
-    if (!campaignName) return;
-
-    const current = get().activeFiles;
-    const next = new Set(current);
-    const allActive = paths.length > 0 && paths.every((p) => next.has(p));
-    if (allActive) paths.forEach((p) => next.delete(p));
-    else paths.forEach((p) => next.add(p));
-
-    const arr = Array.from(next);
-    saveActiveFiles(campaignName, arr);
-    set({ activeFiles: arr });
-  },
-
-  // Concatenate all active prompt contents — used later by the chat feature
-  getActivePromptText: () => {
-    const { promptsData, activePrompts } = get();
-    const pieces = activePrompts
-      .map((path) => findNodeContent(promptsData, path))
-      .filter((c) => c !== null && c !== "");
-    return pieces.join("\n\n---\n\n");
-  },
-
-  sendChat: async (messages, instructions, campaignName) => {
-    set({ loading: true, error: null });
+  // The ticked prompts' text of any campaign, as the assistant sends it
+  // (the footer's assistant may be on another campaign than this page).
+  // Read fresh from the server, after any prompt typed a moment ago is
+  // saved. null when they couldn't be read.
+  promptTextFor: async (campaignName) => {
     try {
+      await flushNoteSaves();
       const token = localStorage.getItem("token");
-      const res = await fetch(`${API_BASE_CAMPAIGN}/dm_assistant`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          messages,
-          instructions,
-          campaign_name: campaignName,
-          active_files: get().activeFiles,
-        }),
+      const res = await fetch(`${API_BASE_CAMPAIGN}/prompts?campaign_name=${encodeURIComponent(campaignName)}`, {
+        headers: { Authorization: `Bearer ${token}` },
       });
-      if (!res.ok) throw new Error(`Chat request failed: ${res.status}`);
-      const data = await res.json();
-      set({ loading: false });
-      return data;
-    } catch (err) {
-      set({ error: err.message || "Unknown error", loading: false });
+      if (!res.ok) return null;
+      const { children } = await res.json();
+      return promptText(children, loadActivePrompts(campaignName));
+    } catch {
+      return null;
     }
   },
 
   renameNode: async (path, newName) => {
     set({ error: null });
     try {
+      await flushNoteSaves();
       const token = localStorage.getItem("token");
       const res = await fetch(`${API_BASE_CAMPAIGN}/rename`, {
         method: "PUT",
@@ -579,6 +542,8 @@ const useCampaignStore = create((set, get) => ({
         throw new Error(err.detail || `Rename failed: ${res.status}`);
       }
       const data = await res.json();
+      retargetFileCards(path, data.path);
+      followActive(get, set, path, data.path);
       await Promise.all([get().refreshCampaignData(), get().refreshPromptsData()]);
       return data;
     } catch (err) {
@@ -589,6 +554,7 @@ const useCampaignStore = create((set, get) => ({
   moveNode: async (sourcePath, targetFolder) => {
     set({ error: null });
     try {
+      await flushNoteSaves();
       const token = localStorage.getItem("token");
       const res = await fetch(`${API_BASE_CAMPAIGN}/move`, {
         method: "PUT",
@@ -603,6 +569,8 @@ const useCampaignStore = create((set, get) => ({
         throw new Error(err.detail || `Move failed: ${res.status}`);
       }
       const data = await res.json();
+      retargetFileCards(sourcePath, data.path);
+      followActive(get, set, sourcePath, data.path);
       await Promise.all([get().refreshCampaignData(), get().refreshPromptsData()]);
       return data;
     } catch (err) {
@@ -613,6 +581,7 @@ const useCampaignStore = create((set, get) => ({
   copyNode: async (path) => {
     set({ error: null });
     try {
+      await flushNoteSaves();
       const token = localStorage.getItem("token");
       const res = await fetch(`${API_BASE_CAMPAIGN}/copy`, {
         method: "POST",
@@ -664,4 +633,4 @@ const useCampaignStore = create((set, get) => ({
   },
 }));
 
-export default useCampaignStore;
+export default useCampaignStore;

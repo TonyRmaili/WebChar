@@ -5,7 +5,6 @@ import useMinionStore from "../../store/MinionStore";
 import { usePopupStore } from "../../store/PopupStore";
 import { INK, InkButton, InkNumber, InkRemove, InkSelect, InkText, ParchmentSheet, SubHeading } from "../../styles/parchment";
 import { addBtn, chipBtn, dangerBtn } from "../../styles/parchmentForm";
-import ParchmentMenu from "../../styles/ParchmentMenu";
 import RollLog from "./RollLog";
 import { DAMAGE_TYPES } from "../../utils/Constants";
 import { DICE, MODES, addDie, modeWord } from "./diceWords";
@@ -15,7 +14,8 @@ import { loadoutWords } from "./loadoutFill";
 /* ═══════════════════════════════════════════════════════════════════
    DiceTowerWindow — the dice tower as a card window (popup type "dice";
    there is only one). The footer's DiceTower button opens it and puts it
-   away again; minimized, it keeps everything but stays out of the deck.
+   away again; so do × and a right-click anywhere on it. Put away, it keeps
+   its place and size and stays out of the deck.
 
    Left:  the tray (click a die to add it), a line to type any roll
           ("100d6", "4d6kh3", "1d20+5"), how many times, advantage, an
@@ -352,7 +352,6 @@ export default function DiceTowerWindow() {
   const [against, setAgainst] = useState(null);
   const [problem, setProblem] = useState(null);
   const [busy, setBusy] = useState(false);
-  const [menu, setMenu] = useState(null);
 
   // lines: [{ label, expression, times, mode }]
   const roll = async (lines, label = "") => {
@@ -368,14 +367,7 @@ export default function DiceTowerWindow() {
   const rollTyped = () => expression.trim() && roll([{ expression: expression.trim(), times, mode, against }]);
 
   return (
-    <div
-      className="@container h-full overflow-y-auto bg-desk-deep"
-      onContextMenu={(e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        setMenu({ x: e.clientX, y: e.clientY });
-      }}
-    >
+    <div className="@container h-full overflow-y-auto bg-desk-deep">
       <div className="flex flex-col gap-2 p-2 @3xl:h-full @3xl:flex-row">
         {/* ── rolling ── */}
         <div className="shrink-0 @3xl:w-[48%] @3xl:overflow-y-auto">
@@ -476,23 +468,6 @@ export default function DiceTowerWindow() {
           </ParchmentSheet>
         </div>
       </div>
-
-      {menu && (
-        <ParchmentMenu
-          x={menu.x}
-          y={menu.y}
-          title="Dice tower"
-          groups={[
-            {
-              items: [
-                { label: "Minimize", onSelect: () => usePopupStore.getState().minimize(DICE_WINDOW) },
-                { label: "Close", onSelect: () => usePopupStore.getState().close(DICE_WINDOW) },
-              ],
-            },
-          ]}
-          onClose={() => setMenu(null)}
-        />
-      )}
     </div>
   );
 }

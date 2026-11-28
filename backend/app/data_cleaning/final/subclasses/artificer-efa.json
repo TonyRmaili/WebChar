@@ -1,0 +1,1365 @@
+[
+    {
+        "id": "artificer-efa:alchemist-efa",
+        "kind": "subclass",
+        "name": "Alchemist",
+        "source": "EFA",
+        "edition": "one",
+        "text": "*Craft Magic Elixirs and Potions*\n\nAn Alchemist is an expert at combining reagents to produce magical effects. Alchemists use their creations to give life and to leech it away.",
+        "class_id": "artificer-efa",
+        "short_name": "Alchemist",
+        "grants": {
+            "spells": [
+                {
+                    "spell": "healing-word-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "ray-of-sickness-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "flaming-sphere-xphb",
+                    "how": "prepared",
+                    "at": 5
+                },
+                {
+                    "spell": "melfs-acid-arrow-xphb",
+                    "how": "prepared",
+                    "at": 5
+                },
+                {
+                    "spell": "gaseous-form-xphb",
+                    "how": "prepared",
+                    "at": 9
+                },
+                {
+                    "spell": "mass-healing-word-xphb",
+                    "how": "prepared",
+                    "at": 9
+                },
+                {
+                    "spell": "death-ward-xphb",
+                    "how": "prepared",
+                    "at": 13
+                },
+                {
+                    "spell": "vitriolic-sphere-xphb",
+                    "how": "prepared",
+                    "at": 13
+                },
+                {
+                    "spell": "cloudkill-xphb",
+                    "how": "prepared",
+                    "at": 17
+                },
+                {
+                    "spell": "raise-dead-xphb",
+                    "how": "prepared",
+                    "at": 17
+                },
+                {
+                    "spell": "lesser-restoration-xphb",
+                    "how": "prepared",
+                    "at": 9,
+                    "uses": {
+                        "max": "max(1, int_mod)",
+                        "reset": "long"
+                    }
+                },
+                {
+                    "spell": "tashas-bubbling-cauldron-xphb",
+                    "how": "prepared",
+                    "at": 15,
+                    "uses": {
+                        "max": 1,
+                        "reset": "long"
+                    }
+                }
+            ]
+        },
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "artificer-efa:alchemist-efa:tools-of-the-trade",
+                    "artificer-efa:alchemist-efa:alchemist-spells",
+                    "artificer-efa:alchemist-efa:experimental-elixir"
+                ]
+            },
+            {
+                "level": 5,
+                "features": [
+                    "artificer-efa:alchemist-efa:alchemical-savant"
+                ]
+            },
+            {
+                "level": 9,
+                "features": [
+                    "artificer-efa:alchemist-efa:restorative-reagents"
+                ]
+            },
+            {
+                "level": 15,
+                "features": [
+                    "artificer-efa:alchemist-efa:chemical-mastery"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "artificer-efa:alchemist-efa:tools-of-the-trade",
+                "name": "Tools of the Trade",
+                "level": 3,
+                "text": "You gain the following benefits.\n\n**Tool Proficiency.** You gain proficiency with Alchemist's Supplies and the Herbalism Kit. If you already have one of these proficiencies, you gain proficiency with one other type of Artisan's Tools of your choice (or with two other types if you have both).\n\n**Potion Crafting.** When you brew a potion using the crafting rules in the Dungeon Master's Guide, the amount of time required to craft it is halved.",
+                "category": "traits",
+                "grants": {
+                    "tools": [
+                        "alchemists_supplies",
+                        "herbalism_kit"
+                    ]
+                }
+            },
+            {
+                "id": "artificer-efa:alchemist-efa:alchemist-spells",
+                "name": "Alchemist Spells",
+                "level": 3,
+                "text": "When you reach an Artificer level specified in the Alchemist Spells table, you thereafter always have the listed spells prepared.\n\nAlchemist Spells\n\nArtificer Level | Spells\n--- | ---\n3 | Healing Word, Ray of Sickness\n5 | Flaming Sphere, Melf's Acid Arrow\n9 | Gaseous Form, Mass Healing Word\n13 | Death Ward, Vitriolic Sphere\n17 | Cloudkill, Raise Dead",
+                "category": "traits"
+            },
+            {
+                "id": "artificer-efa:alchemist-efa:experimental-elixir",
+                "name": "Experimental Elixir",
+                "level": 3,
+                "text": "Whenever you finish a Long Rest while holding Alchemist's Supplies, you can use that tool to magically produce two elixirs. For each elixir, roll on the Experimental Elixir table for the elixir's effect, which is triggered when someone drinks the elixir. The elixir appears in a vial, and the vial vanishes when the elixir is drunk or poured out. If any elixir remains when you finish a Long Rest, the elixir and its vial vanish.\n\n**Drinking an Elixir.** As a Bonus Action, a creature can drink the elixir or administer it to another creature within 5 feet of itself.\n\n**Creating Additional Elixirs.** As a Magic action while holding Alchemist's Supplies, you can expend one spell slot to create another elixir. When you do so, you choose its effect from the Experimental Elixir table rather than rolling.\n\nWhen you reach certain Artificer levels, you can make an additional elixir at the end of each Long Rest: a total of three at level 5, four at level 9, and five at level 15.\n\nExperimental Elixir\n\n1d6 | Effect\n--- | ---\n1 | **Healing.** The drinker regains a number of Hit Points equal to 2d8 plus your Intelligence modifier. The number of Hit Points restored increases by 1d8 when you reach Artificer levels 9 (3d8) and 15 (4d8).\n2 | **Swiftness.** The drinker's Speed increases by 10 feet for 1 hour. This bonus increases when you reach Artificer levels 9 (15 feet) and 15 (20 feet).\n3 | **Resilience.** The drinker gains a +1 bonus to AC for 10 minutes. The duration increases when you reach Artificer levels 9 (1 hour) and 15 (8 hours).\n4 | **Boldness.** The drinker can roll 1d4 and add the number rolled to every attack roll and saving throw they make for the next minute. The duration increases when you reach Artificer levels 9 (10 minutes) and 15 (1 hour).\n5 | **Flight.** The drinker gains a Fly Speed of 10 feet for 10 minutes. The Fly Speed increases when you reach Artificer levels 9 (20 feet) and 15 (30 feet).\n6 | You determine the elixir's effect by choosing one of the other rows in this table.",
+                "category": "traits"
+            },
+            {
+                "id": "artificer-efa:alchemist-efa:alchemical-savant",
+                "name": "Alchemical Savant",
+                "level": 5,
+                "text": "Whenever you cast a spell using your Alchemist's Supplies as the Spellcasting Focus, you gain a bonus to one roll of the spell. That roll must restore Hit Points or be a damage roll that deals Acid, Fire, or Poison damage. The bonus equals your Intelligence modifier (minimum bonus of +1).",
+                "category": "traits"
+            },
+            {
+                "id": "artificer-efa:alchemist-efa:restorative-reagents",
+                "name": "Restorative Reagents",
+                "level": 9,
+                "text": "You can cast Lesser Restoration without expending a spell slot and without preparing the spell, provided you use Alchemist's Supplies as the Spellcasting Focus. You can do so a number of times equal to your Intelligence modifier (minimum of once), and you regain all expended uses when you finish a Long Rest.",
+                "category": "traits"
+            },
+            {
+                "id": "artificer-efa:alchemist-efa:chemical-mastery",
+                "name": "Chemical Mastery",
+                "level": 15,
+                "text": "You gain the following benefits.\n\n**Alchemical Eruption.** When you cast an Artificer spell that deals Acid, Fire, or Poison damage to a target, you can also deal 2d8 Force damage to that target. You can use this benefit only once on each of your turns.\n\n**Chemical Resistance.** You gain Resistance to Acid damage and Poison damage. You also gain Immunity to the Poisoned condition.\n\n**Conjured Cauldron.** You can cast Tasha's Bubbling Cauldron without expending a spell slot, without preparing the spell, and without Material components, provided you use Alchemist's Supplies as the Spellcasting Focus. Once you use this feature, you can't use it again until you finish a Long Rest.",
+                "category": "traits"
+            },
+            {
+                "id": "artificer-efa:alchemist-efa:experimental-elixir:drinking-an-elixir",
+                "name": "Drinking an Elixir",
+                "level": 3,
+                "text": "**Drinking an Elixir.** As a Bonus Action, a creature can drink the elixir or administer it to another creature within 5 feet of itself.",
+                "parent": "artificer-efa:alchemist-efa:experimental-elixir",
+                "category": "bonus_actions",
+                "action": {
+                    "range": "5 feet"
+                }
+            },
+            {
+                "id": "artificer-efa:alchemist-efa:experimental-elixir:creating-additional-elixirs",
+                "name": "Creating Additional Elixirs",
+                "level": 3,
+                "text": "**Creating Additional Elixirs.** As a Magic action while holding Alchemist's Supplies, you can expend one spell slot to create another elixir. When you do so, you choose its effect from the Experimental Elixir table rather than rolling.\n\nWhen you reach certain Artificer levels, you can make an additional elixir at the end of each Long Rest: a total of three at level 5, four at level 9, and five at level 15.\n\nExperimental Elixir\n\n1d6 | Effect\n--- | ---\n1 | **Healing.** The drinker regains a number of Hit Points equal to 2d8 plus your Intelligence modifier. The number of Hit Points restored increases by 1d8 when you reach Artificer levels 9 (3d8) and 15 (4d8).\n2 | **Swiftness.** The drinker's Speed increases by 10 feet for 1 hour. This bonus increases when you reach Artificer levels 9 (15 feet) and 15 (20 feet).\n3 | **Resilience.** The drinker gains a +1 bonus to AC for 10 minutes. The duration increases when you reach Artificer levels 9 (1 hour) and 15 (8 hours).\n4 | **Boldness.** The drinker can roll 1d4 and add the number rolled to every attack roll and saving throw they make for the next minute. The duration increases when you reach Artificer levels 9 (10 minutes) and 15 (1 hour).\n5 | **Flight.** The drinker gains a Fly Speed of 10 feet for 10 minutes. The Fly Speed increases when you reach Artificer levels 9 (20 feet) and 15 (30 feet).\n6 | You determine the elixir's effect by choosing one of the other rows in this table.",
+                "parent": "artificer-efa:alchemist-efa:experimental-elixir",
+                "category": "actions"
+            },
+            {
+                "id": "artificer-efa:alchemist-efa:chemical-mastery:chemical-resistance",
+                "name": "Chemical Resistance",
+                "level": 15,
+                "text": "**Chemical Resistance.** You gain Resistance to Acid damage and Poison damage. You also gain Immunity to the Poisoned condition.",
+                "parent": "artificer-efa:alchemist-efa:chemical-mastery",
+                "category": "traits",
+                "grants": {
+                    "defenses": {
+                        "resist": [
+                            "acid",
+                            "poison"
+                        ],
+                        "condition_immune": [
+                            "poisoned"
+                        ]
+                    }
+                }
+            }
+        ],
+        "resources": []
+    },
+    {
+        "id": "artificer-efa:armorer-efa",
+        "kind": "subclass",
+        "name": "Armorer",
+        "source": "EFA",
+        "edition": "one",
+        "text": "*Craft Magic Armor to Enhance Your Abilities*\n\nAn Armorer modifies armor to function almost like a second skin. The armor is enhanced to hone the Armorer's magic, unleash potent attacks, and generate a formidable defense.",
+        "class_id": "artificer-efa",
+        "short_name": "Armorer",
+        "grants": {
+            "spells": [
+                {
+                    "spell": "magic-missile-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "thunderwave-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "mirror-image-xphb",
+                    "how": "prepared",
+                    "at": 5
+                },
+                {
+                    "spell": "shatter-xphb",
+                    "how": "prepared",
+                    "at": 5
+                },
+                {
+                    "spell": "hypnotic-pattern-xphb",
+                    "how": "prepared",
+                    "at": 9
+                },
+                {
+                    "spell": "lightning-bolt-xphb",
+                    "how": "prepared",
+                    "at": 9
+                },
+                {
+                    "spell": "fire-shield-xphb",
+                    "how": "prepared",
+                    "at": 13
+                },
+                {
+                    "spell": "greater-invisibility-xphb",
+                    "how": "prepared",
+                    "at": 13
+                },
+                {
+                    "spell": "passwall-xphb",
+                    "how": "prepared",
+                    "at": 17
+                },
+                {
+                    "spell": "wall-of-force-xphb",
+                    "how": "prepared",
+                    "at": 17
+                }
+            ]
+        },
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "artificer-efa:armorer-efa:tools-of-the-trade",
+                    "artificer-efa:armorer-efa:armorer-spells",
+                    "artificer-efa:armorer-efa:arcane-armor",
+                    "artificer-efa:armorer-efa:armor-model"
+                ]
+            },
+            {
+                "level": 5,
+                "features": [
+                    "artificer-efa:armorer-efa:extra-attack"
+                ]
+            },
+            {
+                "level": 9,
+                "features": [
+                    "artificer-efa:armorer-efa:improved-armorer"
+                ]
+            },
+            {
+                "level": 15,
+                "features": [
+                    "artificer-efa:armorer-efa:perfected-armor"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "artificer-efa:armorer-efa:tools-of-the-trade",
+                "name": "Tools of the Trade",
+                "level": 3,
+                "text": "You gain the following benefits.\n\n**Armor Training.** You gain training with Heavy armor.\n\n**Tool Proficiency.** You gain proficiency with Smith's Tools. If you already have this tool proficiency, you gain proficiency with one other type of Artisan's Tools of your choice.\n\n**Armor Crafting.** When you craft nonmagical or magic armor, the amount of time required to craft it is halved.",
+                "category": "traits",
+                "grants": {
+                    "tools": [
+                        "smiths_tools"
+                    ],
+                    "armor": [
+                        "heavy"
+                    ]
+                },
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "tools_1",
+                        "label": "Tools",
+                        "grant": "tools",
+                        "count": 1,
+                        "from": "artisans_tools"
+                    }
+                ]
+            },
+            {
+                "id": "artificer-efa:armorer-efa:armorer-spells",
+                "name": "Armorer Spells",
+                "level": 3,
+                "text": "When you reach an Artificer level specified in the Armorer Spells table, you thereafter always have the listed spells prepared.\n\nArmorer Spells\n\nArtificer Level | Spells\n--- | ---\n3 | Magic Missile, Thunderwave\n5 | Mirror Image, Shatter\n9 | Hypnotic Pattern, Lightning Bolt\n13 | Fire Shield, Greater Invisibility\n17 | Passwall, Wall of Force",
+                "category": "traits"
+            },
+            {
+                "id": "artificer-efa:armorer-efa:arcane-armor",
+                "name": "Arcane Armor",
+                "level": 3,
+                "text": "As a Magic action while you have Smith's Tools in hand, you can turn a suit of armor you are wearing into Arcane Armor. The armor continues to be Arcane Armor until you don another suit of armor or you die.\n\nYou gain the following benefits while wearing your Arcane Armor.\n\n**No Strength Requirement.** If the armor normally has a Strength requirement, the Arcane Armor lacks this requirement for you.\n\n**Quick Don and Doff.** You can don or doff the armor as a Utilize action. The armor can't be removed against your will.\n\n**Spellcasting Focus.** You can use the Arcane Armor as a Spellcasting Focus for your Artificer spells.",
+                "category": "actions"
+            },
+            {
+                "id": "artificer-efa:armorer-efa:armor-model",
+                "name": "Armor Model",
+                "level": 3,
+                "text": "You can customize your Arcane Armor. When you do so, choose one of the following armor models: Dreadnaught, Guardian, or Infiltrator. The model you choose gives you special benefits while you wear it.\n\nEach model includes a special weapon. When you attack with that weapon, you can add your Intelligence modifier, instead of your Strength or Dexterity modifier, to the attack and damage rolls.\n\nYou can change the armor's model whenever you finish a Short or Long Rest if you have Smith's Tools in hand.",
+                "category": "traits"
+            },
+            {
+                "id": "artificer-efa:armorer-efa:dreadnaught",
+                "name": "Dreadnaught",
+                "level": 3,
+                "text": "You design your armor to become a towering juggernaut in battle. It has the following features:\n\n- **Force Demolisher.** An arcane wrecking ball or sledgehammer projects from your armor. The demolisher counts as a Simple Melee weapon with the Reach property, and it deals 1d10 Force damage on a hit. If you hit a creature that is at least one size smaller than you with the demolisher, you can push the creature up to 10 feet straight away from yourself or pull the creature up to 10 feet toward yourself.\n- **Giant Stature.** As a Bonus Action, you transform and enlarge your armor for 1 minute. For the duration, your reach increases by 5 feet, and if you are smaller than Large, you become Large, along with anything you are wearing. If there isn't enough room for you to increase your size, your size doesn't change. You can use this Bonus Action a number of times equal to your Intelligence modifier (minimum of once). You regain all expended uses when you finish a Long Rest.",
+                "parent": "artificer-efa:armorer-efa:armor-model",
+                "category": "traits"
+            },
+            {
+                "id": "artificer-efa:armorer-efa:guardian",
+                "name": "Guardian",
+                "level": 3,
+                "text": "You design your armor to be in the front line of conflict. It has the following features:\n\n- **Thunder Pulse.** You can discharge concussive blasts with strikes from your armor. The pulse counts as a Simple Melee weapon and deals 1d8 Thunder damage on a hit. A creature hit by the pulse has Disadvantage on attack rolls against targets other than you until the start of your next turn.\n\n- **Defensive Field.** While Bloodied, you can take a Bonus Action to gain Temporary Hit Points equal to your Artificer level. You lose these Temporary Hit Points if you doff the armor.",
+                "parent": "artificer-efa:armorer-efa:armor-model",
+                "category": "reactions",
+                "uses": {
+                    "max": "max(1, int_mod)",
+                    "reset": "long"
+                },
+                "action": {
+                    "range": "30 feet",
+                    "save": {
+                        "ability": "str",
+                        "dc": "8 + pb + spell_mod",
+                        "on_success": "none"
+                    }
+                }
+            },
+            {
+                "id": "artificer-efa:armorer-efa:infiltrator",
+                "name": "Infiltrator",
+                "level": 3,
+                "text": "You customize your armor for subtler undertakings. It has the following features:\n\n- **Lightning Launcher.** A gemlike node appears on your armor, from which you can shoot bolts of lightning. The launcher counts as a Simple Ranged weapon with a normal range of 90 feet and a long range of 300 feet, and it deals 1d6 Lightning damage on a hit. Once on each of your turns when you hit a creature with the launcher, you can deal an extra 1d6 Lightning damage to that target.\n- **Powered Steps.** Your Speed increases by 5 feet.\n- **Dampening Field.** You have Advantage on Dexterity (Stealth) checks. If the armor imposes Disadvantage on such checks, the Advantage and Disadvantage cancel each other, as normal.",
+                "parent": "artificer-efa:armorer-efa:armor-model",
+                "category": "bonus_actions",
+                "uses": {
+                    "max": "max(1, int_mod)",
+                    "reset": "long"
+                },
+                "toggle": {
+                    "uses_charge": true
+                }
+            },
+            {
+                "id": "artificer-efa:armorer-efa:extra-attack",
+                "name": "Extra Attack",
+                "level": 5,
+                "text": "You can attack twice instead of once whenever you take the Attack action on your turn.",
+                "category": "traits"
+            },
+            {
+                "id": "artificer-efa:armorer-efa:improved-armorer",
+                "name": "Improved Armorer",
+                "level": 9,
+                "text": "You gain the following benefits.\n\n**Armor Replication.** You learn an additional plan for your Replicate Magic Item feature, and it must be in the Armor category. If you replace that plan, you must replace it with another Armor plan.\n\nIn addition, you can create an additional item with that feature, and the item must also be in the Armor category.\n\n**Improved Arsenal.** You gain a +1 bonus to attack and damage rolls made with the special weapon of your Arcane Armor model.",
+                "category": "traits",
+                "modifiers": [
+                    {
+                        "target": "attack",
+                        "add": 1
+                    },
+                    {
+                        "target": "damage",
+                        "add": 1
+                    }
+                ]
+            },
+            {
+                "id": "artificer-efa:armorer-efa:perfected-armor",
+                "name": "Perfected Armor",
+                "level": 15,
+                "text": "Your Arcane Armor gains additional benefits based on its model, as detailed below.\n\n**Dreadnaught.** The damage die of your Force Demolisher increases to 2d6 Force damage.\n\nIn addition, when you use your Giant Stature, your reach increases by 10 feet, your size can increase to Large or Huge (your choice), and you have Advantage on Strength checks and Strength saving throws for the duration.\n\n**Guardian.** The damage die of your Thunder Pulse increases to 1d10 Thunder damage.\n\nIn addition, when a Huge or smaller creature you can see ends its turn within 30 feet of you, you can take a Reaction to magically force that creature to make a Strength saving throw against your spell save DC. On a failed save, you pull the creature up to 25 feet directly toward you to an unoccupied space. If you pull the target to a space within 5 feet of yourself, you can make a melee weapon attack against it as part of this Reaction.\n\nYou can take this Reaction a number of times equal to your Intelligence modifier (minimum of once), and you regain all expended uses when you finish a Long Rest.\n\n**Infiltrator.** The damage die of your Lightning Launcher increases to 2d6 Lightning damage. Any creature that takes Lightning damage from your Lightning Launcher glimmers with magical light until the start of your next turn. The glimmering creature sheds Dim Light in a 5-foot radius, and it has Disadvantage on attack rolls against you, as the light jolts it if it attacks you.\n\nAdditionally, as a Bonus Action, you can gain a Fly Speed equal to twice your Speed until the end of the current turn. You can take this Bonus Action a number of times equal to your Intelligence modifier (minimum of once), and you regain all expended uses when you finish a Long Rest.",
+                "category": "traits"
+            },
+            {
+                "id": "artificer-efa:armorer-efa:dreadnaught:force-demolisher",
+                "name": "Force Demolisher",
+                "level": 3,
+                "text": "- **Force Demolisher.** An arcane wrecking ball or sledgehammer projects from your armor. The demolisher counts as a Simple Melee weapon with the Reach property, and it deals 1d10 Force damage on a hit. If you hit a creature that is at least one size smaller than you with the demolisher, you can push the creature up to 10 feet straight away from yourself or pull the creature up to 10 feet toward yourself.",
+                "parent": "artificer-efa:armorer-efa:dreadnaught",
+                "category": "actions",
+                "action": {
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": "pb + int_mod",
+                        "damage": [
+                            {
+                                "dice": {
+                                    "1": "1d10",
+                                    "15": "2d6"
+                                },
+                                "bonus": "int_mod",
+                                "type": "force"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "artificer-efa:armorer-efa:dreadnaught:giant-stature",
+                "name": "Giant Stature",
+                "level": 3,
+                "text": "- **Giant Stature.** As a Bonus Action, you transform and enlarge your armor for 1 minute. For the duration, your reach increases by 5 feet, and if you are smaller than Large, you become Large, along with anything you are wearing. If there isn't enough room for you to increase your size, your size doesn't change. You can use this Bonus Action a number of times equal to your Intelligence modifier (minimum of once). You regain all expended uses when you finish a Long Rest.",
+                "parent": "artificer-efa:armorer-efa:dreadnaught",
+                "category": "bonus_actions",
+                "uses": {
+                    "max": "max(1, int_mod)",
+                    "reset": "long"
+                },
+                "toggle": {
+                    "uses_charge": true
+                }
+            },
+            {
+                "id": "artificer-efa:armorer-efa:guardian:thunder-pulse",
+                "name": "Thunder Pulse",
+                "level": 3,
+                "text": "- **Thunder Pulse.** You can discharge concussive blasts with strikes from your armor. The pulse counts as a Simple Melee weapon and deals 1d8 Thunder damage on a hit. A creature hit by the pulse has Disadvantage on attack rolls against targets other than you until the start of your next turn.",
+                "parent": "artificer-efa:armorer-efa:guardian",
+                "category": "actions",
+                "action": {
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": "pb + int_mod",
+                        "damage": [
+                            {
+                                "dice": {
+                                    "1": "1d8",
+                                    "15": "1d10"
+                                },
+                                "bonus": "int_mod",
+                                "type": "thunder"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "artificer-efa:armorer-efa:guardian:defensive-field",
+                "name": "Defensive Field",
+                "level": 3,
+                "text": "- **Defensive Field.** While Bloodied, you can take a Bonus Action to gain Temporary Hit Points equal to your Artificer level. You lose these Temporary Hit Points if you doff the armor.",
+                "parent": "artificer-efa:armorer-efa:guardian",
+                "category": "bonus_actions",
+                "action": {
+                    "temp_hp": "class_level"
+                }
+            },
+            {
+                "id": "artificer-efa:armorer-efa:infiltrator:lightning-launcher",
+                "name": "Lightning Launcher",
+                "level": 3,
+                "text": "- **Lightning Launcher.** A gemlike node appears on your armor, from which you can shoot bolts of lightning. The launcher counts as a Simple Ranged weapon with a normal range of 90 feet and a long range of 300 feet, and it deals 1d6 Lightning damage on a hit. Once on each of your turns when you hit a creature with the launcher, you can deal an extra 1d6 Lightning damage to that target.",
+                "parent": "artificer-efa:armorer-efa:infiltrator",
+                "category": "actions",
+                "action": {
+                    "range": "90/300 feet",
+                    "attack": {
+                        "kind": "ranged",
+                        "bonus": "pb + int_mod",
+                        "damage": [
+                            {
+                                "dice": {
+                                    "1": "1d6",
+                                    "15": "2d6"
+                                },
+                                "bonus": "int_mod",
+                                "type": "lightning"
+                            },
+                            {
+                                "dice": "1d6",
+                                "type": "lightning",
+                                "condition": "once on each of your turns when you hit a creature with the launcher"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "artificer-efa:armorer-efa:infiltrator:powered-steps",
+                "name": "Powered Steps",
+                "level": 3,
+                "text": "- **Powered Steps.** Your Speed increases by 5 feet.",
+                "parent": "artificer-efa:armorer-efa:infiltrator",
+                "category": "traits",
+                "modifiers": [
+                    {
+                        "target": "speed.walk",
+                        "add": 5
+                    }
+                ]
+            }
+        ],
+        "resources": []
+    },
+    {
+        "id": "artificer-efa:artillerist-efa",
+        "kind": "subclass",
+        "name": "Artillerist",
+        "source": "EFA",
+        "edition": "one",
+        "text": "*Wield Destructive Power from Afar*\n\nAn Artillerist specializes in using magic to hurl energy, projectiles, and explosions on a battlefield.",
+        "class_id": "artificer-efa",
+        "short_name": "Artillerist",
+        "grants": {
+            "spells": [
+                {
+                    "spell": "shield-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "thunderwave-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "scorching-ray-xphb",
+                    "how": "prepared",
+                    "at": 5
+                },
+                {
+                    "spell": "shatter-xphb",
+                    "how": "prepared",
+                    "at": 5
+                },
+                {
+                    "spell": "fireball-xphb",
+                    "how": "prepared",
+                    "at": 9
+                },
+                {
+                    "spell": "wind-wall-xphb",
+                    "how": "prepared",
+                    "at": 9
+                },
+                {
+                    "spell": "ice-storm-xphb",
+                    "how": "prepared",
+                    "at": 13
+                },
+                {
+                    "spell": "wall-of-fire-xphb",
+                    "how": "prepared",
+                    "at": 13
+                },
+                {
+                    "spell": "cone-of-cold-xphb",
+                    "how": "prepared",
+                    "at": 17
+                },
+                {
+                    "spell": "wall-of-force-xphb",
+                    "how": "prepared",
+                    "at": 17
+                }
+            ]
+        },
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "artificer-efa:artillerist-efa:tools-of-the-trade",
+                    "artificer-efa:artillerist-efa:artillerist-spells",
+                    "artificer-efa:artillerist-efa:eldritch-cannon"
+                ]
+            },
+            {
+                "level": 5,
+                "features": [
+                    "artificer-efa:artillerist-efa:arcane-firearm"
+                ]
+            },
+            {
+                "level": 9,
+                "features": [
+                    "artificer-efa:artillerist-efa:explosive-cannon"
+                ]
+            },
+            {
+                "level": 15,
+                "features": [
+                    "artificer-efa:artillerist-efa:fortified-position"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "artificer-efa:artillerist-efa:tools-of-the-trade",
+                "name": "Tools of the Trade",
+                "level": 3,
+                "text": "You gain the following benefits.\n\n**Ranged Weaponry.** You gain proficiency with Martial Ranged weapons.\n\n**Tool Proficiency.** You gain proficiency with Woodcarver's Tools. If you already have this proficiency, you gain proficiency with one other type of Artisan's Tools of your choice.\n\n**Wand Crafting.** When you craft a magic Wand, the amount of time required to craft it is halved.",
+                "category": "traits",
+                "grants": {
+                    "tools": [
+                        "woodcarvers_tools"
+                    ],
+                    "weapons": [
+                        "martial_ranged_weapons"
+                    ]
+                }
+            },
+            {
+                "id": "artificer-efa:artillerist-efa:artillerist-spells",
+                "name": "Artillerist Spells",
+                "level": 3,
+                "text": "When you reach an Artificer level specified in the Artillerist Spells table, you thereafter always have the listed spells prepared.\n\nArtillerist Spells\n\nArtificer Level | Spells\n--- | ---\n3 | Shield, Thunderwave\n5 | Scorching Ray, Shatter\n9 | Fireball, Wind Wall\n13 | Ice Storm, Wall of Fire\n17 | Cone of Cold, Wall of Force",
+                "category": "traits"
+            },
+            {
+                "id": "artificer-efa:artillerist-efa:eldritch-cannon",
+                "name": "Eldritch Cannon",
+                "level": 3,
+                "text": "Using Smith's Tools or Woodcarver's Tools, you can take a Magic action to create a Small or Tiny Eldritch Cannon in an unoccupied space on a horizontal surface within 5 feet of yourself. You determine its appearance, including whether you carry it or not (and your choice of legs or wheels, for the latter). It disappears if it is reduced to 0 Hit Points or after 1 hour. You can dismiss it early as a Magic action.\n\nOnce you create a cannon, you can't do so again until you finish a Long Rest or expend a spell slot to create one. You can have only one cannon at a time and can't create one while you already have one.",
+                "category": "actions",
+                "uses": {
+                    "max": 1,
+                    "reset": "long"
+                },
+                "action": {
+                    "range": "5 feet"
+                }
+            },
+            {
+                "id": "artificer-efa:artillerist-efa:arcane-firearm",
+                "name": "Arcane Firearm",
+                "level": 5,
+                "text": "When you finish a Long Rest, you can use Woodcarver's Tools to carve special sigils into a Rod, Staff, Wand, or Martial Ranged weapon and thereby turn it into your Arcane Firearm. The sigils disappear from the object if you later carve them on a different item. The sigils otherwise last indefinitely.\n\nYou can use your Arcane Firearm as a Spellcasting Focus for your Artificer spells. When you cast an Artificer spell through the firearm, roll 1d8, and you gain a bonus to one of the spell's damage rolls equal to the number rolled.",
+                "category": "traits"
+            },
+            {
+                "id": "artificer-efa:artillerist-efa:explosive-cannon",
+                "name": "Explosive Cannon",
+                "level": 9,
+                "text": "Every Eldritch Cannon you create is now more destructive. You gain the following benefits.\n\n**Detonate.** When your cannon takes damage, you can take a Reaction to command the cannon to detonate if you are within 60 feet of it. Doing so destroys the cannon and forces each creature within 20 feet of it to make a Dexterity saving throw against your spell save DC, taking 3d10 Force damage on a failed save or half as much damage on a successful one.\n\n**Firepower.** The cannon's damage rolls and the number of Temporary Hit Points granted by Protector increase by 1d8.",
+                "category": "traits"
+            },
+            {
+                "id": "artificer-efa:artillerist-efa:fortified-position",
+                "name": "Fortified Position",
+                "level": 15,
+                "text": "You're a master at forming well-defended emplacements using your Eldritch Cannon. You gain the following benefits.\n\n- **Double Firepower.** You can now have two cannons at the same time, and you can create two with the same Magic action. (If you expend a spell slot to create the first cannon, you must expend another spell slot to create the second.) You can activate both of them with the same Bonus Action, ordering them to use the same activation option or different ones. You can't create a third cannon while you have two.\n\n**Shimmering Field Projection.** You and your allies have Half Cover while within 10 feet of your Eldritch Cannon.",
+                "category": "traits"
+            },
+            {
+                "id": "artificer-efa:artillerist-efa:explosive-cannon:detonate",
+                "name": "Detonate",
+                "level": 9,
+                "text": "**Detonate.** When your cannon takes damage, you can take a Reaction to command the cannon to detonate if you are within 60 feet of it. Doing so destroys the cannon and forces each creature within 20 feet of it to make a Dexterity saving throw against your spell save DC, taking 3d10 Force damage on a failed save or half as much damage on a successful one.",
+                "parent": "artificer-efa:artillerist-efa:explosive-cannon",
+                "category": "reactions",
+                "action": {
+                    "range": "60 feet",
+                    "area": "20-foot radius",
+                    "save": {
+                        "ability": "dex",
+                        "dc": "8 + pb + spell_mod",
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": "3d10",
+                                "type": "force"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "artificer-efa:artillerist-efa:fortified-position:double-firepower",
+                "name": "Double Firepower",
+                "level": 15,
+                "text": "- **Double Firepower.** You can now have two cannons at the same time, and you can create two with the same Magic action. (If you expend a spell slot to create the first cannon, you must expend another spell slot to create the second.) You can activate both of them with the same Bonus Action, ordering them to use the same activation option or different ones. You can't create a third cannon while you have two.",
+                "parent": "artificer-efa:artillerist-efa:fortified-position",
+                "category": "bonus_actions"
+            }
+        ],
+        "resources": []
+    },
+    {
+        "id": "artificer-efa:battle-smith-efa",
+        "kind": "subclass",
+        "name": "Battle Smith",
+        "source": "EFA",
+        "edition": "one",
+        "text": "*Command a Construct Guardian*\n\nA Battle Smith is a combination of protector and medic, an expert at defending others and repairing both materiel and personnel. To aid in their work, Battle Smiths are accompanied by a Steel Defender, a protective companion of their own creation.",
+        "class_id": "artificer-efa",
+        "short_name": "Battle Smith",
+        "grants": {
+            "spells": [
+                {
+                    "spell": "heroism-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "shield-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "shining-smite-xphb",
+                    "how": "prepared",
+                    "at": 5
+                },
+                {
+                    "spell": "warding-bond-xphb",
+                    "how": "prepared",
+                    "at": 5
+                },
+                {
+                    "spell": "aura-of-vitality-xphb",
+                    "how": "prepared",
+                    "at": 9
+                },
+                {
+                    "spell": "conjure-barrage-xphb",
+                    "how": "prepared",
+                    "at": 9
+                },
+                {
+                    "spell": "aura-of-purity-xphb",
+                    "how": "prepared",
+                    "at": 13
+                },
+                {
+                    "spell": "fire-shield-xphb",
+                    "how": "prepared",
+                    "at": 13
+                },
+                {
+                    "spell": "banishing-smite-xphb",
+                    "how": "prepared",
+                    "at": 17
+                },
+                {
+                    "spell": "mass-cure-wounds-xphb",
+                    "how": "prepared",
+                    "at": 17
+                }
+            ]
+        },
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "artificer-efa:battle-smith-efa:tools-of-the-trade",
+                    "artificer-efa:battle-smith-efa:battle-smith-spells",
+                    "artificer-efa:battle-smith-efa:battle-ready",
+                    "artificer-efa:battle-smith-efa:steel-defender"
+                ]
+            },
+            {
+                "level": 5,
+                "features": [
+                    "artificer-efa:battle-smith-efa:extra-attack"
+                ]
+            },
+            {
+                "level": 9,
+                "features": [
+                    "artificer-efa:battle-smith-efa:arcane-jolt"
+                ]
+            },
+            {
+                "level": 15,
+                "features": [
+                    "artificer-efa:battle-smith-efa:improved-defender"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "artificer-efa:battle-smith-efa:tools-of-the-trade",
+                "name": "Tools of the Trade",
+                "level": 3,
+                "text": "You gain the following benefits.\n\n**Tool Proficiency.** You gain proficiency with Smith's Tools. If you already have this proficiency, you gain proficiency with one other type of Artisan's Tools of your choice.\n\n**Weapon Crafting.** When you craft a nonmagical or magic weapon, the amount of time required to craft it is halved.",
+                "category": "traits"
+            },
+            {
+                "id": "artificer-efa:battle-smith-efa:battle-smith-spells",
+                "name": "Battle Smith Spells",
+                "level": 3,
+                "text": "When you reach an Artificer level specified in the Battle Smith Spells table, you thereafter always have the listed spells prepared.\n\nBattle Smith Spells\n\nArtificer Level | Spells\n--- | ---\n3 | Heroism, Shield\n5 | Shining Smite, Warding Bond\n9 | Aura of Vitality, Conjure Barrage\n13 | Aura of Purity, Fire Shield\n17 | Banishing Smite, Mass Cure Wounds",
+                "category": "traits"
+            },
+            {
+                "id": "artificer-efa:battle-smith-efa:battle-ready",
+                "name": "Battle Ready",
+                "level": 3,
+                "text": "Your combat training and your experiments with magic have paid off in two ways.\n\n**Arcane Empowerment.** When you attack with a magic weapon, you can use your Intelligence modifier, instead of your Strength or Dexterity modifier, for the attack and damage rolls.\n\n**Weapon Knowledge.** You gain proficiency with Martial weapons. You can use a weapon with which you have proficiency as a Spellcasting Focus for your Artificer spells.",
+                "category": "traits"
+            },
+            {
+                "id": "artificer-efa:battle-smith-efa:steel-defender",
+                "name": "Steel Defender",
+                "level": 3,
+                "text": "Your tinkering has borne you a companion, a Steel Defender. You determine the defender's appearance and whether it has two legs or four; your choices don't affect the defender's game statistics.\n\nThe defender is Friendly to you and your allies and obeys you. It vanishes if you die.\n\n**The Defender in Combat.** In combat, the defender acts during your turn. It can move and take its Reaction on its own, but the only action it takes is the Dodge action unless you take a Bonus Action to command it to take an action. If you have the Incapacitated condition, the defender acts on its own and isn't limited to the Dodge action.\n\n**Restoring or Replacing the Defender.** If the defender has died within the last hour, you can take a Magic action to touch it and expend a spell slot. The defender returns to life after 1 minute with all its Hit Points restored.\n\nWhenever you finish a Long Rest, you can create a new defender if you have Smith's Tools in hand. If you already have a defender from this feature, the first one vanishes.",
+                "category": "traits"
+            },
+            {
+                "id": "artificer-efa:battle-smith-efa:extra-attack",
+                "name": "Extra Attack",
+                "level": 5,
+                "text": "You can attack twice instead of once whenever you take the Attack action on your turn. You can forgo one of your attacks when you take the Attack action to command your Steel Defender to take the Force-Empowered Rend action.",
+                "category": "traits"
+            },
+            {
+                "id": "artificer-efa:battle-smith-efa:arcane-jolt",
+                "name": "Arcane Jolt",
+                "level": 9,
+                "text": "When either you hit a target with an attack roll using a magic weapon or your Steel Defender hits a target, you can channel magical energy through the strike to create one of the following effects:\n\n- **Destructive Energy.** The target takes an extra 2d6 Force damage.\n- **Restorative Energy.** Choose one creature or object you can see within 30 feet of the target. Healing energy flows into the chosen recipient, restoring 2d6 Hit Points to it.\n\nYou can use this energy a number of times equal to your Intelligence modifier (minimum of once), but you can do so no more than once per turn. You regain all expended uses when you finish a Long Rest.",
+                "category": "traits",
+                "uses": {
+                    "max": "max(1, int_mod)",
+                    "reset": "long"
+                },
+                "action": {
+                    "range": "30 feet",
+                    "heal": {
+                        "1": "2d6",
+                        "15": "4d6"
+                    },
+                    "attack": {
+                        "kind": "any",
+                        "damage": [
+                            {
+                                "dice": {
+                                    "1": "2d6",
+                                    "15": "4d6"
+                                },
+                                "type": "force"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "artificer-efa:battle-smith-efa:improved-defender",
+                "name": "Improved Defender",
+                "level": 15,
+                "text": "Your Arcane Jolt and Steel Defender have become more powerful, granting these benefits.\n\n**Improved Jolt.** The extra damage and healing of your Arcane Jolt both increase to 4d6.\n\n**Improved Deflection.** Whenever your Steel Defender uses its Deflect Attack, the attacker takes Force damage equal to 1d4 plus your Intelligence modifier.",
+                "category": "traits"
+            },
+            {
+                "id": "artificer-efa:battle-smith-efa:tools-of-the-trade:tool-proficiency",
+                "name": "Tool Proficiency",
+                "level": 3,
+                "text": "**Tool Proficiency.** You gain proficiency with Smith's Tools. If you already have this proficiency, you gain proficiency with one other type of Artisan's Tools of your choice.",
+                "parent": "artificer-efa:battle-smith-efa:tools-of-the-trade",
+                "category": "traits",
+                "grants": {
+                    "tools": [
+                        "smiths_tools"
+                    ]
+                },
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "tools_1",
+                        "label": "Tools",
+                        "grant": "tools",
+                        "count": 1,
+                        "from": "artisans_tools"
+                    }
+                ]
+            },
+            {
+                "id": "artificer-efa:battle-smith-efa:battle-ready:weapon-knowledge",
+                "name": "Weapon Knowledge",
+                "level": 3,
+                "text": "**Weapon Knowledge.** You gain proficiency with Martial weapons. You can use a weapon with which you have proficiency as a Spellcasting Focus for your Artificer spells.",
+                "parent": "artificer-efa:battle-smith-efa:battle-ready",
+                "category": "traits",
+                "grants": {
+                    "weapons": [
+                        "martial_weapons"
+                    ]
+                }
+            },
+            {
+                "id": "artificer-efa:battle-smith-efa:steel-defender:the-defender-in-combat",
+                "name": "The Defender in Combat",
+                "level": 3,
+                "text": "**The Defender in Combat.** In combat, the defender acts during your turn. It can move and take its Reaction on its own, but the only action it takes is the Dodge action unless you take a Bonus Action to command it to take an action. If you have the Incapacitated condition, the defender acts on its own and isn't limited to the Dodge action.",
+                "parent": "artificer-efa:battle-smith-efa:steel-defender",
+                "category": "bonus_actions"
+            },
+            {
+                "id": "artificer-efa:battle-smith-efa:steel-defender:restoring-or-replacing-the-defender",
+                "name": "Restoring or Replacing the Defender",
+                "level": 3,
+                "text": "**Restoring or Replacing the Defender.** If the defender has died within the last hour, you can take a Magic action to touch it and expend a spell slot. The defender returns to life after 1 minute with all its Hit Points restored.\n\nWhenever you finish a Long Rest, you can create a new defender if you have Smith's Tools in hand. If you already have a defender from this feature, the first one vanishes.",
+                "parent": "artificer-efa:battle-smith-efa:steel-defender",
+                "category": "actions"
+            },
+            {
+                "id": "artificer-efa:battle-smith-efa:improved-defender:improved-deflection",
+                "name": "Improved Deflection",
+                "level": 15,
+                "text": "**Improved Deflection.** Whenever your Steel Defender uses its Deflect Attack, the attacker takes Force damage equal to 1d4 plus your Intelligence modifier.",
+                "parent": "artificer-efa:battle-smith-efa:improved-defender",
+                "category": "reactions",
+                "action": {
+                    "damage": [
+                        {
+                            "dice": "1d4",
+                            "bonus": "int_mod",
+                            "type": "force"
+                        }
+                    ]
+                }
+            }
+        ],
+        "resources": []
+    },
+    {
+        "id": "artificer-efa:cartographer-efa",
+        "kind": "subclass",
+        "name": "Cartographer",
+        "source": "EFA",
+        "edition": "one",
+        "text": "*Chart Advantageous Courses through Turmoil*\n\nCartographers are the premier navigators and reconnaissance agents. Using their creations, Cartographers can highlight threats, safeguard allies, and carve portals to distant locations.",
+        "class_id": "artificer-efa",
+        "short_name": "Cartographer",
+        "grants": {
+            "spells": [
+                {
+                    "spell": "faerie-fire-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "guiding-bolt-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "healing-word-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "locate-object-xphb",
+                    "how": "prepared",
+                    "at": 5
+                },
+                {
+                    "spell": "mind-spike-xphb",
+                    "how": "prepared",
+                    "at": 5
+                },
+                {
+                    "spell": "call-lightning-xphb",
+                    "how": "prepared",
+                    "at": 9
+                },
+                {
+                    "spell": "clairvoyance-xphb",
+                    "how": "prepared",
+                    "at": 9
+                },
+                {
+                    "spell": "banishment-xphb",
+                    "how": "prepared",
+                    "at": 13
+                },
+                {
+                    "spell": "locate-creature-xphb",
+                    "how": "prepared",
+                    "at": 13
+                },
+                {
+                    "spell": "scrying-xphb",
+                    "how": "prepared",
+                    "at": 17
+                },
+                {
+                    "spell": "teleportation-circle-xphb",
+                    "how": "prepared",
+                    "at": 17
+                }
+            ]
+        },
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "artificer-efa:cartographer-efa:tools-of-the-trade",
+                    "artificer-efa:cartographer-efa:cartographer-spells",
+                    "artificer-efa:cartographer-efa:adventurers-atlas",
+                    "artificer-efa:cartographer-efa:mapping-magic"
+                ]
+            },
+            {
+                "level": 5,
+                "features": [
+                    "artificer-efa:cartographer-efa:guided-precision"
+                ]
+            },
+            {
+                "level": 9,
+                "features": [
+                    "artificer-efa:cartographer-efa:ingenious-movement"
+                ]
+            },
+            {
+                "level": 15,
+                "features": [
+                    "artificer-efa:cartographer-efa:superior-atlas"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "artificer-efa:cartographer-efa:tools-of-the-trade",
+                "name": "Tools of the Trade",
+                "level": 3,
+                "text": "You gain the following benefits.\n\n**Tool Proficiency.** You gain proficiency with Calligrapher's Supplies and Cartographer's Tools. If you already have one of these proficiencies, you gain proficiency with one other type of Artisan's Tools of your choice (or with two other types if you have both).\n\n**Scroll Crafting.** When you scribe a Spell Scroll using the crafting rules in the Player's Handbook, the amount of time required to craft it is halved.",
+                "category": "traits"
+            },
+            {
+                "id": "artificer-efa:cartographer-efa:cartographer-spells",
+                "name": "Cartographer Spells",
+                "level": 3,
+                "text": "When you reach an Artificer level specified in the Cartographer Spells table, you thereafter always have the listed spells prepared.\n\nCartographer Spells\n\nArtificer Level | Spells\n--- | ---\n3 | Faerie Fire, Guiding Bolt, Healing Word\n5 | Locate Object, Mind Spike\n9 | Call Lightning, Clairvoyance\n13 | Banishment, Locate Creature\n17 | Scrying, Teleportation Circle",
+                "category": "traits"
+            },
+            {
+                "id": "artificer-efa:cartographer-efa:adventurers-atlas",
+                "name": "Adventurer's Atlas",
+                "level": 3,
+                "text": "Whenever you finish a Long Rest while holding Cartographer's Tools, you can use that tool to create a set of magical maps by touching at least two creatures (one of whom can be yourself), up to a maximum number of creatures equal to 1 plus your Intelligence modifier (minimum of two creatures). Each target receives a magical map, which constantly updates to show the relative position of all the map holders but is illegible to all others. The maps last until you die or until you use this feature again, at which point any existing maps created by this feature immediately vanish.\n\nWhile carrying the map, a target gains the following benefits.\n\n**Awareness.** The target adds 1d4 to its Initiative rolls.\n\n**Positioning.** The target knows the location of all other map holders that are on the same plane of existence as itself. When casting a spell or creating another effect that requires being able to see the effect's target, a map holder can target another map holder regardless of sight or cover, so long as the other map holder is still within the effect's range.",
+                "category": "traits"
+            },
+            {
+                "id": "artificer-efa:cartographer-efa:mapping-magic",
+                "name": "Mapping Magic",
+                "level": 3,
+                "text": "You gain the following benefits.\n\n**Illuminated Cartography.** You can cast Faerie Fire without expending a spell slot, outlining the affected creatures as if in ink. You can do so a number of times equal to your Intelligence modifier (minimum of once), and you regain all expended uses when you finish a Long Rest.\n\n**Portal Jump.** On your turn, you can spend an amount of movement equal to half your Speed (round down) to teleport to an unoccupied space you can see within 10 feet of yourself or within 5 feet of a creature that is within 30 feet of you and holding one of your Adventurer's Atlas maps. You can't use this benefit if your Speed is 0.",
+                "category": "traits"
+            },
+            {
+                "id": "artificer-efa:cartographer-efa:guided-precision",
+                "name": "Guided Precision",
+                "level": 5,
+                "text": "Once per turn, whenever you cast a spell from your Cartographer Spells list or hit a creature affected by your Faerie Fire with an attack roll, you can add your Intelligence modifier to one damage roll of the spell or attack.\n\nIn addition, taking damage can't cause you to lose Concentration on Faerie Fire.",
+                "category": "traits"
+            },
+            {
+                "id": "artificer-efa:cartographer-efa:ingenious-movement",
+                "name": "Ingenious Movement",
+                "level": 9,
+                "text": "When you use your Flash of Genius, you or a willing creature of your choice that you can see within 30 feet of yourself can teleport up to 30 feet to an unoccupied space you can see as part of that same Reaction.",
+                "category": "reactions",
+                "action": {
+                    "range": "30 feet"
+                }
+            },
+            {
+                "id": "artificer-efa:cartographer-efa:superior-atlas",
+                "name": "Superior Atlas",
+                "level": 15,
+                "text": "Your Adventurer's Atlas improves, gaining the following benefits.\n\n**Safe Haven.** When a map holder would be reduced to 0 Hit Points but not killed outright, that creature can destroy its map. The creature's Hit Points instead change to a number equal to twice your Artificer level, and the creature is teleported to an unoccupied space within 5 feet of you or another map holder of its choice.\n\n**Unerring Path.** If you are one of the map holders for your Adventurer's Atlas, you can cast Find the Path without expending a spell slot, without preparing the spell, and without needing spell components. Once you use this benefit, you can't use it again until you finish a Long Rest.",
+                "category": "traits"
+            },
+            {
+                "id": "artificer-efa:cartographer-efa:tools-of-the-trade:tool-proficiency",
+                "name": "Tool Proficiency",
+                "level": 3,
+                "text": "**Tool Proficiency.** You gain proficiency with Calligrapher's Supplies and Cartographer's Tools. If you already have one of these proficiencies, you gain proficiency with one other type of Artisan's Tools of your choice (or with two other types if you have both).",
+                "parent": "artificer-efa:cartographer-efa:tools-of-the-trade",
+                "category": "traits",
+                "grants": {
+                    "tools": [
+                        "calligraphers_supplies",
+                        "cartographers_tools"
+                    ]
+                }
+            },
+            {
+                "id": "artificer-efa:cartographer-efa:mapping-magic:portal-jump",
+                "name": "Portal Jump",
+                "level": 3,
+                "text": "**Portal Jump.** On your turn, you can spend an amount of movement equal to half your Speed (round down) to teleport to an unoccupied space you can see within 10 feet of yourself or within 5 feet of a creature that is within 30 feet of you and holding one of your Adventurer's Atlas maps. You can't use this benefit if your Speed is 0.",
+                "parent": "artificer-efa:cartographer-efa:mapping-magic",
+                "category": "actions"
+            },
+            {
+                "id": "artificer-efa:cartographer-efa:superior-atlas:safe-haven",
+                "name": "Safe Haven",
+                "level": 15,
+                "text": "**Safe Haven.** When a map holder would be reduced to 0 Hit Points but not killed outright, that creature can destroy its map. The creature's Hit Points instead change to a number equal to twice your Artificer level, and the creature is teleported to an unoccupied space within 5 feet of you or another map holder of its choice.",
+                "parent": "artificer-efa:cartographer-efa:superior-atlas",
+                "category": "reactions",
+                "action": {
+                    "range": "5 feet"
+                }
+            },
+            {
+                "id": "artificer-efa:cartographer-efa:superior-atlas:unerring-path",
+                "name": "Unerring Path",
+                "level": 15,
+                "text": "**Unerring Path.** If you are one of the map holders for your Adventurer's Atlas, you can cast Find the Path without expending a spell slot, without preparing the spell, and without needing spell components. Once you use this benefit, you can't use it again until you finish a Long Rest.",
+                "parent": "artificer-efa:cartographer-efa:superior-atlas",
+                "category": "traits"
+            }
+        ],
+        "resources": []
+    },
+    {
+        "id": "artificer-efa:reanimator-rhw",
+        "kind": "subclass",
+        "name": "Reanimator",
+        "source": "RHW",
+        "edition": "one",
+        "text": "*Reassemble Corpses and Raise the Dead*\n\nReanimators defy the laws of nature in pursuit of gruesome experiments. These grim Artificers stitch together servants from disparate corpses, use foul magic to strengthen the living, and transform the art of necromancy into a terrifying science.",
+        "class_id": "artificer-efa",
+        "short_name": "Reanimator",
+        "grants": {
+            "spells": [
+                {
+                    "spell": "false-life-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "spare-the-dying-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "witch-bolt-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "blindness-deafness-xphb",
+                    "how": "prepared",
+                    "at": 5
+                },
+                {
+                    "spell": "enhance-ability-xphb",
+                    "how": "prepared",
+                    "at": 5
+                },
+                {
+                    "spell": "animate-dead-xphb",
+                    "how": "prepared",
+                    "at": 9
+                },
+                {
+                    "spell": "lightning-bolt-xphb",
+                    "how": "prepared",
+                    "at": 9
+                },
+                {
+                    "spell": "blight-xphb",
+                    "how": "prepared",
+                    "at": 13
+                },
+                {
+                    "spell": "death-ward-xphb",
+                    "how": "prepared",
+                    "at": 13
+                },
+                {
+                    "spell": "antilife-shell-xphb",
+                    "how": "prepared",
+                    "at": 17
+                },
+                {
+                    "spell": "raise-dead-xphb",
+                    "how": "prepared",
+                    "at": 17
+                }
+            ]
+        },
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "artificer-efa:reanimator-rhw:reanimator-spells",
+                    "artificer-efa:reanimator-rhw:reanimators-skill-set",
+                    "artificer-efa:reanimator-rhw:reanimated-companion"
+                ]
+            },
+            {
+                "level": 5,
+                "features": [
+                    "artificer-efa:reanimator-rhw:strange-modifications"
+                ]
+            },
+            {
+                "level": 9,
+                "features": [
+                    "artificer-efa:reanimator-rhw:improved-reanimation",
+                    "artificer-efa:reanimator-rhw:macabre-modifications"
+                ]
+            },
+            {
+                "level": 15,
+                "features": [
+                    "artificer-efa:reanimator-rhw:refined-reanimation"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "artificer-efa:reanimator-rhw:reanimator-spells",
+                "name": "Reanimator Spells",
+                "level": 3,
+                "text": "When you reach an Artificer level specified in the Reanimator Spells table, you thereafter always have the listed spells prepared.\n\nReanimator Spells\n\nArtificer Level | Spells\n--- | ---\n3 | False Life, Spare the Dying, Witch Bolt\n5 | Blindness/Deafness, Enhance Ability\n9 | Animate Dead, Lightning Bolt\n13 | Blight, Death Ward\n17 | Antilife Shell, Raise Dead",
+                "category": "traits"
+            },
+            {
+                "id": "artificer-efa:reanimator-rhw:reanimators-skill-set",
+                "name": "Reanimator's Skill Set",
+                "level": 3,
+                "text": "You gain the following benefits.\n\n**Jolt to Life.** When you cast Spare the Dying, you can modify the spell so that it sends a jolt of electricity through the target, reviving it. The target regains a number of Hit Points equal to your Artificer level, and each creature of your choice in a 10-foot Emanation originating from the target makes a Dexterity saving throw against your spell save DC, taking 2d4 Lightning damage on a failed save or half as much damage on a successful one.\n\nYou can modify the spell this way a number of times equal to your Intelligence modifier, and you regain all expended uses when you finish a Long Rest. The Lightning damage of this feature increases by 1d4 when you reach Artificer levels 11 (3d4) and 17 (4d4).\n\n**Reanimator's Tools.** You gain proficiency with Alchemist's Supplies. If you already have this proficiency, you gain proficiency with one other type of Artisan's Tools of your choice.",
+                "category": "traits"
+            },
+            {
+                "id": "artificer-efa:reanimator-rhw:reanimated-companion",
+                "name": "Reanimated Companion",
+                "level": 3,
+                "text": "Using Tinker's Tools or another type of Artisan's Tools with which you have proficiency, you can take a Magic action to create a Reanimated Companion through the power of necromancy and science. The companion manifests in an unoccupied space within 5 feet of you. You determine the companion's appearance; your choices don't affect the companion's game statistics.\n\nThe companion is Friendly to you and your allies and obeys you. It lasts until you finish a Long Rest or until you take a Magic action to dismiss it early, at which point it harmlessly collapses into a pile of viscera. It immediately drops to 0 Hit Points and dies (triggering its Death Burst trait) if you die.\n\nOnce you create a companion, you can't do so again until you finish a Long Rest or expend a spell slot to create one. You can have only one companion at a time and can't create one while your companion is present.\n\n**The Companion in Combat.** In combat, the companion acts during your turn. It can move and take its Reaction on its own, but the only action it takes is the Dodge action unless you take a Bonus Action to command it to take an action. If you have the Incapacitated condition, the companion acts on its own and isn't limited to the Dodge action.",
+                "category": "actions",
+                "uses": {
+                    "max": 1,
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "artificer-efa:reanimator-rhw:strange-modifications",
+                "name": "Strange Modifications",
+                "level": 5,
+                "text": "Whenever you create a Reanimated Companion, it gains one of the following options of your choice; choose when you create the companion.\n\n**Arcane Conduit.** You can cast spells as though you were in the companion's space, but you must use your own senses. Once per turn, when you cast an Artificer spell from the Evocation or Necromancy school and deal damage while your companion is within 120 feet of you, you can add your Intelligence modifier to one damage roll of that spell.\n\n**Ferocity.** The damage die of the companion's Dreadful Swipe increases to 1d6.",
+                "category": "traits"
+            },
+            {
+                "id": "artificer-efa:reanimator-rhw:improved-reanimation",
+                "name": "Improved Reanimation",
+                "level": 9,
+                "text": "The damage of your Reanimated Companion's Death Burst increases to 4d4. Necrotic damage dealt by your companion ignores Resistance.",
+                "category": "traits"
+            },
+            {
+                "id": "artificer-efa:reanimator-rhw:macabre-modifications",
+                "name": "Macabre Modifications",
+                "level": 9,
+                "text": "You experiment and alter your companion further. Whenever you create a Reanimated Companion, the companion now gains two options for Strange Modifications, instead of one. Additionally, when picking options for Strange Modifications, you can also choose from the following options.\n\n**Bloated.** The companion becomes Large. Whenever it hits a Large or smaller creature with its Dreadful Swipe action, that creature is pushed up to 10 feet away from the companion. Additionally, you can add your Intelligence modifier to the damage dealt by the companion's Death Burst.\n\n**Gaunt.** The companion's Speed increases to 45 feet, and it gains a Climb Speed equal to its Speed. It can climb difficult surfaces, including along ceilings, without needing to make an ability check. In addition, whenever a creature of your choice starts its turn within a 10-foot Emanation originating from your companion, the creature must succeed on a Wisdom saving throw against your spell save DC or have the Frightened condition until the start of its next turn.\n\n**Moist.** The companion gains a Swim Speed equal to its Speed, and it can move through a space as narrow as 1 inch without expending extra movement to do so. In addition, whenever the companion is hit by an attack roll from a creature within 10 feet of itself, the attacker takes Acid damage equal to your Intelligence modifier.",
+                "category": "traits"
+            },
+            {
+                "id": "artificer-efa:reanimator-rhw:refined-reanimation",
+                "name": "Refined Reanimation",
+                "level": 15,
+                "text": "You have mastered the science of revivification, granting you the following benefits.\n\n**Facilitated Revival.** You can cast Raise Dead once without expending a spell slot and without Material components, provided you use Tinker's Tools or another type of Artisan's Tools with which you have proficiency as the Spellcasting Focus. Once you use this feature, you can't use it again until you finish a Long Rest.\n\n**Life Transfer.** You can siphon the animating magic of your Reanimated Companion to bolster yourself. When you or your companion takes damage, you can take a Reaction to gain a number of Hit Points equal to your companion's current Hit Points. The companion then immediately drops to 0 Hit Points and dies (triggering its Death Burst trait).\n\n**Superior Modifications.** Whenever you create a Reanimated Companion, the companion now gains three options for Strange Modifications.",
+                "category": "traits"
+            },
+            {
+                "id": "artificer-efa:reanimator-rhw:reanimators-skill-set:jolt-to-life",
+                "name": "Jolt to Life",
+                "level": 3,
+                "text": "**Jolt to Life.** When you cast Spare the Dying, you can modify the spell so that it sends a jolt of electricity through the target, reviving it. The target regains a number of Hit Points equal to your Artificer level, and each creature of your choice in a 10-foot Emanation originating from the target makes a Dexterity saving throw against your spell save DC, taking 2d4 Lightning damage on a failed save or half as much damage on a successful one.\n\nYou can modify the spell this way a number of times equal to your Intelligence modifier, and you regain all expended uses when you finish a Long Rest. The Lightning damage of this feature increases by 1d4 when you reach Artificer levels 11 (3d4) and 17 (4d4).",
+                "parent": "artificer-efa:reanimator-rhw:reanimators-skill-set",
+                "category": "actions",
+                "uses": {
+                    "max": "int_mod",
+                    "reset": "long"
+                },
+                "action": {
+                    "area": "10-foot Emanation",
+                    "heal": "class_level",
+                    "save": {
+                        "ability": "dex",
+                        "dc": "8 + pb + spell_mod",
+                        "on_success": "half",
+                        "damage": [
+                            {
+                                "dice": {
+                                    "1": "2d4",
+                                    "11": "3d4",
+                                    "17": "4d4"
+                                },
+                                "type": "lightning"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "artificer-efa:reanimator-rhw:reanimators-skill-set:reanimators-tools",
+                "name": "Reanimator's Tools",
+                "level": 3,
+                "text": "**Reanimator's Tools.** You gain proficiency with Alchemist's Supplies. If you already have this proficiency, you gain proficiency with one other type of Artisan's Tools of your choice.",
+                "parent": "artificer-efa:reanimator-rhw:reanimators-skill-set",
+                "category": "traits",
+                "grants": {
+                    "tools": [
+                        "alchemists_supplies"
+                    ]
+                },
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "tools_1",
+                        "label": "Tools",
+                        "grant": "tools",
+                        "count": 1,
+                        "from": "artisans_tools"
+                    }
+                ]
+            },
+            {
+                "id": "artificer-efa:reanimator-rhw:refined-reanimation:life-transfer",
+                "name": "Life Transfer",
+                "level": 15,
+                "text": "**Life Transfer.** You can siphon the animating magic of your Reanimated Companion to bolster yourself. When you or your companion takes damage, you can take a Reaction to gain a number of Hit Points equal to your companion's current Hit Points. The companion then immediately drops to 0 Hit Points and dies (triggering its Death Burst trait).",
+                "parent": "artificer-efa:reanimator-rhw:refined-reanimation",
+                "category": "reactions"
+            }
+        ],
+        "resources": []
+    }
+]

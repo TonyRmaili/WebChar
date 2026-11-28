@@ -390,13 +390,16 @@
             {
                 "level": 2,
                 "features": [
-                    "cleric-phb:channel-divinity"
+                    "cleric-phb:channel-divinity",
+                    "cleric-phb:channel-divinity-harness-divine-power"
                 ],
                 "subclass_features": true
             },
             {
                 "level": 4,
-                "features": [],
+                "features": [
+                    "cleric-phb:cantrip-versatility"
+                ],
                 "choices": [
                     {
                         "type": "bundle",
@@ -763,6 +766,36 @@
                         "on_success": "none"
                     }
                 }
+            },
+            {
+                "id": "cleric-phb:channel-divinity-harness-divine-power",
+                "name": "Channel Divinity: Harness Divine Power",
+                "level": 2,
+                "source": "TCE",
+                "text": "*2nd-level cleric optional feature*\n\nYou can expend a use of your Channel Divinity to fuel your spells. As a bonus action, you touch your holy symbol, utter a prayer, and regain one expended spell slot, the level of which can be no higher than half your proficiency bonus (rounded up). The number of times you can use this feature is based on the level you've reached in this class: 2nd level, once; 6th level, twice; and 18th level, thrice. You regain all expended uses when you finish a long rest.",
+                "optional": true,
+                "consumes": {
+                    "resource": "channel_divinity",
+                    "amount": 1
+                },
+                "category": "bonus_actions",
+                "uses": {
+                    "max": {
+                        "1": 1,
+                        "6": 2,
+                        "18": 3
+                    },
+                    "reset": "long"
+                }
+            },
+            {
+                "id": "cleric-phb:cantrip-versatility",
+                "name": "Cantrip Versatility",
+                "level": 4,
+                "source": "TCE",
+                "text": "*4th-level cleric optional feature*\n\nWhenever you reach a level in this class that grants the Ability Score Improvement feature, you can replace one cantrip you learned from this class's Spellcasting feature with another cantrip from the cleric spell list.",
+                "optional": true,
+                "category": "traits"
             },
             {
                 "id": "cleric-phb:destroy-undead-cr-1-2",

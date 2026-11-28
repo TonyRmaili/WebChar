@@ -1,5 +1,258 @@
 [
     {
+        "id": "bard-xphb:dance-xphb",
+        "kind": "subclass",
+        "name": "College of Dance",
+        "source": "XPHB",
+        "edition": "one",
+        "text": "*Move in Harmony with the Cosmos*\n\nBards of the College of Dance know that the Words of Creation can't be contained within speech or song; the words are uttered by the movements of celestial bodies and flow through the motions of the smallest creatures. These Bards practice a way of being in harmony with the whirling cosmos that emphasizes agility, speed, and grace.",
+        "class_id": "bard-xphb",
+        "short_name": "Dance",
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "bard-xphb:dance-xphb:dazzling-footwork"
+                ]
+            },
+            {
+                "level": 6,
+                "features": [
+                    "bard-xphb:dance-xphb:inspiring-movement",
+                    "bard-xphb:dance-xphb:tandem-footwork"
+                ]
+            },
+            {
+                "level": 14,
+                "features": [
+                    "bard-xphb:dance-xphb:leading-evasion"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "bard-xphb:dance-xphb:dazzling-footwork",
+                "name": "Dazzling Footwork",
+                "level": 3,
+                "text": "While you aren't wearing armor or wielding a Shield, you gain the following benefits.",
+                "category": "traits"
+            },
+            {
+                "id": "bard-xphb:dance-xphb:dance-virtuoso",
+                "name": "Dance Virtuoso",
+                "level": 3,
+                "text": "You have Advantage on any Charisma (Performance) check you make that involves you dancing.",
+                "parent": "bard-xphb:dance-xphb:dazzling-footwork",
+                "category": "traits"
+            },
+            {
+                "id": "bard-xphb:dance-xphb:unarmored-defense",
+                "name": "Unarmored Defense",
+                "level": 3,
+                "text": "Your base Armor Class equals 10 plus your Dexterity and Charisma modifiers.",
+                "parent": "bard-xphb:dance-xphb:dazzling-footwork",
+                "category": "traits",
+                "modifiers": [
+                    {
+                        "target": "ac",
+                        "base": "10 + dex_mod + cha_mod",
+                        "requires": [
+                            "no_armor",
+                            "no_shield"
+                        ]
+                    }
+                ]
+            },
+            {
+                "id": "bard-xphb:dance-xphb:agile-strikes",
+                "name": "Agile Strikes",
+                "level": 3,
+                "text": "When you expend a use of your Bardic Inspiration as part of an action, a Bonus Action, or a Reaction, you can make one Unarmed Strike as part of that action, Bonus Action, or Reaction.",
+                "parent": "bard-xphb:dance-xphb:dazzling-footwork",
+                "category": "traits"
+            },
+            {
+                "id": "bard-xphb:dance-xphb:bardic-damage",
+                "name": "Bardic Damage",
+                "level": 3,
+                "text": "You can use Dexterity instead of Strength for the attack rolls of your Unarmed Strikes. When you deal damage with an Unarmed Strike, you can deal Bludgeoning damage equal to a roll of your Bardic Inspiration die plus your Dexterity modifier, instead of the strike's normal damage. This roll doesn't expend the die.",
+                "parent": "bard-xphb:dance-xphb:dazzling-footwork",
+                "category": "actions",
+                "action": {
+                    "attack": {
+                        "kind": "melee",
+                        "bonus": "pb + dex_mod",
+                        "damage": [
+                            {
+                                "dice": "bardic_die",
+                                "bonus": "dex_mod",
+                                "type": "bludgeoning"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "bard-xphb:dance-xphb:inspiring-movement",
+                "name": "Inspiring Movement",
+                "level": 6,
+                "text": "When an enemy you can see ends its turn within 5 feet of you, you can take a Reaction and expend one use of your Bardic Inspiration to move up to half your Speed. Then one ally of your choice within 30 feet of you can also move up to half their Speed using their Reaction.\n\nNone of this feature's movement provokes Opportunity Attacks.",
+                "category": "reactions",
+                "consumes": {
+                    "resource": "bardic_inspiration",
+                    "amount": 1
+                }
+            },
+            {
+                "id": "bard-xphb:dance-xphb:tandem-footwork",
+                "name": "Tandem Footwork",
+                "level": 6,
+                "text": "When you roll Initiative, you can expend one use of your Bardic Inspiration if you don't have the Incapacitated condition. When you do so, roll your Bardic Inspiration die; you and each ally within 30 feet of you who can see or hear you gains a bonus to Initiative equal to the number rolled.",
+                "category": "traits",
+                "modifiers": [
+                    {
+                        "target": "initiative",
+                        "add": "bardic_die"
+                    }
+                ],
+                "consumes": {
+                    "resource": "bardic_inspiration",
+                    "amount": 1
+                }
+            },
+            {
+                "id": "bard-xphb:dance-xphb:leading-evasion",
+                "name": "Leading Evasion",
+                "level": 14,
+                "text": "When you are subjected to an effect that allows you to make a Dexterity saving throw to take only half damage, you instead take no damage if you succeed on the saving throw and only half damage if you fail. If any creatures within 5 feet of you are making the same Dexterity saving throw, you can share this benefit with them for that save.\n\nYou can't use this feature if you have the Incapacitated condition.",
+                "category": "traits"
+            }
+        ],
+        "resources": []
+    },
+    {
+        "id": "bard-xphb:glamour-xphb",
+        "kind": "subclass",
+        "name": "College of Glamour",
+        "source": "XPHB",
+        "edition": "one",
+        "text": "*Weave Beguiling Fey Magic*\n\nThe College of Glamour traces its origins to the beguiling magic of the Feywild. Bards who study this magic weave threads of beauty and terror into their songs and stories, and the mightiest among them can cloak themselves in otherworldly majesty. Their performances stir up wistful longing for forgotten innocence, evoke unconscious memories of long-held fears, and tug at the emotions of even the most hard-hearted listeners.",
+        "class_id": "bard-xphb",
+        "short_name": "Glamour",
+        "grants": {
+            "spells": [
+                {
+                    "spell": "charm-person-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "mirror-image-xphb",
+                    "how": "prepared",
+                    "at": 3
+                },
+                {
+                    "spell": "command-xphb",
+                    "how": "prepared",
+                    "at": 6
+                },
+                {
+                    "spell": "command-xphb",
+                    "how": "prepared",
+                    "at": 6
+                }
+            ]
+        },
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "bard-xphb:glamour-xphb:beguiling-magic",
+                    "bard-xphb:glamour-xphb:mantle-of-inspiration"
+                ]
+            },
+            {
+                "level": 6,
+                "features": [
+                    "bard-xphb:glamour-xphb:mantle-of-majesty"
+                ]
+            },
+            {
+                "level": 14,
+                "features": [
+                    "bard-xphb:glamour-xphb:unbreakable-majesty"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "bard-xphb:glamour-xphb:beguiling-magic",
+                "name": "Beguiling Magic",
+                "level": 3,
+                "text": "You always have the Charm Person and Mirror Image spells prepared.\n\nIn addition, immediately after you cast an Enchantment or Illusion spell using a spell slot, you can cause a creature you can see within 60 feet of yourself to make a Wisdom saving throw against your spell save DC. On a failed save, the target has the Charmed or Frightened condition (your choice) for 1 minute. The target repeats the save at the end of each of its turns, ending the effect on itself on a success.\n\nOnce you use this benefit, you can't use it again until you finish a Long Rest. You can also restore your use of it by expending one use of your Bardic Inspiration (no action required).",
+                "category": "traits",
+                "uses": {
+                    "max": 1,
+                    "reset": "long"
+                },
+                "action": {
+                    "range": "60 feet",
+                    "save": {
+                        "ability": "wis",
+                        "dc": "8 + pb + spell_mod",
+                        "on_success": "none",
+                        "conditions": [
+                            "charmed",
+                            "frightened"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "bard-xphb:glamour-xphb:mantle-of-inspiration",
+                "name": "Mantle of Inspiration",
+                "level": 3,
+                "text": "You can weave fey magic into a song or dance to fill others with vigor. As a Bonus Action, you can expend a use of Bardic Inspiration, rolling a Bardic Inspiration die. When you do so, choose a number of other creatures within 60 feet of yourself, up to a number equal to your Charisma modifier (minimum of one creature). Each of those creatures gains a number of Temporary Hit Points equal to two times the number rolled on the Bardic Inspiration die, and then each can use its Reaction to move up to its Speed without provoking Opportunity Attacks.",
+                "category": "bonus_actions",
+                "action": {
+                    "range": "60 feet",
+                    "temp_hp": "2 * bardic_die"
+                },
+                "consumes": {
+                    "resource": "bardic_inspiration",
+                    "amount": 1
+                }
+            },
+            {
+                "id": "bard-xphb:glamour-xphb:mantle-of-majesty",
+                "name": "Mantle of Majesty",
+                "level": 6,
+                "text": "You always have the Command spell prepared.\n\nAs a Bonus Action, you cast Command without expending a spell slot, and you take on an unearthly appearance for 1 minute or until your Concentration ends. During this time, you can cast Command as a Bonus Action without expending a spell slot.\n\nAny creature Charmed by you automatically fails its saving throw against the Command you cast with this feature.\n\nOnce you use this feature, you can't use it again until you finish a Long Rest. You can also restore your use of it by expending a level 3+ spell slot (no action required).",
+                "category": "traits"
+            },
+            {
+                "id": "bard-xphb:glamour-xphb:unbreakable-majesty",
+                "name": "Unbreakable Majesty",
+                "level": 14,
+                "text": "As a Bonus Action, you can assume a magically majestic presence for 1 minute or until you have the Incapacitated condition. For the duration, whenever any creature hits you with an attack roll for the first time on a turn, the attacker must succeed on a Charisma saving throw against your spell save DC, or the attack misses instead, as the creature recoils from your majesty.\n\nOnce you assume this majestic presence, you can't do so again until you finish a Short or Long Rest.",
+                "category": "bonus_actions",
+                "uses": {
+                    "max": 1,
+                    "reset": "short"
+                },
+                "action": {
+                    "save": {
+                        "ability": "cha",
+                        "dc": "8 + pb + spell_mod",
+                        "on_success": "none"
+                    }
+                },
+                "toggle": true
+            }
+        ],
+        "resources": []
+    },
+    {
         "id": "bard-xphb:lore-xphb",
         "kind": "subclass",
         "name": "College of Lore",
@@ -138,6 +391,399 @@
                 "consumes": {
                     "resource": "bardic_inspiration",
                     "amount": 1
+                }
+            }
+        ],
+        "resources": []
+    },
+    {
+        "id": "bard-xphb:valor-xphb",
+        "kind": "subclass",
+        "name": "College of Valor",
+        "source": "XPHB",
+        "edition": "one",
+        "text": "*Sing the Deeds of Ancient Heroes*\n\nBards of the College of Valor are daring storytellers whose tales preserve the memory of the great heroes of the past. These Bards sing the deeds of the mighty in vaulted halls or to crowds gathered around great bonfires. They travel to witness great events firsthand and to ensure that the memory of these events doesn't pass away. With their songs, they inspire new generations to reach the same heights of accomplishment as the heroes of old.",
+        "class_id": "bard-xphb",
+        "short_name": "Valor",
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "bard-xphb:valor-xphb:combat-inspiration",
+                    "bard-xphb:valor-xphb:martial-training"
+                ]
+            },
+            {
+                "level": 6,
+                "features": [
+                    "bard-xphb:valor-xphb:extra-attack"
+                ]
+            },
+            {
+                "level": 14,
+                "features": [
+                    "bard-xphb:valor-xphb:battle-magic"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "bard-xphb:valor-xphb:combat-inspiration",
+                "name": "Combat Inspiration",
+                "level": 3,
+                "text": "You can use your wit to turn the tide of battle. A creature that has a Bardic Inspiration die from you can use it for one of the following effects.\n\n**Defense.** When the creature is hit by an attack roll, that creature can use its Reaction to roll the Bardic Inspiration die and add the number rolled to its AC against that attack, potentially causing the attack to miss.\n\n**Offense.** Immediately after the creature hits a target with an attack roll, the creature can roll the Bardic Inspiration die and add the number rolled to the attack's damage against the target.",
+                "category": "traits"
+            },
+            {
+                "id": "bard-xphb:valor-xphb:martial-training",
+                "name": "Martial Training",
+                "level": 3,
+                "text": "You gain proficiency with Martial weapons and training with Medium armor and Shields.\n\nIn addition, you can use a Simple or Martial weapon as a Spellcasting Focus to cast spells from your Bard spell list.",
+                "category": "traits",
+                "grants": {
+                    "weapons": [
+                        "martial_weapons"
+                    ],
+                    "armor": [
+                        "medium",
+                        "shields"
+                    ]
+                }
+            },
+            {
+                "id": "bard-xphb:valor-xphb:extra-attack",
+                "name": "Extra Attack",
+                "level": 6,
+                "text": "You can attack twice instead of once whenever you take the Attack action on your turn.\n\nIn addition, you can cast one of your cantrips that has a casting time of an action in place of one of those attacks.",
+                "category": "traits"
+            },
+            {
+                "id": "bard-xphb:valor-xphb:battle-magic",
+                "name": "Battle Magic",
+                "level": 14,
+                "text": "After you cast a spell that has a casting time of an action, you can make one attack with a weapon as a Bonus Action.",
+                "category": "bonus_actions"
+            },
+            {
+                "id": "bard-xphb:valor-xphb:combat-inspiration:defense",
+                "name": "Defense",
+                "level": 3,
+                "text": "**Defense.** When the creature is hit by an attack roll, that creature can use its Reaction to roll the Bardic Inspiration die and add the number rolled to its AC against that attack, potentially causing the attack to miss.",
+                "parent": "bard-xphb:valor-xphb:combat-inspiration",
+                "category": "reactions"
+            },
+            {
+                "id": "bard-xphb:valor-xphb:combat-inspiration:offense",
+                "name": "Offense",
+                "level": 3,
+                "text": "**Offense.** Immediately after the creature hits a target with an attack roll, the creature can roll the Bardic Inspiration die and add the number rolled to the attack's damage against the target.",
+                "parent": "bard-xphb:valor-xphb:combat-inspiration",
+                "category": "traits",
+                "action": {
+                    "attack": {
+                        "kind": "any",
+                        "damage": [
+                            {
+                                "dice": "bardic_die",
+                                "type": "weapon"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "resources": []
+    },
+    {
+        "id": "bard-xphb:moon-frhof",
+        "kind": "subclass",
+        "name": "College of the Moon",
+        "source": "FRHoF",
+        "edition": "one",
+        "text": "*Inspire Allies with Primal Tales*\n\nThe College of the Moon traces its origins to the ancient druidic circles of the Moonshae Isles, who entrusted the first Bards of this tradition with chronicling the stories of the islands and their people. Bards of this college draw from the isles' fey magic and the primal power of the moonwells to bolster their allies, protect the natural world, and inspire their bardic works.",
+        "class_id": "bard-xphb",
+        "short_name": "Moon",
+        "grants": {
+            "spells": [
+                {
+                    "spell": "moonbeam-xphb",
+                    "how": "prepared",
+                    "at": 6,
+                    "uses": {
+                        "max": 1,
+                        "reset": "long"
+                    }
+                }
+            ]
+        },
+        "choices": [
+            {
+                "type": "pool",
+                "id": "spells",
+                "label": "Spells",
+                "grant": "spells",
+                "count": 1,
+                "from": {
+                    "spell_level": 0,
+                    "class": "druid"
+                },
+                "how": "prepared",
+                "at": 3
+            }
+        ],
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "bard-xphb:moon-frhof:moons-inspiration",
+                    "bard-xphb:moon-frhof:primal-lore"
+                ]
+            },
+            {
+                "level": 6,
+                "features": [
+                    "bard-xphb:moon-frhof:blessing-of-moonlight"
+                ]
+            },
+            {
+                "level": 14,
+                "features": [
+                    "bard-xphb:moon-frhof:eventides-splendor"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "bard-xphb:moon-frhof:moons-inspiration",
+                "name": "Moon's Inspiration",
+                "level": 3,
+                "text": "The primal and ever-changing power of the moon flows through you, granting you the following benefits.\n\n**Inspired Eclipse.** When you take a Bonus Action to give a creature a Bardic Inspiration die, you can have the Invisible condition and teleport up to 30 feet to an unoccupied space you can see as part of that Bonus Action. This invisibility lasts until the start of your next turn and ends early immediately after you make an attack roll, deal damage, or cast a spell.\n\n**Lunar Vitality.** Once per turn when you restore Hit Points to a creature with a spell, you can expend a Bardic Inspiration die and increase the amount of Hit Points restored by a number equal to a roll of the Bardic Inspiration die. The creature's Speed also increases by 10 feet until the end of its next turn.",
+                "category": "traits"
+            },
+            {
+                "id": "bard-xphb:moon-frhof:primal-lore",
+                "name": "Primal Lore",
+                "level": 3,
+                "text": "You learn Druidic and one cantrip from the Druid spell list. It counts as a Bard spell for you but doesn't count against the number of cantrips you know. Whenever you gain a Bard level, you can replace this cantrip with another cantrip of your choice from the Druid spell list.\n\nAdditionally, choose one of the following skills: Animal Handling, Insight, Medicine, Nature, Perception, or Survival. You have proficiency in that skill.",
+                "category": "traits",
+                "grants": {
+                    "languages": [
+                        "druidic"
+                    ]
+                },
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "skills_1",
+                        "label": "Skills",
+                        "grant": "skills",
+                        "count": 1,
+                        "from": [
+                            "animal_handling",
+                            "insight",
+                            "medicine",
+                            "nature",
+                            "perception",
+                            "survival"
+                        ]
+                    }
+                ]
+            },
+            {
+                "id": "bard-xphb:moon-frhof:blessing-of-moonlight",
+                "name": "Blessing of Moonlight",
+                "level": 6,
+                "text": "You always have the Moonbeam spell prepared.\n\nWhen you cast Moonbeam, you can modify the spell so that you glow faintly while the spell is active. While glowing, you shed Dim Light out to 5 feet, and whenever a creature fails its saving throw against the effects of this Moonbeam, another creature of your choice that you can see within 60 feet of yourself regains 2d4 Hit Points.\n\nOnce you use this feature to modify a casting of Moonbeam, you can't use it again until you finish a Long Rest.",
+                "category": "traits",
+                "uses": {
+                    "max": 1,
+                    "reset": "long"
+                },
+                "action": {
+                    "range": "60 feet",
+                    "heal": "2d4"
+                }
+            },
+            {
+                "id": "bard-xphb:moon-frhof:eventides-splendor",
+                "name": "Eventide's Splendor",
+                "level": 14,
+                "text": "You become suffused with the might of the moon, improving your Moon's Inspiration in the following ways.\n\n**Shadow of the New Moon.** When you use Inspired Eclipse, the creature who received the Bardic Inspiration die can also have the Invisible condition and immediately take a Reaction to teleport up to 30 feet to an unoccupied space it can see. The creature remains Invisible until the start of its next turn.\n\n**Vibrance of the Full Moon.** When you use Lunar Vitality, you can roll 1d6 and use the number rolled in place of expending a Bardic Inspiration die.",
+                "category": "traits"
+            },
+            {
+                "id": "bard-xphb:moon-frhof:moons-inspiration:inspired-eclipse",
+                "name": "Inspired Eclipse",
+                "level": 3,
+                "text": "**Inspired Eclipse.** When you take a Bonus Action to give a creature a Bardic Inspiration die, you can have the Invisible condition and teleport up to 30 feet to an unoccupied space you can see as part of that Bonus Action. This invisibility lasts until the start of your next turn and ends early immediately after you make an attack roll, deal damage, or cast a spell.",
+                "parent": "bard-xphb:moon-frhof:moons-inspiration",
+                "category": "bonus_actions",
+                "action": {
+                    "range": "30 feet"
+                }
+            },
+            {
+                "id": "bard-xphb:moon-frhof:moons-inspiration:lunar-vitality",
+                "name": "Lunar Vitality",
+                "level": 3,
+                "text": "**Lunar Vitality.** Once per turn when you restore Hit Points to a creature with a spell, you can expend a Bardic Inspiration die and increase the amount of Hit Points restored by a number equal to a roll of the Bardic Inspiration die. The creature's Speed also increases by 10 feet until the end of its next turn.",
+                "parent": "bard-xphb:moon-frhof:moons-inspiration",
+                "category": "traits",
+                "action": {
+                    "heal": "bardic_die"
+                }
+            },
+            {
+                "id": "bard-xphb:moon-frhof:eventides-splendor:shadow-of-the-new-moon",
+                "name": "Shadow of the New Moon",
+                "level": 14,
+                "text": "**Shadow of the New Moon.** When you use Inspired Eclipse, the creature who received the Bardic Inspiration die can also have the Invisible condition and immediately take a Reaction to teleport up to 30 feet to an unoccupied space it can see. The creature remains Invisible until the start of its next turn.",
+                "parent": "bard-xphb:moon-frhof:eventides-splendor",
+                "category": "reactions",
+                "action": {
+                    "range": "30 feet"
+                }
+            },
+            {
+                "id": "bard-xphb:moon-frhof:eventides-splendor:vibrance-of-the-full-moon",
+                "name": "Vibrance of the Full Moon",
+                "level": 14,
+                "text": "**Vibrance of the Full Moon.** When you use Lunar Vitality, you can roll 1d6 and use the number rolled in place of expending a Bardic Inspiration die.",
+                "parent": "bard-xphb:moon-frhof:eventides-splendor",
+                "category": "traits",
+                "action": {
+                    "heal": "1d6"
+                }
+            }
+        ],
+        "resources": []
+    },
+    {
+        "id": "bard-xphb:spirits-rhw",
+        "kind": "subclass",
+        "name": "College of Spirits",
+        "source": "RHW",
+        "edition": "one",
+        "text": "*Call Forth Spirits from Beyond the Grave*\n\nBards of the College of Spirits conjure legendary spirits to change the world. But such entities are capricious, and what a Bard summons isn't always entirely under their control.",
+        "class_id": "bard-xphb",
+        "short_name": "Spirits",
+        "grants": {
+            "spells": [
+                {
+                    "spell": "spirit-guardians-xphb",
+                    "how": "prepared",
+                    "at": 6,
+                    "uses": {
+                        "max": 1,
+                        "reset": "long"
+                    }
+                }
+            ]
+        },
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "bard-xphb:spirits-rhw:channeler",
+                    "bard-xphb:spirits-rhw:spirits-from-beyond"
+                ]
+            },
+            {
+                "level": 6,
+                "features": [
+                    "bard-xphb:spirits-rhw:empowered-channeling"
+                ]
+            },
+            {
+                "level": 14,
+                "features": [
+                    "bard-xphb:spirits-rhw:mystical-connection"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "bard-xphb:spirits-rhw:channeler",
+                "name": "Channeler",
+                "level": 3,
+                "text": "You learn how to contact spirits beyond the grave, letting their power and knowledge flow through you. You gain the following benefits.\n\n**Guiding Whispers.** You know the Guidance cantrip. It has a range of 60 feet when you cast it.\n\n**Spiritual Focus.** You employ tools that aid you in channeling spirits. You gain a Gaming Set (playing cards). You have proficiency with this Gaming Set, and you can use it or one of the following items as a Spellcasting Focus for your Bard spells: Arcane Focus (crystal or orb), Candle, or Ink Pen.",
+                "category": "traits"
+            },
+            {
+                "id": "bard-xphb:spirits-rhw:spirits-from-beyond",
+                "name": "Spirits from Beyond",
+                "level": 3,
+                "text": "You can call forth spirits of the dead to empower you and your allies. When you take a Bonus Action to give a creature a Bardic Inspiration die, you can call forth the powers of a random spirit. To determine the spirit you channel, roll the Bardic Inspiration die and refer to the Spirits from Beyond table. The spirit remains channeled until you unleash it or until you finish a Short or Long Rest.\n\n**Controlled Channeling.** As a Bonus Action, you can expend a use of your Bardic Inspiration and channel a specific spirit. When you do so, choose the spirit from the Spirits from Beyond table rather than rolling. The chosen spirit's corresponding number must be less than or equal to the highest number on your Bardic Inspiration die; for example, if your Bardic Inspiration die is a d8, you can choose to channel any spirit up to (and including) the Shade.\n\n**Unleashing a Spirit.** As a Magic action, you can unleash one of your channeled spirits. Choose one creature you can see within 30 feet of yourself as the spirit's target. The spirit then takes effect; if a spirit's effect requires a saving throw, the DC equals your Bard spell save DC.\n\nSpirits from Beyond\n\nBardic Insp. Die | Spirit and Unleash Effect\n--- | ---\n1 | Beloved. The target regains Hit Points equal to a roll of your Bardic Inspiration die plus your Charisma modifier.\n2 | Sharpshooter. The target takes Force damage equal to a roll of your Bardic Inspiration die plus your Charisma modifier.\n3 | Avenger. Until the end of your next turn, any creature that hits the target with a melee attack roll takes Force damage equal to a roll of your Bardic Inspiration die.\n4 | Renegade. The target can immediately take a Reaction to teleport up to 30 feet to an unoccupied space it can see.\n5 | Fortune Teller. The target has Advantage on D20 Tests until the start of your next turn.\n6 | Wayfarer. The target gains Temporary Hit Points equal to a roll of your Bardic Inspiration die plus your Bard level. While the target has these Temporary Hit Points, its Speed increases by 10 feet.\n7 | Trickster. The target makes a Wisdom saving throw. On a failed save, the target takes Psychic damage equal to two rolls of your Bardic Inspiration die and has the Charmed condition until the start of your next turn. On a successful save, the target takes half as much damage only.\n8 | Shade. The target has the Invisible condition until the end of its next turn or until the target makes an attack roll, deals damage, or casts a spell. When the invisibility ends, each creature in a 5-foot Emanation originating from the target must succeed on a Constitution saving throw or take Necrotic damage equal to two rolls of your Bardic Inspiration die.\n9 | Arsonist. The target makes a Dexterity saving throw, taking Fire damage equal to four rolls of your Bardic Inspiration die on a failed save or half as much damage on a successful one.\n10 | Coward. The target and each creature of your choice in a 30-foot Emanation originating from the target must succeed on a Wisdom saving throw or have the Frightened condition until the start of your next turn. While a creature is Frightened, its Speed is halved (round down), and it can take either an action or a Bonus Action, not both.\n11 | Brute. Each creature of your choice in a 30-foot Emanation originating from the target makes a Strength saving throw. On a failed save, a creature takes Thunder damage equal to three rolls of your Bardic Inspiration die and has the Prone condition. On a successful save, a creature takes half as much damage only.\n12 | Priest. The target regains Hit Points equal to two rolls of your Bardic Inspiration die, and one of the following conditions of your choice ends on the target: Blinded, Charmed, Deafened, Paralyzed, Poisoned, or Stunned.",
+                "category": "traits"
+            },
+            {
+                "id": "bard-xphb:spirits-rhw:empowered-channeling",
+                "name": "Empowered Channeling",
+                "level": 6,
+                "text": "Your ability to channel spirits improves. You gain the following benefits.\n\n**Power from Beyond.** Once per turn, when you cast a Bard spell with a spell slot that deals damage or restores Hit Points, roll 1d6. You gain a bonus equal to the number rolled to one of the spell's damage rolls or to the total Hit Points the spell restores.\n\n**Spiritual Manifestation.** You always have the Spirit Guardians spell prepared. You can cast the spell once without a spell slot, and you regain the ability to cast it in this way when you finish a Long Rest.\n\nWhenever you cast the spell, you can modify it so the spirits also guard against worldly threats. When you cast the spell in this way, you and allies within the spell's Emanation have Half Cover. Once you modify the spell in this way, you can't do so again until you finish a Short or Long Rest.",
+                "category": "traits"
+            },
+            {
+                "id": "bard-xphb:spirits-rhw:mystical-connection",
+                "name": "Mystical Connection",
+                "level": 14,
+                "text": "You gain mastery over the spirits you call forth. Whenever you roll on the Spirits from Beyond table, you can roll the die twice and choose which of the two effects to bestow. If you roll the same number on both dice, you can instead choose any effect on the table.",
+                "category": "traits"
+            },
+            {
+                "id": "bard-xphb:spirits-rhw:channeler:guiding-whispers",
+                "name": "Guiding Whispers",
+                "level": 3,
+                "text": "**Guiding Whispers.** You know the Guidance cantrip. It has a range of 60 feet when you cast it.",
+                "parent": "bard-xphb:spirits-rhw:channeler",
+                "category": "traits"
+            },
+            {
+                "id": "bard-xphb:spirits-rhw:channeler:spiritual-focus",
+                "name": "Spiritual Focus",
+                "level": 3,
+                "text": "**Spiritual Focus.** You employ tools that aid you in channeling spirits. You gain a Gaming Set (playing cards). You have proficiency with this Gaming Set, and you can use it or one of the following items as a Spellcasting Focus for your Bard spells: Arcane Focus (crystal or orb), Candle, or Ink Pen.",
+                "parent": "bard-xphb:spirits-rhw:channeler",
+                "category": "traits",
+                "grants": {
+                    "tools": [
+                        "gaming_set_playing_cards"
+                    ]
+                }
+            },
+            {
+                "id": "bard-xphb:spirits-rhw:spirits-from-beyond:controlled-channeling",
+                "name": "Controlled Channeling",
+                "level": 3,
+                "text": "**Controlled Channeling.** As a Bonus Action, you can expend a use of your Bardic Inspiration and channel a specific spirit. When you do so, choose the spirit from the Spirits from Beyond table rather than rolling. The chosen spirit's corresponding number must be less than or equal to the highest number on your Bardic Inspiration die; for example, if your Bardic Inspiration die is a d8, you can choose to channel any spirit up to (and including) the Shade.",
+                "parent": "bard-xphb:spirits-rhw:spirits-from-beyond",
+                "category": "bonus_actions",
+                "consumes": {
+                    "resource": "bardic_inspiration",
+                    "amount": 1
+                }
+            },
+            {
+                "id": "bard-xphb:spirits-rhw:spirits-from-beyond:unleashing-a-spirit",
+                "name": "Unleashing a Spirit",
+                "level": 3,
+                "text": "**Unleashing a Spirit.** As a Magic action, you can unleash one of your channeled spirits. Choose one creature you can see within 30 feet of yourself as the spirit's target. The spirit then takes effect; if a spirit's effect requires a saving throw, the DC equals your Bard spell save DC.\n\nSpirits from Beyond\n\nBardic Insp. Die | Spirit and Unleash Effect\n--- | ---\n1 | Beloved. The target regains Hit Points equal to a roll of your Bardic Inspiration die plus your Charisma modifier.\n2 | Sharpshooter. The target takes Force damage equal to a roll of your Bardic Inspiration die plus your Charisma modifier.\n3 | Avenger. Until the end of your next turn, any creature that hits the target with a melee attack roll takes Force damage equal to a roll of your Bardic Inspiration die.\n4 | Renegade. The target can immediately take a Reaction to teleport up to 30 feet to an unoccupied space it can see.\n5 | Fortune Teller. The target has Advantage on D20 Tests until the start of your next turn.\n6 | Wayfarer. The target gains Temporary Hit Points equal to a roll of your Bardic Inspiration die plus your Bard level. While the target has these Temporary Hit Points, its Speed increases by 10 feet.\n7 | Trickster. The target makes a Wisdom saving throw. On a failed save, the target takes Psychic damage equal to two rolls of your Bardic Inspiration die and has the Charmed condition until the start of your next turn. On a successful save, the target takes half as much damage only.\n8 | Shade. The target has the Invisible condition until the end of its next turn or until the target makes an attack roll, deals damage, or casts a spell. When the invisibility ends, each creature in a 5-foot Emanation originating from the target must succeed on a Constitution saving throw or take Necrotic damage equal to two rolls of your Bardic Inspiration die.\n9 | Arsonist. The target makes a Dexterity saving throw, taking Fire damage equal to four rolls of your Bardic Inspiration die on a failed save or half as much damage on a successful one.\n10 | Coward. The target and each creature of your choice in a 30-foot Emanation originating from the target must succeed on a Wisdom saving throw or have the Frightened condition until the start of your next turn. While a creature is Frightened, its Speed is halved (round down), and it can take either an action or a Bonus Action, not both.\n11 | Brute. Each creature of your choice in a 30-foot Emanation originating from the target makes a Strength saving throw. On a failed save, a creature takes Thunder damage equal to three rolls of your Bardic Inspiration die and has the Prone condition. On a successful save, a creature takes half as much damage only.\n12 | Priest. The target regains Hit Points equal to two rolls of your Bardic Inspiration die, and one of the following conditions of your choice ends on the target: Blinded, Charmed, Deafened, Paralyzed, Poisoned, or Stunned.",
+                "parent": "bard-xphb:spirits-rhw:spirits-from-beyond",
+                "category": "actions",
+                "action": {
+                    "range": "30 feet"
+                }
+            },
+            {
+                "id": "bard-xphb:spirits-rhw:empowered-channeling:spiritual-manifestation",
+                "name": "Spiritual Manifestation",
+                "level": 6,
+                "text": "**Spiritual Manifestation.** You always have the Spirit Guardians spell prepared. You can cast the spell once without a spell slot, and you regain the ability to cast it in this way when you finish a Long Rest.\n\nWhenever you cast the spell, you can modify it so the spirits also guard against worldly threats. When you cast the spell in this way, you and allies within the spell's Emanation have Half Cover. Once you modify the spell in this way, you can't do so again until you finish a Short or Long Rest.",
+                "parent": "bard-xphb:spirits-rhw:empowered-channeling",
+                "category": "traits",
+                "uses": {
+                    "max": 1,
+                    "reset": "short"
                 }
             }
         ],

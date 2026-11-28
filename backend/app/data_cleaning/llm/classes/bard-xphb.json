@@ -247,5 +247,371 @@
     "reviewed": false,
     "reasoning": "medium",
     "at": "2026-11-18T13:13:10+00:00"
+  },
+  "bard-xphb:dance-xphb": {
+    "label": "Bard (XPHB) · College of Dance (XPHB)",
+    "hash": "4a66447145374abe",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "unarmored-defense",
+          "name": "Unarmored Defense",
+          "level": 3,
+          "category": "traits",
+          "modifiers": [
+            {
+              "target": "ac",
+              "base": "10 + dex_mod + cha_mod",
+              "requires": [
+                "no_armor",
+                "no_shield"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "bardic-damage",
+          "name": "Bardic Damage",
+          "level": 3,
+          "category": "actions",
+          "action": {
+            "attack": {
+              "kind": "melee",
+              "bonus": "pb + dex_mod",
+              "damage": [
+                {
+                  "dice": "bardic_die",
+                  "bonus": "dex_mod",
+                  "type": "bludgeoning"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "inspiring-movement",
+          "name": "Inspiring Movement",
+          "level": 6,
+          "category": "reactions",
+          "consumes": {
+            "resource": "bardic_inspiration",
+            "amount": 1
+          }
+        },
+        {
+          "id": "tandem-footwork",
+          "name": "Tandem Footwork",
+          "level": 6,
+          "category": "traits",
+          "modifiers": [
+            {
+              "target": "initiative",
+              "add": "bardic_die"
+            }
+          ],
+          "consumes": {
+            "resource": "bardic_inspiration",
+            "amount": 1
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 14297,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:17:22+00:00"
+  },
+  "bard-xphb:glamour-xphb": {
+    "label": "Bard (XPHB) · College of Glamour (XPHB)",
+    "hash": "4ce3c5516b3c37f7",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "beguiling-magic",
+          "name": "Beguiling Magic",
+          "level": 3,
+          "category": "traits",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "action": {
+            "range": "60 feet",
+            "save": {
+              "ability": "wis",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "none",
+              "conditions": [
+                "charmed",
+                "frightened"
+              ]
+            }
+          }
+        },
+        {
+          "id": "mantle-of-inspiration",
+          "name": "Mantle of Inspiration",
+          "level": 3,
+          "category": "bonus_actions",
+          "action": {
+            "range": "60 feet",
+            "temp_hp": "2 * bardic_die"
+          },
+          "consumes": {
+            "resource": "bardic_inspiration",
+            "amount": 1
+          }
+        },
+        {
+          "id": "mantle-of-majesty",
+          "name": "Mantle of Majesty",
+          "level": 6,
+          "category": "traits"
+        },
+        {
+          "id": "unbreakable-majesty",
+          "name": "Unbreakable Majesty",
+          "level": 14,
+          "category": "bonus_actions",
+          "uses": {
+            "max": 1,
+            "reset": "short"
+          },
+          "action": {
+            "save": {
+              "ability": "cha",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "none"
+            }
+          },
+          "toggle": true
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13881,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:17:40+00:00"
+  },
+  "bard-xphb:valor-xphb": {
+    "label": "Bard (XPHB) · College of Valor (XPHB)",
+    "hash": "01f8f32bf3f55c90",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "defense",
+          "name": "Defense",
+          "level": 3,
+          "category": "reactions"
+        },
+        {
+          "id": "offense",
+          "name": "Offense",
+          "level": 3,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": "bardic_die",
+                  "type": "weapon"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "martial-training",
+          "name": "Martial Training",
+          "level": 3,
+          "category": "traits",
+          "grants": {
+            "weapons": [
+              "martial_weapons"
+            ],
+            "armor": [
+              "medium",
+              "shields"
+            ]
+          }
+        },
+        {
+          "id": "battle-magic",
+          "name": "Battle Magic",
+          "level": 14,
+          "category": "bonus_actions"
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13642,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:17:57+00:00"
+  },
+  "bard-xphb:moon-frhof": {
+    "label": "Bard (XPHB) · College of the Moon (FRHoF)",
+    "hash": "0777463e19feaa30",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "inspired-eclipse",
+          "name": "Inspired Eclipse",
+          "level": 3,
+          "category": "bonus_actions",
+          "action": {
+            "range": "30 feet"
+          }
+        },
+        {
+          "id": "lunar-vitality",
+          "name": "Lunar Vitality",
+          "level": 3,
+          "category": "traits",
+          "action": {
+            "heal": "bardic_die"
+          }
+        },
+        {
+          "id": "primal-lore",
+          "name": "Primal Lore",
+          "level": 3,
+          "category": "traits",
+          "picks": [
+            {
+              "grant": "skills",
+              "count": 1,
+              "from": [
+                "animal_handling",
+                "insight",
+                "medicine",
+                "nature",
+                "perception",
+                "survival"
+              ]
+            }
+          ],
+          "grants": {
+            "languages": [
+              "druidic"
+            ]
+          }
+        },
+        {
+          "id": "blessing-of-moonlight",
+          "name": "Blessing of Moonlight",
+          "level": 6,
+          "category": "traits",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "action": {
+            "range": "60 feet",
+            "heal": "2d4"
+          }
+        },
+        {
+          "id": "shadow-of-the-new-moon",
+          "name": "Shadow of the New Moon",
+          "level": 14,
+          "category": "reactions",
+          "action": {
+            "range": "30 feet"
+          }
+        },
+        {
+          "id": "vibrance-of-the-full-moon",
+          "name": "Vibrance of the Full Moon",
+          "level": 14,
+          "category": "traits",
+          "action": {
+            "heal": "1d6"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 14282,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:18:13+00:00"
+  },
+  "bard-xphb:spirits-rhw": {
+    "label": "Bard (XPHB) · College of Spirits (RHW)",
+    "hash": "2447955ce94d0ae3",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "guiding-whispers",
+          "name": "Guiding Whispers",
+          "level": 3,
+          "category": "traits"
+        },
+        {
+          "id": "spiritual-focus",
+          "name": "Spiritual Focus",
+          "level": 3,
+          "category": "traits",
+          "grants": {
+            "tools": [
+              "gaming_set_playing_cards"
+            ]
+          }
+        },
+        {
+          "id": "controlled-channeling",
+          "name": "Controlled Channeling",
+          "level": 3,
+          "category": "bonus_actions",
+          "consumes": {
+            "resource": "bardic_inspiration",
+            "amount": 1
+          }
+        },
+        {
+          "id": "unleashing-a-spirit",
+          "name": "Unleashing a Spirit",
+          "level": 3,
+          "category": "actions",
+          "action": {
+            "range": "30 feet"
+          }
+        },
+        {
+          "id": "spiritual-manifestation",
+          "name": "Spiritual Manifestation",
+          "level": 6,
+          "category": "traits",
+          "uses": {
+            "max": 1,
+            "reset": "short"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 14653,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:18:31+00:00"
   }
 }

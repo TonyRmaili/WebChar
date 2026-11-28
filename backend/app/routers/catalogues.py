@@ -949,13 +949,86 @@ def delete_race(
     raise HTTPException(status_code=404, detail="Race not found")
 
 
-#----------------------- Rules ------------------------------
+#----------------------- Rules, Lore, Toolkit ------------------------------
+# The reference catalogues (2026-11-25): text-only entries (final/rules.json,
+# lore.json, toolkit.json; data_cleaning/cleaners/reference_cleaner.py), each
+# with a `kind` (action, deity, trap…). Their homebrew is kept like every
+# other catalogue's: private per user, public shared. One set of handlers
+# serves all three.
 
-@router.get("/rules")
-def get_rules(current_user: CurrentUser):
+REFERENCE_CATALOGUES = ("rules", "lore", "toolkit")
 
-    return {
-        "original": load_final("actions"),
-        # "public_homebrew": load_homebrew("public", current_user.name, "races"),
-        # "private_homebrew": load_homebrew("private", current_user.name, "races"),
-    }
+
+def _create_entry(category: str, payload: dict, username: str) -> dict:
+    visibility = payload.get("visibility", "private")
+    if visibility not in ("public", "private"):
+        raise HTTPException(status_code=400, detail="visibility must be 'public' or 'private'")
+    payload["id"] = str(uuid.uuid4())
+    payload["created_by"] = username
+    path = _resolve_homebrew_path(visibility, username, category)
+    data = _load_or_empty(path)
+    data.append(payload)
+    FileHandler().save_json(path, data)
+    return payload
+
+
+def _update_entry(category: str, entry_id: str, payload: dict, username: str) -> dict:
+    new_visibility = payload.get("visibility", "private")
+    if new_visibility not in ("public", "private"):
+        raise HTTPException(status_code=400, detail="visibility must be 'public' or 'private'")
+    filehandler = FileHandler()
+    for visibility in ("public", "private"):
+        path = _resolve_homebrew_path(visibility, username, category)
+        data = _load_or_empty(path)
+        existing = next((e for e in data if e.get("id") == entry_id), None)
+        if existing is None:
+            continue
+        if existing.get("created_by") != username:
+            raise HTTPException(status_code=403, detail="You can only edit your own homebrew")
+        payload["id"] = entry_id
+        payload["created_by"] = username
+        # Out of its old file, into the one its visibility says (may be the same).
+        filehandler.save_json(path, [e for e in data if e.get("id") != entry_id])
+        target = _resolve_homebrew_path(new_visibility, username, category)
+        target_data = _load_or_empty(target)
+        target_data.append(payload)
+        filehandler.save_json(target, target_data)
+        return payload
+    raise HTTPException(status_code=404, detail="Entry not found")
+
+
+def _delete_entry(category: str, entry_id: str, username: str) -> Response:
+    for visibility in ("public", "private"):
+        path = _resolve_homebrew_path(visibility, username, category)
+        data = _load_or_empty(path)
+        for entry in data:
+            if entry.get("id") == entry_id:
+                if entry.get("created_by") != username:
+                    raise HTTPException(status_code=403, detail="You can only delete your own homebrew")
+                FileHandler().save_json(path, [e for e in data if e.get("id") != entry_id])
+                return Response(status_code=status.HTTP_204_NO_CONTENT)
+    raise HTTPException(status_code=404, detail="Entry not found")
+
+
+def _reference_routes(category: str) -> None:
+    """GET / POST / PUT / DELETE /catalogue/<category> for one reference catalogue."""
+
+    @router.get(f"/{category}", name=f"get_{category}")
+    def get_list(current_user: CurrentUser):
+        return catalogue_list(category, current_user.name)
+
+    @router.post(f"/{category}", status_code=status.HTTP_201_CREATED, name=f"create_{category}")
+    def create(payload: dict, current_user: CurrentUser):
+        return _create_entry(category, payload, current_user.name)
+
+    @router.put(f"/{category}/{{entry_id}}", name=f"update_{category}")
+    def update(entry_id: str, payload: dict, current_user: CurrentUser):
+        return _update_entry(category, entry_id, payload, current_user.name)
+
+    @router.delete(f"/{category}/{{entry_id}}", status_code=status.HTTP_204_NO_CONTENT, name=f"delete_{category}")
+    def delete(entry_id: str, current_user: CurrentUser):
+        return _delete_entry(category, entry_id, current_user.name)
+
+
+for _category in REFERENCE_CATALOGUES:
+    _reference_routes(_category)

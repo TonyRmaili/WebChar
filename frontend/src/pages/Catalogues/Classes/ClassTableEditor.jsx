@@ -20,6 +20,11 @@ import { RESET_OPTIONS } from "./classFormParts";
    improves (↑), and the subclass's levels. "+" on a level adds a
    feature, a pick, an "improves", or marks a subclass level.
 
+   Subclass levels (2026-11-25): one list; the earliest is always where
+   the subclass is picked, the others say "Subclass feature". Marking an
+   earlier level moves the pick there; taking the first one off moves it
+   to the next; none left: no subclasses.
+
    Number cells: each is that level's own value; an empty cell shows the
    one above it, faded (the table is stored as "from this level on").
 
@@ -30,9 +35,10 @@ import { RESET_OPTIONS } from "./classFormParts";
      spellcasting / onSpellcasting   the spellcasting form (or null)
      subclass                  class form: { level, title, onLevel } —
                                where the subclass is picked (level null:
-                               none; onLevel(level | null) moves or
-                               removes it) and the "subclass feature"
-                               marks; null in the subclass form
+                               none; onLevel(level | null) sets it, always
+                               the earliest subclass level); the rows'
+                               `subclass_features` are the other levels;
+                               null in the subclass form
      levels                    the rows shown (default 1–20)
      addable                   levels that take new features (default all)
      onOpenFeature(ref), openRef, onRemoveFeature(ref), edition, index
@@ -63,6 +69,19 @@ export default function ClassTableEditor({
 
   const canAdd = (level) => !addable || addable.includes(level);
   const setRow = (level, p) => onRows({ ...rows, [level]: { ...rows[level], ...p } });
+
+  // ─── the subclass's levels: the earliest is where it's picked ───
+  const subLevels = subclass
+    ? [...new Set([...(subclass.level ? [subclass.level] : []), ...Object.keys(rows).map(Number).filter((l) => rows[l]?.subclass_features)])].sort((a, b) => a - b)
+    : [];
+  const setSubLevel = (level, on) => {
+    const next = new Set(subLevels);
+    if (on) next.add(level);
+    else next.delete(level);
+    const start = next.size ? Math.min(...next) : null;
+    onRows(Object.fromEntries(Object.entries(rows).map(([l, r]) => [l, { ...r, subclass_features: next.has(Number(l)) && Number(l) !== start }])));
+    if (start !== (subclass.level ?? null)) subclass.onLevel(start);
+  };
   const setColumn = (i, p) => onColumns(columns.map((c, j) => (j === i ? { ...c, ...p } : c)));
   const top = features.filter((f) => !f.parent);
   const nameOf = Object.fromEntries(features.map((f) => [featureRef(f), f.name || "(no name)"]));
@@ -152,16 +171,11 @@ export default function ClassTableEditor({
               )}
               {adding.kind && <button type="button" onClick={addPick} className={addRowCls}>add</button>}
             </span>
-            {subclass && level !== subclass.level && (
-              <button type="button" onClick={() => { subclass.onLevel(level); setAdding(null); }} className={addRowCls}
-                      title="The subclass is picked at this level (and gives its first features here)">
-                {subclass.level ? "subclass starts here instead" : "+ subclass starts here"}
-              </button>
-            )}
-            {subclass && subclass.level && level > subclass.level && (
-              <label className="flex items-baseline gap-1.5 text-xs text-ink-faded">
-                <input type="checkbox" checked={row.subclass_features} onChange={(e) => setRow(level, { subclass_features: e.target.checked })} className="accent-rubric" />
-                a subclass feature here
+            {subclass && (
+              <label className="flex items-baseline gap-1.5 text-xs text-ink-faded"
+                     title="Its subclass gives features at this level. The earliest subclass level is where the subclass is picked.">
+                <input type="checkbox" checked={subLevels.includes(level)} onChange={(e) => setSubLevel(level, e.target.checked)} className="accent-rubric" />
+                a subclass level
               </label>
             )}
             {earlier.length > 0 && (
@@ -295,14 +309,15 @@ export default function ClassTableEditor({
                         {isPick && (
                           <span className="inline-flex items-baseline gap-0.5 italic text-rubric" title="The subclass is picked here; it gives its first features here">
                             {subclass.title}
-                            <button type="button" onClick={() => subclass.onLevel(null)} className="px-0.5 text-[10px] not-italic text-ink-faint hover:text-bad"
-                                    aria-label="No subclass" title="No subclasses for this class">✕</button>
+                            <button type="button" onClick={() => setSubLevel(level, false)} className="px-0.5 text-[10px] not-italic text-ink-faint hover:text-bad"
+                                    aria-label="Not a subclass level"
+                                    title={subLevels.length > 1 ? `Not a subclass level: it's picked at ${ordinal(subLevels[1])} level instead` : "No subclasses for this class"}>✕</button>
                           </span>
                         )}
                         {subclass && !isPick && row.subclass_features && (
                           <span className="inline-flex items-baseline gap-0.5 italic text-ink-faded" title="Its subclass gives a feature here">
                             Subclass feature
-                            <button type="button" onClick={() => setRow(level, { subclass_features: false })} className="px-0.5 text-[10px] not-italic text-ink-faint hover:text-bad" aria-label="Not a subclass level">✕</button>
+                            <button type="button" onClick={() => setSubLevel(level, false)} className="px-0.5 text-[10px] not-italic text-ink-faint hover:text-bad" aria-label="Not a subclass level">✕</button>
                           </span>
                         )}
                         {open && adding?.level !== level && (

@@ -156,5 +156,1950 @@
     "reviewed": false,
     "reasoning": "medium",
     "at": "2026-11-18T13:13:46+00:00"
+  },
+  "cleric-phb:channel-divinity-harness-divine-power": {
+    "label": "Cleric (PHB) · Channel Divinity: Harness Divine Power",
+    "hash": "147fd5c81c208763",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "channel-divinity-harness-divine-power",
+          "name": "Channel Divinity: Harness Divine Power",
+          "level": 2,
+          "category": "bonus_actions",
+          "uses": {
+            "max": {
+              "1": 1,
+              "6": 2,
+              "18": 3
+            },
+            "reset": "long"
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11416,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:18:47+00:00"
+  },
+  "cleric-phb:cantrip-versatility": {
+    "label": "Cleric (PHB) · Cantrip Versatility",
+    "hash": "3f703b3b3a49fdad",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11304,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:18:50+00:00"
+  },
+  "cleric-phb:knowledge-phb": {
+    "label": "Cleric (PHB) · Knowledge Domain (PHB)",
+    "hash": "2a72cd63c2908359",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "blessings-of-knowledge",
+          "name": "Blessings of Knowledge",
+          "level": 1,
+          "category": "traits",
+          "picks": [
+            {
+              "grant": "languages",
+              "count": 2,
+              "from": [
+                "all_languages"
+              ]
+            },
+            {
+              "grant": "skills",
+              "count": 2,
+              "from": [
+                "arcana",
+                "history",
+                "nature",
+                "religion"
+              ]
+            },
+            {
+              "grant": "expertise",
+              "count": 2,
+              "from": [
+                "arcana",
+                "history",
+                "nature",
+                "religion"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "channel-divinity-knowledge-of-the-ages",
+          "name": "Channel Divinity: Knowledge of the Ages",
+          "level": 2,
+          "category": "actions",
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "channel-divinity-read-thoughts",
+          "name": "Channel Divinity: Read Thoughts",
+          "level": 6,
+          "category": "actions",
+          "action": {
+            "range": "60 feet",
+            "save": {
+              "ability": "wis",
+              "on_success": "none"
+            }
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "potent-spellcasting",
+          "name": "Potent Spellcasting",
+          "level": 8,
+          "category": "traits",
+          "modifiers": [
+            {
+              "target": "damage",
+              "add": "wis_mod"
+            }
+          ]
+        },
+        {
+          "id": "blessed-strikes",
+          "name": "Blessed Strikes",
+          "level": 8,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": "1d8",
+                  "type": "radiant"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "visions-of-the-past",
+          "name": "Visions of the Past",
+          "level": 17,
+          "category": "actions",
+          "uses": {
+            "max": 1,
+            "reset": "short"
+          }
+        },
+        {
+          "id": "object-reading",
+          "name": "Object Reading",
+          "level": 17,
+          "category": "actions"
+        },
+        {
+          "id": "area-reading",
+          "name": "Area Reading",
+          "level": 17,
+          "category": "actions",
+          "action": {
+            "area": "50-foot cube"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 14478,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:18:53+00:00"
+  },
+  "cleric-phb:light-phb": {
+    "label": "Cleric (PHB) · Light Domain (PHB)",
+    "hash": "f079ce8f02b3465a",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "warding-flare",
+          "name": "Warding Flare",
+          "level": 1,
+          "category": "reactions",
+          "uses": {
+            "max": "max(1, wis_mod)",
+            "reset": "long"
+          },
+          "action": {
+            "range": "30 feet"
+          }
+        },
+        {
+          "id": "channel-divinity-radiance-of-the-dawn",
+          "name": "Channel Divinity: Radiance of the Dawn",
+          "level": 2,
+          "category": "actions",
+          "action": {
+            "range": "30 feet",
+            "save": {
+              "ability": "con",
+              "on_success": "half",
+              "damage": [
+                {
+                  "dice": "2d10",
+                  "bonus": "class_level",
+                  "type": "radiant"
+                }
+              ]
+            }
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "potent-spellcasting",
+          "name": "Potent Spellcasting",
+          "level": 8,
+          "category": "traits",
+          "modifiers": [
+            {
+              "target": "damage",
+              "add": "wis_mod"
+            }
+          ]
+        },
+        {
+          "id": "blessed-strikes",
+          "name": "Blessed Strikes",
+          "level": 8,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": "1d8",
+                  "type": "radiant"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "corona-of-light",
+          "name": "Corona of Light",
+          "level": 17,
+          "category": "actions",
+          "toggle": true
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13476,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:19:14+00:00"
+  },
+  "cleric-phb:nature-phb": {
+    "label": "Cleric (PHB) · Nature Domain (PHB)",
+    "hash": "cc9b71f6311082d5",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "acolyte-of-nature",
+          "name": "Acolyte of Nature",
+          "level": 1,
+          "category": "traits",
+          "picks": [
+            {
+              "grant": "skills",
+              "count": 1,
+              "from": [
+                "animal_handling",
+                "nature",
+                "survival"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "bonus-proficiency",
+          "name": "Bonus Proficiency",
+          "level": 1,
+          "category": "traits",
+          "grants": {
+            "armor": [
+              "heavy"
+            ]
+          }
+        },
+        {
+          "id": "channel-divinity-charm-animals-and-plants",
+          "name": "Channel Divinity: Charm Animals and Plants",
+          "level": 2,
+          "category": "actions",
+          "action": {
+            "range": "30 feet",
+            "save": {
+              "ability": "wis",
+              "on_success": "none",
+              "conditions": [
+                "charmed"
+              ]
+            }
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "dampen-elements",
+          "name": "Dampen Elements",
+          "level": 6,
+          "category": "reactions",
+          "action": {
+            "range": "30 feet"
+          }
+        },
+        {
+          "id": "divine-strike",
+          "name": "Divine Strike",
+          "level": 8,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": {
+                    "1": "1d8",
+                    "14": "2d8"
+                  },
+                  "type": "cold",
+                  "condition": "if cold is chosen"
+                },
+                {
+                  "dice": {
+                    "1": "1d8",
+                    "14": "2d8"
+                  },
+                  "type": "fire",
+                  "condition": "if fire is chosen"
+                },
+                {
+                  "dice": {
+                    "1": "1d8",
+                    "14": "2d8"
+                  },
+                  "type": "lightning",
+                  "condition": "if lightning is chosen"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "blessed-strikes",
+          "name": "Blessed Strikes",
+          "level": 8,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": "1d8",
+                  "type": "radiant"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "master-of-nature",
+          "name": "Master of Nature",
+          "level": 17,
+          "category": "bonus_actions"
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13515,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:19:27+00:00"
+  },
+  "cleric-phb:tempest-phb": {
+    "label": "Cleric (PHB) · Tempest Domain (PHB)",
+    "hash": "075574f52a053179",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "bonus-proficiencies",
+          "name": "Bonus Proficiencies",
+          "level": 1,
+          "category": "traits",
+          "grants": {
+            "weapons": [
+              "martial_weapons"
+            ],
+            "armor": [
+              "heavy"
+            ]
+          }
+        },
+        {
+          "id": "wrath-of-the-storm",
+          "name": "Wrath of the Storm",
+          "level": 1,
+          "category": "reactions",
+          "uses": {
+            "max": "max(1, wis_mod)",
+            "reset": "long"
+          },
+          "action": {
+            "range": "5 feet",
+            "save": {
+              "ability": "dex",
+              "on_success": "half",
+              "damage": [
+                {
+                  "dice": "2d8",
+                  "type": "lightning",
+                  "condition": "if lightning is chosen"
+                },
+                {
+                  "dice": "2d8",
+                  "type": "thunder",
+                  "condition": "if thunder is chosen"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "channel-divinity-destructive-wrath",
+          "name": "Channel Divinity: Destructive Wrath",
+          "level": 2,
+          "category": "traits",
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "divine-strike",
+          "name": "Divine Strike",
+          "level": 8,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": {
+                    "1": "1d8",
+                    "14": "2d8"
+                  },
+                  "type": "thunder"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "blessed-strikes",
+          "name": "Blessed Strikes",
+          "level": 8,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": "1d8",
+                  "type": "radiant"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "stormborn",
+          "name": "Stormborn",
+          "level": 17,
+          "category": "traits",
+          "grants": {
+            "speed": {
+              "fly": "walk"
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13761,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:19:40+00:00"
+  },
+  "cleric-phb:trickery-phb": {
+    "label": "Cleric (PHB) · Trickery Domain (PHB)",
+    "hash": "8f4c7e5f9bf5e222",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "blessing-of-the-trickster",
+          "name": "Blessing of the Trickster",
+          "level": 1,
+          "category": "actions",
+          "action": {
+            "range": "touch"
+          }
+        },
+        {
+          "id": "channel-divinity-invoke-duplicity",
+          "name": "Channel Divinity: Invoke Duplicity",
+          "level": 2,
+          "category": "actions",
+          "action": {
+            "range": "30 feet"
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "channel-divinity-cloak-of-shadows",
+          "name": "Channel Divinity: Cloak of Shadows",
+          "level": 6,
+          "category": "actions",
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "divine-strike",
+          "name": "Divine Strike",
+          "level": 8,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": {
+                    "1": "1d8",
+                    "14": "2d8"
+                  },
+                  "type": "poison"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "blessed-strikes",
+          "name": "Blessed Strikes",
+          "level": 8,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": "1d8",
+                  "type": "radiant"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13737,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:19:55+00:00"
+  },
+  "cleric-phb:war-phb": {
+    "label": "Cleric (PHB) · War Domain (PHB)",
+    "hash": "82b9984dca453cee",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "bonus-proficiencies",
+          "name": "Bonus Proficiencies",
+          "level": 1,
+          "category": "traits",
+          "grants": {
+            "weapons": [
+              "martial_weapons"
+            ],
+            "armor": [
+              "heavy"
+            ]
+          }
+        },
+        {
+          "id": "war-priest",
+          "name": "War Priest",
+          "level": 1,
+          "category": "bonus_actions",
+          "uses": {
+            "max": "max(1, wis_mod)",
+            "reset": "long"
+          }
+        },
+        {
+          "id": "channel-divinity-guided-strike",
+          "name": "Channel Divinity: Guided Strike",
+          "level": 2,
+          "category": "traits",
+          "modifiers": [
+            {
+              "target": "attack",
+              "add": 10
+            }
+          ],
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "channel-divinity-war-god-s-blessing",
+          "name": "Channel Divinity: War God's Blessing",
+          "level": 6,
+          "category": "reactions",
+          "action": {
+            "range": "30 feet"
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "divine-strike",
+          "name": "Divine Strike",
+          "level": 8,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": {
+                    "1": "1d8",
+                    "14": "2d8"
+                  },
+                  "type": "weapon"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "blessed-strikes",
+          "name": "Blessed Strikes",
+          "level": 8,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": "1d8",
+                  "type": "radiant"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "avatar-of-battle",
+          "name": "Avatar of Battle",
+          "level": 17,
+          "category": "traits",
+          "grants": {
+            "defenses": {
+              "resist": [
+                "bludgeoning",
+                "piercing",
+                "slashing"
+              ]
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 14065,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:20:09+00:00"
+  },
+  "cleric-phb:death-dmg": {
+    "label": "Cleric (PHB) · Death Domain (DMG)",
+    "hash": "cf1625e70f8f9f8b",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "bonus-proficiency",
+          "name": "Bonus Proficiency",
+          "level": 1,
+          "category": "traits",
+          "grants": {
+            "weapons": [
+              "martial_weapons"
+            ]
+          }
+        },
+        {
+          "id": "channel-divinity-touch-of-death",
+          "name": "Channel Divinity: Touch of Death",
+          "level": 2,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "melee",
+              "damage": [
+                {
+                  "bonus": "5 + 2 * class_level",
+                  "type": "necrotic"
+                }
+              ]
+            }
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "divine-strike",
+          "name": "Divine Strike",
+          "level": 8,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": {
+                    "1": "1d8",
+                    "14": "2d8"
+                  },
+                  "type": "necrotic"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "blessed-strikes",
+          "name": "Blessed Strikes",
+          "level": 8,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": "1d8",
+                  "type": "radiant"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13356,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:20:26+00:00"
+  },
+  "cleric-phb:arcana-scag": {
+    "label": "Cleric (PHB) · Arcana Domain (SCAG)",
+    "hash": "edacf9faf3483325",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "arcane-initiate",
+          "name": "Arcane Initiate",
+          "level": 1,
+          "category": "traits",
+          "grants": {
+            "skills": [
+              "arcana"
+            ]
+          }
+        },
+        {
+          "id": "channel-divinity-arcane-abjuration",
+          "name": "Channel Divinity: Arcane Abjuration",
+          "level": 2,
+          "category": "actions",
+          "action": {
+            "range": "30 feet",
+            "save": {
+              "ability": "wis",
+              "on_success": "none"
+            }
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "potent-spellcasting",
+          "name": "Potent Spellcasting",
+          "level": 8,
+          "category": "traits",
+          "modifiers": [
+            {
+              "target": "damage",
+              "add": "wis_mod"
+            }
+          ]
+        },
+        {
+          "id": "blessed-strikes",
+          "name": "Blessed Strikes",
+          "level": 8,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": "1d8",
+                  "type": "radiant"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13369,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:20:38+00:00"
+  },
+  "cleric-phb:ambition-psa-psa": {
+    "label": "Cleric (PHB) · Ambition Domain (PSA) (PSA)",
+    "hash": "f3b9d05232bc98f3",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "warding-flare",
+          "name": "Warding Flare",
+          "level": 1,
+          "category": "reactions",
+          "uses": {
+            "max": "max(1, wis_mod)",
+            "reset": "long"
+          },
+          "action": {
+            "range": "30 feet"
+          }
+        },
+        {
+          "id": "channel-divinity-invoke-duplicity",
+          "name": "Channel Divinity: Invoke Duplicity",
+          "level": 2,
+          "category": "actions",
+          "action": {
+            "range": "30 feet"
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "channel-divinity-cloak-of-shadows",
+          "name": "Channel Divinity: Cloak of Shadows",
+          "level": 6,
+          "category": "actions",
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "potent-spellcasting",
+          "name": "Potent Spellcasting",
+          "level": 8,
+          "category": "traits",
+          "modifiers": [
+            {
+              "target": "damage",
+              "add": "wis_mod"
+            }
+          ]
+        },
+        {
+          "id": "blessed-strikes",
+          "name": "Blessed Strikes",
+          "level": 8,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": "1d8",
+                  "type": "radiant",
+                  "condition": "when a creature takes damage from one of your cantrips or weapon attacks"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "improved-duplicity",
+          "name": "Improved Duplicity",
+          "level": 17,
+          "category": "bonus_actions",
+          "action": {
+            "range": "120 feet"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13465,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:20:51+00:00"
+  },
+  "cleric-phb:knowledge-psa-psa": {
+    "label": "Cleric (PHB) · Knowledge Domain (PSA) (PSA)",
+    "hash": "d2da0d8de29f93a2",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "blessings-of-knowledge",
+          "name": "Blessings of Knowledge",
+          "level": 1,
+          "category": "traits",
+          "picks": [
+            {
+              "grant": "languages",
+              "count": 2,
+              "from": [
+                "all_languages"
+              ]
+            },
+            {
+              "grant": "skills",
+              "count": 2,
+              "from": [
+                "arcana",
+                "history",
+                "nature",
+                "religion"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "channel-divinity-knowledge-of-the-ages",
+          "name": "Channel Divinity: Knowledge of the Ages",
+          "level": 2,
+          "category": "actions",
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "channel-divinity-read-thoughts",
+          "name": "Channel Divinity: Read Thoughts",
+          "level": 6,
+          "category": "actions",
+          "action": {
+            "range": "60 feet",
+            "save": {
+              "ability": "wis",
+              "on_success": "none"
+            }
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "potent-spellcasting",
+          "name": "Potent Spellcasting",
+          "level": 8,
+          "category": "traits",
+          "modifiers": [
+            {
+              "target": "damage",
+              "add": "wis_mod"
+            }
+          ]
+        },
+        {
+          "id": "blessed-strikes",
+          "name": "Blessed Strikes",
+          "level": 8,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": "1d8",
+                  "type": "radiant"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "visions-of-the-past",
+          "name": "Visions of the Past",
+          "level": 17,
+          "category": "actions",
+          "uses": {
+            "max": 1,
+            "reset": "short"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 14283,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:21:03+00:00"
+  },
+  "cleric-phb:solidarity-psa-psa": {
+    "label": "Cleric (PHB) · Solidarity Domain (PSA) (PSA)",
+    "hash": "91422e6fca5eb367",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "bonus-proficiency",
+          "name": "Bonus Proficiency",
+          "level": 1,
+          "category": "traits",
+          "grants": {
+            "armor": [
+              "heavy"
+            ]
+          }
+        },
+        {
+          "id": "solidarity-s-action",
+          "name": "Solidarity's Action",
+          "level": 1,
+          "category": "bonus_actions",
+          "uses": {
+            "max": "max(1, wis_mod)",
+            "reset": "long"
+          }
+        },
+        {
+          "id": "channel-divinity-preserve-life",
+          "name": "Channel Divinity: Preserve Life",
+          "level": 2,
+          "category": "actions",
+          "action": {
+            "range": "30 feet",
+            "heal": "5 * class_level"
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "oketra-s-blessing",
+          "name": "Oketra's Blessing",
+          "level": 6,
+          "category": "reactions",
+          "action": {
+            "range": "30 feet"
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "divine-strike",
+          "name": "Divine Strike",
+          "level": 8,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": {
+                    "1": "1d8",
+                    "14": "2d8"
+                  },
+                  "type": "weapon"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "blessed-strikes",
+          "name": "Blessed Strikes",
+          "level": 8,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": "1d8",
+                  "type": "radiant"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13432,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:21:18+00:00"
+  },
+  "cleric-phb:strength-psa-psa": {
+    "label": "Cleric (PHB) · Strength Domain (PSA) (PSA)",
+    "hash": "04e87112c9b577a5",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "acolyte-of-strength",
+          "name": "Acolyte of Strength",
+          "level": 1,
+          "category": "traits",
+          "picks": [
+            {
+              "grant": "skills",
+              "count": 1,
+              "from": [
+                "animal_handling",
+                "athletics",
+                "nature",
+                "survival"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "bonus-proficiency",
+          "name": "Bonus Proficiency",
+          "level": 1,
+          "category": "traits",
+          "grants": {
+            "armor": [
+              "heavy"
+            ]
+          }
+        },
+        {
+          "id": "channel-divinity-feat-of-strength",
+          "name": "Channel Divinity: Feat of Strength",
+          "level": 2,
+          "category": "traits",
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "rhonas-s-blessing",
+          "name": "Rhonas's Blessing",
+          "level": 6,
+          "category": "reactions",
+          "action": {
+            "range": "30 feet"
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "divine-strike",
+          "name": "Divine Strike",
+          "level": 8,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": {
+                    "1": "1d8",
+                    "14": "2d8"
+                  },
+                  "type": "weapon"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "blessed-strikes",
+          "name": "Blessed Strikes",
+          "level": 8,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": "1d8",
+                  "type": "radiant"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "avatar-of-battle",
+          "name": "Avatar of Battle",
+          "level": 17,
+          "category": "traits",
+          "grants": {
+            "defenses": {
+              "resist": [
+                "bludgeoning",
+                "piercing",
+                "slashing"
+              ]
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13454,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:21:30+00:00"
+  },
+  "cleric-phb:zeal-psa-psa": {
+    "label": "Cleric (PHB) · Zeal Domain (PSA) (PSA)",
+    "hash": "2c26c8eb6263989b",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "bonus-proficiencies",
+          "name": "Bonus Proficiencies",
+          "level": 1,
+          "category": "traits",
+          "grants": {
+            "weapons": [
+              "martial_weapons"
+            ],
+            "armor": [
+              "heavy"
+            ]
+          }
+        },
+        {
+          "id": "priest-of-zeal",
+          "name": "Priest of Zeal",
+          "level": 1,
+          "category": "bonus_actions",
+          "uses": {
+            "max": "max(1, wis_mod)",
+            "reset": "long"
+          }
+        },
+        {
+          "id": "channel-divinity-consuming-fervor",
+          "name": "Channel Divinity: Consuming Fervor",
+          "level": 2,
+          "category": "traits",
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "divine-strike",
+          "name": "Divine Strike",
+          "level": 8,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": {
+                    "1": "1d8",
+                    "14": "2d8"
+                  },
+                  "type": "weapon"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "blessed-strikes",
+          "name": "Blessed Strikes",
+          "level": 8,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": "1d8",
+                  "type": "radiant"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "blaze-of-glory",
+          "name": "Blaze of Glory",
+          "level": 17,
+          "category": "reactions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "action": {
+            "attack": {
+              "kind": "melee",
+              "damage": [
+                {
+                  "dice": "5d10",
+                  "type": "fire"
+                },
+                {
+                  "dice": "5d10",
+                  "type": "weapon"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13568,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:21:45+00:00"
+  },
+  "cleric-phb:forge-xge": {
+    "label": "Cleric (PHB) · Forge Domain (XGE)",
+    "hash": "0b3b64c6864f635b",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "bonus-proficiency",
+          "name": "Bonus Proficiency",
+          "level": 1,
+          "category": "traits",
+          "grants": {
+            "tools": [
+              "smiths_tools"
+            ],
+            "armor": [
+              "heavy"
+            ]
+          }
+        },
+        {
+          "id": "blessing-of-the-forge",
+          "name": "Blessing of the Forge",
+          "level": 1,
+          "category": "traits",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          }
+        },
+        {
+          "id": "channel-divinity-artisan-s-blessing",
+          "name": "Channel Divinity: Artisan's Blessing",
+          "level": 2,
+          "category": "actions",
+          "action": {
+            "range": "5 feet"
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "soul-of-the-forge",
+          "name": "Soul of the Forge",
+          "level": 6,
+          "category": "traits",
+          "grants": {
+            "defenses": {
+              "resist": [
+                "fire"
+              ]
+            }
+          }
+        },
+        {
+          "id": "divine-strike",
+          "name": "Divine Strike",
+          "level": 8,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": {
+                    "1": "1d8",
+                    "14": "2d8"
+                  },
+                  "type": "fire"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "blessed-strikes",
+          "name": "Blessed Strikes",
+          "level": 8,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": "1d8",
+                  "type": "radiant"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "saint-of-forge-and-fire",
+          "name": "Saint of Forge and Fire",
+          "level": 17,
+          "category": "traits",
+          "grants": {
+            "defenses": {
+              "immune": [
+                "fire"
+              ]
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 14339,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:21:58+00:00"
+  },
+  "cleric-phb:grave-xge": {
+    "label": "Cleric (PHB) · Grave Domain (XGE)",
+    "hash": "b8d429251c4e3577",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "eyes-of-the-grave",
+          "name": "Eyes of the Grave",
+          "level": 1,
+          "category": "actions",
+          "uses": {
+            "max": "max(1, wis_mod)",
+            "reset": "long"
+          },
+          "action": {
+            "range": "60 feet"
+          }
+        },
+        {
+          "id": "channel-divinity-path-to-the-grave",
+          "name": "Channel Divinity: Path to the Grave",
+          "level": 2,
+          "category": "actions",
+          "action": {
+            "range": "30 feet"
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "sentinel-at-death-s-door",
+          "name": "Sentinel at Death's Door",
+          "level": 6,
+          "category": "reactions",
+          "uses": {
+            "max": "max(1, wis_mod)",
+            "reset": "long"
+          }
+        },
+        {
+          "id": "potent-spellcasting",
+          "name": "Potent Spellcasting",
+          "level": 8,
+          "category": "traits",
+          "modifiers": [
+            {
+              "target": "damage",
+              "add": "wis_mod"
+            }
+          ]
+        },
+        {
+          "id": "blessed-strikes",
+          "name": "Blessed Strikes",
+          "level": 8,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": "1d8",
+                  "type": "radiant"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13328,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:22:15+00:00"
+  },
+  "cleric-phb:order-tce": {
+    "label": "Cleric (PHB) · Order Domain (TCE)",
+    "hash": "47f9cc26f7c5ce79",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "bonus-proficiencies",
+          "name": "Bonus Proficiencies",
+          "level": 1,
+          "category": "traits",
+          "picks": [
+            {
+              "grant": "skills",
+              "count": 1,
+              "from": [
+                "intimidation",
+                "persuasion"
+              ]
+            }
+          ],
+          "grants": {
+            "armor": [
+              "heavy"
+            ]
+          }
+        },
+        {
+          "id": "voice-of-authority",
+          "name": "Voice of Authority",
+          "level": 1,
+          "category": "reactions"
+        },
+        {
+          "id": "channel-divinity-order-s-demand",
+          "name": "Channel Divinity: Order's Demand",
+          "level": 2,
+          "category": "actions",
+          "action": {
+            "range": "30 feet",
+            "save": {
+              "ability": "wis",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "none",
+              "conditions": [
+                "charmed"
+              ]
+            }
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "embodiment-of-the-law",
+          "name": "Embodiment of the Law",
+          "level": 6,
+          "category": "bonus_actions",
+          "uses": {
+            "max": "max(1, wis_mod)",
+            "reset": "long"
+          }
+        },
+        {
+          "id": "divine-strike",
+          "name": "Divine Strike",
+          "level": 8,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": {
+                    "1": "1d8",
+                    "14": "2d8"
+                  },
+                  "type": "psychic"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "blessed-strikes",
+          "name": "Blessed Strikes",
+          "level": 8,
+          "category": "traits",
+          "action": {
+            "damage": [
+              {
+                "dice": "1d8",
+                "type": "radiant",
+                "condition": "when a creature takes damage from one of your cantrips or weapon attacks"
+              }
+            ]
+          }
+        },
+        {
+          "id": "order-s-wrath",
+          "name": "Order's Wrath",
+          "level": 17,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": "2d8",
+                  "type": "psychic",
+                  "condition": "the next time one of your allies hits the cursed creature"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 14588,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:22:25+00:00"
+  },
+  "cleric-phb:peace-tce": {
+    "label": "Cleric (PHB) · Peace Domain (TCE)",
+    "hash": "3aecc7aa264eac3f",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "implement-of-peace",
+          "name": "Implement of Peace",
+          "level": 1,
+          "category": "traits",
+          "picks": [
+            {
+              "grant": "skills",
+              "count": 1,
+              "from": [
+                "insight",
+                "performance",
+                "persuasion"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "emboldening-bond",
+          "name": "Emboldening Bond",
+          "level": 1,
+          "category": "actions",
+          "uses": {
+            "max": "pb",
+            "reset": "long"
+          },
+          "action": {
+            "range": "30 feet"
+          }
+        },
+        {
+          "id": "channel-divinity-balm-of-peace",
+          "name": "Channel Divinity: Balm of Peace",
+          "level": 2,
+          "category": "actions",
+          "action": {
+            "heal": "max(1, 2d6 + wis_mod)"
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "protective-bond",
+          "name": "Protective Bond",
+          "level": 6,
+          "category": "reactions",
+          "action": {
+            "range": "30 feet"
+          }
+        },
+        {
+          "id": "potent-spellcasting",
+          "name": "Potent Spellcasting",
+          "level": 8,
+          "category": "traits",
+          "modifiers": [
+            {
+              "target": "damage",
+              "add": "wis_mod"
+            }
+          ]
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 14340,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:22:44+00:00"
+  },
+  "cleric-phb:twilight-tce": {
+    "label": "Cleric (PHB) · Twilight Domain (TCE)",
+    "hash": "a1da24cff0824748",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "bonus-proficiencies",
+          "name": "Bonus Proficiencies",
+          "level": 1,
+          "category": "traits",
+          "grants": {
+            "weapons": [
+              "martial_weapons"
+            ],
+            "armor": [
+              "heavy"
+            ]
+          }
+        },
+        {
+          "id": "eyes-of-night",
+          "name": "Eyes of Night",
+          "level": 1,
+          "category": "actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "action": {
+            "range": "10 feet"
+          },
+          "grants": {
+            "senses": {
+              "darkvision": 300
+            }
+          }
+        },
+        {
+          "id": "vigilant-blessing",
+          "name": "Vigilant Blessing",
+          "level": 1,
+          "category": "actions",
+          "action": {
+            "range": "touch"
+          }
+        },
+        {
+          "id": "channel-divinity-twilight-sanctuary",
+          "name": "Channel Divinity: Twilight Sanctuary",
+          "level": 2,
+          "category": "actions",
+          "action": {
+            "area": "30-foot radius",
+            "temp_hp": "1d6 + class_level"
+          },
+          "consumes": {
+            "resource": "channel_divinity",
+            "amount": 1
+          }
+        },
+        {
+          "id": "steps-of-night",
+          "name": "Steps of Night",
+          "level": 6,
+          "category": "bonus_actions",
+          "uses": {
+            "max": "pb",
+            "reset": "long"
+          },
+          "toggle": {
+            "uses_charge": true,
+            "grants": {
+              "speed": {
+                "fly": "walk"
+              }
+            }
+          }
+        },
+        {
+          "id": "divine-strike",
+          "name": "Divine Strike",
+          "level": 8,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": {
+                    "1": "1d8",
+                    "14": "2d8"
+                  },
+                  "type": "radiant"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "blessed-strikes",
+          "name": "Blessed Strikes",
+          "level": 8,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": "1d8",
+                  "type": "radiant"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13932,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:23:02+00:00"
   }
 }

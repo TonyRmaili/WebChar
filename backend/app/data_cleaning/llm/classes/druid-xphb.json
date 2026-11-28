@@ -367,5 +367,278 @@
     "reviewed": false,
     "reasoning": "medium",
     "at": "2026-11-18T13:17:13+00:00"
+  },
+  "druid-xphb:moon-xphb": {
+    "label": "Druid (XPHB) · Circle of the Moon (XPHB)",
+    "hash": "5f5725fe655b2bb3",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "circle-forms",
+          "name": "Circle Forms",
+          "level": 3,
+          "category": "traits",
+          "action": {
+            "temp_hp": "3 * class_level"
+          },
+          "toggle": {
+            "modifiers": [
+              {
+                "target": "ac",
+                "min": "13 + wis_mod"
+              }
+            ]
+          }
+        },
+        {
+          "id": "increased-toughness",
+          "name": "Increased Toughness",
+          "level": 6,
+          "category": "traits",
+          "toggle": {
+            "modifiers": [
+              {
+                "target": "save.con",
+                "add": "wis_mod"
+              }
+            ]
+          }
+        },
+        {
+          "id": "moonlight-step",
+          "name": "Moonlight Step",
+          "level": 10,
+          "category": "bonus_actions",
+          "uses": {
+            "max": "max(1, wis_mod)",
+            "reset": "long"
+          },
+          "action": {
+            "range": "30 feet"
+          }
+        },
+        {
+          "id": "improved-lunar-radiance",
+          "name": "Improved Lunar Radiance",
+          "level": 14,
+          "category": "traits",
+          "action": {
+            "attack": {
+              "kind": "any",
+              "damage": [
+                {
+                  "dice": "2d10",
+                  "type": "radiant"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 14405,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:28:46+00:00"
+  },
+  "druid-xphb:sea-xphb": {
+    "label": "Druid (XPHB) · Circle of the Sea (XPHB)",
+    "hash": "bfe7d1e9bb3a859e",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "wrath-of-the-sea",
+          "name": "Wrath of the Sea",
+          "level": 3,
+          "category": "bonus_actions",
+          "action": {
+            "area": "5-foot Emanation",
+            "save": {
+              "ability": "con",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "none",
+              "damage": [
+                {
+                  "dice": "max(1, wis_mod) * 1d6",
+                  "type": "cold"
+                }
+              ]
+            }
+          },
+          "consumes": {
+            "resource": "wild_shape",
+            "amount": 1
+          }
+        },
+        {
+          "id": "aquatic-affinity",
+          "name": "Aquatic Affinity",
+          "level": 6,
+          "category": "traits",
+          "grants": {
+            "speed": {
+              "swim": "walk"
+            }
+          }
+        },
+        {
+          "id": "flight",
+          "name": "Flight",
+          "level": 10,
+          "category": "traits",
+          "grants": {
+            "speed": {
+              "fly": "walk"
+            }
+          }
+        },
+        {
+          "id": "resistance",
+          "name": "Resistance",
+          "level": 10,
+          "category": "traits",
+          "grants": {
+            "defenses": {
+              "resist": [
+                "cold",
+                "lightning",
+                "thunder"
+              ]
+            }
+          }
+        },
+        {
+          "id": "oceanic-gift",
+          "name": "Oceanic Gift",
+          "level": 14,
+          "category": "bonus_actions",
+          "action": {
+            "range": "60 feet"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [
+      "feature 'Wrath of the Sea'.save.damage[0].dice: 'max(1, wis_mod) * 1d6' is not dice like '2d6'"
+    ],
+    "tokens": 28357,
+    "tries": 2,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:29:05+00:00"
+  },
+  "druid-xphb:stars-xphb": {
+    "label": "Druid (XPHB) · Circle of the Stars (XPHB)",
+    "hash": "9b536b58536aaa25",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "starry-form",
+          "name": "Starry Form",
+          "level": 3,
+          "category": "bonus_actions",
+          "toggle": {
+            "uses_charge": true
+          },
+          "consumes": {
+            "resource": "wild_shape",
+            "amount": 1
+          }
+        },
+        {
+          "id": "archer",
+          "name": "Archer",
+          "level": 3,
+          "category": "bonus_actions",
+          "action": {
+            "range": "60 feet",
+            "attack": {
+              "kind": "spell",
+              "bonus": "spell_mod + pb",
+              "damage": [
+                {
+                  "dice": {
+                    "1": "1d8",
+                    "10": "2d8"
+                  },
+                  "bonus": "wis_mod",
+                  "type": "radiant"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "chalice",
+          "name": "Chalice",
+          "level": 3,
+          "category": "traits",
+          "action": {
+            "range": "30 feet",
+            "heal": {
+              "1": "1d8 + wis_mod",
+              "10": "2d8 + wis_mod"
+            }
+          }
+        },
+        {
+          "id": "cosmic-omen",
+          "name": "Cosmic Omen",
+          "level": 6,
+          "category": "reactions",
+          "uses": {
+            "max": "max(1, wis_mod)",
+            "reset": "long"
+          },
+          "action": {
+            "range": "30 feet"
+          }
+        },
+        {
+          "id": "twinkling-constellations",
+          "name": "Twinkling Constellations",
+          "level": 10,
+          "category": "traits",
+          "toggle": {
+            "grants": {
+              "speed": {
+                "fly": 20
+              }
+            }
+          }
+        },
+        {
+          "id": "full-of-stars",
+          "name": "Full of Stars",
+          "level": 14,
+          "category": "traits",
+          "toggle": {
+            "grants": {
+              "defenses": {
+                "resist": [
+                  "bludgeoning",
+                  "piercing",
+                  "slashing"
+                ]
+              }
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 30116,
+    "tries": 2,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:29:41+00:00"
   }
 }

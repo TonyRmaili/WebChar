@@ -1,5 +1,209 @@
 [
     {
+        "id": "fighter-xphb:battle-master-xphb",
+        "kind": "subclass",
+        "name": "Battle Master",
+        "source": "XPHB",
+        "edition": "one",
+        "text": "*Master Sophisticated Battle Maneuvers*\n\nBattle Masters are students of the art of battle, learning martial techniques passed down through generations. The most accomplished Battle Masters are well-rounded figures who combine their carefully honed combat skills with academic study in the fields of history, theory, and the arts.",
+        "class_id": "fighter-xphb",
+        "short_name": "Battle Master",
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "fighter-xphb:battle-master-xphb:combat-superiority",
+                    "fighter-xphb:battle-master-xphb:student-of-war",
+                    "fighter-xphb:battle-master-xphb:maneuver-options"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "maneuvers_3",
+                        "label": "Maneuvers",
+                        "grant": "optional_features",
+                        "count": 3,
+                        "from": {
+                            "feature_type": [
+                                "maneuver"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 7,
+                "features": [
+                    "fighter-xphb:battle-master-xphb:know-your-enemy"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "maneuvers_7",
+                        "label": "Maneuvers",
+                        "grant": "optional_features",
+                        "count": 2,
+                        "from": {
+                            "feature_type": [
+                                "maneuver"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 10,
+                "features": [
+                    "fighter-xphb:battle-master-xphb:improved-combat-superiority"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "maneuvers_10",
+                        "label": "Maneuvers",
+                        "grant": "optional_features",
+                        "count": 2,
+                        "from": {
+                            "feature_type": [
+                                "maneuver"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 15,
+                "features": [
+                    "fighter-xphb:battle-master-xphb:relentless"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "maneuvers_15",
+                        "label": "Maneuvers",
+                        "grant": "optional_features",
+                        "count": 2,
+                        "from": {
+                            "feature_type": [
+                                "maneuver"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 18,
+                "features": [
+                    "fighter-xphb:battle-master-xphb:ultimate-combat-superiority"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "fighter-xphb:battle-master-xphb:combat-superiority",
+                "name": "Combat Superiority",
+                "level": 3,
+                "text": "Your experience on the battlefield has refined your fighting techniques. You learn maneuvers that are fueled by special dice called Superiority Dice.\n\n**Maneuvers.** You learn three maneuvers of your choice from the \"Maneuver Options\" section later in this subclass's description. Many maneuvers enhance an attack in some way. You can use only one maneuver per attack.\n\nYou learn two additional maneuvers of your choice when you reach Fighter levels 7, 10, and 15. Each time you learn new maneuvers, you can also replace one maneuver you know with a different one.\n\n**Superiority Dice.** You have four Superiority Dice, which are d8s. A Superiority Die is expended when you use it. You regain all expended Superiority Dice when you finish a Short or Long Rest.\n\nYou gain an additional Superiority Die when you reach Fighter levels 7 (five dice total) and 15 (six dice total).\n\n**Saving Throws.** If a maneuver requires a saving throw, the DC equals 8 plus your Strength or Dexterity modifier (your choice) and Proficiency Bonus.",
+                "category": "traits"
+            },
+            {
+                "id": "fighter-xphb:battle-master-xphb:student-of-war",
+                "name": "Student of War",
+                "level": 3,
+                "text": "You gain proficiency with one type of Artisan's Tools of your choice, and you gain proficiency in one skill of your choice from the skills available to Fighters at level 1.",
+                "category": "traits",
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "tools_1",
+                        "label": "Tools",
+                        "grant": "tools",
+                        "count": 1,
+                        "from": "artisans_tools"
+                    },
+                    {
+                        "type": "pool",
+                        "id": "skills_2",
+                        "label": "Skills",
+                        "grant": "skills",
+                        "count": 1,
+                        "from": [
+                            "acrobatics",
+                            "animal_handling",
+                            "athletics",
+                            "history",
+                            "insight",
+                            "intimidation",
+                            "persuasion",
+                            "perception",
+                            "survival"
+                        ]
+                    }
+                ]
+            },
+            {
+                "id": "fighter-xphb:battle-master-xphb:maneuver-options",
+                "name": "Maneuver Options",
+                "level": 3,
+                "text": "The maneuvers are presented here in alphabetical order.\n\n- Ambush\n- Bait and Switch\n- Battle Shout\n- Commander's Strike\n- Commanding Presence\n- Demoralizing Shout\n- Disarming Attack\n- Distracting Strike\n- Evasive Footwork\n- Feinting Attack\n- Goading Attack\n- Heroic Leap\n- Lunging Attack\n- Maneuvering Attack\n- Menacing Attack\n- Mortal Strike\n- Parry\n- Precision Attack\n- Pushing Attack\n- Rally\n- Riposte\n- Sweeping Attack\n- Tactical Assessment\n- Trip Attack\n- Warding Maneuver",
+                "category": "traits"
+            },
+            {
+                "id": "fighter-xphb:battle-master-xphb:know-your-enemy",
+                "name": "Know Your Enemy",
+                "level": 7,
+                "text": "As a Bonus Action, you can discern certain strengths and weaknesses of a creature you can see within 30 feet of yourself; you know whether that creature has any Immunities, Resistances, or Vulnerabilities, and if the creature has any, you know what they are.\n\nOnce you use this feature, you can't do so again until you finish a Long Rest. You can also restore a use of the feature by expending one Superiority Die (no action required).",
+                "category": "bonus_actions",
+                "uses": {
+                    "max": 1,
+                    "reset": "long"
+                },
+                "action": {
+                    "range": "30 feet"
+                }
+            },
+            {
+                "id": "fighter-xphb:battle-master-xphb:improved-combat-superiority",
+                "name": "Improved Combat Superiority",
+                "level": 10,
+                "text": "Your Superiority Die becomes a d10.",
+                "category": "traits"
+            },
+            {
+                "id": "fighter-xphb:battle-master-xphb:relentless",
+                "name": "Relentless",
+                "level": 15,
+                "text": "Once per turn, when you use a maneuver, you can roll 1d8 and use the number rolled instead of expending a Superiority Die.",
+                "category": "traits"
+            },
+            {
+                "id": "fighter-xphb:battle-master-xphb:ultimate-combat-superiority",
+                "name": "Ultimate Combat Superiority",
+                "level": 18,
+                "text": "Your Superiority Die becomes a d12.",
+                "category": "traits"
+            }
+        ],
+        "resources": [
+            {
+                "id": "superiority_dice",
+                "name": "Superiority Dice",
+                "max": {
+                    "1": 4,
+                    "7": 5,
+                    "15": 6
+                },
+                "die": {
+                    "1": "d8",
+                    "10": "d10",
+                    "18": "d12"
+                },
+                "reset": "short",
+                "short_rest": "all"
+            }
+        ]
+    },
+    {
         "id": "fighter-xphb:champion-xphb",
         "kind": "subclass",
         "name": "Champion",
@@ -118,6 +322,851 @@
                     "5.2": "Survivor"
                 },
                 "category": "traits"
+            }
+        ],
+        "resources": []
+    },
+    {
+        "id": "fighter-xphb:eldritch-knight-xphb",
+        "kind": "subclass",
+        "name": "Eldritch Knight",
+        "source": "XPHB",
+        "edition": "one",
+        "text": "*Support Combat Skills with Arcane Magic*\n\nEldritch Knights combine the martial mastery common to all Fighters with a careful study of magic. Their spells both complement and extend their combat skills, providing additional protection to shore up their armor and also allowing them to engage many foes at once with explosive magic.",
+        "class_id": "fighter-xphb",
+        "short_name": "Eldritch Knight",
+        "grants": {
+            "spell_lists": [
+                {
+                    "filter": {
+                        "spell_level": 0,
+                        "class": "wizard"
+                    },
+                    "at": 3
+                },
+                {
+                    "filter": {
+                        "spell_level": 1,
+                        "class": "wizard"
+                    },
+                    "at": 3
+                },
+                {
+                    "filter": {
+                        "spell_level": 2,
+                        "class": "wizard"
+                    },
+                    "at": 7
+                },
+                {
+                    "filter": {
+                        "spell_level": 3,
+                        "class": "wizard"
+                    },
+                    "at": 13
+                },
+                {
+                    "filter": {
+                        "spell_level": 4,
+                        "class": "wizard"
+                    },
+                    "at": 19
+                }
+            ]
+        },
+        "spellcasting": {
+            "ability": "int",
+            "progression": "third",
+            "cantrips": {
+                "3": 2,
+                "10": 3
+            },
+            "prepared": {
+                "3": 3,
+                "4": 4,
+                "7": 5,
+                "8": 6,
+                "10": 7,
+                "11": 8,
+                "13": 9,
+                "14": 10,
+                "16": 11,
+                "19": 12,
+                "20": 13
+            },
+            "change": "level",
+            "slots": {
+                "3": [
+                    2
+                ],
+                "4": [
+                    3
+                ],
+                "7": [
+                    4,
+                    2
+                ],
+                "10": [
+                    4,
+                    3
+                ],
+                "13": [
+                    4,
+                    3,
+                    2
+                ],
+                "16": [
+                    4,
+                    3,
+                    3
+                ],
+                "19": [
+                    4,
+                    3,
+                    3,
+                    1
+                ]
+            }
+        },
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "fighter-xphb:eldritch-knight-xphb:spellcasting",
+                    "fighter-xphb:eldritch-knight-xphb:war-bond"
+                ]
+            },
+            {
+                "level": 7,
+                "features": [
+                    "fighter-xphb:eldritch-knight-xphb:war-magic"
+                ]
+            },
+            {
+                "level": 10,
+                "features": [
+                    "fighter-xphb:eldritch-knight-xphb:eldritch-strike"
+                ]
+            },
+            {
+                "level": 15,
+                "features": [
+                    "fighter-xphb:eldritch-knight-xphb:arcane-charge"
+                ]
+            },
+            {
+                "level": 18,
+                "features": [
+                    "fighter-xphb:eldritch-knight-xphb:improved-war-magic"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "fighter-xphb:eldritch-knight-xphb:spellcasting",
+                "name": "Spellcasting",
+                "level": 3,
+                "text": "You have learned to cast spells. See chapter 7 for the rules on spellcasting. The information below details how you use those rules as an Eldritch Knight.\n\n**Cantrips.** You know two cantrips of your choice from the Wizard spell list (see that class's section for its list). Ray of Frost and Shocking Grasp are recommended. Whenever you gain a Fighter level, you can replace one of these cantrips with another cantrip of your choice from the Wizard spell list.\n\nWhen you reach Fighter level 10, you learn another Wizard cantrip of your choice.\n\n**Spell Slots.** The Eldritch Knight Spellcasting table shows how many spell slots you have to cast your level 1+ spells. You regain all expended slots when you finish a Long Rest.\n\n**Prepared Spells of Level 1+.** You prepare the list of level 1+ spells that are available for you to cast with this feature. To start, choose three level 1 spells from the Wizard spell list. Burning Hands, Jump, and Shield are recommended.\n\nThe number of spells on your list increases as you gain Fighter levels, as shown in the Prepared Spells column of the Eldritch Knight Spellcasting table. Whenever that number increases, choose additional spells from the Wizard spell list until the number of spells on your list matches the number on the table. The chosen spells must be of a level for which you have spell slots. For example, if you're a level 7 Fighter, your list of prepared spells can include five Wizard spells of levels 1 and 2 in any combination.\n\n**Changing your Prepared Spells.** Whenever you gain a Fighter level, you can replace one spell on your list with another Wizard spell for which you have spell slots.\n\n**Spellcasting Ability.** Intelligence is your spellcasting ability for your Wizard spells.\n\n**Spellcasting Focus.** You can use an Arcane Focus as a Spellcasting Focus for your Wizard spells.",
+                "category": "traits"
+            },
+            {
+                "id": "fighter-xphb:eldritch-knight-xphb:war-bond",
+                "name": "War Bond",
+                "level": 3,
+                "text": "You learn a ritual that creates a magical bond between yourself and one weapon. You perform the ritual over the course of 1 hour, which can be done during a Short Rest. The weapon must be within your reach throughout the ritual, at the conclusion of which you touch the weapon and forge the bond. The bond fails if another Fighter is bonded to the weapon or if the weapon is a magic item to which someone else is attuned.\n\nOnce you have bonded a weapon to yourself, you can't be disarmed of that weapon unless you have the Incapacitated condition. If it is on the same plane of existence, you can summon that weapon as a Bonus Action, causing it to teleport instantly to your hand.\n\nYou can have up to two bonded weapons, but you can summon only one at a time with a Bonus Action. If you attempt to bond with a third weapon, you must break the bond with one of the other two.",
+                "category": "bonus_actions"
+            },
+            {
+                "id": "fighter-xphb:eldritch-knight-xphb:war-magic",
+                "name": "War Magic",
+                "level": 7,
+                "text": "When you take the Attack action on your turn, you can replace one of the attacks with a casting of one of your Wizard cantrips that has a casting time of an action.",
+                "category": "traits"
+            },
+            {
+                "id": "fighter-xphb:eldritch-knight-xphb:eldritch-strike",
+                "name": "Eldritch Strike",
+                "level": 10,
+                "text": "You learn how to make your weapon strikes undercut a creature's ability to withstand your spells. When you hit a creature with an attack using a weapon, that creature has Disadvantage on the next saving throw it makes against a spell you cast before the end of your next turn.",
+                "category": "traits"
+            },
+            {
+                "id": "fighter-xphb:eldritch-knight-xphb:arcane-charge",
+                "name": "Arcane Charge",
+                "level": 15,
+                "text": "When you use your Action Surge, you can teleport up to 30 feet to an unoccupied space you can see. You can teleport before or after the additional action.",
+                "category": "actions",
+                "action": {
+                    "range": "30 feet"
+                }
+            },
+            {
+                "id": "fighter-xphb:eldritch-knight-xphb:improved-war-magic",
+                "name": "Improved War Magic",
+                "level": 18,
+                "text": "When you take the Attack action on your turn, you can replace two of the attacks with a casting of one of your level 1 or level 2 Wizard spells that has a casting time of an action.",
+                "category": "traits"
+            }
+        ],
+        "resources": []
+    },
+    {
+        "id": "fighter-xphb:psi-warrior-xphb",
+        "kind": "subclass",
+        "name": "Psi Warrior",
+        "source": "XPHB",
+        "edition": "one",
+        "text": "*Augment Physical Might with Psionic Power*\n\nPsi Warriors awaken the power of their minds to augment their physical might. They harness this psionic power to infuse their weapon strikes, lash out with telekinetic energy, and create barriers of mental force.",
+        "class_id": "fighter-xphb",
+        "short_name": "Psi Warrior",
+        "grants": {
+            "spells": [
+                {
+                    "spell": "telekinesis-xphb",
+                    "how": "prepared",
+                    "at": 18,
+                    "uses": {
+                        "max": 1,
+                        "reset": "long"
+                    }
+                }
+            ]
+        },
+        "columns": [
+            {
+                "id": "psionic_energy_die_size",
+                "name": "Psionic Energy Die Size",
+                "values": {
+                    "3": "d6",
+                    "5": "d8",
+                    "11": "d10",
+                    "17": "d12"
+                }
+            },
+            {
+                "id": "psionic_energy_die_number",
+                "name": "Psionic Energy Die Number",
+                "values": {
+                    "3": 4,
+                    "5": 6,
+                    "9": 8,
+                    "13": 10,
+                    "17": 12
+                }
+            }
+        ],
+        "resources": [
+            {
+                "id": "psionic_energy_dice",
+                "name": "Psionic Energy Dice",
+                "max": {
+                    "3": 4,
+                    "5": 6,
+                    "9": 8,
+                    "13": 10,
+                    "17": 12
+                },
+                "die": {
+                    "3": "d6",
+                    "5": "d8",
+                    "11": "d10",
+                    "17": "d12"
+                },
+                "reset": "long",
+                "short_rest": 1
+            }
+        ],
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "fighter-xphb:psi-warrior-xphb:psionic-power"
+                ]
+            },
+            {
+                "level": 7,
+                "features": [
+                    "fighter-xphb:psi-warrior-xphb:telekinetic-adept"
+                ]
+            },
+            {
+                "level": 10,
+                "features": [
+                    "fighter-xphb:psi-warrior-xphb:guarded-mind"
+                ]
+            },
+            {
+                "level": 15,
+                "features": [
+                    "fighter-xphb:psi-warrior-xphb:bulwark-of-force"
+                ]
+            },
+            {
+                "level": 18,
+                "features": [
+                    "fighter-xphb:psi-warrior-xphb:telekinetic-master"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "fighter-xphb:psi-warrior-xphb:psionic-power",
+                "name": "Psionic Power",
+                "level": 3,
+                "text": "You harbor a wellspring of psionic energy within yourself. It is represented by your Psionic Energy Dice, which fuel powers you have from this subclass. The Psi Warrior Energy Dice table shows the die size and number of these dice you have when you reach certain Fighter levels.\n\nPsi Warrior Energy Dice\n\nFighter Level | Die Size | Number\n--- | --- | ---\n3 | D6 | 4\n5 | D8 | 6\n9 | D8 | 8\n11 | D10 | 8\n13 | D10 | 10\n17 | D12 | 12\n\nAny features in this subclass that use a Psionic Energy Die use only the dice from this subclass. Some of your powers expend the Psionic Energy Die, as specified in a power's description, and you can't use a power if it requires you to use a die when all your Psionic Energy Dice are expended.\n\nYou regain one of your expended Psionic Energy Dice when you finish a Short Rest, and you regain all of them when you finish a Long Rest.",
+                "category": "traits"
+            },
+            {
+                "id": "fighter-xphb:psi-warrior-xphb:protective-field",
+                "name": "Protective Field",
+                "level": 3,
+                "text": "When you or another creature you can see within 30 feet of you takes damage, you can take a Reaction to expend one Psionic Energy Die, roll the die, and reduce the damage taken by the number rolled plus your Intelligence modifier (minimum reduction of 1), as you create a momentary shield of telekinetic force.",
+                "parent": "fighter-xphb:psi-warrior-xphb:psionic-power",
+                "consumes": {
+                    "resource": "psionic_energy_dice",
+                    "amount": 1
+                },
+                "category": "reactions",
+                "action": {
+                    "range": "30 feet"
+                }
+            },
+            {
+                "id": "fighter-xphb:psi-warrior-xphb:psionic-strike",
+                "name": "Psionic Strike",
+                "level": 3,
+                "text": "You can propel your weapons with psionic force. Once on each of your turns, immediately after you hit a target within 30 feet of yourself with an attack and deal damage to it with a weapon, you can expend one Psionic Energy Die, rolling it and dealing Force damage to the target equal to the number rolled plus your Intelligence modifier.",
+                "parent": "fighter-xphb:psi-warrior-xphb:psionic-power",
+                "consumes": {
+                    "resource": "psionic_energy_dice",
+                    "amount": 1
+                },
+                "category": "traits",
+                "action": {
+                    "attack": {
+                        "kind": "any",
+                        "damage": [
+                            {
+                                "dice": "psionic_energy_die_size",
+                                "bonus": "int_mod",
+                                "type": "force"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "fighter-xphb:psi-warrior-xphb:telekinetic-movement",
+                "name": "Telekinetic Movement",
+                "level": 3,
+                "text": "You can move an object or a creature with your mind. As a Magic action, choose one target you can see within 30 feet of yourself; the target must be a loose object that is Large or smaller or one willing creature other than you. You transport the target up to 30 feet to an unoccupied space you can see. Alternatively, if the target is a Tiny object, you can transport it to or from your hand.\n\nOnce you take this action, you can't do so again until you finish a Short or Long Rest unless you expend a Psionic Energy Die (no action required) to restore your use of it.",
+                "parent": "fighter-xphb:psi-warrior-xphb:psionic-power",
+                "consumes": {
+                    "resource": "psionic_energy_dice",
+                    "amount": 1
+                },
+                "category": "actions",
+                "uses": {
+                    "max": 1,
+                    "reset": "short"
+                },
+                "action": {
+                    "range": "30 feet"
+                }
+            },
+            {
+                "id": "fighter-xphb:psi-warrior-xphb:telekinetic-adept",
+                "name": "Telekinetic Adept",
+                "level": 7,
+                "text": "You have mastered new ways to use your telekinetic abilities, detailed below.",
+                "category": "traits"
+            },
+            {
+                "id": "fighter-xphb:psi-warrior-xphb:psi-powered-leap",
+                "name": "Psi-Powered Leap",
+                "level": 7,
+                "text": "As a Bonus Action, you gain a Fly Speed equal to twice your Speed until the end of the current turn. Once you take this Bonus Action, you can't do so again until you finish a Short or Long Rest unless you expend a Psionic Energy Die (no action required) to restore your use of it.",
+                "parent": "fighter-xphb:psi-warrior-xphb:telekinetic-adept",
+                "consumes": {
+                    "resource": "psionic_energy_dice",
+                    "amount": 1
+                },
+                "category": "bonus_actions",
+                "uses": {
+                    "max": 1,
+                    "reset": "short"
+                }
+            },
+            {
+                "id": "fighter-xphb:psi-warrior-xphb:telekinetic-thrust",
+                "name": "Telekinetic Thrust",
+                "level": 7,
+                "text": "When you deal damage to a target with your Psionic Strike, you can force the target to make a Strength saving throw (DC 8 plus your Intelligence modifier and Proficiency Bonus). On a failed save, you can give the target the Prone condition or transport it up to 10 feet horizontally.",
+                "parent": "fighter-xphb:psi-warrior-xphb:telekinetic-adept",
+                "category": "traits",
+                "action": {
+                    "save": {
+                        "ability": "str",
+                        "dc": "8 + int_mod + pb",
+                        "on_success": "none",
+                        "conditions": [
+                            "prone"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "fighter-xphb:psi-warrior-xphb:guarded-mind",
+                "name": "Guarded Mind",
+                "level": 10,
+                "text": "You have Resistance to Psychic damage. Moreover, if you start your turn with the Charmed or Frightened condition, you can expend a Psionic Energy Die (no action required) and end every effect on yourself giving you those conditions.",
+                "consumes": {
+                    "resource": "psionic_energy_dice",
+                    "amount": 1
+                },
+                "category": "traits",
+                "grants": {
+                    "defenses": {
+                        "resist": [
+                            "psychic"
+                        ]
+                    }
+                }
+            },
+            {
+                "id": "fighter-xphb:psi-warrior-xphb:bulwark-of-force",
+                "name": "Bulwark of Force",
+                "level": 15,
+                "text": "You can shield yourself and others with telekinetic force. As a Bonus Action, you can choose creatures, including yourself, within 30 feet of yourself, up to a number of creatures equal to your Intelligence modifier (minimum of one creature). Each of the chosen creatures has Half Cover for 1 minute or until you have the Incapacitated condition.\n\nOnce you use this feature, you can't do so again until you finish a Long Rest unless you expend a Psionic Energy Die (no action required) to restore your use of it.",
+                "consumes": {
+                    "resource": "psionic_energy_dice",
+                    "amount": 1
+                },
+                "category": "bonus_actions",
+                "uses": {
+                    "max": 1,
+                    "reset": "long"
+                },
+                "action": {
+                    "range": "30 feet"
+                }
+            },
+            {
+                "id": "fighter-xphb:psi-warrior-xphb:telekinetic-master",
+                "name": "Telekinetic Master",
+                "level": 18,
+                "text": "You always have the Telekinesis spell prepared. With this feature, you can cast it without a spell slot or components, and your spellcasting ability for it is Intelligence. On each of your turns while you maintain Concentration on it, including the turn when you cast it, you can make one attack with a weapon as a Bonus Action.\n\nOnce you cast the spell with this feature, you can't do so in this way again until you finish a Long Rest unless you expend a Psionic Energy Die (no action required) to restore your use of it.",
+                "consumes": {
+                    "resource": "psionic_energy_dice",
+                    "amount": 1
+                },
+                "category": "bonus_actions"
+            }
+        ]
+    },
+    {
+        "id": "fighter-xphb:banneret-frhof",
+        "kind": "subclass",
+        "name": "Banneret",
+        "source": "FRHoF",
+        "edition": "one",
+        "text": "*Rally Fellow Heroes with Inspiring Leadership*\n\nBannerets are paragons of valor and leadership who protect the innocent and rally fellow adventurers to the causes of justice and freedom. Many are knights serving in Cormyr, the Silver Marches, Damara, Chessenta, or other lands across Faerûn. They wander the realms as knights errant, taking the fight against evil beyond their kingdom's borders.\n\nA Banneret relies on judgment, bravery, and fidelity to the code of chivalry to guide them in defeating evildoers. A lone Banneret is a skilled warrior, but when leading a band of allies one of these warriors can transform even a poorly equipped militia into a ferocious war band.",
+        "class_id": "fighter-xphb",
+        "short_name": "Banneret",
+        "grants": {
+            "spells": [
+                {
+                    "spell": "comprehend-languages-xphb",
+                    "how": "prepared",
+                    "at": 3,
+                    "uses": "ritual",
+                    "ability": "cha"
+                }
+            ]
+        },
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "fighter-xphb:banneret-frhof:knightly-envoy",
+                    "fighter-xphb:banneret-frhof:group-recovery"
+                ]
+            },
+            {
+                "level": 7,
+                "features": [
+                    "fighter-xphb:banneret-frhof:team-tactics"
+                ]
+            },
+            {
+                "level": 10,
+                "features": [
+                    "fighter-xphb:banneret-frhof:rallying-surge"
+                ]
+            },
+            {
+                "level": 15,
+                "features": [
+                    "fighter-xphb:banneret-frhof:shared-resilience"
+                ]
+            },
+            {
+                "level": 18,
+                "features": [
+                    "fighter-xphb:banneret-frhof:inspiring-commander"
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "fighter-xphb:banneret-frhof:knightly-envoy",
+                "name": "Knightly Envoy",
+                "level": 3,
+                "text": "You know how to conduct yourself with grace as a noble ambassador. You gain the following benefits.\n\n**Comprehension.** You can cast the Comprehend Languages spell but only as a Ritual. Charisma is your spellcasting ability for it.\n\n**Polyglot.** You learn one language from the language tables in the Player's Handbook or chapter 2 of this book. When you finish a Long Rest, you can replace a language learned from this benefit with another language you have heard, seen signed, or read in the past 24 hours.\n\n**Well Spoken.** You gain proficiency in one of the following skills of your choice: Insight, Intimidation, Persuasion, or Performance.",
+                "category": "traits"
+            },
+            {
+                "id": "fighter-xphb:banneret-frhof:group-recovery",
+                "name": "Group Recovery",
+                "level": 3,
+                "text": "When you use your Second Wind to regain Hit Points, you can choose a number of allies within a 30-foot Emanation originating from yourself, up to a number of allies equal to your Charisma modifier (minimum of one). Each of those allies regains Hit Points equal to 1d4 plus your Fighter level. Once you use this ability, you can't use it again until you finish a Short or Long Rest.",
+                "category": "bonus_actions",
+                "uses": {
+                    "max": 1,
+                    "reset": "short"
+                },
+                "action": {
+                    "area": "30-foot Emanation",
+                    "heal": "1d4 + class_level"
+                }
+            },
+            {
+                "id": "fighter-xphb:banneret-frhof:team-tactics",
+                "name": "Team Tactics",
+                "level": 7,
+                "text": "When you use Group Recovery, each chosen ally has Advantage on D20 Tests until the start of your next turn.",
+                "category": "traits"
+            },
+            {
+                "id": "fighter-xphb:banneret-frhof:rallying-surge",
+                "name": "Rallying Surge",
+                "level": 10,
+                "text": "When you use your Action Surge, you can choose allies within a 30-foot Emanation originating from yourself, up to a number of allies equal to your Charisma modifier (minimum of one). Each of those allies can immediately take a Reaction to use one of the following options.\n\n**Attack.** The ally makes one attack with a weapon or an Unarmed Strike.\n\n**Move.** The ally moves up to half its Speed without provoking an Opportunity Attack.",
+                "category": "actions",
+                "action": {
+                    "area": "30-foot Emanation"
+                }
+            },
+            {
+                "id": "fighter-xphb:banneret-frhof:shared-resilience",
+                "name": "Shared Resilience",
+                "level": 15,
+                "text": "When an ally you can see within 60 feet of yourself fails a saving throw, you can take a Reaction to expend a use of your Indomitable feature. The ally can immediately reroll the saving throw with a bonus equal to your Fighter level; the ally must use the new roll.",
+                "category": "reactions",
+                "action": {
+                    "range": "60 feet"
+                },
+                "consumes": {
+                    "resource": "indomitable",
+                    "amount": 1
+                }
+            },
+            {
+                "id": "fighter-xphb:banneret-frhof:inspiring-commander",
+                "name": "Inspiring Commander",
+                "level": 18,
+                "text": "You gain the following benefits.\n\n**Bolstered Rally.** The area of effect for both Group Recovery and Rallying Surge is now a 60-foot Emanation.\n\n**Unshakable Bravery.** You have Immunity to the Charmed and Frightened conditions.",
+                "category": "traits"
+            },
+            {
+                "id": "fighter-xphb:banneret-frhof:knightly-envoy:comprehension",
+                "name": "Comprehension",
+                "level": 3,
+                "text": "**Comprehension.** You can cast the Comprehend Languages spell but only as a Ritual. Charisma is your spellcasting ability for it.",
+                "parent": "fighter-xphb:banneret-frhof:knightly-envoy",
+                "category": "traits"
+            },
+            {
+                "id": "fighter-xphb:banneret-frhof:knightly-envoy:polyglot",
+                "name": "Polyglot",
+                "level": 3,
+                "text": "**Polyglot.** You learn one language from the language tables in the Player's Handbook or chapter 2 of this book. When you finish a Long Rest, you can replace a language learned from this benefit with another language you have heard, seen signed, or read in the past 24 hours.",
+                "parent": "fighter-xphb:banneret-frhof:knightly-envoy",
+                "category": "traits",
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "languages_1",
+                        "label": "Languages",
+                        "grant": "languages",
+                        "count": 1,
+                        "from": "all_languages"
+                    }
+                ]
+            },
+            {
+                "id": "fighter-xphb:banneret-frhof:knightly-envoy:well-spoken",
+                "name": "Well Spoken",
+                "level": 3,
+                "text": "**Well Spoken.** You gain proficiency in one of the following skills of your choice: Insight, Intimidation, Persuasion, or Performance.",
+                "parent": "fighter-xphb:banneret-frhof:knightly-envoy",
+                "category": "traits",
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "skills_1",
+                        "label": "Skills",
+                        "grant": "skills",
+                        "count": 1,
+                        "from": [
+                            "insight",
+                            "intimidation",
+                            "persuasion",
+                            "performance"
+                        ]
+                    }
+                ]
+            },
+            {
+                "id": "fighter-xphb:banneret-frhof:inspiring-commander:unshakable-bravery",
+                "name": "Unshakable Bravery",
+                "level": 18,
+                "text": "**Unshakable Bravery.** You have Immunity to the Charmed and Frightened conditions.",
+                "parent": "fighter-xphb:banneret-frhof:inspiring-commander",
+                "category": "traits",
+                "grants": {
+                    "defenses": {
+                        "condition_immune": [
+                            "charmed",
+                            "frightened"
+                        ]
+                    }
+                }
+            }
+        ],
+        "resources": []
+    },
+    {
+        "id": "fighter-xphb:arcane-archer-au",
+        "kind": "subclass",
+        "name": "Arcane Archer",
+        "source": "AU",
+        "edition": "one",
+        "text": "*Deploy Magical Effects Through Enchanted Ammunition*\n\nAn Arcane Archer studies a unique elven method of archery that weaves magic into attacks to produce supernatural effects. Over the centuries, other folk have learned this technique and broadened it so it applies to ranged weapons of many kinds and to aspects of adventuring life outside of combat.",
+        "class_id": "fighter-xphb",
+        "short_name": "Arcane Archer",
+        "choices": [
+            {
+                "type": "bundle",
+                "id": "spells",
+                "label": "Spells",
+                "options": [
+                    {
+                        "id": "a",
+                        "label": "Druidcraft",
+                        "grants": {
+                            "spells": [
+                                {
+                                    "spell": "druidcraft-xphb",
+                                    "how": "known",
+                                    "at": 3,
+                                    "ability": "int"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "id": "b",
+                        "label": "Prestidigitation",
+                        "grants": {
+                            "spells": [
+                                {
+                                    "spell": "prestidigitation-xphb",
+                                    "how": "known",
+                                    "at": 3,
+                                    "ability": "int"
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        ],
+        "progression": [
+            {
+                "level": 3,
+                "features": [
+                    "fighter-xphb:arcane-archer-au:arcane-archer-lore",
+                    "fighter-xphb:arcane-archer-au:arcane-shot",
+                    "fighter-xphb:arcane-archer-au:arcane-shot-options"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "arcane_shots_3",
+                        "label": "Arcane Shots",
+                        "grant": "optional_features",
+                        "count": 2,
+                        "from": {
+                            "feature_type": [
+                                "arcane_shot"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 7,
+                "features": [
+                    "fighter-xphb:arcane-archer-au:curving-shot",
+                    "fighter-xphb:arcane-archer-au:magical-ammunition"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "arcane_shots_7",
+                        "label": "Arcane Shots",
+                        "grant": "optional_features",
+                        "count": 1,
+                        "from": {
+                            "feature_type": [
+                                "arcane_shot"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 10,
+                "features": [
+                    "fighter-xphb:arcane-archer-au:ever-ready-shot"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "arcane_shots_10",
+                        "label": "Arcane Shots",
+                        "grant": "optional_features",
+                        "count": 1,
+                        "from": {
+                            "feature_type": [
+                                "arcane_shot"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 15,
+                "features": [
+                    "fighter-xphb:arcane-archer-au:indomitable-teleport"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "arcane_shots_15",
+                        "label": "Arcane Shots",
+                        "grant": "optional_features",
+                        "count": 1,
+                        "from": {
+                            "feature_type": [
+                                "arcane_shot"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "level": 18,
+                "features": [
+                    "fighter-xphb:arcane-archer-au:masterful-shots"
+                ],
+                "choices": [
+                    {
+                        "type": "pool",
+                        "id": "arcane_shots_18",
+                        "label": "Arcane Shots",
+                        "grant": "optional_features",
+                        "count": 1,
+                        "from": {
+                            "feature_type": [
+                                "arcane_shot"
+                            ]
+                        }
+                    }
+                ]
+            }
+        ],
+        "features": [
+            {
+                "id": "fighter-xphb:arcane-archer-au:arcane-archer-lore",
+                "name": "Arcane Archer Lore",
+                "level": 3,
+                "text": "You learn magical theory and secrets of nature, granting you the following benefits.\n\n**Cantrip.** You know either the Druidcraft or the Prestidigitation cantrip. Intelligence is your spellcasting ability for it.\n\n**Skills.** You gain proficiency in the Arcana and Nature skills. If you already have one of these proficiencies, you instead gain proficiency in a different skill of your choice from the skills available to Fighters at level 1 (or in two skills available to Fighters at level 1 if you have both).",
+                "category": "traits",
+                "grants": {
+                    "skills": [
+                        "arcana",
+                        "nature"
+                    ]
+                }
+            },
+            {
+                "id": "fighter-xphb:arcane-archer-au:arcane-shot",
+                "name": "Arcane Shot",
+                "level": 3,
+                "text": "You learn to unleash special magical effects with your shots.\n\nYou learn two Arcane Shot options of your choice. You learn an additional Arcane Shot option of your choice when you reach Fighter levels 7, 10, 15, and 18. Each time you learn a new Arcane Shot option, you can also replace one option you know with a different one.\n\n**Using Arcane Shot.** Once per turn when you make a ranged attack using a weapon with the Ammunition property, you can apply one of your Arcane Shot options to that attack. You decide to use the option when you hit a creature and deal damage to it unless the option doesn't involve an attack roll.\n\nYou can use this feature a number of times equal to your Intelligence modifier (minimum of once). You regain all expended uses when you finish a Short or Long Rest.\n\n**Arcane Shot Die.** Arcane Shot options refer to your Arcane Shot Die. Your Arcane Shot Die is a d6.\n\n**Saving Throws.** If an Arcane Shot option requires a saving throw, the DC equals 8 plus your Intelligence modifier and Proficiency Bonus.\n\n**At Higher Levels.** Your Arcane Shot Die changes when you reach certain Fighter levels. The die becomes a d8 at level 10, a d10 at level 15, and a d12 at level 18.",
+                "category": "traits",
+                "uses": {
+                    "max": "max(1, int_mod)",
+                    "reset": "short"
+                }
+            },
+            {
+                "id": "fighter-xphb:arcane-archer-au:arcane-shot-options",
+                "name": "Arcane Shot Options",
+                "level": 3,
+                "text": "The Arcane Shot feature lets you choose options for it at certain levels. The options are presented here in alphabetical order.\n\n- Banishing Shot\n- Beguiling Shot\n- Bursting Shot\n- Enfeebling Shot\n- Grasping Shot\n- Piercing Shot\n- Seeking Shot\n- Shadow Shot",
+                "category": "traits"
+            },
+            {
+                "id": "fighter-xphb:arcane-archer-au:curving-shot",
+                "name": "Curving Shot",
+                "level": 7,
+                "text": "You learn how to direct an errant shot toward a new target. If you make a ranged attack roll with a weapon with the Ammunition property and miss, you can cause the shot to ricochet toward a new target as a Bonus Action immediately after the attack misses. The new target must be a creature you can see within the weapon's range and within 60 feet of the attack's original target. Make an attack roll against the new target.",
+                "category": "bonus_actions"
+            },
+            {
+                "id": "fighter-xphb:arcane-archer-au:magical-ammunition",
+                "name": "Magical Ammunition",
+                "level": 7,
+                "text": "You learn to imbue your ammunition with magical properties. As a Magic action, you can imbue a piece of nonmagical ammunition with one of the following magical properties and fire it at a solid surface you can see within the weapon's range. When the ammunition hits the surface, the ammunition's effect activates, and the ammunition attaches to the surface it hit for the duration of the effect; you can remove an attached piece of ammunition as a Magic action, ending the effect early. When the effect ends, the ammunition is destroyed.\n\nOnce you use this feature, you can't do so again until you finish a Short or Long Rest. You can also restore your use of this feature by expending a use of your Second Wind (no action required).\n\n**Darkening Ammunition.** Magical shadows fill a 15-foot Emanation originating from the ammunition for 1 minute. Nonmagical flames in the Emanation are extinguished, and creatures in the Emanation have a −5 penalty to Wisdom (Perception) checks and Passive Perception.\n\n**Unlocking Ammunition.** A burst of magic fills a 15-foot Emanation originating from the ammunition. The ammunition also emits a loud knocking sound, audible up to 300 feet away. Any object in the Emanation that is held shut by a nonmagical lock or that is stuck or barred becomes unlocked, unstuck, or unbarred. If such an object has multiple locks, only one of them is unlocked.\n\n**Vine Ammunition.** A 120-foot-long vine grows from the ammunition. You and other creatures can then climb it. The vine withers away after 10 minutes.",
+                "category": "actions",
+                "uses": {
+                    "max": 1,
+                    "reset": "short"
+                }
+            },
+            {
+                "id": "fighter-xphb:arcane-archer-au:ever-ready-shot",
+                "name": "Ever-Ready Shot",
+                "level": 10,
+                "text": "When you roll Initiative, you can regain one expended use of Arcane Shot.",
+                "category": "traits"
+            },
+            {
+                "id": "fighter-xphb:arcane-archer-au:indomitable-teleport",
+                "name": "Indomitable Teleport",
+                "level": 15,
+                "text": "Your magical mastery lets you escape dire situations. When you use your Indomitable feature and succeed on the saving throw, you can teleport up to 60 feet to an unoccupied space you can see.",
+                "category": "traits"
+            },
+            {
+                "id": "fighter-xphb:arcane-archer-au:masterful-shots",
+                "name": "Masterful Shots",
+                "level": 18,
+                "text": "You employ agility in your sharpshooting. When a creature you can see misses you with an attack roll, you can take a Reaction to move up to half your Speed away from the attacker without provoking Opportunity Attacks. You can then make a ranged attack roll against the attacker as part of this Reaction if the attacker is within the weapon's range.",
+                "category": "reactions"
             }
         ],
         "resources": []

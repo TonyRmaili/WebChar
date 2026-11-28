@@ -170,5 +170,500 @@
     "reviewed": false,
     "reasoning": "medium",
     "at": "2026-11-18T13:15:50+00:00"
+  },
+  "druid-phb:wild-companion": {
+    "label": "Druid (PHB) · Wild Companion",
+    "hash": "42509bec4b5a014e",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "wild-companion",
+          "name": "Wild Companion",
+          "level": 2,
+          "category": "traits",
+          "consumes": {
+            "resource": "wild_shape",
+            "amount": 1
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11364,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:26:57+00:00"
+  },
+  "druid-phb:cantrip-versatility": {
+    "label": "Druid (PHB) · Cantrip Versatility",
+    "hash": "a516c5bea5205cc0",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "cantrip-versatility",
+          "name": "Cantrip Versatility",
+          "level": 4,
+          "category": "traits"
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 11238,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:27:00+00:00"
+  },
+  "druid-phb:moon-phb": {
+    "label": "Druid (PHB) · Circle of the Moon (PHB)",
+    "hash": "09776362e0fcf62c",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "combat-wild-shape",
+          "name": "Combat Wild Shape",
+          "level": 2,
+          "category": "bonus_actions"
+        },
+        {
+          "id": "elemental-wild-shape",
+          "name": "Elemental Wild Shape",
+          "level": 10,
+          "category": "actions",
+          "consumes": {
+            "resource": "wild_shape",
+            "amount": 2
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 12904,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:27:02+00:00"
+  },
+  "druid-phb:dreams-xge": {
+    "label": "Druid (PHB) · Circle of Dreams (XGE)",
+    "hash": "2226420b88e0fa4e",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "balm-of-the-summer-court",
+          "name": "Balm of the Summer Court",
+          "level": 2,
+          "category": "bonus_actions",
+          "action": {
+            "range": "120 feet"
+          }
+        },
+        {
+          "id": "hearth-of-moonlight-and-shadow",
+          "name": "Hearth of Moonlight and Shadow",
+          "level": 6,
+          "category": "traits",
+          "toggle": {
+            "modifiers": [
+              {
+                "target": "check.stealth",
+                "add": 5
+              },
+              {
+                "target": "check.perception",
+                "add": 5
+              }
+            ]
+          }
+        },
+        {
+          "id": "hidden-paths",
+          "name": "Hidden Paths",
+          "level": 10,
+          "category": "bonus_actions",
+          "uses": {
+            "max": "max(1, wis_mod)",
+            "reset": "long"
+          }
+        },
+        {
+          "id": "walker-in-dreams",
+          "name": "Walker in Dreams",
+          "level": 14,
+          "category": "traits"
+        }
+      ],
+      "resources": [
+        {
+          "name": "Fey Energy Dice",
+          "max": "class_level",
+          "die": "d6",
+          "reset": "long"
+        }
+      ]
+    },
+    "problems": [],
+    "tokens": 13218,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:27:14+00:00"
+  },
+  "druid-phb:shepherd-xge": {
+    "label": "Druid (PHB) · Circle of the Shepherd (XGE)",
+    "hash": "42092afd6ce55f05",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "speech-of-the-woods",
+          "name": "Speech of the Woods",
+          "level": 2,
+          "category": "traits",
+          "grants": {
+            "languages": [
+              "sylvan"
+            ]
+          }
+        },
+        {
+          "id": "spirit-totem",
+          "name": "Spirit Totem",
+          "level": 2,
+          "category": "bonus_actions",
+          "uses": {
+            "max": 1,
+            "reset": "short"
+          },
+          "action": {
+            "range": "60 feet",
+            "area": "30-foot radius"
+          }
+        },
+        {
+          "id": "hawk-spirit",
+          "name": "Hawk Spirit",
+          "level": 2,
+          "category": "reactions"
+        },
+        {
+          "id": "faithful-summons",
+          "name": "Faithful Summons",
+          "level": 14,
+          "category": "traits",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 14835,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:27:25+00:00"
+  },
+  "druid-phb:spores-tce": {
+    "label": "Druid (PHB) · Circle of Spores (TCE)",
+    "hash": "b730006fd8c27c1d",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "halo-of-spores",
+          "name": "Halo of Spores",
+          "level": 2,
+          "category": "reactions",
+          "action": {
+            "range": "10 feet",
+            "save": {
+              "ability": "con",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "none",
+              "damage": [
+                {
+                  "dice": {
+                    "1": "1d4",
+                    "6": "1d6",
+                    "10": "1d8",
+                    "14": "1d10"
+                  },
+                  "type": "necrotic"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "symbiotic-entity",
+          "name": "Symbiotic Entity",
+          "level": 2,
+          "category": "actions",
+          "action": {
+            "temp_hp": "4 * class_level",
+            "attack": {
+              "kind": "melee",
+              "damage": [
+                {
+                  "dice": "1d6",
+                  "type": "necrotic",
+                  "condition": "while Symbiotic Entity is active"
+                }
+              ]
+            }
+          },
+          "toggle": true,
+          "consumes": {
+            "resource": "wild_shape",
+            "amount": 1
+          }
+        },
+        {
+          "id": "fungal-infestation",
+          "name": "Fungal Infestation",
+          "level": 6,
+          "category": "reactions",
+          "uses": {
+            "max": "max(1, wis_mod)",
+            "reset": "long"
+          },
+          "action": {
+            "range": "10 feet"
+          }
+        },
+        {
+          "id": "spreading-spores",
+          "name": "Spreading Spores",
+          "level": 10,
+          "category": "bonus_actions",
+          "action": {
+            "range": "30 feet",
+            "area": "10-foot cube",
+            "save": {
+              "ability": "con",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "none",
+              "damage": [
+                {
+                  "dice": {
+                    "1": "1d8",
+                    "14": "1d10"
+                  },
+                  "type": "necrotic"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "fungal-body",
+          "name": "Fungal Body",
+          "level": 14,
+          "category": "traits",
+          "grants": {
+            "defenses": {
+              "condition_immune": [
+                "blinded",
+                "deafened",
+                "frightened",
+                "poisoned"
+              ]
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 27711,
+    "tries": 2,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:27:46+00:00"
+  },
+  "druid-phb:stars-tce": {
+    "label": "Druid (PHB) · Circle of Stars (TCE)",
+    "hash": "0b612c221e13289d",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "starry-form",
+          "name": "Starry Form",
+          "level": 2,
+          "category": "bonus_actions",
+          "toggle": true,
+          "consumes": {
+            "resource": "wild_shape",
+            "amount": 1
+          }
+        },
+        {
+          "id": "archer",
+          "name": "Archer",
+          "level": 2,
+          "category": "bonus_actions",
+          "action": {
+            "range": "60 feet",
+            "attack": {
+              "kind": "spell",
+              "bonus": "pb + spell_mod",
+              "damage": [
+                {
+                  "dice": {
+                    "1": "1d8",
+                    "10": "2d8"
+                  },
+                  "bonus": "wis_mod",
+                  "type": "radiant"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "chalice",
+          "name": "Chalice",
+          "level": 2,
+          "category": "traits",
+          "action": {
+            "range": "30 feet",
+            "heal": {
+              "1": "1d8 + wis_mod",
+              "10": "2d8 + wis_mod"
+            }
+          }
+        },
+        {
+          "id": "dragon",
+          "name": "Dragon",
+          "level": 2,
+          "category": "traits",
+          "grants": {
+            "speed": {
+              "fly": 20
+            }
+          }
+        },
+        {
+          "id": "cosmic-omen",
+          "name": "Cosmic Omen",
+          "level": 6,
+          "category": "reactions",
+          "uses": {
+            "max": "pb",
+            "reset": "long"
+          },
+          "action": {
+            "range": "30 feet"
+          }
+        },
+        {
+          "id": "full-of-stars",
+          "name": "Full of Stars",
+          "level": 14,
+          "category": "traits",
+          "grants": {
+            "defenses": {
+              "resist": [
+                "bludgeoning",
+                "piercing",
+                "slashing"
+              ]
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 15136,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:28:11+00:00"
+  },
+  "druid-phb:wildfire-tce": {
+    "label": "Druid (PHB) · Circle of Wildfire (TCE)",
+    "hash": "e3891c1807f53922",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "summon-wildfire-spirit",
+          "name": "Summon Wildfire Spirit",
+          "level": 2,
+          "category": "actions",
+          "action": {
+            "range": "30 feet",
+            "area": "10-foot radius",
+            "save": {
+              "ability": "dex",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "none",
+              "damage": [
+                {
+                  "dice": "2d6",
+                  "type": "fire"
+                }
+              ]
+            }
+          },
+          "consumes": {
+            "resource": "wild_shape",
+            "amount": 1
+          }
+        },
+        {
+          "id": "cauterizing-flames",
+          "name": "Cauterizing Flames",
+          "level": 10,
+          "category": "reactions",
+          "uses": {
+            "max": "pb",
+            "reset": "long"
+          },
+          "action": {
+            "heal": "2d10 + wis_mod",
+            "damage": [
+              {
+                "dice": "2d10",
+                "bonus": "wis_mod",
+                "type": "fire",
+                "condition": "if you choose to deal fire damage"
+              }
+            ]
+          }
+        },
+        {
+          "id": "blazing-revival",
+          "name": "Blazing Revival",
+          "level": 14,
+          "category": "traits",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13896,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-27T15:28:32+00:00"
   }
 }

@@ -187,5 +187,406 @@
     "reviewed": false,
     "reasoning": "medium",
     "at": "2026-11-19T11:41:45+00:00"
+  },
+  "sorcerer-xphb:draconic-wow": {
+    "label": "Sorcerer (XPHB) · Draconic Sorcery (WoW)",
+    "hash": "84a90c3a9168f6f1",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "draconic-resilience",
+          "name": "Draconic Resilience",
+          "level": 3,
+          "category": "traits",
+          "modifiers": [
+            {
+              "target": "hp_max",
+              "add": "class_level"
+            },
+            {
+              "target": "ac",
+              "base": "10 + dex_mod + cha_mod",
+              "requires": [
+                "no_armor"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "dragon-wings",
+          "name": "Dragon Wings",
+          "level": 14,
+          "category": "bonus_actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "toggle": {
+            "uses_charge": true,
+            "grants": {
+              "speed": {
+                "fly": 60
+              }
+            }
+          }
+        },
+        {
+          "id": "dragon-companion",
+          "name": "Dragon Companion",
+          "level": 18,
+          "category": "traits"
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13099,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:20:42+00:00"
+  },
+  "sorcerer-xphb:aberrant-xphb": {
+    "label": "Sorcerer (XPHB) · Aberrant Sorcery (XPHB)",
+    "hash": "2a4c47e9ab53fe4f",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "telepathic-speech",
+          "name": "Telepathic Speech",
+          "level": 3,
+          "category": "bonus_actions",
+          "action": {
+            "range": "30 feet"
+          }
+        },
+        {
+          "id": "psychic-defenses",
+          "name": "Psychic Defenses",
+          "level": 6,
+          "category": "traits",
+          "grants": {
+            "defenses": {
+              "resist": [
+                "psychic"
+              ]
+            }
+          }
+        },
+        {
+          "id": "revelation-in-flesh",
+          "name": "Revelation in Flesh",
+          "level": 14,
+          "category": "bonus_actions",
+          "consumes": {
+            "resource": "sorcery_points",
+            "amount": 1
+          }
+        },
+        {
+          "id": "warping-implosion",
+          "name": "Warping Implosion",
+          "level": 18,
+          "category": "actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "action": {
+            "range": "120 feet",
+            "area": "30-foot radius",
+            "save": {
+              "ability": "str",
+              "dc": "8 + pb + spell_mod",
+              "on_success": "half",
+              "damage": [
+                {
+                  "dice": "3d10",
+                  "type": "force"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13951,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:20:52+00:00"
+  },
+  "sorcerer-xphb:clockwork-xphb": {
+    "label": "Sorcerer (XPHB) · Clockwork Sorcery (XPHB)",
+    "hash": "3d3dbb5683f0da5f",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "restore-balance",
+          "name": "Restore Balance",
+          "level": 3,
+          "category": "reactions",
+          "uses": {
+            "max": "max(1, cha_mod)",
+            "reset": "long"
+          },
+          "action": {
+            "range": "60 feet"
+          }
+        },
+        {
+          "id": "bastion-of-law",
+          "name": "Bastion of Law",
+          "level": 6,
+          "category": "actions",
+          "action": {
+            "range": "30 feet"
+          }
+        },
+        {
+          "id": "trance-of-order",
+          "name": "Trance of Order",
+          "level": 14,
+          "category": "bonus_actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "toggle": {
+            "uses_charge": true
+          }
+        },
+        {
+          "id": "clockwork-cavalcade",
+          "name": "Clockwork Cavalcade",
+          "level": 18,
+          "category": "actions",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "action": {
+            "area": "30-foot Cube",
+            "heal": 100
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 12955,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:21:09+00:00"
+  },
+  "sorcerer-xphb:wild-magic-xphb": {
+    "label": "Sorcerer (XPHB) · Wild Magic Sorcery (XPHB)",
+    "hash": "1f72715ca1f0e787",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "bend-luck",
+          "name": "Bend Luck",
+          "level": 6,
+          "category": "reactions",
+          "consumes": {
+            "resource": "sorcery_points",
+            "amount": 1
+          }
+        },
+        {
+          "id": "tamed-surge",
+          "name": "Tamed Surge",
+          "level": 18,
+          "category": "traits",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 13677,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:21:17+00:00"
+  },
+  "sorcerer-xphb:spellfire-frhof": {
+    "label": "Sorcerer (XPHB) · Spellfire Sorcery (FRHoF)",
+    "hash": "ab976856aab2d3ee",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "bolstering-flames",
+          "name": "Bolstering Flames",
+          "level": 3,
+          "category": "traits",
+          "action": {
+            "range": "30 feet",
+            "temp_hp": {
+              "1": "1d4 + cha_mod",
+              "14": "1d4 + cha_mod + class_level"
+            }
+          }
+        },
+        {
+          "id": "radiant-fire",
+          "name": "Radiant Fire",
+          "level": 3,
+          "category": "traits",
+          "action": {
+            "range": "30 feet",
+            "damage": [
+              {
+                "dice": {
+                  "1": "1d4",
+                  "14": "1d8"
+                },
+                "type": "fire",
+                "condition": "if you choose Fire"
+              },
+              {
+                "dice": {
+                  "1": "1d4",
+                  "14": "1d8"
+                },
+                "type": "radiant",
+                "condition": "if you choose Radiant"
+              }
+            ]
+          }
+        },
+        {
+          "id": "crown-of-spellfire",
+          "name": "Crown of Spellfire",
+          "level": 18,
+          "category": "traits",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "toggle": {
+            "uses_charge": true,
+            "grants": {
+              "speed": {
+                "fly": 60
+              }
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 14272,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:21:24+00:00"
+  },
+  "sorcerer-xphb:shadow-rhw": {
+    "label": "Sorcerer (XPHB) · Shadow Sorcery (RHW)",
+    "hash": "69c715aa834058a7",
+    "prompt": "32065d0d62380c91",
+    "output": {
+      "features": [
+        {
+          "id": "eyes-of-the-dark",
+          "name": "Eyes of the Dark",
+          "level": 3,
+          "category": "traits",
+          "grants": {
+            "senses": {
+              "darkvision": 120,
+              "blindsight": 10
+            }
+          }
+        },
+        {
+          "id": "strength-of-the-grave",
+          "name": "Strength of the Grave",
+          "level": 3,
+          "category": "traits",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "action": {
+            "save": {
+              "ability": "cha",
+              "on_success": "none"
+            }
+          }
+        },
+        {
+          "id": "beasts-of-ill-omen",
+          "name": "Beasts of Ill Omen",
+          "level": 6,
+          "category": "traits",
+          "consumes": {
+            "resource": "sorcery_points",
+            "amount": 3
+          }
+        },
+        {
+          "id": "shadow-walk",
+          "name": "Shadow Walk",
+          "level": 14,
+          "category": "bonus_actions",
+          "action": {
+            "range": "120 feet"
+          }
+        },
+        {
+          "id": "umbral-form",
+          "name": "Umbral Form",
+          "level": 18,
+          "category": "traits",
+          "uses": {
+            "max": 1,
+            "reset": "long"
+          },
+          "toggle": {
+            "uses_charge": true,
+            "grants": {
+              "defenses": {
+                "resist": [
+                  "acid",
+                  "bludgeoning",
+                  "cold",
+                  "fire",
+                  "lightning",
+                  "necrotic",
+                  "piercing",
+                  "poison",
+                  "psychic",
+                  "slashing",
+                  "thunder",
+                  "weapon"
+                ]
+              }
+            }
+          }
+        }
+      ],
+      "resources": []
+    },
+    "problems": [],
+    "tokens": 14507,
+    "tries": 1,
+    "reviewed": false,
+    "reasoning": "medium",
+    "at": "2026-11-28T11:21:41+00:00"
   }
 }
